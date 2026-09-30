@@ -117,7 +117,7 @@ How to use this file
 ## Phase 2 — Extraction and our model (Wed 7 – Wed 14 Oct) → G2
 
 ### P2.1 Field registry + rules (Rung 1) `feat/p2.1-rules` [CC] — Wed 7 Oct
-- [ ] `configs/fields.yaml` (11 fields, EN/HI labels, document (RHP or Prospectus), sections, questions, extractor, fallback, `ladder` flag)
+- [ ] `configs/fields.yaml` (11 fields, EN/HI labels, document (RHP or Prospectus), sections, questions, extractor, fallback, `ladder` flag; `offer_price` = rules-only on the Prospectus cover, `ladder: false`, like `objects_of_offer`)
 - [ ] `extract/rules.py` against SEBI standard wording (cover page, The Offer); tests with real-looking sentences in `data/samples/`
 - [ ] Tune rules on the 3 dev IPOs only; gold v1 already exists from P1.7
 **Done when:** rules produce candidates for all demo IPOs; tests green.
