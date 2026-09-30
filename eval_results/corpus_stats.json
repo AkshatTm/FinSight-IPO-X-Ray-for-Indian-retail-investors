@@ -1,0 +1,37 @@
+{
+ "n_ipos": 389,
+ "by_doc_kind": {
+  "prospectus": 279,
+  "rhp": 110
+ },
+ "by_close_year": {
+  "2009": 17,
+  "2010": 48,
+  "2011": 27,
+  "2012": 9,
+  "2013": 3,
+  "2014": 5,
+  "2015": 20,
+  "2016": 24,
+  "2017": 35,
+  "2018": 22,
+  "2019": 15,
+  "2020": 12,
+  "2021": 61,
+  "2022": 37,
+  "2023": 54
+ },
+ "key_sections_found": "331/389",
+ "key_sections_found_by_kind": {
+  "rhp": "101/110",
+  "prospectus": "230/279"
+ },
+ "one_text_per_ipo": true,
+ "pages_p50": 450,
+ "skipped": {
+  "drhp": 5,
+  "too_short": 9,
+  "unknown": 15
+ },
+ "excluded": {}
+}
