@@ -1,9 +1,8 @@
 # PROGRESS (≤ 10 lines; newest first; Claude Code updates at the end of each sub-phase)
 
-- 1 Oct — P2.1 rules extractor (PR open, #26): fields.yaml (11 fields), extract/rules.py + table.py, `pipeline build --stage rules`; dev IPOs 33/33 vs gold, all 10 IPOs get candidates; ADR-036. Next P2.2 (S). Eye-check notes for 3 parsed docs still pending from Akshat.
-- 1 Oct — G1 PASS: gold v1 (110 rows, AI-prefilled + verified by Akshat, ADR-035) validates `--complete`; tag v0.1.0. Next P2.1 (S). Eye-check notes for 3 parsed docs not yet received.
-- 2026-09-30 — P1.5 corpus merged (PR #21): 389 IPOs (110 RHP + 279 Prospectus texts), 331 with all key sections; exclusion of demo + gold names; `python -m finsight.ingest.corpus build`. [AKSHAT] add gold-v2 names to data/gold/excluded_ipos.txt. P1.7 tooling merged (#22).
-- 2026-09-30 — P1.4 numerals (#20) + P1.3 tables (#19) merged: normalize (Indian/Hindi amounts, equal, periods; ADR-034); Docling tables, objects rows 8/8.
+- 1 Oct — P2.2 pretrained QA + X-Ray v0 (#28): xray.json for 10/10 IPOs, fresh+OFS=total verified 10/10; `--stage qa` needs the ml group (~8 min); ADR-037 (transformers 5 has no QA pipeline). Next P2.3 is ★ Opus: model switch. Eye-check notes for 3 parsed docs still pending from Akshat.
+- 1 Oct — P2.1 rules extractor merged (#27): fields.yaml, extract/rules.py + table.py, dev IPOs 33/33 vs gold; ADR-036. G1 passed, v0.1.0 tagged (gold v1 AI-prefilled + verified, ADR-035).
+- 2026-09-30 — P1.5 corpus (#21): 389 IPOs; P1.4 numerals (#20) + P1.3 tables (#19): normalize, Docling tables.
 - G0 passed (P0.2 #14, P0.3 #15, P0.4 #16). CI 'test' required on main; close each issue by hand after merge.
 - P0.1: qwen3.5:2b 37 % CPU / 63 % GPU at ctx 4096 (thinking off, ADR-032). RAM 10.2 GB idle, 12.0 GB with model. dev_light = qwen3.5:0.8b.
 - Autopilot: stop only for hand-work with nothing unblocked, gates, 01/02/06 edits, irreversible actions, BLOCKED.md, model switch (check Model column before every sub-phase).
