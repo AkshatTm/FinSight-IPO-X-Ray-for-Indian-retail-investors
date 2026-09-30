@@ -1,0 +1,71 @@
+[
+ {
+  "ipo_id": "urban-company-2025",
+  "pdf_page": 163,
+  "what": "objects: header ruled, body unruled",
+  "pymupdf": {
+   "tables": 2,
+   "rows": 4,
+   "value_cells": 0,
+   "seconds": 0.2
+  },
+  "pdfplumber": {
+   "tables": 2,
+   "rows": 4,
+   "value_cells": 0,
+   "seconds": 0.47
+  },
+  "docling": {
+   "tables": 2,
+   "rows": 8,
+   "value_cells": 5,
+   "seconds": 0.94
+  }
+ },
+ {
+  "ipo_id": "meesho-2025",
+  "pdf_page": 210,
+  "what": "objects: fully ruled",
+  "pymupdf": {
+   "tables": 1,
+   "rows": 5,
+   "value_cells": 3,
+   "seconds": 0.1
+  },
+  "pdfplumber": {
+   "tables": 1,
+   "rows": 5,
+   "value_cells": 3,
+   "seconds": 0.98
+  },
+  "docling": {
+   "tables": 1,
+   "rows": 3,
+   "value_cells": 3,
+   "seconds": 0.69
+  }
+ },
+ {
+  "ipo_id": "tata-capital-2025",
+  "pdf_page": 145,
+  "what": "capital structure: long ruled table",
+  "pymupdf": {
+   "tables": 2,
+   "rows": 25,
+   "value_cells": 61,
+   "seconds": 0.34
+  },
+  "pdfplumber": {
+   "tables": 2,
+   "rows": 24,
+   "value_cells": 61,
+   "seconds": 0.85
+  },
+  "docling": {
+   "tables": 2,
+   "rows": 21,
+   "value_cells": 61,
+   "seconds": 2.06
+  }
+ }
+]
