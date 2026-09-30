@@ -1,8 +1,9 @@
 """Offline pipeline CLI.
 
 uv run python -m finsight.pipeline build --ipo meesho-2025 [--doc rhp|prospectus|both]
-                                        [--stage parse|sections|tables|rules] [--no-images]
-uv run python -m finsight.pipeline build-all [--stage parse|sections|tables|rules] [--no-images]
+                                        [--stage parse|sections|tables|rules|qa|xray] [--no-images]
+uv run python -m finsight.pipeline build-all [--stage parse|sections|tables|rules|qa|xray]
+                                            [--no-images]
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 [--doc rhp] --stats
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 --page 1 [--lines 20]
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 --grep "fresh issue"
@@ -14,10 +15,12 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import Counter
 from typing import cast
 
 from finsight.core.config import get_settings
-from finsight.core.schemas import DocType, Section
+from finsight.core.schemas import DocType, Section, XRay
+from finsight.extract import QAExtractor
 from finsight.ingest.registry import DemoIpo, get_demo_ipo, list_demo_ipos
 from finsight.parse import KEY_SECTIONS
 from finsight.pipeline import inspect as insp
@@ -30,8 +33,9 @@ from finsight.pipeline.rules_stage import (
 )
 from finsight.pipeline.sections_stage import run_sections, section_matrix, write_matrix
 from finsight.pipeline.tables_stage import TablesReport, run_tables, update_summary
+from finsight.pipeline.xray_stage import run_qa, run_xray, write_xray_summary, xray_summary
 
-STAGES = ["parse", "sections", "tables", "rules"]
+STAGES = ["parse", "sections", "tables", "rules", "qa", "xray"]
 
 
 def _docs(choice: str) -> list[DocType]:
@@ -92,6 +96,24 @@ def _rules(ipo: DemoIpo, docs: list[DocType]) -> dict[tuple[str, DocType], Rules
     return out
 
 
+def _qa(ipo: DemoIpo, docs: list[DocType], qa: QAExtractor) -> None:
+    processed = get_settings().paths.processed_dir
+    for doc in docs:
+        found = run_qa(processed, ipo.ipo_id, doc, qa)
+        got = sum(bool(c) for c in found.values())
+        print(
+            f"{ipo.ipo_id:28} {doc:10} fields with a QA candidate: {got}/{len(found)}", flush=True
+        )
+
+
+def _xray(ipo: DemoIpo) -> XRay:
+    xray = run_xray(get_settings().paths.processed_dir, ipo)
+    chosen = sum(f.chosen is not None for f in xray.fields)
+    verdicts = Counter(f.verdict for f in xray.fields)
+    print(f"{ipo.ipo_id:28} xray fields with a value: {chosen}/{len(xray.fields)} {dict(verdicts)}")
+    return xray
+
+
 def _write_timing(reports: list[ParseReport]) -> None:
     out = get_settings().paths.eval_dir / "parse_timing.json"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -142,6 +164,17 @@ def main(argv: list[str] | None = None) -> int:
         write_rules_summary(
             get_settings().paths.eval_dir / "rules_candidates.json", rules_summary(every)
         )
+    elif args.command == "build" and args.stage == "qa":
+        _qa(get_demo_ipo(args.ipo), _docs(args.doc), QAExtractor())
+    elif args.command == "build-all" and args.stage == "qa":
+        qa = QAExtractor()  # one model load for all 20 documents
+        for ipo in list_demo_ipos():
+            _qa(ipo, ["rhp", "prospectus"], qa)
+    elif args.command == "build" and args.stage == "xray":
+        _xray(get_demo_ipo(args.ipo))
+    elif args.command == "build-all" and args.stage == "xray":
+        xrays = [_xray(ipo) for ipo in list_demo_ipos()]
+        write_xray_summary(get_settings().paths.eval_dir / "xray_summary.json", xray_summary(xrays))
     elif args.command == "build" and args.stage == "tables":
         _tables(get_demo_ipo(args.ipo), _docs(args.doc))
     elif args.command == "build":

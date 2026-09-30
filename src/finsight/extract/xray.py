@@ -17,13 +17,14 @@ from finsight.core.schemas import (
     CheckResult,
     DocType,
     FieldResult,
+    FieldSpec,
     Money,
     Placeholder,
     Value,
     XRay,
 )
 from finsight.extract.fields import load_fields
-from finsight.extract.select import select_field
+from finsight.extract.select import best_real, select_field
 from finsight.verify import check_consistency
 
 MAX_CANDIDATES = 8  # per field in the X-Ray, best first, at least one per document
@@ -49,20 +50,16 @@ def _shortlist(candidates: list[Candidate]) -> list[Candidate]:
     return sorted(keep, key=lambda c: (-c.score, c.page))
 
 
-def _best_real(candidates: list[Candidate]) -> Value | None:
-    real = [c for c in candidates if isinstance(c.value, Money)]
-    return max(real, key=lambda c: c.score).value if real else None
-
-
 def _consistency_value(
-    chosen: Candidate | None, all_docs: dict[DocType, list[Candidate]]
+    spec: FieldSpec, chosen: Candidate | None, by_doc: dict[DocType, list[Candidate]]
 ) -> Value | None:
-    """The chosen value, or (when it is blank) a real value the other document shows."""
+    """The chosen value; when it is blank, the real value the other document shows."""
     if chosen is not None and not isinstance(chosen.value, Placeholder):
         return chosen.value
-    other = _best_real(all_docs.get("prospectus", []) + all_docs.get("rhp", []))
-    if other is not None:
-        return other
+    other: DocType = "prospectus" if spec.doc == "rhp" else "rhp"
+    real = best_real(spec, by_doc.get(other, []))
+    if real is not None and isinstance(real.value, Money):
+        return real.value
     return chosen.value if chosen is not None else None
 
 
@@ -91,9 +88,11 @@ def build_xray(
             checks=[],
         )
 
+    specs = {f.id: f for f in fields}
+
     def value_of(field_id: str) -> Value | None:
         by_doc = {doc: inputs.candidates.get(field_id, []) for doc, inputs in docs.items()}
-        return _consistency_value(results[field_id].chosen, by_doc)
+        return _consistency_value(specs[field_id], results[field_id].chosen, by_doc)
 
     report = check_consistency(
         fresh=value_of("fresh_issue_size"),

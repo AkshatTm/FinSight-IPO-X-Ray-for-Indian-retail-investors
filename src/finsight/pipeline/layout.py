@@ -15,6 +15,7 @@ class DocOutputs:
     sections: Path  # sections.json (RHP) or sections_prospectus.json
     tables: Path  # tables.json (RHP) or tables_prospectus.json
     candidates: Path  # candidates_rules.json (RHP) or candidates_rules_prospectus.json
+    candidates_qa: Path  # candidates_qa.json (RHP) or candidates_qa_prospectus.json
 
 
 def doc_outputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocOutputs:
@@ -26,4 +27,10 @@ def doc_outputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocOutputs:
         sections=base / f"sections{suffix}.json",
         tables=base / f"tables{suffix}.json",
         candidates=base / f"candidates_rules{suffix}.json",
+        candidates_qa=base / f"candidates_qa{suffix}.json",
     )
+
+
+def xray_path(processed_dir: Path, ipo_id: str) -> Path:
+    """``xray.json``: one per IPO, built from both documents."""
+    return processed_dir / ipo_id / "xray.json"

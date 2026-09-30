@@ -44,11 +44,16 @@ def _compact(text: str) -> str:
 
 
 def same_value(a: Value, b: Value) -> bool:
-    """Equal in meaning: amounts by ``normalize.equal``, names ignoring case, lists as sets."""
+    """Not in conflict: amounts equal by ``normalize.equal``; names ignoring case, one inside the
+    other ("KFin Technologies" inside "KFin Technologies Limited"); lists as sets where one
+    contains the other (a model that names only some of the managers does not contradict)."""
     if isinstance(a, TextValue) and isinstance(b, TextValue):
-        return _compact(a.text) == _compact(b.text)
+        x, y = _compact(a.text), _compact(b.text)
+        return bool(x and y) and (x in y or y in x)
     if isinstance(a, ListValue) and isinstance(b, ListValue):
-        return {_compact(i) for i in a.items} == {_compact(i) for i in b.items}
+        x_set = {_compact(i) for i in a.items}
+        y_set = {_compact(i) for i in b.items}
+        return bool(x_set and y_set) and (x_set <= y_set or y_set <= x_set)
     if isinstance(a, TableValue) and isinstance(b, TableValue):
         return {_compact(r[0]) for r in a.rows} == {_compact(r[0]) for r in b.rows}
     if isinstance(a, TextValue | ListValue | TableValue) or isinstance(
@@ -65,6 +70,12 @@ def _amount(value: Value) -> Amount:
 
 def _is_blank(candidate: Candidate) -> bool:
     return isinstance(candidate.value, Placeholder)
+
+
+def best_real(field: FieldSpec, candidates: list[Candidate]) -> Candidate | None:
+    """The top candidate of the highest-priority extractor that found a real (non-blank) value."""
+    tops = _tops([c for c in candidates if not _is_blank(c)])
+    return next((tops[e] for e in _priority(field) if e in tops), None)
 
 
 def _tops(candidates: list[Candidate]) -> dict[str, Candidate]:
@@ -86,10 +97,9 @@ def _page(c: Candidate) -> str:
 
 def _companion_note(field: FieldSpec, by_doc: dict[DocType, list[Candidate]]) -> str:
     other: DocType = "prospectus" if field.doc == "rhp" else "rhp"
-    real = [c for c in by_doc.get(other, []) if not _is_blank(c)]
-    if not real:
+    best = best_real(field, by_doc.get(other, []))
+    if best is None:
         return ""
-    best = max(real, key=lambda c: c.score)
     return f" The {DOC_NAME[other]} shows {best.raw} ({_page(best)})."
 
 
@@ -103,12 +113,12 @@ def select_field(
     """The chosen candidate, verdict and reason for one field (primary document first)."""
     candidates = by_doc.get(field.doc, [])
     doc_name = DOC_NAME[field.doc]
+    if pure_ofs and field.id in NO_PROCEEDS_FIELDS:  # whatever a model guessed, there is nothing
+        return Selection(
+            None, "verified", "not_in_document",
+            "Pure offer for sale: the company receives no proceeds from the Offer.",
+        )  # fmt: skip
     if not candidates:
-        if pure_ofs and field.id in NO_PROCEEDS_FIELDS:
-            return Selection(
-                None, "verified", "not_in_document",
-                "Pure offer for sale: the company receives no proceeds from the Offer.",
-            )  # fmt: skip
         if missing_sections:
             return Selection(
                 None, "unverifiable", "section_not_found",
@@ -119,32 +129,39 @@ def select_field(
         )
 
     tops = _tops(candidates)
-    order = _priority(field)
-    name = next(e for e in order if e in tops)
+    name = next(e for e in _priority(field) if e in tops)
     chosen = tops[name]
     if _is_blank(chosen):
         return Selection(
             chosen, "unverifiable", "placeholder",
             f"Left as [●] in the {doc_name} ({_page(chosen)})." + _companion_note(field, by_doc),
         )  # fmt: skip
-    others = [c for n, c in tops.items() if n != name]
-    if not others:
-        return Selection(
-            chosen, "verified", "verified",
-            f"Found by {name} in the {doc_name} ({_page(chosen)}).",
-        )  # fmt: skip
-    if chosen.value is not None:
-        clash = [c for c in others if c.value is not None and not same_value(chosen.value, c.value)]
-    else:
-        clash = []
-    if clash:
-        detail = "; ".join(f"{c.extractor} read {c.raw} ({_page(c)})" for c in clash)
+
+    confirmed: list[str] = []
+    clashes: list[Candidate] = []
+    for other in {c.extractor for c in candidates} - {name}:
+        mine = [c for c in candidates if c.extractor == other and c.value is not None]
+        if chosen.value is None:
+            continue
+        if any(same_value(chosen.value, c.value) for c in mine if c.value is not None):
+            confirmed.append(other)
+        else:
+            # A different value only counts against the choice when it was read from the same
+            # page: a model quoting another page is talking about something else.
+            same_page = [c for c in mine if c.page == chosen.page]
+            if same_page:
+                clashes.append(max(same_page, key=lambda c: c.score))
+    if clashes:
+        detail = "; ".join(f"{c.extractor} read {c.raw} ({_page(c)})" for c in clashes)
         return Selection(
             chosen, "unverifiable", "extractors_disagree",
             f"{name} read {chosen.raw} ({_page(chosen)}) but {detail}.",
         )  # fmt: skip
-    agreeing = ", ".join([name] + [c.extractor for c in others])
+    if confirmed:
+        agreeing = ", ".join([name, *sorted(confirmed)])
+        return Selection(
+            chosen, "verified", "verified", f"{agreeing} agree ({_page(chosen)}, {doc_name})."
+        )
     return Selection(
-        chosen, "verified", "verified",
-        f"{agreeing} agree ({_page(chosen)}, {doc_name}).",
-    )  # fmt: skip
+        chosen, "verified", "verified", f"Found by {name} in the {doc_name} ({_page(chosen)})."
+    )
