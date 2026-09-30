@@ -1,0 +1,44 @@
+# --- data & models (never committed; see CLAUDE.md) ---
+data/raw/
+data/processed/
+models/
+# any PDF anywhere (RHPs, prospectuses, reports)
+*.pdf
+*.PDF
+# audio (voice clips stay local unless deliberately added under frontend/public/demo/)
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.webm
+!frontend/public/demo/*.webm
+# secrets
+.env
+.env.*
+!.env.example
+# notebooks
+.ipynb_checkpoints/
+# python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+htmlcov/
+dist/
+*.egg-info/
+# frontend
+node_modules/
+.next/
+# local tool state
+.claude/settings.local.json
+*.db
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

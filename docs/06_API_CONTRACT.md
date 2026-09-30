@@ -12,7 +12,7 @@ All non-2xx responses:
 ```json
 {"error": {"code": "ipo_not_found", "message": "No IPO with id 'xyz'.", "hint": "Check /api/ipos for valid ids.", "trace_id": null}}
 ```
-Codes: `ipo_not_found`, `page_out_of_range`, `llm_unavailable`, `models_warming_up`, `asr_failed`, `audio_too_long`, `validation_error`, `internal_error`. Stack traces never appear in responses.
+Codes: `ipo_not_found`, `page_out_of_range`, `llm_unavailable`, `models_warming_up`, `asr_failed`, `audio_too_long`, `rate_limited`, `validation_error`, `internal_error`. Stack traces never appear in responses.
 
 ---
 
@@ -23,11 +23,11 @@ Codes: `ipo_not_found`, `page_out_of_range`, `llm_unavailable`, `models_warming_
 {"status": "ok | warming | degraded", "profile": "full", "demo_mode": false,
  "models": {"llm": {"name": "qwen3.5:2b", "loaded": true}, "dense": {"loaded": true},
             "reranker": {"loaded": true}, "asr": {"loaded": false, "lazy": true}},
- "version": "0.6.0", "git_sha": "abc1234"}
+ "version": "0.3.0", "git_sha": "abc1234"}
 ```
 
 ### `GET /api/ipos`
-Query: `q`, `sector`, `year`, `sort=listing_date|issue_size`.
+Query: `q`, `sector`, `year`, `sort=listing_date|issue_size`. The `*_inr` values are `null` when the documents leave them as `[●]` or the field is not in the document.
 ```json
 [{"id": "acme-industries-2025", "company": "Acme Industries Ltd", "sector": "Industrials",
   "listing_date": "2025-11-14", "rhp_pages": 612,
@@ -36,10 +36,10 @@ Query: `q`, `sector`, `year`, `sort=listing_date|issue_size`.
 ```
 
 ### `GET /api/ipos/{id}`
-Metadata + section list:
+Metadata + section list. Page endpoints take `?doc=rhp|prospectus` (default `rhp`); all page numbers are **PDF pages** (1-indexed), with the printed page number available alongside:
 ```json
-{"id": "...", "company": "...", "rhp_pages": 612, "page_size": {"width": 612, "height": 792},
- "sections": [{"id": "the_offer", "title": "THE OFFER", "start_page": 67, "end_page": 68}]}
+{"id": "...", "company": "...", "rhp_pages": 612, "prospectus_pages": 612, "page_size": {"width": 612, "height": 792},
+ "sections": [{"id": "the_offer", "doc": "rhp", "title": "THE OFFER", "start_page": 67, "printed_start_page": "45", "end_page": 68}]}
 ```
 
 ### `GET /api/ipos/{id}/xray`
@@ -49,15 +49,16 @@ Metadata + section list:
    "field_id": "fresh_issue_size", "label_en": "Fresh issue", "label_hi": "नया निर्गम (फ्रेश इश्यू)",
    "type": "money",
    "value": {"kind": "money", "value_inr": "8000000000.00", "raw": "₹ 800.00 crore", "scale_word": "crore", "precision": 2},
-   "page": 12, "bbox": [72.0, 410.2, 301.5, 422.8],
+   "doc": "rhp", "page": 12, "printed_page": "8", "bbox": [72.0, 410.2, 301.5, 422.8],
    "extractor": "qa_finetuned", "score": 0.93,
    "verdict": "verified", "reason_code": "verified", "reason": "Matches The Offer (p. 67).",
+   "companion": {"doc": "prospectus", "page": 14, "value": {"kind": "money", "value_inr": "8000000000.00", "raw": "₹ 800.00 crore", "scale_word": "crore", "precision": 2}},
    "checks": [{"check": "total_equals_fresh_plus_ofs", "status": "verified", "reason": "..."}],
    "candidates": [{"extractor": "rules", "raw": "...", "value": {...}, "page": 1, "score": 1.0, "gold_match": true}]
  }],
  "derived": {"fresh_share_pct": "64.00", "ofs_share_pct": "36.00"}}
 ```
-`value.kind` ∈ `money | count | percent | range | placeholder | text | list | table`. `gold_match` present only for IPOs with gold labels.
+`value.kind` ∈ `money | count | percent | range | placeholder | text | list | table` (same names as the `kind` discriminator in `02` §6). `reason_code` for X-Ray fields ∈ `verified | section_not_found | extractors_disagree | placeholder | not_in_document`. `companion` holds the same field from the other document when both exist (e.g. RHP `[●]` beside the Prospectus value). `gold_match` present only for IPOs with gold labels.
 
 ### `GET /api/ipos/{id}/pages/{n}`
 `image/webp`. `Cache-Control: public, max-age=31536000, immutable`.
@@ -92,7 +93,7 @@ Events (in order; `event:` name + JSON `data:`):
 | `token` | `{"text": "The fresh"}` | Many |
 | `answer` | `{"text": "...", "citations": [{"n": 1, "char_start": 45, "char_end": 48}]}` | Full text once |
 | `verdict` | `{"index": 0, "answer_char_span": [23, 38], "answer_value": {...}, "status": "contradicted", "reason_code": "scale_mismatch", "reason": "...", "evidence": {"passage_id": "...", "page": 12, "char_span": [120, 134], "bbox": [...], "value": {...}}}` | One per number; frontend staggers the reveal |
-| `final` | `{"trace_id": "01J...", "score": 0.75, "n_numbers": 4, "timings_ms": {"guard": 3, "retrieve": 410, "generate": 5200, "verify": 40}}` | Always last |
+| `final` | `{"trace_id": "01J...", "score": 0.75, "n_numbers": 4, "timings_ms": {"guard": 3, "retrieving": 410, "generating": 5200, "verifying": 40}}` | Always last; keys equal the `stage` names |
 | `error` | `{"code": "llm_unavailable", "message": "..."}` | Then stream closes |
 
 ### `POST /api/voice`

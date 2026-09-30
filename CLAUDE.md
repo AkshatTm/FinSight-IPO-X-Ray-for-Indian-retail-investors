@@ -3,14 +3,14 @@
 FinSight = IPO X-Ray for Indian retail investors: RHP → cited fact sheet + bilingual chat with ✅/⚠️/❌ number verification. Local open-weight models only. Deadline Sun 1 Nov 2026.
 
 ## Session protocol
-1. Read `PROGRESS.md`, then `docs/07_ROADMAP.md` (find the current sub-phase), then only the doc sections that sub-phase needs. Full doc index: `docs/00_README.md`.
+1. Read `PROGRESS.md`, then `docs/07_ROADMAP.md` (find the current sub-phase) and its entry in `docs/EXECUTION_PLAN.md`, then only the doc sections that sub-phase needs. Full doc index: `docs/00_README.md`.
 2. Run the tests (`uv run poe test`) before changing anything when resuming.
 3. Work on **one sub-phase per session**. At the end, print: `✅ <ID> done — run /clear and paste the resume prompt.`
 
 ## Hard rules
 - **Plan first:** for any task > ~50 lines, show a plan (≤ 15 lines) and wait for Akshat's approval.
-- **One package per session;** import other packages only via their `__init__.py`.
-- **Never read:** `data/raw/`, `data/processed/`, PDFs, audio, `models/`, weights, `node_modules/`, `.next/`, `.venv/`, notebook outputs. You may read `data/samples/` and `data/gold/`. For schema questions, run a summary script or ask Akshat for 5 rows.
+- **One primary package per sub-phase;** touch other packages only for wiring, and import them only via their `__init__.py`.
+- **Never read:** `data/raw/`, `data/processed/`, PDFs, audio, `models/`, weights, `node_modules/`, `.next/`, `.venv/`, notebook outputs. You may read `data/samples/` and `data/gold/`. For schema questions, run a summary script or ask Akshat for 5 rows. To see a document, use `uv run python -m finsight.pipeline inspect` (prints ≤ 40 lines; may write ≤ 30 truncated snippets to `data/samples/`).
 - **Never train models.** Write notebooks; Akshat runs them on Kaggle.
 - **Never hand-edit model outputs or eval results.** Fix the pipeline or show ⚠️.
 - **Never add investment advice, ratings or predictions.**

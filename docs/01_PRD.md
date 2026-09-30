@@ -69,7 +69,7 @@ IDs are referenced from `07_ROADMAP.md` and PR titles.
 | ID | Feature | Notes |
 |---|---|---|
 | FR-01 | **IPO Library** of 12 curated demo IPOs | Cards with key facts, search |
-| FR-02 | **X-Ray fact sheet** — 9 fields + 2 derived | Fields in §5.4 |
+| FR-02 | **X-Ray fact sheet** — 11 fields + 2 derived | Fields in §5.4 |
 | FR-03 | **Click-to-source**: any figure → viewer jumps to page, exact words highlighted | < 300 ms |
 | FR-04 | **Chat with citations** `[1]…[5]`, hover preview, click → page | Streaming (SSE) |
 | FR-05 | **Numeric verifier** with ✅ ⚠️ ❌ badges + **evidence drawer** | Scale mismatch is always ❌ |
@@ -107,12 +107,17 @@ IDs are referenced from `07_ROADMAP.md` and PR titles.
 | FR-37 | Publish the fine-tuned extractor on Hugging Face Hub with a model card (same NC-SA terms as training data) |
 
 ### 5.4 X-Ray fields (v1)
+
+Each IPO has **two documents**: the RHP and the final Prospectus (filed after pricing). RHPs leave the offer price, total issue size and the OFS rupee amount as `[●]`; the Prospectus fills them in. Both go through the same pipeline and every value cites its document and PDF page (ADR-023). A `[●]` in the RHP is shown as ⚠️ "the RHP leaves this blank", with the Prospectus value beside it when available.
+
 | Field id | Type | Example |
 |---|---|---|
-| `total_issue_size` | money | ₹1,250.00 crore |
-| `fresh_issue_size` | money | ₹800.00 crore |
-| `ofs_size` | money or share count | ₹450.00 crore / 1,23,45,678 shares |
-| `price_band` | money range | ₹440 – ₹463 per share |
+| `fresh_issue_size` | money (RHP) | ₹800.00 crore |
+| `ofs_shares` | count (RHP) | 1,23,45,678 equity shares |
+| `ofs_amount` | money (RHP often `[●]`; final Prospectus fills it) | ₹450.00 crore |
+| `offer_price` | money (final Prospectus) | ₹463 per share |
+| `price_band` | money range (RHP if stated, else price-band ad; optional) | ₹440 – ₹463 per share |
+| `total_issue_size` | money (Prospectus; RHP shows `[●]`) | ₹1,250.00 crore |
 | `face_value` | money | ₹2 per share |
 | `book_running_lead_managers` | list[text] | … |
 | `registrar` | text | … |

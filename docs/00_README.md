@@ -20,6 +20,7 @@ Course: CSE472 Deep Learning for NLP (LPU) · Solo build: Akshat Tomar + Claude 
 | 05 | `05_DATA_AND_EVALUATION.md` | Datasets, splits, gold labelling, weak-label audit, metrics, experiments | Data/eval/notebook work |
 | 06 | `06_API_CONTRACT.md` | Every endpoint, payload, SSE event, error format | Backend API + frontend integration |
 | 07 | `07_ROADMAP.md` | **When**: phases, sub-phases, gates, day plan, cut list, status checkboxes | Every session |
+| — | `EXECUTION_PLAN.md` | **How each sub-phase is built**: files, tests, planned commits, owner, model; Akshat's dated hand-work list. Dates and gates stay in 07 | Every session (with 07) |
 | 08 | `08_GIT_WORKFLOW.md` | Issues, branches, commits, PRs, tags, releases | Every session |
 | 09 | `09_DECISIONS.md` | Decision log (ADRs): what was decided and why | When something looks odd, or before changing a decision |
 | 10 | `10_FINSIGHT_EXPLAINED.md` | Learning doc: every concept explained from scratch + viva questions. Living doc | Akshat: continuously. CC: append a section after each module |
@@ -31,7 +32,7 @@ Course: CSE472 Deep Learning for NLP (LPU) · Solo build: Akshat Tomar + Claude 
 ## Precedence when docs disagree
 
 1. A direct instruction from Akshat in the current session wins — but Claude Code must point out the conflict first.
-2. Otherwise: `06_API_CONTRACT` wins on payload shapes, `02_ARCHITECTURE` on module boundaries, `07_ROADMAP` on dates and ordering, `01_PRD` on scope and priority, `05_DATA_AND_EVALUATION` on metrics and splits.
+2. Otherwise: `06_API_CONTRACT` wins on payload shapes, `02_ARCHITECTURE` on module boundaries, `07_ROADMAP` on dates and ordering (`EXECUTION_PLAN` adds files/tests/commits under it), `01_PRD` on scope and priority, `05_DATA_AND_EVALUATION` on metrics and splits.
 3. Every resolved conflict gets a new entry in `09_DECISIONS.md` and the losing doc is fixed in the same PR.
 
 ## Who may edit what

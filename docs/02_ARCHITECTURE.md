@@ -52,7 +52,7 @@ flowchart TD
 
 | Stage | Input | Output (in `data/processed/<ipo_id>/`) | Module |
 |---|---|---|---|
-| Parse text | `data/raw/rhp/<ipo_id>.pdf` | `parsed.json` (pages, lines, words + bboxes, fonts) | `parse` |
+| Parse text | `data/raw/rhp/<ipo_id>.pdf` and `data/raw/prospectus/<ipo_id>.pdf` (parsed separately, `--doc rhp\|prospectus`) | `parsed.json`, `parsed_prospectus.json` (pages, lines, words + bboxes, fonts, printed page number) | `parse` |
 | Page images | PDF | `pages/<n>.webp` (~110 DPI, quality 80) | `parse` |
 | Sections | `parsed.json` | `sections.json` (id, title, start/end page, confidence, method) | `parse` |
 | Tables | key-section pages | `tables.json` (cells with bboxes, header scale e.g. "₹ in million") | `parse` |
@@ -137,31 +137,37 @@ Sketch — field lists are binding, types may be refined in the PR that creates 
 BBox = tuple[float, float, float, float]            # x0, y0, x1, y1 in PDF points
 
 class Word(BaseModel):   text: str; bbox: BBox; font_size: float; bold: bool
-class Page(BaseModel):   number: int; width: float; height: float; words: list[Word]; text: str; is_scanned: bool
-class ParsedDoc(BaseModel): ipo_id: str; source_path: str; n_pages: int; pages: list[Page]; sha256: str
+class Page(BaseModel):   number: int; printed_page: str | None; width: float; height: float; words: list[Word]; text: str; is_scanned: bool   # number = PDF page, 1-indexed
+class ParsedDoc(BaseModel): ipo_id: str; doc_type: Literal["rhp", "prospectus"]; source_path: str; n_pages: int; pages: list[Page]; sha256: str
 
 class Section(BaseModel): id: str; title: str; start_page: int; end_page: int; method: Literal["toc","regex","font"]; confidence: float
 class TableCell(BaseModel): row: int; col: int; text: str; bbox: BBox; page: int
 class Table(BaseModel):  id: str; section_id: str; pages: list[int]; header_scale: str | None; cells: list[TableCell]
 
-class Passage(BaseModel): id: str; ipo_id: str; section_id: str; page_start: int; page_end: int; text: str
-                          char_to_bbox: list[tuple[int, int, int, BBox]] | None   # (start, end, page, box) spans for highlighting
+class Passage(BaseModel): id: str; ipo_id: str; doc_type: Literal["rhp", "prospectus"]; section_id: str; page_start: int; page_end: int; text: str
+                          char_to_bbox: list[tuple[int, int, int, BBox]]   # (start, end, page, box) spans; required: "Show in document" needs them
 
-class Money(BaseModel):  value_inr: Decimal | None; currency: Literal["INR","USD","OTHER"]; raw: str; scale_word: str | None; precision: int
-class Count(BaseModel):  value: int; raw: str; unit: str | None          # e.g. "equity shares"
-class Percent(BaseModel): value: Decimal; raw: str; is_bps: bool
-class Placeholder(BaseModel): raw: str                                   # [●], [•]
-class Range(BaseModel):  low: Money; high: Money; raw: str
+# every value model carries a `kind` literal discriminator (this is 06's `value.kind`)
+class Money(BaseModel):  kind: Literal["money"]; value_inr: Decimal | None; currency: Literal["INR","USD","OTHER"]; raw: str; scale_word: str | None; precision: int
+class Count(BaseModel):  kind: Literal["count"]; value: int; raw: str; unit: str | None          # e.g. "equity shares"
+class Percent(BaseModel): kind: Literal["percent"]; value: Decimal; raw: str; is_bps: bool
+class Placeholder(BaseModel): kind: Literal["placeholder"]; raw: str                              # [●], [•]
+class Range(BaseModel):  kind: Literal["range"]; low: Money; high: Money; raw: str
+class TextValue(BaseModel): kind: Literal["text"]; text: str
+class ListValue(BaseModel): kind: Literal["list"]; items: list[str]
+class TableValue(BaseModel): kind: Literal["table"]; columns: list[str]; rows: list[list[str]]
 Amount = Money | Count | Percent | Placeholder | Range
+Value = Amount | TextValue | ListValue | TableValue
 
 class FieldSpec(BaseModel): id: str; label_en: str; label_hi: str; type: str; sections: list[str]
                             questions: list[str]; extractor: str; fallback: str | None; demo: bool
-class Candidate(BaseModel): field_id: str; extractor: str; raw: str; value: Amount | str | list[str] | None
-                            page: int; bbox: BBox | None; score: float; passage_id: str | None
+class Candidate(BaseModel): field_id: str; extractor: str; doc_type: Literal["rhp", "prospectus"]; raw: str; value: Value | None
+                            page: int; printed_page: str | None; bbox: BBox | None; score: float; passage_id: str | None
 Verdict = Literal["verified", "unverifiable", "contradicted"]
 class FieldResult(BaseModel): field_id: str; chosen: Candidate | None; candidates: list[Candidate]
-                              verdict: Verdict; reason: str; checks: list["CheckResult"]
-class XRay(BaseModel): ipo_id: str; company: str; built_at: datetime; fields: list[FieldResult]; derived: dict[str, Percent]
+                              verdict: Verdict; reason_code: str; reason: str; checks: list["CheckResult"]
+                              # X-Ray reason codes: verified, section_not_found, extractors_disagree, placeholder, not_in_document
+class XRay(BaseModel): ipo_id: str; company: str; built_at: datetime; fields: list[FieldResult]; derived: dict[str, str]   # decimal strings, as in 06
 
 class Claim(BaseModel): sentence: str; char_span: tuple[int, int]; amounts: list[Amount]; cited: list[int]
 class CheckResult(BaseModel): check: str; status: Verdict; reason_code: str; reason: str
@@ -211,7 +217,7 @@ class DocTypeAdapter(Protocol):
 
 ## 8. Configuration and profiles
 
-One `config.yaml` + `.env` loaded via `pydantic-settings`. Profile chosen by `FINSIGHT_PROFILE`.
+One `configs/config.yaml` + `.env` loaded via `pydantic-settings`. Profile chosen by `FINSIGHT_PROFILE`; the default is `dev_light`.
 
 | Key | `dev_light` (default while coding) | `full` (local demo) | `deploy_cpu` (public) |
 |---|---|---|---|
@@ -231,16 +237,18 @@ Paths (`data_dir`, `processed_dir`, `models_dir`) always come from config; code 
 ```
 data/
   raw/rhp/<ipo_id>.pdf                    # gitignored
+  raw/prospectus/<ipo_id>.pdf             # final Prospectus, gitignored
   raw/ipo_dataset/                        # gitignored, HF download
   processed/<ipo_id>/                     # gitignored
-    parsed.json  sections.json  tables.json  xray.json  chunks.jsonl
+    parsed.json  parsed_prospectus.json  sections.json  tables.json  xray.json  chunks.jsonl
     pages/<n>.webp  words/<n>.json
     bm25/  faiss.index  faiss_ids.json
   processed/weaklabel/{train,dev}.jsonl   # gitignored
   processed/corpus/<ipo_id>.json          # training-corpus text per IPO, gitignored
   samples/                                # committed, ≤ 30 rows each — the only data CC may read
   gold/gold_values.jsonl                  # committed, hand-labelled
-  finsight.db                             # SQLite: ipos, xray_index, chat_cache, traces
+  finsight.db                             # SQLite: ipos, traces, demo_cache
+configs/                                  # committed: config.yaml, fields.yaml, demo_ipos.yaml, suggested_questions.yaml
 models/                                   # gitignored: fine-tuned weights, ONNX exports
 eval_results/                             # committed JSON/CSV — single source for report + Model Lab
 ```
@@ -250,7 +258,7 @@ eval_results/                             # committed JSON/CSV — single source
 - `passage_id`: `<ipo_id>:p<page_start>:c<k>`.
 - `trace_id`: ULID (sortable by time).
 
-**SQLite tables:** `ipos(id, company, sector, listing_date, rhp_pages, status)`, `traces(trace_id, created_at, json)`, `demo_cache(key, events_json)`. X-Rays stay as JSON files (git-diffable when copied to fixtures).
+**SQLite tables:** `ipos(id, company, sector, listing_date, rhp_pages, status)`, `traces(trace_id, created_at, json)`, `demo_cache(key, events_json)` (only these; `chat_cache`/`xray_index` from earlier drafts are dropped). X-Rays stay as JSON files (git-diffable when copied to fixtures).
 
 ---
 
@@ -274,7 +282,7 @@ For each claim (sentence) in the answer:
 3. Search evidence: cited passages first, then the other retrieved passages. Normalize every amount in the evidence; attach nearest metric keyword within a window of ~20 tokens.
 4. Decide:
    - **✅ verified** — an evidence amount is equal (within stated precision, §10.4) and its metric matches (or the claim has no metric and the value is unique in the evidence).
-   - **❌ contradicted / scale_mismatch** — same metric, value differs by exactly 10², 10¹ or 10³ after normalization (lakh↔crore, million↔crore, thousand↔million). Always ❌.
+   - **❌ contradicted / scale_mismatch** — same metric, values differ by exactly 10ᵏ (k = 1, 2, 3) after normalization **and** either the scale words differ (lakh↔crore, million↔crore, thousand↔million) **or** the printed digits are identical. Always ❌. A 10× gap with different digits and the same scale word is `wrong_value` (e.g. face value ₹10 vs ₹1). See ADR-027.
    - **❌ contradicted / wrong_value** — same metric, different value.
    - **❌ contradicted / wrong_metric** — equal value found but attached to a different metric (e.g. the answer calls the OFS amount the fresh issue).
    - **⚠️ unverifiable / not_found** — number absent from all evidence.
@@ -285,7 +293,8 @@ For each claim (sentence) in the answer:
 `equal(a, b)`: same currency; compare `value_inr` after rounding both to the coarser stated precision in the coarser unit (e.g. "₹1,250 crore" vs "₹12,499.8 million" → both 1,250.0 crore at 1 dp → equal). Counts: exact. Percent: within 0.05 pp unless precision says otherwise.
 
 ### 10.5 Consistency checks (X-Ray)
-- `total_issue_size ≈ fresh_issue_size + ofs_size` (when all money).
+- `total_issue_size ≈ fresh_issue_size + ofs_amount` (when all three are money; a `[●]` in the RHP skips the check with reason `placeholder`, and the Prospectus values are used when present).
+- `ofs_amount ≈ ofs_shares × offer_price` (Prospectus).
 - `price_band.low < price_band.high`, and both > `face_value`.
 - Sum of `objects_of_offer` amounts ≈ net proceeds (when present) — P1.
 
@@ -324,7 +333,7 @@ Assume ~8 GB RAM is already used by Windows + Claude Code + VS Code + browser + 
 | DeBERTa QA (offline or playground) | GPU fp16 | ~0.4 GB VRAM | Offline pipeline / lazy |
 | Python + torch + FastAPI | CPU | ~1 GB RAM | — |
 
-Rules: a `ModelManager` owns all model singletons (lazy load, idle unload, `/api/health` reports what's loaded). Numbers above are planning estimates — **Phase 3.1 measures real usage** and records it in `09_DECISIONS.md`.
+The Ollama runner itself adds ~1–2 GB of system RAM on top of these rows, so for the live demo close Claude Code and VS Code and serve the frontend with `next start`, not `next dev`. Rules: a `ModelManager` owns all model singletons (lazy load, idle unload, `/api/health` reports what's loaded). Numbers above are planning estimates — **Phase 3.1 measures real usage** and records it in `09_DECISIONS.md`.
 
 ---
 
