@@ -199,3 +199,22 @@ def test_complete_import_of_a_fully_filled_sheet(xlsx: Path, tmp_path: Path) -> 
     result = import_xlsx(xlsx, out)
     assert (result.written, result.errors) == (110, [])
     assert validate_file(out, require_complete=True) == []
+
+
+def test_how_to_examples_pass_the_validator() -> None:
+    from finsight.evaluate.gold import DEFAULT_DOC
+    from finsight.evaluate.gold_xlsx import EXAMPLES, _value
+
+    for ex in EXAMPLES:
+        status = ex["status"]
+        value = (
+            "" if status == "not_in_document" else _value(FIELDS[ex["field_id"]], ex["value_raw"])
+        )
+        row = {
+            "ipo_id": URBAN, "field_id": ex["field_id"], "doc": DEFAULT_DOC[ex["field_id"]],
+            "value_raw": value, "page": ex["page"] or None, "quote": ex["quote"],
+            "status": status, "labelled_at": "2026-10-08", "notes": "",
+        }  # fmt: skip
+        from finsight.evaluate.gold import validate_row
+
+        assert validate_row(row) == [], ex["type"]
