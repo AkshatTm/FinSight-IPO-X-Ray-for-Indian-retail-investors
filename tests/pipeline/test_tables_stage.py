@@ -6,7 +6,12 @@ from finsight.core.schemas import Section
 from finsight.parse import pymupdf_backend
 from finsight.pipeline.layout import doc_outputs
 from finsight.pipeline.parse_stage import run_parse
-from finsight.pipeline.tables_stage import load_tables, run_tables, tables_summary
+from finsight.pipeline.tables_stage import (
+    load_tables,
+    run_tables,
+    tables_summary,
+    update_summary,
+)
 
 BACKEND = ("pymupdf", pymupdf_backend)
 
@@ -42,3 +47,14 @@ def test_summary_counts_fresh_issue_documents_only(table_pdf: Path, tmp_path: Pa
         "pure_ofs_not_in_document": ["ofs-2025"],
         "missing": [],
     }
+
+
+def test_update_summary_merges_one_ipo_at_a_time(table_pdf: Path, tmp_path: Path) -> None:
+    _prepare(table_pdf, tmp_path)
+    ok = run_tables(tmp_path, table_pdf, "acme-2025", "rhp", backend=BACKEND)
+    ofs = ok.__class__(**{**ok.__dict__, "ipo_id": "ofs-2025", "pure_ofs": True,
+                          "objects": "not_in_document"})  # fmt: skip
+    out = tmp_path / "eval" / "tables.json"
+    update_summary(out, [ok])
+    summary = update_summary(out, [ofs])
+    assert set(summary["documents"]) == {"acme-2025:rhp", "ofs-2025:rhp"}  # type: ignore[arg-type]

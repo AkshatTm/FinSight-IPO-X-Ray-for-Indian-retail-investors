@@ -106,3 +106,15 @@ def write_summary(path: Path, summary: dict[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(summary, indent=1, ensure_ascii=False) + "\n"
     path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def update_summary(path: Path, reports: list[TablesReport]) -> dict[str, object]:
+    """Merge ``reports`` into the summary at ``path`` (one IPO at a time survives a crash)."""
+    known: dict[str, TablesReport] = {}
+    if path.exists():
+        documents = json.loads(path.read_text(encoding="utf-8"))["documents"]
+        known = {k: TablesReport(**v) for k, v in documents.items()}
+    known |= {f"{r.ipo_id}:{r.doc}": r for r in reports}
+    summary = tables_summary(list(known.values()))
+    write_summary(path, summary)
+    return summary
