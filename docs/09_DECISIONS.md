@@ -110,10 +110,10 @@ The Excel's `Fresh Issue`, `Offer for Sale`, `Total Issue Size`, `Price Band`, `
 **Decision:** thinking is always disabled (`think: false`, tested). `dev_light` uses `qwen3.5:0.8b`. For `full`, the LLM must fit fully on the GPU: prefer a text-only GGUF and the smallest context that holds 5 passages, chosen from measurements in P3.1/P3.2.
 **Consequences:** the 2B/4B choice waits for the bake-off; the 02 section 12 budget uses measured numbers; the live demo closes other apps.
 
-### ADR-033 Passage ids include the document for Prospectus passages — proposed (30 Sep 2026)
+### ADR-033 Passage ids include the document for Prospectus passages — accepted (Akshat, 30 Sep 2026)
 **Context:** 02 section 9 defines `passage_id` as `<ipo_id>:p<page_start>:c<k>`. With two documents per IPO (ADR-023) page 12 of the RHP and page 12 of the Prospectus would get the same id.
 **Decision:** RHP passages keep the documented format; Prospectus passages are `<ipo_id>:prospectus:p<page>:c<k>` (`core/ids.py`, round-trip tested).
-**Consequences:** no existing id changes. 02 section 9 needs one line describing the Prospectus form; that edit is left for Akshat's approval with the next change to 02.
+**Consequences:** no existing id changes. 02 section 9 needs one line describing the Prospectus form; 02 section 9 now carries that line.
 
 ### ADR-034 Normalizer conventions — proposed (30 Sep 2026)
 **Context:** P1.4 had to fix several behaviours that the docs leave open; each changes what the verifier calls ✅ or ❌.

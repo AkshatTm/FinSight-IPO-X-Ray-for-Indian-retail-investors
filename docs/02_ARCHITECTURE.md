@@ -257,7 +257,7 @@ eval_results/                             # committed JSON/CSV — single source
 
 **IDs**
 - `ipo_id`: `<company-slug>-<yyyy>` e.g. `acme-industries-2025`.
-- `passage_id`: `<ipo_id>:p<page_start>:c<k>`.
+- `passage_id`: `<ipo_id>:p<page_start>:c<k>` for RHP passages; `<ipo_id>:prospectus:p<page_start>:c<k>` for final-Prospectus passages (ADR-033).
 - `trace_id`: ULID (sortable by time).
 
 **SQLite tables:** `ipos(id, company, sector, listing_date, rhp_pages, status)`, `traces(trace_id, created_at, json)`, `demo_cache(key, events_json)` (only these; `chat_cache`/`xray_index` from earlier drafts are dropped). X-Rays stay as JSON files (git-diffable when copied to fixtures).
