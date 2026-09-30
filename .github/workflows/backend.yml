@@ -1,0 +1,30 @@
+name: backend
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# No path filters on purpose: this check becomes a required status on main,
+# so it must report on every PR, including docs-only ones.
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          python-version: "3.11"
+          enable-cache: true
+      # dev + api groups only (default-groups); torch and ASR are never installed in CI.
+      - run: uv sync --locked
+      - run: uv run poe lint
+      - run: uv run poe typecheck
+      - run: uv run poe test
