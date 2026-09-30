@@ -26,18 +26,19 @@ dev = [
     "pytest>=8.2",
     "pytest-cov>=5.0",
     "hypothesis>=6.100",
-    "httpx>=0.27",
     "ruff>=0.6",
     "mypy>=1.10",
     "types-PyYAML>=6.0",
     "poethepoet>=0.29",
     "pre-commit>=3.7",
     "nbstripout>=0.7",
+    "httpx2>=2.13.1",
 ]
 api = [
     "fastapi>=0.115",
     "uvicorn[standard]>=0.30",
     "sse-starlette>=2.1",
+    "python-multipart>=0.0.32",
 ]
 # Offline pipeline, Kaggle and the laptop GPU. Never installed in CI or the deploy image.
 ml = [
@@ -65,6 +66,8 @@ test = { cmd = "pytest -m 'not slow'", help = "Fast tests (no real models)" }
 test-all = { cmd = "pytest", help = "All tests including slow (real models)" }
 fmt = { sequence = [{ cmd = "ruff check --fix ." }, { cmd = "ruff format ." }], help = "Auto-fix and format" }
 typecheck = { cmd = "mypy -p finsight.core -p finsight.normalize -p finsight.verify", help = "mypy on the correctness-critical packages" }
+api = { cmd = "uvicorn finsight.api.app:app --reload --port 8000", help = "FastAPI on :8000" }
+gen-openapi = { cmd = "python scripts/gen_openapi.py", help = "Write openapi.json (add --check to verify it is current)" }
 
 [tool.poe.tasks.lint]
 help = "ruff check and format check"

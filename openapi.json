@@ -1,0 +1,2972 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FinSight API",
+    "description": "IPO X-Ray and verified chat. Contract: docs/06_API_CONTRACT.md.",
+    "version": "0.0.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ipos": {
+      "get": {
+        "tags": [
+          "ipos"
+        ],
+        "summary": "List Ipos",
+        "operationId": "list_ipos_api_ipos_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Company or sector search.",
+              "title": "Q"
+            },
+            "description": "Company or sector search."
+          },
+          {
+            "name": "sector",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sector"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Year"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "listing_date",
+                "issue_size"
+              ],
+              "type": "string",
+              "default": "listing_date",
+              "title": "Sort"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IpoSummary"
+                  },
+                  "title": "Response List Ipos Api Ipos Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/ipos/{id}": {
+      "get": {
+        "tags": [
+          "ipos"
+        ],
+        "summary": "Get Ipo",
+        "operationId": "get_ipo_api_ipos__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IpoDetail"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/ipos/{id}/xray": {
+      "get": {
+        "tags": [
+          "ipos"
+        ],
+        "summary": "Get Xray",
+        "operationId": "get_xray_api_ipos__id__xray_get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/XRayResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/ipos/{id}/pages/{n}": {
+      "get": {
+        "tags": [
+          "ipos"
+        ],
+        "summary": "Get Page Image",
+        "operationId": "get_page_image_api_ipos__id__pages__n__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          },
+          {
+            "name": "n",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "N"
+            }
+          },
+          {
+            "name": "doc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "rhp",
+                "prospectus"
+              ],
+              "type": "string",
+              "description": "Which document: the RHP or the final Prospectus.",
+              "default": "rhp",
+              "title": "Doc"
+            },
+            "description": "Which document: the RHP or the final Prospectus."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "image/webp": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/ipos/{id}/pages/{n}/words": {
+      "get": {
+        "tags": [
+          "ipos"
+        ],
+        "summary": "Get Page Words",
+        "operationId": "get_page_words_api_ipos__id__pages__n__words_get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          },
+          {
+            "name": "n",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "N"
+            }
+          },
+          {
+            "name": "doc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "rhp",
+                "prospectus"
+              ],
+              "type": "string",
+              "description": "Which document: the RHP or the final Prospectus.",
+              "default": "rhp",
+              "title": "Doc"
+            },
+            "description": "Which document: the RHP or the final Prospectus."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageWords"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/ipos/{id}/suggested-questions": {
+      "get": {
+        "tags": [
+          "ipos"
+        ],
+        "summary": "Suggested Questions",
+        "operationId": "suggested_questions_api_ipos__id__suggested_questions_get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SuggestedQuestion"
+                  },
+                  "title": "Response Suggested Questions Api Ipos  Id  Suggested Questions Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat",
+        "operationId": "chat_api_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Server-sent events; see the x-sse-events map for each payload model.",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "x-sse-events": {
+                  "stage": {
+                    "$ref": "#/components/schemas/StageEvent"
+                  },
+                  "guard": {
+                    "$ref": "#/components/schemas/GuardEvent"
+                  },
+                  "retrieval": {
+                    "$ref": "#/components/schemas/RetrievalEvent"
+                  },
+                  "abstain": {
+                    "$ref": "#/components/schemas/AbstainEvent"
+                  },
+                  "token": {
+                    "$ref": "#/components/schemas/TokenEvent"
+                  },
+                  "answer": {
+                    "$ref": "#/components/schemas/AnswerEvent"
+                  },
+                  "verdict": {
+                    "$ref": "#/components/schemas/VerdictEvent"
+                  },
+                  "final": {
+                    "$ref": "#/components/schemas/FinalEvent"
+                  },
+                  "error": {
+                    "$ref": "#/components/schemas/ErrorEvent"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voice": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Voice",
+        "operationId": "voice_api_voice_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_voice_api_voice_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/traces/{trace_id}": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Get Trace",
+        "operationId": "get_trace_api_traces__trace_id__get",
+        "parameters": [
+          {
+            "name": "trace_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Trace Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Trace"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/lab/ladder": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Lab Ladder",
+        "operationId": "lab_ladder_api_lab_ladder_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Lab Ladder Api Lab Ladder Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/fields": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Lab Fields",
+        "operationId": "lab_fields_api_lab_fields_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Lab Fields Api Lab Fields Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/verifier": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Lab Verifier",
+        "operationId": "lab_verifier_api_lab_verifier_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Lab Verifier Api Lab Verifier Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/weaklabels": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Lab Weaklabels",
+        "operationId": "lab_weaklabels_api_lab_weaklabels_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Lab Weaklabels Api Lab Weaklabels Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/frontier": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Lab Frontier",
+        "operationId": "lab_frontier_api_lab_frontier_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Lab Frontier Api Lab Frontier Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/glossary": {
+      "get": {
+        "tags": [
+          "content"
+        ],
+        "summary": "Glossary",
+        "operationId": "glossary_api_glossary_get",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "en",
+                "hi"
+              ],
+              "type": "string",
+              "default": "en",
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GlossaryEntry"
+                  },
+                  "title": "Response Glossary Api Glossary Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiCandidate": {
+        "properties": {
+          "extractor": {
+            "type": "string",
+            "title": "Extractor"
+          },
+          "doc": {
+            "type": "string",
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc"
+          },
+          "raw": {
+            "type": "string",
+            "title": "Raw"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TextValue"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ListValue"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TableValue"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "kind",
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "list": "#/components/schemas/ListValue",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range",
+                    "table": "#/components/schemas/TableValue",
+                    "text": "#/components/schemas/TextValue"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "gold_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gold Match"
+          }
+        },
+        "type": "object",
+        "required": [
+          "extractor",
+          "doc",
+          "raw",
+          "page",
+          "score"
+        ],
+        "title": "ApiCandidate"
+      },
+      "Body_voice_api_voice_post": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Audio",
+            "description": "webm/opus or wav, at most 20 s."
+          },
+          "language": {
+            "type": "string",
+            "title": "Language",
+            "default": "hi"
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio"
+        ],
+        "title": "Body_voice_api_voice_post"
+      },
+      "ChatRequest": {
+        "properties": {
+          "ipo_id": {
+            "type": "string",
+            "title": "Ipo Id"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "en",
+              "hi"
+            ],
+            "title": "Language",
+            "default": "en"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "typed",
+              "voice",
+              "chip"
+            ],
+            "title": "Source",
+            "default": "typed"
+          },
+          "demo": {
+            "type": "boolean",
+            "title": "Demo",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "ipo_id",
+          "question"
+        ],
+        "title": "ChatRequest"
+      },
+      "CheckResult": {
+        "properties": {
+          "check": {
+            "type": "string",
+            "title": "Check"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "unverifiable",
+              "contradicted"
+            ],
+            "title": "Status"
+          },
+          "reason_code": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "scale_mismatch",
+              "wrong_value",
+              "wrong_metric",
+              "not_found",
+              "placeholder",
+              "section_not_found",
+              "extractors_disagree",
+              "not_in_document"
+            ],
+            "title": "Reason Code"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "answer_value": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "kind",
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer Value"
+          },
+          "evidence_value": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "kind",
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Value"
+          },
+          "evidence_passage_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Passage Id"
+          },
+          "evidence_char_span": {
+            "anyOf": [
+              {
+                "prefixItems": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "type": "array",
+                "maxItems": 2,
+                "minItems": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Char Span"
+          }
+        },
+        "type": "object",
+        "required": [
+          "check",
+          "status",
+          "reason_code",
+          "reason"
+        ],
+        "title": "CheckResult"
+      },
+      "Companion": {
+        "properties": {
+          "doc": {
+            "type": "string",
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TextValue"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ListValue"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TableValue"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "kind",
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "list": "#/components/schemas/ListValue",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range",
+                    "table": "#/components/schemas/TableValue",
+                    "text": "#/components/schemas/TextValue"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc",
+          "page"
+        ],
+        "title": "Companion",
+        "description": "The same field read from the other document (RHP ``[●]`` beside the Prospectus value)."
+      },
+      "Count": {
+        "properties": {
+          "kind": {
+            "const": "count",
+            "default": "count",
+            "title": "Kind",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "integer"
+          },
+          "raw": {
+            "title": "Raw",
+            "type": "string"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Unit"
+          }
+        },
+        "required": [
+          "value",
+          "raw"
+        ],
+        "title": "Count",
+        "type": "object"
+      },
+      "ErrorBody": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "ipo_not_found",
+              "page_out_of_range",
+              "llm_unavailable",
+              "models_warming_up",
+              "asr_failed",
+              "audio_too_long",
+              "rate_limited",
+              "validation_error",
+              "internal_error"
+            ],
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hint"
+          },
+          "trace_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorBody"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorBody"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse"
+      },
+      "FieldCheck": {
+        "properties": {
+          "check": {
+            "type": "string",
+            "title": "Check"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "unverifiable",
+              "contradicted"
+            ],
+            "title": "Status"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "check",
+          "status",
+          "reason"
+        ],
+        "title": "FieldCheck"
+      },
+      "GlossaryEntry": {
+        "properties": {
+          "term": {
+            "type": "string",
+            "title": "Term"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "body": {
+            "type": "string",
+            "title": "Body"
+          }
+        },
+        "type": "object",
+        "required": [
+          "term",
+          "title",
+          "body"
+        ],
+        "title": "GlossaryEntry"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "warming",
+              "degraded"
+            ],
+            "title": "Status"
+          },
+          "profile": {
+            "type": "string",
+            "title": "Profile"
+          },
+          "demo_mode": {
+            "type": "boolean",
+            "title": "Demo Mode"
+          },
+          "models": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ModelStatus"
+            },
+            "type": "object",
+            "title": "Models"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "git_sha": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Git Sha"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "profile",
+          "demo_mode",
+          "models",
+          "version"
+        ],
+        "title": "HealthResponse"
+      },
+      "IpoDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "rhp_pages": {
+            "type": "integer",
+            "title": "Rhp Pages"
+          },
+          "prospectus_pages": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prospectus Pages"
+          },
+          "page_size": {
+            "$ref": "#/components/schemas/PageSize"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/SectionInfo"
+            },
+            "type": "array",
+            "title": "Sections"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "company",
+          "rhp_pages",
+          "page_size",
+          "sections"
+        ],
+        "title": "IpoDetail"
+      },
+      "IpoSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "listing_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Listing Date"
+          },
+          "rhp_pages": {
+            "type": "integer",
+            "title": "Rhp Pages"
+          },
+          "issue_size_inr": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issue Size Inr"
+          },
+          "fresh_inr": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fresh Inr"
+          },
+          "ofs_inr": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ofs Inr"
+          },
+          "xray_status": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "building",
+              "missing"
+            ],
+            "title": "Xray Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "company",
+          "rhp_pages",
+          "xray_status"
+        ],
+        "title": "IpoSummary"
+      },
+      "ListValue": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "list",
+            "title": "Kind",
+            "default": "list"
+          },
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "ListValue"
+      },
+      "ModelStatus": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "loaded": {
+            "type": "boolean",
+            "title": "Loaded"
+          },
+          "lazy": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lazy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loaded"
+        ],
+        "title": "ModelStatus"
+      },
+      "Money": {
+        "properties": {
+          "kind": {
+            "const": "money",
+            "default": "money",
+            "title": "Kind",
+            "type": "string"
+          },
+          "value_inr": {
+            "anyOf": [
+              {
+                "examples": [
+                  "8000000000.00"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value Inr"
+          },
+          "currency": {
+            "enum": [
+              "INR",
+              "USD",
+              "OTHER"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "raw": {
+            "title": "Raw",
+            "type": "string"
+          },
+          "scale_word": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Scale Word"
+          },
+          "precision": {
+            "title": "Precision",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value_inr",
+          "currency",
+          "raw",
+          "precision"
+        ],
+        "title": "Money",
+        "type": "object"
+      },
+      "PageSize": {
+        "properties": {
+          "width": {
+            "type": "number",
+            "title": "Width"
+          },
+          "height": {
+            "type": "number",
+            "title": "Height"
+          }
+        },
+        "type": "object",
+        "required": [
+          "width",
+          "height"
+        ],
+        "title": "PageSize"
+      },
+      "PageWord": {
+        "properties": {
+          "t": {
+            "type": "string",
+            "title": "T"
+          },
+          "b": {
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "B"
+          }
+        },
+        "type": "object",
+        "required": [
+          "t",
+          "b"
+        ],
+        "title": "PageWord"
+      },
+      "PageWords": {
+        "properties": {
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "width": {
+            "type": "number",
+            "title": "Width"
+          },
+          "height": {
+            "type": "number",
+            "title": "Height"
+          },
+          "words": {
+            "items": {
+              "$ref": "#/components/schemas/PageWord"
+            },
+            "type": "array",
+            "title": "Words"
+          }
+        },
+        "type": "object",
+        "required": [
+          "page",
+          "width",
+          "height",
+          "words"
+        ],
+        "title": "PageWords"
+      },
+      "Percent": {
+        "properties": {
+          "kind": {
+            "const": "percent",
+            "default": "percent",
+            "title": "Kind",
+            "type": "string"
+          },
+          "value": {
+            "examples": [
+              "8000000000.00"
+            ],
+            "title": "Value",
+            "type": "string"
+          },
+          "raw": {
+            "title": "Raw",
+            "type": "string"
+          },
+          "is_bps": {
+            "default": false,
+            "title": "Is Bps",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "value",
+          "raw"
+        ],
+        "title": "Percent",
+        "type": "object"
+      },
+      "Placeholder": {
+        "description": "A blank the document fills in later: [●] or [•]. Never a zero.",
+        "properties": {
+          "kind": {
+            "const": "placeholder",
+            "default": "placeholder",
+            "title": "Kind",
+            "type": "string"
+          },
+          "raw": {
+            "title": "Raw",
+            "type": "string"
+          }
+        },
+        "required": [
+          "raw"
+        ],
+        "title": "Placeholder",
+        "type": "object"
+      },
+      "Range": {
+        "properties": {
+          "kind": {
+            "const": "range",
+            "default": "range",
+            "title": "Kind",
+            "type": "string"
+          },
+          "low": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "high": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "raw": {
+            "title": "Raw",
+            "type": "string"
+          }
+        },
+        "required": [
+          "low",
+          "high",
+          "raw"
+        ],
+        "title": "Range",
+        "type": "object"
+      },
+      "SectionInfo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "doc": {
+            "type": "string",
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "start_page": {
+            "type": "integer",
+            "title": "Start Page"
+          },
+          "printed_start_page": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Printed Start Page"
+          },
+          "end_page": {
+            "type": "integer",
+            "title": "End Page"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "doc",
+          "title",
+          "start_page",
+          "end_page"
+        ],
+        "title": "SectionInfo"
+      },
+      "SuggestedQuestion": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "en",
+              "hi"
+            ],
+            "title": "Language"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "trick",
+              "advice"
+            ],
+            "title": "Kind"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "language",
+          "kind"
+        ],
+        "title": "SuggestedQuestion"
+      },
+      "TableValue": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "table",
+            "title": "Kind",
+            "default": "table"
+          },
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "rows": {
+            "items": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Rows"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columns",
+          "rows"
+        ],
+        "title": "TableValue"
+      },
+      "TextValue": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "text",
+            "title": "Kind",
+            "default": "text"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "TextValue"
+      },
+      "Trace": {
+        "properties": {
+          "trace_id": {
+            "type": "string",
+            "title": "Trace Id"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "stages": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "passages": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Passages"
+          },
+          "prompt": {
+            "type": "string",
+            "title": "Prompt"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/CheckResult"
+            },
+            "type": "array",
+            "title": "Checks"
+          },
+          "timings_ms": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Timings Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "trace_id",
+          "question",
+          "stages",
+          "passages",
+          "prompt",
+          "checks",
+          "timings_ms"
+        ],
+        "title": "Trace"
+      },
+      "VoiceResponse": {
+        "properties": {
+          "transcript": {
+            "type": "string",
+            "title": "Transcript"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "asr_model": {
+            "type": "string",
+            "title": "Asr Model"
+          },
+          "ms": {
+            "type": "integer",
+            "title": "Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "transcript",
+          "language",
+          "asr_model",
+          "ms"
+        ],
+        "title": "VoiceResponse"
+      },
+      "XRayField": {
+        "properties": {
+          "field_id": {
+            "type": "string",
+            "title": "Field Id"
+          },
+          "label_en": {
+            "type": "string",
+            "title": "Label En"
+          },
+          "label_hi": {
+            "type": "string",
+            "title": "Label Hi"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TextValue"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ListValue"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TableValue"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "kind",
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "list": "#/components/schemas/ListValue",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range",
+                    "table": "#/components/schemas/TableValue",
+                    "text": "#/components/schemas/TextValue"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "doc": {
+            "type": "string",
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "printed_page": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Printed Page"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array",
+                "maxItems": 4,
+                "minItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bbox"
+          },
+          "extractor": {
+            "type": "string",
+            "title": "Extractor"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "unverifiable",
+              "contradicted"
+            ],
+            "title": "Verdict"
+          },
+          "reason_code": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "scale_mismatch",
+              "wrong_value",
+              "wrong_metric",
+              "not_found",
+              "placeholder",
+              "section_not_found",
+              "extractors_disagree",
+              "not_in_document"
+            ],
+            "title": "Reason Code"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "companion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Companion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/FieldCheck"
+            },
+            "type": "array",
+            "title": "Checks"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/ApiCandidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field_id",
+          "label_en",
+          "label_hi",
+          "type",
+          "doc",
+          "page",
+          "extractor",
+          "score",
+          "verdict",
+          "reason_code",
+          "reason",
+          "checks",
+          "candidates"
+        ],
+        "title": "XRayField"
+      },
+      "XRayResponse": {
+        "properties": {
+          "ipo_id": {
+            "type": "string",
+            "title": "Ipo Id"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "built_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Built At"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/XRayField"
+            },
+            "type": "array",
+            "title": "Fields"
+          },
+          "derived": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Derived"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ipo_id",
+          "company",
+          "built_at",
+          "fields",
+          "derived"
+        ],
+        "title": "XRayResponse"
+      },
+      "StageEvent": {
+        "properties": {
+          "name": {
+            "enum": [
+              "guard",
+              "retrieving",
+              "generating",
+              "verifying",
+              "done"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "start",
+              "end"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ms"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "title": "StageEvent",
+        "type": "object"
+      },
+      "FactSummary": {
+        "description": "A short X-Ray fact shown on the advice-refusal card.",
+        "properties": {
+          "field_id": {
+            "title": "Field Id",
+            "type": "string"
+          },
+          "label_en": {
+            "title": "Label En",
+            "type": "string"
+          },
+          "label_hi": {
+            "title": "Label Hi",
+            "type": "string"
+          },
+          "display": {
+            "title": "Display",
+            "type": "string"
+          },
+          "doc": {
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc",
+            "type": "string"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "field_id",
+          "label_en",
+          "label_hi",
+          "display",
+          "doc",
+          "page"
+        ],
+        "title": "FactSummary",
+        "type": "object"
+      },
+      "GuardEvent": {
+        "properties": {
+          "blocked": {
+            "title": "Blocked",
+            "type": "boolean"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/FactSummary"
+            },
+            "title": "Facts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "blocked",
+          "reason",
+          "facts"
+        ],
+        "title": "GuardEvent",
+        "type": "object"
+      },
+      "RetrievedPassage": {
+        "properties": {
+          "n": {
+            "title": "N",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "doc": {
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc",
+            "type": "string"
+          },
+          "page_start": {
+            "title": "Page Start",
+            "type": "integer"
+          },
+          "page_end": {
+            "title": "Page End",
+            "type": "integer"
+          },
+          "section": {
+            "title": "Section",
+            "type": "string"
+          },
+          "snippet": {
+            "title": "Snippet",
+            "type": "string"
+          },
+          "bm25_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bm25 Rank"
+          },
+          "dense_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Dense Rank"
+          },
+          "fused_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Fused Rank"
+          },
+          "rerank_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Rerank Score"
+          }
+        },
+        "required": [
+          "n",
+          "id",
+          "doc",
+          "page_start",
+          "page_end",
+          "section",
+          "snippet"
+        ],
+        "title": "RetrievedPassage",
+        "type": "object"
+      },
+      "RetrievalEvent": {
+        "properties": {
+          "passages": {
+            "items": {
+              "$ref": "#/components/schemas/RetrievedPassage"
+            },
+            "title": "Passages",
+            "type": "array"
+          },
+          "dropped": {
+            "items": {
+              "$ref": "#/components/schemas/RetrievedPassage"
+            },
+            "title": "Dropped",
+            "type": "array"
+          }
+        },
+        "required": [
+          "passages",
+          "dropped"
+        ],
+        "title": "RetrievalEvent",
+        "type": "object"
+      },
+      "AbstainEvent": {
+        "properties": {
+          "reason": {
+            "const": "low_retrieval_score",
+            "title": "Reason",
+            "type": "string"
+          },
+          "closest_passage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RetrievedPassage"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "AbstainEvent",
+        "type": "object"
+      },
+      "TokenEvent": {
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "TokenEvent",
+        "type": "object"
+      },
+      "Citation": {
+        "properties": {
+          "n": {
+            "title": "N",
+            "type": "integer"
+          },
+          "char_start": {
+            "title": "Char Start",
+            "type": "integer"
+          },
+          "char_end": {
+            "title": "Char End",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "n",
+          "char_start",
+          "char_end"
+        ],
+        "title": "Citation",
+        "type": "object"
+      },
+      "AnswerEvent": {
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/Citation"
+            },
+            "title": "Citations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "text",
+          "citations"
+        ],
+        "title": "AnswerEvent",
+        "type": "object"
+      },
+      "Evidence": {
+        "properties": {
+          "passage_id": {
+            "title": "Passage Id",
+            "type": "string"
+          },
+          "doc": {
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc",
+            "type": "string"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "char_span": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Char Span",
+            "type": "array"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bbox"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Value"
+          }
+        },
+        "required": [
+          "passage_id",
+          "doc",
+          "page",
+          "char_span"
+        ],
+        "title": "Evidence",
+        "type": "object"
+      },
+      "VerdictEvent": {
+        "properties": {
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "answer_char_span": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Answer Char Span",
+            "type": "array"
+          },
+          "answer_value": {
+            "discriminator": {
+              "mapping": {
+                "count": "#/components/schemas/Count",
+                "money": "#/components/schemas/Money",
+                "percent": "#/components/schemas/Percent",
+                "placeholder": "#/components/schemas/Placeholder",
+                "range": "#/components/schemas/Range"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "$ref": "#/components/schemas/Count"
+              },
+              {
+                "$ref": "#/components/schemas/Percent"
+              },
+              {
+                "$ref": "#/components/schemas/Placeholder"
+              },
+              {
+                "$ref": "#/components/schemas/Range"
+              }
+            ],
+            "title": "Answer Value"
+          },
+          "status": {
+            "enum": [
+              "verified",
+              "unverifiable",
+              "contradicted"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "reason_code": {
+            "enum": [
+              "verified",
+              "scale_mismatch",
+              "wrong_value",
+              "wrong_metric",
+              "not_found",
+              "placeholder",
+              "section_not_found",
+              "extractors_disagree",
+              "not_in_document"
+            ],
+            "title": "Reason Code",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Evidence"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "index",
+          "answer_char_span",
+          "answer_value",
+          "status",
+          "reason_code",
+          "reason"
+        ],
+        "title": "VerdictEvent",
+        "type": "object"
+      },
+      "FinalEvent": {
+        "properties": {
+          "trace_id": {
+            "title": "Trace Id",
+            "type": "string"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "n_numbers": {
+            "title": "N Numbers",
+            "type": "integer"
+          },
+          "timings_ms": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Timings Ms",
+            "type": "object"
+          }
+        },
+        "required": [
+          "trace_id",
+          "score",
+          "n_numbers",
+          "timings_ms"
+        ],
+        "title": "FinalEvent",
+        "type": "object"
+      },
+      "ErrorEvent": {
+        "properties": {
+          "code": {
+            "enum": [
+              "llm_unavailable",
+              "models_warming_up",
+              "internal_error"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorEvent",
+        "type": "object"
+      }
+    }
+  }
+}
