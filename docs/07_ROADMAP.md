@@ -104,7 +104,9 @@ How to use this file
 **Done when:** ≥ 150 (target ≥ 300) corpus IPOs with section-tagged text. → 389 IPOs (110 RHP, 279 Prospectus), 331 with all 4 key sections; merged #21, 2026-09-30. [AKSHAT] add the 10 gold-v2 company names to `data/gold/excluded_ipos.txt` and rerun `uv run python -m finsight.ingest.corpus build` (no overlap expected: the dataset ends in 2023).
 
 ### P1.6 Buffer + G1 review — Tue 6 Oct
-- [ ] Fix parser problems found by eye; update `10_FINSIGHT_EXPLAINED.md` (parsing, sections, numerals); tag `v0.1.0`
+- [x] `10_FINSIGHT_EXPLAINED.md` updated (C1 parsing, C2 sections, C2b tables, C2c corpus, C2d gold, C3 numerals)
+- [ ] [AKSHAT] Eye-check 3 parsed documents; fix parser problems found
+- [ ] G1 passed (gold v1 labelled) → tag `v0.1.0`
 
 ### P1.7 Gold v1 tooling and labelling `data/p1.7-gold-v1` [AKSHAT + CC] — runs alongside P1.1–P1.5
 - [x] [CC] `evaluate/gold.py` schema + validator; empty per-IPO template generator (no values) → merged #22; `uv run python -m finsight.evaluate.gold template|validate [--complete]|consistency`; empty template committed at `data/gold/gold_template.jsonl` (110 rows: copy to `gold_values.jsonl` and fill)
