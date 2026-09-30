@@ -1,0 +1,31 @@
+# Profiles from 02_ARCHITECTURE.md section 8. Pick one with FINSIGHT_PROFILE (default dev_light).
+# Any value can be overridden by env vars: FINSIGHT_LLM__MODEL=qwen3.5:2b, DEMO_MODE=1, ...
+paths:
+  data_dir: data
+  processed_dir: data/processed
+  models_dir: models
+  eval_dir: eval_results
+
+profiles:
+  dev_light:
+    llm: { backend: ollama, model: "qwen3.5:0.8b", num_ctx: 2048 }
+    retrieve: { dense: false, rerank: false }
+    voice: { asr: "off" }
+    verify: { nli: false }
+    demo_mode: false
+
+  full:
+    # Model names below are placeholders until the P3.2 bake-off (ADR-020).
+    llm: { backend: ollama, model: "qwen3.5:2b", num_ctx: 2048 }
+    retrieve: { dense: true, rerank: true }
+    voice: { asr: "faster-whisper-small" }
+    verify: { nli: false } # turns on with P5.5
+    demo_mode: false
+
+  deploy_cpu:
+    # ADR-022 (pending): BM25 + small rerank + smallest LLM that passes the quality bar.
+    llm: { backend: llama-cpp, model: "smallest-passing-gguf", num_ctx: 2048 }
+    retrieve: { dense: false, rerank: true, rerank_top_n: 10 }
+    voice: { asr: "off" }
+    verify: { nli: false }
+    demo_mode: true
