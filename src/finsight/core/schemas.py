@@ -12,12 +12,19 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PlainSerializer, WithJsonSchema
 
 BBox = tuple[float, float, float, float]  # x0, y0, x1, y1 in PDF points
 DocType = Literal["rhp", "prospectus"]
 Verdict = Literal["verified", "unverifiable", "contradicted"]
 Language = Literal["en", "hi"]
+
+# Decimals travel as strings ("8000000000.00") so no float ever touches money (06 conventions).
+DecimalStr = Annotated[
+    Decimal,
+    PlainSerializer(str, return_type=str, when_used="json"),
+    WithJsonSchema({"type": "string", "examples": ["8000000000.00"]}),
+]
 
 # Reason codes for verifier checks (02 section 10.3) and X-Ray fields (06 xray).
 ReasonCode = Literal[
@@ -100,7 +107,7 @@ class Passage(BaseModel):
 # --------------------------------------------------------------------------- values
 class Money(BaseModel):
     kind: Literal["money"] = "money"
-    value_inr: Decimal | None
+    value_inr: DecimalStr | None
     currency: Literal["INR", "USD", "OTHER"]
     raw: str
     scale_word: str | None = None
@@ -116,7 +123,7 @@ class Count(BaseModel):
 
 class Percent(BaseModel):
     kind: Literal["percent"] = "percent"
-    value: Decimal
+    value: DecimalStr
     raw: str
     is_bps: bool = False
 
