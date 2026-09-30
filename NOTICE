@@ -1,0 +1,24 @@
+FinSight — licences and data notices
+
+Code
+  MIT License (see LICENSE). Copyright (c) 2026 Akshat Tomar.
+
+Training data
+  The Indian IPO datasets of Ghosh et al. (Hugging Face: sohomghosh/Indian_IPO_datasets)
+  are licensed CC BY-NC-SA 4.0: non-commercial, share-alike, attribution required.
+  They are used only to build weak labels for coursework and are not redistributed here.
+  Any sample rows committed under data/samples/ are truncated excerpts kept under the
+  same CC BY-NC-SA 4.0 terms. The dataset's Apply/Avoid ratings and listing-gain
+  targets are never used.
+
+Models
+  Weights fine-tuned on that data inherit the CC BY-NC-SA 4.0 terms and are not
+  committed to this repository. Third-party base models keep their own licences
+  (see docs/04_TECH_STACK_AND_RESOURCES.md section 4).
+
+Documents
+  Red Herring Prospectuses and final Prospectuses are public regulatory filings
+  (SEBI, stock exchanges). The PDFs are not redistributed in this repository.
+
+Not investment advice
+  FinSight summarises public disclosures. It does not recommend, rate or predict.
