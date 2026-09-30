@@ -13,7 +13,7 @@ This doc owns datasets, splits, labelling protocols, metric definitions and the 
 | **Training corpus** | RHP text of past Indian IPOs from the Ghosh et al. IPO datasets (CC BY-NC-SA 4.0) | target ≥ 300 mainboard RHPs (more if available) | Weak labels → fine-tuning | Evaluation |
 | **Demo set** | 10 recent mainboard IPOs (2025), each with its RHP **and** final Prospectus, clean digital PDFs. **3 dev / 7 test** (ADR-026) | 10 (+2 optional) | Demo; dev IPOs for tuning rules and extractor choice, test IPOs for reported numbers | Training; tuning on the 7 test IPOs |
 | **Gold v1** | Hand-labelled values for the 11 fields on the demo set, labelled in Phase 1 before any extractor runs | ~110 values | Extractor ladder, verifier tests | Training |
-| **Gold v2 (expansion)** | +18 held-out RHPs (not in training corpus) | ~30 IPOs, ~270 values | Final report numbers | Training |
+| **Gold v2 (expansion)** | +10 held-out IPOs, 2025–26, RHP + Prospectus each (not in training corpus) | ~20 IPOs with v1, ~220 values | Final report numbers | Training |
 | **Dev questions** | ~20 hand-written questions on 3 demo IPOs | 20 | Tuning retrieval abstain threshold, prompt | Final numbers |
 | **Test questions** | ~60 hand-written questions (EN + HI) on the other IPOs | 60 | Retrieval Recall@5, answer quality | Tuning |
 | **Advice set** | ≥ 50 advice + ≥ 50 factual questions **written by Akshat and friends** (EN/HI/Hinglish) for guard evaluation; up to ~150 + ~150 more (may be drafted by Claude Code) for classifier training only | 100 eval + ≤ 300 train | Guard evaluation (Akshat's set only), classifier training (Claude-drafted lines only) | Evaluating a guard on lines the guard author wrote |

@@ -109,7 +109,7 @@ How to use this file
 ### P1.7 Gold v1 tooling and labelling `data/p1.7-gold-v1` [AKSHAT + CC] — runs alongside P1.1–P1.5
 - [ ] [CC] `evaluate/gold.py` schema + validator; empty per-IPO template generator (no values)
 - [ ] [AKSHAT] Label 11 fields × 10 IPOs from the PDFs, blind, PDF page recorded (`05` §2) → `data/gold/gold_values.jsonl`
-- [ ] [AKSHAT, low priority] Download the 18 gold-v2 RHPs; test one full-RHP upload in a frontier app (`05` §7)
+- [ ] [AKSHAT, low priority] Download 10 more IPOs (2025–26, RHP + Prospectus each) for gold v2; test one full-RHP upload in a frontier app (`05` §7)
 **Done when:** validator passes on all ~110 values; committed before P2.1 starts.
 
 ---
@@ -214,7 +214,7 @@ How to use this file
 
 | Sub-phase | Branch | Owner | Scope |
 |---|---|---|---|
-| P5.1 Gold v2 | `data/p5.1-gold-v2` | [AKSHAT] + [CC] tooling | +18 held-out RHPs, parse + label (assisted, disclosed) → final ladder numbers |
+| P5.1 Gold v2 | `data/p5.1-gold-v2` | [AKSHAT] + [CC] tooling | +10 held-out IPOs (RHP + Prospectus), parse + label (assisted, disclosed) → final ladder numbers |
 | P5.2 Frontier comparison | `eval/p5.2-frontier` | [AKSHAT] runs, [CC] scoring | E9 incl. verifier on frontier answers |
 | P5.3 BiLSTM-CRF rung | `feat/p5.3-bilstm-crf` | [CC→AKSHAT] | BIO conversion, notebook, 3 seeds → E11, auto-appears in ladder |
 | P5.4 Advice classifier | `feat/p5.4-guard-clf` | [CC→AKSHAT] | MuRIL on advice set → E8 row; swap via config |
