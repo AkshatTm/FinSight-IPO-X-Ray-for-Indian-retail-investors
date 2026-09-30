@@ -56,12 +56,47 @@ def test_two_extractors_agreeing_is_verified_and_the_primary_is_chosen() -> None
 
 def test_disagreement_keeps_the_primary_but_is_flagged() -> None:
     rules = cand(FRESH, money("₹ 4,720 million"))
-    qa = cand(FRESH, money("₹ 400 million"), "qa_pretrained", 9)
+    qa = cand(FRESH, money("₹ 400 million"), "qa_pretrained", 3)  # same page, other number
     sel = select_field(get_field(FRESH), {"rhp": [rules, qa]})
     assert sel.chosen == rules
     assert sel.verdict == "unverifiable"
     assert sel.reason_code == "extractors_disagree"
     assert "400" in sel.reason
+
+
+def test_a_different_value_from_another_page_is_not_a_contradiction() -> None:
+    rules = cand("face_value", money("₹ 1"), page=1)
+    qa = cand("face_value", money("₹ 200,000"), "qa_pretrained", 14, 1.0)  # another sentence
+    sel = select_field(get_field("face_value"), {"rhp": [rules, qa]})
+    assert sel.verdict == "verified"
+    assert sel.chosen == rules
+    assert "Found by rules" in sel.reason
+
+
+def test_any_qa_candidate_that_matches_confirms_even_if_not_its_best() -> None:
+    rules = cand("face_value", money("₹ 1"), page=1)
+    wrong = cand("face_value", money("₹ 200,000"), "qa_pretrained", 14, 1.0)
+    right = cand("face_value", money("₹ 1"), "qa_pretrained", 1, 0.8)
+    sel = select_field(get_field("face_value"), {"rhp": [rules, wrong, right]})
+    assert "agree" in sel.reason
+
+
+def test_pure_offer_for_sale_ignores_model_guesses() -> None:
+    junk = cand(FRESH, money("₹ 100 million"), "qa_pretrained", 8)
+    sel = select_field(get_field(FRESH), {"rhp": [junk]}, pure_ofs=True)
+    assert sel.chosen is None
+    assert sel.reason_code == "not_in_document"
+
+
+def test_companion_note_prefers_the_rules_value() -> None:
+    blank = cand("ofs_amount", Placeholder(raw="[●]"))
+    rules = cand("ofs_amount", money("₹ 14,280 million"), doc="prospectus", page=12, score=0.7)
+    junk = cand(
+        "ofs_amount", money("₹ 1 million"), extractor="qa_pretrained", doc="prospectus",
+        page=9, score=0.99,
+    )  # fmt: skip
+    sel = select_field(get_field("ofs_amount"), {"rhp": [blank], "prospectus": [rules, junk]})
+    assert "14,280" in sel.reason
 
 
 def test_fallback_extractor_is_used_when_the_primary_finds_nothing() -> None:
@@ -129,10 +164,15 @@ def test_text_and_list_values_compare_ignoring_case_and_order() -> None:
     la = cand("promoters", ListValue(items=["A B", "C D"]))
     lb = cand("promoters", ListValue(items=["C D", "A B"]), "qa_pretrained")
     assert select_field(get_field("promoters"), {"rhp": [la, lb]}).verdict == "verified"
-    lc = cand("promoters", ListValue(items=["A B"]), "qa_pretrained")
-    assert select_field(get_field("promoters"), {"rhp": [la, lc]}).reason_code == (
+    part = cand("promoters", ListValue(items=["A B"]), "qa_pretrained")  # names only some
+    assert select_field(get_field("promoters"), {"rhp": [la, part]}).verdict == "verified"
+    other = cand("promoters", ListValue(items=["X Y"]), "qa_pretrained")
+    assert select_field(get_field("promoters"), {"rhp": [la, other]}).reason_code == (
         "extractors_disagree"
     )
+    wide = cand("registrar", TextValue(text="KFin Technologies"), "qa_pretrained")
+    full = cand("registrar", TextValue(text="KFin Technologies Limited"))
+    assert select_field(get_field("registrar"), {"rhp": [full, wide]}).verdict == "verified"
 
 
 def test_counts_compare_by_value() -> None:

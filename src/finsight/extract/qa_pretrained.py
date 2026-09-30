@@ -34,6 +34,7 @@ MIN_SCORE = 0.05  # below this the model is guessing
 _UNIT_AFTER = re.compile(r"^\s*(million|crore|lakh|billion|mn|cr)\b", re.IGNORECASE)
 _SPLIT_LIST = re.compile(r",|;|\band\b|\n", re.IGNORECASE)
 _DIGITS = re.compile(r"^\d[\d,]*(?:\.\d+)?$")
+_MARKS = re.compile(r"[\^*†‡]")  # footnote marks printed after numbers ("19,000^ million")
 
 
 @dataclass(frozen=True)
@@ -115,7 +116,7 @@ def default_answerer(model: str = MODEL, batch_size: int = 16) -> Answerer:
 
 
 def _to_value(kind: str, answer: RawAnswer, context: str) -> Value | None:
-    text = answer.text.strip()
+    text = _MARKS.sub("", answer.text).strip()
     if kind == "money":
         if _DIGITS.match(text):  # a bare number: the unit and the rupee sign sit around the span
             unit = _UNIT_AFTER.match(context[answer.end :])

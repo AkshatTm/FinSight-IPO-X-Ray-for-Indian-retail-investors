@@ -196,7 +196,7 @@ def promoters(text: str) -> list[Hit]:
         names = [n.strip(" ,.;") for n in re.split(r",|\band\b", window, flags=_CI)]
         names = [n for n in names if n and len(n.split()) <= 6]
         if names:
-            return [Hit(window.strip(), ListValue(items=names))]
+            return [Hit("; ".join(names), ListValue(items=names))]
     return []
 
 
@@ -278,7 +278,7 @@ def book_running_lead_managers(text: str) -> list[Hit]:
                 found.append((m.start(), name))
         if found:
             names = [name for _, name in sorted(found)]
-            return [Hit(window.strip()[:300], ListValue(items=names))]
+            return [Hit("; ".join(names), ListValue(items=names))]
     return []
 
 
