@@ -53,12 +53,12 @@ How to use this file
 **Done when:** CI green on the PR; `uv run poe test` passes (one smoke test). → merged #14, 2026-09-30
 
 ### P0.3 Core `feat/p0.3-core` [CC]
-- [ ] `core/schemas.py`, `core/interfaces.py`, `core/registry.py`, `core/config.py` (profiles), `core/ids.py`, `core/logging.py`
-- [ ] `configs/config.yaml` with `dev_light` (default), `full`, `deploy_cpu`
-- [ ] Contract-first API skeleton: every route in `06` returns 501 with its response model; each SSE event is a pydantic model registered in OpenAPI; `poe gen-openapi` writes `openapi.json` (ADR-024)
-- [ ] Align `02` §6 with `06` (kind discriminator, value types, reason codes)
-- [ ] Tests: schema round-trips, registry, config profile loading
-**Done when:** tests green; mypy clean on `core`.
+- [x] `core/schemas.py`, `core/interfaces.py`, `core/registry.py`, `core/config.py` (profiles), `core/ids.py`, `core/logging.py`
+- [x] `configs/config.yaml` with `dev_light` (default), `full`, `deploy_cpu`
+- [x] Contract-first API skeleton: every route in `06` returns 501 with its response model; each SSE event is a pydantic model registered in OpenAPI; `poe gen-openapi` writes `openapi.json` (ADR-024)
+- [x] Align `02` §6 with `06` (kind discriminator, value types, reason codes)
+- [x] Tests: schema round-trips, registry, config profile loading
+**Done when:** tests green; mypy clean on `core`. → merged #15, 2026-09-30
 
 ### P0.4 Data recon `data/p0.4-recon` [CC→AKSHAT]
 - [ ] [AKSHAT] Download the HF IPO dataset to `data/raw/ipo_dataset/`
