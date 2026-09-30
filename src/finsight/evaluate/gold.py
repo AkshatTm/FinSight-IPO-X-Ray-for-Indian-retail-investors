@@ -7,6 +7,8 @@ from. This module never writes values; it only checks that the file is well form
     uv run python -m finsight.evaluate.gold template            # data/gold/gold_template.jsonl
     uv run python -m finsight.evaluate.gold validate [--complete] [path]
     uv run python -m finsight.evaluate.gold consistency first.jsonl second.jsonl
+    uv run python -m finsight.evaluate.gold export-xlsx            # labelling sheet (git-ignored)
+    uv run python -m finsight.evaluate.gold import-xlsx [--partial]  # sheet -> gold_values.jsonl
 """
 
 from __future__ import annotations
@@ -232,6 +234,28 @@ def self_consistency(first: Path, second: Path) -> Consistency:
     return report
 
 
+def _xlsx_command(args: argparse.Namespace) -> int:
+    from finsight.evaluate.gold_xlsx import export_xlsx, import_xlsx
+
+    if args.command == "export-xlsx":
+        try:
+            print(f"wrote {export_xlsx(args.xlsx, args.force)}")
+        except FileExistsError as exc:
+            print(exc)
+            return 1
+        return 0
+    result = import_xlsx(args.xlsx, args.out, args.partial)
+    if result.errors:
+        print(f"{len(result.errors)} problem(s) to fix in {args.xlsx.name}; nothing was written:\n")
+        print("\n".join(result.errors[:60]))
+        if len(result.errors) > 60:
+            print(f"... and {len(result.errors) - 60} more")
+        return 1
+    note = f" ({result.unfilled} rows not filled in yet)" if result.unfilled else ""
+    print(f"OK: wrote {result.written} values to {args.out}{note}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     gold_dir = get_settings().paths.gold_dir
     parser = argparse.ArgumentParser(description="Gold value file tools (P1.7)")
@@ -245,8 +269,17 @@ def main(argv: list[str] | None = None) -> int:
     con = sub.add_parser("consistency", help="agreement between two labelling passes")
     con.add_argument("first", type=Path)
     con.add_argument("second", type=Path)
+    exp = sub.add_parser("export-xlsx", help="write the Excel labelling sheet")
+    exp.add_argument("--xlsx", type=Path, default=gold_dir / "gold_labelling.xlsx")
+    exp.add_argument("--force", action="store_true", help="overwrite an existing sheet")
+    imp = sub.add_parser("import-xlsx", help="filled sheet -> gold_values.jsonl, then validate")
+    imp.add_argument("--xlsx", type=Path, default=gold_dir / "gold_labelling.xlsx")
+    imp.add_argument("--out", type=Path, default=gold_dir / "gold_values.jsonl")
+    imp.add_argument("--partial", action="store_true", help="skip rows not filled in yet")
     args = parser.parse_args(argv)
 
+    if args.command in ("export-xlsx", "import-xlsx"):
+        return _xlsx_command(args)
     if args.command == "template":
         args.out.parent.mkdir(parents=True, exist_ok=True)
         lines = [json.dumps(r, ensure_ascii=False) for r in template_rows(args.ipo)]

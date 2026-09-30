@@ -42,3 +42,6 @@ node_modules/
 Thumbs.db
 .vscode/
 .idea/
+# Akshat's working sheet for gold labelling; only the final gold_values.jsonl is committed
+data/gold/*.xlsx
+data/gold/~$*
