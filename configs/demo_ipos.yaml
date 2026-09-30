@@ -1,0 +1,53 @@
+# Demo set: RHP + final Prospectus per IPO. PDFs live in data/raw/ (gitignored); this file is committed.
+# split: dev = tune rules/thresholds/extractor choice; test = numbers reported in the report (ADR-026).
+ipos:
+  - ipo_id: ather-energy-2025
+    split: dev
+    company: "Ather Energy Limited"
+    rhp: {file: data/raw/rhp/ather-energy-2025.pdf, pages: 586, sha256: b0bcc33896944ebdea9e7fe9184d91692391a97658df1109bfb9c1e84208792b, dated: "April 22, 2025"}
+    prospectus: {file: data/raw/prospectus/ather-energy-2025.pdf, pages: 586, sha256: 1e0df8cdaec6c247ab4a547ddb9e7575866fa6910590293f91afd186548bb328, dated: "April 30, 2025"}
+  - ipo_id: groww-2025
+    split: test
+    company: "Billionbrains Garage Ventures Limited"
+    rhp: {file: data/raw/rhp/groww-2025.pdf, pages: 568, sha256: 62eb4c6c0d1b03c11e7c24eb2a9b8da377f4965db2b900d475fcd2228b5a892d, dated: "October 29, 2025"}
+    prospectus: {file: data/raw/prospectus/groww-2025.pdf, pages: 568, sha256: 1a16dbdc168fb897ee7e207b0dfc395cf4bc75ac529dfec720a436894f05324f, dated: "November 7, 2025"}
+  - ipo_id: hdb-financial-services-2025
+    split: test
+    company: "HDB Financial Services Limited"
+    rhp: {file: data/raw/rhp/hdb-financial-services-2025.pdf, pages: 758, sha256: 716c346cf41989068534417b3c7d81cb94925fe51fc41565b290424adfc7f9c7, dated: "June 19, 2025"}
+    prospectus: {file: data/raw/prospectus/hdb-financial-services-2025.pdf, pages: 758, sha256: 47156a095042db004a5a036d00ab7a3e259e314d0e95f183c25ada0221c34116, dated: "June 28, 2025"}
+  - ipo_id: hexaware-technologies-2025
+    split: dev
+    company: "Hexaware Technologies Limited"
+    rhp: {file: data/raw/rhp/hexaware-technologies-2025.pdf, pages: 644, sha256: aa20d5d0a910c1609bf0045bd101e9c77e7fde699cd6e7f91d8e0300ca0ed63f, dated: "February 5, 2025"}
+    prospectus: {file: data/raw/prospectus/hexaware-technologies-2025.pdf, pages: 644, sha256: 10d15327b6857d212a14ae1631246c30697f060c7743d26737252fdf419424c2, dated: "February 14, 2025"}
+  - ipo_id: lenskart-2025
+    split: test
+    company: "Lenskart Solutions Limited"
+    rhp: {file: data/raw/rhp/lenskart-2025.pdf, pages: 1083, sha256: a54bb43b4d018ea95c25cc9e7c95426223344ecd52553ef6211fd525be043713, dated: "October 25, 2025"}
+    prospectus: {file: data/raw/prospectus/lenskart-2025.pdf, pages: 1083, sha256: c9b07ad88dea34decf8cb05019a5ecc100f72594dacd10ba9a01725e8259f72d, dated: "November 4, 2025"}
+  - ipo_id: lg-electronics-india-2025
+    split: test
+    company: "LG Electronics India Limited"
+    rhp: {file: data/raw/rhp/lg-electronics-india-2025.pdf, pages: 502, sha256: f86a7051dfc63c3d24f75b1285e6246210d50674ab661a0ca333f0cfb5817cd5, dated: "September 30, 2025"}
+    prospectus: {file: data/raw/prospectus/lg-electronics-india-2025.pdf, pages: 502, sha256: 09cc32c3817ebdd84c066b6221e4a8ac087fc8280079b856875700659b92dc46, dated: "October 9, 2025"}
+  - ipo_id: meesho-2025
+    split: test
+    company: "Meesho Limited"
+    rhp: {file: data/raw/rhp/meesho-2025.pdf, pages: 689, sha256: 82a545ea4298862b92df484cf78d8f5043dce695cb89c276a4fbec673387ad49, dated: "November 27, 2025"}
+    prospectus: {file: data/raw/prospectus/meesho-2025.pdf, pages: 689, sha256: 1a07c62899516a080404dd8cb044b71bae97681bff4dc69f8c1149652c0eb520, dated: "December 5, 2025"}
+  - ipo_id: physicswallah-2025
+    split: test
+    company: "PhysicsWallah Limited"
+    rhp: {file: data/raw/rhp/physicswallah-2025.pdf, pages: 669, sha256: ad4ff1fe70e4a141bd8dc25473bd077aa7c1816efc725cf4aa8508d6b6600129, dated: "November 4, 2025"}
+    prospectus: {file: data/raw/prospectus/physicswallah-2025.pdf, pages: 669, sha256: c39e9145391ace6ca7b2199085702017cc43ca000f50562b2bd1f13053b2762f, dated: "November 13, 2025"}
+  - ipo_id: tata-capital-2025
+    split: test
+    company: "Tata Capital Limited"
+    rhp: {file: data/raw/rhp/tata-capital-2025.pdf, pages: 836, sha256: fab5028547f218ad942df616b77c4fc985f4b911aced59cc65e74ba69c2e1e86, dated: "September 26, 2025"}
+    prospectus: {file: data/raw/prospectus/tata-capital-2025.pdf, pages: 836, sha256: a545180d98c495ba53712d31e2fbfddc5b4492d0496b4ff28e2e1e9bf5fd3a80, dated: "October 8, 2025"}
+  - ipo_id: urban-company-2025
+    split: dev
+    company: "Urban Company Limited"
+    rhp: {file: data/raw/rhp/urban-company-2025.pdf, pages: 577, sha256: 4203f54285427552dff3af2ea4fb1a4d769e674e2848a1c32e53f81982ad7460, dated: "September 2, 2025"}
+    prospectus: {file: data/raw/prospectus/urban-company-2025.pdf, pages: 577, sha256: 58ee9124892dd2d14bb74a1802b4afd32e76691de8d57edf2a1f878c798cdcdc, dated: "September 12, 2025"}
