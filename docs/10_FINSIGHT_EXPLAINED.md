@@ -203,6 +203,22 @@ If a company's passages appear in both training and test, scores look better tha
 
 **Likely viva questions.** (1) *Why must the demo IPOs be excluded from training?* (2) *Why classify the document kind from the cover text instead of the file name?*
 
+### C2d. Gold values: schema, validator, template (built in P1.7)
+
+**What it does.** The *gold* file is the answer key: for each demo IPO and each of the 11 X-Ray fields, the value a human read from the PDF, the PDF page and the exact quote. Every later score (rules baseline, pretrained QA, fine-tuned model, the X-Ray itself) is measured against it. `finsight.evaluate.gold` does not create answers; it checks that the file Akshat fills in is well formed, and writes an empty template to fill.
+
+**Key ideas in plain words.**
+- *Blind labelling.* Values are written from the PDF before any extractor exists, so the model cannot look better by having "seen" the labels' source.
+- *One line per (IPO, field, document).* Most fields are read from the RHP; `offer_price` and `total_issue_size` from the final Prospectus, where the RHP shows `[●]` (ADR-023). A field the document does not contain is `not_in_document`; a blank the document leaves open is `placeholder`; both are valid answers a system must reproduce.
+- *The validator catches typos, not judgement.* It checks the IPO and field exist, the page is inside the document (using the page count in `demo_ipos.yaml`), the value parses with the P1.4 normalizer as the right type (money, count, range), the value really appears in the quote, and lists and tables have the right shape. `[●]` under `status=present` is rejected.
+- *Self-consistency.* Re-label 10 values a week later; `gold consistency a.jsonl b.jsonl` compares by value ("₹ 4,720 million" = "₹ 472 crore"), not by string, and lists the disagreements.
+
+**Worked example.** Row: `{"ipo_id": "urban-company-2025", "field_id": "fresh_issue_size", "doc": "rhp", "value_raw": "₹ 4,720 million", "page": 163, "quote": "...aggregating up to ₹ 4,720 million by our Company...", "status": "present", "labelled_at": "2026-10-08"}` passes; the same row with `"page": 900` fails with "page 900 is beyond the document (577 pages)". The empty template has 110 rows (11 fields × 10 IPOs) and fails validation until filled, by design.
+
+**Limits.** The validator cannot tell that a value is the *right* occurrence, only that it is in the quote on a real page. Companion labels (the other document's value for the same field) are accepted but not required.
+
+**Likely viva questions.** (1) *Why label the gold set before building any extractor?* (2) *Why is `not_in_document` a label rather than an empty cell?*
+
 <!-- C4 extract.rules -->
 <!-- C5 extract.qa -->
 <!-- C6 weaklabel -->
