@@ -1,0 +1,113 @@
+# Field registry (02 section 7, ADR-023). One entry per extracted field.
+# doc: the document the value is normally read from. sections: where to look (cover = first pages).
+# extractor: rules | table. fallback: what runs when the primary finds nothing.
+# ladder: false = excluded from weak labels and the model ladder (B4, ADR-023).
+fields:
+  - id: fresh_issue_size
+    label_en: Fresh issue size
+    label_hi: नया निर्गम (फ्रेश इश्यू) का आकार
+    type: money
+    doc: rhp
+    sections: [cover, the_offer]
+    questions: ["What is the size of the fresh issue?", "How much money will the company raise from new shares?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: ofs_shares
+    label_en: Offer for sale (shares)
+    label_hi: बिक्री हेतु प्रस्ताव (शेयरों की संख्या)
+    type: count
+    doc: rhp
+    sections: [cover, the_offer]
+    questions: ["How many shares are being sold in the offer for sale?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: ofs_amount
+    label_en: Offer for sale (amount)
+    label_hi: बिक्री हेतु प्रस्ताव (राशि)
+    type: money
+    doc: rhp
+    sections: [cover, the_offer]
+    questions: ["What is the amount of the offer for sale?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: offer_price
+    label_en: Offer price
+    label_hi: निर्गम मूल्य
+    type: money
+    doc: prospectus
+    sections: [cover]
+    questions: ["What is the offer price per share?"]
+    extractor: rules
+    ladder: false # RHP texts hold [●] for the price, so there are no positives to learn from
+  - id: price_band
+    label_en: Price band
+    label_hi: मूल्य सीमा (प्राइस बैंड)
+    type: range
+    doc: rhp
+    sections: [cover, the_offer]
+    questions: ["What is the price band?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: false # [●] in all 10 demo RHPs: expect status placeholder
+  - id: total_issue_size
+    label_en: Total issue size
+    label_hi: कुल निर्गम आकार
+    type: money
+    doc: prospectus
+    sections: [cover, the_offer]
+    questions: ["What is the total size of the issue?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: face_value
+    label_en: Face value
+    label_hi: अंकित मूल्य
+    type: money
+    doc: rhp
+    sections: [cover, capital_structure]
+    questions: ["What is the face value of each equity share?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: book_running_lead_managers
+    label_en: Book running lead managers
+    label_hi: बुक रनिंग लीड मैनेजर
+    type: list
+    doc: rhp
+    sections: [cover]
+    questions: ["Who are the book running lead managers?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: registrar
+    label_en: Registrar to the offer
+    label_hi: निर्गम के रजिस्ट्रार
+    type: text
+    doc: rhp
+    sections: [cover]
+    questions: ["Who is the registrar to the offer?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: promoters
+    label_en: Promoters
+    label_hi: प्रवर्तक
+    type: list
+    doc: rhp
+    sections: [cover]
+    questions: ["Who are the promoters of the company?"]
+    extractor: rules
+    fallback: qa_pretrained
+    ladder: true
+  - id: objects_of_offer
+    label_en: Objects of the offer
+    label_hi: निर्गम के उद्देश्य
+    type: table
+    doc: rhp
+    sections: [objects_of_the_offer]
+    questions: ["What will the money raised be used for?"]
+    extractor: table
+    ladder: false # table extractor only (B4)
