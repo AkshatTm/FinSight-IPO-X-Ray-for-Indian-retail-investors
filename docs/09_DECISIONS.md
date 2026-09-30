@@ -49,6 +49,52 @@ Each decision: context → decision → consequences. Status: `accepted` (Akshat
 ### ADR-015 Cross-lingual retrieval, not translation — accepted
 **Decision:** bge-m3 embeds Hindi questions and English passages into one space; the LLM answers in Hindi while copying numbers exactly. **Consequences:** no translation model; numbers in Hindi answers are verified the same way.
 
+### ADR-023 Two documents per IPO: RHP and final Prospectus — proposed (30 Sep 2026)
+**Context:** the downloaded RHPs leave the offer price, total issue size and the OFS rupee amount as `[●]`; the final Prospectus (filed after pricing) fills them in. Both exist for all 10 demo IPOs.
+**Options:** (A) RHP only, show `[●]` as ⚠️ everywhere; (B) RHP + Prospectus parsed by the same pipeline; (C) also require the price-band advertisement.
+**Decision:** B. Fields become `fresh_issue_size`, `ofs_shares` (count), `ofs_amount`, `offer_price`, `price_band` (optional; RHP or price-band ad if easy to find) and `total_issue_size`. Every value cites its document and PDF page; a `[●]` in the RHP is a normal ⚠️ and the Prospectus value is shown beside it as `companion`.
+**Consequences:** `doc_type` on parsed docs, passages and candidates; two sets of page images; gold v1 records the document. The Prospectus is the more authoritative source for final prices; chat retrieval indexes both, and answers say which document a figure came from.
+
+### ADR-024 Contract-first API skeleton — proposed (30 Sep 2026)
+**Context:** the frontend starts in Phase 1 but the real API arrives in Phase 4, and OpenAPI does not describe SSE event payloads by default.
+**Decision:** P0.3 ships a FastAPI skeleton where every route in `06` returns 501 with its response model, and each SSE event is a pydantic model registered in OpenAPI. `poe gen-openapi` writes a committed `openapi.json` and the frontend generates types from it from F1 onward.
+**Consequences:** shapes are agreed before either side is built; contract tests exist from the start; changing a shape means changing `06`, the model and `openapi.json` in one PR.
+
+### ADR-025 Page numbering: PDF page primary, printed page secondary — proposed (30 Sep 2026)
+**Context:** RHPs print their own page numbers, which differ from the PDF page index; an examiner opening the PDF would see a mismatch.
+**Decision:** all page numbers in the API, viewer chips and citations are PDF pages (1-indexed). The printed page number is stored alongside and shown in the popover.
+**Consequences:** `Page.printed_page` is read from the footer where present (nullable); "p. 12" in the UI always means the 12th PDF page.
+
+### ADR-026 Dev/test split of the demo set; gold v1 labelled in Phase 1 — proposed (30 Sep 2026)
+**Context:** writing rules and picking extractors on the same IPOs used for the reported ladder would leak test information; the original plan labelled gold after the X-Ray already existed.
+**Decision:** 3 dev / 7 test IPOs. Rules, thresholds, prompts and per-field extractor choice are tuned on dev only; reported numbers use test. Gold v1 is labelled blind in Phase 1 (P1.7), before any extractor exists. Proposed dev set: `hexaware-technologies-2025` (pure OFS), `ather-energy-2025`, `urban-company-2025`; confirmed in P0.4.
+**Consequences:** fewer test IPOs (7), so results are reported with bootstrap intervals and per-field numbers are descriptive (ADR-031). Gold v2 (18 held-out RHPs) increases the test size later.
+
+### ADR-027 Scale-mismatch requires a scale signal — proposed (30 Sep 2026)
+**Context:** the rule "a 10/100/1000× difference is always a scale mismatch" also fires on genuinely different values, e.g. face value ₹10 vs ₹1.
+**Decision:** `scale_mismatch` only when the ratio is 10ᵏ (k = 1–3) **and** (the scale words differ **or** the printed digits are identical). Any other 10ᵏ gap is `wrong_value`. Scale mismatch is always ❌.
+**Consequences:** fewer mislabelled reasons in the evidence drawer; a unit test per case; the seeded-error harness includes a "10× wrong value" negative.
+
+### ADR-028 Numeral policy for Hindi — proposed (30 Sep 2026)
+**Context:** Hindi answers may write scale words as लाख/करोड़/हज़ार/अरब and currency as रुपये; documents could contain Devanagari digits.
+**Decision:** the normalizer parses Hindi scale words, रुपये and Devanagari digits. Generated answers always use Western digits (0–9) and may use Hindi scale words. Devanagari digits are never output.
+**Consequences:** ≥ 12 Hindi cases in the P1.4 table; Hindi answers are verified through the same path as English.
+
+### ADR-029 Dependency groups; no torch in the API image or CI — proposed (30 Sep 2026)
+**Context:** the online path uses ONNX int8 encoders, Ollama and CTranslate2, none of which need PyTorch; torch costs ~1 GB RAM and a large CI download.
+**Decision:** uv dependency groups `api`, `ml` (torch, transformers, offline and Kaggle), `asr`, `dev`. CI installs `api` + `dev` only; the CUDA wheel is pinned under `ml`.
+**Consequences:** faster CI, smaller deploy image, lower RAM; tests needing torch are marked `slow`.
+
+### ADR-030 One primary package per sub-phase; capped `inspect` command — proposed (30 Sep 2026)
+**Context:** the roadmap's sub-phases wire several packages (e.g. P2.2 touches extract, verify and pipeline), and Claude Code may not read PDFs or raw data yet must debug parsing.
+**Decision:** rule reworded to one primary package per sub-phase with wiring elsewhere through `__init__.py`. `finsight.pipeline inspect` prints ≤ 40 lines and may write ≤ 30 truncated snippets to `data/samples/`.
+**Consequences:** `CLAUDE.md` updated; debugging works from summaries, not source documents.
+
+### ADR-031 Headline claim and ladder settings — proposed (30 Sep 2026)
+**Context:** with 7 test IPOs one IPO moves a field's score by 10+ points; cover-page sentences are templated so rules read them almost perfectly.
+**Decision:** the headline result is overall NVM with a bootstrap CI (by IPO) and a paired per-IPO comparison between rungs; per-field results are descriptive. Every ladder is reported for the **full document** and **body-only** (cover masked).
+**Consequences:** the PRD target "better on ≥ 5 of 8 fields" is treated as a descriptive goal; the report states which claims the sample supports.
+
 ---
 
 ## Pending ADRs (to be written during the build)
