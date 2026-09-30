@@ -150,12 +150,12 @@ def price_band(text: str) -> list[Hit]:
     return []
 
 
-_PUBLIC_OFFER = re.compile(r"public\s+offer\b", _CI)
+_PUBLIC_OFFER = re.compile(r"public\s+offer(?:ing)?\b", _CI)
 _STOP_TOTAL = re.compile(r"comprising|consisting", _CI)
 
 
 def total_issue_size(text: str) -> list[Hit]:
-    hit = _first_aggregate(_after(text, _PUBLIC_OFFER, 500, _STOP_TOTAL))
+    hit = _first_aggregate(_after(text, _PUBLIC_OFFER, 900, _STOP_TOTAL))
     return [hit] if hit else []
 
 
@@ -177,8 +177,22 @@ _STOP_PROMOTER = re.compile(
 )
 
 
+def _upper_run(window: str) -> str:
+    """An all-capitals list of names ends where the capitals end ("... LIMITED Eligibility")."""
+    words = window.split()
+    if not words or not words[0].isupper():
+        return window
+    kept = []
+    for word in words:
+        if any(ch.islower() for ch in word):
+            break
+        kept.append(word)
+    return " ".join(kept)
+
+
 def promoters(text: str) -> list[Hit]:
     for window in _after(text, _PROMOTER, 220, _STOP_PROMOTER):
+        window = _upper_run(window)
         names = [n.strip(" ,.;") for n in re.split(r",|\band\b", window, flags=_CI)]
         names = [n for n in names if n and len(n.split()) <= 6]
         if names:
@@ -214,9 +228,7 @@ def registrar(text: str) -> list[Hit]:
 
 _BRLM = re.compile(r"book\s+running\s+lead\s+managers?", _CI)
 _STOP_BRLM = re.compile(
-    r"registrar\s+to\s+the\s+(?:offer|issue)|bid\s*/\s*offer\s+(?:opens|period|programme)|"
-    r"syndicate\s+member|credit\s+rating|escrow",
-    _CI,
+    r"bid\s*/\s*offer\s+(?:opens|programme)|syndicate\s+member|credit\s+rating|escrow", _CI
 )
 # Indian BRLMs are a short list; a known name is returned in its full legal form.
 _KNOWN_BRLMS = {
@@ -253,8 +265,13 @@ _KNOWN_BRLMS = {
 _KNOWN_BRLM_RE = [(re.compile(p, _CI), name) for p, name in _KNOWN_BRLMS.items()]
 
 
+def _known_brlms(text: str) -> list[str]:
+    found = [(m.start(), name) for pattern, name in _KNOWN_BRLM_RE if (m := pattern.search(text))]
+    return [name for _, name in sorted(found)]
+
+
 def book_running_lead_managers(text: str) -> list[Hit]:
-    for window in _after(text, _BRLM, 1800, _STOP_BRLM):
+    for window in _after(text, _BRLM, 4000, _STOP_BRLM):
         found = []
         for pattern, name in _KNOWN_BRLM_RE:
             if m := pattern.search(window):
@@ -290,6 +307,26 @@ def _pages_to_search(doc: ParsedDoc, sections: list[Section], field: FieldSpec) 
             end = min(section.end_page, section.start_page + MAX_SECTION_PAGES - 1)
             pages += [p for p in range(section.start_page, end + 1) if p not in pages]
     return pages
+
+
+SPLIT_LIST_FIELDS = {"book_running_lead_managers"}  # the contact table runs over a page break
+
+
+def _merge_split_list(candidates: list[Candidate], doc: ParsedDoc) -> list[Candidate]:
+    """One list from a first hit and the hit on the next page (Hexaware: 3 + 2 BRLMs)."""
+    lists = [c for c in candidates if isinstance(c.value, ListValue)]
+    if not lists:
+        return candidates
+    first = min(lists, key=lambda c: c.page)
+    assert isinstance(first.value, ListValue)
+    items = list(first.value.items)
+    run = [first]
+    if first.page < doc.n_pages:  # the continuation page has names but no heading
+        next_text = _squash(doc.pages[first.page].text)
+        items += [i for i in _known_brlms(next_text) if i not in items]
+        run += [c for c in lists if c.page == first.page + 1]
+    merged = first.model_copy(update={"value": ListValue(items=items)})
+    return [merged] + [c for c in candidates if c not in run]
 
 
 def _score(page: int, in_cover: bool, weight: float) -> float:
@@ -331,4 +368,6 @@ class RulesExtractor:
                     score=_score(number, number <= COVER_PAGES, hit.weight),
                 )
             )
+        if field.id in SPLIT_LIST_FIELDS:
+            candidates = _merge_split_list(candidates, doc)
         return sorted(candidates, key=lambda c: (-c.score, c.page))

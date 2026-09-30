@@ -14,6 +14,7 @@ class DocOutputs:
     pages_dir: Path  # pages/ (RHP) or pages_prospectus/
     sections: Path  # sections.json (RHP) or sections_prospectus.json
     tables: Path  # tables.json (RHP) or tables_prospectus.json
+    candidates: Path  # candidates_rules.json (RHP) or candidates_rules_prospectus.json
 
 
 def doc_outputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocOutputs:
@@ -24,4 +25,5 @@ def doc_outputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocOutputs:
         pages_dir=base / f"pages{suffix}",
         sections=base / f"sections{suffix}.json",
         tables=base / f"tables{suffix}.json",
+        candidates=base / f"candidates_rules{suffix}.json",
     )

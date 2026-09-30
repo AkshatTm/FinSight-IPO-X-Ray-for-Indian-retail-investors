@@ -247,3 +247,15 @@ def test_no_match_gives_no_candidates() -> None:
 
 def test_table_field_is_not_handled_by_the_rules_extractor() -> None:
     assert run("objects_of_offer", URBAN_COVER) == []
+
+
+def test_brlm_table_split_over_a_page_break_gives_one_list() -> None:
+    p1 = "BOOK RUNNING LEAD MANAGERS Kotak Mahindra Capital Company Limited Ganesh Rane"
+    p2 = "IIFL Capital Services Limited (formerly known as IIFL Securities Limited) Mukesh"
+    c = best("book_running_lead_managers", p1, p2)
+    assert isinstance(c.value, ListValue)
+    assert c.value.items == [
+        "Kotak Mahindra Capital Company Limited",
+        "IIFL Capital Services Limited",
+    ]
+    assert c.page == 1

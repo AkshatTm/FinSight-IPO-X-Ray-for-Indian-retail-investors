@@ -119,11 +119,11 @@ How to use this file
 ## Phase 2 — Extraction and our model (Wed 7 – Wed 14 Oct) → G2
 
 ### P2.1 Field registry + rules (Rung 1) `feat/p2.1-rules` [CC] — Wed 7 Oct
-- [ ] `configs/fields.yaml` (11 fields, EN/HI labels, document (RHP or Prospectus), sections, questions, extractor, fallback, `ladder` flag; `offer_price` = rules-only on the Prospectus cover, `ladder: false`, like `objects_of_offer`; `price_band` is `[●]` in all 10 RHPs: `ladder: false`, expect status `placeholder` on RHPs)
-- [ ] Extractor cases from gold v1: `total_issue_size` and `ofs_amount` are stated in the RHP for HDB, Hexaware, PhysicsWallah and Urban Company and `[●]` for the other six (handle both); Tata Capital `fresh_issue_size` is a placeholder in the RHP (shares only)
-- [ ] `extract/rules.py` against SEBI standard wording (cover page, The Offer); tests with real-looking sentences in `data/samples/`
-- [ ] Tune rules on the 3 dev IPOs only; gold v1 already exists from P1.7
-**Done when:** rules produce candidates for all demo IPOs; tests green.
+- [x] `configs/fields.yaml` (11 fields, EN/HI labels, document (RHP or Prospectus), sections, questions, extractor, fallback, `ladder` flag; `offer_price` = rules-only on the Prospectus cover, `ladder: false`, like `objects_of_offer`; `price_band` is `[●]` in all 10 RHPs: `ladder: false`, expect status `placeholder` on RHPs)
+- [x] Extractor cases from gold v1: `total_issue_size` and `ofs_amount` are stated in the RHP for HDB, Hexaware, PhysicsWallah and Urban Company and `[●]` for the other six (handle both); Tata Capital `fresh_issue_size` is a placeholder in the RHP (shares only)
+- [x] `extract/rules.py` against SEBI standard wording (cover page, The Offer); tests with real-looking sentences in `data/samples/`
+- [x] Tune rules on the 3 dev IPOs only; gold v1 already exists from P1.7 (33/33 dev values agree; `scripts/rules_dev_check.py`)
+**Done when:** rules produce candidates for all demo IPOs; tests green. → 10/10 IPOs, both documents; `eval_results/rules_candidates.json`; ADR-036; #26.
 
 ### P2.2 Pretrained QA + X-Ray v0 `feat/p2.2-qa-pretrained` [CC] — Thu 8 Oct
 - [ ] `extract/qa_pretrained.py` (deberta-v3-base-squad2, GPU fp16, section-restricted passages)
