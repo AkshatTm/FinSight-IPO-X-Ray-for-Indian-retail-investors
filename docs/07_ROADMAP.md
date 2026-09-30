@@ -86,9 +86,9 @@ How to use this file
 **Done when:** the 4 key sections found in ≥ 9 of 10 RHPs (Prospectus tracked separately). → 10/10 RHPs, 10/10 Prospectuses; merged #18, 2026-09-30
 
 ### P1.3 Tables `feat/p1.3-tables` [CC] — Sat 3 Oct
-- [ ] Bake-off pdfplumber vs Docling on 3 table pages (Capital Structure, Objects) → ADR
-- [ ] `parse/tables.py` with header-scale detection ("₹ in million")
-**Done when:** Objects-of-the-offer rows extracted for every demo IPO that has a fresh issue (pure-OFS IPOs correctly give `not_in_document`).
+- [x] Bake-off pdfplumber vs Docling on 3 table pages (Capital Structure, Objects) → ADR
+- [x] `parse/tables.py` with header-scale detection ("₹ in million")
+**Done when:** Objects-of-the-offer rows extracted for every demo IPO that has a fresh issue (pure-OFS IPOs correctly give `not_in_document`). → 8/8 RHPs + 8/8 Prospectuses; Hexaware and LG not_in_document; ADR-017 (Docling primary, PyMuPDF fallback); merged #19, 2026-09-30
 
 ### P1.4 ★ Numeral normalization `feat/p1.4-numerals` [CC] — Sun 4 Oct
 - [ ] Tests first: table-driven cases from `02_ARCHITECTURE.md` §10.4 and the list below, then hypothesis round-trip
