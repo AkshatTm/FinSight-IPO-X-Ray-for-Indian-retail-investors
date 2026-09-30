@@ -11,12 +11,12 @@ This doc owns datasets, splits, labelling protocols, metric definitions and the 
 | Set | Contents | Size | Used for | Never used for |
 |---|---|---|---|---|
 | **Training corpus** | RHP text of past Indian IPOs from the Ghosh et al. IPO datasets (CC BY-NC-SA 4.0) | target ≥ 300 mainboard RHPs (more if available) | Weak labels → fine-tuning | Evaluation |
-| **Demo set** | 12 recent, well-known mainboard IPOs, clean digital RHP PDFs | 12 | Demo, gold test set v1 | Training, threshold tuning |
-| **Gold v1** | Hand-labelled values for the 9 fields on the demo set | ~100 values | Extractor ladder, verifier tests | Training |
+| **Demo set** | 10 recent mainboard IPOs (2025), each with its RHP **and** final Prospectus, clean digital PDFs. **3 dev / 7 test** (ADR-026) | 10 (+2 optional) | Demo; dev IPOs for tuning rules and extractor choice, test IPOs for reported numbers | Training; tuning on the 7 test IPOs |
+| **Gold v1** | Hand-labelled values for the 11 fields on the demo set, labelled in Phase 1 before any extractor runs | ~110 values | Extractor ladder, verifier tests | Training |
 | **Gold v2 (expansion)** | +18 held-out RHPs (not in training corpus) | ~30 IPOs, ~270 values | Final report numbers | Training |
 | **Dev questions** | ~20 hand-written questions on 3 demo IPOs | 20 | Tuning retrieval abstain threshold, prompt | Final numbers |
 | **Test questions** | ~60 hand-written questions (EN + HI) on the other IPOs | 60 | Retrieval Recall@5, answer quality | Tuning |
-| **Advice set** | ~150 advice-seeking + ~150 factual questions (EN/HI/Hinglish) | 300 | Guard evaluation, classifier training (split 70/15/15) | — |
+| **Advice set** | ≥ 50 advice + ≥ 50 factual questions **written by Akshat and friends** (EN/HI/Hinglish) for guard evaluation; up to ~150 + ~150 more (may be drafted by Claude Code) for classifier training only | 100 eval + ≤ 300 train | Guard evaluation (Akshat's set only), classifier training (Claude-drafted lines only) | Evaluating a guard on lines the guard author wrote |
 | **Hindi audio** | 10–20 recorded Hindi questions | 10–20 | ASR bake-off + WER/CER | — |
 
 We **do not use** the dataset's Apply/Avoid rating labels or listing-gain targets, ever.
@@ -41,13 +41,15 @@ We **do not use** the dataset's Apply/Avoid rating labels or listing-gain target
 
 - Listed 2024–2026, mainboard, names a classmate would recognise.
 - Digital PDF (text selectable), not scanned.
-- Mix of structures: at least 3 pure fresh issue, 3 pure OFS, 6 mixed; at least 2 whose tables say "(₹ in million)" and 2 that use crore throughout.
-- At least one with a very large RHP (600+ pages) to test performance.
-- Record in `data/demo_ipos.yaml`: `ipo_id`, company, listing date, source URL, pages, sha256.
+- Mix of structures: the downloaded set is 2 pure OFS and 8 mixed as far as we know (recon confirms from the Prospectus offer tables); no pure-fresh IPO yet. Adding 2 pure-fresh IPOs later is welcome; until then pure-fresh handling is covered by fixtures only. Report the actual mix.
+- At least 2 whose tables say "(₹ in million)" and 2 that use crore throughout (recon checks).
+- At least one very large RHP (600+ pages) to test performance (Lenskart, 1083 pages).
+- Record in `configs/demo_ipos.yaml`: `ipo_id`, company, RHP and Prospectus file, pages, sha256, cover date, `split`.
 
 ### 1.5 Split rules
 
 - Splits are **by IPO**, never by passage.
+- Demo set: 3 dev / 7 test. Rules, thresholds, prompts and the per-field extractor choice are tuned on **dev only**; the ladder, retrieval and answer numbers in the report are computed on **test**. Proposed dev IPOs: `hexaware-technologies-2025` (pure OFS), `ather-energy-2025`, `urban-company-2025` (confirm in P0.4).
 - Demo set and gold v2 IPOs are removed from the training corpus by company name + year (fuzzy match, threshold logged) before weak labelling. The exclusion list is committed (`data/gold/excluded_ipos.txt`) and a test asserts no overlap.
 - Weak-label train/dev = 90/10 by IPO, seed 2026.
 
@@ -64,13 +66,13 @@ We **do not use** the dataset's Apply/Avoid rating labels or listing-gain target
 `status` ∈ `present | not_in_document | placeholder`. List fields store a JSON list in `value_raw`.
 
 **Rules**
-1. **Blind labelling for gold v1:** label from the PDF directly, before looking at any extractor output. This keeps the ladder fair.
+1. **Blind labelling for gold v1:** label from the PDF directly, before any extractor exists or its output is seen (Phase 1, sub-phase P1.7). This keeps the ladder fair. Fields: fresh issue amount, OFS shares, OFS amount, offer price (Prospectus), price band (if stated), face value, BRLMs, registrar, promoters, objects of the offer. Record the **PDF page**.
 2. Record the **first authoritative occurrence** (cover page or The Offer) and the page number.
 3. Copy the value exactly as printed; normalisation is done by code.
 4. **Self-consistency check:** a week later, re-label 10 random values without looking; report agreement.
 5. Gold v2 may use *assisted* labelling (CC pre-fills page hints, not values) — disclosed in the report.
 
-Estimated effort: ~12 min per IPO for 9 fields → ~2.5 h for v1, ~4 h for v2.
+Estimated effort: ~15 min per IPO for 11 fields across two documents → ~2.5–3 h for v1, ~4 h for v2.
 
 ---
 
@@ -80,6 +82,7 @@ Pipeline and rationale are in `02_ARCHITECTURE.md` and `10_FINSIGHT_EXPLAINED.md
 
 - **Seed precision first:** rules extract seed values only when unambiguous (exactly one match pattern, non-placeholder, passes consistency). Coverage is reported (share of corpus IPOs with a seed per field).
 - **Propagation filters:** only passages in the field's expected sections; value must be equal under `normalize.equal`; a metric keyword within the passage.
+- **Non-numeric fields:** names (BRLMs, registrar, promoters) propagate by normalized fuzzy match ("Ltd" ↔ "Limited", case and punctuation folded). A list field trains on one span covering the whole list. `objects_of_offer` is a table and uses the table extractor only, outside the QA ladder.
 - **Negatives:** 1–2 per positive, same sections, value absent.
 - **Audit [AKSHAT]:** `weaklabel/audit.py` samples 50 positives stratified by field → `data/gold/weaklabel_audit.jsonl` with the passage and highlighted answer → Akshat marks `correct | wrong_span | wrong_value | ambiguous`. Report precision with a 95 % Wilson interval.
 
@@ -105,6 +108,8 @@ Dataset card for the generated set: counts per field, positives/negatives, IPOs,
 | Latency | p50 / p95 per stage, laptop `full` profile |
 
 Uncertainty: 3 seeds → mean ± std for trained models; bootstrap 95 % CI (1,000 resamples by IPO) for gold-set metrics. Always print `n`.
+
+**Headline claim and settings (ADR-031).** With ~7 test IPOs a single IPO moves one field's score by 10+ points, so the headline result is overall NVM with a bootstrap CI and a paired per-IPO difference between rungs; per-field results are shown as descriptive. Every ladder is reported in two settings: **full document** and **body-only** (cover page and summary masked), because cover sentences are templated and rules read them almost perfectly; body-only tests robustness to other wordings.
 
 ---
 
@@ -140,6 +145,8 @@ Uncertainty: 3 seeds → mean ± std for trained models; bootstrap 95 % CI (1,00
 
 ## 6. Seeded-error harness (E5)
 
+This is a **unit-level benchmark**: the errors are constructed from known rules, so high recall is expected by design. Natural-error evidence comes from running the verifier on real LLM answers (E7) and on frontier answers (E9), with a hand-checked sample reported.
+
 Start from answers verified correct by Akshat (or constructed from gold values with a template). Corrupt one number per answer:
 
 | Error type | Construction | Expected verdict |
@@ -160,6 +167,7 @@ Balanced: 100 corrupted + 100 correct (incl. rounding_ok). Detection = verdict �
 - **Models:** one Claude model and optionally one other frontier chatbot, via their consumer apps with the RHP PDF uploaded (or a small one-time API spend). Record model name, date, interface.
 - **Tasks:** (a) the 9 X-Ray fields for each gold IPO, asked with a fixed prompt; (b) 20 test questions.
 - **Scoring:** same NVM metric; citation = page number given and correct.
+- **Upload check (Phase 1):** test one full 600-page RHP upload in each consumer app. If it is truncated or rejected, add a condition where both systems receive the same top-5 passages, and report both conditions.
 - **Twist (strong report result):** run FinSight's verifier on the frontier answers (with FinSight's retrieval as evidence) and report how many of their numbers get ❌ / ⚠️, broken down by error type.
 - **Honesty:** they saw the full PDF; they are much larger; they likely win on open-ended explanation — say so. Expected FinSight advantages: numeric faithfulness, page citations, consistency, cost, offline operation.
 - Store raw frontier outputs in `data/gold/frontier_raw/` (committed; small text).

@@ -16,8 +16,8 @@ How to use this file
 
 | Gate | Date | Must be true | If it fails |
 |---|---|---|---|
-| **G0** | Wed 30 Sep | Repo + CI green; `uv run poe test` passes; Ollama runs on GPU; dataset recon done; ≥ 10 demo RHPs downloaded | Slip P1 by one day; do not skip recon |
-| **G1** | Tue 6 Oct | ≥ 10 of 12 demo RHPs parse; 4 key sections (Cover, The Offer, Capital Structure, Objects) found in ≥ 10; numeral suite green; training-corpus text available for ≥ 150 RHPs | Demo set → 8 IPOs; Plan B corpus (`05` §1.3) |
+| **G0** | Wed 30 Sep | Repo + CI green; `uv run poe test` passes; Ollama runs on GPU; dataset recon done; 10 demo IPOs (RHP + Prospectus) downloaded and registered | Slip P1 by one day; do not skip recon |
+| **G1** | Tue 6 Oct | ≥ 9 of 10 demo IPOs parse (both documents); 4 key sections (Cover, The Offer, Capital Structure, Objects) found in ≥ 9; numeral suite green; training-corpus text available for ≥ 150 RHPs; gold v1 labelled | Demo set → 8 IPOs; Plan B corpus (`05` §1.3) |
 | **G2** | Wed 14 Oct | X-Ray JSON for every demo IPO; ladder has 3 rows with real numbers; weak-label audit done | Ship with pretrained QA as the X-Ray extractor; keep fine-tune results as an experiment |
 | **G3** | Tue 20 Oct | `/api/chat` end to end with citations + verdicts; scale-trick caught; guard works; Hindi voice question answered | Voice → P2; chat limited to suggested questions |
 | **G4** | Fri 23 Oct | Full UI on the real API locally; Playwright demo test green on real API; demo cache recorded | Cut per list below |
@@ -30,7 +30,7 @@ How to use this file
 4. BiLSTM-CRF rung (FR-15)
 5. Inspector live mode → cached traces only
 6. Hindi voice → typed Hindi only
-7. Demo set 12 → 8 IPOs
+7. Demo set 10 → 8 IPOs
 
 **Never cut:** X-Ray with click-to-page highlight, chat verdict marks + evidence drawer, the scale-mismatch catch, the extractor ladder with real numbers, honest reporting.
 
@@ -46,7 +46,7 @@ How to use this file
 
 ### P0.2 Scaffold `chore/p0.2-scaffold` [CC]
 - [ ] Repo tree per `02_ARCHITECTURE.md` §5/§9 with empty packages + `__init__.py`
-- [ ] `pyproject.toml` (uv), poe tasks, ruff, mypy config, pytest config (`slow` marker), `.gitignore`, `.gitattributes` (LF), `.env.example`
+- [ ] `pyproject.toml` (uv; dependency groups `api` / `ml` / `asr` / `dev`, torch only in `ml`), poe tasks, ruff, mypy config, pytest config (`slow` marker), `.gitignore` (done 30 Sep), `.gitattributes` (LF), `.env.example`, `NOTICE` (data licences)
 - [ ] pre-commit: ruff, ruff-format, nbstripout, end-of-file, large-file guard (> 5 MB)
 - [ ] GitHub Actions CI: backend lint/type/test (fast)
 - [ ] `README.md` stub with badge, `LICENSE` decision noted (code MIT; data/model NC-SA)
@@ -54,14 +54,16 @@ How to use this file
 
 ### P0.3 Core `feat/p0.3-core` [CC]
 - [ ] `core/schemas.py`, `core/interfaces.py`, `core/registry.py`, `core/config.py` (profiles), `core/ids.py`, `core/logging.py`
-- [ ] `config.yaml` with `dev_light`, `full`, `deploy_cpu`
+- [ ] `configs/config.yaml` with `dev_light` (default), `full`, `deploy_cpu`
+- [ ] Contract-first API skeleton: every route in `06` returns 501 with its response model; each SSE event is a pydantic model registered in OpenAPI; `poe gen-openapi` writes `openapi.json` (ADR-024)
+- [ ] Align `02` §6 with `06` (kind discriminator, value types, reason codes)
 - [ ] Tests: schema round-trips, registry, config profile loading
 **Done when:** tests green; mypy clean on `core`.
 
 ### P0.4 Data recon `data/p0.4-recon` [CC→AKSHAT]
 - [ ] [AKSHAT] Download the HF IPO dataset to `data/raw/ipo_dataset/`
-- [ ] [AKSHAT] Choose 12 demo IPOs per `05` §1.4; download RHPs to `data/raw/rhp/`
-- [ ] [CC] `ingest/recon.py` → summary printed; [CC] `data/demo_ipos.yaml` from Akshat's list; checksums
+- [ ] [AKSHAT] Demo set chosen (10 IPOs, RHP + final Prospectus each) → `data/raw/rhp/` and `data/raw/prospectus/` ✅ 30 Sep
+- [ ] [CC] `ingest/recon.py` → summary printed; [CC] `configs/demo_ipos.yaml` (ids, files, pages, sha256, cover dates) ✅ 30 Sep; confirm offer structure per IPO; propose the 3 dev / 7 test split
 - [ ] [CC] 5 sample rows to `data/samples/`; ADR "Training corpus source" in `09_DECISIONS.md`
 **Done when:** ADR written with the answers to `05` §1.2 Q1–Q3. **Gate G0 review.**
 
@@ -73,19 +75,20 @@ How to use this file
 - [ ] `parse/pdf_text.py` (PyMuPDF words + bboxes + font info), `parse/page_images.py` (WebP ~110 DPI), scanned-page detection, header/footer stripping
 - [ ] Synthetic fixture PDF generator script (`tests/fixtures/make_fixture_pdf.py`) + committed 3-page fixture
 - [ ] `pipeline` CLI: `build --ipo <id> --stage parse`
-- [ ] [AKSHAT] Run on all demo PDFs; compare 3 by eye; paste problems into the next session
-**Done when:** fixture tests green; all 12 demo RHPs produce `parsed.json` + page images; timing per IPO logged.
+- [ ] `pipeline inspect` prints ≤ 40 lines and can write ≤ 30 truncated snippets to `data/samples/` (how CC sees a document without reading it)
+- [ ] [AKSHAT] Run on all 20 demo documents; compare 3 by eye; paste problems into the next session
+**Done when:** fixture tests green; all 20 demo documents produce `parsed.json` + page images; timing per document logged.
 
 ### P1.2 ★ Sections `feat/p1.2-sections` [CC] — Fri 2 Oct
 - [ ] `parse/sections.py`: TOC parse + printed→PDF page offset, heading regexes, font cues, voting, confidence
 - [ ] `RhpAdapter` implementing `DocTypeAdapter`
 - [ ] Report script: section found/not-found matrix for the demo set → `eval_results/sections.json`
-**Done when:** the 4 key sections found in ≥ 10 of 12.
+**Done when:** the 4 key sections found in ≥ 9 of 10 RHPs (Prospectus tracked separately).
 
 ### P1.3 Tables `feat/p1.3-tables` [CC] — Sat 3 Oct
 - [ ] Bake-off pdfplumber vs Docling on 3 table pages (Capital Structure, Objects) → ADR
 - [ ] `parse/tables.py` with header-scale detection ("₹ in million")
-**Done when:** Objects-of-the-offer rows extracted for ≥ 9 demo IPOs.
+**Done when:** Objects-of-the-offer rows extracted for every demo IPO that has a fresh issue (pure-OFS IPOs correctly give `not_in_document`).
 
 ### P1.4 ★ Numeral normalization `feat/p1.4-numerals` [CC] — Sun 4 Oct
 - [ ] Tests first: table-driven cases from `02_ARCHITECTURE.md` §10.4 and the list below, then hypothesis round-trip
@@ -103,14 +106,20 @@ How to use this file
 ### P1.6 Buffer + G1 review — Tue 6 Oct
 - [ ] Fix parser problems found by eye; update `10_FINSIGHT_EXPLAINED.md` (parsing, sections, numerals); tag `v0.1.0`
 
+### P1.7 Gold v1 tooling and labelling `data/p1.7-gold-v1` [AKSHAT + CC] — runs alongside P1.1–P1.5
+- [ ] [CC] `evaluate/gold.py` schema + validator; empty per-IPO template generator (no values)
+- [ ] [AKSHAT] Label 11 fields × 10 IPOs from the PDFs, blind, PDF page recorded (`05` §2) → `data/gold/gold_values.jsonl`
+- [ ] [AKSHAT, low priority] Download the 18 gold-v2 RHPs; test one full-RHP upload in a frontier app (`05` §7)
+**Done when:** validator passes on all ~110 values; committed before P2.1 starts.
+
 ---
 
 ## Phase 2 — Extraction and our model (Wed 7 – Wed 14 Oct) → G2
 
 ### P2.1 Field registry + rules (Rung 1) `feat/p2.1-rules` [CC] — Wed 7 Oct
-- [ ] `configs/fields.yaml` (9 fields, EN/HI labels, sections, questions, extractor, fallback)
+- [ ] `configs/fields.yaml` (11 fields, EN/HI labels, document (RHP or Prospectus), sections, questions, extractor, fallback, `ladder` flag)
 - [ ] `extract/rules.py` against SEBI standard wording (cover page, The Offer); tests with real-looking sentences in `data/samples/`
-- [ ] [AKSHAT] **Gold v1 labelling starts** (blind, per `05` §2) — finish by Fri 9 Oct
+- [ ] Tune rules on the 3 dev IPOs only; gold v1 already exists from P1.7
 **Done when:** rules produce candidates for all demo IPOs; tests green.
 
 ### P2.2 Pretrained QA + X-Ray v0 `feat/p2.2-qa-pretrained` [CC] — Thu 8 Oct
@@ -158,7 +167,7 @@ How to use this file
 - [ ] `generate/llm_backend.py` (Ollama; llama-cpp stub), `prompts.py` (EN + HI), thinking disabled
 - [ ] Prompt-injection test with adversarial chunk
 - [ ] Bake-off script; [AKSHAT] judge Hindi fluency → ADR "LLM choice"
-**Done when:** CLI `python -m finsight.chat ask --ipo <id> "question"` prints a cited answer.
+**Done when:** CLI `python -m finsight.generate ask --ipo <id> "question"` prints a cited answer (`finsight.chat ask` arrives in P3.6).
 
 ### P3.3 ★ Verifier + seeded errors `feat/p3.3-verifier` [CC] — Sat 17 Oct
 - [ ] `verify/claims.py`, `numeric_check.py` (all reason codes), `verdict.py`; tests per reason code
@@ -166,7 +175,7 @@ How to use this file
 **Done when:** scale-mismatch recall on seeded set ≥ 95 % (or the miss is explained in an ADR); CLI shows verdicts.
 
 ### P3.4 Advice guard `feat/p3.4-guard` [CC] — Sun 18 Oct (morning)
-- [ ] `guard/advice.py` keyword/regex EN/HI/Hinglish + facts payload; advice set v0 (≥ 100 lines) + tests → E8 (keyword row)
+- [ ] `guard/advice.py` keyword/regex EN/HI/Hinglish + facts payload; scored on Akshat's advice set (≥ 50 advice + ≥ 50 factual, written by him and friends) + tests → E8 (keyword row)
 
 ### P3.5 Voice `feat/p3.5-voice` [CC→AKSHAT] — Sun 18 Oct (afternoon)
 - [ ] `voice/asr.py` backends + lazy load/unload; ASR bake-off script → E12 + ADR
