@@ -259,3 +259,14 @@ def test_brlm_table_split_over_a_page_break_gives_one_list() -> None:
         "IIFL Capital Services Limited",
     ]
     assert c.page == 1
+
+
+def test_promoter_honorifics_do_not_cut_the_list() -> None:
+    text = "PROMOTERS OF OUR COMPANY: MR. GYANENDRA KUMAR AND MRS. ASHA RANI. DETAILS OF THE OFFER"
+    assert best("promoters", text).value.items == ["GYANENDRA KUMAR", "ASHA RANI"]
+
+
+def test_pte_ltd_is_not_the_end_of_the_promoter_list() -> None:
+    text = "OUR PROMOTERS: FOSUN PHARMA INDUSTRIAL PTE. LTD AND ACME HOLDINGS LIMITED. INITIAL"
+    items = best("promoters", text).value.items
+    assert items == ["FOSUN PHARMA INDUSTRIAL PTE. LTD", "ACME HOLDINGS LIMITED"]

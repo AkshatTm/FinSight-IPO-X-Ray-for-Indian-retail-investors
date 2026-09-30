@@ -37,7 +37,7 @@ _MARKS = re.compile(r"[\^*†‡]")  # footnote marks printed after numbers
 _CI = re.IGNORECASE
 _AMT = (
     r"(?:₹|Rs\.?|INR)\s?(?:\[\s*[●•]\s*\]|\d[\d,]*(?:\.\d+)?)"
-    r"(?:\s*(?:million|crore|lakh|billion|mn|cr)\b)?"
+    r"(?:\s*(?:millions?|crores?|lakhs?|billions?|mn|cr)\b)?"  # older covers: "RS 6150 LAKHS"
 )
 _AGG = re.compile(rf"aggregating\s+(?:up\s+to\s+|to\s+)?(?P<amt>{_AMT})", _CI)
 _OFS = re.compile(
@@ -150,7 +150,7 @@ def price_band(text: str) -> list[Hit]:
     return []
 
 
-_PUBLIC_OFFER = re.compile(r"public\s+offer(?:ing)?\b", _CI)
+_PUBLIC_OFFER = re.compile(r"public\s+(?:offer(?:ing)?|issue)\b", _CI)
 _STOP_TOTAL = re.compile(r"comprising|consisting", _CI)
 
 
@@ -172,7 +172,8 @@ def face_value(text: str) -> list[Hit]:
 _PROMOTER = re.compile(r"promoters?(?:\s+of\s+our\s+company)?\s*:", _CI)
 _STOP_PROMOTER = re.compile(
     r"\b(?:details\s+of\s+the|type\s+of|the\s+offer|offer\s+for|initial\s+public|fresh\s+issue|"
-    r"bid\s*/|contact|issue\s+size|our\s+company|selling\s+shareholders?)\b|\.\s",
+    r"bid\s*/|contact|issue\s+size|our\s+company|selling\s+shareholders?)\b"
+    r"|(?<!\bpte)(?<!\bpvt)(?<!\bco)(?<!\binc)(?<!\bltd)\.\s",  # "PTE. LTD" is not a full stop
     _CI,
 )
 
@@ -190,11 +191,15 @@ def _upper_run(window: str) -> str:
     return " ".join(kept)
 
 
+_HONORIFIC = re.compile(r"\b(?:mr|mrs|ms|dr|shri|smt)\.?\s+", _CI)
+
+
 def promoters(text: str) -> list[Hit]:
+    text = _HONORIFIC.sub("", text)  # "MR. GYANENDRA ..." must not end the list at "MR."
     for window in _after(text, _PROMOTER, 220, _STOP_PROMOTER):
         window = _upper_run(window)
         names = [n.strip(" ,.;") for n in re.split(r",|\band\b", window, flags=_CI)]
-        names = [n for n in names if n and len(n.split()) <= 6]
+        names = [n for n in names if len(n) >= 3 and len(n.split()) <= 6]
         if names:
             return [Hit("; ".join(names), ListValue(items=names))]
     return []
@@ -208,7 +213,9 @@ _KNOWN_REGISTRARS = re.compile(
     r"(?:KFin\s+Technologies|MUFG\s+Intime\s+India|Link\s+Intime\s+India|Bigshare\s+Services|"
     r"Cameo\s+Corporate\s+Services|Integrated\s+Registry\s+Management\s+Services|"
     r"Skyline\s+Financial\s+Services|Purva\s+Sharegistry\s+\(India\)|Maashitla\s+Securities|"
-    r"MAS\s+Services)(?:\s+(?:Private|Pvt\.?))?\s+(?:Limited|Ltd\.?)",
+    r"MAS\s+Services|Karvy\s+Computershare|Karvy\s+Fintech|Sharepro\s+Services\s+\(India\)|"
+    r"Alankit\s+Assignments|Intime\s+Spectrum\s+Registry|Satellite\s+Corporate\s+Services)"
+    r"(?:\s+(?:Private|Pvt\.?))?\s+(?:Limited|Ltd\.?)",
     _CI,
 )
 _NAME_LIMITED = re.compile(
@@ -226,7 +233,9 @@ def registrar(text: str) -> list[Hit]:
     return []
 
 
-_BRLM = re.compile(r"book\s+running\s+lead\s+managers?", _CI)
+_BRLM = re.compile(
+    r"book\s+running\s+lead\s+managers?|lead\s+managers?\s+to\s+the\s+(?:issue|offer)", _CI
+)
 _STOP_BRLM = re.compile(
     r"bid\s*/\s*offer\s+(?:opens|programme)|syndicate\s+member|credit\s+rating|escrow", _CI
 )
@@ -261,6 +270,22 @@ _KNOWN_BRLMS = {
     r"UBS\s+Securities\s+India": "UBS Securities India Private Limited",
     r"Centrum\s+Capital": "Centrum Capital Limited",
     r"Systematix\s+Corporate\s+Services": "Systematix Corporate Services Limited",
+    # names seen on 2009-2023 covers in the training corpus
+    r"Enam\s+Securities": "Enam Securities Private Limited",
+    r"DSP\s+Merrill\s+Lynch": "DSP Merrill Lynch Limited",
+    r"Edelweiss\s+(?:Capital|Financial\s+Services)": "Edelweiss Financial Services Limited",
+    r"Credit\s+Suisse\s+Securities\s+\(India\)": "Credit Suisse Securities (India) Private Limited",
+    r"Deutsche\s+Equities\s+India": "Deutsche Equities India Private Limited",
+    r"IDFC\s+(?:Capital|Securities)": "IDFC Securities Limited",
+    r"Karvy\s+Investor\s+Services": "Karvy Investor Services Limited",
+    r"Almondz\s+Global\s+Securities": "Almondz Global Securities Limited",
+    r"Keynote\s+Corporate\s+Services": "Keynote Corporate Services Limited",
+    r"BOB\s+Capital\s+Markets": "BOB Capital Markets Limited",
+    r"Yes\s+Securities\s+\(India\)": "YES Securities (India) Limited",
+    r"Haitong\s+Securities\s+India": "Haitong Securities India Private Limited",
+    r"Batlivala\s+(?:&|and)\s+Karani": "Batlivala & Karani Securities India Private Limited",
+    r"Pantomath\s+Capital\s+Advisors": "Pantomath Capital Advisors Private Limited",
+    r"Saffron\s+Capital\s+Advisors": "Saffron Capital Advisors Private Limited",
 }
 _KNOWN_BRLM_RE = [(re.compile(p, _CI), name) for p, name in _KNOWN_BRLMS.items()]
 
