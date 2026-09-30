@@ -105,6 +105,22 @@ If a company's passages appear in both training and test, scores look better tha
 
 *(Claude Code appends one section per module when its PR merges: what it does, the key algorithm in plain words, one worked example, known limitations, and 2 likely viva questions.)*
 
+### C0. Core and the API skeleton (built in P0.3)
+
+**What it does.** `finsight.core` is the shared vocabulary: the data shapes every other package passes around (schemas), the interfaces they implement, a registry that picks an implementation by name from config, profile-based settings, IDs and JSON logging. `finsight.api` is the *contract* of the web server, written before any feature exists.
+
+**Key ideas in plain words.**
+- *Typed values with a `kind` label.* An extracted value is a `Money`, `Count`, `Percent`, `Placeholder` (`[●]`), `Range`, text, list or table. Each carries `kind`, so when JSON is read back the program knows exactly which one it is. A `[●]` is its own type, so it can never be mistaken for zero.
+- *Money as strings.* Amounts travel as `"8000000000.00"`, never as floating-point numbers, so no rounding error can change a rupee figure.
+- *Registry and profiles.* Code asks for "the LLM" by name and config decides which one (`dev_light` uses a tiny model while coding, `full` the demo model). Swapping a model is a config change, not a rewrite.
+- *Contract first.* The API routes exist from day one and answer "not implemented" in a fixed error format. The frontend team (you, later) can generate TypeScript types from `openapi.json` before the real backend is ready. Streaming events are described by one model each, because OpenAPI cannot describe a stream by itself.
+
+**Worked example.** `₹ 800.00 crore` becomes `Money(kind="money", value_inr="8000000000.00", scale_word="crore", precision=2)`. Written to JSON and read back it is identical; a `[●]` becomes `Placeholder(raw="[●]")`.
+
+**Limits.** Every endpoint still answers 501. The schemas are a sketch that later sub-phases may refine (with a matching change to `06`).
+
+**Likely viva questions.** (1) *Why store money as strings, not floats?* (2) *What does "contract first" buy you when one person builds both sides?*
+
 <!-- C1 parse -->
 <!-- C2 sections -->
 <!-- C3 normalize -->
