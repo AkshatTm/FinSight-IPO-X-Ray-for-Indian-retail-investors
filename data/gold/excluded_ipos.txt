@@ -1,0 +1,3 @@
+# Companies whose IPO documents are in the demo or gold-v2 evaluation sets.
+# One company name per line. The demo companies come from configs/demo_ipos.yaml automatically;
+# add the 10 gold-v2 IPOs here (AKSHAT hand-work) before rebuilding the corpus.
