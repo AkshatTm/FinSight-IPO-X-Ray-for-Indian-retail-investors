@@ -136,7 +136,22 @@ If a company's passages appear in both training and test, scores look better tha
 **Limits.** Multi-column layouts are read in PyMuPDF's sorted order, which can interleave columns. Tables come out as lines of text here; P1.3 extracts them as cells. Rupee signs rendered as images or custom glyphs would be lost (not seen in the demo set so far).
 
 **Likely viva questions.** (1) *Why render page images instead of using a PDF viewer?* (2) *How do you tell a header from a real sentence that happens to repeat?*
-<!-- C2 sections -->
+
+### C2. Finding the sections (built in P1.2)
+
+**What it does.** `finsight.parse.sections` splits each RHP or Prospectus into its SEBI-standard sections ("The Offer", "Capital Structure", "Objects of the Offer", "Risk Factors", ...), each with a PDF page range, the method that found it and a confidence. Later stages use this to look only in the right pages: the offer size lives in "The Offer", the use of money in "Objects of the Offer". `pipeline build --stage sections` writes `sections.json` per document; `build-all --stage sections` also writes the found/not-found matrix to `eval_results/sections.json`.
+
+**Key ideas in plain words.**
+- *The table of contents is a map with the wrong page numbers.* The TOC says "CAPITAL STRUCTURE .... 96", but 96 is the *printed* number. P1.1 read the printed number in every footer, so we look up which PDF page carries "96"; if that footer is unreadable we use the typical gap between the two numbers (the median offset).
+- *Three signals vote.* (1) the TOC entry, (2) the title appearing as a whole line in the first 8 lines of that page, (3) the title's words being bold or ≥ 1.2× the page's usual font size. All three agree → confidence 1.0; TOC + heading → 0.9; TOC alone → 0.7. If the heading is found a few pages away instead, the heading wins (0.5–0.6).
+- *Canonical ids.* Different companies write "OBJECTS OF THE OFFER" or "OBJECTS OF THE ISSUE"; both become `objects_of_the_offer`, so later code has one name to ask for.
+- *Ranges.* A section runs until the next one starts; the cover is everything before the TOC.
+
+**Worked example.** Hexaware's RHP TOC lists "CAPITAL STRUCTURE .... 92"; the PDF page whose footer reads "92" is page 96, whose first line is the bold heading "CAPITAL STRUCTURE" → start page 96, method `toc`, confidence 1.0. On the 20 demo documents all 4 key sections were found in 10/10 RHPs and 10/10 Prospectuses; of 688 non-cover sections, 648 scored 1.0, 38 scored 0.9 and 2 scored 0.7.
+
+**Limits.** A section that the TOC doesn't list and whose heading doesn't sit in the top lines of a page is missed. Very long sections (Hexaware's capital structure runs to page 251 because its TOC nests many sub-parts under it) are correct by the TOC but broad, so retrieval still has to rank passages inside them. Scanned TOC pages would disable the TOC signal.
+
+**Likely viva questions.** (1) *Why not trust the TOC page numbers directly?* (2) *What happens when the TOC and the heading disagree?*
 <!-- C3 normalize -->
 <!-- C4 extract.rules -->
 <!-- C5 extract.qa -->

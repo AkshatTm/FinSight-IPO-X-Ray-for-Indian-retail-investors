@@ -80,10 +80,10 @@ How to use this file
 **Done when:** fixture tests green; all 20 demo documents produce `parsed.json` + page images; timing per document logged. → merged #17, 2026-09-30 (fixture generated at test time, not committed: PDFs are gitignored)
 
 ### P1.2 ★ Sections `feat/p1.2-sections` [CC] — Fri 2 Oct
-- [ ] `parse/sections.py`: TOC parse + printed→PDF page offset, heading regexes, font cues, voting, confidence
-- [ ] `RhpAdapter` implementing `DocTypeAdapter`
-- [ ] Report script: section found/not-found matrix for the demo set → `eval_results/sections.json`
-**Done when:** the 4 key sections found in ≥ 9 of 10 RHPs (Prospectus tracked separately).
+- [x] `parse/sections.py`: TOC parse + printed→PDF page offset, heading regexes, font cues, voting, confidence
+- [x] `RhpAdapter` implementing `DocTypeAdapter`
+- [x] Report script: section found/not-found matrix for the demo set → `eval_results/sections.json`
+**Done when:** the 4 key sections found in ≥ 9 of 10 RHPs (Prospectus tracked separately). → 10/10 RHPs, 10/10 Prospectuses; merged #18, 2026-09-30
 
 ### P1.3 Tables `feat/p1.3-tables` [CC] — Sat 3 Oct
 - [ ] Bake-off pdfplumber vs Docling on 3 table pages (Capital Structure, Objects) → ADR
