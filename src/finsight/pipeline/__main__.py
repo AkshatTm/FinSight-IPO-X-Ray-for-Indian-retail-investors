@@ -1,8 +1,8 @@
 """Offline pipeline CLI.
 
 uv run python -m finsight.pipeline build --ipo meesho-2025 [--doc rhp|prospectus|both]
-                                        [--stage parse] [--no-images]
-uv run python -m finsight.pipeline build-all [--no-images]
+                                        [--stage parse|sections] [--no-images]
+uv run python -m finsight.pipeline build-all [--stage parse|sections] [--no-images]
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 [--doc rhp] --stats
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 --page 1 [--lines 20]
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 --grep "fresh issue"
@@ -17,12 +17,14 @@ import sys
 from typing import cast
 
 from finsight.core.config import get_settings
-from finsight.core.schemas import DocType
+from finsight.core.schemas import DocType, Section
 from finsight.ingest.registry import DemoIpo, get_demo_ipo, list_demo_ipos
+from finsight.parse import KEY_SECTIONS
 from finsight.pipeline import inspect as insp
 from finsight.pipeline.parse_stage import ParseReport, load_parsed, run_parse
+from finsight.pipeline.sections_stage import run_sections, section_matrix, write_matrix
 
-STAGES = ["parse"]
+STAGES = ["parse", "sections"]
 
 
 def _docs(choice: str) -> list[DocType]:
@@ -43,6 +45,17 @@ def _build(ipo: DemoIpo, docs: list[DocType], images: bool) -> list[ParseReport]
         )
         reports.append(report)
     return reports
+
+
+def _sections(ipo: DemoIpo, docs: list[DocType]) -> dict[tuple[str, DocType], list[Section]]:
+    processed = get_settings().paths.processed_dir
+    results = {}
+    for doc in docs:
+        sections = run_sections(processed, ipo.ipo_id, doc)
+        missing = set(KEY_SECTIONS) - {s.id for s in sections}
+        print(f"{ipo.ipo_id:28} {doc:10} sections={len(sections):3} missing_key={sorted(missing)}")
+        results[(ipo.ipo_id, doc)] = sections
+    return results
 
 
 def _write_timing(reports: list[ParseReport]) -> None:
@@ -81,8 +94,17 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
 
-    if args.command == "build":
+    if args.command == "build" and args.stage == "sections":
+        _sections(get_demo_ipo(args.ipo), _docs(args.doc))
+    elif args.command == "build":
         _write_timing(_build(get_demo_ipo(args.ipo), _docs(args.doc), not args.no_images))
+    elif args.command == "build-all" and args.stage == "sections":
+        results: dict[tuple[str, DocType], list[Section]] = {}
+        for ipo in list_demo_ipos():
+            results |= _sections(ipo, ["rhp", "prospectus"])
+        matrix = section_matrix(results)
+        write_matrix(get_settings().paths.eval_dir / "sections.json", matrix)
+        print(f"all key sections found: {matrix['all_key_found']}")
     elif args.command == "build-all":
         reports: list[ParseReport] = []
         for ipo in list_demo_ipos():
