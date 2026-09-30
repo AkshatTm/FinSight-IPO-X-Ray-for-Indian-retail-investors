@@ -1,0 +1,155 @@
+# 10 — FinSight Explained (learning doc + viva prep)
+
+Written for someone starting NLP from zero. Read Part A and B now; Part C grows as each module is built (Claude Code appends a section per module); Part D is the viva drill. If a paragraph doesn't make sense, ask Claude to explain it with a different example — that's what this doc is for.
+
+---
+
+## Part A — The finance you need
+
+**IPO (Initial Public Offering).** A private company sells shares to the public for the first time and lists on NSE/BSE.
+
+**DRHP vs RHP.** The *Draft* Red Herring Prospectus is filed with SEBI first; key numbers like the price are left blank as `[●]`. The *Red Herring Prospectus* is the updated version filed just before the issue opens; most numbers are filled in. We use RHPs.
+
+**Fresh issue vs Offer for Sale (OFS).** Fresh issue = the company creates new shares; the money goes to the company. OFS = existing shareholders (often promoters or investors) sell their shares; the money goes to them, not the company. Total issue = fresh + OFS. A retail investor cares because "how much actually goes into the business" is the fresh part.
+
+**Price band.** The range (e.g. ₹440–₹463) within which investors bid. **Face value** is a nominal accounting value (e.g. ₹2), not the price.
+
+**Promoters.** The people/entities who control the company. **Book Running Lead Managers (BRLMs)** are the investment banks managing the issue. **Registrar** handles applications and allotment.
+
+**Objects of the Offer.** What the company will do with the fresh-issue money (repay debt, build a plant, etc.), usually a table.
+
+**Lakh and crore.** 1 lakh = 1,00,000 = 10⁵. 1 crore = 1,00,00,000 = 10⁷ = 100 lakh. 1 million = 10⁶ = 10 lakh. 1 billion = 10⁹ = 100 crore. So ₹1,250 crore = ₹12,500 million = ₹12.5 billion. Indian grouping puts commas after the first three digits, then every two: 12,50,00,00,000.
+
+**Why SEBI matters to us.** Recommending whether to buy a security requires SEBI registration. FinSight only explains the document.
+
+---
+
+## Part B — NLP and ML concepts (in pipeline order)
+
+### B1. Text extraction from PDFs
+A PDF stores characters with positions, not paragraphs. PyMuPDF gives us every word with its bounding box (x0, y0, x1, y1). Keeping boxes is what lets us draw a highlight on the page image later. Scanned PDFs are just pictures of text; without OCR we can't read them, so we detect and skip them.
+
+### B2. Tokens and tokenization
+Models don't read words; they read *tokens* — pieces of words from a fixed vocabulary. "crore" might be one token; "₹1,250.00" might be five. Every model has its own tokenizer, and length limits (e.g. 384 tokens for our QA model) are counted in tokens.
+
+### B3. Embeddings
+An embedding turns a piece of text into a list of numbers (a vector) so that similar meanings land close together. "offer for sale" and "OFS" end up near each other. We use embeddings to find passages related to a question (B11).
+
+### B4. Transformers and attention (just enough)
+A transformer reads all tokens at once and, for each token, computes *attention*: how much to look at every other token. That's how "it" in a sentence can be linked to the right noun. Stacking many attention layers gives rich, context-aware token representations.
+
+### B5. Encoder models: BERT → DeBERTa
+Encoder models (BERT family) read text and produce a vector per token; they're great for understanding tasks. **DeBERTa-v3** improves BERT by separating *what* a token is from *where* it is (disentangled attention) and a better pre-training task. We use `deberta-v3-base` (~184 M parameters) — small enough for a T4 and our laptop.
+
+### B6. Extractive question answering
+Give the model a question and a passage; it outputs the *span* of the passage that answers it. Technically it predicts, for every token, a score for "answer starts here" and "answer ends here"; the best valid (start, end) pair is the answer. **SQuAD 2.0** adds unanswerable questions: the model can point at a special "no answer" token. This matters because most passages in an RHP don't contain the fresh-issue size.
+
+Why extractive rather than generative for the X-Ray? An extractive model can only copy text that exists in the document — it cannot invent a number.
+
+### B7. Fine-tuning
+Start from a model that already knows English and general QA (`deberta-v3-base-squad2`), then keep training it on our own examples so it learns RHP wording. Key knobs: learning rate (3e-5: small steps so we don't destroy what it knows), epochs (2–3 passes over data), batch size, warm-up. We run 3 random seeds because results vary a bit run to run; we report mean ± std.
+
+### B8. Distant supervision (weak labelling) — our key idea
+We have no labelled training data. But the cover page states the issue sizes in a very standard sentence that simple rules can read with high precision. So:
+1. Rules read the true value from the cover page (the "seed").
+2. We search the rest of the RHP for passages containing the *same normalized value* (₹800 crore == ₹8,000 million).
+3. Those passages become training examples: question "What is the fresh issue size?", answer = that span.
+4. Passages without the value become "no answer" examples.
+The model then learns to find the value in wordings the rules never saw. Labels are "weak" (some are wrong), so we audit 50 and report precision. This idea comes from relation extraction (Mintz et al., 2009).
+
+### B9. The extractor ladder
+Rung 1 rules → Rung 2 pretrained QA → Rung 3 our fine-tuned QA → (Rung 4 BiLSTM-CRF). Comparing rungs on the same gold set shows *what each step buys you*. That comparison is the core experimental result.
+
+### B10. BiLSTM-CRF (sequence labelling)
+A different way to extract: label every token with a tag — `B-FRESH` (beginning), `I-FRESH` (inside), `O` (outside). An LSTM reads tokens left-to-right and right-to-left (bidirectional) to build context; a CRF layer on top makes the tag sequence consistent (it won't allow `O` followed by `I-FRESH`). Older than transformers, smaller, and a good syllabus comparison.
+
+### B11. Retrieval: BM25, dense, fusion, reranking
+To answer a chat question we first find the 5 most relevant passages out of thousands.
+- **BM25** scores passages by matching words, weighting rare words more. Great for exact terms and numbers.
+- **Dense retrieval** compares embeddings (B3); finds matches even with different wording, and with **bge-m3** even across languages (Hindi question → English passage).
+- **Reciprocal Rank Fusion** combines both rankings: each passage gets Σ 1/(60 + rank). Simple and robust.
+- **Reranker (cross-encoder)** reads question and passage *together* and scores relevance precisely. Too slow for thousands, perfect for re-ordering the top 20.
+If even the best passage scores low, we **abstain** instead of guessing.
+
+### B12. RAG (retrieval-augmented generation)
+Put the retrieved passages into the LLM's prompt and instruct it to answer only from them, citing `[n]`. The model's knowledge is replaced by the document's facts.
+
+### B13. LLMs, decoding, quantization
+A decoder LLM predicts the next token repeatedly. **Temperature** controls randomness (we use 0.2: near-deterministic). **Quantization** stores weights in 4 bits instead of 16, shrinking a 2–4 B model to ~1.5–3.3 GB so it fits our 4 GB GPU, with a small quality loss. **GGUF** is the file format llama.cpp/Ollama use for quantized models. Small models sometimes have a "thinking" mode that writes hidden reasoning first — we disable it for speed.
+
+### B14. Hallucination and faithfulness
+A *hallucination* is output not supported by the source. *Faithfulness* = every claim is supported by the retrieved evidence. Small LLMs especially slip on numbers: they may write "lakh" where the document says "crore".
+
+### B15. Deterministic verification — our second key idea
+Instead of asking another model "is this right?", we parse every number in the answer and in the evidence into a canonical rupee value and compare them in code. If they differ by exactly 100× and the units are lakh vs crore, that's a scale mismatch → ❌. Code can't be talked out of the truth, and every verdict has a reason we can show.
+
+### B16. NLI (natural language inference)
+A model that decides if a *premise* entails, contradicts, or is neutral to a *hypothesis*. We can use it for non-numeric claims ("the registrar is X") where number-matching doesn't apply.
+
+### B17. Speech recognition (ASR)
+Whisper-family models turn audio into text; they were trained on huge amounts of weakly labelled audio. We run a quantized version on CPU for Hindi. We measure **CER** (character error rate) because Hindi word boundaries make WER harsher.
+
+### B18. Evaluation metrics
+- **EM:** predicted string exactly equals gold. **Token F1:** partial-overlap credit.
+- **NVM (normalized value match):** our primary metric — `₹800 crore` and `₹8,000 million` count as the same.
+- **Precision / recall / F1:** of the errors the verifier flagged, how many were real (precision); of the real errors, how many it caught (recall).
+- **Recall@5:** was the right passage in the top 5?
+- **Mean ± std over seeds; bootstrap CIs:** our test set is small, so we show uncertainty honestly.
+
+### B19. Train/test leakage
+If a company's passages appear in both training and test, scores look better than reality. We split by IPO and exclude every demo/gold IPO from training, with a test that checks it.
+
+---
+
+## Part C — How each FinSight module works
+
+*(Claude Code appends one section per module when its PR merges: what it does, the key algorithm in plain words, one worked example, known limitations, and 2 likely viva questions.)*
+
+<!-- C1 parse -->
+<!-- C2 sections -->
+<!-- C3 normalize -->
+<!-- C4 extract.rules -->
+<!-- C5 extract.qa -->
+<!-- C6 weaklabel -->
+<!-- C7 retrieve -->
+<!-- C8 generate -->
+<!-- C9 verify -->
+<!-- C10 guard -->
+<!-- C11 voice -->
+<!-- C12 chat + api -->
+<!-- C13 frontend -->
+
+---
+
+## Part D — Viva drill (answer aloud without notes)
+
+1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
+2. **Why not just use ChatGPT/Claude?** No page-level traceability, lakh/crore slips, cost, can't run offline; our E9 results show where they fail and where they win.
+3. **What's DRHP vs RHP, and why RHPs?** DRHPs have `[●]` placeholders for key numbers.
+4. **Fresh issue vs OFS?** New shares, money to company vs existing holders selling, money to them.
+5. **What is extractive QA? How does the model choose an answer?** Start/end token scores; best valid span; "no answer" option.
+6. **Why DeBERTa-v3-base?** Strong QA encoder that fits a free T4 and our laptop; disentangled attention.
+7. **Where did your training labels come from?** Distant supervision from cover-page rules + value propagation.
+8. **How noisy are they? How do you know?** 50-sample audit → precision with CI.
+9. **Why exclude the cover page from positives (ablation)?** Otherwise the model just learns to copy the rules.
+10. **How do you prevent leakage?** Split by IPO; demo/gold excluded; overlap test.
+11. **What does the ladder show?** What each rung adds per field; where fine-tuning helped and where rules are enough.
+12. **Why three seeds?** Fine-tuning variance; report mean ± std.
+13. **Explain BM25 in one sentence.** Word-match scoring that rewards rare terms and normalizes for passage length.
+14. **Why hybrid retrieval?** BM25 for exact names/numbers, dense for paraphrase and cross-lingual.
+15. **What is RRF?** Sum of 1/(60+rank) across rankers.
+16. **Bi-encoder vs cross-encoder?** Separate embeddings (fast, used for search) vs reading pair together (accurate, used for reranking).
+17. **When does FinSight abstain?** Top rerank score below a threshold tuned on dev questions.
+18. **Why a small local LLM? What did you lose?** Offline, free, private; weaker fluency — compensated by retrieval + verifier.
+19. **What is quantization?** Fewer bits per weight → smaller, faster, slight quality loss.
+20. **How does the verifier decide ❌ vs ⚠️?** Same metric with different value/scale → ❌; number absent → ⚠️.
+21. **Why is scale mismatch always ❌?** An exact 10ⁿ ratio with a unit swap is a unit error, not missing info.
+22. **Why deterministic instead of an LLM judge?** Explainable, testable, and model judges are weak on bare numbers.
+23. **How did you test the verifier?** Seeded errors by type + correct answers incl. allowed rounding → P/R/F1.
+24. **How does Hindi work without translation?** bge-m3 cross-lingual retrieval; LLM answers in Hindi; numbers verified the same way.
+25. **How is prompt injection handled?** Passages delimited as data, system rule to ignore embedded instructions, adversarial test.
+26. **Why can't FinSight say "apply"?** SEBI registration rules; guard refuses and shows facts.
+27. **What are your biggest limitations?** Small gold set, weak-label noise, scanned PDFs unsupported, small LLM fluency, 9 fields only.
+28. **What would you do with one more month?** More fields, QLoRA generator, concall adapter, larger gold set, user study.
+29. **How is the demo mode honest?** It replays recorded real outputs only; never edited.
+30. **Walk me through one chat answer end to end.** Guard → BM25 + dense → RRF → rerank → prompt with [1]–[5] → stream → claims → numbers normalized → matched → marks → trace.
