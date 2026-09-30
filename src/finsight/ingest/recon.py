@@ -88,16 +88,21 @@ def flatten_text(obj: Any) -> str:
     return " ".join(p for p in parts if p).strip()
 
 
+_TITLE = re.compile(r"\b(DRAFT\s+)?(RED\s+HERRING\s+)?PROSPECTUS\b")
+
+
 def classify_cover(text: str) -> CoverKind:
-    """Decide from cover-page words whether a text is a DRHP, RHP or final Prospectus."""
-    head = " ".join(text[:1500].upper().split())
-    if "DRAFT RED HERRING" in head:
+    """DRHP, RHP or final Prospectus, judged by the *first* title phrase on the cover.
+
+    Later mentions do not count: an RHP cover says "(This Draft Red Herring Prospectus...)"
+    further down and a final Prospectus refers to "the Red Herring Prospectus dated ...".
+    """
+    match = _TITLE.search(" ".join(text[:1500].upper().split()))
+    if not match:
+        return "unknown"
+    if match.group(1):
         return "drhp"
-    if "RED HERRING PROSPECTUS" in head:
-        return "rhp"
-    if re.search(r"\bPROSPECTUS\b", head):
-        return "prospectus"
-    return "unknown"
+    return "rhp" if match.group(2) else "prospectus"
 
 
 # ------------------------------------------------------------------------- Excel
@@ -172,6 +177,7 @@ class ZipSummary:
     n_entries: int
     by_name_pattern: dict[str, int]
     by_cover: dict[str, int]
+    by_name_and_cover: dict[str, int]  # "N_RHP.json -> prospectus": file names are not reliable
     size_mb_p50: float
     size_mb_max: float
     pages_p50: int
@@ -184,6 +190,7 @@ def _pattern(name: str) -> str:
 def summarize_zip(path: Path) -> ZipSummary:
     by_name: Counter[str] = Counter()
     by_cover: Counter[str] = Counter()
+    by_both: Counter[str] = Counter()
     sizes: list[int] = []
     pages: list[int] = []
     with zipfile.ZipFile(path) as z:
@@ -195,7 +202,9 @@ def summarize_zip(path: Path) -> ZipSummary:
             obj = json.loads(z.read(info))
             pages.append(len(obj) if isinstance(obj, dict) else 0)
             first = obj.get("Page_0") if isinstance(obj, dict) else None
-            by_cover[classify_cover(flatten_text(first))] += 1
+            cover = classify_cover(flatten_text(first))
+            by_cover[cover] += 1
+            by_both[f"{_pattern(info.filename)} -> {cover}"] += 1
     sizes.sort()
     pages.sort()
     mid = len(sizes) // 2
@@ -203,6 +212,7 @@ def summarize_zip(path: Path) -> ZipSummary:
         n_entries=len(sizes),
         by_name_pattern=dict(by_name.most_common()),
         by_cover=dict(by_cover),
+        by_name_and_cover=dict(by_both.most_common()),
         size_mb_p50=round(sizes[mid] / 1e6, 2) if sizes else 0.0,
         size_mb_max=round(sizes[-1] / 1e6, 2) if sizes else 0.0,
         pages_p50=pages[mid] if pages else 0,
@@ -237,6 +247,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     print("By file-name pattern:", zs.by_name_pattern)
     print("By cover-page class :", zs.by_cover)
+    print("File name -> cover  :", {k: v for k, v in zs.by_name_and_cover.items() if v >= 5})
 
     demo = [i.company for i in list_demo_ipos()]
     overlap = demo_overlap(xlsx, demo)

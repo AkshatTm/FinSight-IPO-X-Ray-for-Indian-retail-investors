@@ -24,6 +24,10 @@ from finsight.ingest.recon import (
         ("PROSPECTUS\nDated November 7, 2025", "prospectus"),
         ("Some annual report", "unknown"),
         ("", "unknown"),
+        # The first title phrase on the cover decides, not any later mention (real dataset cases):
+        ("RED HERRING PROSPECTUS Dated 2016 ... (This Draft Red Herring Prospectus)", "rhp"),
+        ("C M Y K Prospectus Dated 2010 ... read with the Red Herring Prospectus", "prospectus"),
+        ("(cid:51)(cid:53) Dated: February 05, 2016", "unknown"),
     ],
 )
 def test_classify_cover(text: str, expected: str) -> None:
@@ -110,6 +114,7 @@ def test_summarize_zip_classifies_by_cover_and_name(tiny_dataset: tuple[Path, Pa
     assert summary.n_entries == 3
     assert summary.by_cover == {"rhp": 1, "prospectus": 1, "drhp": 1}
     assert summary.by_name_pattern == {"N_RHP.json": 1, "N.json": 1, "N_DRHP.json": 1}
+    assert summary.by_name_and_cover["N.json -> prospectus"] == 1
 
 
 def test_sample_rows_are_truncated_and_exclude_forbidden(tiny_dataset: tuple[Path, Path]) -> None:
