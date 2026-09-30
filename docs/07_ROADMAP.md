@@ -98,10 +98,10 @@ How to use this file
 **Done when:** ≥ 80 table cases + property tests green; mypy clean. → 96 table cases (18 Hindi) + 10 sentence/span tests + 5 hypothesis properties + 29 equality + 25 period tests; mypy strict clean; ADR-034; merged #20, 2026-09-30
 
 ### P1.5 Training corpus `data/p1.5-corpus` [CC→AKSHAT] — Mon 5 Oct
-- [ ] `ingest/corpus.py`: build `data/processed/corpus/<ipo_id>.json` from dataset text, or Plan B download + parse
-- [ ] Exclusion of demo IPOs (and later gold v2) + overlap test
-- [ ] Corpus stats → `eval_results/corpus_stats.json`
-**Done when:** ≥ 150 (target ≥ 300) corpus IPOs with section-tagged text.
+- [x] `ingest/corpus.py`: build `data/processed/corpus/<ipo_id>.json` from dataset text, or Plan B download + parse
+- [x] Exclusion of demo IPOs (and later gold v2) + overlap test
+- [x] Corpus stats → `eval_results/corpus_stats.json`
+**Done when:** ≥ 150 (target ≥ 300) corpus IPOs with section-tagged text. → 389 IPOs (110 RHP, 279 Prospectus), 331 with all 4 key sections; merged #21, 2026-09-30. [AKSHAT] add the 10 gold-v2 company names to `data/gold/excluded_ipos.txt` and rerun `uv run python -m finsight.ingest.corpus build` (no overlap expected: the dataset ends in 2023).
 
 ### P1.6 Buffer + G1 review — Tue 6 Oct
 - [ ] Fix parser problems found by eye; update `10_FINSIGHT_EXPLAINED.md` (parsing, sections, numerals); tag `v0.1.0`

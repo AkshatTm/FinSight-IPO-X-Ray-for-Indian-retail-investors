@@ -187,6 +187,22 @@ If a company's passages appear in both training and test, scores look better tha
 **Likely viva questions.** (1) *Why is "₹ 5 crore" equal to "₹ 4.6 crore" but "₹ 800 crore" not equal to "₹ 800 million"?* (2) *How do property-based tests differ from your table of examples, and what did they check?*
 
 
+### C2c. The training corpus (built in P1.5)
+
+**What it does.** `finsight.ingest.corpus` turns the public IPO dataset (2009-2023 RHPs and final Prospectuses, already extracted to text page by page) into a clean training corpus: one file per IPO with the page texts, the document kind and the sections found by the P1.2 detector. `finsight.ingest.exclusion` guarantees that no demo IPO and no gold-v2 IPO is in it. Weak labelling (P2) and the BiLSTM-CRF/QA training use this corpus, never the demo PDFs.
+
+**Key ideas in plain words.**
+- *Kind by cover, not by file name.* About 170 files named `_RHP` are really final Prospectuses. The first title phrase on the cover ("RED HERRING PROSPECTUS" vs "PROSPECTUS") decides, and draft (DRHP) or unreadable texts are dropped (ADR-016).
+- *One text per IPO.* The Excel sheet links each IPO to exactly one text file, so an IPO can never be in both training and dev/test data through two documents.
+- *Reuse the section detector.* The dataset gives no boxes or fonts, so we wrap each page's text in the same `ParsedDoc` shape and run `find_sections`. The heading and table-of-contents signals still work; the font signal does not, so confidence tops out at 0.9.
+- *Fuzzy exclusion.* Company names are normalised (lowercase, no "Limited", "IPO", punctuation) and compared three ways: equal, equal without spaces (Urbancompany = Urban Company), or one distinctive word opening the other (Groww = Groww Innovations). "Tata Capital" and "Tata Motors" stay different. The demo companies come from `configs/demo_ipos.yaml`; the ten gold-v2 companies go in `data/gold/excluded_ipos.txt`.
+
+**Worked example.** `Edserv Softsystems Limited IPO`, closed 2009 becomes `edserv-softsystems-2009`: cover says Prospectus, so `doc_kind = prospectus`; its TOC gives The Offer, Capital Structure and Objects of the Offer page ranges. Result on the full dataset: 389 IPOs (110 RHP-derived, 279 Prospectus-derived), 331 with all four key sections found; 5 DRHP, 15 unreadable and 9 too-short texts were skipped; nothing needed excluding because the dataset ends in 2023 and the demo IPOs are all from 2025.
+
+**Limits.** The text is whatever the dataset's PDF extractor produced: no boxes, so no highlight source. Tables come as text rows. 16 % of texts miss a key section (mostly older scans with irregular TOCs), which the weak-label step simply skips. The corpus is 470 MB and lives in `data/processed/` (not committed).
+
+**Likely viva questions.** (1) *Why must the demo IPOs be excluded from training?* (2) *Why classify the document kind from the cover text instead of the file name?*
+
 <!-- C4 extract.rules -->
 <!-- C5 extract.qa -->
 <!-- C6 weaklabel -->
