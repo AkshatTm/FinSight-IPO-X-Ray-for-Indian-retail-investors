@@ -152,6 +152,22 @@ If a company's passages appear in both training and test, scores look better tha
 **Limits.** A section that the TOC doesn't list and whose heading doesn't sit in the top lines of a page is missed. Very long sections (Hexaware's capital structure runs to page 251 because its TOC nests many sub-parts under it) are correct by the TOC but broad, so retrieval still has to rank passages inside them. Scanned TOC pages would disable the TOC signal.
 
 **Likely viva questions.** (1) *Why not trust the TOC page numbers directly?* (2) *What happens when the TOC and the heading disagree?*
+### C2b. Tables (built in P1.3)
+
+**What it does.** `finsight.parse.tables` pulls the tables out of the three sections the X-Ray needs (The Offer, Capital Structure, Objects of the Offer), cell by cell, each cell with its text, row, column and exact box on the page. It also records the table's unit ("₹ in million"), because "4,720" means nothing without it. `pipeline build --stage tables` writes `tables.json` per document and updates `eval_results/tables.json`.
+
+**Key ideas in plain words.**
+- *Two ways to find a table.* PyMuPDF finds tables from the lines drawn around cells: fast and exact when every cell is boxed. But many RHPs box only the header row and print the body as plain text, so line-finding sees a two-row table with no numbers. Docling runs a small vision model that looks at the page layout and rebuilds the grid even without lines. We use Docling when it is installed and fall back to PyMuPDF (ADR-017).
+- *Only where it matters.* Docling is slower (about 1.5 s a page on the laptop GPU), so it runs only on the three key sections, at most 40 pages each: about 7 % of all pages.
+- *The unit header.* We look for phrases like "(in ₹ million)", "(₹ in crore)" or "(Rs. in lakhs)" in the table's first two rows or in the inch of text above it, and store one canonical form such as "₹ in million". A phrase with digits, like "(₹ 800 crore)", is an amount, not a unit, and is ignored.
+- *Offer for Sale only.* When the whole IPO is existing shareholders selling (no fresh issue), the company gets no money and there is no "use of proceeds" table. The Objects section then says "will not receive any proceeds from the Offer", and we report `not_in_document` instead of "missing".
+
+**Worked example.** Urban Company RHP, PDF page 163: PyMuPDF found only "Particulars | Estimated Amount | (in ₹ million)". Docling found the rows "Gross Proceeds of the Fresh Issue | 4,720", "Less: Offer expenses … | [●]", "Total Net Proceeds | [●]", with unit "₹ in million". Over the demo set: Objects rows were found in 8/8 fresh-issue RHPs and 8/8 Prospectuses; Hexaware and LG Electronics (pure OFS) were reported as `not_in_document`. 1,000 pages took 25 minutes.
+
+**Limits.** A table that continues onto the next page is stored as two tables (joining them is left to extraction). Docling occasionally drops a few cells that fit no row or column (it logs a warning). Docling needs the optional `tables` group and preferably the GPU; without it the ruled-table fallback misses unruled bodies.
+
+**Likely viva questions.** (1) *Why not run the table model on the whole 700-page document?* (2) *How do you know "4,720" is ₹ 4,720 million and not ₹ 4,720?*
+
 <!-- C3 normalize -->
 <!-- C4 extract.rules -->
 <!-- C5 extract.qa -->
