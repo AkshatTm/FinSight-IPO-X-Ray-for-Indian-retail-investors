@@ -107,7 +107,7 @@ How to use this file
 - [ ] Fix parser problems found by eye; update `10_FINSIGHT_EXPLAINED.md` (parsing, sections, numerals); tag `v0.1.0`
 
 ### P1.7 Gold v1 tooling and labelling `data/p1.7-gold-v1` [AKSHAT + CC] — runs alongside P1.1–P1.5
-- [ ] [CC] `evaluate/gold.py` schema + validator; empty per-IPO template generator (no values)
+- [x] [CC] `evaluate/gold.py` schema + validator; empty per-IPO template generator (no values) → merged #22; `uv run python -m finsight.evaluate.gold template|validate [--complete]|consistency`; empty template committed at `data/gold/gold_template.jsonl` (110 rows: copy to `gold_values.jsonl` and fill)
 - [ ] [AKSHAT] Label 11 fields × 10 IPOs from the PDFs, blind, PDF page recorded (`05` §2) → `data/gold/gold_values.jsonl`
 - [ ] [AKSHAT, low priority] Download 10 more IPOs (2025–26, RHP + Prospectus each) for gold v2; test one full-RHP upload in a frontier app (`05` §7)
 **Done when:** validator passes on all ~110 values; committed before P2.1 starts.
