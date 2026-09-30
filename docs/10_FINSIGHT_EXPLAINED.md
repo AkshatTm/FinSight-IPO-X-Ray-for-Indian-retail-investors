@@ -168,6 +168,8 @@ If a company's passages appear in both training and test, scores look better tha
 
 **Likely viva questions.** (1) *Why not run the table model on the whole 700-page document?* (2) *How do you know "4,720" is ₹ 4,720 million and not ₹ 4,720?*
 
+**Update (1 Oct): the AI-prefilled gold.** Gold v1 was pre-filled by an AI and checked by a human instead of labelled blind. To make the validator accept real filings it now ignores capitals and footnote marks, treats `[•]` as `[●]`, lets a name wrap across table lines, and lets list items sit between contact details (words must still appear in order). Numbers still need an exact match. Every row is tagged `ai_assisted_verified`, so any score against gold v1 must say so (ADR-035).
+
 ### C3. Normalizing numbers, units and periods (built in P1.4)
 
 **What it does.** `finsight.normalize` turns the ways an RHP or a Hindi answer can write a number into one exact value. `parse_amounts(text)` finds every amount in a sentence with its character span; `parse_amount(cell, header_scale)` reads one table cell; `equal(a, b)` says whether two amounts are the same number; `to_unit` / `format_money` give UI equivalents ("₹ 1,249.98 crore = ₹ 12,499.8 million"); `find_periods` reads FY24, FY2024-25, Q3FY25 and "six months ended September 30, 2024".

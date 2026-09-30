@@ -106,20 +106,21 @@ How to use this file
 ### P1.6 Buffer + G1 review — Tue 6 Oct
 - [x] `10_FINSIGHT_EXPLAINED.md` updated (C1 parsing, C2 sections, C2b tables, C2c corpus, C2d gold, C3 numerals)
 - [ ] [AKSHAT] Eye-check 3 parsed documents; fix parser problems found
-- [ ] G1 passed (gold v1 labelled) → tag `v0.1.0`
+- [x] G1 passed (gold v1 labelled, validate --complete OK) → tag `v0.1.0`
 
 ### P1.7 Gold v1 tooling and labelling `data/p1.7-gold-v1` [AKSHAT + CC] — runs alongside P1.1–P1.5
 - [x] [CC] `evaluate/gold.py` schema + validator; empty per-IPO template generator (no values) → merged #22; `uv run python -m finsight.evaluate.gold template|validate [--complete]|consistency`; empty template committed at `data/gold/gold_template.jsonl` (110 rows: copy to `gold_values.jsonl` and fill)
-- [ ] [AKSHAT] Label 11 fields × 10 IPOs from the PDFs, blind, PDF page recorded (`05` §2) → `data/gold/gold_values.jsonl`
+- [x] [AKSHAT] Gold v1: 110 values AI-prefilled then verified by Akshat, PDF page recorded (`05` §2, ADR-035) → `data/gold/gold_values.jsonl` (`gold import-prefill`)
 - [ ] [AKSHAT, low priority] Download 10 more IPOs (2025–26, RHP + Prospectus each) for gold v2; test one full-RHP upload in a frontier app (`05` §7)
-**Done when:** validator passes on all ~110 values; committed before P2.1 starts.
+**Done when:** validator passes on all ~110 values; committed before P2.1 starts. → passes, 110 rows, `label_source: ai_assisted_verified`.
 
 ---
 
 ## Phase 2 — Extraction and our model (Wed 7 – Wed 14 Oct) → G2
 
 ### P2.1 Field registry + rules (Rung 1) `feat/p2.1-rules` [CC] — Wed 7 Oct
-- [ ] `configs/fields.yaml` (11 fields, EN/HI labels, document (RHP or Prospectus), sections, questions, extractor, fallback, `ladder` flag; `offer_price` = rules-only on the Prospectus cover, `ladder: false`, like `objects_of_offer`)
+- [ ] `configs/fields.yaml` (11 fields, EN/HI labels, document (RHP or Prospectus), sections, questions, extractor, fallback, `ladder` flag; `offer_price` = rules-only on the Prospectus cover, `ladder: false`, like `objects_of_offer`; `price_band` is `[●]` in all 10 RHPs: `ladder: false`, expect status `placeholder` on RHPs)
+- [ ] Extractor cases from gold v1: `total_issue_size` and `ofs_amount` are stated in the RHP for HDB, Hexaware, PhysicsWallah and Urban Company and `[●]` for the other six (handle both); Tata Capital `fresh_issue_size` is a placeholder in the RHP (shares only)
 - [ ] `extract/rules.py` against SEBI standard wording (cover page, The Offer); tests with real-looking sentences in `data/samples/`
 - [ ] Tune rules on the 3 dev IPOs only; gold v1 already exists from P1.7
 **Done when:** rules produce candidates for all demo IPOs; tests green.

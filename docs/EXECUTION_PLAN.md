@@ -121,8 +121,9 @@ Fix parser problems from Akshat's eye-check; update `10` Part C; run Prompt 5 fo
 ## Phase 2 — Extraction and our model → G2
 
 ### P2.1 Field registry + rules (Rung 1) — [CC] · S · `feat/p2.1-rules` · "P2.1 Field registry and rules extractor"
-- **Files:** `configs/fields.yaml` (fields per ADR-023, EN/HI labels, doc type, sections, questions, extractor, fallback, `ladder: true|false`; `offer_price` and `objects_of_offer` are `ladder: false`), `extract/{fields,rules}.py`, `data/samples/*` sentence samples, `tests/extract/*`.
+- **Files:** `configs/fields.yaml` (fields per ADR-023, EN/HI labels, doc type, sections, questions, extractor, fallback, `ladder: true|false`; `offer_price`, `price_band` and `objects_of_offer` are `ladder: false`), `extract/{fields,rules}.py`, `data/samples/*` sentence samples, `tests/extract/*`.
 - **`offer_price` (review decision):** rules-only, read from the Prospectus cover; `ladder: false` because RHP training texts contain `[●]` for it, so there are no positives to learn from. Same treatment as `objects_of_offer`.
+- **Gold v1 findings:** `price_band` is `[●]` in all 10 RHPs (expect `placeholder`). `total_issue_size` and `ofs_amount` are stated in the RHP for HDB, Hexaware, PhysicsWallah and Urban Company and blank for the other six: handle both. Tata Capital `fresh_issue_size` is a placeholder in the RHP (shares only): test case.
 - **Tuning discipline:** rules are developed and checked against the 3 **dev** IPOs only; test IPOs are first scored in P2.6.
 - **Commits:** (1) `feat(extract): field registry loader` · (2) `test(extract): cover-page sentences for fresh issue and OFS shares` · (3) `feat(extract): rules for fresh issue, OFS shares, offer price` · (4) `feat(extract): rules for face value, BRLMs, registrar` · (5) `feat(extract): promoter rules` · (6) `test(extract): placeholder handling` · (7) `docs(explained): C4 rules`.
 

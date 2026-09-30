@@ -63,14 +63,15 @@ We **do not use** the dataset's Apply/Avoid rating labels or listing-gain target
  "page": 12, "quote": "Fresh Issue of up to [●] Equity Shares aggregating up to ₹ 800.00 crore",
  "status": "present", "labelled_at": "2026-10-08", "notes": ""}
 ```
-`status` ∈ `present | not_in_document | placeholder`. List fields store a JSON list in `value_raw`.
+`status` ∈ `present | not_in_document | placeholder`. List fields store a JSON list in `value_raw`; `objects_of_offer` stores `[purpose, amount]` pairs (amounts as printed, usually ₹ million). Optional `label_source` ∈ `hand | ai_assisted_verified` (default `hand`; ADR-035). A `not_in_document` row may keep `page` and `quote` as evidence (for example a pure offer for sale).
 
 **Rules**
 1. **Blind labelling for gold v1:** label from the PDF directly, before any extractor exists or its output is seen (Phase 1, sub-phase P1.7). This keeps the ladder fair. Fields: fresh issue amount, OFS shares, OFS amount, offer price (Prospectus), price band (if stated), face value, BRLMs, registrar, promoters, objects of the offer. Record the **PDF page**.
 2. Record the **first authoritative occurrence** (cover page or The Offer) and the page number.
 3. Copy the value exactly as printed; normalisation is done by code.
 4. **Self-consistency check:** a week later, re-label 10 random values without looking; report agreement.
-5. Gold v2 may use *assisted* labelling (CC pre-fills page hints, not values) — disclosed in the report.
+5. **Gold v1 as actually built (ADR-035):** the 110 values were pre-filled by Claude (chat) from the PDFs and then verified by Akshat, so rule 1 (blind labelling) was not followed and all rows carry `label_source: ai_assisted_verified`. Reports must disclose this: extractor scores against gold v1 measure agreement with AI-read, human-checked values, and the two may share blind spots. Hand corrections made during verification: not recorded. The self-consistency check (rule 4) therefore compares a fresh hand pass against these values.
+6. Gold v2 may use *assisted* labelling (CC pre-fills page hints, not values) — disclosed in the report.
 
 Estimated effort: ~15 min per IPO for 11 fields across two documents → ~2.5–3 h for v1, ~4 h for v2.
 
