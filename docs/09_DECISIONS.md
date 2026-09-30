@@ -115,13 +115,19 @@ The Excel's `Fresh Issue`, `Offer for Sale`, `Total Issue Size`, `Price Band`, `
 **Decision:** RHP passages keep the documented format; Prospectus passages are `<ipo_id>:prospectus:p<page>:c<k>` (`core/ids.py`, round-trip tested).
 **Consequences:** no existing id changes. 02 section 9 needs one line describing the Prospectus form; that edit is left for Akshat's approval with the next change to 02.
 
+### ADR-017 Table extractor: Docling primary, PyMuPDF fallback — proposed (30 Sep 2026)
+**Context:** many RHPs draw ruling lines only around the header of the Objects-of-the-Offer table; the body rows ("Gross Proceeds … 4,720") are plain text. Bake-off on 3 RHP pages (`scripts/table_bakeoff.py`, `eval_results/table_bakeoff.json`): on Urban Company p163 (unruled body) PyMuPDF and pdfplumber found only the 2 header rows (0 value cells), Docling found both tables with 5 value cells; on the fully ruled Meesho p210 and Tata Capital p145 all three found the same value cells (3 and 61). Warm Docling on the RTX 2050 took 0.7–2.1 s/page; PyMuPDF 0.1–0.3 s; pdfplumber 0.5–1.0 s and it added spurious one-column fragments.
+**Options:** (A) pdfplumber — no gain over PyMuPDF, slower. (B) PyMuPDF `find_tables` — fast, already installed, misses unruled bodies. (C) Docling — recovers unruled tables; pulls torch and ~100 packages. (D) own word-geometry heuristic — more code to maintain for what C already does.
+**Decision:** Docling is the primary backend, installed only in the opt-in `tables` dependency group (`uv run --group tables …`); PyMuPDF is the automatic fallback when Docling is absent (CI, `dev_light`). Only the_offer, capital_structure and objects_of_the_offer are processed, capped at 40 pages per section. The unit header ("₹ in million") comes from the table's first two rows or the text within 72 pt above it.
+**Consequences:** the offline build needs the GPU for tables (demo set: 1,000 key-section pages, 1,502 s; one process per IPO, because a single 20-document process died silently after 12); CI tests use the PyMuPDF backend and a slow test covers Docling. pdfplumber stays only for the bake-off script. Pure-OFS IPOs are recognised from the Objects text ("will not receive any proceeds from the Offer") and reported as `not_in_document`.
+
 ---
 
 ## Pending ADRs (to be written during the build)
 
 | # | Topic | Phase |
 |---|---|---|
-| ADR-017 | Table extractor: pdfplumber vs Docling | P1.3 |
+| ~~ADR-017~~ | Table extractor: pdfplumber vs Docling (written above) | P1.3 |
 | ADR-018 | Extractor chosen per field (from ladder results) | P2.6 |
 | ADR-019 | Measured memory/latency; device assignments | P3.1 |
 | ADR-020 | LLM choice (bake-off) | P3.2 |
