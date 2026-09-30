@@ -68,3 +68,32 @@ typecheck = { cmd = "mypy -p finsight.core -p finsight.normalize -p finsight.ver
 [tool.poe.tasks.lint]
 help = "ruff check and format check"
 sequence = [{ cmd = "ruff check ." }, { cmd = "ruff format --check ." }]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+extend-exclude = ["data", "models", "frontend", "notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "PT", "RUF"]
+# Rupee signs, the placeholder bullet and Devanagari are intentional in strings and comments.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.11"
+mypy_path = "src"
+plugins = ["pydantic.mypy"]
+warn_unused_configs = true
+
+# Strict where correctness matters most (CLAUDE.md, 04 section 3).
+[[tool.mypy.overrides]]
+module = ["finsight.core.*", "finsight.normalize.*", "finsight.verify.*"]
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "slow: uses real models or large data; skipped by `poe test`, run by `poe test-all`",
+]
