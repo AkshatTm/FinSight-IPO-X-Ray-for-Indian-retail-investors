@@ -68,7 +68,7 @@ Each decision: context → decision → consequences. Status: `accepted` (Akshat
 ### ADR-026 Dev/test split of the demo set; gold v1 labelled in Phase 1 — proposed (30 Sep 2026)
 **Context:** writing rules and picking extractors on the same IPOs used for the reported ladder would leak test information; the original plan labelled gold after the X-Ray already existed.
 **Decision:** 3 dev / 7 test IPOs. Rules, thresholds, prompts and per-field extractor choice are tuned on dev only; reported numbers use test. Gold v1 is labelled blind in Phase 1 (P1.7), before any extractor exists. Proposed dev set: `hexaware-technologies-2025` (pure OFS), `ather-energy-2025`, `urban-company-2025`; confirmed in P0.4.
-**Consequences:** fewer test IPOs (7), so results are reported with bootstrap intervals and per-field numbers are descriptive (ADR-031). Gold v2 (18 held-out RHPs) increases the test size later.
+**Consequences:** fewer test IPOs (7), so results are reported with bootstrap intervals and per-field numbers are descriptive (ADR-031). Gold v2 (10 more held-out IPOs) increases the test size later.
 
 ### ADR-027 Scale-mismatch requires a scale signal — proposed (30 Sep 2026)
 **Context:** the rule "a 10/100/1000× difference is always a scale mismatch" also fires on genuinely different values, e.g. face value ₹10 vs ₹1.

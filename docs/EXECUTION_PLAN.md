@@ -24,7 +24,7 @@
 | B4 | Ladder field list written down. Names propagate by normalized fuzzy match. Lists scored with list-F1. `objects_of_offer` uses the table extractor only | 05 §3/§4, P2.1, P2.3, P2.6 |
 | B5 | PDF page in the chip, printed page in the popover; both stored | ADR-025, 02 §6, 06, P1.1 |
 | C1 | 10 demo IPOs = **3 dev / 7 test**; gold v1 labelled in Phase 1 before any extractor exists; rules and extractor choice tuned on dev only | ADR-026, 05 §1, P1.7 |
-| C2 | Headline claim = overall NVM + bootstrap CI + paired comparison; per-field results descriptive. Gold v2 RHPs downloaded during Phase 1 | 01 §8, 05 §4, P5.1 |
+| C2 | Headline claim = overall NVM + bootstrap CI + paired comparison; per-field results descriptive. Gold v2 (10 more IPOs) downloaded during Phase 1 | 01 §8, 05 §4, P5.1 |
 | C3 | Ladder reported on the full document **and** body-only (cover masked) | ADR-031, P2.6 |
 | C4 | Advice/factual test set written by Akshat + friends before P3.4; my lines go to classifier training only | 05 §1.1, P3.4 |
 | C5 | E5 is called a unit benchmark; add verifier runs on real LLM answers (E7) and frontier answers (E9) with a hand-checked sample | 05 §6, P3.6, P5.2 |
@@ -236,7 +236,7 @@ Each F sub-phase: issue "Fn <title>", branch as in `07`, commits below, verify w
 | Before P1.1 review | Run parse on all 20 documents; eyeball 3; paste problems | P1.2 |
 | Sat 3 Oct | Test one full-RHP upload to Claude/ChatGPT/Gemini: is it truncated? | P5.2 design |
 | Mon 5 Oct | **Gold v1 labelling** (blind, ~3 h) into `data/gold/gold_values.jsonl` | P2.1 rules review, P2.6 |
-| Sat 10 Oct | Optional: add 2 pure-fresh IPOs (RHP + Prospectus) to `data/raw/` and tell CC; download the 18 gold-v2 RHPs | P5.1 |
+| Sat 10 Oct | Optional: add 2 pure-fresh IPOs (RHP + Prospectus) to `data/raw/` and tell CC; download 10 more IPOs for gold v2 (2025–26, RHP + Prospectus each) | P5.1 |
 | Sat 10 Oct | Audit 50 weak labels (~1 h) | P2.4 → E1 |
 | Sun 11 Oct | Write advice + factual question set (≥ 50 + ≥ 50, EN/HI/Hinglish) with friends | P3.4 |
 | Sun 11 Oct | Kaggle: upload dataset, run 3 seeds, download weights, commit metrics | P2.6 |
