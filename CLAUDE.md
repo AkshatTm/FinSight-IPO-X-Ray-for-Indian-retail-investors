@@ -5,7 +5,8 @@ FinSight = IPO X-Ray for Indian retail investors: RHP → cited fact sheet + bil
 ## Session protocol
 1. Read `PROGRESS.md`, then `docs/07_ROADMAP.md` (find the current sub-phase) and its entry in `docs/EXECUTION_PLAN.md`, then only the doc sections that sub-phase needs. Full doc index: `docs/00_README.md`.
 2. Run the tests (`uv run poe test`) before changing anything when resuming.
-3. Work on **one sub-phase per session**. At the end, print: `✅ <ID> done — run /clear and paste the resume prompt.`
+3. **Model check before every sub-phase:** find its Model column in `docs/EXECUTION_PLAN.md` (O = Opus, S = Sonnet; ★ and bugs that failed twice on Sonnet = Opus). If it differs from the running model, stop before any work and print exactly: "🔁 MODEL SWITCH: next is <ID> (<title>) — recommended <Opus/Sonnet>. Type /model <opus/sonnet>, then say continue." Otherwise print "✓ Model OK: <ID> on <model>".
+4. Work on **one sub-phase per session**. At the end, print: `✅ <ID> done — run /clear and paste the resume prompt.`
 
 ## Hard rules
 - **Plan first:** for any task > ~50 lines, show a plan (≤ 15 lines) and wait for Akshat's approval.
