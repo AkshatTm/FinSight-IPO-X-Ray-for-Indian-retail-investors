@@ -168,7 +168,25 @@ If a company's passages appear in both training and test, scores look better tha
 
 **Likely viva questions.** (1) *Why not run the table model on the whole 700-page document?* (2) *How do you know "4,720" is ₹ 4,720 million and not ₹ 4,720?*
 
-<!-- C3 normalize -->
+### C3. Normalizing numbers, units and periods (built in P1.4)
+
+**What it does.** `finsight.normalize` turns the ways an RHP or a Hindi answer can write a number into one exact value. `parse_amounts(text)` finds every amount in a sentence with its character span; `parse_amount(cell, header_scale)` reads one table cell; `equal(a, b)` says whether two amounts are the same number; `to_unit` / `format_money` give UI equivalents ("₹ 1,249.98 crore = ₹ 12,499.8 million"); `find_periods` reads FY24, FY2024-25, Q3FY25 and "six months ended September 30, 2024".
+
+**Key ideas in plain words.**
+- *One exact value.* "₹ 1,250.5 crore", "Rs. 12,505 mn" and "₹ १,२५०.५ करोड़" all become 12,505,000,000 rupees, stored as a `Decimal` (never a float), plus the scale word and how many decimals were printed.
+- *Only amounts, not every digit.* A number counts only with a signal: ₹/Rs./INR/रुपये, a scale word (lakh, crore, million, करोड़ …), %, bps or "equity shares". So years, page numbers and "FY24" are skipped. A table cell may be a bare number because its column header ("₹ in million") supplies the unit.
+- *Indian and Western grouping.* 1,23,45,678 and 12,345,678 both read as 12345678. Devanagari digits are converted; output always uses Western digits (ADR-028).
+- *[●] is a blank, not zero.* It becomes a `Placeholder` that is never equal to anything.
+- *Equality at the stated precision.* "₹ 1,250 crore" is only precise to ₹ 1 crore, so "₹ 12,499.8 million" (= ₹ 1,249.98 crore) counts as the same. "₹ 800 crore" vs "₹ 800 million" can never round together: that 10× gap is exactly the scale error the verifier must catch.
+- *Fiscal years.* India's year runs April–March and is named by the year it ends: FY2024-25 = FY25 = Fiscal 2025; Q3 ends 31 December.
+
+**Worked example.** "a Fresh Issue of ₹ 4,720 million and an Offer for Sale of ₹ 14,280 million" → two `Money` values, 4,720,000,000 and 14,280,000,000 rupees, spans pointing at "₹ 4,720 million" and "₹ 14,280 million". In the demo tables, every number-like Objects cell parses; the misses are "-" (nil), serial numbers and decimals in tables without a unit.
+
+**Limits.** Words for numbers ("five crore") are not read. A bare cell under a unit header is taken as money even in a serial-number column, so extraction must pick value columns. Other currencies (€, £) are not recognised. Periods in Hindi are not parsed yet.
+
+**Likely viva questions.** (1) *Why is "₹ 5 crore" equal to "₹ 4.6 crore" but "₹ 800 crore" not equal to "₹ 800 million"?* (2) *How do property-based tests differ from your table of examples, and what did they check?*
+
+
 <!-- C4 extract.rules -->
 <!-- C5 extract.qa -->
 <!-- C6 weaklabel -->

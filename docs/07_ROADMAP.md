@@ -91,11 +91,11 @@ How to use this file
 **Done when:** Objects-of-the-offer rows extracted for every demo IPO that has a fresh issue (pure-OFS IPOs correctly give `not_in_document`). → 8/8 RHPs + 8/8 Prospectuses; Hexaware and LG not_in_document; ADR-017 (Docling primary, PyMuPDF fallback); merged #19, 2026-09-30
 
 ### P1.4 ★ Numeral normalization `feat/p1.4-numerals` [CC] — Sun 4 Oct
-- [ ] Tests first: table-driven cases from `02_ARCHITECTURE.md` §10.4 and the list below, then hypothesis round-trip
-- [ ] `normalize/numerals.py`: ₹/Rs./INR/Rupees, $/USD tagging, lakh/lac/crore/cr/million/mn/billion/bn/thousand, Indian + Western grouping, decimals with scale, table header scale, parentheses negatives, `[●]`/`[•]`, ranges, percent + bps, NBSP and dash variants
-- [ ] `normalize/periods.py`: FY24, FY2024-25, Q3FY25, "quarter ended December 31, 2024"
-- [ ] `equal()` with precision tolerance; `to_unit()` for UI equivalents
-**Done when:** ≥ 80 table cases + property tests green; mypy clean.
+- [x] Tests first: table-driven cases from `02_ARCHITECTURE.md` §10.4 and the list below, then hypothesis round-trip
+- [x] `normalize/numerals.py`: ₹/Rs./INR/Rupees, $/USD tagging, lakh/lac/crore/cr/million/mn/billion/bn/thousand, Indian + Western grouping, decimals with scale, table header scale, parentheses negatives, `[●]`/`[•]`, ranges, percent + bps, NBSP and dash variants
+- [x] `normalize/periods.py`: FY24, FY2024-25, Q3FY25, "quarter ended December 31, 2024"
+- [x] `equal()` with precision tolerance; `to_unit()` for UI equivalents
+**Done when:** ≥ 80 table cases + property tests green; mypy clean. → 96 table cases (18 Hindi) + 10 sentence/span tests + 5 hypothesis properties + 29 equality + 25 period tests; mypy strict clean; ADR-034; merged #20, 2026-09-30
 
 ### P1.5 Training corpus `data/p1.5-corpus` [CC→AKSHAT] — Mon 5 Oct
 - [ ] `ingest/corpus.py`: build `data/processed/corpus/<ipo_id>.json` from dataset text, or Plan B download + parse
