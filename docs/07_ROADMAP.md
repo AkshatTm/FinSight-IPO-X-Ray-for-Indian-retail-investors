@@ -132,9 +132,9 @@ How to use this file
 **Done when:** `xray.json` exists for every demo IPO; consistency checks run. → 10/10; `eval_results/xray_summary.json`; ADR-037; #28.
 
 ### P2.3 ★ Weak labelling `feat/p2.3-weaklabel` [CC] — Fri 9 Oct
-- [ ] `weaklabel/seeds.py`, `propagate.py`, `negatives.py`, `build_squad.py`, `audit.py`
-- [ ] SQuAD 2.0 JSONL train/dev split by IPO; stats file; audit sample file
-**Done when:** train/dev JSONL built; stats committed; audit file ready for Akshat.
+- [x] `weaklabel/seeds.py`, `propagate.py`, `negatives.py`, `build_squad.py`, `audit.py`
+- [x] SQuAD 2.0 JSONL train/dev split by IPO; stats file; audit sample file
+**Done when:** train/dev JSONL built; stats committed; audit file ready for Akshat. → `python -m finsight.weaklabel build`: 302 IPOs, 1,869 positives / 2,791 negatives, train 272 IPOs, dev 30; `eval_results/weaklabel_stats.json`; `data/gold/weaklabel_audit.jsonl` (50 rows); ADR-038; #30.
 
 ### P2.4 Audit + fine-tune notebook `feat/p2.4-finetune-nb` [CC→AKSHAT] — Sat 10 Oct
 - [ ] [AKSHAT] Audit 50 weak labels (~1 h) → E1

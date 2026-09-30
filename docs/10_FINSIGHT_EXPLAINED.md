@@ -249,6 +249,14 @@ If a company's passages appear in both training and test, scores look better tha
 **The X-Ray:** one JSON per IPO with the chosen value, its page and extractor, a verdict with a plain reason, every candidate from both documents, and the derived shares. "Verified" means read from the page and not contradicted; it does not mean a second independent source agreed.
 **Honest limits:** the QA model is weak on names and tables, so rules win those fields; scores against gold come in P2.6.
 
+
+### C6. Weak labelling: making training data without a human (built in P2.3)
+**The idea (see B8):** the cover page states the key numbers in a fixed sentence the rules read reliably. That value is the *seed*. We then look through the rest of the same document for other sentences that contain the same value, written differently ("Rs. 300 crore" is the same as "₹ 3,000 million"), next to a word naming the metric ("fresh issue"). Each such sentence becomes a training question with its answer marked; sentences without the value become "no answer" examples.
+**Why be strict with seeds:** a wrong seed spreads its mistake into every sentence it matches. So a seed is kept only if the cover never gives two different values, the three issue amounts add up, and the dataset's own spreadsheet agrees when it has the number. About one total-issue seed in three disagreed with the spreadsheet and was thrown away.
+**Old documents:** the corpus goes back to 2009, when covers said "public issue" and "Rs. 38.96 crores", and PDF text turned ₹ into a backtick. The rules and a small clean-up step handle these.
+**No leakage:** training and dev sets are split by company, and no demo or gold company is ever included (checked twice). Otherwise the model could memorise the answers it is later tested on.
+**How good are the labels?** Unknown until checked, so 50 examples, spread over the fields, go to Akshat to mark correct or wrong (P2.4). That gives a precision number with an error bar, which the report quotes.
+
 ---
 
 ## Part D — Viva drill (answer aloud without notes)

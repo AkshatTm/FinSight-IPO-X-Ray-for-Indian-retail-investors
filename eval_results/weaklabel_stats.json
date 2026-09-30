@@ -1,0 +1,128 @@
+{
+ "n_ipos": 389,
+ "by_doc_kind": {
+  "prospectus": 279,
+  "rhp": 110
+ },
+ "excluded_ipos": [],
+ "seed_coverage": {
+  "fresh_issue_size": "109/389",
+  "ofs_shares": "136/389",
+  "ofs_amount": "96/389",
+  "total_issue_size": "127/389",
+  "face_value": "255/389",
+  "book_running_lead_managers": "110/389",
+  "registrar": "99/389",
+  "promoters": "126/389"
+ },
+ "seed_dropped": {
+  "fresh_issue_size": {
+   "ambiguous": 2,
+   "excel_disagrees": 14,
+   "inconsistent": 1,
+   "no_match": 259,
+   "placeholder": 4
+  },
+  "ofs_shares": {
+   "ambiguous": 5,
+   "excel_disagrees": 19,
+   "no_match": 213,
+   "placeholder": 16
+  },
+  "ofs_amount": {
+   "ambiguous": 3,
+   "excel_disagrees": 23,
+   "inconsistent": 1,
+   "no_match": 237,
+   "placeholder": 29
+  },
+  "total_issue_size": {
+   "ambiguous": 9,
+   "excel_disagrees": 71,
+   "inconsistent": 1,
+   "no_match": 139,
+   "placeholder": 42
+  },
+  "face_value": {
+   "ambiguous": 16,
+   "excel_disagrees": 4,
+   "no_match": 114
+  },
+  "book_running_lead_managers": {
+   "ambiguous": 8,
+   "no_match": 271
+  },
+  "registrar": {
+   "no_match": 290
+  },
+  "promoters": {
+   "ambiguous": 2,
+   "no_match": 217,
+   "not_cover_format": 44
+  }
+ },
+ "seed_agrees_with_excel": {
+  "fresh_issue_size": 94,
+  "ofs_shares": 87,
+  "ofs_amount": 55,
+  "total_issue_size": 127,
+  "face_value": 255,
+  "book_running_lead_managers": 0,
+  "registrar": 0,
+  "promoters": 0
+ },
+ "split_seed": 2026,
+ "train": {
+  "ipos": 272,
+  "examples": 4155,
+  "positives": 1669
+ },
+ "dev": {
+  "ipos": 30,
+  "examples": 505,
+  "positives": 200
+ },
+ "per_field": {
+  "fresh_issue_size": {
+   "positives": 171,
+   "negatives": 252,
+   "ipos": 98
+  },
+  "ofs_shares": {
+   "positives": 182,
+   "negatives": 272,
+   "ipos": 97
+  },
+  "ofs_amount": {
+   "positives": 136,
+   "negatives": 209,
+   "ipos": 80
+  },
+  "total_issue_size": {
+   "positives": 173,
+   "negatives": 258,
+   "ipos": 110
+  },
+  "face_value": {
+   "positives": 939,
+   "negatives": 1400,
+   "ipos": 255
+  },
+  "book_running_lead_managers": {
+   "positives": 85,
+   "negatives": 121,
+   "ipos": 74
+  },
+  "registrar": {
+   "positives": 90,
+   "negatives": 139,
+   "ipos": 87
+  },
+  "promoters": {
+   "positives": 93,
+   "negatives": 140,
+   "ipos": 78
+  }
+ },
+ "avg_context_chars": 1084
+}
