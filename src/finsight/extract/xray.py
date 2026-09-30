@@ -54,13 +54,15 @@ def _consistency_value(
     spec: FieldSpec, chosen: Candidate | None, by_doc: dict[DocType, list[Candidate]]
 ) -> Value | None:
     """The chosen value; when it is blank, the real value the other document shows."""
-    if chosen is not None and not isinstance(chosen.value, Placeholder):
+    if chosen is None:  # nothing chosen (for example a pure offer for sale): do not guess
+        return None
+    if not isinstance(chosen.value, Placeholder):
         return chosen.value
     other: DocType = "prospectus" if spec.doc == "rhp" else "rhp"
     real = best_real(spec, by_doc.get(other, []))
     if real is not None and isinstance(real.value, Money):
         return real.value
-    return chosen.value if chosen is not None else None
+    return chosen.value
 
 
 def build_xray(

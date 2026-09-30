@@ -1,0 +1,111 @@
+{
+ "n_ipos": 10,
+ "fields": {
+  "fresh_issue_size": {
+   "has_value": 8,
+   "reason:not_in_document": 2,
+   "reason:placeholder": 1,
+   "reason:verified": 7,
+   "verdict:unverifiable": 1,
+   "verdict:verified": 9
+  },
+  "ofs_shares": {
+   "has_value": 10,
+   "reason:extractors_disagree": 1,
+   "reason:placeholder": 4,
+   "reason:verified": 5,
+   "verdict:unverifiable": 5,
+   "verdict:verified": 5
+  },
+  "ofs_amount": {
+   "has_value": 10,
+   "reason:extractors_disagree": 1,
+   "reason:placeholder": 6,
+   "reason:verified": 3,
+   "verdict:unverifiable": 7,
+   "verdict:verified": 3
+  },
+  "offer_price": {
+   "has_value": 10,
+   "reason:verified": 10,
+   "verdict:verified": 10
+  },
+  "price_band": {
+   "has_value": 9,
+   "reason:not_in_document": 1,
+   "reason:placeholder": 8,
+   "reason:verified": 1,
+   "verdict:unverifiable": 9,
+   "verdict:verified": 1
+  },
+  "total_issue_size": {
+   "has_value": 10,
+   "reason:extractors_disagree": 1,
+   "reason:verified": 9,
+   "verdict:unverifiable": 1,
+   "verdict:verified": 9
+  },
+  "face_value": {
+   "has_value": 10,
+   "reason:verified": 10,
+   "verdict:verified": 10
+  },
+  "book_running_lead_managers": {
+   "has_value": 10,
+   "reason:extractors_disagree": 2,
+   "reason:verified": 8,
+   "verdict:unverifiable": 2,
+   "verdict:verified": 8
+  },
+  "registrar": {
+   "has_value": 10,
+   "reason:extractors_disagree": 1,
+   "reason:verified": 9,
+   "verdict:unverifiable": 1,
+   "verdict:verified": 9
+  },
+  "promoters": {
+   "has_value": 10,
+   "reason:verified": 10,
+   "verdict:verified": 10
+  },
+  "objects_of_offer": {
+   "has_value": 8,
+   "reason:not_in_document": 2,
+   "reason:verified": 8,
+   "verdict:verified": 10
+  }
+ },
+ "consistency": {
+  "ather-energy-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "groww-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "hdb-financial-services-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "hexaware-technologies-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "lenskart-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "lg-electronics-india-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "meesho-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "physicswallah-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "tata-capital-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  },
+  "urban-company-2025": {
+   "total_equals_fresh_plus_ofs": "verified/verified"
+  }
+ }
+}

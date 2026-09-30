@@ -241,6 +241,14 @@ If a company's passages appear in both training and test, scores look better tha
 **Details a beginner trips on:** `[●]` means "the company has not filled this in yet", so the code returns a Placeholder, never zero. Names in the BRLM and registrar tables wrap across lines and sit between phone numbers, so the rules look for a short list of known firms and write them out in full legal form. The Objects table is chosen by what its rows say (a "general corporate purposes" row, "Net Proceeds" in the header), not by size.
 **How it was tuned:** on three dev IPOs only (Ather, Hexaware, Urban Company), where all 33 gold values match. The other seven IPOs are scored for the first time in P2.6, so the demo numbers are not inflated by tuning on them. `scripts/rules_dev_check.py` is the dev-only check. Caveat: gold v1 was AI-prefilled then human-checked (ADR-035).
 
+
+### C5. Pretrained QA, choosing a value, and the X-Ray (built in P2.2)
+**Pretrained QA (Rung 2):** a question-answering model reads a passage and points at the words that answer a question ("What is the size of the fresh issue?" -> "₹ 4,720 million"). We use a public model that was never trained on IPO documents, so it shows what you get for free. For each token it scores "the answer starts here" and "the answer ends here"; the best pair wins unless the "no answer" score is higher. A new library version removed the ready-made helper for this, so `qa_pretrained.py` does those few lines itself.
+**Choosing a value:** rules and QA each give candidates. The field's main extractor decides; the other one can confirm it or, if it read a different number from the *same page*, cast doubt. Two readers quoting different pages are not in conflict. A `[●]` stays a `[●]` and is labelled "placeholder", never replaced by a number from elsewhere.
+**Consistency check:** a fresh issue plus an offer for sale must equal the total. The code adds them and compares within the precision printed ("₹ 19,000 million" is not a mismatch with 18,999.6). If a number is still blank or missing the check says "unverifiable", not "wrong".
+**The X-Ray:** one JSON per IPO with the chosen value, its page and extractor, a verdict with a plain reason, every candidate from both documents, and the derived shares. "Verified" means read from the page and not contradicted; it does not mean a second independent source agreed.
+**Honest limits:** the QA model is weak on names and tables, so rules win those fields; scores against gold come in P2.6.
+
 ---
 
 ## Part D — Viva drill (answer aloud without notes)

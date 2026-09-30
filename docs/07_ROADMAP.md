@@ -126,10 +126,10 @@ How to use this file
 **Done when:** rules produce candidates for all demo IPOs; tests green. → 10/10 IPOs, both documents; `eval_results/rules_candidates.json`; ADR-036; #26.
 
 ### P2.2 Pretrained QA + X-Ray v0 `feat/p2.2-qa-pretrained` [CC] — Thu 8 Oct
-- [ ] `extract/qa_pretrained.py` (deberta-v3-base-squad2, GPU fp16, section-restricted passages)
-- [ ] `extract/select.py` candidate selection; `verify/consistency.py`; `extract/xray.py`
-- [ ] `pipeline build --stage xray` for all demo IPOs
-**Done when:** `xray.json` exists for every demo IPO; consistency checks run.
+- [x] `extract/qa_pretrained.py` (deberta-v3-base-squad2, GPU fp16, section-restricted passages)
+- [x] `extract/select.py` candidate selection; `verify/consistency.py`; `extract/xray.py`
+- [x] `pipeline build --stage xray` for all demo IPOs (`--stage qa` first, ml group)
+**Done when:** `xray.json` exists for every demo IPO; consistency checks run. → 10/10; `eval_results/xray_summary.json`; ADR-037; #28.
 
 ### P2.3 ★ Weak labelling `feat/p2.3-weaklabel` [CC] — Fri 9 Oct
 - [ ] `weaklabel/seeds.py`, `propagate.py`, `negatives.py`, `build_squad.py`, `audit.py`
