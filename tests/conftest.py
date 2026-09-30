@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "fixtures"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[0] / "fixtures"))
 
 from make_fixture_pdf import build
 
