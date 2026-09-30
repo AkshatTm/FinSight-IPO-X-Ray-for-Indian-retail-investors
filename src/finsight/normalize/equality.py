@@ -76,7 +76,7 @@ def group_digits(value: Decimal, indian: bool = True) -> str:
     whole, _, frac = f"{abs(value):f}".partition(".")
     if indian and len(whole) > 3:
         head, tail = whole[:-3], whole[-3:]
-        pairs = []
+        pairs: list[str] = []
         while len(head) > 2:
             head, pairs = head[:-2], [head[-2:], *pairs]
         whole = ",".join([head, *pairs, tail])
