@@ -119,7 +119,8 @@ Fix parser problems from Akshat's eye-check; update `10` Part C; run Prompt 5 fo
 ## Phase 2 — Extraction and our model → G2
 
 ### P2.1 Field registry + rules (Rung 1) — [CC] · S · `feat/p2.1-rules` · "P2.1 Field registry and rules extractor"
-- **Files:** `configs/fields.yaml` (fields per ADR-023, EN/HI labels, doc type, sections, questions, extractor, fallback, `ladder: true|false`), `extract/{fields,rules}.py`, `data/samples/*` sentence samples, `tests/extract/*`.
+- **Files:** `configs/fields.yaml` (fields per ADR-023, EN/HI labels, doc type, sections, questions, extractor, fallback, `ladder: true|false`; `offer_price` and `objects_of_offer` are `ladder: false`), `extract/{fields,rules}.py`, `data/samples/*` sentence samples, `tests/extract/*`.
+- **`offer_price` (review decision):** rules-only, read from the Prospectus cover; `ladder: false` because RHP training texts contain `[●]` for it, so there are no positives to learn from. Same treatment as `objects_of_offer`.
 - **Tuning discipline:** rules are developed and checked against the 3 **dev** IPOs only; test IPOs are first scored in P2.6.
 - **Commits:** (1) `feat(extract): field registry loader` · (2) `test(extract): cover-page sentences for fresh issue and OFS shares` · (3) `feat(extract): rules for fresh issue, OFS shares, offer price` · (4) `feat(extract): rules for face value, BRLMs, registrar` · (5) `feat(extract): promoter rules` · (6) `test(extract): placeholder handling` · (7) `docs(explained): C4 rules`.
 
@@ -129,7 +130,7 @@ Fix parser problems from Akshat's eye-check; update `10` Part C; run Prompt 5 fo
 
 ### P2.3 ★ Weak labelling — [CC] · O · `feat/p2.3-weaklabel` · "P2.3 Distant supervision pipeline"
 - **Files:** `weaklabel/{seeds,propagate,negatives,build_squad,audit}.py`, `eval_results/weaklabel_stats.json`, `data/gold/weaklabel_audit.jsonl` (50 stratified). Seeds cross-checked against the dataset Excel columns (fresh/OFS/total/price/face value) where they exist.
-- **Field handling (B4):** numeric fields propagate by `normalize.equal`; names by normalized fuzzy match; lists get one span covering the list; `objects_of_offer` excluded from QA training.
+- **Field handling (B4):** numeric fields propagate by `normalize.equal`; names by normalized fuzzy match; lists get one span covering the list; `objects_of_offer` and `offer_price` are excluded from QA training (table extractor / Prospectus rules only).
 - **Tests:** seed unambiguity, propagation filters, negatives ratio, SQuAD 2.0 schema, split by IPO with seed 2026, no demo/gold IPO in output.
 - **Commits:** (1) `test(weaklabel): seed unambiguity cases` · (2) `feat(weaklabel): high-precision seed extraction` · (3) `feat(weaklabel): propagate seeds by normalized value` · (4) `feat(weaklabel): fuzzy name propagation` · (5) `feat(weaklabel): negatives` · (6) `feat(weaklabel): SQuAD 2.0 export with IPO-level split` · (7) `feat(weaklabel): stratified audit sampler` · (8) `test(weaklabel): leakage assertions` · (9) `docs(explained): C6 weak labelling`.
 

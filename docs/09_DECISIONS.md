@@ -53,7 +53,7 @@ Each decision: context → decision → consequences. Status: `accepted` (Akshat
 **Context:** the downloaded RHPs leave the offer price, total issue size and the OFS rupee amount as `[●]`; the final Prospectus (filed after pricing) fills them in. Both exist for all 10 demo IPOs.
 **Options:** (A) RHP only, show `[●]` as ⚠️ everywhere; (B) RHP + Prospectus parsed by the same pipeline; (C) also require the price-band advertisement.
 **Decision:** B. Fields become `fresh_issue_size`, `ofs_shares` (count), `ofs_amount`, `offer_price`, `price_band` (optional; RHP or price-band ad if easy to find) and `total_issue_size`. Every value cites its document and PDF page; a `[●]` in the RHP is a normal ⚠️ and the Prospectus value is shown beside it as `companion`.
-**Consequences:** `doc_type` on parsed docs, passages and candidates; two sets of page images; gold v1 records the document. The Prospectus is the more authoritative source for final prices; chat retrieval indexes both, and answers say which document a figure came from.
+**Consequences:** `doc_type` on parsed docs, passages and candidates; two sets of page images; gold v1 records the document. `offer_price` is rules-only on the Prospectus cover and outside the QA ladder (no positives in RHP-derived training text). The Prospectus is the more authoritative source for final prices; chat retrieval indexes both, and answers say which document a figure came from.
 
 ### ADR-024 Contract-first API skeleton — proposed (30 Sep 2026)
 **Context:** the frontend starts in Phase 1 but the real API arrives in Phase 4, and OpenAPI does not describe SSE event payloads by default.

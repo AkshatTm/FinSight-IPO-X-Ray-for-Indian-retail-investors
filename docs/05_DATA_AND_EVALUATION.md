@@ -82,7 +82,7 @@ Pipeline and rationale are in `02_ARCHITECTURE.md` and `10_FINSIGHT_EXPLAINED.md
 
 - **Seed precision first:** rules extract seed values only when unambiguous (exactly one match pattern, non-placeholder, passes consistency). Coverage is reported (share of corpus IPOs with a seed per field).
 - **Propagation filters:** only passages in the field's expected sections; value must be equal under `normalize.equal`; a metric keyword within the passage.
-- **Non-numeric fields:** names (BRLMs, registrar, promoters) propagate by normalized fuzzy match ("Ltd" ↔ "Limited", case and punctuation folded). A list field trains on one span covering the whole list. `objects_of_offer` is a table and uses the table extractor only, outside the QA ladder.
+- **Non-numeric fields:** names (BRLMs, registrar, promoters) propagate by normalized fuzzy match ("Ltd" ↔ "Limited", case and punctuation folded). A list field trains on one span covering the whole list. `objects_of_offer` is a table and uses the table extractor only, outside the QA ladder. `offer_price` is read by rules from the Prospectus cover and is also outside the ladder: RHP training texts hold `[●]` for it, so weak labelling has no positives.
 - **Negatives:** 1–2 per positive, same sections, value absent.
 - **Audit [AKSHAT]:** `weaklabel/audit.py` samples 50 positives stratified by field → `data/gold/weaklabel_audit.jsonl` with the passage and highlighted answer → Akshat marks `correct | wrong_span | wrong_value | ambiguous`. Report precision with a 95 % Wilson interval.
 
