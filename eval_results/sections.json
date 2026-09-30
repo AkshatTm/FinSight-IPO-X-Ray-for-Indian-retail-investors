@@ -1,0 +1,594 @@
+{
+ "key_sections": [
+  "cover",
+  "the_offer",
+  "capital_structure",
+  "objects_of_the_offer"
+ ],
+ "all_key_found": {
+  "rhp": "10/10",
+  "prospectus": "10/10"
+ },
+ "documents": {
+  "ather-energy-2025:prospectus": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 112,
+     "end_page": 113,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 129,
+     "end_page": 170,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 171,
+     "end_page": 200,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "ather-energy-2025:rhp": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 112,
+     "end_page": 113,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 129,
+     "end_page": 170,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 171,
+     "end_page": 200,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "groww-2025:prospectus": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 90,
+     "end_page": 91,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 111,
+     "end_page": 149,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 150,
+     "end_page": 162,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "groww-2025:rhp": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 90,
+     "end_page": 91,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 111,
+     "end_page": 149,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 150,
+     "end_page": 162,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "hdb-financial-services-2025:prospectus": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 3,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 74,
+     "end_page": 75,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 90,
+     "end_page": 147,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 148,
+     "end_page": 153,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "hdb-financial-services-2025:rhp": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 3,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 74,
+     "end_page": 75,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 90,
+     "end_page": 147,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 148,
+     "end_page": 153,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "hexaware-technologies-2025:prospectus": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 3,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 79,
+     "end_page": 80,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 96,
+     "end_page": 251,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 252,
+     "end_page": 254,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "hexaware-technologies-2025:rhp": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 3,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 79,
+     "end_page": 80,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 96,
+     "end_page": 251,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 252,
+     "end_page": 254,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "lenskart-2025:prospectus": {
+   "n_sections": 37,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 119,
+     "end_page": 120,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 137,
+     "end_page": 210,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 211,
+     "end_page": 226,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "lenskart-2025:rhp": {
+   "n_sections": 37,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 119,
+     "end_page": 120,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 137,
+     "end_page": 210,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 211,
+     "end_page": 226,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "lg-electronics-india-2025:prospectus": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 105,
+     "end_page": 106,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 124,
+     "end_page": 134,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 135,
+     "end_page": 137,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "lg-electronics-india-2025:rhp": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 105,
+     "end_page": 106,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 124,
+     "end_page": 134,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 135,
+     "end_page": 137,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "meesho-2025:prospectus": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 5,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 142,
+     "end_page": 144,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 169,
+     "end_page": 209,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 210,
+     "end_page": 230,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "meesho-2025:rhp": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 5,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 142,
+     "end_page": 144,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 169,
+     "end_page": 209,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 210,
+     "end_page": 230,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "physicswallah-2025:prospectus": {
+   "n_sections": 36,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 116,
+     "end_page": 117,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 136,
+     "end_page": 162,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 163,
+     "end_page": 190,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "physicswallah-2025:rhp": {
+   "n_sections": 36,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 116,
+     "end_page": 117,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 136,
+     "end_page": 162,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 163,
+     "end_page": 190,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "tata-capital-2025:prospectus": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 102,
+     "end_page": 103,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 119,
+     "end_page": 143,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 144,
+     "end_page": 149,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "tata-capital-2025:rhp": {
+   "n_sections": 35,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 102,
+     "end_page": 103,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 119,
+     "end_page": 143,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 144,
+     "end_page": 149,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "urban-company-2025:prospectus": {
+   "n_sections": 36,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 92,
+     "end_page": 93,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 109,
+     "end_page": 162,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 163,
+     "end_page": 173,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  },
+  "urban-company-2025:rhp": {
+   "n_sections": 36,
+   "key": {
+    "cover": {
+     "start_page": 1,
+     "end_page": 4,
+     "method": "regex",
+     "confidence": 1.0
+    },
+    "the_offer": {
+     "start_page": 92,
+     "end_page": 93,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "capital_structure": {
+     "start_page": 109,
+     "end_page": 162,
+     "method": "toc",
+     "confidence": 1.0
+    },
+    "objects_of_the_offer": {
+     "start_page": 163,
+     "end_page": 173,
+     "method": "toc",
+     "confidence": 1.0
+    }
+   }
+  }
+ }
+}
