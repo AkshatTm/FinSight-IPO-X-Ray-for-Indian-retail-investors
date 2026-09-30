@@ -1,0 +1,182 @@
+{
+  "ather-energy-2025:prospectus": {
+    "ipo_id": "ather-energy-2025",
+    "doc": "prospectus",
+    "pages": 586,
+    "scanned_pages": 0,
+    "pages_with_printed_number": 581,
+    "parse_s": 10.93,
+    "images_s": 87.66
+  },
+  "ather-energy-2025:rhp": {
+    "ipo_id": "ather-energy-2025",
+    "doc": "rhp",
+    "pages": 586,
+    "scanned_pages": 0,
+    "pages_with_printed_number": 581,
+    "parse_s": 10.25,
+    "images_s": 90.2
+  },
+  "groww-2025:prospectus": {
+    "ipo_id": "groww-2025",
+    "doc": "prospectus",
+    "pages": 568,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 563,
+    "parse_s": 11.8,
+    "images_s": 95.25
+  },
+  "groww-2025:rhp": {
+    "ipo_id": "groww-2025",
+    "doc": "rhp",
+    "pages": 568,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 563,
+    "parse_s": 10.15,
+    "images_s": 86.98
+  },
+  "hdb-financial-services-2025:prospectus": {
+    "ipo_id": "hdb-financial-services-2025",
+    "doc": "prospectus",
+    "pages": 758,
+    "scanned_pages": 1,
+    "pages_with_printed_number": 751,
+    "parse_s": 14.32,
+    "images_s": 122.8
+  },
+  "hdb-financial-services-2025:rhp": {
+    "ipo_id": "hdb-financial-services-2025",
+    "doc": "rhp",
+    "pages": 758,
+    "scanned_pages": 1,
+    "pages_with_printed_number": 751,
+    "parse_s": 14.18,
+    "images_s": 119.88
+  },
+  "hexaware-technologies-2025:prospectus": {
+    "ipo_id": "hexaware-technologies-2025",
+    "doc": "prospectus",
+    "pages": 644,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 640,
+    "parse_s": 13.34,
+    "images_s": 100.22
+  },
+  "hexaware-technologies-2025:rhp": {
+    "ipo_id": "hexaware-technologies-2025",
+    "doc": "rhp",
+    "pages": 644,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 640,
+    "parse_s": 13.38,
+    "images_s": 104.9
+  },
+  "lenskart-2025:prospectus": {
+    "ipo_id": "lenskart-2025",
+    "doc": "prospectus",
+    "pages": 1083,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 1078,
+    "parse_s": 24.71,
+    "images_s": 169.55
+  },
+  "lenskart-2025:rhp": {
+    "ipo_id": "lenskart-2025",
+    "doc": "rhp",
+    "pages": 1083,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 1078,
+    "parse_s": 21.97,
+    "images_s": 182.81
+  },
+  "lg-electronics-india-2025:prospectus": {
+    "ipo_id": "lg-electronics-india-2025",
+    "doc": "prospectus",
+    "pages": 502,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 497,
+    "parse_s": 11.32,
+    "images_s": 80.42
+  },
+  "lg-electronics-india-2025:rhp": {
+    "ipo_id": "lg-electronics-india-2025",
+    "doc": "rhp",
+    "pages": 502,
+    "scanned_pages": 2,
+    "pages_with_printed_number": 497,
+    "parse_s": 12.17,
+    "images_s": 79.94
+  },
+  "meesho-2025:prospectus": {
+    "ipo_id": "meesho-2025",
+    "doc": "prospectus",
+    "pages": 689,
+    "scanned_pages": 6,
+    "pages_with_printed_number": 683,
+    "parse_s": 13.17,
+    "images_s": 110.17
+  },
+  "meesho-2025:rhp": {
+    "ipo_id": "meesho-2025",
+    "doc": "rhp",
+    "pages": 689,
+    "scanned_pages": 6,
+    "pages_with_printed_number": 683,
+    "parse_s": 11.78,
+    "images_s": 108.34
+  },
+  "physicswallah-2025:prospectus": {
+    "ipo_id": "physicswallah-2025",
+    "doc": "prospectus",
+    "pages": 669,
+    "scanned_pages": 0,
+    "pages_with_printed_number": 664,
+    "parse_s": 14.56,
+    "images_s": 107.33
+  },
+  "physicswallah-2025:rhp": {
+    "ipo_id": "physicswallah-2025",
+    "doc": "rhp",
+    "pages": 669,
+    "scanned_pages": 0,
+    "pages_with_printed_number": 665,
+    "parse_s": 14.19,
+    "images_s": 122.1
+  },
+  "tata-capital-2025:prospectus": {
+    "ipo_id": "tata-capital-2025",
+    "doc": "prospectus",
+    "pages": 836,
+    "scanned_pages": 1,
+    "pages_with_printed_number": 820,
+    "parse_s": 16.91,
+    "images_s": 142.91
+  },
+  "tata-capital-2025:rhp": {
+    "ipo_id": "tata-capital-2025",
+    "doc": "rhp",
+    "pages": 836,
+    "scanned_pages": 1,
+    "pages_with_printed_number": 820,
+    "parse_s": 18.3,
+    "images_s": 137.43
+  },
+  "urban-company-2025:prospectus": {
+    "ipo_id": "urban-company-2025",
+    "doc": "prospectus",
+    "pages": 577,
+    "scanned_pages": 1,
+    "pages_with_printed_number": 550,
+    "parse_s": 10.92,
+    "images_s": 92.1
+  },
+  "urban-company-2025:rhp": {
+    "ipo_id": "urban-company-2025",
+    "doc": "rhp",
+    "pages": 577,
+    "scanned_pages": 1,
+    "pages_with_printed_number": 550,
+    "parse_s": 9.4,
+    "images_s": 86.08
+  }
+}
