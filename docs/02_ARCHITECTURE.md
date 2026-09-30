@@ -107,7 +107,7 @@ Voice: `POST /api/voice` (audio) → transcript returned → frontend shows it (
 
 ## 5. Module map
 
-Each package exposes its public API in `__init__.py`; other packages import only from there.
+Packages live in `src/finsight/<package>/` (import name `finsight.<package>`); each exposes its public API in `__init__.py`; other packages import only from there. Repo root: `src/finsight/`, `tests/<package>/`, `configs/`, `scripts/`, `notebooks/`, `frontend/`, `data/`, `models/`, `eval_results/`, `docs/`.
 
 | Package | Responsibility | Public API (examples) | Depends on | Phase |
 |---|---|---|---|---|
@@ -233,6 +233,8 @@ Paths (`data_dir`, `processed_dir`, `models_dir`) always come from config; code 
 ---
 
 ## 9. Storage layout
+
+Repo layout: `src/finsight/<package>/` (code), `tests/<package>/`, `configs/`, `scripts/`, `notebooks/`, `frontend/`, plus the data directories below.
 
 ```
 data/

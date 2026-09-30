@@ -38,6 +38,7 @@ Python 3.11 · uv · ruff · mypy · pytest/hypothesis · pydantic v2 · FastAPI
 Frontend: Next.js App Router · TS strict · Tailwind · shadcn/ui · Motion · TanStack Query · Zustand · Recharts · MSW · openapi-typescript · Vitest · Playwright
 
 ## Module map (details: `docs/02_ARCHITECTURE.md` §5)
+Code lives in `src/finsight/<package>/`, tests in `tests/<package>/`, config in `configs/`, helper scripts in `scripts/`, notebooks in `notebooks/`, the app in `frontend/`.
 core · ingest · parse · normalize · extract · weaklabel · retrieve · generate · verify · guard · voice · chat · evaluate · api · pipeline
 
 ## End of every sub-phase
