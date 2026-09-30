@@ -95,6 +95,16 @@ Each decision: context → decision → consequences. Status: `accepted` (Akshat
 **Decision:** the headline result is overall NVM with a bootstrap CI (by IPO) and a paired per-IPO comparison between rungs; per-field results are descriptive. Every ladder is reported for the **full document** and **body-only** (cover masked).
 **Consequences:** the PRD target "better on ≥ 5 of 8 fields" is treated as a descriptive goal; the report states which claims the sample supports.
 
+### ADR-016 Training corpus source — proposed (30 Sep 2026)
+**Context:** `ingest.recon` on `sohomghosh/Indian_IPO_datasets` (public, CC BY-NC-SA 4.0), mainboard files only. The Excel has 418 IPOs (close years 2009-2023, 217 columns) and the text zip has 424 pagewise JSON texts (`Page_N` maps, median 440 pages, 3.9 MB). Answers to `05` section 1.2:
+1. *Full text?* Yes: full pagewise text for every entry, but from mixed document kinds. File names lie: about 170 of the 219 files named `_RHP` have a cover titled PROSPECTUS. Judged by the first title phrase on the cover, the 424 texts are **112 RHP, 286 final Prospectus, 11 DRHP, 15 unknown** (unreadable font encoding or non-prospectus).
+2. *Mainboard vs SME, years?* Only the mainboard files were downloaded (418 IPOs, 2009-2023; 62 closed in 2021, 57 in 2023). No IPO from 2024-2026.
+3. *De-duplication against the demo set?* Company names are usable (`Issuer Company`, `Company Name`, `Close Year`). None of the 10 demo IPOs (all 2025) appears in the dataset; the exclusion test still runs.
+The Excel's `Fresh Issue`, `Offer for Sale`, `Total Issue Size`, `Price Band`, `Final_Issue_Price` and `Face Value per share` columns are present (fresh issue 43 % and OFS 52 % populated; some hold `[.]` placeholders) and can cross-check seed values. Outcome, subscription, listing-day and broker/member columns are never read.
+**Options:** (A) RHP-derived texts only (112, below the 150 floor); (B) RHP + final-Prospectus texts; (C) Plan B, download RHPs ourselves.
+**Decision:** B (approved by Akshat). Use RHP- and Prospectus-derived texts; record `doc_kind` (`rhp` | `prospectus`) per text, exclude `drhp` and `unknown`. That is about 398 usable texts. When one IPO has both kinds, both stay in the same train/dev split (split by IPO, never by document) and the corpus stats say so. Counts per kind go into `eval_results/corpus_stats.json` (P1.5). Plan B is needed only if usable texts fall below 150.
+**Consequences:** Prospectus texts have the offer price and rupee amounts filled in, RHP texts often show `[●]`; weak-label seeds must therefore be read per document kind (`offer_price` stays rules-only, ADR-023 note). Files are classified by cover text, not file name. Only Excel columns on an allow-list are ever summarised or sampled.
+
 ### ADR-032 LLM memory and thinking policy — proposed (30 Sep 2026)
 **Context:** first measurement on the laptop: with the model unloaded RAM was 10.2 of 15.4 GB; with `qwen3.5:2b` loaded 12.0 GB (Ollama ≈ 1.8 GB). Ollama reported 3.0 GB at context 4096, split 37 % CPU / 63 % GPU, so part of the model ran on the CPU. Thinking mode was on by default and made answers very slow.
 **Decision:** thinking is always disabled (`think: false`, tested). `dev_light` uses `qwen3.5:0.8b`. For `full`, the LLM must fit fully on the GPU: prefer a text-only GGUF and the smallest context that holds 5 passages, chosen from measurements in P3.1/P3.2.
@@ -111,7 +121,6 @@ Each decision: context → decision → consequences. Status: `accepted` (Akshat
 
 | # | Topic | Phase |
 |---|---|---|
-| ADR-016 | Training corpus source (dataset contents, Plan A/B) | P0.4 |
 | ADR-017 | Table extractor: pdfplumber vs Docling | P1.3 |
 | ADR-018 | Extractor chosen per field (from ladder results) | P2.6 |
 | ADR-019 | Measured memory/latency; device assignments | P3.1 |
