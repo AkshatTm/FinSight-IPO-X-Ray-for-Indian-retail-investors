@@ -23,7 +23,7 @@ from finsight.parse import KEY_SECTIONS
 from finsight.pipeline import inspect as insp
 from finsight.pipeline.parse_stage import ParseReport, load_parsed, run_parse
 from finsight.pipeline.sections_stage import run_sections, section_matrix, write_matrix
-from finsight.pipeline.tables_stage import TablesReport, run_tables, tables_summary, write_summary
+from finsight.pipeline.tables_stage import TablesReport, run_tables, update_summary
 
 STAGES = ["parse", "sections", "tables"]
 
@@ -71,6 +71,7 @@ def _tables(ipo: DemoIpo, docs: list[DocType]) -> list[TablesReport]:
             flush=True,
         )
         reports.append(r)
+    update_summary(get_settings().paths.eval_dir / "tables.json", reports)
     return reports
 
 
@@ -127,11 +128,9 @@ def main(argv: list[str] | None = None) -> int:
         write_matrix(get_settings().paths.eval_dir / "sections.json", matrix)
         print(f"all key sections found: {matrix['all_key_found']}")
     elif args.command == "build-all" and args.stage == "tables":
-        tables: list[TablesReport] = []
         for ipo in list_demo_ipos():
-            tables += _tables(ipo, ["rhp", "prospectus"])
-        summary = tables_summary(tables)
-        write_summary(get_settings().paths.eval_dir / "tables.json", summary)
+            _tables(ipo, ["rhp", "prospectus"])  # the summary is updated after every IPO
+        summary = update_summary(get_settings().paths.eval_dir / "tables.json", [])
         print(json.dumps(summary["summary"], ensure_ascii=False))
     elif args.command == "build-all":
         reports: list[ParseReport] = []
