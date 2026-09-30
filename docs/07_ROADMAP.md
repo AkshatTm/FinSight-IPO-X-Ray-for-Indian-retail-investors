@@ -61,11 +61,11 @@ How to use this file
 **Done when:** tests green; mypy clean on `core`. → merged #15, 2026-09-30
 
 ### P0.4 Data recon `data/p0.4-recon` [CC→AKSHAT]
-- [ ] [AKSHAT] Download the HF IPO dataset to `data/raw/ipo_dataset/`
-- [ ] [AKSHAT] Demo set chosen (10 IPOs, RHP + final Prospectus each) → `data/raw/rhp/` and `data/raw/prospectus/` ✅ 30 Sep
-- [ ] [CC] `ingest/recon.py` → summary printed; [CC] `configs/demo_ipos.yaml` (ids, files, pages, sha256, cover dates) ✅ 30 Sep; confirm offer structure per IPO; propose the 3 dev / 7 test split
-- [ ] [CC] 5 sample rows to `data/samples/`; ADR "Training corpus source" in `09_DECISIONS.md`
-**Done when:** ADR written with the answers to `05` §1.2 Q1–Q3. **Gate G0 review.**
+- [x] [AKSHAT] Download the HF IPO dataset to `data/raw/ipo_dataset/`
+- [x] [AKSHAT] Demo set chosen (10 IPOs, RHP + final Prospectus each) → `data/raw/rhp/` and `data/raw/prospectus/` ✅ 30 Sep
+- [x] [CC] `ingest/recon.py` → summary printed; [CC] `configs/demo_ipos.yaml` (ids, files, pages, sha256, cover dates) ✅ 30 Sep; confirm offer structure per IPO; propose the 3 dev / 7 test split
+- [x] [CC] 5 sample rows to `data/samples/`; ADR "Training corpus source" in `09_DECISIONS.md`
+**Done when:** ADR written with the answers to `05` §1.2 Q1–Q3. **Gate G0 review.** → merged #16, 2026-09-30
 
 ---
 
