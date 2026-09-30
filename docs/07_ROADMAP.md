@@ -72,12 +72,12 @@ How to use this file
 ## Phase 1 — Understand the documents (Thu 1 – Tue 6 Oct) → G1
 
 ### P1.1 ★ PDF text, words, page images `feat/p1.1-pdf-text` [CC] — Thu 1 Oct
-- [ ] `parse/pdf_text.py` (PyMuPDF words + bboxes + font info), `parse/page_images.py` (WebP ~110 DPI), scanned-page detection, header/footer stripping
-- [ ] Synthetic fixture PDF generator script (`tests/fixtures/make_fixture_pdf.py`) + committed 3-page fixture
-- [ ] `pipeline` CLI: `build --ipo <id> --stage parse`
-- [ ] `pipeline inspect` prints ≤ 40 lines and can write ≤ 30 truncated snippets to `data/samples/` (how CC sees a document without reading it)
+- [x] `parse/pdf_text.py` (PyMuPDF words + bboxes + font info), `parse/page_images.py` (WebP ~110 DPI), scanned-page detection, header/footer stripping
+- [x] Synthetic fixture PDF generator script (`tests/fixtures/make_fixture_pdf.py`) + committed 3-page fixture
+- [x] `pipeline` CLI: `build --ipo <id> --stage parse`
+- [x] `pipeline inspect` prints ≤ 40 lines and can write ≤ 30 truncated snippets to `data/samples/` (how CC sees a document without reading it)
 - [ ] [AKSHAT] Run on all 20 demo documents; compare 3 by eye; paste problems into the next session
-**Done when:** fixture tests green; all 20 demo documents produce `parsed.json` + page images; timing per document logged.
+**Done when:** fixture tests green; all 20 demo documents produce `parsed.json` + page images; timing per document logged. → merged #17, 2026-09-30 (fixture generated at test time, not committed: PDFs are gitignored)
 
 ### P1.2 ★ Sections `feat/p1.2-sections` [CC] — Fri 2 Oct
 - [ ] `parse/sections.py`: TOC parse + printed→PDF page offset, heading regexes, font cues, voting, confidence

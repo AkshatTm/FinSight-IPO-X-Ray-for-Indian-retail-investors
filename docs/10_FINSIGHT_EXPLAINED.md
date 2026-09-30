@@ -121,7 +121,21 @@ If a company's passages appear in both training and test, scores look better tha
 
 **Likely viva questions.** (1) *Why store money as strings, not floats?* (2) *What does "contract first" buy you when one person builds both sides?*
 
-<!-- C1 parse -->
+### C1. Parsing PDFs into words, clean text and page images (built in P1.1)
+
+**What it does.** `finsight.parse` turns each RHP and Prospectus PDF into a `ParsedDoc`: for every page, every word with its exact box (x0, y0, x1, y1 in PDF points), font size and bold flag, the page's clean text, its printed page number and a scanned-page flag. It also renders every page to a WebP image for the document viewer. `finsight.pipeline build` runs this for the demo set; `pipeline inspect` shows a capped summary (at most 40 lines), which is how Claude Code looks at a document without reading the PDF.
+
+**Key ideas in plain words.**
+- *Words from characters.* PyMuPDF gives every character with its box. We join characters into words and take the union of their boxes, so a highlight later lands exactly on "₹ 800.00 crore".
+- *Headers and footers.* A line near the top or bottom of the page that repeats (digits ignored) on more than half the pages is boilerplate ("ACME LIMITED", "Page # of #"). It is removed from the page text, so it doesn't pollute search or extraction, but its words stay available for highlighting.
+- *Two page numbers.* The PDF page (1, 2, 3, ...) is what the viewer and citations use; the number printed in the footer ("1" on PDF page 7, roman numerals in the front matter) is kept for the popover (ADR-025).
+- *Scanned pages.* A page with images but almost no text is a picture of text. Without OCR we can't read it, so it is flagged and skipped.
+
+**Worked example.** Meesho's RHP: 689 PDF pages, printed page 1 is PDF page 7, 683 pages have a printed number, 6 image-only pages (charts and photos), median 2,923 characters per page. Parsing takes about 10 s; images about 0.15 s and 115 KB per page.
+
+**Limits.** Multi-column layouts are read in PyMuPDF's sorted order, which can interleave columns. Tables come out as lines of text here; P1.3 extracts them as cells. Rupee signs rendered as images or custom glyphs would be lost (not seen in the demo set so far).
+
+**Likely viva questions.** (1) *Why render page images instead of using a PDF viewer?* (2) *How do you tell a header from a real sentence that happens to repeat?*
 <!-- C2 sections -->
 <!-- C3 normalize -->
 <!-- C4 extract.rules -->
