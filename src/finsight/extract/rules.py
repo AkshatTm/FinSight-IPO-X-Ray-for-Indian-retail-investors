@@ -296,7 +296,7 @@ RULES: dict[str, Callable[[str], list[Hit]]] = {
 }
 
 
-def _pages_to_search(doc: ParsedDoc, sections: list[Section], field: FieldSpec) -> list[int]:
+def pages_to_search(doc: ParsedDoc, sections: list[Section], field: FieldSpec) -> list[int]:
     """PDF pages in search order: the cover block first, then the field's sections."""
     pages: list[int] = []
     if "cover" in field.sections:
@@ -350,7 +350,7 @@ class RulesExtractor:
         if rule is None:
             return []
         candidates: list[Candidate] = []
-        for number in _pages_to_search(doc, sections, field):
+        for number in pages_to_search(doc, sections, field):
             page = doc.pages[number - 1]
             hits = rule(_squash(page.text))
             if not hits:
