@@ -1,0 +1,173 @@
+import pytest
+
+from finsight.core import registry
+from finsight.core.schemas import Page, ParsedDoc, Word
+from finsight.parse.sections import (
+    KEY_SECTIONS,
+    canonical_id,
+    find_sections,
+    find_toc_pages,
+    parse_toc_lines,
+    printed_to_pdf,
+)
+
+
+def _page(n: int, text: str, printed: str | None = None, bold: tuple[str, ...] = ()) -> Page:
+    words = [
+        Word(text=w, bbox=(72, 100, 90, 110), font_size=14 if w in bold else 9, bold=w in bold)
+        for w in text.split()
+    ]
+    return Page(
+        number=n, printed_page=printed, width=595, height=842,
+        words=words, text=text, is_scanned=False,
+    )  # fmt: skip
+
+
+TOC = "\n".join(
+    [
+        "TABLE OF CONTENTS",
+        "SECTION I: GENERAL ........................................ 1",
+        "DEFINITIONS AND ABBREVIATIONS ............................. 1",
+        "SECTION III: INTRODUCTION ................................. 3",
+        "THE OFFER ................................................. 3",
+        "CAPITAL STRUCTURE ......................................... 4",
+        "OBJECTS OF THE OFFER ...................................... 6",
+        "MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS",
+        "............................................................ 7",
+    ]
+)
+
+
+def _doc() -> ParsedDoc:
+    """PDF pages 1-2 cover, 3 TOC, then printed page k is PDF page k + 3."""
+    pages = [
+        _page(1, "RED HERRING PROSPECTUS\nACME LIMITED"),
+        _page(2, "NOTICE TO INVESTORS"),
+        _page(3, TOC),
+        _page(4, "SECTION I: GENERAL\nDEFINITIONS AND ABBREVIATIONS\nterms", "1"),
+        _page(5, "more definitions", "2"),
+        _page(6, "SECTION III: INTRODUCTION\nTHE OFFER\nThe table", "3", ("THE", "OFFER")),
+        _page(7, "CAPITAL STRUCTURE\nshare capital", "4", ("CAPITAL", "STRUCTURE")),
+        _page(8, "capital continued", "5"),
+        _page(9, "OBJECTS OF THE OFFER\nThe Net Proceeds", "6"),
+        _page(10, "MANAGEMENT’S DISCUSSION AND ANALYSIS\nresults", "7"),
+        _page(11, "the end", "8"),
+    ]
+    return ParsedDoc(
+        ipo_id="acme-2025", doc_type="rhp", source_path="x.pdf",
+        n_pages=len(pages), pages=pages, sha256="0" * 64,
+    )  # fmt: skip
+
+
+def test_find_toc_pages() -> None:
+    assert find_toc_pages(_doc()) == [3]
+
+
+def test_parse_toc_lines_joins_wrapped_titles_and_skips_parts() -> None:
+    entries = parse_toc_lines(TOC.splitlines())
+    titles = [e.title for e in entries]
+    assert titles == [
+        "DEFINITIONS AND ABBREVIATIONS",
+        "THE OFFER",
+        "CAPITAL STRUCTURE",
+        "OBJECTS OF THE OFFER",
+        "MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS",
+    ]
+    assert [e.printed_page for e in entries] == [1, 3, 4, 6, 7]
+
+
+@pytest.mark.parametrize(
+    ("title", "expected"),
+    [
+        ("THE OFFER", "the_offer"),
+        ("Objects of the Offer", "objects_of_the_offer"),
+        ("OBJECTS OF THE ISSUE", "objects_of_the_offer"),
+        ("CAPITAL  STRUCTURE", "capital_structure"),
+        ("SUMMARY OF THIS RED HERRING PROSPECTUS", "summary"),
+        ("SUMMARY OF THE OFFER DOCUMENT", "summary"),
+        ("SUMMARY OF THIS PROSPECTUS", "summary"),
+        ("OFFER DOCUMENT SUMMARY", "summary"),
+        ("OUR PROMOTERS AND PROMOTER GROUP", "our_promoters"),
+        ("BASIS FOR OFFER PRICE", "basis_for_offer_price"),
+        ("GENERAL INFORMATION", "general_information"),
+        ("TERMS OF THE OFFER", "terms_of_the_offer"),
+        ("CERTAIN U.S. TAX CONSIDERATIONS", "certain_u_s_tax_considerations"),
+    ],
+)
+def test_canonical_ids(title: str, expected: str) -> None:
+    assert canonical_id(title) == expected
+
+
+def test_part_header_that_is_itself_a_section_is_kept() -> None:
+    lines = [
+        "SECTION II: RISK FACTORS ........................ 33",
+        "SECTION III: INTRODUCTION ....................... 75",
+        "THE OFFER ....................................... 75",
+    ]
+    entries = parse_toc_lines(lines)
+    assert [(e.title, e.printed_page) for e in entries] == [("RISK FACTORS", 33), ("THE OFFER", 75)]
+
+
+def test_heading_with_part_prefix_confirms_the_section() -> None:
+    doc = _doc()
+    doc.pages[5].text = "SECTION III - THE OFFER\nThe table"
+    sections = {s.id: s for s in find_sections(doc)}
+    assert sections["the_offer"].start_page == 6
+    assert sections["the_offer"].confidence >= 0.9
+
+
+def test_printed_to_pdf_uses_footer_numbers_then_median_offset() -> None:
+    doc = _doc()
+    assert printed_to_pdf(doc, 3) == 6
+    doc.pages[7].printed_page = None  # printed "5" unreadable: median offset (+3) still finds it
+    assert printed_to_pdf(doc, 5) == 8
+    assert printed_to_pdf(doc, 500) == doc.n_pages  # clamped to the document
+
+
+def test_find_sections_key_sections_and_ranges() -> None:
+    sections = {s.id: s for s in find_sections(_doc())}
+    assert set(KEY_SECTIONS) <= set(sections)
+    assert (sections["cover"].start_page, sections["cover"].end_page) == (1, 2)
+    assert (sections["the_offer"].start_page, sections["the_offer"].end_page) == (6, 6)
+    assert (sections["capital_structure"].start_page, sections["capital_structure"].end_page) == (
+        7,
+        8,
+    )
+    assert sections["objects_of_the_offer"].start_page == 9
+    assert sections["management_s_discussion_and_analysis"].end_page == 11  # last runs to the end
+
+
+def test_toc_confirmed_by_heading_and_bold_font_gives_full_confidence() -> None:
+    sections = {s.id: s for s in find_sections(_doc())}
+    assert sections["the_offer"].method == "toc"
+    assert sections["the_offer"].confidence == pytest.approx(1.0)
+    # heading found but not bold: still confirmed, slightly lower
+    assert 0.8 <= sections["objects_of_the_offer"].confidence < 1.0
+
+
+def test_wrong_toc_page_is_corrected_by_the_heading_regex() -> None:
+    doc = _doc()
+    # Break the footer map so the TOC points at the wrong PDF page for CAPITAL STRUCTURE.
+    doc.pages[6].printed_page = None
+    doc.pages[7].printed_page = "4"
+    sections = {s.id: s for s in find_sections(doc)}
+    assert sections["capital_structure"].start_page == 7
+    assert sections["capital_structure"].method == "font"
+
+
+def test_missing_toc_falls_back_to_heading_regex() -> None:
+    doc = _doc()
+    doc.pages[2].text = "nothing useful here"
+    sections = {s.id: s for s in find_sections(doc)}
+    assert sections["the_offer"].start_page == 6
+    assert sections["the_offer"].method in {"regex", "font"}
+    assert sections["the_offer"].confidence < 1.0
+
+
+def test_rhp_adapter_is_registered() -> None:
+    from finsight.parse.rhp_adapter import register
+
+    register()  # other tests may have cleared the registry
+    adapter = registry.get("doc_adapter", "rhp")
+    assert adapter.doc_type == "rhp"
+    assert {s.id for s in adapter.sections(_doc())} >= set(KEY_SECTIONS)
