@@ -1,0 +1,325 @@
+{
+ "summary": {
+  "rhp": {
+   "fresh_issue_with_objects_rows": "8/8",
+   "pure_ofs_not_in_document": [
+    "hexaware-technologies-2025",
+    "lg-electronics-india-2025"
+   ],
+   "missing": []
+  },
+  "prospectus": {
+   "fresh_issue_with_objects_rows": "8/8",
+   "pure_ofs_not_in_document": [
+    "hexaware-technologies-2025",
+    "lg-electronics-india-2025"
+   ],
+   "missing": []
+  }
+ },
+ "documents": {
+  "ather-energy-2025:prospectus": {
+   "ipo_id": "ather-energy-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 77,
+   "seconds": 68.9,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "Less: Offer expenses to the extent applicable to the Fresh I",
+    "Total Net Proceeds"
+   ]
+  },
+  "ather-energy-2025:rhp": {
+   "ipo_id": "ather-energy-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 76,
+   "seconds": 85.7,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "Less: Offer expenses to the extent applicable to the Fresh I",
+    "Total Net Proceeds"
+   ]
+  },
+  "groww-2025:prospectus": {
+   "ipo_id": "groww-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 62,
+   "seconds": 53.0,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "Less: Offer expenses to the extent applicable to the Fresh I",
+    "Total Net Proceeds"
+   ]
+  },
+  "groww-2025:rhp": {
+   "ipo_id": "groww-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 63,
+   "seconds": 63.2,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "Less: Offer expenses to the extent applicable to the Fresh I",
+    "Total Net Proceeds"
+   ]
+  },
+  "hdb-financial-services-2025:prospectus": {
+   "ipo_id": "hdb-financial-services-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 53,
+   "seconds": 93.6,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Fresh Issue expenses (1)",
+    "Net Proceeds"
+   ]
+  },
+  "hdb-financial-services-2025:rhp": {
+   "ipo_id": "hdb-financial-services-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 52,
+   "seconds": 126.1,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Fresh Issue expenses (1)(2)",
+    "Net Proceeds"
+   ]
+  },
+  "hexaware-technologies-2025:prospectus": {
+   "ipo_id": "hexaware-technologies-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 45,
+   "seconds": 24.4,
+   "pure_ofs": true,
+   "objects": "not_in_document",
+   "objects_scale": null,
+   "objects_rows": []
+  },
+  "hexaware-technologies-2025:rhp": {
+   "ipo_id": "hexaware-technologies-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 46,
+   "seconds": 35.1,
+   "pure_ofs": true,
+   "objects": "not_in_document",
+   "objects_scale": null,
+   "objects_rows": []
+  },
+  "lenskart-2025:prospectus": {
+   "ipo_id": "lenskart-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 66,
+   "seconds": 85.9,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Offer related expenses to the extent applicable to th",
+    "Net Proceeds"
+   ]
+  },
+  "lenskart-2025:rhp": {
+   "ipo_id": "lenskart-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 67,
+   "seconds": 93.7,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Offer related expenses to the extent applicable to th",
+    "Net Proceeds"
+   ]
+  },
+  "lg-electronics-india-2025:prospectus": {
+   "ipo_id": "lg-electronics-india-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 21,
+   "seconds": 13.0,
+   "pure_ofs": true,
+   "objects": "not_in_document",
+   "objects_scale": null,
+   "objects_rows": []
+  },
+  "lg-electronics-india-2025:rhp": {
+   "ipo_id": "lg-electronics-india-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 21,
+   "seconds": 22.8,
+   "pure_ofs": true,
+   "objects": "not_in_document",
+   "objects_scale": null,
+   "objects_rows": []
+  },
+  "meesho-2025:prospectus": {
+   "ipo_id": "meesho-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 63,
+   "seconds": 57.6,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "(Less) Offer related expenses to the extent applicable to th"
+   ]
+  },
+  "meesho-2025:rhp": {
+   "ipo_id": "meesho-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 61,
+   "seconds": 66.7,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "(Less) Offer related expenses to the extent applicable to th",
+    "Net Proceeds"
+   ]
+  },
+  "physicswallah-2025:prospectus": {
+   "ipo_id": "physicswallah-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 73,
+   "seconds": 57.6,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "(in ₹ million)",
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Offer related expenses to the extent applicable to th",
+    "Net Proceeds",
+    "29,617.81"
+   ]
+  },
+  "physicswallah-2025:rhp": {
+   "ipo_id": "physicswallah-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 73,
+   "seconds": 67.5,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "(in ₹ million)",
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Offer related expenses to the extent applicable to th",
+    "Issue (only those apportioned to our Company) *",
+    "Net Proceeds"
+   ]
+  },
+  "tata-capital-2025:prospectus": {
+   "ipo_id": "tata-capital-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 46,
+   "seconds": 41.4,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Fresh Issue expenses (1)",
+    "Net Proceeds"
+   ]
+  },
+  "tata-capital-2025:rhp": {
+   "ipo_id": "tata-capital-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 45,
+   "seconds": 50.2,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross proceeds of the Fresh Issue",
+    "(Less) Fresh Issue expenses (1)(2)",
+    "Net Proceeds"
+   ]
+  },
+  "urban-company-2025:prospectus": {
+   "ipo_id": "urban-company-2025",
+   "doc": "prospectus",
+   "backend": "docling",
+   "n_tables": 58,
+   "seconds": 167.5,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "Less: Offer expenses to the extent applicable to the Fresh I",
+    "Total Net Proceeds"
+   ]
+  },
+  "urban-company-2025:rhp": {
+   "ipo_id": "urban-company-2025",
+   "doc": "rhp",
+   "backend": "docling",
+   "n_tables": 59,
+   "seconds": 163.2,
+   "pure_ofs": false,
+   "objects": "ok",
+   "objects_scale": "₹ in million",
+   "objects_rows": [
+    "Particulars",
+    "Gross Proceeds of the Fresh Issue",
+    "Less: Offer expenses to the extent applicable to the Fresh I",
+    "Total Net Proceeds"
+   ]
+  }
+ }
+}
