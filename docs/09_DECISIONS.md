@@ -95,6 +95,11 @@ Each decision: context → decision → consequences. Status: `accepted` (Akshat
 **Decision:** the headline result is overall NVM with a bootstrap CI (by IPO) and a paired per-IPO comparison between rungs; per-field results are descriptive. Every ladder is reported for the **full document** and **body-only** (cover masked).
 **Consequences:** the PRD target "better on ≥ 5 of 8 fields" is treated as a descriptive goal; the report states which claims the sample supports.
 
+### ADR-032 LLM memory and thinking policy — proposed (30 Sep 2026)
+**Context:** first measurement on the laptop: with the model unloaded RAM was 10.2 of 15.4 GB; with `qwen3.5:2b` loaded 12.0 GB (Ollama ≈ 1.8 GB). Ollama reported 3.0 GB at context 4096, split 37 % CPU / 63 % GPU, so part of the model ran on the CPU. Thinking mode was on by default and made answers very slow.
+**Decision:** thinking is always disabled (`think: false`, tested). `dev_light` uses `qwen3.5:0.8b`. For `full`, the LLM must fit fully on the GPU: prefer a text-only GGUF and the smallest context that holds 5 passages, chosen from measurements in P3.1/P3.2.
+**Consequences:** the 2B/4B choice waits for the bake-off; the 02 section 12 budget uses measured numbers; the live demo closes other apps.
+
 ---
 
 ## Pending ADRs (to be written during the build)
