@@ -1,0 +1,1084 @@
+{
+ "documents_with_a_candidate_per_field": {
+  "rhp": {
+   "fresh_issue_size": 8,
+   "ofs_shares": 9,
+   "ofs_amount": 10,
+   "offer_price": 10,
+   "price_band": 8,
+   "total_issue_size": 10,
+   "face_value": 10,
+   "book_running_lead_managers": 10,
+   "registrar": 10,
+   "promoters": 10,
+   "objects_of_offer": 8
+  },
+  "prospectus": {
+   "fresh_issue_size": 8,
+   "ofs_shares": 9,
+   "ofs_amount": 10,
+   "offer_price": 10,
+   "price_band": 0,
+   "total_issue_size": 10,
+   "face_value": 10,
+   "book_running_lead_managers": 10,
+   "registrar": 10,
+   "promoters": 10,
+   "objects_of_offer": 8
+  }
+ },
+ "documents": {
+  "ather-energy-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 25,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 3,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 2,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 172,
+    "kind": "table"
+   }
+  },
+  "ather-energy-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 1,
+    "page": 13,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "face_value": {
+    "n": 24,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 3,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 2,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 172,
+    "kind": "table"
+   }
+  },
+  "groww-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 1,
+    "page": 12,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 1,
+    "page": 12,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 25,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 3,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 151,
+    "kind": "table"
+   }
+  },
+  "groww-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 1,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 1,
+    "page": 13,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "face_value": {
+    "n": 25,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 3,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 3,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 151,
+    "kind": "table"
+   }
+  },
+  "hdb-financial-services-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 5,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 3,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 4,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 148,
+    "kind": "table"
+   }
+  },
+  "hdb-financial-services-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 1,
+    "page": 11,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 5,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 3,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 4,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 148,
+    "kind": "table"
+   }
+  },
+  "hexaware-technologies-2025:prospectus": {
+   "fresh_issue_size": null,
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 9,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 5,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": null
+  },
+  "hexaware-technologies-2025:rhp": {
+   "fresh_issue_size": null,
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 1,
+    "page": 11,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 8,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 4,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": null
+  },
+  "lenskart-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 3,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 20,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 1,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 1,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 212,
+    "kind": "table"
+   }
+  },
+  "lenskart-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "face_value": {
+    "n": 20,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 1,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 1,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 212,
+    "kind": "table"
+   }
+  },
+  "lg-electronics-india-2025:prospectus": {
+   "fresh_issue_size": null,
+   "ofs_shares": null,
+   "ofs_amount": {
+    "n": 1,
+    "page": 12,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 3,
+    "page": 1,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 13,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 3,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": null
+  },
+  "lg-electronics-india-2025:rhp": {
+   "fresh_issue_size": null,
+   "ofs_shares": null,
+   "ofs_amount": {
+    "n": 1,
+    "page": 13,
+    "kind": "placeholder"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 1,
+    "page": 13,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 3,
+    "page": 1,
+    "kind": "placeholder"
+   },
+   "face_value": {
+    "n": 11,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 2,
+    "page": 14,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": null
+  },
+  "meesho-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 1,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 22,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 1,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 1,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 212,
+    "kind": "table"
+   }
+  },
+  "meesho-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 1,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 1,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "offer_price": {
+    "n": 1,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "face_value": {
+    "n": 22,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 2,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 212,
+    "kind": "table"
+   }
+  },
+  "physicswallah-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 17,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 3,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 163,
+    "kind": "table"
+   }
+  },
+  "physicswallah-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 1,
+    "page": 14,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 16,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 2,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 163,
+    "kind": "table"
+   }
+  },
+  "tata-capital-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 3,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 10,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 4,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 144,
+    "kind": "table"
+   }
+  },
+  "tata-capital-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 1,
+    "page": 13,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "face_value": {
+    "n": 11,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 2,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 4,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 144,
+    "kind": "table"
+   }
+  },
+  "urban-company-2025:prospectus": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "count"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "price_band": null,
+   "total_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 16,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 1,
+    "page": 2,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 3,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 164,
+    "kind": "table"
+   }
+  },
+  "urban-company-2025:rhp": {
+   "fresh_issue_size": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "ofs_shares": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "ofs_amount": {
+    "n": 2,
+    "page": 3,
+    "kind": "money"
+   },
+   "offer_price": {
+    "n": 2,
+    "page": 3,
+    "kind": "placeholder"
+   },
+   "price_band": {
+    "n": 2,
+    "page": 11,
+    "kind": "placeholder"
+   },
+   "total_issue_size": {
+    "n": 1,
+    "page": 3,
+    "kind": "money"
+   },
+   "face_value": {
+    "n": 16,
+    "page": 1,
+    "kind": "money"
+   },
+   "book_running_lead_managers": {
+    "n": 1,
+    "page": 3,
+    "kind": "list"
+   },
+   "registrar": {
+    "n": 3,
+    "page": 2,
+    "kind": "text"
+   },
+   "promoters": {
+    "n": 2,
+    "page": 1,
+    "kind": "list"
+   },
+   "objects_of_offer": {
+    "n": 1,
+    "page": 164,
+    "kind": "table"
+   }
+  }
+ }
+}

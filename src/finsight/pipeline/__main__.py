@@ -1,8 +1,8 @@
 """Offline pipeline CLI.
 
 uv run python -m finsight.pipeline build --ipo meesho-2025 [--doc rhp|prospectus|both]
-                                        [--stage parse|sections|tables] [--no-images]
-uv run python -m finsight.pipeline build-all [--stage parse|sections|tables] [--no-images]
+                                        [--stage parse|sections|tables|rules] [--no-images]
+uv run python -m finsight.pipeline build-all [--stage parse|sections|tables|rules] [--no-images]
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 [--doc rhp] --stats
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 --page 1 [--lines 20]
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 --grep "fresh issue"
@@ -22,10 +22,16 @@ from finsight.ingest.registry import DemoIpo, get_demo_ipo, list_demo_ipos
 from finsight.parse import KEY_SECTIONS
 from finsight.pipeline import inspect as insp
 from finsight.pipeline.parse_stage import ParseReport, load_parsed, run_parse
+from finsight.pipeline.rules_stage import (
+    RulesRun,
+    rules_summary,
+    run_rules,
+    write_rules_summary,
+)
 from finsight.pipeline.sections_stage import run_sections, section_matrix, write_matrix
 from finsight.pipeline.tables_stage import TablesReport, run_tables, update_summary
 
-STAGES = ["parse", "sections", "tables"]
+STAGES = ["parse", "sections", "tables", "rules"]
 
 
 def _docs(choice: str) -> list[DocType]:
@@ -75,6 +81,17 @@ def _tables(ipo: DemoIpo, docs: list[DocType]) -> list[TablesReport]:
     return reports
 
 
+def _rules(ipo: DemoIpo, docs: list[DocType]) -> dict[tuple[str, DocType], RulesRun]:
+    processed = get_settings().paths.processed_dir
+    out = {}
+    for doc in docs:
+        found = run_rules(processed, ipo.ipo_id, doc)
+        got = sum(bool(c) for c in found.values())
+        print(f"{ipo.ipo_id:28} {doc:10} fields with a candidate: {got}/{len(found)}", flush=True)
+        out[(ipo.ipo_id, doc)] = found
+    return out
+
+
 def _write_timing(reports: list[ParseReport]) -> None:
     out = get_settings().paths.eval_dir / "parse_timing.json"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -116,6 +133,15 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "build" and args.stage == "sections":
         _sections(get_demo_ipo(args.ipo), _docs(args.doc))
+    elif args.command == "build" and args.stage == "rules":
+        _rules(get_demo_ipo(args.ipo), _docs(args.doc))
+    elif args.command == "build-all" and args.stage == "rules":
+        every: dict[tuple[str, DocType], RulesRun] = {}
+        for ipo in list_demo_ipos():
+            every |= _rules(ipo, ["rhp", "prospectus"])
+        write_rules_summary(
+            get_settings().paths.eval_dir / "rules_candidates.json", rules_summary(every)
+        )
     elif args.command == "build" and args.stage == "tables":
         _tables(get_demo_ipo(args.ipo), _docs(args.doc))
     elif args.command == "build":

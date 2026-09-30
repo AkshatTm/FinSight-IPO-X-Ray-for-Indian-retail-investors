@@ -189,6 +189,7 @@ If a company's passages appear in both training and test, scores look better tha
 **Likely viva questions.** (1) *Why is "₹ 5 crore" equal to "₹ 4.6 crore" but "₹ 800 crore" not equal to "₹ 800 million"?* (2) *How do property-based tests differ from your table of examples, and what did they check?*
 
 
+
 ### C2c. The training corpus (built in P1.5)
 
 **What it does.** `finsight.ingest.corpus` turns the public IPO dataset (2009-2023 RHPs and final Prospectuses, already extracted to text page by page) into a clean training corpus: one file per IPO with the page texts, the document kind and the sections found by the P1.2 detector. `finsight.ingest.exclusion` guarantees that no demo IPO and no gold-v2 IPO is in it. Weak labelling (P2) and the BiLSTM-CRF/QA training use this corpus, never the demo PDFs.
@@ -233,6 +234,12 @@ If a company's passages appear in both training and test, scores look better tha
 <!-- C11 voice -->
 <!-- C12 chat + api -->
 <!-- C13 frontend -->
+
+### C4. Rules extractor: Rung 1 of the ladder (built in P2.1)
+**What it is:** a few regular expressions ("regexes": text patterns) that read the cover page of an RHP or Prospectus. SEBI forces nearly every company to use the same sentences, for example "Fresh Issue of [●] Equity Shares aggregating up to ₹ 4,720 million", so a pattern can pick out the number. It needs no training, runs in milliseconds, and always says which page the value came from.
+**Why start here:** the project compares three rungs: rules, a pretrained question-answering model, and our fine-tuned model. Rules are the baseline. If rules already get a field right, a bigger model adds nothing for that field, and saying so honestly is part of the result.
+**Details a beginner trips on:** `[●]` means "the company has not filled this in yet", so the code returns a Placeholder, never zero. Names in the BRLM and registrar tables wrap across lines and sit between phone numbers, so the rules look for a short list of known firms and write them out in full legal form. The Objects table is chosen by what its rows say (a "general corporate purposes" row, "Net Proceeds" in the header), not by size.
+**How it was tuned:** on three dev IPOs only (Ather, Hexaware, Urban Company), where all 33 gold values match. The other seven IPOs are scored for the first time in P2.6, so the demo numbers are not inflated by tuning on them. `scripts/rules_dev_check.py` is the dev-only check. Caveat: gold v1 was AI-prefilled then human-checked (ADR-035).
 
 ---
 
