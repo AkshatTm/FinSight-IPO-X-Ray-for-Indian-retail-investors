@@ -48,11 +48,40 @@ DEFAULT_DOC: dict[str, str] = {f: "rhp" for f in FIELDS} | {
 }
 STATUSES = ("present", "not_in_document", "placeholder")
 DOCS = ("rhp", "prospectus")
+LABEL_SOURCES = ("hand", "ai_assisted_verified")  # ADR-035; a missing label_source means "hand"
+AI_TAG = "[AI-prefilled, needs human verification]"
 Key = tuple[str, str, str]  # (ipo_id, field_id, doc)
 
 
+_MARKS = re.compile(r"[\^*#†‡]")  # footnote marks printed after a number or name
+
+
+_NOTE_REFS = re.compile(r"(?<=[^\W\d_])(?:\(\d{1,2}\))+")  # note references glued to a word
+
+
+def _clean(text: str) -> str:
+    return _MARKS.sub("", text).replace("•", "●").casefold()
+
+
 def _compact(text: str) -> str:
-    return re.sub(r"\s+", "", text).casefold()
+    return re.sub(r"\s+", "", _clean(text))
+
+
+def _words(text: str) -> list[str]:
+    bare = _NOTE_REFS.sub("", _clean(text))  # "purposes(1)(2)" -> "purposes"
+    return [w.strip(",;:.") for w in bare.split() if w.strip(",;:.")]
+
+
+def _in_order(needle: str, haystack: str) -> bool:
+    """Every word of ``needle`` appears in ``haystack`` in the same order, gaps allowed."""
+    rest = iter(_words(haystack))
+    return all(word in rest for word in _words(needle))
+
+
+def _appears(text: str, quote: str, loose: bool) -> bool:
+    if _compact(text) in _compact(quote):
+        return True
+    return loose and _in_order(text, quote)
 
 
 def _pages(ipo_id: str, doc: str) -> int | None:
@@ -113,9 +142,19 @@ def validate_row(raw: dict[str, Any]) -> list[str]:
         out.append(f"status must be one of {', '.join(STATUSES)}")
         return out
     value, page, quote = raw.get("value_raw"), raw.get("page"), raw.get("quote") or ""
+    source = raw.get("label_source", "hand")
+    if source not in LABEL_SOURCES:
+        out.append(f"label_source must be one of {', '.join(LABEL_SOURCES)}")
+    total = _pages(str(ipo_id), str(doc)) if ipo_id in known and doc in DOCS else None
     if status == "not_in_document":
-        if value not in ("", None, []) or page is not None or quote:
-            out.append("not_in_document rows have no value_raw, page or quote")
+        # value stays empty; page and quote may be kept as evidence (for example "will not
+        # receive any proceeds from the Offer" for a pure offer for sale)
+        if value not in ("", None, []):
+            out.append("not_in_document rows have no value_raw")
+        if page is not None and (not isinstance(page, int) or isinstance(page, bool) or page < 1):
+            out.append("page must be a PDF page number >= 1")
+        elif isinstance(page, int) and total is not None and page > total:
+            out.append(f"page {page} is beyond the document ({total} pages)")
         return out
     if value in ("", None, []):
         out.append("value_raw is empty")
@@ -123,7 +162,6 @@ def validate_row(raw: dict[str, Any]) -> list[str]:
         date.fromisoformat(str(raw.get("labelled_at")))
     except ValueError:
         out.append("labelled_at must be an ISO date (2026-10-08)")
-    total = _pages(str(ipo_id), str(doc)) if ipo_id in known and doc in DOCS else None
     if not isinstance(page, int) or isinstance(page, bool) or page < 1:
         out.append("page must be a PDF page number >= 1")
     elif total is not None and page > total:
@@ -132,8 +170,28 @@ def validate_row(raw: dict[str, Any]) -> list[str]:
         out.append("quote is empty")
     if field_id in FIELDS and value not in ("", None, []):
         out += _value_problems(str(field_id), FIELDS[str(field_id)], value, status)
-        if quote.strip() and not all(_compact(s) in _compact(quote) for s in _strings(value)):
+        loose = FIELDS[str(field_id)] in ("text", "list", "table")
+        if quote.strip() and not all(_appears(s, quote, loose) for s in _strings(value)):
             out.append("value_raw does not appear in the quote")
+    return out
+
+
+def convert_prefill(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Format fixes for an AI-prefilled file (ADR-035). Values and quotes are never changed."""
+    out: list[dict[str, Any]] = []
+    for raw in rows:
+        r = dict(raw)
+        if r.get("doc") == "pro":
+            r["doc"] = "prospectus"
+        value = r.get("value_raw")
+        if FIELDS.get(str(r.get("field_id"))) == "table" and isinstance(value, list):
+            r["value_raw"] = [
+                item.rsplit(" :: ", 1) if isinstance(item, str) and " :: " in item else item
+                for item in value
+            ]
+        r["label_source"] = "ai_assisted_verified"
+        r["notes"] = str(r.get("notes") or "").replace(AI_TAG, "").strip()
+        out.append(r)
     return out
 
 
@@ -234,6 +292,23 @@ def self_consistency(first: Path, second: Path) -> Consistency:
     return report
 
 
+def _import_prefill(src: Path, out: Path) -> int:
+    rows = [obj for _, obj in _read(src) if obj is not None]
+    converted = convert_prefill(rows)
+    tmp = out.with_suffix(".tmp")
+    lines = [json.dumps(r, ensure_ascii=False) for r in converted]
+    tmp.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    issues = validate_file(tmp, require_complete=True)
+    if issues:
+        tmp.unlink()
+        print(f"{len(issues)} problem(s); nothing was written:")
+        print("\n".join(issues[:60]))
+        return 1
+    tmp.replace(out)
+    print(f"OK: wrote {len(converted)} rows to {out}")
+    return 0
+
+
 def _xlsx_command(args: argparse.Namespace) -> int:
     from finsight.evaluate.gold_xlsx import export_xlsx, import_xlsx
 
@@ -276,8 +351,13 @@ def main(argv: list[str] | None = None) -> int:
     imp.add_argument("--xlsx", type=Path, default=gold_dir / "gold_labelling.xlsx")
     imp.add_argument("--out", type=Path, default=gold_dir / "gold_values.jsonl")
     imp.add_argument("--partial", action="store_true", help="skip rows not filled in yet")
+    pre = sub.add_parser("import-prefill", help="AI-prefilled jsonl -> gold_values.jsonl (ADR-035)")
+    pre.add_argument("--src", type=Path, default=gold_dir / "gold_prefill.jsonl")
+    pre.add_argument("--out", type=Path, default=gold_dir / "gold_values.jsonl")
     args = parser.parse_args(argv)
 
+    if args.command == "import-prefill":
+        return _import_prefill(args.src, args.out)
     if args.command in ("export-xlsx", "import-xlsx"):
         return _xlsx_command(args)
     if args.command == "template":

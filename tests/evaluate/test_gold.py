@@ -163,3 +163,103 @@ def test_self_consistency_compares_values_not_strings(tmp_path: Path) -> None:
     assert report.agree == 1
     assert report.disagreements == [(IPO, "face_value", "rhp")]
     assert report.rate == pytest.approx(0.5)
+
+
+# --- AI-prefilled gold v1 (ADR-035): looser quote matching, evidence on not_in_document ---
+
+
+def test_quote_match_ignores_case_and_footnote_marks() -> None:
+    assert problems(value_raw="₹ 321", quote="AT A PRICE OF ₹ 321^ PER EQUITY SHARE") == []
+    assert problems(value_raw="₹ 4,720 MILLION", quote="up to ₹ 4,720 million #") == []
+    assert any("quote" in p for p in problems(value_raw="₹ 322", quote="₹ 321^ per share"))
+
+
+def test_bullet_placeholder_is_a_placeholder() -> None:
+    ok = problems(
+        field_id="ofs_amount", value_raw="₹ [•] million", status="placeholder",
+        quote="aggregating up to ₹ [●] million",
+    )  # fmt: skip
+    assert ok == []
+
+
+def test_text_values_may_wrap_across_table_lines() -> None:
+    quote = "Registrar to the Offer KFin Technologies Tel: +91 40 6716 2222 Limited"
+    assert problems(field_id="registrar", value_raw="KFin Technologies Limited", quote=quote) == []
+    wrong = problems(field_id="registrar", value_raw="Limited KFin Technologies", quote=quote)
+    assert any("quote" in p for p in wrong)  # words must stay in order
+
+
+def test_list_items_may_be_interleaved_with_contact_details() -> None:
+    quote = (
+        "Axis Capital Limited Sagar Jatakiya E-mail: a@b.in HSBC Securities and Capital Markets "
+        "Harsh Thakkar / Tel: +91 22 6864 1289 (India) Private Limited"
+    )
+    ok = problems(
+        field_id="book_running_lead_managers", quote=quote,
+        value_raw=[
+            "Axis Capital Limited",
+            "HSBC Securities and Capital Markets (India) Private Limited",
+        ],
+    )  # fmt: skip
+    assert ok == []
+    bad = problems(field_id="book_running_lead_managers", value_raw=["Nomura"], quote=quote)
+    assert any("quote" in p for p in bad)
+
+
+def test_objects_rows_may_be_interleaved_with_numbers() -> None:
+    quote = (
+        "1. Capital expenditure to be 9,272 7,055 2,217 - incurred by our Company 2. Repayment 400"
+    )
+    ok = problems(
+        field_id="objects_of_offer", quote=quote,
+        value_raw=[
+            ["Capital expenditure to be incurred by our Company", "9,272"],
+            ["Repayment", "400"],
+        ],
+    )  # fmt: skip
+    assert ok == []
+
+
+def test_not_in_document_may_keep_the_evidence_page_and_quote() -> None:
+    quote = "Our Company will not receive any proceeds from the Offer"
+    ok = problems(status="not_in_document", value_raw="", page=21, quote=quote)
+    assert ok == []
+    assert any("page" in p for p in problems(status="not_in_document", value_raw="", page=9999))
+    assert any("value" in p for p in problems(status="not_in_document", value_raw="₹ 5"))
+
+
+def test_label_source_is_optional_and_checked() -> None:
+    assert problems(label_source="ai_assisted_verified") == []
+    assert problems(label_source="hand") == []
+    assert any("label_source" in p for p in problems(label_source="guess"))
+
+
+def test_convert_prefill_fixes_the_format_only() -> None:
+    from finsight.evaluate.gold import convert_prefill
+
+    src = row(
+        doc="pro", notes="[AI-prefilled, needs human verification] Footnote ^ after the number."
+    )
+    obj = row(
+        field_id="objects_of_offer",
+        value_raw=["Capex :: 9,272", "Other :: [●]"],
+        quote="Capex 9,272 Other [●]",
+        notes="[AI-prefilled, needs human verification]",
+    )
+    a, b = convert_prefill([src, obj])
+    assert a["doc"] == "prospectus"
+    assert a["label_source"] == "ai_assisted_verified"
+    assert a["notes"] == "Footnote ^ after the number."
+    assert a["value_raw"] == src["value_raw"]
+    assert a["quote"] == src["quote"]
+    assert b["value_raw"] == [["Capex", "9,272"], ["Other", "[●]"]]
+    assert b["notes"] == ""
+
+
+def test_note_references_glued_to_a_word_are_ignored() -> None:
+    quote = "Funding general 5. [●] corporate purposes(1)(2) Total"
+    ok = problems(
+        field_id="objects_of_offer", quote=quote,
+        value_raw=[["Funding general corporate purposes", "[●]"]],
+    )  # fmt: skip
+    assert ok == []
