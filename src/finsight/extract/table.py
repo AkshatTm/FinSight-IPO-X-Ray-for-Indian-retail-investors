@@ -42,7 +42,8 @@ def _rank(table: Table, rows: list[list[str]]) -> tuple[int, int, int, int]:
     )
 
 
-def _pure_ofs(doc: ParsedDoc, sections: list[Section]) -> bool:
+def objects_pure_ofs(doc: ParsedDoc, sections: list[Section]) -> bool:
+    """The Objects section says the company gets no proceeds (a pure offer for sale)."""
     section = next((s for s in sections if s.id == "objects_of_the_offer"), None)
     if section is None:
         return False
@@ -85,7 +86,7 @@ class TableExtractor:
         tables: list[Table],
         field: FieldSpec,
     ) -> list[Candidate]:
-        if field.id != "objects_of_offer" or _pure_ofs(doc, sections):
+        if field.id != "objects_of_offer" or objects_pure_ofs(doc, sections):
             return []
         best: tuple[Table, list[list[str]]] | None = None
         for table in tables:

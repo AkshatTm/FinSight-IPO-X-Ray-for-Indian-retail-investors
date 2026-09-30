@@ -5,9 +5,11 @@ from finsight.extract.passages import QAPassage, build_passages
 from finsight.extract.qa_pretrained import QAExtractor, RawAnswer
 from finsight.extract.rules import RulesExtractor
 from finsight.extract.select import Selection, select_field
-from finsight.extract.table import TableExtractor
+from finsight.extract.table import TableExtractor, objects_pure_ofs
+from finsight.extract.xray import DocInputs, build_xray
 
 __all__ = [
+    "DocInputs",
     "QAExtractor",
     "QAPassage",
     "RawAnswer",
@@ -15,8 +17,10 @@ __all__ = [
     "Selection",
     "TableExtractor",
     "build_passages",
+    "build_xray",
     "field_ids",
     "get_field",
     "load_fields",
+    "objects_pure_ofs",
     "select_field",
 ]
