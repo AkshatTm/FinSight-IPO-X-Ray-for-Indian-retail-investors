@@ -126,6 +126,11 @@ The Excel's `Fresh Issue`, `Offer for Sale`, `Total Issue Size`, `Price Band`, `
 **Decision:** Docling is the primary backend, installed only in the opt-in `tables` dependency group (`uv run --group tables …`); PyMuPDF is the automatic fallback when Docling is absent (CI, `dev_light`). Only the_offer, capital_structure and objects_of_the_offer are processed, capped at 40 pages per section. The unit header ("₹ in million") comes from the table's first two rows or the text within 72 pt above it.
 **Consequences:** the offline build needs the GPU for tables (demo set: 1,000 key-section pages, 1,502 s; one process per IPO, because a single 20-document process died silently after 12); CI tests use the PyMuPDF backend and a slow test covers Docling. pdfplumber stays only for the bake-off script. Pure-OFS IPOs are recognised from the Objects text ("will not receive any proceeds from the Offer") and reported as `not_in_document`.
 
+### ADR-035 Gold v1 is AI-prefilled, then human-verified — proposed (1 Oct 2026)
+**Context:** 05 section 2 asked for blind hand labelling of 110 values (11 fields × 10 IPOs × 2 documents). Akshat instead had Claude (chat) pre-fill `gold_prefill.jsonl` from the PDFs and checked it. The file used `doc: "pro"`, `"purpose :: amount"` strings, upper-case quotes, footnote marks, `[•]`, and kept a page and quote on pure-OFS `not_in_document` rows.
+**Decision:** accept the prefill as gold v1 with `label_source = "ai_assisted_verified"` on every row and the `[AI-prefilled…]` note tag removed. `gold import-prefill` fixes only the format (`pro` → `prospectus`, pairs, label_source); it never edits values or quotes. The validator now ignores case and footnote marks (`^ * # † ‡`, `(1)` after a word) when matching a value to its quote, treats `[•]` like `[●]`, checks text, list and table items as words in order (names wrap across table lines, contact details sit between list items), and lets `not_in_document` rows keep page and quote. Money, count and range values still need an exact match.
+**Consequences:** the ladder and verifier numbers are scored against AI-read, human-verified labels. Reports say so (05 section 2 rule 5) and the self-consistency re-label (rule 4) is still done by hand. The hand corrections Akshat made are unrecorded.
+
 ---
 
 ## Pending ADRs (to be written during the build)
