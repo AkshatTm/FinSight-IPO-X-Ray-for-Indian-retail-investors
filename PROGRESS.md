@@ -1,6 +1,6 @@
 # PROGRESS (≤ 10 lines; newest first; Claude Code updates at the end of each sub-phase)
 
-- [AKSHAT, needed for G1] Gold v1: copy data/gold/gold_template.jsonl to gold_values.jsonl, label 11 fields x 10 IPOs blind from the PDFs (05 section 2), check with `uv run python -m finsight.evaluate.gold validate --complete`. Next: P1.6 buffer + G1 review.
+- G1 review (30 Sep): PASS parse 10/10 IPOs (20 docs), key sections 10/10 RHP + 10/10 Prospectus, numeral suite green (165 tests), corpus 389; FAIL gold v1 not labelled. [AKSHAT] copy data/gold/gold_template.jsonl to gold_values.jsonl, label 11 fields x 10 IPOs blind (05 section 2), `uv run python -m finsight.evaluate.gold validate --complete`; also eyeball 3 parsed docs (`pipeline inspect`). Then tag v0.1.0 and start P2.1.
 - 2026-09-30 — P1.5 corpus merged (PR #21): 389 IPOs (110 RHP + 279 Prospectus texts), 331 with all key sections; exclusion of demo + gold names; `python -m finsight.ingest.corpus build`. [AKSHAT] add gold-v2 names to data/gold/excluded_ipos.txt. P1.7 tooling merged (#22).
 - 2026-09-30 — P1.4 numerals (#20) + P1.3 tables (#19) merged: normalize (Indian/Hindi amounts, equal, periods; ADR-034); Docling tables, objects rows 8/8.
 - G0 passed (P0.2 #14, P0.3 #15, P0.4 #16). CI 'test' required on main; close each issue by hand after merge.
