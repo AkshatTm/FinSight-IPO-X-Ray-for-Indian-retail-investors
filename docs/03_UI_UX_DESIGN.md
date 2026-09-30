@@ -96,7 +96,7 @@ She types "Is the fresh issue ₹800 lakh?" → answer arrives → the number ge
 Taps mic → speaks "इस आईपीओ में प्रमोटर कौन हैं?" → transcript appears in the input (editable) → sends → Hindi answer with citations and marks.
 
 **Flow E — Advice attempt**
-"Should I apply?" → advice card: "FinSight explains what the prospectus says. It doesn't recommend whether to apply — that needs a SEBI-registered adviser. Here are the facts you might weigh:" + 4 mini fact cards.
+"Should I apply?" → advice card: "FinSight explains what the prospectus says. It doesn't recommend whether to apply — that needs a SEBI-registered adviser. Here is what the prospectus says:" + 4 mini fact cards.
 
 **Flow F — Examiner**
 Model Lab → ladder table → per-field heatmap → click a cell → example predictions → "Inspect a live answer" → Inspector drawer with retrieval scores and checks.

@@ -35,7 +35,7 @@ Day-1 check [AKSHAT]: `nvidia-smi` works and shows the RTX 2050; Task Manager â†
 7. VS Code (optional) with Python, Ruff, Tailwind extensions.
 8. Claude Code installed and logged in; start it from the repo root.
 
-Project creation: make an empty folder `finsight`, copy `CLAUDE.md`, `PROGRESS.md` and `docs/` in, `git init`, create the GitHub repo (`gh repo create finsight --public --source . --remote origin`), push. Then paste the kickoff prompt.
+Project creation: make an empty folder `finsight`, copy `CLAUDE.md`, `PROGRESS.md` and `docs/` in, `git init`, create the GitHub repo (`gh repo create FinSight-IPO-X-Ray-for-Indian-retail-investors --public --source . --remote origin`), push. Then paste the kickoff prompt.
 
 ---
 
@@ -44,7 +44,7 @@ Project creation: make an empty folder `finsight`, copy `CLAUDE.md`, `PROGRESS.m
 | Concern | Choice | Why |
 |---|---|---|
 | Language | Python 3.11 | Stable wheels for every ML lib on Windows |
-| Env + deps | **uv** (`pyproject.toml` + `uv.lock`) | Fast, reproducible, cross-platform |
+| Env + deps | **uv** (`pyproject.toml` + `uv.lock`), dependency groups `api` (runtime server, no torch), `ml` (torch, transformers; offline and Kaggle), `asr`, `dev` | Fast, reproducible; CI and the deployed image never install torch (ADR-029) |
 | Task runner | **poethepoet** (`uv run poe <task>`) | Works on Windows without Make |
 | Lint + format | **ruff** (`ruff check`, `ruff format`) | One tool replaces flake8 + black + isort |
 | Types | mypy on `core`, `normalize`, `verify` | The correctness-critical packages |

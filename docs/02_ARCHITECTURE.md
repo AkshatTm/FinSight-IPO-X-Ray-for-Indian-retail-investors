@@ -333,7 +333,7 @@ Assume ~8 GB RAM is already used by Windows + Claude Code + VS Code + browser + 
 | DeBERTa QA (offline or playground) | GPU fp16 | ~0.4 GB VRAM | Offline pipeline / lazy |
 | Python + torch + FastAPI | CPU | ~1 GB RAM | — |
 
-Rules: a `ModelManager` owns all model singletons (lazy load, idle unload, `/api/health` reports what's loaded). Numbers above are planning estimates — **Phase 3.1 measures real usage** and records it in `09_DECISIONS.md`.
+The Ollama runner itself adds ~1–2 GB of system RAM on top of these rows, so for the live demo close Claude Code and VS Code and serve the frontend with `next start`, not `next dev`. Rules: a `ModelManager` owns all model singletons (lazy load, idle unload, `/api/health` reports what's loaded). Numbers above are planning estimates — **Phase 3.1 measures real usage** and records it in `09_DECISIONS.md`.
 
 ---
 
