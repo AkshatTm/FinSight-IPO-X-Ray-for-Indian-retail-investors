@@ -12,10 +12,17 @@ from finsight.core.schemas import DocType
 class DocOutputs:
     parsed: Path  # parsed.json (RHP) or parsed_prospectus.json
     pages_dir: Path  # pages/ (RHP) or pages_prospectus/
+    sections: Path  # sections.json (RHP) or sections_prospectus.json
 
 
 def doc_outputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocOutputs:
     base = processed_dir / ipo_id
     if doc == "rhp":
-        return DocOutputs(parsed=base / "parsed.json", pages_dir=base / "pages")
-    return DocOutputs(parsed=base / "parsed_prospectus.json", pages_dir=base / "pages_prospectus")
+        return DocOutputs(
+            parsed=base / "parsed.json", pages_dir=base / "pages", sections=base / "sections.json"
+        )
+    return DocOutputs(
+        parsed=base / "parsed_prospectus.json",
+        pages_dir=base / "pages_prospectus",
+        sections=base / "sections_prospectus.json",
+    )
