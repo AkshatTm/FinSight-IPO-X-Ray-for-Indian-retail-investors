@@ -45,12 +45,12 @@ How to use this file
 **Done when:** `gh repo view` works; `ollama ps` shows GPU use for a test model.
 
 ### P0.2 Scaffold `chore/p0.2-scaffold` [CC]
-- [ ] Repo tree per `02_ARCHITECTURE.md` §5/§9 with empty packages + `__init__.py`
-- [ ] `pyproject.toml` (uv; dependency groups `api` / `ml` / `asr` / `dev`, torch only in `ml`), poe tasks, ruff, mypy config, pytest config (`slow` marker), `.gitignore` (done 30 Sep), `.gitattributes` (LF), `.env.example`, `NOTICE` (data licences)
-- [ ] pre-commit: ruff, ruff-format, nbstripout, end-of-file, large-file guard (> 5 MB)
-- [ ] GitHub Actions CI: backend lint/type/test (fast)
-- [ ] `README.md` stub with badge, `LICENSE` decision noted (code MIT; data/model NC-SA)
-**Done when:** CI green on the PR; `uv run poe test` passes (one smoke test).
+- [x] Repo tree per `02_ARCHITECTURE.md` §5/§9 with empty packages + `__init__.py`
+- [x] `pyproject.toml` (uv; dependency groups `api` / `ml` / `asr` / `dev`, torch only in `ml`), poe tasks, ruff, mypy config, pytest config (`slow` marker), `.gitignore` (done 30 Sep), `.gitattributes` (LF), `.env.example`, `NOTICE` (data licences)
+- [x] pre-commit: ruff, ruff-format, nbstripout, end-of-file, large-file guard (> 5 MB)
+- [x] GitHub Actions CI: backend lint/type/test (fast)
+- [x] `README.md` stub with badge, `LICENSE` decision noted (code MIT; data/model NC-SA)
+**Done when:** CI green on the PR; `uv run poe test` passes (one smoke test). → merged #14, 2026-09-30
 
 ### P0.3 Core `feat/p0.3-core` [CC]
 - [ ] `core/schemas.py`, `core/interfaces.py`, `core/registry.py`, `core/config.py` (profiles), `core/ids.py`, `core/logging.py`
