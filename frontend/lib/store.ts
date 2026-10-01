@@ -32,12 +32,20 @@ interface UiState {
   unit: Unit;
   highlight: Highlight | null;
   view: DocView | null;
+  /** Glossary drawer: open flag and the term to scroll to. */
+  glossary: { open: boolean; term: string | null };
+  inspector: boolean;
+  shortcuts: boolean;
   coldBannerDismissed: boolean;
   setLang: (l: Lang) => void;
   setTheme: (t: Theme) => void;
   setUnit: (u: Unit) => void;
   setHighlight: (h: Omit<Highlight, "nonce"> | null) => void;
   setView: (v: DocView) => void;
+  openGlossary: (term?: string | null) => void;
+  closeGlossary: () => void;
+  setInspector: (open: boolean) => void;
+  setShortcuts: (open: boolean) => void;
   dismissColdBanner: () => void;
 }
 
@@ -51,6 +59,9 @@ export const useUi = create<UiState>()(
       unit: "crore",
       highlight: null,
       view: null,
+      glossary: { open: false, term: null },
+      inspector: false,
+      shortcuts: false,
       coldBannerDismissed: false,
       setLang: (lang) => set({ lang }),
       setTheme: (theme) => set({ theme }),
@@ -63,6 +74,10 @@ export const useUi = create<UiState>()(
             : { highlight: null },
         ),
       setView: (view) => set({ view }),
+      openGlossary: (term = null) => set({ glossary: { open: true, term } }),
+      closeGlossary: () => set({ glossary: { open: false, term: null } }),
+      setInspector: (inspector) => set({ inspector }),
+      setShortcuts: (shortcuts) => set({ shortcuts }),
       dismissColdBanner: () => set({ coldBannerDismissed: true }),
     }),
     {
