@@ -257,6 +257,13 @@ If a company's passages appear in both training and test, scores look better tha
 **No leakage:** training and dev sets are split by company, and no demo or gold company is ever included (checked twice). Otherwise the model could memorise the answers it is later tested on.
 **How good are the labels?** Unknown until checked, so 50 examples, spread over the fields, go to Akshat to mark correct or wrong (P2.4). That gives a precision number with an error bar, which the report quotes.
 
+### C7. Metrics, the fine-tuning notebook and the Kaggle hand-off (built in P2.4)
+**Metrics (`evaluate/metrics.py`):** *Exact match* asks whether the predicted text equals the gold text after lower-casing and dropping punctuation and "a/an/the". *Token F1* gives partial credit for overlapping words. For FinSight the main score is *NVM* (normalized value match): ₹ 4,720 million equals ₹ 472 crore because both normalise to the same number, but ₹ 10 million never equals ₹ 10 crore; names ignore case; a list matches as a set; "no answer" matches only "no answer".
+**Error bars:** with only 7 test IPOs a single accuracy number is shaky. We resample whole IPOs 1,000 times (bootstrap) to get a 95 % interval, because the thing that varies from case to case is the company, not the field. Rung comparisons use the same resamples for both rungs (paired bootstrap). The weak-label audit uses a Wilson interval, which behaves sensibly for small counts near 0 or 100 %.
+**The notebook (`notebooks/01_finetune_extractor.ipynb`):** it takes the model that already answers SQuAD 2.0 questions and trains it a little more on our weak labels. Long pages are cut into overlapping 384-token windows; a window that does not hold the answer is taught to say "no answer". After each epoch it saves a checkpoint, so a dropped Kaggle session resumes. Three seeds give a mean and a spread, so one lucky run is not reported as the result.
+**Packager (`weaklabel/package.py`):** copies the training files, adds 200-example slices and a Kaggle metadata file. Slices keep the answerable and unanswerable mix, so the smoke run exercises both paths.
+**Run it (Akshat):** `uv run python -m finsight.weaklabel.package --username <kaggle-username>`, then `kaggle datasets create -p data/processed/kaggle/finsight-weaklabel` (private), open the notebook on Kaggle with GPU and the dataset attached; run with `SLICE = 200`, `SEEDS = [13]`, `EPOCHS = 1` until it prints `SMOKE OK`; then `SLICE = None` and all three seeds. Download `extractor/seed-*/final` to `models/extractor/` and the `metrics*.json` files to `eval_results/` (P2.5).
+
 ---
 
 ## Part D — Viva drill (answer aloud without notes)

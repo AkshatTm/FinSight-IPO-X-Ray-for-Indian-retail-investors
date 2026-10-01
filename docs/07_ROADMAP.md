@@ -138,9 +138,9 @@ How to use this file
 
 ### P2.4 Audit + fine-tune notebook `feat/p2.4-finetune-nb` [CC→AKSHAT] — Sat 10 Oct
 - [ ] [AKSHAT] Audit 50 weak labels (~1 h) → E1
-- [ ] [CC] `notebooks/01_finetune_extractor.ipynb`: parameterized, seeds 13/42/2026, checkpoint + resume, fp32 fallback, writes `metrics.json`
-- [ ] [CC] `evaluate/metrics.py` (EM, F1, NVM, list F1) with tests
-- [ ] [CC] Upload helper: package JSONL as a private Kaggle dataset (instructions for Akshat)
+- [x] [CC] `notebooks/01_finetune_extractor.ipynb`: parameterized, seeds 13/42/2026, checkpoint + resume, fp32 fallback, writes `metrics.json`
+- [x] [CC] `evaluate/metrics.py` (EM, F1, NVM, list F1) with tests
+- [x] [CC] Upload helper: package JSONL as a private Kaggle dataset (instructions for Akshat)
 **Done when:** notebook runs end to end on a 200-example slice on Kaggle.
 
 ### P2.5 Training runs [AKSHAT] — Sun 11 Oct (runs in background)
