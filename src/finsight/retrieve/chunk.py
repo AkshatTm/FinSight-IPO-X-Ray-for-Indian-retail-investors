@@ -12,6 +12,7 @@ import re
 
 from finsight.core.ids import passage_id
 from finsight.core.schemas import BBox, Page, ParsedDoc, Passage, Section, Table, Word
+from finsight.retrieve.redact import address_column_words, redact_prose, redact_table
 
 TARGET_CHARS = 1500  # about 350 tokens
 HARD_MAX_CHARS = 2100  # an endless sentence is cut at a word boundary past this
@@ -79,9 +80,14 @@ def _text_groups(text: str) -> list[str]:
 
 def _prose(page: Page, boxes: list[BBox]) -> list[tuple[str, Spans]]:
     if not page.words:
-        return [(t, []) for t in _text_groups(page.text)]
-    words = [w for w in page.words if w.text.strip() and not _inside(w, boxes)]
-    return [_group_text(g, page.number) for g in _word_groups(words)]
+        return [redact_prose(t, []) for t in _text_groups(page.text)]
+    private = address_column_words(page.words)
+    words = [
+        w
+        for i, w in enumerate(page.words)
+        if w.text.strip() and i not in private and not _inside(w, boxes)
+    ]
+    return [redact_prose(*_group_text(g, page.number)) for g in _word_groups(words)]
 
 
 def table_text(table: Table) -> tuple[str, Spans]:
@@ -136,7 +142,7 @@ def build_chunks(doc: ParsedDoc, sections: list[Section], tables: list[Table]) -
             )
             k += 1
         for table in tables_by_start.get(page.number, []):
-            text, spans = table_text(table)
+            text, spans = table_text(redact_table(table))
             pages = [c.page for c in table.cells]
             out.append(
                 Passage(
