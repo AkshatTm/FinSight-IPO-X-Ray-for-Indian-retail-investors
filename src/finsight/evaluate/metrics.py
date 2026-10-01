@@ -2,7 +2,8 @@
 
 NVM (normalized value match) is the primary extractor metric: money, counts and ranges match by
 ``normalize.equal`` (so ₹ 4,720 million equals ₹ 472 crore but ₹ 10 million never equals ₹ 10
-crore), names match ignoring case, lists match as sets. Uncertainty is a bootstrap that resamples
+crore), names match ignoring case, punctuation and spacing (ADR-045), lists match as sets.
+Uncertainty is a bootstrap that resamples
 whole IPOs (1,000 times), because the unit that varies is the IPO, not the field; the weak-label
 audit uses a Wilson interval.
 """
@@ -14,6 +15,7 @@ import math
 import random
 import re
 import string
+import unicodedata
 from collections import Counter
 from collections.abc import Sequence
 from pathlib import Path
@@ -52,7 +54,11 @@ def token_f1(pred: str, gold: str) -> float:
 
 # ----------------------------------------------------------------------------- values
 def _key(text: str) -> str:
-    return "".join(text.split()).casefold()
+    """Case-, punctuation- and spacing-insensitive form of a name ("INC." equals "Inc")."""
+    kept = (
+        ch for ch in text.casefold() if not ch.isspace() and unicodedata.category(ch)[0] not in "PS"
+    )
+    return "".join(kept)
 
 
 def list_f1(pred: Sequence[str], gold: Sequence[str]) -> float:

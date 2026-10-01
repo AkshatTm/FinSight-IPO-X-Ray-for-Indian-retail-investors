@@ -53,7 +53,7 @@ def _load_qa(processed_dir: Path, ipo_id: str, doc: DocType) -> RulesRun:
     return _CANDIDATES.validate_json(path.read_bytes()) if path.exists() else {}
 
 
-def _inputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocInputs:
+def load_inputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocInputs:
     parsed = load_parsed(processed_dir, ipo_id, doc)
     sections = load_sections(processed_dir, ipo_id, doc)
     rules, qa = load_candidates(processed_dir, ipo_id, doc), _load_qa(processed_dir, ipo_id, doc)
@@ -69,7 +69,7 @@ def _inputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocInputs:
 
 
 def run_xray(processed_dir: Path, ipo: DemoIpo, now: datetime | None = None) -> XRay:
-    docs = {doc: _inputs(processed_dir, ipo.ipo_id, doc) for doc in DOCS}
+    docs = {doc: load_inputs(processed_dir, ipo.ipo_id, doc) for doc in DOCS}
     xray = build_xray(ipo.ipo_id, ipo.company, docs, now or datetime.now(UTC))
     xray_path(processed_dir, ipo.ipo_id).write_text(
         xray.model_dump_json(indent=1), encoding="utf-8"

@@ -72,6 +72,24 @@ def test_nvm_text_is_case_folded_and_lists_are_set_matches() -> None:
     assert nvm(ListValue(items=["A"]), ListValue(items=["A", "B"])) is False
 
 
+def test_names_ignore_punctuation_and_spacing_but_not_letters() -> None:
+    assert nvm(TextValue(text="LG ELECTRONICS INC"), TextValue(text="LG Electronics Inc."))
+    assert nvm(
+        TextValue(text="J.P. Morgan India Private Limited"),
+        TextValue(text="JP Morgan India Private Limited"),
+    )
+    assert nvm(
+        ListValue(items=["Kotak Mahindra Capital Co. Ltd"]),
+        ListValue(items=["KOTAK MAHINDRA CAPITAL CO LTD."]),
+    )
+    assert not nvm(TextValue(text="KFin Technologies"), TextValue(text="Link Intime"))
+    assert (
+        nvm(TextValue(text="केफिन टेक्नोलॉजीज"), TextValue(text="केफिन टेक्नोलॉजीज़")) is False
+    )  # letters, nukta, still count
+    assert nvm(TextValue(text="कंपनी, लिमिटेड"), TextValue(text="कंपनी लिमिटेड"))
+    assert list_f1(["Inc."], ["INC"]) == 1.0
+
+
 def test_nvm_none_means_abstained() -> None:
     assert nvm(None, None) is True  # correctly said "not in document"
     assert nvm(None, m("₹ 1")) is False

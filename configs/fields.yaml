@@ -1,7 +1,7 @@
 # Field registry (02 section 7, ADR-023). One entry per extracted field.
 # doc: the document the value is normally read from. sections: where to look (cover = first pages).
-# extractor: rules | table | qa_finetuned (ADR-018: chosen per field on the dev IPOs). fallback: what runs when
-# the primary finds nothing; every other extractor that finds a value only confirms or doubts it.
+# extractor: rules | table (ADR-018: rules first on every field). fallback: what runs when the primary finds
+# nothing; every other extractor that finds a value only confirms or doubts it (the fine-tuned QA model).
 # ladder: false = excluded from weak labels and the model ladder (B4, ADR-023).
 fields:
   - id: fresh_issue_size
@@ -11,8 +11,8 @@ fields:
     doc: rhp
     sections: [cover, the_offer]
     questions: ["What is the size of the fresh issue?", "How much money will the company raise from new shares?"]
-    extractor: qa_finetuned # chosen on dev (ADR-018)
-    fallback: rules
+    extractor: rules # ADR-018: rules first for the product, fine-tuned model as the cross-check
+    fallback: qa_finetuned
     ladder: true
   - id: ofs_shares
     label_en: Offer for sale (shares)
@@ -60,8 +60,8 @@ fields:
     doc: prospectus
     sections: [cover, the_offer]
     questions: ["What is the total size of the issue?"]
-    extractor: qa_finetuned # chosen on dev (ADR-018)
-    fallback: rules
+    extractor: rules # ADR-018: rules first for the product, fine-tuned model as the cross-check
+    fallback: qa_finetuned
     ladder: true
   - id: face_value
     label_en: Face value
