@@ -161,10 +161,10 @@ How to use this file
 ## Phase 3 — Trustworthy chat (Thu 15 – Tue 20 Oct) → G3
 
 ### P3.1 Retrieval `feat/p3.1-retrieval` [CC] — Thu 15 Oct
-- [ ] `retrieve/chunk.py`, `bm25.py`, `dense.py` (offline GPU fp16 build; online ONNX int8), `fuse.py`, `rerank.py`, `Retriever`
-- [ ] Index all demo IPOs; **measure RAM/VRAM** in `full` profile → ADR updating `02` §12
+- [x] `retrieve/chunk.py`, `bm25.py`, `dense.py` (offline GPU fp16 build; online ONNX int8), `fuse.py`, `rerank.py`, `Retriever`
+- [x] Index all demo IPOs; **measure RAM/VRAM** in `full` profile → ADR updating `02` §12
 - [ ] [AKSHAT+CC] Write dev/test questions (`05` §8) — can start earlier
-**Done when:** E6 run on dev questions; abstain threshold tuned on dev only.
+**Done when:** E6 run on dev questions; abstain threshold tuned on dev only. *(Harness built; waits on the question sets, which are [AKSHAT]: `python -m finsight.retrieve.evaluate --dense --rerank`.)*
 
 ### P3.2 Generation + LLM bake-off `feat/p3.2-generate` [CC→AKSHAT] — Fri 16 Oct
 - [ ] `generate/llm_backend.py` (Ollama; llama-cpp stub), `prompts.py` (EN + HI), thinking disabled
