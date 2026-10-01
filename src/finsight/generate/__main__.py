@@ -3,8 +3,13 @@
     uv run python -m finsight.generate ask --ipo urban-company-2025 "Who is the registrar?"
     uv run python -m finsight.generate ask --ipo urban-company-2025 --lang hi "रजिस्ट्रार कौन है?"
 
-This is the P3.2 slice of the chat pipeline (retrieve -> prompt -> stream); the guard and the
-number verifier join in P3.3-P3.6 (``finsight.chat``). Retrieval follows the profile in
+    uv run python -m finsight.generate ask --ipo ather-energy-2025 "How big is the fresh issue?"
+        --answer "The fresh issue is ₹ 26,260 crore [1]."      (no model: check this answer)
+
+Retrieve -> prompt -> stream -> verify: every number in the answer gets ✅ / ⚠️ / ❌ against the
+retrieved passages (P3.3). ``--answer`` skips the language model and checks the text you give,
+which is how the scale trick is shown. The advice guard joins in P3.4-P3.6 (``finsight.chat``).
+Retrieval follows the profile in
 ``configs/config.yaml``: dense and rerank are used only when the profile turns them on and the
 ``ml`` group is installed (``uv run --group ml``); otherwise BM25 alone answers.
 """
@@ -19,6 +24,7 @@ from finsight.core.config import get_settings, load_settings
 from finsight.generate.llm_backend import LLMUnavailable, ReasoningLeak, get_llm
 from finsight.generate.prompts import build_prompt, cited_indices, is_not_found
 from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Embedder, Reranker, Retriever
+from finsight.verify import format_verdicts, verify_answer
 
 
 def _retriever(profile: str | None) -> Retriever:
@@ -41,10 +47,16 @@ def _retriever(profile: str | None) -> Retriever:
     )
 
 
-def ask(ipo_id: str, question: str, language: str, profile: str | None, model: str | None) -> int:
+def ask(
+    ipo_id: str,
+    question: str,
+    language: str,
+    profile: str | None,
+    model: str | None,
+    given_answer: str | None = None,
+) -> int:
     settings = load_settings(profile) if profile else get_settings()
     config = settings.llm.model_copy(update={"model": model}) if model else settings.llm
-    llm = get_llm(config)
     started = time.perf_counter()
     result = _retriever(profile).search(question, ipo_id)
     retrieved = time.perf_counter()
@@ -57,6 +69,12 @@ def ask(ipo_id: str, question: str, language: str, profile: str | None, model: s
         language,
         budget_chars=_budget(config.num_ctx),  # type: ignore[arg-type]
     )
+    if given_answer is not None:
+        print(given_answer)
+        print("\nNumbers:")
+        print(format_verdicts(verify_answer(given_answer, prompt.passages)))
+        return 0
+    llm = get_llm(config)
     answer: list[str] = []
     first: float | None = None
     try:
@@ -78,6 +96,8 @@ def ask(ipo_id: str, question: str, language: str, profile: str | None, model: s
         for n in cited_indices(text, len(prompt.passages)):
             p = prompt.passages[n - 1]
             print(f"  [{n}] {p.doc_type.upper()} page {p.page_start}  ({p.id})")
+        print("\nNumbers:")
+        print(format_verdicts(verify_answer(text, prompt.passages)))
     print(
         f"\n(retrieval {result.method} {retrieved - started:.1f}s; first token "
         f"{(first or done) - retrieved:.1f}s; total {done - started:.1f}s; "
@@ -102,9 +122,10 @@ def main(argv: list[str] | None = None) -> int:
     ask_p.add_argument("--lang", choices=["en", "hi"], default="en")
     ask_p.add_argument("--profile", help="config profile (default: FINSIGHT_PROFILE or dev_light)")
     ask_p.add_argument("--model", help="override the profile's Ollama model")
+    ask_p.add_argument("--answer", help="skip the model and verify this answer text instead")
     ask_p.add_argument("question")
     args = parser.parse_args(argv)
-    return ask(args.ipo, args.question, args.lang, args.profile, args.model)
+    return ask(args.ipo, args.question, args.lang, args.profile, args.model, args.answer)
 
 
 if __name__ == "__main__":
