@@ -1,0 +1,511 @@
+{
+ "experiment": "E5",
+ "name": "verifier_seeded_errors",
+ "seed": 2026,
+ "created_at": "2026-10-01T07:08:43+00:00",
+ "git_sha": "5019b16",
+ "data": {
+  "gold_version": "v1",
+  "n_ipos": 10,
+  "n_base_values": 45,
+  "n_items": 200,
+  "skipped_gold_values": [
+   "lenskart-2025:total_issue_size (no passage on the gold page states it)",
+   "urban-company-2025:total_issue_size (no passage on the gold page states it)"
+  ]
+ },
+ "metrics": {
+  "detection": {
+   "rate": 1.0,
+   "hits": 100,
+   "n": 100,
+   "wilson_95": [
+    0.963,
+    1.0
+   ]
+  },
+  "scale_mismatch_recall": {
+   "rate": 1.0,
+   "hits": 40,
+   "n": 40,
+   "wilson_95": [
+    0.9124,
+    1.0
+   ]
+  },
+  "exact_reason": {
+   "rate": 1.0,
+   "hits": 100,
+   "n": 100,
+   "wilson_95": [
+    0.963,
+    1.0
+   ]
+  },
+  "false_alarm": {
+   "rate": 0.0,
+   "hits": 0,
+   "n": 100,
+   "wilson_95": [
+    0.0,
+    0.037
+   ]
+  },
+  "per_type": {
+   "correct": {
+    "n": 90,
+    "ok": 90,
+    "exact": 90,
+    "got": {
+     "verified": 90
+    }
+   },
+   "digit": {
+    "n": 20,
+    "ok": 20,
+    "exact": 20,
+    "got": {
+     "wrong_value": 20
+    }
+   },
+   "invented": {
+    "n": 20,
+    "ok": 20,
+    "exact": 20,
+    "got": {
+     "not_found": 20
+    }
+   },
+   "rounding_ok": {
+    "n": 10,
+    "ok": 10,
+    "exact": 10,
+    "got": {
+     "verified": 10
+    }
+   },
+   "scale_lakh_crore": {
+    "n": 20,
+    "ok": 20,
+    "exact": 20,
+    "got": {
+     "scale_mismatch": 20
+    }
+   },
+   "scale_million_crore": {
+    "n": 20,
+    "ok": 20,
+    "exact": 20,
+    "got": {
+     "scale_mismatch": 20
+    }
+   },
+   "swap_metric": {
+    "n": 20,
+    "ok": 20,
+    "exact": 20,
+    "got": {
+     "wrong_metric": 20
+    }
+   }
+  }
+ },
+ "by_split": {
+  "dev": {
+   "detection": {
+    "rate": 1.0,
+    "hits": 36,
+    "n": 36,
+    "wilson_95": [
+     0.9036,
+     1.0
+    ]
+   },
+   "scale_mismatch_recall": {
+    "rate": 1.0,
+    "hits": 13,
+    "n": 13,
+    "wilson_95": [
+     0.7719,
+     1.0
+    ]
+   },
+   "exact_reason": {
+    "rate": 1.0,
+    "hits": 36,
+    "n": 36,
+    "wilson_95": [
+     0.9036,
+     1.0
+    ]
+   },
+   "false_alarm": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 27,
+    "wilson_95": [
+     0.0,
+     0.1246
+    ]
+   },
+   "per_type": {
+    "correct": {
+     "n": 26,
+     "ok": 26,
+     "exact": 26,
+     "got": {
+      "verified": 26
+     }
+    },
+    "digit": {
+     "n": 8,
+     "ok": 8,
+     "exact": 8,
+     "got": {
+      "wrong_value": 8
+     }
+    },
+    "invented": {
+     "n": 7,
+     "ok": 7,
+     "exact": 7,
+     "got": {
+      "not_found": 7
+     }
+    },
+    "rounding_ok": {
+     "n": 1,
+     "ok": 1,
+     "exact": 1,
+     "got": {
+      "verified": 1
+     }
+    },
+    "scale_lakh_crore": {
+     "n": 7,
+     "ok": 7,
+     "exact": 7,
+     "got": {
+      "scale_mismatch": 7
+     }
+    },
+    "scale_million_crore": {
+     "n": 6,
+     "ok": 6,
+     "exact": 6,
+     "got": {
+      "scale_mismatch": 6
+     }
+    },
+    "swap_metric": {
+     "n": 8,
+     "ok": 8,
+     "exact": 8,
+     "got": {
+      "wrong_metric": 8
+     }
+    }
+   }
+  },
+  "test": {
+   "detection": {
+    "rate": 1.0,
+    "hits": 64,
+    "n": 64,
+    "wilson_95": [
+     0.9434,
+     1.0
+    ]
+   },
+   "scale_mismatch_recall": {
+    "rate": 1.0,
+    "hits": 27,
+    "n": 27,
+    "wilson_95": [
+     0.8754,
+     1.0
+    ]
+   },
+   "exact_reason": {
+    "rate": 1.0,
+    "hits": 64,
+    "n": 64,
+    "wilson_95": [
+     0.9434,
+     1.0
+    ]
+   },
+   "false_alarm": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 73,
+    "wilson_95": [
+     0.0,
+     0.05
+    ]
+   },
+   "per_type": {
+    "correct": {
+     "n": 64,
+     "ok": 64,
+     "exact": 64,
+     "got": {
+      "verified": 64
+     }
+    },
+    "digit": {
+     "n": 12,
+     "ok": 12,
+     "exact": 12,
+     "got": {
+      "wrong_value": 12
+     }
+    },
+    "invented": {
+     "n": 13,
+     "ok": 13,
+     "exact": 13,
+     "got": {
+      "not_found": 13
+     }
+    },
+    "rounding_ok": {
+     "n": 9,
+     "ok": 9,
+     "exact": 9,
+     "got": {
+      "verified": 9
+     }
+    },
+    "scale_lakh_crore": {
+     "n": 13,
+     "ok": 13,
+     "exact": 13,
+     "got": {
+      "scale_mismatch": 13
+     }
+    },
+    "scale_million_crore": {
+     "n": 14,
+     "ok": 14,
+     "exact": 14,
+     "got": {
+      "scale_mismatch": 14
+     }
+    },
+    "swap_metric": {
+     "n": 12,
+     "ok": 12,
+     "exact": 12,
+     "got": {
+      "wrong_metric": 12
+     }
+    }
+   }
+  }
+ },
+ "by_language": {
+  "en": {
+   "detection": {
+    "rate": 1.0,
+    "hits": 44,
+    "n": 44,
+    "wilson_95": [
+     0.9197,
+     1.0
+    ]
+   },
+   "scale_mismatch_recall": {
+    "rate": 1.0,
+    "hits": 17,
+    "n": 17,
+    "wilson_95": [
+     0.8157,
+     1.0
+    ]
+   },
+   "exact_reason": {
+    "rate": 1.0,
+    "hits": 44,
+    "n": 44,
+    "wilson_95": [
+     0.9197,
+     1.0
+    ]
+   },
+   "false_alarm": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 51,
+    "wilson_95": [
+     0.0,
+     0.07
+    ]
+   },
+   "per_type": {
+    "correct": {
+     "n": 45,
+     "ok": 45,
+     "exact": 45,
+     "got": {
+      "verified": 45
+     }
+    },
+    "digit": {
+     "n": 11,
+     "ok": 11,
+     "exact": 11,
+     "got": {
+      "wrong_value": 11
+     }
+    },
+    "invented": {
+     "n": 9,
+     "ok": 9,
+     "exact": 9,
+     "got": {
+      "not_found": 9
+     }
+    },
+    "rounding_ok": {
+     "n": 6,
+     "ok": 6,
+     "exact": 6,
+     "got": {
+      "verified": 6
+     }
+    },
+    "scale_lakh_crore": {
+     "n": 8,
+     "ok": 8,
+     "exact": 8,
+     "got": {
+      "scale_mismatch": 8
+     }
+    },
+    "scale_million_crore": {
+     "n": 9,
+     "ok": 9,
+     "exact": 9,
+     "got": {
+      "scale_mismatch": 9
+     }
+    },
+    "swap_metric": {
+     "n": 7,
+     "ok": 7,
+     "exact": 7,
+     "got": {
+      "wrong_metric": 7
+     }
+    }
+   }
+  },
+  "hi": {
+   "detection": {
+    "rate": 1.0,
+    "hits": 56,
+    "n": 56,
+    "wilson_95": [
+     0.9358,
+     1.0
+    ]
+   },
+   "scale_mismatch_recall": {
+    "rate": 1.0,
+    "hits": 23,
+    "n": 23,
+    "wilson_95": [
+     0.8569,
+     1.0
+    ]
+   },
+   "exact_reason": {
+    "rate": 1.0,
+    "hits": 56,
+    "n": 56,
+    "wilson_95": [
+     0.9358,
+     1.0
+    ]
+   },
+   "false_alarm": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 49,
+    "wilson_95": [
+     0.0,
+     0.0727
+    ]
+   },
+   "per_type": {
+    "correct": {
+     "n": 45,
+     "ok": 45,
+     "exact": 45,
+     "got": {
+      "verified": 45
+     }
+    },
+    "digit": {
+     "n": 9,
+     "ok": 9,
+     "exact": 9,
+     "got": {
+      "wrong_value": 9
+     }
+    },
+    "invented": {
+     "n": 11,
+     "ok": 11,
+     "exact": 11,
+     "got": {
+      "not_found": 11
+     }
+    },
+    "rounding_ok": {
+     "n": 4,
+     "ok": 4,
+     "exact": 4,
+     "got": {
+      "verified": 4
+     }
+    },
+    "scale_lakh_crore": {
+     "n": 12,
+     "ok": 12,
+     "exact": 12,
+     "got": {
+      "scale_mismatch": 12
+     }
+    },
+    "scale_million_crore": {
+     "n": 11,
+     "ok": 11,
+     "exact": 11,
+     "got": {
+      "scale_mismatch": 11
+     }
+    },
+    "swap_metric": {
+     "n": 13,
+     "ok": 13,
+     "exact": 13,
+     "got": {
+      "wrong_metric": 13
+     }
+    }
+   }
+  }
+ },
+ "misses": [],
+ "first_run": {
+  "rules": "frozen on dev IPOs",
+  "detection": "100/100",
+  "false_alarm": "0/100",
+  "scale_mismatch_recall": "35/40",
+  "exact_reason": "95/100",
+  "misses": "5 scale_lakh_crore items on test IPOs, flagged as wrong_value"
+ },
+ "notes": "Unit benchmark: errors are constructed by known rules on templated answers, so high recall is expected by design. Rules were tuned on the dev IPOs, then one rule was generalised after the first full run (see first_run and ADR-044)."
+}
