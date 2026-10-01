@@ -3,12 +3,15 @@
 // Page-level copy is added here with the step that builds the page.
 // Interpolation: {name}. Numbers stay Western digits in Hindi.
 
+import { LANDING } from "./content/landing";
+
 export type Lang = "en" | "hi";
 type Entry = { en: string; hi: string };
 
 const d = <T extends Record<string, Entry>>(x: T) => x;
 
 export const STRINGS = d({
+  ...LANDING,
   // 3.1 navigation
   "nav.home": { en: "FinSight", hi: "FinSight" },
   "nav.ipos": { en: "IPOs", hi: "आईपीओ" },
