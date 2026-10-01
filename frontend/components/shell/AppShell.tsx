@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { ToastHost } from "@/components/ui/ToastHost";
 import { useT } from "@/lib/useT";
 import { ColdStartBanner } from "./ColdStartBanner";
 import { Footer } from "./Footer";
@@ -25,6 +26,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {children}
       </main>
       <Footer />
+      <ToastHost />
     </>
   );
 }

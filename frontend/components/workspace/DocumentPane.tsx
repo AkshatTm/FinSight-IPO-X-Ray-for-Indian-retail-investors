@@ -63,6 +63,7 @@ export function DocumentPane({ ipoId, detail }: Props) {
   return (
     <section
       aria-label={t("ws.tab.document")}
+      data-pane="document"
       tabIndex={-1}
       onKeyDown={onKey}
       className="flex h-full min-h-0 flex-col rounded-[10px] border border-rule bg-surface"

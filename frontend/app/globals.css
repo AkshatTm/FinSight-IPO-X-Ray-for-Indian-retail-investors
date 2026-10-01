@@ -121,6 +121,70 @@ a.btn:active {
   }
 }
 
+/* Verdict mark lands: fade + scale from 0.9, 160 ms (spec 7.5.4). */
+.mark-in {
+  animation: mark-in 160ms var(--ease-out) both;
+}
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+.toast-in {
+  animation: toast-in 200ms var(--ease-out) both;
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+/* Leader line: draws in 180 ms, fades after 900 ms. */
+.leader {
+  stroke-dasharray: var(--len);
+  animation:
+    leader-draw 180ms var(--ease-out) both,
+    leader-fade 300ms ease-out 900ms forwards;
+}
+@keyframes leader-draw {
+  from {
+    stroke-dashoffset: var(--len);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes leader-fade {
+  to {
+    opacity: 0;
+  }
+}
+.drawer-in {
+  animation: drawer-in 220ms var(--ease-out) both;
+}
+@keyframes drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--text-muted);
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
 /* Skeleton shimmer. Off under reduced motion. */
 .skeleton {
   background: linear-gradient(90deg, var(--surface-2) 25%, var(--rule) 50%, var(--surface-2) 75%);
@@ -162,5 +226,9 @@ a.btn:active {
   }
   .skeleton {
     animation: none;
+  }
+  /* No leader lines under reduced motion (spec 2.5). */
+  .leader {
+    display: none;
   }
 }
