@@ -141,7 +141,7 @@ How to use this file
 - [x] [CC] `notebooks/01_finetune_extractor.ipynb`: parameterized, seeds 13/42/2026, checkpoint + resume, fp32 fallback, writes `metrics.json`
 - [x] [CC] `evaluate/metrics.py` (EM, F1, NVM, list F1) with tests
 - [x] [CC] Upload helper: package JSONL as a private Kaggle dataset (instructions for Akshat)
-**Done when:** notebook runs end to end on a 200-example slice on Kaggle.
+**Done when:** notebook runs end to end on a 200-example slice on Kaggle. → ran end to end on Kaggle T4 (1 Oct, `finsight-extractor-smoke` v1 and v2: SMOKE OK, weights + metrics written); the loss-went-down check did not pass on 9 noisy steps, so the 3 seeds wait for Akshat's call (ADR-042, #40).
 
 ### P2.5 Training runs [AKSHAT] — Sun 11 Oct (runs in background)
 - [ ] 3 seeds on Kaggle; download weights to `models/extractor/`; commit metrics JSON

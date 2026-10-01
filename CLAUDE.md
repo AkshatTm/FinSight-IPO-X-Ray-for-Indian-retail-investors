@@ -12,7 +12,7 @@ FinSight = IPO X-Ray for Indian retail investors: RHP → cited fact sheet + bil
 - **Plan first:** for any task > ~50 lines, show a plan (≤ 15 lines) and wait for Akshat's approval.
 - **One primary package per sub-phase;** touch other packages only for wiring, and import them only via their `__init__.py`.
 - **Never read:** `data/raw/`, `data/processed/`, PDFs, audio, `models/`, weights, `node_modules/`, `.next/`, `.venv/`, notebook outputs. You may read `data/samples/` and `data/gold/`. For schema questions, run a summary script or ask Akshat for 5 rows. To see a document, use `uv run python -m finsight.pipeline inspect` (prints ≤ 40 lines; may write ≤ 30 truncated snippets to `data/samples/`).
-- **Never train models.** Write notebooks; Akshat runs them on Kaggle.
+- **Never train models on the laptop.** Write notebooks. On **Kaggle only**, you may upload private datasets, push and run notebooks on GPU, poll status and download outputs (`python -m finsight.weaklabel.kaggle`, ADR-042). Official `kaggle` CLI only; never print, log or commit the token.
 - **Never hand-edit model outputs or eval results.** Fix the pipeline or show ⚠️.
 - **Never add investment advice, ratings or predictions.**
 - **Tests are the memory:** every module ships with pytest tests; property tests for `normalize`.
