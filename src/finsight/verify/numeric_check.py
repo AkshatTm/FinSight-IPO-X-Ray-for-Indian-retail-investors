@@ -15,6 +15,7 @@ number in the answer:
 - ⚠️ ``not_found``: the number is nowhere in the evidence.
 
 Passages the sentence cites are searched first, so the evidence shown is the cited one.
+Table passages are read cell by cell with the table's unit header (``table_evidence``).
 """
 
 from __future__ import annotations
@@ -36,7 +37,8 @@ from finsight.core.schemas import (
 )
 from finsight.normalize import MULTIPLIER, equal, parse_amounts
 from finsight.verify.claims import mask_citations
-from finsight.verify.metrics import MetricIndex, metric_at
+from finsight.verify.metrics import PER_SHARE, MetricIndex, metric_at
+from finsight.verify.table_evidence import table_amounts
 
 CHECK = "numeric"
 MAX_POWER = 9  # identical digits: any unit slip up to a billion-fold
@@ -54,12 +56,26 @@ class EvidenceAmount:
     start: int
     end: int
     metrics: tuple[str, ...]  # usually one; a pure offer for sale is also the total
+    unit: str | None = None  # a bare table cell: the unit header it was read with
+
+    @property
+    def shown(self) -> str:
+        """The amount as printed, with the table's unit when the cell had none."""
+        return f"{self.amount.raw} ({self.unit})" if self.unit else self.amount.raw
 
 
 def evidence_amounts(passages: list[Passage]) -> list[EvidenceAmount]:
     """Every amount in the passages with the metric that names it."""
     out = []
     for order, passage in enumerate(passages):
+        cells = table_amounts(passage.text)
+        if cells is not None:
+            for c in cells:
+                s = c.span
+                out.append(
+                    EvidenceAmount(s.amount, passage, order, s.start, s.end, c.metrics, c.unit)
+                )
+            continue
         spans = parse_amounts(passage.text)
         index = MetricIndex(passage.text, [(s.start, s.end) for s in spans])
         for s in spans:
@@ -159,6 +175,20 @@ def is_scale_mismatch(a: Amount, b: Amount) -> bool:
     return ma.scale_word != mb.scale_word and k <= MAX_POWER_WORDS
 
 
+def _can_slip(amount: Amount, metric: str | None, e: EvidenceAmount) -> bool:
+    """A bare table cell is a unit slip only for a number that could stand in that table."""
+    if e.unit is None:
+        return True
+    if metric in PER_SHARE:  # a face value or a price is never "in million"
+        return False
+    ma, me = _as_money(amount), _as_money(e.amount)
+    return (
+        ma is not None
+        and me is not None
+        and (min(_significant(ma), _significant(me)) >= MIN_SIGNIFICANT)
+    )
+
+
 def _where(e: EvidenceAmount) -> str:
     return f"passage [{e.order + 1}] (p. {e.passage.page_start})"
 
@@ -204,38 +234,38 @@ def check_number(
 
     if agreeing:
         best = next((e for e in agreeing if metric in e.metrics), agreeing[0])
-        reason = f"Matches {_where(best)}: {best.amount.raw}."
+        reason = f"Matches {_where(best)}: {best.shown}."
         return _result("verified", "verified", reason, amount, best)
     if equals and other_values:
         e, real = equals[0], other_values[0]
         other = (e.metrics[0] if e.metrics else "").replace("_", " ")
-        reason = (
-            f"{e.amount.raw} is the {other} in {_where(e)}; the {name} there is {real.amount.raw}."
-        )
+        reason = f"{e.shown} is the {other} in {_where(e)}; the {name} there is {real.shown}."
         return _result("contradicted", "wrong_metric", reason, amount, e)
     if equals:  # the value is in the evidence; the passages give no other value for this metric
         e = equals[0]
-        reason = f"Matches {_where(e)}: {e.amount.raw}."
+        reason = f"Matches {_where(e)}: {e.shown}."
         return _result("verified", "verified", reason, amount, e)
 
     slip = next(
         (
             e
             for e in ordered
-            if is_scale_mismatch(amount, e.amount) and (fits(e) or same_digits(amount, e.amount))
+            if is_scale_mismatch(amount, e.amount)
+            and (fits(e) or same_digits(amount, e.amount))
+            and _can_slip(amount, metric, e)
         ),
         None,
     )
     if slip:
         times = 10 ** (power_of_ten_gap(amount, slip.amount) or 0)
         reason = (
-            f"The answer says {amount.raw}; {_where(slip)} says {slip.amount.raw}: "
+            f"The answer says {amount.raw}; {_where(slip)} says {slip.shown}: "
             f"a unit slip, {times:,}x apart."
         )
         return _result("contradicted", "scale_mismatch", reason, amount, slip)
     if other_values:
         e = other_values[0]
-        reason = f"The {name} in {_where(e)} is {e.amount.raw}, not {amount.raw}."
+        reason = f"The {name} in {_where(e)} is {e.shown}, not {amount.raw}."
         return _result("contradicted", "wrong_value", reason, amount, e)
     blank = next((e for e in named if isinstance(e.amount, Placeholder)), None)
     if blank:
