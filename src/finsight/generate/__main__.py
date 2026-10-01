@@ -10,8 +10,9 @@ Retrieve -> prompt -> stream -> verify: every number in the answer gets âœ… / âš
 retrieved passages (P3.3). ``--answer`` skips the language model and checks the text you give,
 which is how the scale trick is shown. The guard runs first (advice, forecasts, privacy): a refused
 question prints the refusal and the key X-Ray facts, with no retrieval and no model call.
-The streamed answer is cut if it loops, and an empty, citation-only or pasted-passage answer is
-replaced by "not found" (``generate.postprocess``). Retrieval follows the profile in
+Generation goes through ``generate.respond`` (the same path as the bake-off and the chat):
+the question guard, loop cutting, the output rules and the privacy output filter all apply, and a
+rejected answer is replaced by "not found" with the reason shown. Retrieval follows the profile in
 ``configs/config.yaml``: dense and rerank are used only when the profile turns them on and the
 ``ml`` group is installed (``uv run --group ml``); otherwise BM25 alone answers.
 """
@@ -20,15 +21,22 @@ from __future__ import annotations
 
 import argparse
 import sys
-import time
 from pathlib import Path
 
 from finsight.core.config import get_settings, load_settings
-from finsight.generate.llm_backend import LLMUnavailable, ReasoningLeak, get_llm
-from finsight.generate.postprocess import LoopDetector, clean_answer
-from finsight.generate.prompts import build_prompt, cited_indices, is_not_found
+from finsight.core.schemas import Passage
+from finsight.generate.llm_backend import get_llm
+from finsight.generate.prompts import build_prompt, cited_indices
+from finsight.generate.respond import respond
 from finsight.guard import check_question, facts_payload, refusal_text
-from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Embedder, Reranker, Retriever
+from finsight.retrieve import (
+    BgeM3Embedder,
+    CrossEncoderReranker,
+    Embedder,
+    Reranker,
+    Retriever,
+    SearchResult,
+)
 from finsight.verify import format_verdicts, verify_answer
 
 
@@ -62,64 +70,81 @@ def ask(
 ) -> int:
     settings = load_settings(profile) if profile else get_settings()
     config = settings.llm.model_copy(update={"model": model}) if model else settings.llm
-    guard = check_question(question)
-    if guard.blocked:
-        print(refusal_text(guard.reason or "advice_intent", language))  # type: ignore[arg-type]
-        _print_facts(settings.paths.processed_dir, ipo_id, language)
-        return 0
-    started = time.perf_counter()
-    result = _retriever(profile).search(question, ipo_id)
-    retrieved = time.perf_counter()
-    if not result.hits:
-        print("No passage matched the question; nothing to answer from.")
-        return 1
-    prompt = build_prompt(
-        question,
-        [h.passage for h in result.hits],
-        language,
-        budget_chars=_budget(config.num_ctx),  # type: ignore[arg-type]
-    )
-    if given_answer is not None:
+    retriever = _retriever(profile)
+    found: dict[str, SearchResult] = {}
+
+    def retrieve() -> list[Passage]:
+        found["result"] = retriever.search(question, ipo_id)
+        return [h.passage for h in found["result"].hits]
+
+    if given_answer is not None:  # no model: check the text the user gives
+        guard = check_question(question)
+        if guard.blocked:
+            return _refuse(settings.paths.processed_dir, ipo_id, guard.reason, language)
+        prompt = build_prompt(
+            question, retrieve(), language,  # type: ignore[arg-type]
+            budget_chars=_budget(config.num_ctx),  # type: ignore[arg-type]
+        )  # fmt: skip
         print(given_answer)
         print("\nNumbers:")
         print(format_verdicts(verify_answer(given_answer, prompt.passages)))
         return 0
-    llm = get_llm(config)
-    answer: list[str] = []
-    first: float | None = None
-    loop = LoopDetector()
-    try:
-        for piece in llm.stream(prompt.text, max_tokens=300, temperature=0.2, language=language):  # type: ignore[arg-type]
-            first = first or time.perf_counter()
-            answer.append(piece)
-            print(piece, end="", flush=True)
-            if loop.feed(piece):
-                break
-    except LLMUnavailable as exc:
-        print(f"\nThe language model is unavailable: {exc}", file=sys.stderr)
-        return 2
-    except ReasoningLeak as exc:
-        print(f"\n{exc}", file=sys.stderr)
-        return 3
-    done = time.perf_counter()
-    cleaned = clean_answer("".join(answer), prompt.passages, language)  # type: ignore[arg-type]
-    text = cleaned.text
-    print()
-    if cleaned.reason or cleaned.trimmed:
-        print(f"\n[{cleaned.reason or 'loop trimmed'}] {text}")
-    if not is_not_found(text, language):  # type: ignore[arg-type]
+    response = respond(
+        question,
+        language,  # type: ignore[arg-type]
+        retrieve,
+        get_llm(config),
+        budget_chars=_budget(config.num_ctx),  # type: ignore[arg-type]
+    )
+    if response.status == "refused":
+        return _refuse(
+            settings.paths.processed_dir, ipo_id, response.reason, language, response.text
+        )
+    if response.status == "error":
+        print(f"\nThe language model is unavailable: {response.error}", file=sys.stderr)
+        return 2 if response.reason == "unavailable" else 3
+    if response.reason == "no_passages":
+        print("No passage matched the question; nothing to answer from.")
+        return 1
+    print(response.text)
+    if response.status == "rejected":
+        print(f"\n[{response.reason}] the model's answer was not usable and was replaced.")
+        if response.raw.strip():
+            print(f"raw model output: {response.raw.strip()[:300]!r}", file=sys.stderr)
+    else:
+        notes = [
+            note
+            for note, on in (
+                ("loop trimmed", response.trimmed),
+                ("Devanagari digits converted", response.digits_converted),
+            )
+            if on
+        ]
+        if notes:
+            print(f"\n[{', '.join(notes)}]")
+        passages = response.passages
         print("\nSources:")
-        for n in cited_indices(text, len(prompt.passages)):
-            p = prompt.passages[n - 1]
+        for n in cited_indices(response.text, len(passages)):
+            p = passages[n - 1]
             print(f"  [{n}] {p.doc_type.upper()} page {p.page_start}  ({p.id})")
         print("\nNumbers:")
-        print(format_verdicts(verify_answer(text, prompt.passages)))
+        print(format_verdicts(verify_answer(response.text, passages)))
+    result = found.get("result")
+    dropped = response.prompt.dropped if response.prompt else 0
     print(
-        f"\n(retrieval {result.method} {retrieved - started:.1f}s; first token "
-        f"{(first or done) - retrieved:.1f}s; total {done - started:.1f}s; "
-        f"{len(prompt.passages)} passages, {prompt.dropped} dropped)",
+        f"\n(retrieval {result.method if result else '-'}; first token "
+        f"{response.first_token_s or 0:.1f}s; total {response.total_s:.1f}s; "
+        f"{len(response.passages)} passages, {dropped} dropped)",
         file=sys.stderr,
     )
+    return 0
+
+
+def _refuse(
+    processed_dir: Path, ipo_id: str, reason: str | None, language: str, text: str | None = None
+) -> int:
+    print(text or refusal_text(reason or "advice_intent", language))  # type: ignore[arg-type]
+    _print_facts(processed_dir, ipo_id, language)
     return 0
 
 
