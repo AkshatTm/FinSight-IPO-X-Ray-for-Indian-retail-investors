@@ -11,6 +11,13 @@ function makeClient() {
   });
 }
 
+declare global {
+  interface Window {
+    /** Test hook (dev and mock builds only): lets Playwright drive the highlight mechanism. */
+    __fsUi?: typeof useUi;
+  }
+}
+
 export function Providers({ children }: { children: ReactNode }) {
   const [client] = useState(makeClient);
   const [ready, setReady] = useState(!USE_MOCKS);
@@ -28,6 +35,10 @@ export function Providers({ children }: { children: ReactNode }) {
     void Promise.resolve(useUi.persist.rehydrate()).then(() => {
       if (!saved) useUi.getState().setTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
     });
+  }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production" || USE_MOCKS) window.__fsUi = useUi;
   }, []);
 
   useEffect(() => {
