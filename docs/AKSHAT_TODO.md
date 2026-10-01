@@ -12,6 +12,10 @@
 - Facts pane: Hindi tooltips for every field (spec 12 gave English only), `facts.chip` ("{doc} पन्ना {n}"), "Show fewer" / "+{n} और", "Details" label, `lib/content/fields.ts` and `facts.*`/`pop.*`/`split.*` in i18n.ts are builder drafts where the spec had no Hindi.
 - Hindi unit words after amounts in the Hindi UI (`₹2,626.00 करोड़`): spec 15 only shows English; used करोड़ / मिलियन / लाख from the unit toggle labels.
 
+- Inspector (7.7) and glossary drawer: Hindi for the three column tooltips (`insp.help.*`) and the glossary search placeholder / "no match" line are builder drafts; the glossary shows the 17-term short definitions only, since the spec has no long ones.
+- Voice: mic opens a glass-style button in CSS mode (not the library) so the composer layout stays intact. Real ASR needs P4.1 `/api/voice`; the mock returns one Hindi sentence.
+- Fact labels keep the dotted underline but do not open the glossary popover (a button inside the fact-row button is invalid HTML); the Glossary button and the advice card link open the drawer instead.
+
 ## Data and evaluation
 - `data/gold/asr_references.csv`: references are now the script you read aloud; `reviewed_by_akshat` is empty. Confirm them, then re-score ASR CER (ADR-021's 0.06 for turbo was measured on the old machine-drafted references).
 - Rate `data/gold/hindi_fluency_sheet.csv`; review `advice_guard_set.csv` and `questions_*.jsonl` (from earlier PROGRESS entries).
