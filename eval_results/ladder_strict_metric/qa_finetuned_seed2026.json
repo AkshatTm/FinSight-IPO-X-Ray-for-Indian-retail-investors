@@ -1,10 +1,10 @@
 {
  "experiment": "E3",
- "name": "qa_finetuned_seed42",
+ "name": "qa_finetuned_seed2026",
  "rung": "qa_finetuned",
- "seed": 42,
- "created_at": "2026-10-01T12:17:03+00:00",
- "git_sha": "48d42e2",
+ "seed": 2026,
+ "created_at": "2026-10-01T11:09:22+00:00",
+ "git_sha": "24d1984",
  "data": {
   "gold_version": "v1",
   "n_ipos": 10,
@@ -32,9 +32,9 @@
   "dev": {
    "full": {
     "n": 24,
-    "nvm": 0.5833,
-    "em": 0.3333,
-    "f1": 0.5273,
+    "nvm": 0.6667,
+    "em": 0.4583,
+    "f1": 0.6044,
     "coverage": 0.9167
    },
    "body_only": {
@@ -48,17 +48,17 @@
   "test": {
    "full": {
     "n": 56,
-    "nvm": 0.75,
+    "nvm": 0.7143,
     "em": 0.5714,
-    "f1": 0.7154,
-    "coverage": 0.9643
+    "f1": 0.7663,
+    "coverage": 0.9821
    },
    "body_only": {
     "n": 35,
     "nvm": 0.8571,
-    "em": 0.7143,
-    "f1": 0.8048,
-    "coverage": 0.9429
+    "em": 0.6571,
+    "f1": 0.7731,
+    "coverage": 0.9714
    }
   }
  },
@@ -69,7 +69,7 @@
      "n": 3,
      "nvm": 0.0,
      "em": 0.0,
-     "f1": 0.2694,
+     "f1": 0.3253,
      "coverage": 1.0
     },
     "body_only": {
@@ -115,9 +115,9 @@
    "ofs_amount": {
     "full": {
      "n": 3,
-     "nvm": 0.3333,
-     "em": 0.0,
-     "f1": 0.4889,
+     "nvm": 0.6667,
+     "em": 0.6667,
+     "f1": 0.8,
      "coverage": 1.0
     },
     "body_only": {
@@ -163,9 +163,9 @@
    "registrar": {
     "full": {
      "n": 3,
-     "nvm": 0.3333,
-     "em": 0.3333,
-     "f1": 0.5,
+     "nvm": 0.6667,
+     "em": 0.6667,
+     "f1": 0.75,
      "coverage": 1.0
     },
     "body_only": {
@@ -197,9 +197,9 @@
    "book_running_lead_managers": {
     "full": {
      "n": 7,
-     "nvm": 0.0,
+     "nvm": 0.1429,
      "em": 0.0,
-     "f1": 0.2528,
+     "f1": 0.361,
      "coverage": 1.0
     },
     "body_only": {
@@ -214,40 +214,40 @@
     "full": {
      "n": 7,
      "nvm": 1.0,
-     "em": 0.4286,
-     "f1": 0.4286,
+     "em": 0.7143,
+     "f1": 0.7143,
      "coverage": 1.0
     },
     "body_only": {
      "n": 7,
      "nvm": 1.0,
-     "em": 0.8571,
-     "f1": 0.8571,
+     "em": 0.7143,
+     "f1": 0.7143,
      "coverage": 1.0
     }
    },
    "fresh_issue_size": {
     "full": {
      "n": 7,
-     "nvm": 0.8571,
-     "em": 0.5714,
-     "f1": 0.6857,
-     "coverage": 1.0
+     "nvm": 1.0,
+     "em": 0.7143,
+     "f1": 0.8286,
+     "coverage": 0.8571
     },
     "body_only": {
      "n": 7,
      "nvm": 1.0,
      "em": 0.7143,
-     "f1": 0.8286,
+     "f1": 0.7829,
      "coverage": 0.8571
     }
    },
    "ofs_amount": {
     "full": {
      "n": 7,
-     "nvm": 0.7143,
-     "em": 0.7143,
-     "f1": 0.881,
+     "nvm": 0.5714,
+     "em": 0.5714,
+     "f1": 0.7952,
      "coverage": 1.0
     },
     "body_only": {
@@ -263,21 +263,21 @@
      "n": 7,
      "nvm": 0.7143,
      "em": 0.7143,
-     "f1": 0.7143,
-     "coverage": 0.8571
+     "f1": 0.8095,
+     "coverage": 1.0
     },
     "body_only": {
      "n": 7,
      "nvm": 0.7143,
-     "em": 0.7143,
-     "f1": 0.7143,
-     "coverage": 0.8571
+     "em": 0.5714,
+     "f1": 0.7446,
+     "coverage": 1.0
     }
    },
    "promoters": {
     "full": {
      "n": 7,
-     "nvm": 1.0,
+     "nvm": 0.8571,
      "em": 0.4286,
      "f1": 0.9515,
      "coverage": 1.0
@@ -293,10 +293,10 @@
    "registrar": {
     "full": {
      "n": 7,
-     "nvm": 0.8571,
-     "em": 0.8571,
-     "f1": 0.8571,
-     "coverage": 0.8571
+     "nvm": 0.5714,
+     "em": 0.5714,
+     "f1": 0.7421,
+     "coverage": 1.0
     },
     "body_only": {
      "n": 0,
@@ -311,7 +311,7 @@
      "n": 7,
      "nvm": 0.8571,
      "em": 0.8571,
-     "f1": 0.9524,
+     "f1": 0.9286,
      "coverage": 1.0
     },
     "body_only": {
@@ -335,7 +335,7 @@
    "full": {
     "pred_raw": "₹26,260 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9998,
+    "pred_score": 0.9999,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -344,7 +344,7 @@
    "body_only": {
     "pred_raw": "₹ 26,260 million",
     "pred_page": 112,
-    "pred_score": 0.9998,
+    "pred_score": 0.9996,
     "nvm": true,
     "em": false,
     "f1": 0.4
@@ -359,7 +359,7 @@
    "full": {
     "pred_raw": "11,051,746 EQUITY SHARES",
     "pred_page": 3,
-    "pred_score": 0.9992,
+    "pred_score": 0.9891,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -368,7 +368,7 @@
    "body_only": {
     "pred_raw": "11,051,746 Equity Shares",
     "pred_page": 112,
-    "pred_score": 0.9988,
+    "pred_score": 0.8378,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -383,7 +383,7 @@
    "full": {
     "pred_raw": "₹ 26,260 million",
     "pred_page": 1,
-    "pred_score": 0.9888,
+    "pred_score": 0.9959,
     "nvm": false,
     "em": false,
     "f1": 0.4
@@ -392,7 +392,7 @@
    "body_only": {
     "pred_raw": "₹ 26,260 million",
     "pred_page": 112,
-    "pred_score": 0.9424,
+    "pred_score": 0.9979,
     "nvm": false,
     "em": false,
     "f1": 0.4
@@ -407,7 +407,7 @@
    "full": {
     "pred_raw": "₹1",
     "pred_page": 10,
-    "pred_score": 0.9998,
+    "pred_score": 0.9995,
     "nvm": true,
     "em": false,
     "f1": 0.0
@@ -416,7 +416,7 @@
    "body_only": {
     "pred_raw": "₹ 1",
     "pred_page": 129,
-    "pred_score": 0.9997,
+    "pred_score": 0.9982,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -431,7 +431,7 @@
    "full": {
     "pred_raw": "Axis Capital, HSBC, JM Financial and Nomura",
     "pred_page": 10,
-    "pred_score": 0.9975,
+    "pred_score": 0.9965,
     "nvm": false,
     "em": false,
     "f1": 0.4828
@@ -448,7 +448,7 @@
    "full": {
     "pred_raw": "Axis Capital Limited",
     "pred_page": 3,
-    "pred_score": 0.9974,
+    "pred_score": 0.7694,
     "nvm": false,
     "em": false,
     "f1": 0.25
@@ -465,7 +465,7 @@
    "full": {
     "pred_raw": "TARUN SANJAY MEHTA, SWAPNIL BABANLAL JAIN AND HERO MOTOCORP LIMITED",
     "pred_page": 1,
-    "pred_score": 0.9963,
+    "pred_score": 0.9839,
     "nvm": true,
     "em": false,
     "f1": 0.9474
@@ -482,7 +482,7 @@
    "full": {
     "pred_raw": "₹ 29,808 million",
     "pred_page": 13,
-    "pred_score": 0.9999,
+    "pred_score": 0.9998,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -491,7 +491,7 @@
    "body_only": {
     "pred_raw": "₹ 29,808 million",
     "pred_page": 112,
-    "pred_score": 0.9996,
+    "pred_score": 0.9995,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -515,7 +515,7 @@
    "body_only": {
     "pred_raw": "₹10,600.00 million",
     "pred_page": 90,
-    "pred_score": 0.9996,
+    "pred_score": 0.9954,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -530,7 +530,7 @@
    "full": {
     "pred_raw": "557,230,051 EQUITY SHARES",
     "pred_page": 3,
-    "pred_score": 0.9987,
+    "pred_score": 0.993,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -539,7 +539,7 @@
    "body_only": {
     "pred_raw": "557,230,051 Equity Shares",
     "pred_page": 90,
-    "pred_score": 0.9977,
+    "pred_score": 0.5076,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -554,7 +554,7 @@
    "full": {
     "pred_raw": "₹10,600.00 million",
     "pred_page": 1,
-    "pred_score": 0.973,
+    "pred_score": 0.9887,
     "nvm": false,
     "em": false,
     "f1": 0.5
@@ -563,7 +563,7 @@
    "body_only": {
     "pred_raw": "₹10,600.00 million",
     "pred_page": 90,
-    "pred_score": 0.9851,
+    "pred_score": 0.996,
     "nvm": false,
     "em": false,
     "f1": 0.5
@@ -578,7 +578,7 @@
    "full": {
     "pred_raw": "₹2",
     "pred_page": 1,
-    "pred_score": 0.9994,
+    "pred_score": 0.9985,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -587,7 +587,7 @@
    "body_only": {
     "pred_raw": "₹2",
     "pred_page": 111,
-    "pred_score": 0.9996,
+    "pred_score": 0.9995,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -600,12 +600,12 @@
    "status": "present",
    "gold": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Motilal Oswal Investment Advisors Limited",
    "full": {
-    "pred_raw": "Axis Capital Limited",
-    "pred_page": 4,
-    "pred_score": 0.9978,
-    "nvm": false,
+    "pred_raw": "Kotak Mahindra Capital Company Limited, J.P. Morgan India Private Limited, Citigroup Global Markets India Private Limited, Axis Capital Limited, and Motilal Oswal Investment Advisors Limited",
+    "pred_page": 10,
+    "pred_score": 0.9973,
+    "nvm": true,
     "em": false,
-    "f1": 0.2222
+    "f1": 0.9796
    },
    "in_body": false,
    "body_only": null
@@ -619,7 +619,7 @@
    "full": {
     "pred_raw": "MUFG Intime India Private Limited",
     "pred_page": 14,
-    "pred_score": 0.9971,
+    "pred_score": 0.9987,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -636,7 +636,7 @@
    "full": {
     "pred_raw": "LALIT KESHRE, HARSH JAIN, ISHAN BANSAL AND NEERAJ SINGH",
     "pred_page": 1,
-    "pred_score": 0.9995,
+    "pred_score": 0.992,
     "nvm": true,
     "em": false,
     "f1": 0.9412
@@ -653,7 +653,7 @@
    "full": {
     "pred_raw": "₹66,323.01 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9996,
+    "pred_score": 0.9998,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -662,7 +662,7 @@
    "body_only": {
     "pred_raw": "₹66,323.01 million",
     "pred_page": 90,
-    "pred_score": 0.9994,
+    "pred_score": 0.9984,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -677,7 +677,7 @@
    "full": {
     "pred_raw": "₹25,000.0 million",
     "pred_page": 10,
-    "pred_score": 0.9997,
+    "pred_score": 0.9996,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -686,7 +686,7 @@
    "body_only": {
     "pred_raw": "₹25,000.0 million",
     "pred_page": 74,
-    "pred_score": 0.9991,
+    "pred_score": 0.998,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -701,7 +701,7 @@
    "full": {
     "pred_raw": "100,000",
     "pred_page": 74,
-    "pred_score": 0.8644,
+    "pred_score": 0.3604,
     "nvm": false,
     "em": false,
     "f1": 0.0
@@ -710,7 +710,7 @@
    "body_only": {
     "pred_raw": "100,000",
     "pred_page": 74,
-    "pred_score": 0.8644,
+    "pred_score": 0.3604,
     "nvm": false,
     "em": false,
     "f1": 0.0
@@ -725,7 +725,7 @@
    "full": {
     "pred_raw": "₹100,000.0 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9989,
+    "pred_score": 0.9956,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -734,7 +734,7 @@
    "body_only": {
     "pred_raw": "₹100,000.0 million",
     "pred_page": 74,
-    "pred_score": 0.9993,
+    "pred_score": 0.9883,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -749,7 +749,7 @@
    "full": {
     "pred_raw": "₹ 10",
     "pred_page": 90,
-    "pred_score": 0.9996,
+    "pred_score": 0.9993,
     "nvm": true,
     "em": false,
     "f1": 0.0
@@ -758,7 +758,7 @@
    "body_only": {
     "pred_raw": "₹ 10",
     "pred_page": 90,
-    "pred_score": 0.9996,
+    "pred_score": 0.9993,
     "nvm": true,
     "em": false,
     "f1": 0.0
@@ -773,7 +773,7 @@
    "full": {
     "pred_raw": "Goldman Sachs (India) Securities Private Limited",
     "pred_page": 3,
-    "pred_score": 0.9875,
+    "pred_score": 0.9919,
     "nvm": false,
     "em": false,
     "f1": 0.1846
@@ -790,7 +790,7 @@
    "full": {
     "pred_raw": "MUFG Intime India Private Limited",
     "pred_page": 2,
-    "pred_score": 0.9968,
+    "pred_score": 0.9944,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -807,7 +807,7 @@
    "full": {
     "pred_raw": "HDFC BANK LIMITED",
     "pred_page": 1,
-    "pred_score": 0.9998,
+    "pred_score": 0.9996,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -833,7 +833,7 @@
    "body_only": {
     "pred_raw": "₹125,000.0 million",
     "pred_page": 74,
-    "pred_score": 0.9997,
+    "pred_score": 0.9996,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -846,9 +846,9 @@
    "status": "not_in_document",
    "gold": "",
    "full": {
-    "pred_raw": "₹87,500 million",
-    "pred_page": 1,
-    "pred_score": 0.9951,
+    "pred_raw": "₹ 87,500 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.4796,
     "nvm": false,
     "em": false,
     "f1": 0.0
@@ -894,12 +894,12 @@
    "status": "present",
    "gold": "₹ 87,500 MILLION",
    "full": {
-    "pred_raw": "₹87,500 million",
+    "pred_raw": "₹ 87,500 million",
     "pred_page": 1,
-    "pred_score": 0.9931,
+    "pred_score": 0.9938,
     "nvm": true,
-    "em": false,
-    "f1": 0.4
+    "em": true,
+    "f1": 1.0
    },
    "in_body": true,
    "body_only": {
@@ -920,7 +920,7 @@
    "full": {
     "pred_raw": "₹1",
     "pred_page": 1,
-    "pred_score": 0.999,
+    "pred_score": 0.9983,
     "nvm": true,
     "em": false,
     "f1": 0.0
@@ -929,7 +929,7 @@
    "body_only": {
     "pred_raw": "₹1",
     "pred_page": 96,
-    "pred_score": 0.9992,
+    "pred_score": 0.9969,
     "nvm": true,
     "em": false,
     "f1": 0.0
@@ -944,7 +944,7 @@
    "full": {
     "pred_raw": "KFin Technologies Limited",
     "pred_page": 3,
-    "pred_score": 0.9937,
+    "pred_score": 0.9908,
     "nvm": false,
     "em": false,
     "f1": 0.0645
@@ -961,7 +961,7 @@
    "full": {
     "pred_raw": "KFin Technologies Limited",
     "pred_page": 2,
-    "pred_score": 0.9796,
+    "pred_score": 0.9979,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -978,7 +978,7 @@
    "full": {
     "pred_raw": "CA MAGNUM HOLDINGS",
     "pred_page": 1,
-    "pred_score": 0.9991,
+    "pred_score": 0.9934,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1004,7 +1004,7 @@
    "body_only": {
     "pred_raw": "₹87,500 million",
     "pred_page": 79,
-    "pred_score": 0.9982,
+    "pred_score": 0.9761,
     "nvm": true,
     "em": false,
     "f1": 0.4
@@ -1019,7 +1019,7 @@
    "full": {
     "pred_raw": "₹21,500.00 million",
     "pred_page": 15,
-    "pred_score": 0.9996,
+    "pred_score": 0.9998,
     "nvm": true,
     "em": false,
     "f1": 0.4
@@ -1028,7 +1028,7 @@
    "body_only": {
     "pred_raw": "₹21,500.00 million",
     "pred_page": 119,
-    "pred_score": 0.9998,
+    "pred_score": 0.9987,
     "nvm": true,
     "em": false,
     "f1": 0.4
@@ -1043,7 +1043,7 @@
    "full": {
     "pred_raw": "127,562,573 EQUITY SHARES",
     "pred_page": 3,
-    "pred_score": 0.9995,
+    "pred_score": 0.998,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1052,7 +1052,7 @@
    "body_only": {
     "pred_raw": "127,562,573 Equity Shares",
     "pred_page": 119,
-    "pred_score": 0.9977,
+    "pred_score": 0.8195,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1065,18 +1065,18 @@
    "status": "placeholder",
    "gold": "₹ [●] MILLION",
    "full": {
-    "pred_raw": "₹ [●] MILLION",
-    "pred_page": 3,
-    "pred_score": 0.9413,
-    "nvm": true,
-    "em": true,
-    "f1": 1.0
+    "pred_raw": "₹21,500.00 million",
+    "pred_page": 15,
+    "pred_score": 0.8638,
+    "nvm": false,
+    "em": false,
+    "f1": 0.4
    },
    "in_body": true,
    "body_only": {
     "pred_raw": "₹21,500.00 million",
     "pred_page": 119,
-    "pred_score": 0.8956,
+    "pred_score": 0.886,
     "nvm": false,
     "em": false,
     "f1": 0.4
@@ -1091,7 +1091,7 @@
    "full": {
     "pred_raw": "₹2",
     "pred_page": 1,
-    "pred_score": 0.9994,
+    "pred_score": 0.9992,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1100,7 +1100,7 @@
    "body_only": {
     "pred_raw": "₹2",
     "pred_page": 137,
-    "pred_score": 0.9996,
+    "pred_score": 0.9991,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1115,7 +1115,7 @@
    "full": {
     "pred_raw": "Axis Capital Limited",
     "pred_page": 3,
-    "pred_score": 0.9983,
+    "pred_score": 0.9542,
     "nvm": false,
     "em": false,
     "f1": 0.1875
@@ -1130,12 +1130,12 @@
    "status": "present",
    "gold": "MUFG Intime India Private Limited",
    "full": {
-    "pred_raw": "",
-    "pred_page": null,
-    "pred_score": null,
+    "pred_raw": "MUFG Intime India",
+    "pred_page": 2,
+    "pred_score": 0.9847,
     "nvm": false,
     "em": false,
-    "f1": 0.0
+    "f1": 0.75
    },
    "in_body": false,
    "body_only": null
@@ -1149,7 +1149,7 @@
    "full": {
     "pred_raw": "PEYUSH BANSAL, NEHA BANSAL, AMIT CHAUDHARY AND SUMEET KAPAHI",
     "pred_page": 1,
-    "pred_score": 0.999,
+    "pred_score": 0.992,
     "nvm": true,
     "em": false,
     "f1": 0.9412
@@ -1164,18 +1164,18 @@
    "status": "present",
    "gold": "₹72,780.15 MILLION",
    "full": {
-    "pred_raw": "₹72,780.15",
-    "pred_page": 3,
-    "pred_score": 0.9981,
+    "pred_raw": "₹51,280.15 million",
+    "pred_page": 15,
+    "pred_score": 0.9892,
     "nvm": false,
     "em": false,
-    "f1": 0.6667
+    "f1": 0.5
    },
    "in_body": true,
    "body_only": {
     "pred_raw": "₹72,780.15 million",
     "pred_page": 119,
-    "pred_score": 0.9995,
+    "pred_score": 0.9992,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1188,12 +1188,12 @@
    "status": "not_in_document",
    "gold": "",
    "full": {
-    "pred_raw": "₹ [●] million",
-    "pred_page": 1,
-    "pred_score": 0.2362,
-    "nvm": false,
-    "em": false,
-    "f1": 0.0
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
    },
    "in_body": true,
    "body_only": {
@@ -1214,16 +1214,16 @@
    "full": {
     "pred_raw": "101,815,859 Equity Shares",
     "pred_page": 105,
-    "pred_score": 0.9981,
+    "pred_score": 0.9976,
     "nvm": true,
     "em": true,
     "f1": 1.0
    },
    "in_body": true,
    "body_only": {
-    "pred_raw": "101,815,859 equity shares",
+    "pred_raw": "101,815,859 Equity Shares",
     "pred_page": 105,
-    "pred_score": 0.9997,
+    "pred_score": 0.9976,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1236,9 +1236,9 @@
    "status": "placeholder",
    "gold": "₹ [●] MILLION",
    "full": {
-    "pred_raw": "₹ [●] MILLION",
-    "pred_page": 3,
-    "pred_score": 0.3956,
+    "pred_raw": "₹ [●] million",
+    "pred_page": 1,
+    "pred_score": 0.8478,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1247,7 +1247,7 @@
    "body_only": {
     "pred_raw": "₹ [●] million",
     "pred_page": 105,
-    "pred_score": 0.8616,
+    "pred_score": 0.9614,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1262,19 +1262,19 @@
    "full": {
     "pred_raw": "₹10",
     "pred_page": 12,
-    "pred_score": 0.9986,
+    "pred_score": 0.9981,
     "nvm": true,
     "em": false,
     "f1": 0.0
    },
    "in_body": true,
    "body_only": {
-    "pred_raw": "₹ 10",
+    "pred_raw": "₹10",
     "pred_page": 124,
-    "pred_score": 0.9933,
+    "pred_score": 0.9909,
     "nvm": true,
-    "em": true,
-    "f1": 1.0
+    "em": false,
+    "f1": 0.0
    }
   },
   {
@@ -1286,7 +1286,7 @@
    "full": {
     "pred_raw": "Axis, Morgan Stanley, JPM, BofA and Citi",
     "pred_page": 10,
-    "pred_score": 0.9974,
+    "pred_score": 0.9985,
     "nvm": false,
     "em": false,
     "f1": 0.2581
@@ -1303,7 +1303,7 @@
    "full": {
     "pred_raw": "KFin Technologies Limited",
     "pred_page": 14,
-    "pred_score": 0.9999,
+    "pred_score": 0.9998,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1320,8 +1320,8 @@
    "full": {
     "pred_raw": "LG ELECTRONICS INC.",
     "pred_page": 1,
-    "pred_score": 0.6603,
-    "nvm": true,
+    "pred_score": 0.8927,
+    "nvm": false,
     "em": true,
     "f1": 1.0
    },
@@ -1337,7 +1337,7 @@
    "full": {
     "pred_raw": "₹116,047.32 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9997,
+    "pred_score": 0.9994,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1346,7 +1346,7 @@
    "body_only": {
     "pred_raw": "₹ 116,047.32 million",
     "pred_page": 105,
-    "pred_score": 0.9986,
+    "pred_score": 0.999,
     "nvm": true,
     "em": false,
     "f1": 0.4
@@ -1359,9 +1359,9 @@
    "status": "present",
    "gold": "₹ 42,500 MILLION",
    "full": {
-    "pred_raw": "₹ 42,500 million",
-    "pred_page": 1,
-    "pred_score": 0.9998,
+    "pred_raw": "₹ 42,500 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.9997,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1370,7 +1370,7 @@
    "body_only": {
     "pred_raw": "₹ 42,500 million",
     "pred_page": 142,
-    "pred_score": 0.9996,
+    "pred_score": 0.9989,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1385,7 +1385,7 @@
    "full": {
     "pred_raw": "105,513,839 EQUITY SHARES",
     "pred_page": 3,
-    "pred_score": 0.9993,
+    "pred_score": 0.9912,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1394,7 +1394,7 @@
    "body_only": {
     "pred_raw": "105,513,839 Equity Shares",
     "pred_page": 142,
-    "pred_score": 0.9993,
+    "pred_score": 0.8994,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1409,7 +1409,7 @@
    "full": {
     "pred_raw": "₹ 42,500 million",
     "pred_page": 1,
-    "pred_score": 0.9998,
+    "pred_score": 0.9997,
     "nvm": false,
     "em": false,
     "f1": 0.6667
@@ -1418,7 +1418,7 @@
    "body_only": {
     "pred_raw": "₹ 42,500 million",
     "pred_page": 142,
-    "pred_score": 0.9652,
+    "pred_score": 0.9975,
     "nvm": false,
     "em": false,
     "f1": 0.6667
@@ -1431,12 +1431,12 @@
    "status": "present",
    "gold": "₹ 1",
    "full": {
-    "pred_raw": "₹1",
-    "pred_page": 13,
-    "pred_score": 0.9996,
+    "pred_raw": "₹ 1",
+    "pred_page": 1,
+    "pred_score": 0.9991,
     "nvm": true,
-    "em": false,
-    "f1": 0.0
+    "em": true,
+    "f1": 1.0
    },
    "in_body": true,
    "body_only": {
@@ -1457,7 +1457,7 @@
    "full": {
     "pred_raw": "Kotak, J.P. Morgan, Morgan Stanley, Axis and Citi",
     "pred_page": 14,
-    "pred_score": 0.9911,
+    "pred_score": 0.992,
     "nvm": false,
     "em": false,
     "f1": 0.3636
@@ -1472,12 +1472,12 @@
    "status": "present",
    "gold": "KFin Technologies Limited",
    "full": {
-    "pred_raw": "KFin Technologies Limited",
-    "pred_page": 4,
-    "pred_score": 0.8835,
-    "nvm": true,
-    "em": true,
-    "f1": 1.0
+    "pred_raw": "Citigroup Global Markets India Private Limited",
+    "pred_page": 15,
+    "pred_score": 0.8939,
+    "nvm": false,
+    "em": false,
+    "f1": 0.2222
    },
    "in_body": false,
    "body_only": null
@@ -1491,7 +1491,7 @@
    "full": {
     "pred_raw": "VIDIT AATREY AND SANJEEV KUMAR",
     "pred_page": 1,
-    "pred_score": 0.9994,
+    "pred_score": 0.9952,
     "nvm": true,
     "em": false,
     "f1": 0.8889
@@ -1508,7 +1508,7 @@
    "full": {
     "pred_raw": "₹54,212.04 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9998,
+    "pred_score": 0.9997,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1517,7 +1517,7 @@
    "body_only": {
     "pred_raw": "₹ 54,212.04 million",
     "pred_page": 142,
-    "pred_score": 0.9996,
+    "pred_score": 0.9991,
     "nvm": true,
     "em": false,
     "f1": 0.4
@@ -1532,7 +1532,7 @@
    "full": {
     "pred_raw": "₹ 31,000.00 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9999,
+    "pred_score": 0.9997,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1541,7 +1541,7 @@
    "body_only": {
     "pred_raw": "₹ 31,000.00 million",
     "pred_page": 116,
-    "pred_score": 0.9989,
+    "pred_score": 0.9669,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1554,21 +1554,21 @@
    "status": "placeholder",
    "gold": "[●] EQUITY SHARES",
    "full": {
-    "pred_raw": "",
-    "pred_page": null,
-    "pred_score": null,
+    "pred_raw": "2,575,223,963 Equity Shares",
+    "pred_page": 116,
+    "pred_score": 0.4603,
     "nvm": false,
     "em": false,
-    "f1": 0.0
+    "f1": 0.6667
    },
    "in_body": true,
    "body_only": {
-    "pred_raw": "",
-    "pred_page": null,
-    "pred_score": null,
+    "pred_raw": "2,575,223,963 Equity Shares",
+    "pred_page": 116,
+    "pred_score": 0.4607,
     "nvm": false,
     "em": false,
-    "f1": 0.0
+    "f1": 0.6667
    }
   },
   {
@@ -1580,7 +1580,7 @@
    "full": {
     "pred_raw": "₹ 3,800.00 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9993,
+    "pred_score": 0.999,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1589,7 +1589,7 @@
    "body_only": {
     "pred_raw": "₹ 3,800.00 million",
     "pred_page": 116,
-    "pred_score": 0.9623,
+    "pred_score": 0.6229,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1602,18 +1602,18 @@
    "status": "present",
    "gold": "₹ 1",
    "full": {
-    "pred_raw": "₹1",
+    "pred_raw": "₹ 1",
     "pred_page": 1,
-    "pred_score": 0.9968,
+    "pred_score": 0.9996,
     "nvm": true,
-    "em": false,
-    "f1": 0.0
+    "em": true,
+    "f1": 1.0
    },
    "in_body": true,
    "body_only": {
     "pred_raw": "₹ 1",
     "pred_page": 136,
-    "pred_score": 0.9988,
+    "pred_score": 0.9987,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1628,7 +1628,7 @@
    "full": {
     "pred_raw": "Kotak, JPM, GS and Axis Capital",
     "pred_page": 11,
-    "pred_score": 0.9995,
+    "pred_score": 0.999,
     "nvm": false,
     "em": false,
     "f1": 0.24
@@ -1644,8 +1644,8 @@
    "gold": "MUFG Intime India Private Limited",
    "full": {
     "pred_raw": "MUFG Intime India Private Limited",
-    "pred_page": 15,
-    "pred_score": 0.9941,
+    "pred_page": 2,
+    "pred_score": 0.9985,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1662,7 +1662,7 @@
    "full": {
     "pred_raw": "ALAKH PANDEY AND PRATEEK BOOB",
     "pred_page": 1,
-    "pred_score": 0.9987,
+    "pred_score": 0.9941,
     "nvm": true,
     "em": false,
     "f1": 0.8889
@@ -1679,7 +1679,7 @@
    "full": {
     "pred_raw": "₹ 34,800.00 million",
     "pred_page": 13,
-    "pred_score": 0.9999,
+    "pred_score": 0.9997,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1688,7 +1688,7 @@
    "body_only": {
     "pred_raw": "₹ 34,800.00 million",
     "pred_page": 116,
-    "pred_score": 0.9991,
+    "pred_score": 0.9986,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1703,19 +1703,19 @@
    "full": {
     "pred_raw": "₹[●] million",
     "pred_page": 1,
-    "pred_score": 0.9405,
+    "pred_score": 0.9572,
     "nvm": true,
     "em": false,
     "f1": 0.4
    },
    "in_body": true,
    "body_only": {
-    "pred_raw": "₹[●] million",
+    "pred_raw": "₹[●] million consists of: Fresh Issue(1) Up to 210,000,000 Equity Shares of face value of ₹10 each, aggregating up to ₹[●] million",
     "pred_page": 102,
-    "pred_score": 0.8129,
+    "pred_score": 0.2198,
     "nvm": true,
     "em": false,
-    "f1": 0.4
+    "f1": 0.08
    }
   },
   {
@@ -1727,19 +1727,19 @@
    "full": {
     "pred_raw": "265,824,280 EQUITY SHARES",
     "pred_page": 3,
-    "pred_score": 0.9988,
+    "pred_score": 0.9916,
     "nvm": true,
     "em": true,
     "f1": 1.0
    },
    "in_body": true,
    "body_only": {
-    "pred_raw": "265,824,280 Equity Shares",
+    "pred_raw": "265,824,280 Equity Shares of face value of ₹10",
     "pred_page": 102,
-    "pred_score": 0.9839,
+    "pred_score": 0.2053,
     "nvm": true,
-    "em": true,
-    "f1": 1.0
+    "em": false,
+    "f1": 0.5455
    }
   },
   {
@@ -1751,7 +1751,7 @@
    "full": {
     "pred_raw": "₹[●] MILLION",
     "pred_page": 3,
-    "pred_score": 0.9521,
+    "pred_score": 0.9977,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1760,7 +1760,7 @@
    "body_only": {
     "pred_raw": "₹[●] million",
     "pred_page": 102,
-    "pred_score": 0.3388,
+    "pred_score": 0.3091,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1775,7 +1775,7 @@
    "full": {
     "pred_raw": "₹10",
     "pred_page": 1,
-    "pred_score": 0.9971,
+    "pred_score": 0.9966,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1784,7 +1784,7 @@
    "body_only": {
     "pred_raw": "₹10",
     "pred_page": 119,
-    "pred_score": 0.9996,
+    "pred_score": 0.9984,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1799,7 +1799,7 @@
    "full": {
     "pred_raw": "HSBC Securities and Capital Markets (India) Private Limited",
     "pred_page": 3,
-    "pred_score": 0.9989,
+    "pred_score": 0.9987,
     "nvm": false,
     "em": false,
     "f1": 0.3137
@@ -1814,12 +1814,12 @@
    "status": "present",
    "gold": "MUFG Intime India Private Limited",
    "full": {
-    "pred_raw": "MUFG Intime India Private Limited",
-    "pred_page": 13,
-    "pred_score": 0.9948,
-    "nvm": true,
-    "em": true,
-    "f1": 1.0
+    "pred_raw": "SBI Capital Markets Limited",
+    "pred_page": 2,
+    "pred_score": 0.9788,
+    "nvm": false,
+    "em": false,
+    "f1": 0.2222
    },
    "in_body": false,
    "body_only": null
@@ -1833,7 +1833,7 @@
    "full": {
     "pred_raw": "TATA SONS PRIVATE LIMITED",
     "pred_page": 1,
-    "pred_score": 0.9998,
+    "pred_score": 0.9993,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1850,7 +1850,7 @@
    "full": {
     "pred_raw": "₹155,118.7 MILLION",
     "pred_page": 3,
-    "pred_score": 0.9999,
+    "pred_score": 0.9998,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1859,7 +1859,7 @@
    "body_only": {
     "pred_raw": "₹155,118.7 million",
     "pred_page": 102,
-    "pred_score": 0.9999,
+    "pred_score": 0.9996,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1872,9 +1872,9 @@
    "status": "present",
    "gold": "₹ 4,720 MILLION",
    "full": {
-    "pred_raw": "₹ 4,720 MILLION",
-    "pred_page": 3,
-    "pred_score": 0.9998,
+    "pred_raw": "₹ 4,720 million",
+    "pred_page": 12,
+    "pred_score": 0.9997,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1883,7 +1883,7 @@
    "body_only": {
     "pred_raw": "₹ 4,720 million",
     "pred_page": 92,
-    "pred_score": 0.9958,
+    "pred_score": 0.9904,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1920,18 +1920,18 @@
    "status": "present",
    "gold": "₹ 14,280 MILLION",
    "full": {
-    "pred_raw": "₹ 19,000 million",
-    "pred_page": 1,
-    "pred_score": 0.9998,
-    "nvm": false,
-    "em": false,
-    "f1": 0.6667
+    "pred_raw": "₹ 14,280 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.9996,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
    },
    "in_body": true,
    "body_only": {
     "pred_raw": "₹ 14,280 million",
     "pred_page": 92,
-    "pred_score": 0.9974,
+    "pred_score": 0.9686,
     "nvm": true,
     "em": true,
     "f1": 1.0
@@ -1946,7 +1946,7 @@
    "full": {
     "pred_raw": "₹ 1",
     "pred_page": 1,
-    "pred_score": 0.9995,
+    "pred_score": 0.9986,
     "nvm": true,
     "em": false,
     "f1": 0.0
@@ -1968,12 +1968,12 @@
    "status": "present",
    "gold": "Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Goldman Sachs (India) Securities Private Limited; JM Financial Limited",
    "full": {
-    "pred_raw": "JM Financial Limited",
-    "pred_page": 3,
-    "pred_score": 0.997,
+    "pred_raw": "Kotak Securities Limited and JM Financial Services Limited",
+    "pred_page": 15,
+    "pred_score": 0.9783,
     "nvm": false,
     "em": false,
-    "f1": 0.2609
+    "f1": 0.4286
    },
    "in_body": false,
    "body_only": null
@@ -1985,12 +1985,12 @@
    "status": "present",
    "gold": "MUFG Intime India Private Limited",
    "full": {
-    "pred_raw": "JM Financial Limited",
-    "pred_page": 3,
-    "pred_score": 0.9991,
-    "nvm": false,
-    "em": false,
-    "f1": 0.25
+    "pred_raw": "MUFG Intime India Private Limited",
+    "pred_page": 2,
+    "pred_score": 0.9914,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
    },
    "in_body": false,
    "body_only": null
@@ -2004,7 +2004,7 @@
    "full": {
     "pred_raw": "ABHIRAJ SINGH BHAL, RAGHAV CHANDRA AND VARUN KHAITAN",
     "pred_page": 1,
-    "pred_score": 0.9983,
+    "pred_score": 0.993,
     "nvm": true,
     "em": false,
     "f1": 0.9333
@@ -2021,7 +2021,7 @@
    "full": {
     "pred_raw": "₹ 19,000^ MILLION",
     "pred_page": 3,
-    "pred_score": 0.9992,
+    "pred_score": 0.9995,
     "nvm": true,
     "em": true,
     "f1": 1.0
