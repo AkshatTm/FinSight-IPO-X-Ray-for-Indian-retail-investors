@@ -39,7 +39,7 @@ def test_package_writes_files_metadata_and_slice(source: Path, tmp_path: Path) -
     meta = json.loads((out / "dataset-metadata.json").read_text(encoding="utf-8"))
     assert meta["id"] == "akshat-user/finsight-weaklabel"
     assert meta["title"] == "finsight-weaklabel"
-    assert meta["licenses"] == [{"name": "CC0-1.0"}]
+    assert meta["licenses"] == [{"name": "CC-BY-NC-SA-4.0"}]
     assert sum(1 for _ in (out / "train_200.jsonl").open(encoding="utf-8")) == 200
     assert sum(1 for _ in (out / "dev_200.jsonl").open(encoding="utf-8")) == 60  # fewer than 200
     assert (out / "train.jsonl").read_bytes() == (source / "train.jsonl").read_bytes()
