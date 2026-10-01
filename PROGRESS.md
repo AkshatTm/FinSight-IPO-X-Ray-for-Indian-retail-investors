@@ -1,5 +1,6 @@
 # PROGRESS (≤ 10 lines; newest first; Claude Code updates at the end of each sub-phase)
 
+- 3 Oct — H How it works/About/404/500 (#86): spec 9-11 EN+HI in lib/content/pages.ts, flow diagram, FAQ, limits, licences, app/not-found.tsx and app/error.tsx. Frontend on mocks complete through spec step H. Next P3.6 chat orchestrator (backend).
 - 3 Oct — L Landing (#84): spec 5 sections EN+HI (copy in lib/content/landing.ts, glossary markers via Rich), CSS hero lens with tag and cursor follow, chatbot example, steps, MiniDemo (reuses PageViewer), Hindi example audio, limits, lab stats that hide when missing (lib/labStats.ts); mock lab fixtures. Next H How it works / About / 404 / 500.
 - 3 Oct — F5b voice/inspector/glossary/tour (#82): voice state machine + MediaRecorder hook (20 s cap, transcript editable, never auto-sent, Hindi switches answer language), InspectorDrawer with trace prompt, GlossaryDrawer + term popover, first-visit tour, `?` shortcuts, drafts in chat store; mobile header wraps. Mock /api/voice and /api/traces. Next L Landing.
 - 3 Oct — F5 Ask (#80): lib/sse (incremental parser), lib/chat (pure reducer, 13.1 reason templates, meter, segments), chatStore, 7 MSW streams, tick-and-tie answer, evidence drawer, guard/abstain/error cards, composer; guard `forecast` reason is a proposal for P3.6 (contract lists only advice_intent/privacy). Next F5b.

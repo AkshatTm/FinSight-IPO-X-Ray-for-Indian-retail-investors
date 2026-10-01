@@ -18,6 +18,8 @@
 
 - Landing: hero image is a drawn stand-in (public/landing/rhp-cover.svg), not the real Ather RHP page 3 (I may not read PDFs). Replace it with a WebP of the real page if you want; the lens position constants are in components/landing/Hero.tsx. The lens is CSS glass, not liquid-glass-react (the library element positions itself fixed and cannot be pinned over an image), see ADR-050 note. Spec 5.7 asks for the real demo-cache answer under the Hindi question: not available until P4.1, so only the question and the play button show. The spec 5.11 friend test is yours: does a newcomer get it after the first three sections? The humanizer pass changed nothing on Landing because the spec copy is fixed verbatim. Landing stats "detection" and "robust" need `/api/lab/verifier` and `/api/lab/ladder` (P4.1); until then they are hidden outside mock mode.
 
+- How it works: spec 9 says each box opens a real example (recorded trace or screenshot). None exists yet, so the boxes are static. Add them after P4.1 records the demo cache. About Hindi (spec 10 has English only) is a builder draft: every `about.*` string. Humanizer pass: no change, copy is fixed verbatim.
+
 ## Data and evaluation
 - `data/gold/asr_references.csv`: references are now the script you read aloud; `reviewed_by_akshat` is empty. Confirm them, then re-score ASR CER (ADR-021's 0.06 for turbo was measured on the old machine-drafted references).
 - Rate `data/gold/hindi_fluency_sheet.csv`; review `advice_guard_set.csv` and `questions_*.jsonl` (from earlier PROGRESS entries).
