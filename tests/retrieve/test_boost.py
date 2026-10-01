@@ -94,3 +94,50 @@ def test_retriever_puts_cover_in_reach_for_bm25_only():
     r.add("i", IpoIndex(ps))
     pages = [h.passage.page_start for h in r.search("Who is the registrar?", "i").hits]
     assert 2 in pages
+
+
+@pytest.mark.parametrize(
+    "question",
+    [
+        "इस ऑफ़र का रजिस्ट्रार कौन है?",
+        "रजिस्ट्रार कौन है",
+        "फ्रेश इश्यू का आकार कितना है?",
+        "प्रत्येक इक्विटी शेयर का अंकित मूल्य (फेस वैल्यू) कितना है?",
+        "फेस वैल्यू क्या है",
+        "प्रमोटर कौन हैं?",
+        "इस IPO के लीड मैनेजर कौन हैं",
+        "ऑफ़र प्राइस कितना है?",
+        "ऑफर प्राइस क्या है",
+        "कुल इश्यू साइज़ कितना है?",
+        "कुल इश्यू कितना है",
+        "registrar kaun hai",
+        "fresh issue kitna hai",
+        "face value kya hai",
+        "promoter kaun hain",
+        "lead manager kaun hain",
+        "offer price kya hai",
+        "kul issue kitna hai",
+        "IPO ka kul size kya hai",
+    ],
+)
+def test_hindi_and_hinglish_cover_cues(question):
+    assert wants_cover(question)
+
+
+@pytest.mark.parametrize(
+    "question",
+    [
+        "कंपनी का राजस्व कितना है?",
+        "company ke risk factors kya hain",
+        "How many employees does the company have?",
+    ],
+)
+def test_other_questions_do_not_pull_the_cover(question):
+    assert not wants_cover(question)
+
+
+def test_nukta_spellings_are_the_same_word():
+    assert wants_cover("ऑफ\u093cर प्राइस")
+    assert wants_cover("ऑफर प्राइस")
+    assert prefers_prospectus("ऑफ\u093cर प्राइस कितना है?")
+    assert prefers_prospectus("ऑफर प्राइस कितना है?")
