@@ -1,0 +1,73 @@
+{
+ "experiment": "E1",
+ "name": "weaklabel_audit",
+ "measured_on": "v1",
+ "current_label_version": "v2",
+ "n": 50,
+ "correct": 45,
+ "precision": 0.9,
+ "wilson_95": [
+  0.7864,
+  0.9565
+ ],
+ "labels": {
+  "correct": 45,
+  "wrong_span": 3,
+  "wrong_value": 2,
+  "ambiguous": 0
+ },
+ "per_field": {
+  "book_running_lead_managers": {
+   "correct": 5,
+   "wrong_span": 1,
+   "wrong_value": 0,
+   "ambiguous": 0
+  },
+  "face_value": {
+   "correct": 5,
+   "wrong_span": 0,
+   "wrong_value": 2,
+   "ambiguous": 0
+  },
+  "fresh_issue_size": {
+   "correct": 6,
+   "wrong_span": 0,
+   "wrong_value": 0,
+   "ambiguous": 0
+  },
+  "ofs_amount": {
+   "correct": 6,
+   "wrong_span": 0,
+   "wrong_value": 0,
+   "ambiguous": 0
+  },
+  "ofs_shares": {
+   "correct": 7,
+   "wrong_span": 0,
+   "wrong_value": 0,
+   "ambiguous": 0
+  },
+  "promoters": {
+   "correct": 4,
+   "wrong_span": 2,
+   "wrong_value": 0,
+   "ambiguous": 0
+  },
+  "registrar": {
+   "correct": 6,
+   "wrong_span": 0,
+   "wrong_value": 0,
+   "ambiguous": 0
+  },
+  "total_issue_size": {
+   "correct": 6,
+   "wrong_span": 0,
+   "wrong_value": 0,
+   "ambiguous": 0
+  }
+ },
+ "label_sources": [
+  "ai_labelled_claude_chat_human_reviewed"
+ ],
+ "notes": "Measured on v1 labels; the misses were fixed in v2, which is not re-audited."
+}
