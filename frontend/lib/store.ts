@@ -19,16 +19,25 @@ export interface Highlight {
   nonce: number;
 }
 
+/** Which page of which document the viewer shows. Reset when the IPO changes. */
+export interface DocView {
+  ipoId: string;
+  doc: "rhp" | "prospectus";
+  page: number;
+}
+
 interface UiState {
   lang: Lang;
   theme: Theme;
   unit: Unit;
   highlight: Highlight | null;
+  view: DocView | null;
   coldBannerDismissed: boolean;
   setLang: (l: Lang) => void;
   setTheme: (t: Theme) => void;
   setUnit: (u: Unit) => void;
   setHighlight: (h: Omit<Highlight, "nonce"> | null) => void;
+  setView: (v: DocView) => void;
   dismissColdBanner: () => void;
 }
 
@@ -41,11 +50,19 @@ export const useUi = create<UiState>()(
       theme: "light",
       unit: "crore",
       highlight: null,
+      view: null,
       coldBannerDismissed: false,
       setLang: (lang) => set({ lang }),
       setTheme: (theme) => set({ theme }),
       setUnit: (unit) => set({ unit }),
-      setHighlight: (h) => set({ highlight: h ? { ...h, nonce: ++nonce } : null }),
+      // One mechanism: a highlight also moves the viewer to its page.
+      setHighlight: (h) =>
+        set(
+          h
+            ? { highlight: { ...h, nonce: ++nonce }, view: { ipoId: h.ipoId, doc: h.doc, page: h.page } }
+            : { highlight: null },
+        ),
+      setView: (view) => set({ view }),
       dismissColdBanner: () => set({ coldBannerDismissed: true }),
     }),
     {
