@@ -152,3 +152,17 @@ def test_continuation_page_without_a_header_is_redacted_by_din_rows() -> None:
     gone = {words[i].text for i in address_column_words(words)}
     assert {"Flat", "12,", "Maple", "Heights", "Pune"} <= gone
     assert not gone & {"A", "Rao", "Independent", "Director", "DIN:", "08000001", "The", "Company"}
+
+
+def test_address_cells_start_left_of_the_address_header_word() -> None:
+    words = [
+        w("Name,", 50, 100), w("Designation", 90, 100), w("and", 160, 100), w("DIN", 190, 100),
+        w("Address", 359, 100),
+        w("A", 50, 130), w("Rao", 70, 130),
+        w("DIN:", 50, 150), w("08000001", 90, 150, 140),
+        w("Flat", 283, 130), w("12,", 330, 130), w("Maple", 283, 150), w("Heights", 330, 150),
+        w("The", 50, 220), w("Company", 90, 220),
+    ]  # fmt: skip
+    gone = {words[i].text for i in address_column_words(words)}
+    assert {"Flat", "12,", "Maple", "Heights"} <= gone
+    assert not gone & {"A", "Rao", "DIN:", "08000001", "The", "Company"}
