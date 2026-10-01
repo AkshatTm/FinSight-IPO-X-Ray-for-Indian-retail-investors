@@ -110,6 +110,7 @@ export function Workspace({ id }: { id: string }) {
     <div className="skeleton h-full w-full" aria-busy="true" />
   );
   const paneBox = "h-full overflow-y-auto rounded-[10px] border border-rule bg-surface";
+  const askBox = "h-full overflow-hidden rounded-[10px] border border-rule bg-surface";
 
   return (
     <div className="pt-4">
@@ -119,7 +120,7 @@ export function Workspace({ id }: { id: string }) {
           <ResizablePanes
             initial={[30, 40, 30]}
             minPx={[300, 420, 320]}
-            panes={[<div key="f" className={paneBox}>{facts}</div>, doc, <div key="a" className={paneBox}>{ask}</div>]}
+            panes={[<div key="f" className={paneBox}>{facts}</div>, doc, <div key="a" className={askBox}>{ask}</div>]}
           />
         )}
         {layout === "mid" && (
@@ -130,7 +131,7 @@ export function Workspace({ id }: { id: string }) {
               doc,
               <div key="r" className="flex h-full flex-col">
                 <Tabs tabs={["facts", "ask"]} tab={rightTab} onTab={(k) => setRightTab(k as "facts" | "ask")} />
-                <div className={`min-h-0 flex-1 ${paneBox}`}>{rightTab === "facts" ? facts : ask}</div>
+                <div className={`min-h-0 flex-1 ${rightTab === "facts" ? paneBox : askBox}`}>{rightTab === "facts" ? facts : ask}</div>
               </div>,
             ]}
           />
@@ -139,7 +140,7 @@ export function Workspace({ id }: { id: string }) {
           <div className="flex h-full flex-col">
             <Tabs tabs={["facts", "document", "ask"]} tab={tab} onTab={setTab} />
             <div className="min-h-0 flex-1">
-              {tab === "document" ? doc : <div className={paneBox}>{tab === "facts" ? facts : ask}</div>}
+              {tab === "document" ? doc : <div className={tab === "facts" ? paneBox : askBox}>{tab === "facts" ? facts : ask}</div>}
             </div>
           </div>
         )}
