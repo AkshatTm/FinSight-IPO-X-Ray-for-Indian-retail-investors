@@ -287,6 +287,15 @@ If a company's passages appear in both training and test, scores look better tha
 
 ---
 
+### C10. The verifier: checking every number in an answer (built in P3.3)
+**Why it exists:** a small language model copies numbers wrongly often enough that we never trust it. After the answer is written, a plain rule-based checker compares each number in it with the passages the answer was built from. No model is involved, so the check is fast, repeatable and explainable.
+**Step 1, claims (`verify/claims.py`):** the answer is cut into sentences (English full stop or Hindi danda). In each sentence the amounts are found with the same normalizer the rest of FinSight uses, so "₹ 2,626 करोड़" and "₹ 26,260 million" are the same money. Citation marks like [2], years and page numbers are not amounts.
+**Step 2, which metric (`verify/metrics.py`):** "fresh issue", "offer for sale", "face value" and so on are looked up in English, Hindi and Hinglish. In a prospectus the name comes before the number ("a fresh issue ... aggregating up to ₹ 26,260 million"), or right after it as a defined term ("₹ 29,808 million (the "Offer")").
+**Step 3, the verdict (`verify/numeric_check.py`):** ✅ *verified* when a passage has the same value for that metric. ❌ *scale mismatch* when the digits match but the unit does not (₹ 26,260 crore against ₹ 26,260 million): this is the demo moment. ❌ *wrong value* when the passage gives a different number for that metric. ❌ *wrong metric* when the number is real but belongs to something else (the OFS amount called the fresh issue). ⚠️ *placeholder* when the document itself has [●] there. ⚠️ *not found* when the number is nowhere in the passages. A 10x gap is only called a unit slip if the units differ or the digits are identical; face value ₹ 10 against ₹ 1 is simply a wrong value (ADR-027).
+**The score (`verify/verdict.py`):** verified numbers divided by all numbers. An answer with no numbers has no score.
+**How we tested it (E5, `evaluate/seeded_errors.py`):** correct answers were written from the hand-checked gold values, then one number in each was broken on purpose in five ways. The checker caught all 100 broken answers and raised no false alarm on 100 correct ones. Say it honestly in the viva: this is a *unit* test of the rules on tidy sentences, so near-perfect scores are expected; on the first full run it called 5 of 40 unit slips "wrong value" instead of "scale mismatch", and we fixed that rule after seeing them (ADR-044). How it does on real model answers is measured later (E7).
+**Try it:** `uv run python -m finsight.generate ask --ipo ather-energy-2025 "How big is the fresh issue?" --answer "The fresh issue is ₹ 26,260 crore [1]."`
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
