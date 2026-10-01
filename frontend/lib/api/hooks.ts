@@ -21,3 +21,11 @@ export const useSuggested = (id: string) =>
     queryKey: ["suggested", id],
     queryFn: () => apiGet<Schemas["SuggestedQuestion"][]>(`/api/ipos/${id}/suggested-questions`),
   });
+
+export const useWords = (ipoId: string, doc: string, page: number, enabled = true) =>
+  useQuery({
+    queryKey: ["words", ipoId, doc, page],
+    queryFn: () => apiGet<Schemas["PageWords"]>(`/api/ipos/${ipoId}/pages/${page}/words?doc=${doc}`),
+    enabled,
+    staleTime: Infinity,
+  });

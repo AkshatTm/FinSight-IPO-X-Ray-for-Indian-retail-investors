@@ -1,6 +1,6 @@
 import { http, HttpResponse, delay } from "msw";
 import { DETAILS, HEALTH, IPOS } from "./fixtures";
-import { pageSvg } from "./pages";
+import { pageSvg, pageWords } from "./pages";
 import { buildXray, SUGGESTED } from "./xray";
 
 const notFound = () =>
@@ -39,4 +39,7 @@ export const handlers = [
       headers: { "Content-Type": "image/svg+xml", "Cache-Control": "public, max-age=31536000, immutable" },
     });
   }),
+  http.get("/api/ipos/:id/pages/:n/words", ({ params }) =>
+    DETAILS[String(params.id)] ? HttpResponse.json(pageWords(Number(params.n))) : notFound(),
+  ),
 ];
