@@ -1,0 +1,630 @@
+{
+  "methods": {
+    "bm25": {
+      "test": {
+        "all": {
+          "n": 56,
+          "recall@1": {
+            "mean": 0.3036,
+            "low": 0.2679,
+            "high": 0.3393
+          },
+          "recall@5": {
+            "mean": 0.625,
+            "low": 0.4821,
+            "high": 0.75
+          },
+          "mrr": {
+            "mean": 0.3935,
+            "low": 0.3342,
+            "high": 0.4515
+          }
+        },
+        "en": {
+          "n": 38,
+          "recall@1": {
+            "mean": 0.2895,
+            "low": 0.2222,
+            "high": 0.359
+          },
+          "recall@5": {
+            "mean": 0.6316,
+            "low": 0.5128,
+            "high": 0.7436
+          },
+          "mrr": {
+            "mean": 0.3803,
+            "low": 0.314,
+            "high": 0.4428
+          }
+        },
+        "hi": {
+          "n": 18,
+          "recall@1": {
+            "mean": 0.3333,
+            "low": 0.1429,
+            "high": 0.5294
+          },
+          "recall@5": {
+            "mean": 0.6111,
+            "low": 0.3333,
+            "high": 0.8333
+          },
+          "mrr": {
+            "mean": 0.4213,
+            "low": 0.2167,
+            "high": 0.6157
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "dev": {
+        "all": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.4118,
+            "low": 0.2,
+            "high": 0.6
+          },
+          "recall@5": {
+            "mean": 0.7059,
+            "low": 0.6,
+            "high": 0.8571
+          },
+          "mrr": {
+            "mean": 0.4843,
+            "low": 0.3167,
+            "high": 0.6
+          }
+        },
+        "en": {
+          "n": 11,
+          "recall@1": {
+            "mean": 0.2727,
+            "low": 0.0,
+            "high": 0.4
+          },
+          "recall@5": {
+            "mean": 0.5455,
+            "low": 0.3333,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.3364,
+            "low": 0.0833,
+            "high": 0.49
+          }
+        },
+        "hi": {
+          "n": 6,
+          "recall@1": {
+            "mean": 0.6667,
+            "low": 0.5,
+            "high": 1.0
+          },
+          "recall@5": {
+            "mean": 1.0,
+            "low": 1.0,
+            "high": 1.0
+          },
+          "mrr": {
+            "mean": 0.7556,
+            "low": 0.6,
+            "high": 1.0
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": 3.660670042037964,
+        "test_unanswerable_abstained": "5/11",
+        "test_answerable_wrongly_abstained": "33/56"
+      }
+    },
+    "dense": {
+      "test": {
+        "all": {
+          "n": 56,
+          "recall@1": {
+            "mean": 0.2679,
+            "low": 0.1786,
+            "high": 0.375
+          },
+          "recall@5": {
+            "mean": 0.5179,
+            "low": 0.4286,
+            "high": 0.625
+          },
+          "mrr": {
+            "mean": 0.347,
+            "low": 0.2875,
+            "high": 0.4298
+          }
+        },
+        "en": {
+          "n": 38,
+          "recall@1": {
+            "mean": 0.2632,
+            "low": 0.15,
+            "high": 0.3846
+          },
+          "recall@5": {
+            "mean": 0.5263,
+            "low": 0.4211,
+            "high": 0.6154
+          },
+          "mrr": {
+            "mean": 0.3482,
+            "low": 0.2785,
+            "high": 0.4359
+          }
+        },
+        "hi": {
+          "n": 18,
+          "recall@1": {
+            "mean": 0.2778,
+            "low": 0.1429,
+            "high": 0.4375
+          },
+          "recall@5": {
+            "mean": 0.5,
+            "low": 0.3684,
+            "high": 0.6875
+          },
+          "mrr": {
+            "mean": 0.3444,
+            "low": 0.195,
+            "high": 0.5
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "dev": {
+        "all": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.2353,
+            "low": 0.2,
+            "high": 0.2857
+          },
+          "recall@5": {
+            "mean": 0.4706,
+            "low": 0.4,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.3382,
+            "low": 0.25,
+            "high": 0.4
+          }
+        },
+        "en": {
+          "n": 11,
+          "recall@1": {
+            "mean": 0.1818,
+            "low": 0.0,
+            "high": 0.4
+          },
+          "recall@5": {
+            "mean": 0.4545,
+            "low": 0.3333,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.2955,
+            "low": 0.0833,
+            "high": 0.5
+          }
+        },
+        "hi": {
+          "n": 6,
+          "recall@1": {
+            "mean": 0.3333,
+            "low": 0.0,
+            "high": 0.5
+          },
+          "recall@5": {
+            "mean": 0.5,
+            "low": 0.0,
+            "high": 1.0
+          },
+          "mrr": {
+            "mean": 0.4167,
+            "low": 0.0,
+            "high": 0.75
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": 0.5965744256973267,
+        "test_unanswerable_abstained": "4/11",
+        "test_answerable_wrongly_abstained": "22/56"
+      }
+    },
+    "hybrid": {
+      "test": {
+        "all": {
+          "n": 56,
+          "recall@1": {
+            "mean": 0.3393,
+            "low": 0.2679,
+            "high": 0.4107
+          },
+          "recall@5": {
+            "mean": 0.6429,
+            "low": 0.5179,
+            "high": 0.7679
+          },
+          "mrr": {
+            "mean": 0.4357,
+            "low": 0.3601,
+            "high": 0.5068
+          }
+        },
+        "en": {
+          "n": 38,
+          "recall@1": {
+            "mean": 0.3421,
+            "low": 0.2632,
+            "high": 0.4211
+          },
+          "recall@5": {
+            "mean": 0.6053,
+            "low": 0.4737,
+            "high": 0.7368
+          },
+          "mrr": {
+            "mean": 0.4241,
+            "low": 0.3419,
+            "high": 0.5004
+          }
+        },
+        "hi": {
+          "n": 18,
+          "recall@1": {
+            "mean": 0.3333,
+            "low": 0.15,
+            "high": 0.5
+          },
+          "recall@5": {
+            "mean": 0.7222,
+            "low": 0.5263,
+            "high": 0.8947
+          },
+          "mrr": {
+            "mean": 0.4602,
+            "low": 0.2792,
+            "high": 0.6133
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "dev": {
+        "all": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.4118,
+            "low": 0.2,
+            "high": 0.6
+          },
+          "recall@5": {
+            "mean": 0.5294,
+            "low": 0.4,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.451,
+            "low": 0.2667,
+            "high": 0.6
+          }
+        },
+        "en": {
+          "n": 11,
+          "recall@1": {
+            "mean": 0.2727,
+            "low": 0.0,
+            "high": 0.4
+          },
+          "recall@5": {
+            "mean": 0.3636,
+            "low": 0.0,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.303,
+            "low": 0.0,
+            "high": 0.4667
+          }
+        },
+        "hi": {
+          "n": 6,
+          "recall@1": {
+            "mean": 0.6667,
+            "low": 0.5,
+            "high": 1.0
+          },
+          "recall@5": {
+            "mean": 0.8333,
+            "low": 0.5,
+            "high": 1.0
+          },
+          "mrr": {
+            "mean": 0.7222,
+            "low": 0.5,
+            "high": 1.0
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": -0.9875,
+        "test_unanswerable_abstained": "0/11",
+        "test_answerable_wrongly_abstained": "0/56"
+      }
+    },
+    "hybrid+rerank": {
+      "test": {
+        "all": {
+          "n": 56,
+          "recall@1": {
+            "mean": 0.4643,
+            "low": 0.375,
+            "high": 0.5714
+          },
+          "recall@5": {
+            "mean": 0.6071,
+            "low": 0.4643,
+            "high": 0.7321
+          },
+          "mrr": {
+            "mean": 0.514,
+            "low": 0.4024,
+            "high": 0.6295
+          }
+        },
+        "en": {
+          "n": 38,
+          "recall@1": {
+            "mean": 0.5,
+            "low": 0.3889,
+            "high": 0.6316
+          },
+          "recall@5": {
+            "mean": 0.6316,
+            "low": 0.5135,
+            "high": 0.7368
+          },
+          "mrr": {
+            "mean": 0.5447,
+            "low": 0.4369,
+            "high": 0.6581
+          }
+        },
+        "hi": {
+          "n": 18,
+          "recall@1": {
+            "mean": 0.3889,
+            "low": 0.2222,
+            "high": 0.5333
+          },
+          "recall@5": {
+            "mean": 0.5556,
+            "low": 0.3158,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.4491,
+            "low": 0.2583,
+            "high": 0.6176
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "dev": {
+        "all": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.1765,
+            "low": 0.1429,
+            "high": 0.2
+          },
+          "recall@5": {
+            "mean": 0.5882,
+            "low": 0.5714,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.3255,
+            "low": 0.2857,
+            "high": 0.3667
+          }
+        },
+        "en": {
+          "n": 11,
+          "recall@1": {
+            "mean": 0.0909,
+            "low": 0.0,
+            "high": 0.2
+          },
+          "recall@5": {
+            "mean": 0.5455,
+            "low": 0.3333,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.2455,
+            "low": 0.0667,
+            "high": 0.4
+          }
+        },
+        "hi": {
+          "n": 6,
+          "recall@1": {
+            "mean": 0.3333,
+            "low": 0.0,
+            "high": 0.5
+          },
+          "recall@5": {
+            "mean": 0.6667,
+            "low": 0.0,
+            "high": 1.0
+          },
+          "mrr": {
+            "mean": 0.4722,
+            "low": 0.0,
+            "high": 0.75
+          }
+        },
+        "hinglish": {
+          "n": 0,
+          "recall@1": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "recall@5": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "mrr": {
+            "mean": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": 0.765625,
+        "test_unanswerable_abstained": "9/11",
+        "test_answerable_wrongly_abstained": "23/56"
+      }
+    }
+  },
+  "thresholds": {
+    "bm25": 3.660670042037964,
+    "dense": 0.5965744256973267,
+    "hybrid": -0.9875,
+    "hybrid+rerank": 0.765625
+  }
+}
