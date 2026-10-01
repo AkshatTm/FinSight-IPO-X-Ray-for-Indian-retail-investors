@@ -2,6 +2,7 @@
 
 from finsight.extract.fields import field_ids, get_field, load_fields
 from finsight.extract.passages import QAPassage, build_passages
+from finsight.extract.qa_finetuned import MAX_ANSWER_TOKENS, SEEDS, FineTunedExtractor, weights_dir
 from finsight.extract.qa_pretrained import QAExtractor, RawAnswer, answer_value
 from finsight.extract.rules import COVER_PAGES, RulesExtractor
 from finsight.extract.select import Selection, same_value, select_field
@@ -10,7 +11,10 @@ from finsight.extract.xray import DocInputs, build_xray
 
 __all__ = [
     "COVER_PAGES",
+    "MAX_ANSWER_TOKENS",
+    "SEEDS",
     "DocInputs",
+    "FineTunedExtractor",
     "QAExtractor",
     "QAPassage",
     "RawAnswer",
@@ -26,4 +30,5 @@ __all__ = [
     "objects_pure_ofs",
     "same_value",
     "select_field",
+    "weights_dir",
 ]
