@@ -107,6 +107,7 @@ ignore = ["RUF001", "RUF002", "RUF003"]
 "src/finsight/guard/advice.py" = ["E501"]
 "src/finsight/guard/privacy.py" = ["E501"]
 "src/finsight/generate/postprocess.py" = ["E501"]
+"src/finsight/retrieve/boost.py" = ["E501"]
 # One-off experiment and data scripts keep long f-strings and table rows readable.
 "scripts/*.py" = ["E501"]
 
