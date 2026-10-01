@@ -98,7 +98,7 @@ Dataset card for the generated set: counts per field, positives/negatives, IPOs,
 |---|---|
 | **EM** | Predicted span string == gold string after whitespace/case/punctuation normalisation |
 | **Token F1** | SQuAD-style token overlap F1 |
-| **NVM (normalized value match)** — primary | `normalize.equal(pred, gold)` for money/count/percent; for text/list fields, case-folded set match (list F1 for lists) |
+| **NVM (normalized value match)** — primary | `normalize.equal(pred, gold)` for money/count/percent; for text/list fields, set match ignoring case, punctuation and spacing, ADR-045 (list F1 for lists) |
 | Field coverage | Share of fields where the extractor returns a non-empty answer |
 | Correct abstention | Extractor returns "no answer" when gold `status = not_in_document` |
 | **Verifier P / R / F1** | Positive class = "answer contains an error". Per error type and overall |
