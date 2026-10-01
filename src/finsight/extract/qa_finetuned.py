@@ -11,10 +11,16 @@ from __future__ import annotations
 from pathlib import Path
 
 from finsight.core.config import get_settings
-from finsight.extract.qa_pretrained import Answerer, QAExtractor, default_answerer
+from finsight.extract.qa_pretrained import (
+    MAX_ANSWER_TOKENS,
+    Answerer,
+    QAExtractor,
+    default_answerer,
+)
 
 SEEDS = (13, 42, 2026)
-MAX_ANSWER_TOKENS = 128  # the same limit the notebook used to score the dev split
+DEFAULT_SEED = 2026  # best dev NVM of the three seeds; the pipeline runs with it (ADR-018)
+__all__ = ["DEFAULT_SEED", "MAX_ANSWER_TOKENS", "SEEDS", "FineTunedExtractor", "weights_dir"]
 
 
 def weights_dir(seed: int, models_dir: Path | None = None) -> Path:

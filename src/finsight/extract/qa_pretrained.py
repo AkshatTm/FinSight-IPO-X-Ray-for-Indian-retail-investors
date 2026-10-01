@@ -31,6 +31,7 @@ from finsight.normalize import parse_amount
 
 MODEL = "deepset/deberta-v3-base-squad2"
 MIN_SCORE = 0.05  # below this the model is guessing
+MAX_ANSWER_TOKENS = 128  # the same span limit for every QA rung (promoters are whole-list spans)
 _UNIT_AFTER = re.compile(r"^\s*(million|crore|lakh|billion|mn|cr)\b", re.IGNORECASE)
 _SPLIT_LIST = re.compile(r",|;|\band\b|\n", re.IGNORECASE)
 _DIGITS = re.compile(r"^\d[\d,]*(?:\.\d+)?$")
@@ -50,7 +51,7 @@ Answerer = Callable[[str, list[str]], list[RawAnswer | None]]
 
 
 def default_answerer(
-    model: str = MODEL, batch_size: int = 16, max_answer_tokens: int = 40
+    model: str = MODEL, batch_size: int = 16, max_answer_tokens: int = MAX_ANSWER_TOKENS
 ) -> Answerer:
     """The real model on the GPU in fp16 (CPU fp32 otherwise).
 

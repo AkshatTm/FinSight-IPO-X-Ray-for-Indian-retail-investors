@@ -12,7 +12,14 @@ from finsight.core.schemas import (
     Range,
     TextValue,
 )
-from finsight.extract import QAExtractor, RawAnswer, build_passages, get_field
+from finsight.extract import QAExtractor, RawAnswer, build_passages
+from finsight.extract import get_field as deployed_field
+
+
+def get_field(field_id: str):  # type: ignore[no-untyped-def]
+    """The field as if it named the pretrained model, whatever fields.yaml says today."""
+    spec = deployed_field(field_id)
+    return spec.model_copy(update={"extractor": "rules", "fallback": "qa_pretrained"})
 
 
 def make_doc(pages: list[str], doc_type: str = "rhp") -> ParsedDoc:
@@ -109,8 +116,9 @@ def test_unreadable_low_score_or_empty_answers_are_dropped() -> None:
 
 
 def test_only_fields_that_use_qa_are_run() -> None:
-    assert run("offer_price", ["price of ₹ 321"], "₹ 321") == []  # rules-only field
-    assert run("objects_of_offer", ["capex 5"], "5") == []  # table field
+    qa = QAExtractor(answerer=answerer_for("₹ 321"))  # the fields as fields.yaml has them today
+    assert qa.extract(make_doc(["price of ₹ 321"]), [], [], deployed_field("offer_price")) == []
+    assert qa.extract(make_doc(["capex ₹ 321"]), [], [], deployed_field("objects_of_offer")) == []
 
 
 def test_best_answers_first_and_one_candidate_per_distinct_value() -> None:

@@ -27,7 +27,9 @@ def run_rules(processed_dir: Path, ipo_id: str, doc: DocType) -> RulesRun:
     extractors = {"rules": RulesExtractor(), "table": TableExtractor()}
     found: RulesRun = {}
     for field in load_fields():
-        extractor = extractors.get(field.extractor)
+        # a field whose primary is a QA model still gets the rules, as the cross-check
+        name = field.extractor if field.extractor in extractors else field.fallback
+        extractor = extractors.get(name or "")
         found[field.id] = extractor.extract(parsed, sections, tables, field) if extractor else []
     doc_outputs(processed_dir, ipo_id, doc).candidates.write_bytes(
         _CANDIDATES.dump_json(found, indent=1)

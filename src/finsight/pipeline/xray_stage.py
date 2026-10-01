@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from collections import Counter
+from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -28,13 +29,19 @@ DOCS: tuple[DocType, ...] = ("rhp", "prospectus")
 
 
 def run_qa(
-    processed_dir: Path, ipo_id: str, doc: DocType, extractor: QAExtractor | None = None
+    processed_dir: Path,
+    ipo_id: str,
+    doc: DocType,
+    extractors: Sequence[QAExtractor] | None = None,
 ) -> RulesRun:
-    """Pretrained QA for every field that opts in; writes ``candidates_qa*.json``."""
+    """QA candidates for every field that names one of the extractors (``extractor`` or
+    ``fallback`` in fields.yaml); writes ``candidates_qa*.json``."""
     parsed = load_parsed(processed_dir, ipo_id, doc)
     sections = load_sections(processed_dir, ipo_id, doc)
-    qa = extractor or QAExtractor()
-    found = {f.id: qa.extract(parsed, sections, [], f) for f in load_fields()}
+    qa = list(extractors) if extractors else [QAExtractor()]
+    found = {
+        f.id: [c for e in qa for c in e.extract(parsed, sections, [], f)] for f in load_fields()
+    }
     doc_outputs(processed_dir, ipo_id, doc).candidates_qa.write_bytes(
         _CANDIDATES.dump_json(found, indent=1)
     )

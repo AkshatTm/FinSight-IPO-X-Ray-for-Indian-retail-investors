@@ -237,4 +237,7 @@ def test_finetuned_extractor_reads_its_seed_folder_and_reports_missing_weights(t
     assert found
     assert found[0].extractor == "qa_finetuned"
     # a field that does not name the extractor is left alone
-    assert ok.extract(doc([COVER]), [], [], get_field("fresh_issue_size")) == []
+    spec = get_field("fresh_issue_size").model_copy(
+        update={"extractor": "rules", "fallback": "qa_pretrained"}
+    )
+    assert ok.extract(doc([COVER]), [], [], spec) == []
