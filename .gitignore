@@ -13,6 +13,7 @@ models/
 *.ogg
 *.webm
 !frontend/public/demo/*.webm
+!frontend/public/demo/*.m4a
 # secrets
 .env
 .env.*
@@ -48,3 +49,7 @@ data/gold/~$*
 # agent skills: licences not all verified as MIT/Apache; skills-lock.json is committed instead
 .claude/skills/
 .claude/worktrees/
+
+# tool scratch
+.playwright-mcp/
+.dev.log
