@@ -17,7 +17,8 @@ profiles:
   full:
     # Model names below are placeholders until the P3.2 bake-off (ADR-020).
     llm: { backend: ollama, model: "qwen3.5:2b", num_ctx: 2048 }
-    retrieve: { dense: true, rerank: true }
+    # -4.402: highest hybrid+rerank score that refuses at most 10 % of answerable dev questions (ADR-049)
+    retrieve: { dense: true, rerank: true, abstain_thresholds: { "hybrid+rerank": -4.402 } }
     voice: { asr: "faster-whisper-small" }
     verify: { nli: false } # turns on with P5.5
     demo_mode: false
