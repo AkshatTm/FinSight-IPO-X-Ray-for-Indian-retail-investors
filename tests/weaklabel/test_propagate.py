@@ -68,3 +68,80 @@ def test_positives_are_capped_per_field_and_document() -> None:
     found = propagate(doc, sections_for(21), get_field("fresh_issue_size"), seed, max_positives=5)
     assert len(found) == 5
     assert len({e.passage_id for e in found}) == 5  # one per passage
+
+
+# ---- v2: the five misses of the 50-row audit (ADR-041) ----------------------------------
+
+
+def test_face_value_of_preference_shares_is_not_a_positive() -> None:
+    face = get_field("face_value")
+    value = parse_amount("₹ 10")
+    ccps = (
+        "Board of Directors of our Company or a duly constituted committee thereof. Compulsorily "
+        "convertible preference shares of our Company of face value of ₹ 10 each. The company "
+        "secretary and compliance officer of our Company."
+    )
+    ocrps = (
+        "These OCRPS were partly paid-up to the extent of ₹0.04 on the face value of ₹10 per "
+        "OCRPS at the time of allotment and thereafter converted into Equity Shares."
+    )
+    assert find_answer(face, value, ccps) is None  # type: ignore[arg-type]
+    assert find_answer(face, value, ocrps) is None  # type: ignore[arg-type]
+
+
+def test_face_value_needs_equity_shares_in_the_same_sentence() -> None:
+    face = get_field("face_value")
+    value = parse_amount("₹ 10")
+    good = "Equity Shares of our Company of face value of ₹ 10 each."
+    span = find_answer(face, value, good)  # type: ignore[arg-type]
+    assert span is not None
+    assert good[span[0] : span[1]] == "₹ 10"
+    bare = "The debentures have a face value of ₹ 10 each."
+    assert find_answer(face, value, bare) is None  # type: ignore[arg-type]
+    units = "Units of face value of ₹ 10 each."
+    assert find_answer(face, value, units) is None  # type: ignore[arg-type]
+    both = (
+        "The capital comprises Equity Shares of face value of ₹ 10 each and Preference Shares of "
+        "face value of ₹ 100 each."
+    )
+    span = find_answer(face, value, both)  # type: ignore[arg-type]
+    assert span is not None
+    assert both[span[0] : span[1]] == "₹ 10"
+
+
+def test_name_span_keeps_initials_and_the_closing_bracket() -> None:
+    promoters = get_field("promoters")
+    seed = ListValue(items=["M.G. GEORGE MUTHOOT", "GEORGE THOMAS MUTHOOT"])
+    text = "PROMOTERS: M.G. GEORGE MUTHOOT AND GEORGE THOMAS MUTHOOT table"
+    span = find_answer(promoters, seed, text)
+    assert span is not None
+    assert text[span[0] : span[1]] == "M.G. GEORGE MUTHOOT AND GEORGE THOMAS MUTHOOT"
+
+    seed = ListValue(items=["SHIV RATAN AGARWAL", "DEEPAK AGARWAL (HUF)"])
+    text = "PROMOTERS OF OUR COMPANY: SHIV RATAN AGARWAL AND DEEPAK AGARWAL (HUF) INITIAL PUBLIC"
+    span = find_answer(promoters, seed, text)
+    assert span is not None
+    assert text[span[0] : span[1]] == "SHIV RATAN AGARWAL AND DEEPAK AGARWAL (HUF)"
+
+
+def test_list_span_grows_over_neighbouring_names_the_seed_missed() -> None:
+    brlms = get_field("book_running_lead_managers")
+    seed = ListValue(items=["ICICI Securities Limited", "SBI Capital Markets Limited"])
+    text = (
+        "The book running lead managers to the Offer, being IDBI Capital Markets & Securities "
+        "Limited, ICICI Securities Limited, Nomura Financial Advisory and Securities (India) "
+        "Private Limited and SBI Capital Markets Limited. The broker centres notified."
+    )
+    span = find_answer(brlms, seed, text)
+    assert span is not None
+    assert text[span[0] : span[1]] == (
+        "IDBI Capital Markets & Securities Limited, ICICI Securities Limited, Nomura Financial "
+        "Advisory and Securities (India) Private Limited and SBI Capital Markets Limited"
+    )
+    after = (
+        "The BRLMs are ICICI Securities Limited and SBI Capital Markets Limited, and KFin "
+        "Technologies Limited is the Registrar to the Offer."
+    )
+    span = find_answer(brlms, seed, after)
+    assert span is not None  # the registrar is not a lead manager
+    assert after[span[0] : span[1]] == "ICICI Securities Limited and SBI Capital Markets Limited"
