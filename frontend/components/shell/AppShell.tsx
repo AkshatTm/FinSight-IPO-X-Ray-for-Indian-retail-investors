@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useT } from "@/lib/useT";
 import { ColdStartBanner } from "./ColdStartBanner";
@@ -8,6 +9,8 @@ import { NavBar } from "./NavBar";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useT();
+  // The workspace (/ipos/<id>) uses the full width for three panes.
+  const wide = /^\/ipos\/[^/]+/.test(usePathname());
   return (
     <>
       <a
@@ -18,7 +21,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <NavBar />
       <ColdStartBanner />
-      <main id="main" className="mx-auto w-full max-w-[1120px] flex-1 px-4 md:px-6">
+      <main id="main" className={`mx-auto w-full flex-1 px-4 md:px-6 ${wide ? "max-w-[1760px]" : "max-w-[1120px]"}`}>
         {children}
       </main>
       <Footer />
