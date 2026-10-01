@@ -115,7 +115,8 @@ def default_answerer(model: str = MODEL, batch_size: int = 16) -> Answerer:
     return answer
 
 
-def _to_value(kind: str, answer: RawAnswer, context: str) -> Value | None:
+def answer_value(kind: str, answer: RawAnswer, context: str) -> Value | None:
+    """The typed value of an answer span; a bare number takes its unit from the text around it."""
     text = _MARKS.sub("", answer.text).strip()
     if kind == "money":
         if _DIGITS.match(text):  # a bare number: the unit and the rupee sign sit around the span
@@ -172,7 +173,7 @@ class QAExtractor:
         for passage, answer in zip(passages, answers, strict=True):
             if answer is None or answer.score < MIN_SCORE:
                 continue
-            value = _to_value(field.type, answer, passage.text)
+            value = answer_value(field.type, answer, passage.text)
             if value is None or (key := value.model_dump_json()) in seen:
                 continue
             seen.add(key)
