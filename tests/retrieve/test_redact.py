@@ -139,3 +139,16 @@ def test_chunks_of_a_page_with_an_address_do_not_contain_it() -> None:
     assert "Maple" not in joined
     assert PLACEHOLDER in joined
     assert "Business." in joined
+
+
+def test_continuation_page_without_a_header_is_redacted_by_din_rows() -> None:
+    words = [
+        w("A", 50, 120), w("Rao", 70, 120), w("Flat", 330, 120), w("12,", 360, 120),
+        w("Independent", 50, 140), w("Director", 120, 140), w("Maple", 330, 140),
+        w("DIN:", 50, 160), w("08000001", 90, 160, 140), w("Heights", 330, 160),
+        w("Pune", 330, 180),
+        w("The", 50, 240), w("Company", 90, 240), w("appoints", 150, 240),
+    ]  # fmt: skip
+    gone = {words[i].text for i in address_column_words(words)}
+    assert {"Flat", "12,", "Maple", "Heights", "Pune"} <= gone
+    assert not gone & {"A", "Rao", "Independent", "Director", "DIN:", "08000001", "The", "Company"}

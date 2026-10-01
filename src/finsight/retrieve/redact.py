@@ -159,6 +159,8 @@ def address_column_words(words: list[Word]) -> set[int]:
         line = [v for v in words if abs(_yc(v) - _yc(w)) < _LINE_TOL and v.bbox[2] <= w.bbox[0] + 1]
         if any(v.text.strip(" :|,").upper() == "DIN" for v in line):
             headers.append((i, w.bbox[0], max(v.bbox[3] for v in [*line, w])))
+    if not headers:
+        return _headerless_address_column(words)
     drop: set[int] = set()
     headers.sort(key=lambda h: h[2])
     for k, (_, x_addr, top) in enumerate(headers):
@@ -183,3 +185,41 @@ def address_column_words(words: list[Word]) -> set[int]:
             if top <= w.bbox[1] < end and (w.bbox[0] + w.bbox[2]) / 2 >= left and j not in drop:
                 drop.add(j)
     return drop
+
+
+# A board table that continues on the next page has no header there. Its rows still read
+# "DIN: 01234567" in the left cell with the address to the right on the same line.
+_ROW_TOP = 70.0  # points above the first DIN line where that row's address can start
+_MIN_GAP = 12.0  # an address column starts at least this far right of the DIN number
+
+
+def _headerless_address_column(words: list[Word]) -> set[int]:
+    starts: list[float] = []
+    din_lines: list[Word] = []
+    for i, w in enumerate(words):
+        if not _DIN_NUMBER.match(w.text.strip()) or i == 0:
+            continue
+        if words[i - 1].text.strip(" :").upper() != "DIN":
+            continue
+        din_lines.append(w)
+        right = [
+            v.bbox[0]
+            for v in words
+            if abs(_yc(v) - _yc(w)) < _LINE_TOL and v.bbox[0] > w.bbox[2] + _MIN_GAP
+        ]
+        if right:
+            starts.append(min(right))
+    if not starts:
+        return set()
+    left = min(starts) - _COLUMN_TOL
+    top = min(w.bbox[1] for w in din_lines) - _ROW_TOP
+    last_din = max(w.bbox[3] for w in din_lines)
+    below = [
+        w.bbox[1] for w in words if w.bbox[1] > last_din + 1 and w.bbox[0] < left and w.text.strip()
+    ]
+    end = min(below) if below else float("inf")
+    return {
+        j
+        for j, w in enumerate(words)
+        if top <= w.bbox[1] < end and (w.bbox[0] + w.bbox[2]) / 2 >= left
+    }
