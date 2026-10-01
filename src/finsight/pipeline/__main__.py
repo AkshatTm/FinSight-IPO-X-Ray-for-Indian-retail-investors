@@ -21,7 +21,7 @@ from typing import cast
 
 from finsight.core.config import get_settings
 from finsight.core.schemas import DocType, Section, XRay
-from finsight.extract import QAExtractor
+from finsight.extract import DEFAULT_SEED, FineTunedExtractor, QAExtractor
 from finsight.ingest.registry import DemoIpo, get_demo_ipo, list_demo_ipos
 from finsight.parse import KEY_SECTIONS
 from finsight.pipeline import inspect as insp
@@ -99,7 +99,7 @@ def _rules(ipo: DemoIpo, docs: list[DocType]) -> dict[tuple[str, DocType], Rules
     return out
 
 
-def _qa(ipo: DemoIpo, docs: list[DocType], qa: QAExtractor) -> None:
+def _qa(ipo: DemoIpo, docs: list[DocType], qa: list[QAExtractor]) -> None:
     processed = get_settings().paths.processed_dir
     for doc in docs:
         found = run_qa(processed, ipo.ipo_id, doc, qa)
@@ -107,6 +107,11 @@ def _qa(ipo: DemoIpo, docs: list[DocType], qa: QAExtractor) -> None:
         print(
             f"{ipo.ipo_id:28} {doc:10} fields with a QA candidate: {got}/{len(found)}", flush=True
         )
+
+
+def _qa_extractors() -> list[QAExtractor]:
+    """Both QA rungs; each runs only on the fields that name it in fields.yaml (ADR-018)."""
+    return [QAExtractor(), FineTunedExtractor(DEFAULT_SEED)]
 
 
 def _xray(ipo: DemoIpo) -> XRay:
@@ -180,9 +185,9 @@ def main(argv: list[str] | None = None) -> int:
             get_settings().paths.eval_dir / "rules_candidates.json", rules_summary(every)
         )
     elif args.command == "build" and args.stage == "qa":
-        _qa(get_demo_ipo(args.ipo), _docs(args.doc), QAExtractor())
+        _qa(get_demo_ipo(args.ipo), _docs(args.doc), _qa_extractors())
     elif args.command == "build-all" and args.stage == "qa":
-        qa = QAExtractor()  # one model load for all 20 documents
+        qa = _qa_extractors()  # one model load for all 20 documents
         for ipo in list_demo_ipos():
             _qa(ipo, ["rhp", "prospectus"], qa)
     elif args.command == "build" and args.stage == "xray":

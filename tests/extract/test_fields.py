@@ -27,7 +27,13 @@ def test_ladder_flags_follow_adr_023() -> None:
 def test_objects_use_the_table_extractor_and_the_rest_use_rules() -> None:
     by_id = {f.id: f for f in load_fields()}
     assert by_id["objects_of_offer"].extractor == "table"
-    assert all(f.extractor == "rules" for i, f in by_id.items() if i != "objects_of_offer")
+    # ADR-018: two fields were handed to the fine-tuned model on dev; rules stay as their fallback
+    by_model = {i for i, f in by_id.items() if f.extractor == "qa_finetuned"}
+    assert by_model == {"fresh_issue_size", "total_issue_size"}
+    assert all(by_id[i].fallback == "rules" for i in by_model)
+    assert all(
+        f.extractor == "rules" for i, f in by_id.items() if i not in by_model | {"objects_of_offer"}
+    )
     assert by_id["offer_price"].fallback is None  # rules-only, Prospectus cover
 
 

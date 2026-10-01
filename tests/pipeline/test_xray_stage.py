@@ -5,7 +5,7 @@ import pytest
 from pydantic import TypeAdapter
 
 from finsight.core.schemas import DocType, Page, ParsedDoc, Section
-from finsight.extract import QAExtractor, RawAnswer
+from finsight.extract import FineTunedExtractor, RawAnswer
 from finsight.ingest.registry import DemoIpo, DocFile
 from finsight.pipeline.layout import doc_outputs, xray_path
 from finsight.pipeline.rules_stage import run_rules
@@ -88,11 +88,11 @@ def test_qa_candidates_are_merged_when_present(processed: Path) -> None:
             out.append(RawAnswer("4,720", 0.9, i, i + 5) if i >= 0 else None)
         return out
 
-    run_qa(processed, IPO, "rhp", QAExtractor(answerer=answers))
+    run_qa(processed, IPO, "rhp", [FineTunedExtractor(13, answerer=answers, models_dir=processed)])
     assert doc_outputs(processed, IPO, "rhp").candidates_qa.exists()
     xray = run_xray(processed, ipo())
     fresh = next(f for f in xray.fields if f.field_id == "fresh_issue_size")
-    assert {c.extractor for c in fresh.candidates} == {"rules", "qa_pretrained"}
+    assert {c.extractor for c in fresh.candidates} == {"rules", "qa_finetuned"}
     assert "agree" in fresh.reason  # both read ₹ 4,720 million on the same page
 
 

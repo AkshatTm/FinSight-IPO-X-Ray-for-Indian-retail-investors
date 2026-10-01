@@ -1,6 +1,7 @@
 # Field registry (02 section 7, ADR-023). One entry per extracted field.
 # doc: the document the value is normally read from. sections: where to look (cover = first pages).
-# extractor: rules | table. fallback: what runs when the primary finds nothing.
+# extractor: rules | table | qa_finetuned (ADR-018: chosen per field on the dev IPOs). fallback: what runs when
+# the primary finds nothing; every other extractor that finds a value only confirms or doubts it.
 # ladder: false = excluded from weak labels and the model ladder (B4, ADR-023).
 fields:
   - id: fresh_issue_size
@@ -10,8 +11,8 @@ fields:
     doc: rhp
     sections: [cover, the_offer]
     questions: ["What is the size of the fresh issue?", "How much money will the company raise from new shares?"]
-    extractor: rules
-    fallback: qa_pretrained
+    extractor: qa_finetuned # chosen on dev (ADR-018)
+    fallback: rules
     ladder: true
   - id: ofs_shares
     label_en: Offer for sale (shares)
@@ -21,7 +22,7 @@ fields:
     sections: [cover, the_offer]
     questions: ["How many shares are being sold in the offer for sale?"]
     extractor: rules
-    fallback: qa_pretrained
+    fallback: qa_finetuned
     ladder: true
   - id: ofs_amount
     label_en: Offer for sale (amount)
@@ -31,7 +32,7 @@ fields:
     sections: [cover, the_offer]
     questions: ["What is the amount of the offer for sale?"]
     extractor: rules
-    fallback: qa_pretrained
+    fallback: qa_finetuned
     ladder: true
   - id: offer_price
     label_en: Offer price
@@ -50,7 +51,7 @@ fields:
     sections: [cover, the_offer]
     questions: ["What is the price band?"]
     extractor: rules
-    fallback: qa_pretrained
+    fallback: qa_finetuned
     ladder: false # [●] in all 10 demo RHPs: expect status placeholder
   - id: total_issue_size
     label_en: Total issue size
@@ -59,8 +60,8 @@ fields:
     doc: prospectus
     sections: [cover, the_offer]
     questions: ["What is the total size of the issue?"]
-    extractor: rules
-    fallback: qa_pretrained
+    extractor: qa_finetuned # chosen on dev (ADR-018)
+    fallback: rules
     ladder: true
   - id: face_value
     label_en: Face value
@@ -70,7 +71,7 @@ fields:
     sections: [cover, capital_structure]
     questions: ["What is the face value of each equity share?"]
     extractor: rules
-    fallback: qa_pretrained
+    fallback: qa_finetuned
     ladder: true
   - id: book_running_lead_managers
     label_en: Book running lead managers
@@ -80,7 +81,7 @@ fields:
     sections: [cover]
     questions: ["Who are the book running lead managers?"]
     extractor: rules
-    fallback: qa_pretrained
+    fallback: qa_finetuned
     ladder: true
   - id: registrar
     label_en: Registrar to the offer
@@ -90,7 +91,7 @@ fields:
     sections: [cover]
     questions: ["Who is the registrar to the offer?"]
     extractor: rules
-    fallback: qa_pretrained
+    fallback: qa_finetuned
     ladder: true
   - id: promoters
     label_en: Promoters
@@ -100,7 +101,7 @@ fields:
     sections: [cover]
     questions: ["Who are the promoters of the company?"]
     extractor: rules
-    fallback: qa_pretrained
+    fallback: qa_finetuned
     ladder: true
   - id: objects_of_offer
     label_en: Objects of the offer
