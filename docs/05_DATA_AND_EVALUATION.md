@@ -162,6 +162,8 @@ Start from answers verified correct by Akshat (or constructed from gold values w
 
 Balanced: 100 corrupted + 100 correct (incl. rounding_ok). Detection = verdict ∈ {❌, ⚠️} for corrupted; false alarm = ❌ or ⚠️ on correct.
 
+**How E5 is reported (ADR-044).** Rules are tuned on the 3 dev IPOs only. The headline is the held-out run: rules frozen on dev, first run on all 10 IPOs. Result (1 Oct 2026): scale-mismatch recall **35/40** (87.5 %, Wilson 73.9-94.5 %; test IPOs 22/27), detection 100/100, false alarms 0/100. One rule was fixed after that run showed misses on test IPOs; the current rules score **40/40**, which is reported only beside the headline as "after one rule fix" and never as a held-out number. `eval_results/verifier.json` holds both in its `headline` block; the report and the Model Lab read that block.
+
 ---
 
 ## 7. Frontier LLM comparison (E9)
