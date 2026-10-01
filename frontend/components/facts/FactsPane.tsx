@@ -34,7 +34,7 @@ export function FactsPane({ ipoId }: { ipoId: string }) {
   const [compare, setCompare] = useState(false);
 
   return (
-    <section aria-label={t("facts.title")} className="flex min-h-full flex-col p-4">
+    <section data-pane="facts" aria-label={t("facts.title")} className="flex min-h-full flex-col p-4">
       <h2 className="text-lg font-semibold">{t("facts.title")}</h2>
       <p className="mb-4 text-sm text-muted">{t("facts.sub")}</p>
 
