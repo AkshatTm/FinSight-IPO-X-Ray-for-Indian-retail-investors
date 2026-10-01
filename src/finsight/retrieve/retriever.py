@@ -15,6 +15,7 @@ from pathlib import Path
 
 from finsight.core.schemas import Passage
 from finsight.retrieve.bm25 import BM25Index
+from finsight.retrieve.boost import inject, prospectus_first
 from finsight.retrieve.dense import DenseIndex, Embedder
 from finsight.retrieve.fuse import rrf
 from finsight.retrieve.rerank import Reranker
@@ -130,7 +131,11 @@ class Retriever:
         else:
             order = bm25_hits
             method = "bm25"
-        order = order[: self.pool]
+        order = inject(question, index.passages, order, self.pool)
+        if self.reranker is None:
+            # No reranker to judge them: cover passages lead (at most two) instead of trailing.
+            extra = order[self.pool :]
+            order = extra[:2] + order[: self.pool]
 
         if self.reranker is not None and order:
             try:
@@ -142,6 +147,7 @@ class Retriever:
             except Exception as exc:
                 notes.append(f"rerank skipped: {exc}")
 
+        order = prospectus_first(question, index.passages, order)
         hits = [
             Hit(passage=index.passages[i], score=s, rank=r)
             for r, (i, s) in enumerate(order[:k], start=1)
