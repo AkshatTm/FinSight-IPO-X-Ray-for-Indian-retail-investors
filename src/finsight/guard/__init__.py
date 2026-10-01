@@ -7,7 +7,7 @@ from typing import Literal
 
 from finsight.guard.advice import AdviceCheck, check_advice, normalize_question
 from finsight.guard.facts import Fact, facts_payload, refusal_text
-from finsight.guard.privacy import PrivacyCheck, check_privacy
+from finsight.guard.privacy import OutputCheck, PrivacyCheck, check_output, check_privacy
 
 
 @dataclass(frozen=True)
@@ -33,8 +33,10 @@ __all__ = [
     "AdviceCheck",
     "Fact",
     "GuardResult",
+    "OutputCheck",
     "PrivacyCheck",
     "check_advice",
+    "check_output",
     "check_privacy",
     "check_question",
     "facts_payload",

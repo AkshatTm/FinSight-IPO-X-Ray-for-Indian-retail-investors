@@ -79,3 +79,68 @@ def check_privacy(question: str) -> PrivacyCheck:
         if m := rx.search(q):
             return PrivacyCheck(True, REASON, category, m.group().strip())
     return PrivacyCheck(False)
+
+
+# ---- layer 3: the answer itself (ADR-048) ----
+# The question guard above cannot see a model that volunteers an address in answer to something
+# else ("who is the CEO?"). Every answer is checked before it reaches the reader; business
+# contacts (registered office, registrar, compliance officer) are allowed.
+_PERSON_CUE = (
+    r"(?:ceo|cfo|coo|cto|founder|promoter|director|chairman|chairperson|kmp|his|her|their|him|"
+    r"mr|mrs|ms|shri|smt|सीईओ|संस्थापक|प्रमोटर|निदेशक|चेयरमैन|उनका|उनके|उनकी|इनका|इनके|श्री|श्रीमती)"
+)
+_ADDRESS_CUE = (
+    r"(?:address|residen\w*|lives?|resides?|home|house|पता|पते|निवास|रहते|रहता|रहती|ठिकाना|घर)"
+)
+_OUTPUT_RULES: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "personal_address",
+        re.compile(
+            rf"\b{_PERSON_CUE}\b.{{0,60}}{_ADDRESS_CUE}|{_ADDRESS_CUE}.{{0,60}}\b{_PERSON_CUE}\b"
+            rf"|{_PERSON_CUE}.{{0,60}}(?:पता|पते|निवास|रहते|रहता|रहती|ठिकाना)"
+            rf"|(?:पता|पते|निवास|रहते|रहता|रहती|ठिकाना).{{0,60}}{_PERSON_CUE}",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "address_detail",
+        re.compile(
+            r"\b(?:house|flat|plot|door|villa)\s*(?:no\.?|number|#)\s*\w+|"
+            r"\b(?:apartments?|residency|enclave|society)\b|\bsector[\s-]*[\d\u0966-\u096f]+|"
+            r"हा[ऊउ]स\s*नंबर|फ्लैट|अपार्टमेंट|सेक्टर[\s-]*[\d\u0966-\u096f]+|मकान\s*नंबर|"
+            r"\b\d{1,4}\s+[A-Z][a-z]+\s+(?:Ct|Court|St|Street|Ave|Avenue|Dr|Drive|Ln|Lane|Rd|Road)\b|"
+            r"\bresidential address\b|\bhome address\b",
+            re.IGNORECASE,
+        ),
+    ),
+    ("identity_number", re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b|\b\d{4}\s\d{4}\s\d{4}\b")),
+    (
+        "phone_or_email",
+        re.compile(r"(?:\+91[\s-]?)?\b[6-9]\d{9}\b|\b[\w.+-]+@[\w-]+\.[\w.-]+\b"),
+    ),
+]
+
+
+@dataclass(frozen=True)
+class OutputCheck:
+    blocked: bool
+    category: str | None = None
+    matched: str | None = None
+
+
+def check_output(answer: str, question: str = "") -> OutputCheck:
+    """Does an answer give a person's home address, phone, e-mail or ID number?
+
+    A business context (registered office, registrar, lead managers, the compliance officer) in
+    the answer or its question lets address-like text through, except identity numbers.
+    """
+    text = answer.strip()
+    if not text:
+        return OutputCheck(False)
+    business = bool(_BUSINESS.search(normalize_question(text) + " " + normalize_question(question)))
+    for category, rx in _OUTPUT_RULES:
+        if business and category != "identity_number":
+            continue
+        if m := rx.search(text):
+            return OutputCheck(True, category, m.group().strip())
+    return OutputCheck(False)

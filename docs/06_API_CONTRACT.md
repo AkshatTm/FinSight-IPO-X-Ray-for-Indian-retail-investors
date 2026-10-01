@@ -87,7 +87,7 @@ Events (in order; `event:` name + JSON `data:`):
 | Event | Data | Notes |
 |---|---|---|
 | `stage` | `{"name": "guard|retrieving|generating|verifying|done", "status": "start|end", "ms": 12}` | Drives the stage line and Inspector timeline |
-| `guard` | `{"blocked": true, "reason": "advice_intent", "facts": [<xray field summaries>]}` | If `blocked`, stream ends after `final` |
+| `guard` | `{"blocked": true, "reason": "advice_intent" \| "privacy", "facts": [<xray field summaries>]}` | If `blocked`, stream ends after `final`. `privacy` = a private person's address, phone, e-mail or ID number was asked for (approved 1 Oct 2026, ADR-048) |
 | `retrieval` | `{"passages": [{"n": 1, "id": "...", "page_start": 67, "page_end": 67, "section": "the_offer", "snippet": "...", "bm25_rank": 2, "dense_rank": 1, "fused_rank": 1, "rerank_score": 0.91}], "dropped": [...]}` | |
 | `abstain` | `{"reason": "low_retrieval_score", "closest_passage": {...}}` | Stream ends after `final` |
 | `token` | `{"text": "The fresh"}` | Many |
