@@ -57,8 +57,9 @@ class RetrieveConfig(BaseModel):
     rerank: bool = False
     rerank_top_n: int = 20
     final_top_k: int = 5
-    # Placeholder until P3.1 tunes it on the dev questions only.
-    abstain_threshold: float = 0.3
+    # Abstain below this top score, per retrieval method (the score scales differ). Tuned on the
+    # 50 dev questions only (ADR-049); a method without an entry never abstains on score.
+    abstain_thresholds: dict[str, float] = Field(default_factory=dict)
 
 
 class VoiceConfig(BaseModel):

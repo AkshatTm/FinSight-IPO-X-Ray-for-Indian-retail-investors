@@ -56,6 +56,7 @@ def _retriever(profile: str | None) -> Retriever:
         embedder=embedder,
         reranker=reranker,
         pool=settings.retrieve.rerank_top_n,
+        thresholds=settings.retrieve.abstain_thresholds,
         top_k=settings.retrieve.final_top_k,
     )
 

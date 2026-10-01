@@ -100,3 +100,11 @@ def test_repo_config_loads_every_profile(profile: str, monkeypatch: pytest.Monke
     s = load_settings(profile)
     assert s.profile == profile
     assert s.llm.think is False
+
+
+def test_full_profile_carries_the_dev_tuned_abstain_threshold() -> None:
+    from finsight.core.config import load_settings
+
+    thresholds = load_settings("full").retrieve.abstain_thresholds
+    assert set(thresholds) == {"hybrid+rerank"}
+    assert load_settings("dev_light").retrieve.abstain_thresholds == {}

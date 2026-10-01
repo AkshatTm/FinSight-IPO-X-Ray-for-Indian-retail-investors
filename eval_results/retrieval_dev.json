@@ -1,0 +1,418 @@
+{
+  "methods": {
+    "bm25": {
+      "dev": {
+        "all": {
+          "n": 41,
+          "recall@1": {
+            "mean": 0.3171,
+            "low": 0.0769,
+            "high": 0.4286
+          },
+          "recall@5": {
+            "mean": 0.6098,
+            "low": 0.4615,
+            "high": 0.7143
+          },
+          "mrr": {
+            "mean": 0.4081,
+            "low": 0.2244,
+            "high": 0.494
+          }
+        },
+        "en": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.2941,
+            "low": 0.0,
+            "high": 0.5
+          },
+          "recall@5": {
+            "mean": 0.5294,
+            "low": 0.3333,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.3647,
+            "low": 0.125,
+            "high": 0.5
+          }
+        },
+        "hi": {
+          "n": 15,
+          "recall@1": {
+            "mean": 0.4667,
+            "low": 0.2,
+            "high": 0.6667
+          },
+          "recall@5": {
+            "mean": 0.6667,
+            "low": 0.6,
+            "high": 0.7143
+          },
+          "mrr": {
+            "mean": 0.5356,
+            "low": 0.3667,
+            "high": 0.6667
+          }
+        },
+        "hinglish": {
+          "n": 9,
+          "recall@1": {
+            "mean": 0.1111,
+            "low": 0.0,
+            "high": 0.2
+          },
+          "recall@5": {
+            "mean": 0.6667,
+            "low": 0.5,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.2778,
+            "low": 0.125,
+            "high": 0.3833
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": -1.0,
+        "dev_in_sample_unanswerable_abstained": "0/9",
+        "dev_in_sample_answerable_wrongly_abstained": "0/41",
+        "dev_leave_one_ipo_out": {
+          "unanswerable_abstained": "0/9",
+          "answerable_wrongly_abstained": "10/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 0/3, answerable wrongly abstained 10/14",
+            "hexaware-technologies-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "urban-company-2025": "unanswerable 0/3, answerable wrongly abstained 0/13"
+          }
+        },
+        "threshold_max_10pct_false_abstain": 0.0,
+        "max10_in_sample_unanswerable_abstained": "0/9",
+        "max10_in_sample_answerable_wrongly_abstained": "0/41",
+        "max10_leave_one_ipo_out": {
+          "unanswerable_abstained": "0/9",
+          "answerable_wrongly_abstained": "0/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "hexaware-technologies-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "urban-company-2025": "unanswerable 0/3, answerable wrongly abstained 0/13"
+          }
+        }
+      }
+    },
+    "dense": {
+      "dev": {
+        "all": {
+          "n": 41,
+          "recall@1": {
+            "mean": 0.2195,
+            "low": 0.1538,
+            "high": 0.2857
+          },
+          "recall@5": {
+            "mean": 0.439,
+            "low": 0.3571,
+            "high": 0.5714
+          },
+          "mrr": {
+            "mean": 0.3191,
+            "low": 0.25,
+            "high": 0.4167
+          }
+        },
+        "en": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.2353,
+            "low": 0.1667,
+            "high": 0.4
+          },
+          "recall@5": {
+            "mean": 0.4118,
+            "low": 0.3333,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.3088,
+            "low": 0.2083,
+            "high": 0.5
+          }
+        },
+        "hi": {
+          "n": 15,
+          "recall@1": {
+            "mean": 0.2,
+            "low": 0.1429,
+            "high": 0.3333
+          },
+          "recall@5": {
+            "mean": 0.4667,
+            "low": 0.2857,
+            "high": 1.0
+          },
+          "mrr": {
+            "mean": 0.3333,
+            "low": 0.2143,
+            "high": 0.6667
+          }
+        },
+        "hinglish": {
+          "n": 9,
+          "recall@1": {
+            "mean": 0.2222,
+            "low": 0.0,
+            "high": 0.4
+          },
+          "recall@5": {
+            "mean": 0.4444,
+            "low": 0.0,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.3148,
+            "low": 0.0,
+            "high": 0.4667
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": 0.5825731754302979,
+        "dev_in_sample_unanswerable_abstained": "7/9",
+        "dev_in_sample_answerable_wrongly_abstained": "18/41",
+        "dev_leave_one_ipo_out": {
+          "unanswerable_abstained": "5/9",
+          "answerable_wrongly_abstained": "21/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 2/3, answerable wrongly abstained 7/14",
+            "hexaware-technologies-2025": "unanswerable 1/3, answerable wrongly abstained 7/14",
+            "urban-company-2025": "unanswerable 2/3, answerable wrongly abstained 7/13"
+          }
+        },
+        "threshold_max_10pct_false_abstain": 0.4678068161010742,
+        "max10_in_sample_unanswerable_abstained": "0/9",
+        "max10_in_sample_answerable_wrongly_abstained": "4/41",
+        "max10_leave_one_ipo_out": {
+          "unanswerable_abstained": "0/9",
+          "answerable_wrongly_abstained": "4/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 0/3, answerable wrongly abstained 1/14",
+            "hexaware-technologies-2025": "unanswerable 0/3, answerable wrongly abstained 3/14",
+            "urban-company-2025": "unanswerable 0/3, answerable wrongly abstained 0/13"
+          }
+        }
+      }
+    },
+    "hybrid": {
+      "dev": {
+        "all": {
+          "n": 41,
+          "recall@1": {
+            "mean": 0.3171,
+            "low": 0.0769,
+            "high": 0.4286
+          },
+          "recall@5": {
+            "mean": 0.561,
+            "low": 0.3846,
+            "high": 0.6429
+          },
+          "mrr": {
+            "mean": 0.3992,
+            "low": 0.1987,
+            "high": 0.5
+          }
+        },
+        "en": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.2941,
+            "low": 0.0,
+            "high": 0.5
+          },
+          "recall@5": {
+            "mean": 0.4118,
+            "low": 0.1667,
+            "high": 0.6
+          },
+          "mrr": {
+            "mean": 0.3431,
+            "low": 0.0833,
+            "high": 0.5
+          }
+        },
+        "hi": {
+          "n": 15,
+          "recall@1": {
+            "mean": 0.4667,
+            "low": 0.2,
+            "high": 0.6667
+          },
+          "recall@5": {
+            "mean": 0.6667,
+            "low": 0.6,
+            "high": 0.7143
+          },
+          "mrr": {
+            "mean": 0.5389,
+            "low": 0.3667,
+            "high": 0.6667
+          }
+        },
+        "hinglish": {
+          "n": 9,
+          "recall@1": {
+            "mean": 0.1111,
+            "low": 0.0,
+            "high": 0.2
+          },
+          "recall@5": {
+            "mean": 0.6667,
+            "low": 0.5,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.2722,
+            "low": 0.1,
+            "high": 0.4
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": -0.9875,
+        "dev_in_sample_unanswerable_abstained": "0/9",
+        "dev_in_sample_answerable_wrongly_abstained": "0/41",
+        "dev_leave_one_ipo_out": {
+          "unanswerable_abstained": "0/9",
+          "answerable_wrongly_abstained": "0/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "hexaware-technologies-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "urban-company-2025": "unanswerable 0/3, answerable wrongly abstained 0/13"
+          }
+        },
+        "threshold_max_10pct_false_abstain": 0.0125,
+        "max10_in_sample_unanswerable_abstained": "0/9",
+        "max10_in_sample_answerable_wrongly_abstained": "0/41",
+        "max10_leave_one_ipo_out": {
+          "unanswerable_abstained": "0/9",
+          "answerable_wrongly_abstained": "0/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "hexaware-technologies-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "urban-company-2025": "unanswerable 0/3, answerable wrongly abstained 0/13"
+          }
+        }
+      }
+    },
+    "hybrid+rerank": {
+      "dev": {
+        "all": {
+          "n": 41,
+          "recall@1": {
+            "mean": 0.3171,
+            "low": 0.2857,
+            "high": 0.3571
+          },
+          "recall@5": {
+            "mean": 0.561,
+            "low": 0.4615,
+            "high": 0.6429
+          },
+          "mrr": {
+            "mean": 0.3992,
+            "low": 0.3615,
+            "high": 0.4583
+          }
+        },
+        "en": {
+          "n": 17,
+          "recall@1": {
+            "mean": 0.1765,
+            "low": 0.1667,
+            "high": 0.2
+          },
+          "recall@5": {
+            "mean": 0.5294,
+            "low": 0.3333,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.2961,
+            "low": 0.2,
+            "high": 0.4
+          }
+        },
+        "hi": {
+          "n": 15,
+          "recall@1": {
+            "mean": 0.4,
+            "low": 0.3333,
+            "high": 0.4286
+          },
+          "recall@5": {
+            "mean": 0.6,
+            "low": 0.5714,
+            "high": 0.6667
+          },
+          "mrr": {
+            "mean": 0.4722,
+            "low": 0.4444,
+            "high": 0.5
+          }
+        },
+        "hinglish": {
+          "n": 9,
+          "recall@1": {
+            "mean": 0.4444,
+            "low": 0.0,
+            "high": 0.6
+          },
+          "recall@5": {
+            "mean": 0.5556,
+            "low": 0.0,
+            "high": 0.8
+          },
+          "mrr": {
+            "mean": 0.4722,
+            "low": 0.0,
+            "high": 0.65
+          }
+        }
+      },
+      "abstain": {
+        "threshold_from_dev": 0.45947265625,
+        "dev_in_sample_unanswerable_abstained": "8/9",
+        "dev_in_sample_answerable_wrongly_abstained": "15/41",
+        "dev_leave_one_ipo_out": {
+          "unanswerable_abstained": "7/9",
+          "answerable_wrongly_abstained": "16/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 3/3, answerable wrongly abstained 6/14",
+            "hexaware-technologies-2025": "unanswerable 2/3, answerable wrongly abstained 7/14",
+            "urban-company-2025": "unanswerable 2/3, answerable wrongly abstained 3/13"
+          }
+        },
+        "threshold_max_10pct_false_abstain": -4.40234375,
+        "max10_in_sample_unanswerable_abstained": "2/9",
+        "max10_in_sample_answerable_wrongly_abstained": "4/41",
+        "max10_leave_one_ipo_out": {
+          "unanswerable_abstained": "3/9",
+          "answerable_wrongly_abstained": "7/41",
+          "per_held_out_ipo": {
+            "ather-energy-2025": "unanswerable 0/3, answerable wrongly abstained 0/14",
+            "hexaware-technologies-2025": "unanswerable 2/3, answerable wrongly abstained 6/14",
+            "urban-company-2025": "unanswerable 1/3, answerable wrongly abstained 1/13"
+          }
+        }
+      }
+    }
+  },
+  "thresholds": {
+    "bm25": -1.0,
+    "dense": 0.5825731754302979,
+    "hybrid": -0.9875,
+    "hybrid+rerank": 0.45947265625
+  }
+}
