@@ -2,7 +2,7 @@
 
 from finsight.verify.claims import AnswerClaim, AnswerNumber, split_claims
 from finsight.verify.consistency import CHECK_TOTAL, ConsistencyReport, check_consistency
-from finsight.verify.metrics import find_metrics, metric_at
+from finsight.verify.metrics import MetricIndex, find_metrics, metric_at
 from finsight.verify.numeric_check import (
     EvidenceAmount,
     NumericCheck,
@@ -26,6 +26,7 @@ __all__ = [
     "AnswerVerdict",
     "ConsistencyReport",
     "EvidenceAmount",
+    "MetricIndex",
     "NumberVerdict",
     "NumericCheck",
     "answer_score",
