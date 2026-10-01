@@ -19,7 +19,10 @@ Updated after every merge. Plain language.
 
 - L Landing (this PR): all sections of spec 5 in EN and HI; hero lens over a stand-in cover page (CSS lens, solid box when reduced motion/transparency), tag after 400 ms, cursor-follow on mouse only; chatbot example card; three steps with marks; interactive mini demo on Ather (own highlight state, shared PageViewer); Hindi question with "Play the example" (hi_q02.m4a); limits; stats hidden when missing; final CTA. Glossary terms linked on first mention.
 
+- H How it works, About, 404, 500 (this PR): two-row flow diagram (6 + 5 steps) with FAQ, About with limits and licences, not-found and error pages, all EN+HI.
+
 ## Look at first
+- docs/screenshots/h/: how-desktop-light-en.png, about-mobile-dark-hi.png, 404-desktop-light-en.png
 - docs/screenshots/l/: desktop-light-en-full.png, desktop-dark-hi-full.png, mobile-dark-hi-full.png, desktop-hero.png
 - docs/screenshots/f5b/: inspector-1366.png, voice-recording-1366.png, voice-done-1366.png, glossary-1366.png, tour-1366.png, composer-mobile-hi-dark.png
 - docs/screenshots/f1/: desktop-light-en.png, desktop-dark-hi.png, mobile-menu.png
@@ -33,7 +36,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: H How it works, About, 404/500.
+- Next: P3.6 chat orchestrator (backend), then P4.1 API.
 
 ## RAM peak
 - not yet measured
