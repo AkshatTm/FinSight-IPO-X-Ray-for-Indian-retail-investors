@@ -214,6 +214,12 @@ Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 
 | **F7** | Thu 22 Oct | `feat/f7-lab-landing` | Model Lab (ladder, heatmap, verifier, weak-label, frontier), Landing, How-it-works | Pages read real `eval_results` |
 | **F8** | Fri 23 Oct | `feat/f8-demo-mode` | DemoController + hotkeys, Playwright `e2e/demo-flow.spec.ts`, polish list from Akshat's phone/laptop test | Playwright green on real API. **Gate G4; tag `v0.4.0`** |
 
+Overnight run (3 Oct) follows `12_FRONTEND_SPEC.md` §18, whose step names differ from the table above (spec F2 = Library, F3 = Workspace + Document, F4 = Facts, F5 = Ask, F5b = voice/inspector/glossary/tour, L = Landing, H = How it works/About/404). Status by spec step:
+- [x] F1 scaffold (#70)
+- [ ] F2 Library · [ ] F3 Workspace + Document · [ ] F4 Facts · [ ] F5 Ask · [ ] F5b voice/inspector/glossary/tour · [ ] L Landing · [ ] H How it works + About + 404/500
+- [ ] P3.6 chat orchestrator · [ ] P4.1 API · [ ] G3 (docs/gates/G3.md)
+- [ ] F6 real API · [ ] F7 Model Lab · [ ] F8 demo mode + E2E · [ ] G4 (docs/gates/G4.md) · [ ] P polish
+
 [AKSHAT] after each F sub-phase: review in the browser for 10 minutes and file issues for anything off.
 
 ---
