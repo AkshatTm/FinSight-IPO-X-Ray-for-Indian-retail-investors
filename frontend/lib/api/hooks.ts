@@ -37,3 +37,12 @@ export const useTrace = (traceId: string | undefined, enabled: boolean) =>
     enabled: enabled && !!traceId,
     staleTime: Infinity,
   });
+
+/** Model Lab payloads are free-form JSON (spec 8); callers read what they need defensively. */
+export const useLab = (name: "ladder" | "fields" | "verifier" | "weaklabels" | "frontier") =>
+  useQuery({
+    queryKey: ["lab", name],
+    queryFn: () => apiGet<Record<string, unknown>>(`/api/lab/${name}`),
+    retry: false,
+    staleTime: Infinity,
+  });
