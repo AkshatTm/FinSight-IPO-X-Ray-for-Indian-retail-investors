@@ -55,7 +55,13 @@ def test_request_disables_thinking_and_sets_options() -> None:
     assert body["stream"] is True
     assert body["model"] == "qwen3.5:2b"
     assert body["messages"] == [{"role": "user", "content": "hello"}]
-    assert body["options"] == {"num_ctx": 3072, "num_predict": 77, "temperature": 0.1}
+    assert body["options"] == {
+        "num_ctx": 3072,
+        "num_predict": 77,
+        "temperature": 0.1,
+        "repeat_penalty": 1.15,
+        "stop": ["DATA>>>", "<<<DATA"],
+    }
 
 
 def test_reasoning_tokens_fail_loudly() -> None:

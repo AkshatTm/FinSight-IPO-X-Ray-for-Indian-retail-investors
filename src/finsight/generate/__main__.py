@@ -8,8 +8,10 @@
 
 Retrieve -> prompt -> stream -> verify: every number in the answer gets ✅ / ⚠️ / ❌ against the
 retrieved passages (P3.3). ``--answer`` skips the language model and checks the text you give,
-which is how the scale trick is shown. The advice guard joins in P3.4-P3.6 (``finsight.chat``).
-Retrieval follows the profile in
+which is how the scale trick is shown. The guard runs first (advice, forecasts, privacy): a refused
+question prints the refusal and the key X-Ray facts, with no retrieval and no model call.
+The streamed answer is cut if it loops, and an empty, citation-only or pasted-passage answer is
+replaced by "not found" (``generate.postprocess``). Retrieval follows the profile in
 ``configs/config.yaml``: dense and rerank are used only when the profile turns them on and the
 ``ml`` group is installed (``uv run --group ml``); otherwise BM25 alone answers.
 """
@@ -19,10 +21,13 @@ from __future__ import annotations
 import argparse
 import sys
 import time
+from pathlib import Path
 
 from finsight.core.config import get_settings, load_settings
 from finsight.generate.llm_backend import LLMUnavailable, ReasoningLeak, get_llm
+from finsight.generate.postprocess import LoopDetector, clean_answer
 from finsight.generate.prompts import build_prompt, cited_indices, is_not_found
+from finsight.guard import check_question, facts_payload, refusal_text
 from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Embedder, Reranker, Retriever
 from finsight.verify import format_verdicts, verify_answer
 
@@ -57,6 +62,11 @@ def ask(
 ) -> int:
     settings = load_settings(profile) if profile else get_settings()
     config = settings.llm.model_copy(update={"model": model}) if model else settings.llm
+    guard = check_question(question)
+    if guard.blocked:
+        print(refusal_text(guard.reason or "advice_intent", language))  # type: ignore[arg-type]
+        _print_facts(settings.paths.processed_dir, ipo_id, language)
+        return 0
     started = time.perf_counter()
     result = _retriever(profile).search(question, ipo_id)
     retrieved = time.perf_counter()
@@ -77,11 +87,14 @@ def ask(
     llm = get_llm(config)
     answer: list[str] = []
     first: float | None = None
+    loop = LoopDetector()
     try:
         for piece in llm.stream(prompt.text, max_tokens=300, temperature=0.2, language=language):  # type: ignore[arg-type]
             first = first or time.perf_counter()
             answer.append(piece)
             print(piece, end="", flush=True)
+            if loop.feed(piece):
+                break
     except LLMUnavailable as exc:
         print(f"\nThe language model is unavailable: {exc}", file=sys.stderr)
         return 2
@@ -89,8 +102,11 @@ def ask(
         print(f"\n{exc}", file=sys.stderr)
         return 3
     done = time.perf_counter()
-    text = "".join(answer)
+    cleaned = clean_answer("".join(answer), prompt.passages, language)  # type: ignore[arg-type]
+    text = cleaned.text
     print()
+    if cleaned.reason or cleaned.trimmed:
+        print(f"\n[{cleaned.reason or 'loop trimmed'}] {text}")
     if not is_not_found(text, language):  # type: ignore[arg-type]
         print("\nSources:")
         for n in cited_indices(text, len(prompt.passages)):
@@ -107,9 +123,23 @@ def ask(
     return 0
 
 
+def _print_facts(processed_dir: Path, ipo_id: str, language: str) -> None:
+    """The key X-Ray facts under a refusal; silent when no X-Ray has been built yet."""
+    from finsight.extract import load_fields
+    from finsight.pipeline.xray_stage import load_xray
+
+    try:
+        xray = load_xray(processed_dir, ipo_id)
+    except FileNotFoundError:
+        return
+    print()
+    for fact in facts_payload(xray, load_fields(), language):  # type: ignore[arg-type]
+        print(f"  {fact['label']}: {fact['value']}  ({fact['doc'].upper()} p.{fact['page']})")
+
+
 def _budget(num_ctx: int) -> int:
     """Characters of passages that fit: context minus rules and answer, ~3 chars per token."""
-    return max(1500, (num_ctx - 650) * 3)
+    return max(1500, (num_ctx - 700) * 3)
 
 
 def main(argv: list[str] | None = None) -> int:
