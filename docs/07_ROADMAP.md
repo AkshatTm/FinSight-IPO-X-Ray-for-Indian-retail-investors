@@ -176,7 +176,7 @@ Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 
 ### P3.3 ★ Verifier + seeded errors `feat/p3.3-verifier` [CC] — Sat 17 Oct
 - [x] `verify/claims.py`, `metrics.py`, `numeric_check.py` (all reason codes), `verdict.py`; tests per reason code
 - [x] `evaluate/seeded_errors.py` → E5
-**Done when:** scale-mismatch recall on seeded set ≥ 95 % (or the miss is explained in an ADR); CLI shows verdicts. → E5: detection 100/100, false alarms 0/100, scale-mismatch 40/40 (first run with rules frozen on dev: 35/40, explained in ADR-044); `generate ask` prints verdicts and takes `--answer`; #44.
+**Done when:** scale-mismatch recall on seeded set ≥ 95 % (or the miss is explained in an ADR); CLI shows verdicts. → E5 (unit-level benchmark): detection 100/100, false alarms 0/100, scale-mismatch **35/40 held-out** (rules frozen on dev; below the 95 % target, explained in ADR-044), 40/40 after one rule fix; `generate ask` prints verdicts and takes `--answer`; #44.
 
 ### P3.4 Advice guard `feat/p3.4-guard` [CC] — Sun 18 Oct (morning)
 - [ ] `guard/advice.py` keyword/regex EN/HI/Hinglish + facts payload; scored on Akshat's advice set (≥ 50 advice + ≥ 50 factual, written by him and friends) + tests → E8 (keyword row)
