@@ -172,6 +172,15 @@ def address_column_words(words: list[Word]) -> set[int]:
         dins = [w.bbox[3] for w in labels + numbers]
         if not labels and numbers:  # DIN has a column of its own: the address column follows it
             left = min(left, max(w.bbox[2] for w in numbers) + _COLUMN_TOL)
+        elif labels:  # "DIN: 0123" in the left cell: the cells start where the line goes on
+            for n in numbers:
+                right = [
+                    v.bbox[0]
+                    for v in words
+                    if abs(_yc(v) - _yc(n)) < _LINE_TOL and v.bbox[0] > n.bbox[2] + _MIN_GAP
+                ]
+                if right:
+                    left = min(left, min(right) - _COLUMN_TOL)
         if not dins:
             continue
         last_din = max(dins)
