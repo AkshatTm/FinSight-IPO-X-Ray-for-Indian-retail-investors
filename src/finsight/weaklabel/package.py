@@ -69,7 +69,7 @@ def package_dataset(
     meta = {
         "title": DATASET_NAME,
         "id": f"{username}/{DATASET_NAME}",
-        "licenses": [{"name": "CC0-1.0"}],
+        "licenses": [{"name": "CC-BY-NC-SA-4.0"}],
     }
     (out / "dataset-metadata.json").write_text(json.dumps(meta, indent=1) + "\n", encoding="utf-8")
     (out / "README.md").write_text(README, encoding="utf-8", newline="\n")
