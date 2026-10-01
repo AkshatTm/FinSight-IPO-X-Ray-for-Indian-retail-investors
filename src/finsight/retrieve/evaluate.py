@@ -34,7 +34,7 @@ KS = (1, 5)
 class Question(BaseModel):
     ipo_id: str
     question: str
-    language: Literal["en", "hi"]
+    language: Literal["en", "hi", "hinglish"]
     answer_gold: str = ""
     evidence_page: int | None = None  # PDF page; empty for unanswerable questions
     answerable: bool
@@ -119,7 +119,7 @@ def score_method(
 ) -> dict[str, object]:
     """Recall@k and MRR over the answerable questions, by IPO bootstrap; also by language."""
     out: dict[str, object] = {}
-    for label, keep in (("all", None), ("en", "en"), ("hi", "hi")):
+    for label, keep in (("all", None), ("en", "en"), ("hi", "hi"), ("hinglish", "hinglish")):
         rows = [(q, h) for q, h in ranked if q.answerable and (keep is None or q.language == keep)]
         block: dict[str, object] = {"n": len(rows)}
         for k in ks:

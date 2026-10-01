@@ -28,9 +28,11 @@ from typing import Any
 from finsight.core.config import LLMConfig, load_settings
 from finsight.generate import (
     LLMUnavailable,
+    LoopDetector,
     ReasoningLeak,
     build_prompt,
     cited_indices,
+    clean_answer,
     get_llm,
     is_not_found,
 )
@@ -99,23 +101,29 @@ def run_model(model: str, items: list[dict[str, Any]], num_ctx: int) -> list[dic
     rows: list[dict[str, Any]] = []
     for item in items:
         prompt = build_prompt(
-            item["question"], item["passages"], item["lang"], budget_chars=(num_ctx - 650) * 3
+            item["question"], item["passages"], item["lang"], budget_chars=(num_ctx - 700) * 3
         )
         started = time.perf_counter()
         first: float | None = None
         pieces: list[str] = []
         error = None
+        loop = LoopDetector()
         try:
             for piece in llm.stream(prompt.text, max_tokens=300, temperature=0.2,
                                     language=item["lang"]):  # fmt: skip
                 first = first or time.perf_counter()
                 pieces.append(piece)
+                if loop.feed(piece):
+                    break
         except ReasoningLeak as exc:
             error = f"reasoning_leak: {exc}"
-        answer = "".join(pieces)
+        raw = "".join(pieces)
+        cleaned = clean_answer(raw, prompt.passages, item["lang"])
+        answer = cleaned.text
         ended = time.perf_counter()
         rows.append({**{k: v for k, v in item.items() if k != "passages"},
-                     "model": model, "answer": answer, "error": error,
+                     "model": model, "answer": answer, "raw_answer": raw,
+                     "rejected": cleaned.reason, "loop_trimmed": cleaned.trimmed, "error": error,
                      "first_token_s": round((first or ended) - started, 2),
                      "total_s": round(ended - started, 2),
                      "n_passages": len(prompt.passages),
@@ -124,6 +132,17 @@ def run_model(model: str, items: list[dict[str, Any]], num_ctx: int) -> list[dic
                      "copied": bool(item["needle"]) and item["needle"] in compact(answer),
                      "devanagari": round(devanagari_share(answer), 2)})  # fmt: skip
     return rows
+
+
+def auto_correct(row: dict[str, Any]) -> str:
+    """Pre-filled from the gold value, never typed by hand: Akshat confirms or overrides."""
+    if not row["answerable"]:
+        return "yes" if row["not_found"] else "no (answered an unanswerable question)"
+    if not row["grounded"]:
+        return "n/a (retrieval missed the gold passage)"
+    if row["copied"]:
+        return "yes (gold value copied exactly)"
+    return "no (not found)" if row["not_found"] else "no (gold value missing or altered)"
 
 
 def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -146,6 +165,8 @@ def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "median_first_token_s": statistics.median(r["first_token_s"] for r in mine),
             "median_total_s": statistics.median(r["total_s"] for r in mine),
             "reasoning_leaks": sum(bool(r["error"]) for r in mine),
+            "rejected_outputs": sum(bool(r["rejected"]) for r in mine),
+            "loop_trimmed": sum(bool(r["loop_trimmed"]) for r in mine),
         }  # fmt: skip
     return out
 
@@ -197,10 +218,13 @@ def main() -> None:
     sheet = settings.paths.gold_dir / "hindi_fluency_sheet.csv"
     with sheet.open("w", encoding="utf-8-sig", newline="") as fh:
         writer = csv.writer(fh)
-        writer.writerow(["model", "ipo", "question", "answer", "fluency_1_to_5", "comment"])
+        writer.writerow(
+            ["model", "ipo", "question", "answer", "auto_correct", "fluency_1_to_5", "comment"]
+        )
         for r in all_rows:
             if r["lang"] == "hi":
-                writer.writerow([r["model"], r["ipo"], r["question"], r["answer"], "", ""])
+                writer.writerow([r["model"], r["ipo"], r["question"], r["answer"],
+                                 auto_correct(r), "", ""])  # fmt: skip
     print(f"wrote {out} and {sheet}")
 
 

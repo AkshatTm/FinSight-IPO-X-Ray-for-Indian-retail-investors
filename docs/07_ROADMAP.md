@@ -173,6 +173,8 @@ Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 
 - [x] Bake-off script; [AKSHAT] judge Hindi fluency (`data/gold/hindi_fluency_sheet.csv`, 1-5) → finalises ADR-020
 **Done when:** CLI `python -m finsight.generate ask --ipo <id> "question"` prints a cited answer (`finsight.chat ask` arrives in P3.6).
 
+**P3.2b chat-quality fixes (#58, ADR-047):** [x] cover-page injection + Prospectus-first; [x] loop stop, citation-only and dump rejection, repeat penalty; [x] prompt rules; [x] guard in `generate ask`; [x] bake-off re-run (3 models); [ ] ADR-020 update after Akshat's Hindi ratings.
+
 ### P3.3 ★ Verifier + seeded errors `feat/p3.3-verifier` [CC] — Sat 17 Oct
 - [x] `verify/claims.py`, `metrics.py`, `numeric_check.py` (all reason codes), `verdict.py`; tests per reason code
 - [x] `evaluate/seeded_errors.py` → E5
