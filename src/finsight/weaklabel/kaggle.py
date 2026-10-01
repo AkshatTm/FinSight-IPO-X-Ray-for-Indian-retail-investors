@@ -218,7 +218,7 @@ def collect(
         report = {"run": run, "per_epoch": _per_epoch(metrics, dev_rows, predictions)}
         if not problems:
             eval_dir.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(metrics_file, eval_dir / "extractor_baseline.json")  # never edited
+            _keep(metrics_file, eval_dir / "extractor_baseline.json")
             _write(eval_dir / "extractor_dev-baseline.json", report)
         return {**report, "problems": problems, "warnings": []}
 
@@ -258,9 +258,15 @@ def collect(
     target.parent.mkdir(parents=True, exist_ok=True)
     eval_dir.mkdir(parents=True, exist_ok=True)
     shutil.move(str(final), str(target))  # one copy on disk: the best epoch's weights
-    shutil.copyfile(metrics_file, eval_dir / f"extractor_metrics-{seed}.json")  # never edited
+    _keep(metrics_file, eval_dir / f"extractor_metrics-{seed}.json")
     _write(eval_dir / f"extractor_dev-{seed}.json", report)
     return report
+
+
+def _keep(source: Path, target: Path) -> None:
+    """The notebook's metrics file as written: values never edited, only a final newline added."""
+    text = source.read_text(encoding="utf-8")
+    target.write_text(text.rstrip("\n") + "\n", encoding="utf-8", newline="\n")
 
 
 def _write(path: Path, data: dict[str, Any]) -> None:

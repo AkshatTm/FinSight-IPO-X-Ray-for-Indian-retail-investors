@@ -142,8 +142,11 @@ Fix parser problems from Akshat's eye-check; update `10` Part C; run Prompt 5 fo
 - **Akshat:** audit 50 labels (~1 h) → E1.
 - **Commits:** (1) `test(evaluate): EM, F1 and NVM cases` · (2) `feat(evaluate): metrics with bootstrap intervals` · (3) `feat(notebooks): fine-tune notebook with resume` · (4) `feat(weaklabel): Kaggle dataset packager` · (5) `docs: Kaggle run instructions`.
 
-### P2.5 Training runs — [AKSHAT]
-3 seeds on Kaggle; weights to `models/extractor/`; metrics JSON committed; ablations E4 if quota allows.
+### P2.5 Training runs — [CC] on Kaggle (ADR-042, ADR-043; was [AKSHAT])
+- **Smoke = runs end to end + outputs produced** (`metrics.json` and weights on the 200-example slice). It is not a quality check: loss trend and quality are judged on full runs only.
+- **Quality gate for full runs:** loss logged as the average of the last 25 steps; dev split scored after every epoch (EM, token F1 on Kaggle; NVM on the laptop from the saved dev predictions); `final/` = best epoch by dev F1. Zero-shot `deberta-v3-base-squad2` on the same dev split is the baseline (`eval_results/extractor_baseline.json`).
+- **Order:** seed 13 first; it must beat the baseline on dev EM and F1 (a smoothed loss that rises over the last epoch is flagged). Only then seeds 42 and 2026. A failed seed 13 stops the runs.
+- **Outputs:** weights to `models/extractor/seed-<n>/` (never committed, best checkpoint only); `eval_results/extractor_metrics-<n>.json` (the notebook's file, unedited) and `eval_results/extractor_dev-<n>.json` (per-epoch EM/F1/NVM and the gate verdict) committed; ablations E4 if quota allows.
 
 ### P2.6 Fine-tuned extractor + ladder — [CC] · S · `feat/p2.6-ladder`
 - **Files:** `extract/qa_finetuned.py`, `evaluate/{ladder,run_gold}.py`, `eval_results/ladder_table.{csv,json,tex}`, ADR-018 (extractor per field, chosen on **dev**, reported on **test**), `tests/evaluate/*`.
