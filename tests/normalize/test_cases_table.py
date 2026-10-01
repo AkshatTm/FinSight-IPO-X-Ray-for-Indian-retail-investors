@@ -158,6 +158,10 @@ HINDI = [
     ("₹ 12 हज़ार", M("12000", "thousand")),  # हज़ार precomposed
     ("₹ 12 हजार", M("12000", "thousand")),  # हजार
     ("₹ 2 अरब", M("2000000000", "billion")),
+    # Hindi answers spell the English scale words in Devanagari (P3.3: the verifier reads them)
+    ("₹ 26,260 मिलियन", M("26260000000", "million")),
+    ("26,260 मिलियन रुपये", M("26260000000", "million")),
+    ("₹ 2 बिलियन", M("2000000000", "billion")),
     ("₹ 1,250.5 करोड़", M("12505000000", "crore", 1)),
     ("12.5 प्रतिशत", P("12.5")),
     ("₹ 440 से ₹ 463", R("440", "463")),

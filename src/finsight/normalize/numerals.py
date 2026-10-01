@@ -61,6 +61,8 @@ _SCALE_WORDS = [
     (_HI_LAKH, "lakh"),
     (_HI_CRORE, "crore"),
     (_HI_ARAB, "billion"),
+    ("मिलियन", "million"),  # English scale words as Hindi answers spell them
+    ("बिलियन", "billion"),
 ]
 _SCALE_RES = [(re.compile(rf"^(?:{p})$", re.IGNORECASE), name) for p, name in _SCALE_WORDS]
 _SCALE = "|".join(p for p, _ in _SCALE_WORDS)
