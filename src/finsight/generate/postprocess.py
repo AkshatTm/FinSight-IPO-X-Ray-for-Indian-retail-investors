@@ -9,6 +9,15 @@ The 2B-4B models seen in the bake-off fail in three recognisable ways, and each 
   asks for a short answer in the model's own words, and a dump is a retrieval result, not an
   answer (and in Hindi it is usually English text under a Hindi question).
 
+Three more rules came from the rated Hindi sheet (ADR-020):
+
+* **Devanagari digits** ("४,७२०") are turned into 0-9: the same number, in the script the
+  verifier and the document use. The answer is flagged ``digits_converted``; nothing else changes.
+* **A converted unit** (the passage says "₹ 26,260 million", the answer "₹ 2,626 crore") is
+  rejected: the unit must be copied as written, even when the conversion is arithmetically right.
+* **Investor opinions and cautions** ("investors should be careful", "सावधान रहें") are rejected:
+  FinSight states what the document says and nothing else.
+
 ``clean_answer`` returns the trimmed text, or the "not found" sentence with a reason when the
 output is not usable. It never edits numbers or words inside a usable answer.
 """
@@ -19,9 +28,22 @@ import re
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-from finsight.core.schemas import Passage
+from finsight.core.schemas import Money, Passage
 from finsight.generate.prompts import NOT_FOUND, Language
+from finsight.normalize import parse_amounts
+from finsight.verify import evidence_amounts, same_value
 
+_DEVANAGARI_DIGITS = str.maketrans({chr(0x0966 + d): str(d) for d in range(10)})
+_OPINION = re.compile(
+    r"\b(?:investors?|readers?|you|users?)\s+(?:should|must|need to|ought to|may want to|are advised|"
+    r"are encouraged|are cautioned)\b|"
+    r"\b(?:recommend(?:ed|ation)?|advisable|i advise|we advise|be careful|be cautious|exercise caution|"
+    r"worth (?:investing|considering|applying)|good (?:investment|ipo|opportunity)|bad (?:investment|ipo)|"
+    r"attractive|overvalued|undervalued|risky|consult (?:a |an |your )?(?:financial|investment|advis[eo]r))\b|"
+    r"सावधान|सतर्क|सलाह|अनुशंसा|सिफ़ारिश|सिफारिश|जोखिम भरा|अच्छा निवेश|बेहतर विकल्प|"
+    r"ध्यान (?:रखें|रखना|दें)|निवेशकों को [^।]{0,60}चाहिए",
+    re.IGNORECASE,
+)
 _CITE = re.compile(r"\[\d+\]")
 _WORD = re.compile(r"\w+", re.UNICODE)
 _SENTENCE = re.compile(r"(?<=[.!?।])\s+")
@@ -36,8 +58,40 @@ MAX_REPEATS = 3  # a unit may appear this many times in a row; the next one is a
 @dataclass(frozen=True)
 class Cleaned:
     text: str
-    reason: str | None  # None when the answer is usable; else "empty", "citation_only", "dump"
+    # None when the answer is usable; else "empty", "citation_only", "dump", "unit_converted",
+    # "opinion"
+    reason: str | None
     trimmed: bool = False
+    digits_converted: bool = False
+
+
+def ascii_digits(text: str) -> tuple[str, bool]:
+    """Devanagari digits to 0-9; the second value says whether any were found."""
+    out = text.translate(_DEVANAGARI_DIGITS)
+    return out, out != text
+
+
+def converted_units(answer: str, passages: Sequence[Passage]) -> list[str]:
+    """Answer amounts written in another unit than the passage prints them in.
+
+    An amount counts when no passage amount has the same value *and* the same scale word, yet one
+    passage amount has the same value in a different unit ("₹ 2,626 crore" for "₹ 26,260 million").
+    """
+    evidence = [e for e in evidence_amounts(list(passages)) if isinstance(e.amount, Money)]
+    masked = _CITE.sub(lambda m: " " * len(m.group()), answer)
+    found: list[str] = []
+    for span in parse_amounts(masked):
+        a = span.amount
+        if not isinstance(a, Money) or a.scale_word is None:
+            continue
+        equal = [e for e in evidence if same_value(a, e.amount)]
+        if equal and all(getattr(e.amount, "scale_word", None) != a.scale_word for e in equal):
+            found.append(a.raw)
+    return found
+
+
+def has_opinion(answer: str) -> bool:
+    return _OPINION.search(_CITE.sub(" ", answer)) is not None
 
 
 def content_words(text: str) -> list[str]:
@@ -88,7 +142,12 @@ def clean_answer(text: str, passages: Sequence[Passage], language: Language = "e
         return Cleaned(NOT_FOUND[language], reason)
     if is_dump(trimmed_text, passages):
         return Cleaned(NOT_FOUND[language], "dump")
-    return Cleaned(trimmed_text, None, trimmed)
+    digits_text, digits_converted = ascii_digits(trimmed_text)
+    if converted_units(digits_text, passages):
+        return Cleaned(NOT_FOUND[language], "unit_converted", trimmed, digits_converted)
+    if has_opinion(digits_text):
+        return Cleaned(NOT_FOUND[language], "opinion", trimmed, digits_converted)
+    return Cleaned(digits_text, None, trimmed, digits_converted)
 
 
 class LoopDetector:

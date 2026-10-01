@@ -14,6 +14,7 @@ from finsight.generate.prompts import (
     cited_indices,
     is_not_found,
 )
+from finsight.generate.respond import Response, respond
 
 __all__ = [
     "NOT_FOUND",
@@ -23,9 +24,11 @@ __all__ = [
     "OllamaBackend",
     "Prompt",
     "ReasoningLeak",
+    "Response",
     "build_prompt",
     "cited_indices",
     "clean_answer",
     "get_llm",
     "is_not_found",
+    "respond",
 ]
