@@ -260,6 +260,41 @@ export const STRINGS = d({
   },
   "500.button": { en: "Reload", hi: "रीलोड करें" },
 
+  // 6 IPO Library
+  "lib.title": { en: "IPOs", hi: "आईपीओ" },
+  "lib.sub": {
+    en: "{n} recent IPOs from the NSE and BSE. Pick one to see its facts, the original pages, and ask questions.",
+    hi: "एनएसई और बीएसई के {n} हाल के आईपीओ। किसी एक को चुनें, उसके तथ्य और मूल पन्ने देखें, और सवाल पूछें।",
+  },
+  "lib.search": { en: "Search by company or sector", hi: "कंपनी या सेक्टर से खोजें" },
+  "lib.sort.newest": { en: "Newest first", hi: "सबसे नए पहले" },
+  "lib.sort.largest": { en: "Largest issue first", hi: "सबसे बड़ा इश्यू पहले" },
+  "lib.sort.az": { en: "A to Z", hi: "A से Z" },
+  "lib.sort.label": { en: "Sort", hi: "क्रम" },
+  "lib.filter.all": { en: "All", hi: "सभी" },
+  "lib.filter.fresh": { en: "Has fresh issue", hi: "फ्रेश इश्यू वाले" },
+  "lib.filter.ofs": { en: "Only offer for sale", hi: "केवल ओएफएस" },
+  "lib.listed": { en: "Listed {month}", hi: "सूचीबद्ध {month}" },
+  "lib.issueSize": { en: "Issue size", hi: "इश्यू का आकार" },
+  "lib.pages": { en: "{n} pages", hi: "{n} पन्ने" },
+  "lib.fresh": { en: "Fresh {x}", hi: "फ्रेश {x}" },
+  "lib.ofsPct": { en: "OFS {y}", hi: "ओएफएस {y}" },
+  "lib.onlyOfs": { en: "Only offer for sale", hi: "केवल बिक्री प्रस्ताव (ओएफएस)" },
+  "lib.offerPrice": { en: "Offer price", hi: "ऑफ़र प्राइस" },
+  "lib.faceValue": { en: "Face value", hi: "फेस वैल्यू" },
+  "lib.managers": { en: "Lead managers", hi: "लीड मैनेजर" },
+  "lib.empty": {
+    en: "No IPO matches “{query}”. Try a company name like Lenskart.",
+    hi: "“{query}” से कोई आईपीओ नहीं मिला। Lenskart जैसा कंपनी का नाम आज़माएँ।",
+  },
+  "lib.clear": { en: "Clear search", hi: "खोज हटाएँ" },
+  "lib.hint": {
+    en: "New here? Start with Ather Energy. It has a fresh issue and an offer for sale, so you'll see every kind of fact.",
+    hi: "पहली बार आए हैं? Ather Energy से शुरू करें। इसमें फ्रेश इश्यू और ओएफएस दोनों हैं, इसलिए आपको हर तरह के तथ्य दिखेंगे।",
+  },
+  "lib.hintLink": { en: "Open Ather Energy", hi: "Ather Energy खोलें" },
+  "lib.notSet": { en: "Set when the final price is fixed", hi: "अंतिम कीमत तय होने पर पता चलेगा" },
+
   // 17 keyboard shortcuts dialog (copy not in the spec: written per spec section 1, see AKSHAT_TODO)
   "keys.title": { en: "Keyboard shortcuts", hi: "कीबोर्ड शॉर्टकट" },
   "keys.focusInput": { en: "Focus the question box", hi: "सवाल वाले बॉक्स पर जाएँ" },
