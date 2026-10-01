@@ -40,6 +40,11 @@ describe("formatMoney (spec 15)", () => {
   it("million", () => expect(formatMoney(v, "million")).toBe("₹26,260.00 million"));
   it("lakh", () => expect(formatMoney(v, "lakh")).toBe("₹2,62,600.00 lakh"));
   it("full", () => expect(formatMoney(v, "full")).toBe("₹26,26,00,00,000"));
+  it("uses Hindi unit words in the Hindi UI, digits stay 0-9", () => {
+    expect(formatMoney(v, "crore", "hi")).toBe("₹2,626.00 करोड़");
+    expect(formatMoney(v, "million", "hi")).toBe("₹26,260.00 मिलियन");
+    expect(formatMoney(v, "lakh", "hi")).toBe("₹2,62,600.00 लाख");
+  });
   it("keeps fractions without float error", () => {
     expect(formatMoney("1234567.89", "crore")).toBe("₹0.12 crore");
     expect(formatMoney("8000000000", "crore")).toBe("₹800.00 crore");
