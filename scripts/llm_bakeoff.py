@@ -253,6 +253,13 @@ def main() -> None:
         settings.paths.processed_dir, embedder=BgeM3Embedder(), reranker=CrossEncoderReranker()
     )
     items = build_items(retriever, gold)
+    del retriever  # the prompts are built; free the GPU for the language model
+    import gc
+
+    import torch
+
+    gc.collect()
+    torch.cuda.empty_cache()
     grounded = sum(i["grounded"] for i in items if i["answerable"])
     report: dict[str, Any] = {
         "num_ctx": args.num_ctx, "profile": args.profile, "n_items": len(items),
