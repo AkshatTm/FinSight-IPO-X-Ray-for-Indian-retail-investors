@@ -100,12 +100,14 @@ def check_run(metrics: dict[str, Any], weight_files: list[str]) -> list[str]:
     """Problems with a finished run; an empty list means it passed (loss fell, files exist)."""
     problems = []
     losses = [float(x) for x in metrics.get("loss_history") or []]
+    third = max(1, len(losses) // 3)  # single steps are noisy: compare the first and last third
+    first, last = sum(losses[:third]) / third, sum(losses[-third:]) / third
     if len(losses) < 2:
         problems.append("fewer than two logged losses: cannot tell whether the loss went down")
     elif not all(math.isfinite(x) for x in losses):
         problems.append("loss history has NaN or infinity")
-    elif not losses[-1] < losses[0]:
-        problems.append(f"loss did not go down ({losses[0]:.3f} -> {losses[-1]:.3f})")
+    elif not last < first:
+        problems.append(f"loss did not go down ({first:.3f} -> {last:.3f})")
     f1 = metrics.get("F1")
     if f1 is None or not math.isfinite(float(f1)):
         problems.append("F1 is missing or not a number")

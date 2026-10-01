@@ -80,6 +80,9 @@ def test_a_run_passes_only_when_loss_fell_and_weights_exist() -> None:
     assert check_run(GOOD, FILES) == []
     assert "did not go down" in check_run({**GOOD, "loss_history": [1.0, 1.2]}, FILES)[0]
     assert "fewer than two" in check_run({**GOOD, "loss_history": [1.0]}, FILES)[0]
+    assert "fewer than two" in check_run({**GOOD, "loss_history": []}, FILES)[0]
+    noisy = [2.0, 2.4, 1.9, 1.5, 1.6, 1.0, 1.2, 0.8, 1.1]  # thirds: 2.1 -> 1.03
+    assert check_run({**GOOD, "loss_history": noisy}, FILES) == []
     assert "NaN" in check_run({**GOOD, "loss_history": [1.0, float("nan")]}, FILES)[0]
     assert "F1" in check_run({"loss_history": [2.0, 1.0]}, FILES)[0]
     assert "weights" in check_run(GOOD, ["config.json"])[0]

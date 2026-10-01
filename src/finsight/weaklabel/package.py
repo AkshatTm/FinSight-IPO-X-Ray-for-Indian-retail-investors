@@ -4,9 +4,10 @@
 
 Writes ``data/processed/kaggle/finsight-weaklabel/`` (git-ignored): the full ``train.jsonl`` and
 ``dev.jsonl``, a 200-example slice of each for the smoke run, ``dataset-metadata.json`` and a
-README. Upload with ``kaggle datasets create -p <folder>`` (private by default) or by dragging the
-folder into kaggle.com/datasets/new. The data comes from public filings and the allow-listed
-Excel columns only; nothing from the demo or gold IPOs is in it.
+README. Upload from inside that folder with ``kaggle datasets create -p .`` (private by default;
+a relative path with slashes fails on Windows), later versions with ``kaggle datasets version``.
+The data comes from public filings and the allow-listed Excel columns only; nothing from the demo
+or gold IPOs is in it.
 """
 
 from __future__ import annotations
