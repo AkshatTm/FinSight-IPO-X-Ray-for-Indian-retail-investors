@@ -29,15 +29,20 @@ class CrossEncoderReranker:
         device: str | None = None,
         max_len: int = 512,
         batch: int = 8,
+        precision: str = "auto",
+        swap_inputs: bool = False,
     ) -> None:
+        """``precision``: "fp16", "fp32" or "auto" (fp16 on CUDA, fp32 on CPU).
+        ``swap_inputs`` puts the passage first; only the reranker experiment uses it."""
         import torch
         from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
         self._torch = torch
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-        self.max_len, self.batch = max_len, batch
+        self.max_len, self.batch, self.swap_inputs = max_len, batch, swap_inputs
         self._tok = AutoTokenizer.from_pretrained(model)
-        dtype = torch.float16 if self.device == "cuda" else torch.float32
+        half = precision == "fp16" or (precision == "auto" and self.device == "cuda")
+        dtype = torch.float16 if half else torch.float32
         self._model = (
             AutoModelForSequenceClassification.from_pretrained(model, dtype=dtype)
             .to(self.device)
@@ -49,10 +54,40 @@ class CrossEncoderReranker:
         with self._torch.no_grad():
             for start in range(0, len(texts), self.batch):
                 chunk = texts[start : start + self.batch]
+                first, second = ([query] * len(chunk), chunk)
+                if self.swap_inputs:
+                    first, second = second, first
                 enc = self._tok(
-                    [query] * len(chunk), chunk, padding=True, truncation="only_second",
+                    first, second, padding=True,
+                    truncation="only_second" if not self.swap_inputs else "only_first",
                     max_length=self.max_len, return_tensors="pt",
                 ).to(self.device)  # fmt: skip
                 logits = self._model(**enc).logits.view(-1).float().cpu().tolist()
                 scores.extend(logits)
+        return scores
+
+
+class OnnxReranker:
+    """The same cross-encoder as an ONNX graph on CPU (fp32 or int8-quantised). Needs ``onnx``."""
+
+    def __init__(self, path: str, model: str = BGE_RERANKER, max_len: int = 512, batch: int = 4):
+        import onnxruntime as ort
+        from transformers import AutoTokenizer
+
+        self.max_len, self.batch = max_len, batch
+        self._tok = AutoTokenizer.from_pretrained(model)
+        self._session = ort.InferenceSession(path, providers=["CPUExecutionProvider"])
+        self._inputs = {i.name for i in self._session.get_inputs()}
+
+    def score(self, query: str, texts: list[str]) -> list[float]:
+        scores: list[float] = []
+        for start in range(0, len(texts), self.batch):
+            chunk = texts[start : start + self.batch]
+            enc = self._tok(
+                [query] * len(chunk), chunk, padding=True, truncation="only_second",
+                max_length=self.max_len, return_tensors="np",
+            )  # fmt: skip
+            feed = {k: v for k, v in enc.items() if k in self._inputs}
+            logits = self._session.run(None, feed)[0]
+            scores.extend(float(x) for x in logits.reshape(-1))
         return scores
