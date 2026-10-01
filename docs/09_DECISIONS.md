@@ -159,6 +159,13 @@ The Excel's `Fresh Issue`, `Offer for Sale`, `Total Issue Size`, `Price Band`, `
 **Measured (30 Sep laptop, 1 Oct run, `scripts/measure_memory.py`, `eval_results/memory.json`, Ollama running but no LLM loaded):** all 10 IPO indexes in memory 2.9 GB RAM (pydantic passages with word boxes), bge-m3 fp16 +1.06 GB VRAM / +1.6 GB RAM, reranker fp16 +1.06 GB VRAM; process 6.0 GB RSS and 2.1 GB VRAM after searches; warm search 0.7 s, first 1.7 s. Index build: 1 minute (BM25), about 1.5 minutes per IPO with vectors. Smoke check with templated field questions against gold values (not E6, not tuned): BM25 58/85, hybrid 68/85 recall@5.
 **Consequences:** the 5.5 GB RAM / 3.6 GB VRAM budget is exceeded if all indexes load, so the Retriever loads an IPO on first use and the live demo should serve only the demo IPOs; with an LLM resident the reranker must run on CPU (int8) or be skipped (the `full` profile needs a decision in P3.2/P3.6). Proposed edit to 02 section 12 (not applied; 02 needs approval): replace the planning rows for bge-m3 and the reranker with these figures. E6 and the abstain thresholds run once `data/gold/questions_{dev,test}.jsonl` exist.
 
+
+### ADR-020 LLM choice, prompt contract and the Hindi caveat — proposed (1 Oct 2026; Hindi fluency rating pending from Akshat)
+**Context:** P3.2 needs a local model that copies numbers exactly, cites, abstains and fits the laptop. Bake-off (`scripts/llm_bakeoff.py`, `eval_results/llm_bakeoff.json`): 3 dev IPOs, 5 fields, real `full` retrieval, context 2,048, thinking off; only models installed on the laptop were run (`qwen3.5:0.8b`, `qwen3.5:2b`). Retrieval held the gold value in 26 of 28 answerable questions; the model is judged on those only.
+**Results (answerable, grounded / unanswerable):** English number copy 0.8b 6/13, 2b 11/13; cited 12/13 vs 12/12; "not found" on unanswerable 2/6 vs 4/6. Hindi number copy 6/13 for both; mostly-Devanagari answers 12/20 vs 18/20; "not found" 0/6 vs 4/6; 0.8b wrongly said "not found" 5/13 times. Median total time 3.3 s (0.8b) and 5.0 s (2b) in English; first token about 2.5-3 s; no reasoning leaks. The 2b Hindi errors seen: converting "million" to "crore", answering with the wrong figure, a citation-only reply (`[1] [2] ... [22]`).
+**Decision:** (1) `full` keeps `qwen3.5:2b`; `dev_light` keeps `qwen3.5:0.8b` for speed while coding, never for demo claims. (2) Prompt contract = 02 section 10.7: fenced DATA block, numbered passages, cite after every sentence, copy numbers exactly, "not found" when absent, ignore instructions in passages, answer language set, at most 120 words; Hindi has its own Hindi-language rules. Passages that do not fit the context budget are dropped whole, lowest rank first. (3) Fence markers are neutralised inside passages and questions; the injection test (unit plus live on both languages) passes on 2b. (4) A 4B model and other families were not tried (not installed; RTX 2050 would need CPU offload); they remain open if latency allows.
+**Consequences:** the verifier (P3.3) is not optional: a 2b model gets numbers wrong often enough in Hindi (7 of 13 answers) that every answer needs the unit/scale check. Hindi answers are advertised as "experimental" until Akshat rates `data/gold/hindi_fluency_sheet.csv` (1-5) and this ADR is finalised; if fluency is poor, Hindi chat can show the retrieved passages and the verified X-Ray value instead of generated prose. Bake-off is small (n=13 per cell) and covers simple fact questions only; treat differences of 1-2 answers as noise.
+
 ---
 
 ## Pending ADRs (to be written during the build)
@@ -168,7 +175,7 @@ The Excel's `Fresh Issue`, `Offer for Sale`, `Total Issue Size`, `Price Band`, `
 | ~~ADR-017~~ | Table extractor: pdfplumber vs Docling (written above) | P1.3 |
 | ADR-018 | Extractor chosen per field (from ladder results) | P2.6 |
 | ADR-019 | Measured memory/latency; device assignments | P3.1 |
-| ADR-020 | LLM choice (bake-off) | P3.2 |
+| ~~ADR-020~~ | LLM choice (bake-off) (written above, proposed) | P3.2 |
 | ADR-021 | ASR choice (bake-off) | P3.5 |
 | ADR-022 | Deployment target details | P6.1 |
 

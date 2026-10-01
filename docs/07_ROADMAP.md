@@ -167,9 +167,9 @@ How to use this file
 **Done when:** E6 run on dev questions; abstain threshold tuned on dev only. *(Harness built; waits on the question sets, which are [AKSHAT]: `python -m finsight.retrieve.evaluate --dense --rerank`.)*
 
 ### P3.2 Generation + LLM bake-off `feat/p3.2-generate` [CC→AKSHAT] — Fri 16 Oct
-- [ ] `generate/llm_backend.py` (Ollama; llama-cpp stub), `prompts.py` (EN + HI), thinking disabled
-- [ ] Prompt-injection test with adversarial chunk
-- [ ] Bake-off script; [AKSHAT] judge Hindi fluency → ADR "LLM choice"
+- [x] `generate/llm_backend.py` (Ollama; llama-cpp stub), `prompts.py` (EN + HI), thinking disabled
+- [x] Prompt-injection test with adversarial chunk
+- [x] Bake-off script; [AKSHAT] judge Hindi fluency (`data/gold/hindi_fluency_sheet.csv`, 1-5) → finalises ADR-020
 **Done when:** CLI `python -m finsight.generate ask --ipo <id> "question"` prints a cited answer (`finsight.chat ask` arrives in P3.6).
 
 ### P3.3 ★ Verifier + seeded errors `feat/p3.3-verifier` [CC] — Sat 17 Oct
