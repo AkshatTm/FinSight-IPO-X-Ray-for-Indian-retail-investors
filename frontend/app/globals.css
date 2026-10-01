@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/* Tokens: docs/03_UI_UX_DESIGN.md section 2.1. Verdict colours are reserved for verdicts. */
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #edf0f5;
+  --rule: #d5dbe5;
+  --text: #18202e;
+  --text-muted: #5a6578;
+  --stamp: #4b4fd1;
+  --ok: #1b8a5a;
+  --query: #b7791f;
+  --bad: #c53030;
+  --shadow-float: 0 8px 24px rgba(24, 32, 46, 0.12);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #151a23;
+  --surface: #1c2330;
+  --surface-2: #232c3b;
+  --rule: #2f394a;
+  --text: #e9ecf1;
+  --text-muted: #98a2b3;
+  --stamp: #8d90f2;
+  --ok: #3ccb8b;
+  --query: #e9a84a;
+  --bad: #f07070;
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-rule: var(--rule);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-stamp: var(--stamp);
+  --color-ok: var(--ok);
+  --color-query: var(--query);
+  --color-bad: var(--bad);
+  --font-sans: var(--font-plex-sans), var(--font-plex-deva), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --radius-control: 6px;
+  --radius-panel: 10px;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+:lang(hi) {
+  line-height: 1.7;
+}
+
+:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Buttons: press feedback, specific properties only. */
+button,
+[role="button"],
+a.btn {
+  transition:
+    transform 160ms var(--ease-out),
+    background-color 160ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    color 160ms var(--ease-out);
+}
+button:active:not(:disabled),
+a.btn:active {
+  transform: scale(0.97);
+}
+
+/* Glass bar (nav). Text sits on a mostly opaque surface so contrast stays above 4.5:1. */
+.glass-css {
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--rule);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 35%, transparent), var(--shadow-float);
+}
+
+/* Skeleton shimmer. Off under reduced motion. */
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--rule) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 6px;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Glossary term: dotted underline. */
+.term {
+  text-decoration: underline dotted;
+  text-decoration-color: var(--text-muted);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+.sr-only-keep {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton {
+    animation: none;
+  }
+}
