@@ -53,13 +53,27 @@ def load_questions(path: Path) -> list[Question]:
     return questions
 
 
+def compact(text: str) -> str:
+    """Letters and digits only, lower case: "₹ 4,720.00 million" -> "472000million"."""
+    return "".join(ch for ch in text.casefold() if ch.isalnum())
+
+
+MIN_GOLD_CHARS = 4  # a shorter answer ("10") would match almost any passage
+
+
 def is_hit(hit: Hit, q: Question) -> bool:
+    """The passage covers the evidence page, or states the gold answer itself.
+
+    Many facts are printed on several pages (the registrar is named on the cover, in the offer
+    summary and in the issue chapter), so a passage that holds the answer counts as evidence too.
+    """
     p = hit.passage
-    return (
-        q.evidence_page is not None
-        and p.ipo_id == q.ipo_id
-        and p.page_start <= q.evidence_page <= p.page_end
-    )
+    if p.ipo_id != q.ipo_id:
+        return False
+    if q.evidence_page is not None and p.page_start <= q.evidence_page <= p.page_end:
+        return True
+    gold = compact(q.answer_gold)
+    return len(gold) >= MIN_GOLD_CHARS and gold in compact(p.text)
 
 
 def reciprocal_rank(hits: list[Hit], q: Question) -> float:

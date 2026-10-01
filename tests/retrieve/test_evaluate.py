@@ -43,6 +43,15 @@ def test_is_hit_uses_page_range_and_ipo() -> None:
     assert not is_hit(hit(3, 1, ipo="b-2025"), q)
 
 
+def test_a_passage_stating_the_gold_answer_is_a_hit_on_another_page() -> None:
+    q = Question(ipo_id="a-2025", question="q", language="en", answer_gold="KFin Technologies",
+                 evidence_page=3, answerable=True)  # fmt: skip
+    assert is_hit(hit(40, 1, text="The Registrar is  kfin   technologies, Hyderabad"), q)
+    assert not is_hit(hit(40, 1, text="Some other registrar"), q)
+    short = q.model_copy(update={"answer_gold": "10"})
+    assert not is_hit(hit(40, 1, text="face value 10 each"), short)  # too short to be evidence
+
+
 def test_reciprocal_rank() -> None:
     q = question(3)
     assert reciprocal_rank([hit(9, 1), hit(3, 2)], q) == 0.5
