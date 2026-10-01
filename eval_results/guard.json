@@ -1,0 +1,188 @@
+{
+ "experiment": "E8",
+ "name": "guard_keyword",
+ "created_at": "2026-10-01T12:33:43+00:00",
+ "git_sha": "f6f7a5e",
+ "data": {
+  "file": "data/gold/advice_guard_set.csv",
+  "label_source": "ai_drafted_claude_chat",
+  "n_advice": 60,
+  "n_factual": 60,
+  "reviewed_by_akshat": 0,
+  "in_sample": true
+ },
+ "overall": {
+  "block_rate": {
+   "rate": 1.0,
+   "hits": 60,
+   "n": 60,
+   "wilson_95": [
+    0.9398,
+    1.0
+   ]
+  },
+  "false_block_rate": {
+   "rate": 0.0,
+   "hits": 0,
+   "n": 60,
+   "wilson_95": [
+    0.0,
+    0.0602
+   ]
+  }
+ },
+ "by_language": {
+  "en": {
+   "block_rate": {
+    "rate": 1.0,
+    "hits": 28,
+    "n": 28,
+    "wilson_95": [
+     0.8794,
+     1.0
+    ]
+   },
+   "false_block_rate": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 28,
+    "wilson_95": [
+     0.0,
+     0.1206
+    ]
+   }
+  },
+  "hi": {
+   "block_rate": {
+    "rate": 1.0,
+    "hits": 15,
+    "n": 15,
+    "wilson_95": [
+     0.7961,
+     1.0
+    ]
+   },
+   "false_block_rate": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 15,
+    "wilson_95": [
+     0.0,
+     0.2039
+    ]
+   }
+  },
+  "hinglish": {
+   "block_rate": {
+    "rate": 1.0,
+    "hits": 17,
+    "n": 17,
+    "wilson_95": [
+     0.8157,
+     1.0
+    ]
+   },
+   "false_block_rate": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 17,
+    "wilson_95": [
+     0.0,
+     0.1843
+    ]
+   }
+  }
+ },
+ "by_tricky_note": {
+  "\"apply\" word but factual": {
+   "n": 1,
+   "is_advice": false,
+   "correct": 1
+  },
+  "advice disguised as fact": {
+   "n": 3,
+   "is_advice": true,
+   "correct": 3
+  },
+  "advice via GMP": {
+   "n": 3,
+   "is_advice": true,
+   "correct": 3
+  },
+  "bidding strategy": {
+   "n": 2,
+   "is_advice": true,
+   "correct": 2
+  },
+  "comparison advice": {
+   "n": 4,
+   "is_advice": true,
+   "correct": 4
+  },
+  "definition": {
+   "n": 3,
+   "is_advice": false,
+   "correct": 3
+  },
+  "definition, not advice": {
+   "n": 2,
+   "is_advice": false,
+   "correct": 2
+  },
+  "opinion on price": {
+   "n": 1,
+   "is_advice": true,
+   "correct": 1
+  },
+  "opinion on valuation": {
+   "n": 3,
+   "is_advice": true,
+   "correct": 3
+  },
+  "personal advice": {
+   "n": 5,
+   "is_advice": true,
+   "correct": 5
+  },
+  "prediction": {
+   "n": 11,
+   "is_advice": true,
+   "correct": 11
+  },
+  "prediction + advice": {
+   "n": 1,
+   "is_advice": true,
+   "correct": 1
+  },
+  "rating": {
+   "n": 2,
+   "is_advice": true,
+   "correct": 2
+  },
+  "sounds evaluative but factual": {
+   "n": 8,
+   "is_advice": false,
+   "correct": 8
+  },
+  "strategy": {
+   "n": 3,
+   "is_advice": true,
+   "correct": 3
+  }
+ },
+ "categories_blocked": {
+  "decision": 32,
+  "forecast": 11,
+  "rating": 14,
+  "comparison": 3
+ },
+ "fresh_probes_first_run": {
+  "advice_blocked": "33/36",
+  "factual_false_blocks": "0/49",
+  "privacy_blocked": "11/11",
+  "business_contacts_false_blocks": "0/10",
+  "note": "Written by Claude after the rules and before scoring; privacy probes were written knowing the rule set, so they test regressions more than generalisation."
+ },
+ "misses": [],
+ "notes": "Keyword/regex guard (ADR-046). Set drafted by Claude chat, not yet reviewed by Akshat (0/120 rows reviewed); rules were tuned after reading it, so these numbers are in-sample. fresh_probes_first_run is the unseen estimate. The MuRIL classifier row of E8 uses a 70/15/15 split of the same set (later)."
+}
