@@ -18,6 +18,8 @@ from finsight.core.config import LLMConfig
 from finsight.core.registry import register
 
 DEFAULT_HOST = "http://localhost:11434"
+REPEAT_PENALTY = 1.15  # small models loop on "[1][1][1]" without it (ADR-047)
+STOP = ["DATA>>>", "<<<DATA"]  # never continue into the prompt's own fence
 Opener = Callable[[str, dict[str, Any], float], Iterator[bytes]]
 
 
@@ -77,6 +79,8 @@ class OllamaBackend:
                 "num_ctx": self.num_ctx,
                 "num_predict": max_tokens,
                 "temperature": temperature,
+                "repeat_penalty": REPEAT_PENALTY,
+                "stop": STOP,
             },
         }
 
