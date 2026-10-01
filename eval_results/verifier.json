@@ -1,9 +1,10 @@
 {
  "experiment": "E5",
  "name": "verifier_seeded_errors",
+ "benchmark_level": "unit",
  "seed": 2026,
- "created_at": "2026-10-01T07:08:43+00:00",
- "git_sha": "5019b16",
+ "created_at": "2026-10-01T09:29:53+00:00",
+ "git_sha": "f289492",
  "data": {
   "gold_version": "v1",
   "n_ipos": 10,
@@ -14,6 +15,114 @@
    "urban-company-2025:total_issue_size (no passage on the gold page states it)"
   ]
  },
+ "headline": {
+  "detection": {
+   "held_out": {
+    "rate": 1.0,
+    "hits": 100,
+    "n": 100,
+    "wilson_95": [
+     0.963,
+     1.0
+    ]
+   },
+   "after_one_rule_fix": {
+    "rate": 1.0,
+    "hits": 100,
+    "n": 100,
+    "wilson_95": [
+     0.963,
+     1.0
+    ]
+   }
+  },
+  "scale_mismatch_recall": {
+   "held_out": {
+    "rate": 0.875,
+    "hits": 35,
+    "n": 40,
+    "wilson_95": [
+     0.7389,
+     0.9454
+    ],
+    "by_split": {
+     "dev": {
+      "rate": 1.0,
+      "hits": 13,
+      "n": 13,
+      "wilson_95": [
+       0.7719,
+       1.0
+      ]
+     },
+     "test": {
+      "rate": 0.8148,
+      "hits": 22,
+      "n": 27,
+      "wilson_95": [
+       0.633,
+       0.9182
+      ]
+     }
+    }
+   },
+   "after_one_rule_fix": {
+    "rate": 1.0,
+    "hits": 40,
+    "n": 40,
+    "wilson_95": [
+     0.9124,
+     1.0
+    ]
+   }
+  },
+  "exact_reason": {
+   "held_out": {
+    "rate": 0.95,
+    "hits": 95,
+    "n": 100,
+    "wilson_95": [
+     0.8882,
+     0.9785
+    ]
+   },
+   "after_one_rule_fix": {
+    "rate": 1.0,
+    "hits": 100,
+    "n": 100,
+    "wilson_95": [
+     0.963,
+     1.0
+    ]
+   }
+  },
+  "false_alarm": {
+   "held_out": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 100,
+    "wilson_95": [
+     0.0,
+     0.037
+    ]
+   },
+   "after_one_rule_fix": {
+    "rate": 0.0,
+    "hits": 0,
+    "n": 100,
+    "wilson_95": [
+     0.0,
+     0.037
+    ]
+   }
+  },
+  "labels": {
+   "held_out": "held-out: rules frozen on the 3 dev IPOs, first run on all 10 (1 Oct 2026)",
+   "after_one_rule_fix": "after one rule fix, made on seeing the test-IPO misses; not held-out"
+  },
+  "held_out_misses": "5 scale_lakh_crore items on test IPOs, flagged as wrong_value"
+ },
+ "metrics_label": "after one rule fix, made on seeing the test-IPO misses; not held-out",
  "metrics": {
   "detection": {
    "rate": 1.0,
@@ -499,13 +608,5 @@
   }
  },
  "misses": [],
- "first_run": {
-  "rules": "frozen on dev IPOs",
-  "detection": "100/100",
-  "false_alarm": "0/100",
-  "scale_mismatch_recall": "35/40",
-  "exact_reason": "95/100",
-  "misses": "5 scale_lakh_crore items on test IPOs, flagged as wrong_value"
- },
- "notes": "Unit benchmark: errors are constructed by known rules on templated answers, so high recall is expected by design. Rules were tuned on the dev IPOs, then one rule was generalised after the first full run (see first_run and ADR-044)."
+ "notes": "E5 is a unit-level benchmark: errors are built by known rules on templated answers, so high recall is expected by design; it says nothing about free LLM text (E7, E9). Quote the held-out figures in `headline`: scale-mismatch recall 35/40 with rules frozen on the dev IPOs. `metrics`, `by_split` and `by_language` are the current rules, after one rule fix made on seeing test-IPO misses: 40/40, not held-out (ADR-044)."
 }
