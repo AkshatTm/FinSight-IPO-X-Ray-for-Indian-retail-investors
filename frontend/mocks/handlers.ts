@@ -1,5 +1,6 @@
 import { http, HttpResponse, delay } from "msw";
 import { DETAILS, HEALTH, IPOS } from "./fixtures";
+import { buildXray, SUGGESTED } from "./xray";
 
 const notFound = () =>
   HttpResponse.json(
@@ -17,4 +18,12 @@ export const handlers = [
     const d = DETAILS[String(params.id)];
     return d ? HttpResponse.json(d) : notFound();
   }),
+  http.get("/api/ipos/:id/xray", async ({ params }) => {
+    await delay(120);
+    const x = buildXray(String(params.id));
+    return x ? HttpResponse.json(x) : notFound();
+  }),
+  http.get("/api/ipos/:id/suggested-questions", ({ params }) =>
+    DETAILS[String(params.id)] ? HttpResponse.json(SUGGESTED) : notFound(),
+  ),
 ];

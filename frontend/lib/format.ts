@@ -5,6 +5,7 @@
 export type Unit = "crore" | "million" | "lakh" | "full";
 export type Lang = "en" | "hi";
 
+const UNIT_WORD_HI: Record<Exclude<Unit, "full">, string> = { crore: "करोड़", million: "मिलियन", lakh: "लाख" };
 const UNIT_SHIFT: Record<Exclude<Unit, "full">, number> = { crore: 7, million: 6, lakh: 5 };
 
 const HI_MONTHS = [
@@ -70,7 +71,7 @@ function shiftAndRound(d: Dec, places: number, dp: number): Dec {
   return { neg: d.neg, int: i.replace(/^0+(?=\d)/, ""), frac: f };
 }
 
-export function formatMoney(valueInr: string | number, unit: Unit): string {
+export function formatMoney(valueInr: string | number, unit: Unit, lang: Lang = "en"): string {
   const d = parseDecimal(valueInr);
   const sign = d.neg ? "-" : "";
   if (unit === "full") {
@@ -80,7 +81,7 @@ export function formatMoney(valueInr: string | number, unit: Unit): string {
   }
   const r = shiftAndRound(d, UNIT_SHIFT[unit], 2);
   const style = unit === "million" ? "western" : "indian";
-  return `${sign}₹${groupDigits(r.int, style)}.${r.frac} ${unit}`;
+  return `${sign}₹${groupDigits(r.int, style)}.${r.frac} ${lang === "hi" ? UNIT_WORD_HI[unit] : unit}`;
 }
 
 /** Rupees per share (face value, price). No unit word; keeps the printed precision. */
