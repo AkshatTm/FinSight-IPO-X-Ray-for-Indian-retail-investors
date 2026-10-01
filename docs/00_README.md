@@ -25,6 +25,7 @@ Course: CSE472 Deep Learning for NLP (LPU) · Solo build: Akshat Tomar + Claude 
 | 09 | `09_DECISIONS.md` | Decision log (ADRs): what was decided and why | When something looks odd, or before changing a decision |
 | 10 | `10_FINSIGHT_EXPLAINED.md` | Learning doc: every concept explained from scratch + viva questions. Living doc | Akshat: continuously. CC: append a section after each module |
 | 11 | `11_CLAUDE_CODE_PROMPTS.md` | Kickoff prompt, resume prompts, stuck + gate-review prompts | Akshat: start of every Claude Code session |
+| 12 | `12_FRONTEND_SPEC.md` | **Authority for everything on screen**: copy (EN + HI), layout, states, field display rules, demo mode, build order F1–F8. Wins over 03 for words and layout; 03 still owns tokens | Every frontend sub-phase |
 | — | `templates/frontend.CLAUDE.md` | Frontend-specific Claude Code rules | Copied to `frontend/CLAUDE.md` after the Next.js scaffold |
 | — | `../CLAUDE.md` | Always-loaded Claude Code rules | Loaded automatically |
 | — | `../PROGRESS.md` | 10-line daily status | Start of every session |
