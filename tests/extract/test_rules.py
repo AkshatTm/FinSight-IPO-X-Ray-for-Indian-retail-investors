@@ -270,3 +270,18 @@ def test_pte_ltd_is_not_the_end_of_the_promoter_list() -> None:
     text = "OUR PROMOTERS: FOSUN PHARMA INDUSTRIAL PTE. LTD AND ACME HOLDINGS LIMITED. INITIAL"
     items = best("promoters", text).value.items
     assert items == ["FOSUN PHARMA INDUSTRIAL PTE. LTD", "ACME HOLDINGS LIMITED"]
+
+
+def test_initials_do_not_end_the_promoter_list() -> None:  # audit miss, ADR-041
+    text = (
+        "PROMOTERS: M.G. GEORGE MUTHOOT, GEORGE THOMAS MUTHOOT, GEORGE JACOB MUTHOOT AND "
+        "GEORGE ALEXANDER MUTHOOT table C M YK"
+    )
+    assert best("promoters", text).value.items == [
+        "M.G. GEORGE MUTHOOT",
+        "GEORGE THOMAS MUTHOOT",
+        "GEORGE JACOB MUTHOOT",
+        "GEORGE ALEXANDER MUTHOOT",
+    ]
+    text = "PROMOTERS OF OUR COMPANY: A. VELLAYAN AND ASHA RANI. DETAILS OF THE OFFER"
+    assert best("promoters", text).value.items == ["A. VELLAYAN", "ASHA RANI"]

@@ -173,7 +173,8 @@ _PROMOTER = re.compile(r"promoters?(?:\s+of\s+our\s+company)?\s*:", _CI)
 _STOP_PROMOTER = re.compile(
     r"\b(?:details\s+of\s+the|type\s+of|the\s+offer|offer\s+for|initial\s+public|fresh\s+issue|"
     r"bid\s*/|contact|issue\s+size|our\s+company|selling\s+shareholders?)\b"
-    r"|(?<!\bpte)(?<!\bpvt)(?<!\bco)(?<!\binc)(?<!\bltd)\.\s",  # "PTE. LTD" is not a full stop
+    # "PTE. LTD" is not a full stop, nor is the dot after an initial ("M.G. GEORGE MUTHOOT")
+    r"|(?<!\bpte)(?<!\bpvt)(?<!\bco)(?<!\binc)(?<!\bltd)(?<!\b[a-z])\.\s",
     _CI,
 )
 
