@@ -1,6 +1,6 @@
 """E6: how well does each retrieval method find the evidence page? (05 section 4)
 
-    uv run python -m finsight.retrieve.evaluate [--dense] [--rerank]
+    uv run python -m finsight.retrieve.evaluate [--dense] [--rerank] [--dev-only]
 
 Reads ``data/gold/questions_dev.jsonl`` and ``questions_test.jsonl`` (05 section 8; written by
 Akshat). A question is *hit* when one of the top-k passages covers its ``evidence_page``.
@@ -107,6 +107,27 @@ def tune_threshold(scored: list[tuple[bool, float | None]]) -> float | None:
     return best_t
 
 
+MAX_FALSE_ABSTAIN = 0.10  # an answerable question should be refused at most one time in ten
+
+
+def tune_threshold_constrained(
+    scored: list[tuple[bool, float | None]], max_false_abstain: float = MAX_FALSE_ABSTAIN
+) -> float | None:
+    """The highest score below which to abstain such that at most ``max_false_abstain`` of the
+    answerable questions are refused. Balanced accuracy (``tune_threshold``) treats refusing a
+    good question and answering a bad one as equally bad; for a chat the first is worse."""
+    answerable = [s for a, s in scored if a]
+    if not answerable or not any(not a for a, _ in scored):
+        return None
+    values = sorted({s for a, s in scored if a and s is not None})
+    best = (values[0] - 1.0) if values else 0.0
+    for t in values:
+        refused = sum(s is None or s < t for s in answerable) / len(answerable)
+        if refused <= max_false_abstain:
+            best = t
+    return best
+
+
 def _summary(per_ipo: dict[str, list[float]]) -> dict[str, float]:
     if not per_ipo:
         return {"mean": 0.0, "low": 0.0, "high": 0.0}
@@ -167,27 +188,76 @@ def searchers(
     return out
 
 
-def evaluate(
-    dev: list[Question], test: list[Question], search: dict[str, Searcher]
+def _abstain_rates(
+    runs: list[tuple[Question, list[Hit], float | None]], t: float | None
+) -> tuple[int, int, int, int]:
+    """(unanswerable abstained, unanswerable, answerable wrongly abstained, answerable)."""
+    gone = [(q, top is None or (t is not None and top < t)) for q, _, top in runs]
+    un = [a for q, a in gone if not q.answerable]
+    an = [a for q, a in gone if q.answerable]
+    return sum(un), len(un), sum(an), len(an)
+
+
+def leave_one_ipo_out(
+    runs: list[tuple[Question, list[Hit], float | None]],
+    tuner: Callable[[list[tuple[bool, float | None]]], float | None] = tune_threshold,
 ) -> dict[str, object]:
+    """Tune the threshold on all dev IPOs but one and apply it to the held-out one, for each IPO.
+
+    The in-sample threshold is tuned and scored on the same questions, which flatters it; this
+    is the honest estimate with only dev data."""
+    ipos = sorted({q.ipo_id for q, _, _ in runs})
+    caught = n_un = wrong = n_an = 0
+    per_ipo: dict[str, str] = {}
+    for ipo in ipos:
+        train = [(q.answerable, top) for q, _, top in runs if q.ipo_id != ipo]
+        held = [r for r in runs if r[0].ipo_id == ipo]
+        c, u, w, a = _abstain_rates(held, tuner(train))
+        caught, n_un, wrong, n_an = caught + c, n_un + u, wrong + w, n_an + a
+        per_ipo[ipo] = f"unanswerable {c}/{u}, answerable wrongly abstained {w}/{a}"
+    return {
+        "unanswerable_abstained": f"{caught}/{n_un}",
+        "answerable_wrongly_abstained": f"{wrong}/{n_an}",
+        "per_held_out_ipo": per_ipo,
+    }
+
+
+def evaluate(
+    dev: list[Question], test: list[Question] | None, search: dict[str, Searcher]
+) -> dict[str, object]:
+    """``test=None`` is the dev-only mode: the test questions are never searched."""
     methods: dict[str, object] = {}
     thresholds: dict[str, float | None] = {}
     for name, fn in search.items():
         dev_runs = [(q, *fn(q)) for q in dev]
         thresholds[name] = t = tune_threshold([(q.answerable, top) for q, _, top in dev_runs])
-        test_runs = [(q, *fn(q)) for q in test]
-        abstained = [(q, top is None or (t is not None and top < t)) for q, _, top in test_runs]
-        unanswerable = [a for q, a in abstained if not q.answerable]
-        answerable = [a for q, a in abstained if q.answerable]
-        methods[name] = {
-            "test": score_method([(q, hits) for q, hits, _ in test_runs]),
+        c, u, w, a = _abstain_rates(dev_runs, t)
+        t10 = tune_threshold_constrained([(q.answerable, top) for q, _, top in dev_runs])
+        c10, u10, w10, a10 = _abstain_rates(dev_runs, t10)
+        entry: dict[str, object] = {
             "dev": score_method([(q, hits) for q, hits, _ in dev_runs]),
             "abstain": {
                 "threshold_from_dev": t,
-                "test_unanswerable_abstained": f"{sum(unanswerable)}/{len(unanswerable)}",
-                "test_answerable_wrongly_abstained": f"{sum(answerable)}/{len(answerable)}",
+                "dev_in_sample_unanswerable_abstained": f"{c}/{u}",
+                "dev_in_sample_answerable_wrongly_abstained": f"{w}/{a}",
+                "dev_leave_one_ipo_out": leave_one_ipo_out(dev_runs),
+                "threshold_max_10pct_false_abstain": t10,
+                "max10_in_sample_unanswerable_abstained": f"{c10}/{u10}",
+                "max10_in_sample_answerable_wrongly_abstained": f"{w10}/{a10}",
+                "max10_leave_one_ipo_out": leave_one_ipo_out(dev_runs, tune_threshold_constrained),
             },
         }
+        if test is not None:
+            test_runs = [(q, *fn(q)) for q in test]
+            tc, tu, tw, ta = _abstain_rates(test_runs, t)
+            entry["test"] = score_method([(q, hits) for q, hits, _ in test_runs])
+            entry["abstain"].update(  # type: ignore[union-attr]
+                {
+                    "test_unanswerable_abstained": f"{tc}/{tu}",
+                    "test_answerable_wrongly_abstained": f"{tw}/{ta}",
+                }
+            )
+        methods[name] = entry
     return {"methods": methods, "thresholds": thresholds}
 
 
@@ -197,11 +267,16 @@ def main(argv: list[str] | None = None) -> int:
         "--dense", action="store_true", help="add dense + hybrid (bge-m3, ml group)"
     )
     parser.add_argument("--rerank", action="store_true", help="add hybrid+rerank (needs --dense)")
+    parser.add_argument(
+        "--dev-only",
+        action="store_true",
+        help="tune and report on the dev questions only; questions_test.jsonl is not opened",
+    )
     args = parser.parse_args(argv)
     settings = get_settings()
     gold = settings.paths.data_dir / "gold"
     dev = load_questions(gold / "questions_dev.jsonl")
-    test = load_questions(gold / "questions_test.jsonl")
+    test = None if args.dev_only else load_questions(gold / "questions_test.jsonl")
     embedder: Embedder | None = None
     reranker: Reranker | None = None
     if args.dense:
@@ -213,7 +288,7 @@ def main(argv: list[str] | None = None) -> int:
 
             reranker = CrossEncoderReranker()
     report = evaluate(dev, test, searchers(settings.paths.processed_dir, embedder, reranker))
-    out = settings.paths.eval_dir / "retrieval.json"
+    out = settings.paths.eval_dir / ("retrieval_dev.json" if args.dev_only else "retrieval.json")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"wrote {out}")

@@ -1,0 +1,130 @@
+{
+ "set": "dev",
+ "n_questions": 50,
+ "variants": {
+  "hybrid_no_rerank": {
+   "recall@1": 0.3171,
+   "recall@5": 0.561,
+   "mrr": 0.3992,
+   "n": 41,
+   "hit_rank_counts": {
+    "0": 18,
+    "1": 13,
+    "2": 2,
+    "3": 5,
+    "4": 2,
+    "5": 1
+   },
+   "abstain_threshold_dev": -0.9875,
+   "rerank_seconds_per_question": 0.0,
+   "truncation": null
+  },
+  "fp16_512": {
+   "recall@1": 0.3415,
+   "recall@5": 0.561,
+   "mrr": 0.4114,
+   "n": 41,
+   "hit_rank_counts": {
+    "0": 18,
+    "1": 14,
+    "2": 2,
+    "3": 2,
+    "4": 4,
+    "5": 1
+   },
+   "abstain_threshold_dev": 0.45947265625,
+   "rerank_seconds_per_question": 0.79,
+   "truncation": {
+    "passages_in_pools": 232,
+    "cut_at_512": 27,
+    "share_cut": 0.116,
+    "median_tokens": 390,
+    "max_tokens": 749
+   }
+  },
+  "fp32_512": {
+   "recall@1": 0.3415,
+   "recall@5": 0.561,
+   "mrr": 0.4114,
+   "n": 41,
+   "hit_rank_counts": {
+    "0": 18,
+    "1": 14,
+    "2": 2,
+    "3": 2,
+    "4": 4,
+    "5": 1
+   },
+   "abstain_threshold_dev": 0.4588654637336731,
+   "rerank_seconds_per_question": 3.54,
+   "truncation": null
+  },
+  "fp32_1024": {
+   "recall@1": 0.3415,
+   "recall@5": 0.561,
+   "mrr": 0.4093,
+   "n": 41,
+   "hit_rank_counts": {
+    "0": 18,
+    "1": 14,
+    "2": 2,
+    "3": 1,
+    "4": 5,
+    "5": 1
+   },
+   "abstain_threshold_dev": 0.4588659703731537,
+   "rerank_seconds_per_question": 3.51,
+   "truncation": null
+  },
+  "swapped_512": {
+   "recall@1": 0.3171,
+   "recall@5": 0.4878,
+   "mrr": 0.3809,
+   "n": 41,
+   "hit_rank_counts": {
+    "0": 21,
+    "1": 13,
+    "2": 3,
+    "3": 2,
+    "4": 1,
+    "5": 1
+   },
+   "abstain_threshold_dev": 1.8740234375,
+   "rerank_seconds_per_question": 0.81,
+   "truncation": null
+  },
+  "onnx_fp32_512": {
+   "recall@1": 0.3415,
+   "recall@5": 0.561,
+   "mrr": 0.4114,
+   "n": 41,
+   "hit_rank_counts": {
+    "0": 18,
+    "1": 14,
+    "2": 2,
+    "3": 2,
+    "4": 4,
+    "5": 1
+   },
+   "abstain_threshold_dev": 0.4588705897331238,
+   "rerank_seconds_per_question": 41.56,
+   "truncation": null
+  },
+  "onnx_int8_512": {
+   "recall@1": 0.3171,
+   "recall@5": 0.5366,
+   "mrr": 0.389,
+   "n": 41,
+   "hit_rank_counts": {
+    "0": 19,
+    "1": 13,
+    "2": 3,
+    "4": 5,
+    "5": 1
+   },
+   "abstain_threshold_dev": -2.454958915710449,
+   "rerank_seconds_per_question": 26.14,
+   "truncation": null
+  }
+ }
+}
