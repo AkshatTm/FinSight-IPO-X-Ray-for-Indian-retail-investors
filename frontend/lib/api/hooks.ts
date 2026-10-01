@@ -29,3 +29,11 @@ export const useWords = (ipoId: string, doc: string, page: number, enabled = tru
     enabled,
     staleTime: Infinity,
   });
+
+export const useTrace = (traceId: string | undefined, enabled: boolean) =>
+  useQuery({
+    queryKey: ["trace", traceId],
+    queryFn: () => apiGet<Schemas["Trace"]>(`/api/traces/${traceId}`),
+    enabled: enabled && !!traceId,
+    staleTime: Infinity,
+  });
