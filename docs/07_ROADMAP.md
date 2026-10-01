@@ -137,7 +137,7 @@ How to use this file
 **Done when:** train/dev JSONL built; stats committed; audit file ready for Akshat. → `python -m finsight.weaklabel build`: 302 IPOs, 1,869 positives / 2,791 negatives, train 272 IPOs, dev 30; `eval_results/weaklabel_stats.json`; `data/gold/weaklabel_audit.jsonl` (50 rows); ADR-038; #30.
 
 ### P2.4 Audit + fine-tune notebook `feat/p2.4-finetune-nb` [CC→AKSHAT] — Sat 10 Oct
-- [ ] [AKSHAT] Audit 50 weak labels (~1 h) → E1
+- [x] [AKSHAT] Audit 50 weak labels (~1 h) → E1 → 45/50 correct on v1 (Wilson 78.6–95.7 %), labels AI-drafted and reviewed by Akshat; misses fixed, data regenerated as v2 (1,818 positives / 2,720 negatives); ADR-041; #38
 - [x] [CC] `notebooks/01_finetune_extractor.ipynb`: parameterized, seeds 13/42/2026, checkpoint + resume, fp32 fallback, writes `metrics.json`
 - [x] [CC] `evaluate/metrics.py` (EM, F1, NVM, list F1) with tests
 - [x] [CC] Upload helper: package JSONL as a private Kaggle dataset (instructions for Akshat)
