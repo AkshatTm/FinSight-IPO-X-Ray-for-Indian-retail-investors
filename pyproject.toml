@@ -98,6 +98,9 @@ ignore = ["RUF001", "RUF002", "RUF003"]
 [tool.ruff.lint.per-file-ignores]
 # Long user-facing help sentences in the labelling sheet read better unwrapped.
 "src/finsight/evaluate/gold_xlsx.py" = ["E501"]
+# Regex rule tables: one rule per line is easier to audit than wrapped patterns.
+"src/finsight/guard/advice.py" = ["E501"]
+"src/finsight/guard/privacy.py" = ["E501"]
 
 [tool.mypy]
 python_version = "3.11"
