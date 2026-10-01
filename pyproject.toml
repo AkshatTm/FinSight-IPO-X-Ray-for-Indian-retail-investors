@@ -39,6 +39,8 @@ api = [
     "uvicorn[standard]>=0.30",
     "sse-starlette>=2.1",
     "python-multipart>=0.0.32",
+    "bm25s>=0.3.11",
+    "numpy>=2.4.6",
 ]
 # Offline pipeline, Kaggle and the laptop GPU. Never installed in CI or the deploy image.
 ml = [
