@@ -148,7 +148,30 @@ def choose_extractors(results: dict[str, list[dict[str, Any]]]) -> dict[str, Any
     return choice
 
 
-def build(results: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
+def headline_text(table: dict[str, Any]) -> str:
+    """The sentence the report and the Model Lab quote, written from the numbers (G2 framing)."""
+    gain = table["paired_test"]["qa_finetuned_minus_qa_pretrained"]["full"]
+    body = {r: table["ladder"][r][HEADLINE_SPLIT]["body_only"]["nvm"] for r in RUNGS}
+    per_field = table["per_field_test"]
+    n_fields = len(per_field["rules"]["full"])
+    wins = sum(
+        per_field["qa_finetuned"]["full"][f]["nvm"] > per_field["rules"]["full"][f]["nvm"]
+        for f in per_field["rules"]["full"]
+    )
+    return (
+        f"Fine-tuning beats the pretrained model ({gain['diff']:+.2f}, 95% CI "
+        f"{gain['ci95'][0]:.2f} to {gain['ci95'][1]:.2f}); rules win on templated cover pages; the "
+        f"fine-tuned model is far more robust when the cover is unavailable "
+        f"({body['qa_finetuned']:.2f} against {body['rules']:.2f} for rules, body-only). The PRD "
+        f"target of beating rules on at least 5 of {n_fields} fields was not met: the fine-tuned "
+        f"model is ahead on {wins}."
+    )
+
+
+def build(
+    results: dict[str, list[dict[str, Any]]],
+    strict: dict[str, list[dict[str, Any]]] | None = None,
+) -> dict[str, Any]:
     ladder: dict[str, Any] = {}
     for rung in RUNGS:
         ladder[rung] = {
@@ -166,7 +189,7 @@ def build(results: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
             ("qa_pretrained", "rules"),
         )
     }
-    return {
+    table = {
         "experiment": "E2+E3",
         "name": "ladder_table",
         "headline_split": HEADLINE_SPLIT,
@@ -186,9 +209,21 @@ def build(results: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
             "3 seeds per row. body_only blanks pages 1-15 and is scored on rows whose value is "
             "still stated in the searched pages (registrar, managers and promoters are read "
             "from the cover only, so they have no body-only rows). Per-field numbers are "
-            "descriptive. Dev is used only to choose the extractor per field (ADR-018)."
+            "descriptive. Dev is used only to choose the extractor per field (ADR-018). Names "
+            "are compared ignoring case, punctuation and spacing (ADR-045); `strict_metric` holds "
+            "the first run, which only ignored case."
         ),
     }
+    table["headline"] = headline_text(table)
+    if strict is not None:
+        old = build(strict)
+        table["strict_metric"] = {
+            "note": "First run: names compared ignoring case only (before ADR-045).",
+            "ladder": old["ladder"],
+            "paired_test": old["paired_test"],
+            "choice_on_dev": {f: c["extractor"] for f, c in old["choice_on_dev"].items()},
+        }
+    return table
 
 
 def write_csv(table: dict[str, Any], path: Path) -> None:
@@ -247,7 +282,10 @@ def main(argv: list[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     eval_dir = Path(get_settings().paths.eval_dir)
-    table = build(load_results(eval_dir / "ladder"))
+    strict_dir = eval_dir / "ladder_strict_metric"
+    strict = load_results(strict_dir) if strict_dir.exists() else None
+    table = build(load_results(eval_dir / "ladder"), strict)
+    print(table["headline"])
     for entry in table["ladder"].values():
         for setting in SETTINGS:
             m = entry[HEADLINE_SPLIT][setting]

@@ -1,5 +1,6 @@
 """The ladder table from synthetic result files: shape, intervals, paired differences, choice."""
 
+import copy
 import csv
 import json
 from pathlib import Path
@@ -145,3 +146,33 @@ def test_choice_uses_dev_only_and_ties_go_to_the_simplest_rung(tmp_path: Path) -
                 if IPOS[row["ipo_id"]] == "test":
                     row["full"] = pred(False)
     assert choose_extractors(results) == choice
+
+
+def test_headline_is_written_from_the_numbers_and_states_the_unmet_target(tmp_path: Path) -> None:
+    table = build(load_results(write_results(tmp_path)))
+    text = table["headline"]
+    gain = table["paired_test"]["qa_finetuned_minus_qa_pretrained"]["full"]
+    assert f"{gain['diff']:+.2f}" in text
+    assert text.startswith("Fine-tuning beats the pretrained model")
+    assert "rules win on templated cover pages" in text
+    assert "not met" in text
+    assert "ahead on 0" in text or "ahead on 1" in text or "ahead on 2" in text
+
+
+def test_the_strict_metric_run_is_kept_beside_the_fixed_one(tmp_path: Path) -> None:
+    results = load_results(write_results(tmp_path))
+    strict_dir = tmp_path / "strict"
+    strict_dir.mkdir()
+    for files in copy.deepcopy(results).values():
+        for res in files:
+            if res["name"] == "rules":
+                res["predictions"][0]["full"]["nvm"] = not res["predictions"][0]["full"]["nvm"]
+            (strict_dir / f"{res['name']}.json").write_text(json.dumps(res), encoding="utf-8")
+    table = build(results, load_results(strict_dir))
+    assert set(table["strict_metric"]) == {"note", "ladder", "paired_test", "choice_on_dev"}
+    assert "ignoring case only" in table["strict_metric"]["note"]
+    assert (
+        table["ladder"]["rules"]["dev"]["full"]
+        != table["strict_metric"]["ladder"]["rules"]["dev"]["full"]
+    )
+    assert "strict_metric" not in build(results)

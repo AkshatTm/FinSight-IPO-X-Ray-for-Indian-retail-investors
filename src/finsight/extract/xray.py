@@ -70,8 +70,10 @@ def build_xray(
     company: str,
     docs: dict[DocType, DocInputs],
     built_at: datetime,
+    fields: list[FieldSpec] | None = None,
 ) -> XRay:
-    fields = load_fields()
+    """``fields`` overrides ``fields.yaml`` (the G2 comparison of two extractor choices)."""
+    fields = fields or load_fields()
     results: dict[str, FieldResult] = {}
     for spec in fields:
         by_doc: dict[DocType, list[Candidate]] = {
