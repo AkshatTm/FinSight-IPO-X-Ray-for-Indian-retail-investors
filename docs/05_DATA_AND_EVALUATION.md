@@ -16,7 +16,7 @@ This doc owns datasets, splits, labelling protocols, metric definitions and the 
 | **Gold v2 (expansion)** | +10 held-out IPOs, 2025–26, RHP + Prospectus each (not in training corpus) | ~20 IPOs with v1, ~220 values | Final report numbers | Training |
 | **Dev questions** | ~20 hand-written questions on 3 demo IPOs | 20 | Tuning retrieval abstain threshold, prompt | Final numbers |
 | **Test questions** | ~60 hand-written questions (EN + HI) on the other IPOs | 60 | Retrieval Recall@5, answer quality | Tuning |
-| **Advice set** | ≥ 50 advice + ≥ 50 factual questions **written by Akshat and friends** (EN/HI/Hinglish) for guard evaluation; up to ~150 + ~150 more (may be drafted by Claude Code) for classifier training only | 100 eval + ≤ 300 train | Guard evaluation (Akshat's set only), classifier training (Claude-drafted lines only) | Evaluating a guard on lines the guard author wrote |
+| **Advice set** (as built, ADR-046: 60 advice + 60 factual drafted by Claude chat, `ai_drafted_claude_chat`, not yet reviewed by Akshat; E8 is in-sample until he reviews or replaces it) | ≥ 50 advice + ≥ 50 factual questions **written by Akshat and friends** (EN/HI/Hinglish) for guard evaluation; up to ~150 + ~150 more (may be drafted by Claude Code) for classifier training only | 100 eval + ≤ 300 train | Guard evaluation (Akshat's set only), classifier training (Claude-drafted lines only) | Evaluating a guard on lines the guard author wrote |
 | **Hindi audio** | 10–20 recorded Hindi questions | 10–20 | ASR bake-off + WER/CER | — |
 
 We **do not use** the dataset's Apply/Avoid rating labels or listing-gain targets, ever.
