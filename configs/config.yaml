@@ -19,7 +19,7 @@ profiles:
     llm: { backend: ollama, model: "qwen3.5:2b", num_ctx: 2048 }
     # -4.402: highest hybrid+rerank score that refuses at most 10 % of answerable dev questions (ADR-049)
     retrieve: { dense: true, rerank: true, abstain_thresholds: { "hybrid+rerank": -4.402 } }
-    voice: { asr: "faster-whisper-small" }
+    voice: { asr: "faster-whisper-large-v3-turbo" } # ADR-021
     verify: { nli: false } # turns on with P5.5
     demo_mode: false
 
