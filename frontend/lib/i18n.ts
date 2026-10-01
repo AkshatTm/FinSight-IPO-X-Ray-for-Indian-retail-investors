@@ -4,6 +4,7 @@
 // Interpolation: {name}. Numbers stay Western digits in Hindi.
 
 import { LANDING } from "./content/landing";
+import { PAGES } from "./content/pages";
 
 export type Lang = "en" | "hi";
 type Entry = { en: string; hi: string };
@@ -12,6 +13,7 @@ const d = <T extends Record<string, Entry>>(x: T) => x;
 
 export const STRINGS = d({
   ...LANDING,
+  ...PAGES,
   // 3.1 navigation
   "nav.home": { en: "FinSight", hi: "FinSight" },
   "nav.ipos": { en: "IPOs", hi: "आईपीओ" },
