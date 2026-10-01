@@ -15,6 +15,9 @@ export interface EvidenceRef {
 interface ChatState {
   turns: Record<string, Turn[]>;
   evidence: EvidenceRef | null;
+  /** Unsent composer text per IPO; survives tab switches. */
+  drafts: Record<string, { text: string; voice: boolean }>;
+  setDraft: (ipoId: string, text: string, voice?: boolean) => void;
   ask: (ipoId: string, question: string, language: Lang, source?: "typed" | "voice" | "chip") => Promise<void>;
   openEvidence: (e: EvidenceRef) => void;
   closeEvidence: () => void;
@@ -30,6 +33,8 @@ export const useChat = create<ChatState>()((set, get) => {
   return {
     turns: {},
     evidence: null,
+    drafts: {},
+    setDraft: (ipoId, text, voice = false) => set((s) => ({ drafts: { ...s.drafts, [ipoId]: { text, voice } } })),
     openEvidence: (evidence) => set({ evidence }),
     closeEvidence: () => set({ evidence: null }),
     reset: (ipoId) => set((s) => ({ turns: { ...s.turns, [ipoId]: [] }, evidence: null })),

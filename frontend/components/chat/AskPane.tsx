@@ -5,6 +5,7 @@ import { useSuggested } from "@/lib/api/hooks";
 import { useChat } from "@/lib/chatStore";
 import type { StringKey } from "@/lib/i18n";
 import { useT } from "@/lib/useT";
+import { answerLanguage } from "@/lib/voice";
 import { Composer } from "./Composer";
 import { EvidenceDrawer } from "./EvidenceDrawer";
 import { TurnView } from "./TurnView";
@@ -31,7 +32,7 @@ export function AskPane({ ipoId, company }: { ipoId: string; company: string }) 
   }, [progress]);
 
   return (
-    <section aria-label={t("ws.tab.ask")} className="flex h-full min-h-0 flex-col">
+    <section data-pane="ask" aria-label={t("ws.tab.ask")} className="flex h-full min-h-0 flex-col">
       <header className="px-4 pb-2 pt-4">
         <h2 className="text-lg font-semibold">{t("ask.title", { company })}</h2>
       </header>
@@ -56,7 +57,11 @@ export function AskPane({ ipoId, company }: { ipoId: string; company: string }) 
           turns.map((turn) => <TurnView key={turn.id} turn={turn} suggestions={chips} />)
         )}
       </div>
-      <Composer disabled={streaming} onSend={(q) => void ask(ipoId, q, lang, "typed")} />
+      <Composer
+        ipoId={ipoId}
+        disabled={streaming}
+        onSend={(q, voice) => void ask(ipoId, q, voice ? answerLanguage(q, lang) : lang, voice ? "voice" : "typed")}
+      />
       <EvidenceDrawer ipoId={ipoId} />
     </section>
   );
