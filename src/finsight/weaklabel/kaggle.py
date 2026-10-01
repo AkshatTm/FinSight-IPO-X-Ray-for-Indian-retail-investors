@@ -1,6 +1,7 @@
-"""Run the fine-tuning notebook on Kaggle from the laptop (nothing trains locally; ADR-042).
+"""Run the fine-tuning notebook on Kaggle from the laptop (nothing trains locally; ADR-042/043).
 
     uv run python -m finsight.weaklabel.kaggle push smoke     # 200-example slice, seed 13, 1 epoch
+    uv run python -m finsight.weaklabel.kaggle push baseline  # no training: the model as downloaded
     uv run python -m finsight.weaklabel.kaggle push 13        # one full run per seed: 13, 42, 2026
     uv run python -m finsight.weaklabel.kaggle status 13
     uv run python -m finsight.weaklabel.kaggle fetch 13       # weights and metrics come home
@@ -9,6 +10,12 @@ A run is one private Kaggle notebook: a copy of ``notebooks/01_finetune_extracto
 its parameters cell rewritten, plus ``kernel-metadata.json`` (GPU and Internet on, the private
 ``finsight-weaklabel`` dataset attached). The official ``kaggle`` CLI does the talking and reads
 its own token; this module never opens, prints or logs it.
+
+What counts as passing:
+- smoke: it ran end to end and wrote metrics and weights. Nothing about quality.
+- a seed: its best epoch beats the zero-shot baseline on dev EM and token F1 (same dev split).
+  A smoothed loss that rises over the last epoch is flagged as a warning.
+NVM is computed here, from the dev predictions the notebook saved, with the FinSight normalizer.
 """
 
 from __future__ import annotations
@@ -25,6 +32,8 @@ from pathlib import Path
 from typing import Any
 
 from finsight.core.config import get_settings
+from finsight.evaluate import exact_match, nvm
+from finsight.extract import RawAnswer, answer_value, get_field
 from finsight.weaklabel.package import DATASET_NAME, SLICE_SIZE
 
 NOTEBOOK = Path(__file__).resolve().parents[3] / "notebooks" / "01_finetune_extractor.ipynb"
@@ -35,17 +44,20 @@ _USERNAME = re.compile(r"^[a-z0-9][a-z0-9-]{2,}$")
 
 
 def run_params(run: str) -> dict[str, Any]:
-    """``smoke`` or a seed number -> the values written into the parameters cell."""
+    """``smoke``, ``baseline`` or a seed number -> the values written into the parameters cell."""
     if run == "smoke":
         return {"SLICE": SLICE_SIZE, "SEEDS": [SEEDS[0]], "EPOCHS": 1}
+    if run == "baseline":
+        return {"SLICE": None, "ZERO_SHOT": True}
     if run.isdigit() and int(run) in SEEDS:
         return {"SLICE": None, "SEEDS": [int(run)], "EPOCHS": 3}
-    raise ValueError(f"run must be 'smoke' or one of {', '.join(map(str, SEEDS))}; got {run!r}")
+    names = ", ".join(map(str, SEEDS))
+    raise ValueError(f"run must be 'smoke', 'baseline' or one of {names}; got {run!r}")
 
 
 def kernel_slug(run: str) -> str:
     run_params(run)
-    return "finsight-extractor-smoke" if run == "smoke" else f"finsight-extractor-seed-{run}"
+    return f"finsight-extractor-{run}" if not run.isdigit() else f"finsight-extractor-seed-{run}"
 
 
 def render_notebook(nb: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
@@ -96,20 +108,15 @@ def write_kernel(folder: Path, username: str, run: str, notebook: Path = NOTEBOO
     return folder
 
 
-def check_run(metrics: dict[str, Any], weight_files: list[str]) -> list[str]:
-    """Problems with a finished run; an empty list means it passed (loss fell, files exist)."""
+# ----------------------------------------------------------------------------- checks
+def _finite(x: Any) -> bool:
+    return isinstance(x, int | float) and math.isfinite(x)
+
+
+def check_outputs(metrics: dict[str, Any], weight_files: list[str]) -> list[str]:
+    """The smoke criterion: the run ended with scores and weights. Nothing about quality."""
     problems = []
-    losses = [float(x) for x in metrics.get("loss_history") or []]
-    third = max(1, len(losses) // 3)  # single steps are noisy: compare the first and last third
-    first, last = sum(losses[:third]) / third, sum(losses[-third:]) / third
-    if len(losses) < 2:
-        problems.append("fewer than two logged losses: cannot tell whether the loss went down")
-    elif not all(math.isfinite(x) for x in losses):
-        problems.append("loss history has NaN or infinity")
-    elif not last < first:
-        problems.append(f"loss did not go down ({first:.3f} -> {last:.3f})")
-    f1 = metrics.get("F1")
-    if f1 is None or not math.isfinite(float(f1)):
+    if not _finite(metrics.get("F1")):
         problems.append("F1 is missing or not a number")
     if not any(name.startswith("model.") for name in weight_files):
         problems.append("no model weights (model.safetensors) in final/")
@@ -118,29 +125,146 @@ def check_run(metrics: dict[str, Any], weight_files: list[str]) -> list[str]:
     return problems
 
 
-def collect(downloaded: Path, run: str, models_dir: Path, eval_dir: Path) -> dict[str, Any]:
-    """Move a run's weights to ``models/extractor/`` and its metrics to ``eval_results/``.
+def loss_rises_in_last_epoch(metrics: dict[str, Any]) -> str | None:
+    """A warning when the smoothed loss ends the last epoch higher than it began it."""
+    epochs = metrics.get("epochs") or 0
+    last = [h["loss"] for h in metrics.get("loss_history") or [] if h["epoch"] > epochs - 1]
+    if len(last) < 3:
+        return None
+    third = len(last) // 3
+    first, final = sum(last[:third]) / third, sum(last[-third:]) / third
+    if final > first:
+        return f"smoothed loss rose across the last epoch ({first:.3f} -> {final:.3f})"
+    return None
 
-    The smoke run is only checked: its weights and metrics are not kept as results.
+
+def quality_gate(metrics: dict[str, Any], baseline: dict[str, Any]) -> list[str]:
+    """A seed passes only if its best epoch beats the zero-shot baseline on dev EM and F1."""
+    problems = []
+    for name in ("EM", "F1"):
+        ours, base = metrics.get(name), baseline.get(name)
+        if not (_finite(ours) and _finite(base)):
+            problems.append(f"{name} is missing from the run or the baseline")
+        elif not ours > base:
+            problems.append(f"dev {name} {ours:.4f} does not beat the baseline {base:.4f}")
+    return problems
+
+
+def dev_nvm(rows: list[dict[str, Any]], predictions: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Normalized value match on dev: ₹ 300 crore equals ₹ 3,000 million; "" is "no answer".
+
+    A gold span the normalizer cannot read (rare) is compared by exact match instead.
     """
-    seed = run_params(run)["SEEDS"][0]
-    metrics_file = next(iter(sorted(downloaded.rglob(f"metrics-{seed}.json"))), None)
+    hits, unparsed = 0, 0
+    for row in rows:
+        kind = get_field(row["field_id"]).type
+        pred = predictions[row["id"]]
+        pred_value = None
+        if pred["text"]:
+            end = pred["start"] + len(pred["text"])
+            answer = RawAnswer(pred["text"], 1.0, pred["start"], end)
+            pred_value = answer_value(kind, answer, row["context"])
+        if not row["answers"]["text"]:
+            hits += not pred["text"]
+            continue
+        text, start = row["answers"]["text"][0], row["answers"]["answer_start"][0]
+        gold = answer_value(kind, RawAnswer(text, 1.0, start, start + len(text)), row["context"])
+        if gold is None:
+            unparsed += 1
+            hits += exact_match(pred["text"], text)
+        else:
+            hits += nvm(pred_value, gold)
+    return {"NVM": hits / len(rows) if rows else 0.0, "n": len(rows), "gold_unparsed": unparsed}
+
+
+# ----------------------------------------------------------------------------- collecting
+def _one(root: Path, name: str) -> Path:
+    found = sorted(root.rglob(name))
+    if not found:
+        raise FileNotFoundError(f"{root} has no {name}")
+    return found[0]
+
+
+def _per_epoch(
+    metrics: dict[str, Any], rows: list[dict[str, Any]], predictions: dict[str, Any]
+) -> list[dict[str, Any]]:
+    epochs = metrics.get("per_epoch") or [{"epoch": 0, **metrics}]
+    keep = ("EM", "F1", "HasAns_EM", "HasAns_F1", "NoAns_acc")
+    out = []
+    for e in epochs:
+        scores = {k: e[k] for k in keep}
+        out.append({"epoch": e["epoch"], **scores, **dev_nvm(rows, predictions[str(e["epoch"])])})
+    return out
+
+
+def collect(
+    downloaded: Path, run: str, models_dir: Path, eval_dir: Path, dev_rows: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """Check a downloaded run; keep what it earned.
+
+    - smoke: checked, nothing kept.
+    - baseline: metrics -> ``eval_results/extractor_baseline.json`` (as the notebook wrote them).
+    - seed: weights of the best epoch -> ``models/extractor/seed-<n>/``; metrics, unedited ->
+      ``eval_results/extractor_metrics-<n>.json``.
+    Baseline and seeds also get ``eval_results/extractor_dev-<run>.json``: EM, F1 and NVM per
+    epoch, and for a seed the gate verdict against the baseline.
+    """
+    params = run_params(run)
+    if run == "baseline":
+        metrics_file = _one(downloaded, "metrics-baseline.json")
+        metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
+        predictions = json.loads(_one(downloaded, "predictions-baseline.json").read_text("utf-8"))
+        problems = [] if _finite(metrics.get("F1")) else ["F1 is missing or not a number"]
+        report = {"run": run, "per_epoch": _per_epoch(metrics, dev_rows, predictions)}
+        if not problems:
+            eval_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(metrics_file, eval_dir / "extractor_baseline.json")  # never edited
+            _write(eval_dir / "extractor_dev-baseline.json", report)
+        return {**report, "problems": problems, "warnings": []}
+
+    seed = params["SEEDS"][0]
+    metrics_file = _one(downloaded, f"metrics-{seed}.json")
+    metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
     finals = [p for p in sorted(downloaded.rglob("final")) if p.parent.name == f"seed-{seed}"]
     final = next((p for p in finals if p.is_dir()), None)
-    if metrics_file is None or final is None:
-        raise FileNotFoundError(f"{downloaded} has no metrics-{seed}.json and seed-{seed}/final/")
-    metrics: dict[str, Any] = json.loads(metrics_file.read_text(encoding="utf-8"))
-    problems = check_run(metrics, [p.name for p in final.iterdir()])
-    result = {"run": run, "seed": seed, "problems": problems, "metrics": metrics}
+    problems = check_outputs(metrics, [p.name for p in final.iterdir()] if final else [])
     if run == "smoke" or problems:
-        return result
+        return {"run": run, "per_epoch": metrics.get("per_epoch", []), "problems": problems,
+                "warnings": []}  # fmt: skip
+
+    baseline_file = eval_dir / "extractor_dev-baseline.json"
+    if not baseline_file.exists():
+        raise FileNotFoundError("no baseline yet: run `push baseline`, then `fetch baseline`")
+    baseline = json.loads(baseline_file.read_text(encoding="utf-8"))["per_epoch"][0]
+    predictions = json.loads(_one(downloaded, f"predictions-{seed}.json").read_text("utf-8"))
+    per_epoch = _per_epoch(metrics, dev_rows, predictions)
+    best = next(e for e in per_epoch if e["epoch"] == metrics["best_epoch"])
+    problems = quality_gate(best, baseline)
+    warning = loss_rises_in_last_epoch(metrics)
+    report = {
+        "run": run,
+        "seed": seed,
+        "baseline": baseline,
+        "per_epoch": per_epoch,
+        "best_epoch": metrics["best_epoch"],
+        "passed": not problems,
+        "problems": problems,
+        "warnings": [warning] if warning else [],
+    }
+    assert final is not None
     target = models_dir / "extractor" / f"seed-{seed}"
-    target.mkdir(parents=True, exist_ok=True)
-    for p in final.iterdir():
-        shutil.copy2(p, target / p.name)
+    if target.exists():
+        shutil.rmtree(target)
+    target.parent.mkdir(parents=True, exist_ok=True)
     eval_dir.mkdir(parents=True, exist_ok=True)
+    shutil.move(str(final), str(target))  # one copy on disk: the best epoch's weights
     shutil.copyfile(metrics_file, eval_dir / f"extractor_metrics-{seed}.json")  # never edited
-    return result
+    _write(eval_dir / f"extractor_dev-{seed}.json", report)
+    return report
+
+
+def _write(path: Path, data: dict[str, Any]) -> None:
+    path.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8", newline="\n")
 
 
 def _kaggle(*args: str) -> int:
@@ -155,7 +279,7 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(prog="finsight.weaklabel.kaggle")
     parser.add_argument("command", choices=("push", "status", "fetch"))
-    parser.add_argument("run", help="smoke | 13 | 42 | 2026")
+    parser.add_argument("run", help="smoke | baseline | 13 | 42 | 2026")
     parser.add_argument("--username", default=os.environ.get("KAGGLE_USERNAME", ""))
     args = parser.parse_args(argv)
     if not args.username:
@@ -176,12 +300,22 @@ def main(argv: list[str] | None = None) -> int:
     code = _kaggle("kernels", "output", f"{username}/{slug}", "-p", str(out), "-o", "-q")
     if code != 0:
         return code
-    result = collect(out, args.run, paths.models_dir, paths.eval_dir)
-    keep = ("EM", "F1", "HasAns_F1", "NoAns_acc", "n_train", "train_runtime_s", "final_train_loss")
-    print(json.dumps({k: result["metrics"].get(k) for k in keep}))
+    dev_file = paths.processed_dir / "weaklabel" / "dev.jsonl"
+    dev_rows = [json.loads(x) for x in dev_file.read_text(encoding="utf-8").splitlines() if x]
+    result = collect(out, args.run, paths.models_dir, paths.eval_dir, dev_rows)
+    if "baseline" in result:
+        b = result["baseline"]
+        print(f"baseline  EM {b['EM']:.4f}  F1 {b['F1']:.4f}  NVM {b['NVM']:.4f}")
+    for e in result["per_epoch"]:
+        nvm_text = f"  NVM {e['NVM']:.4f}" if "NVM" in e else ""
+        print(f"epoch {e['epoch']}   EM {e['EM']:.4f}  F1 {e['F1']:.4f}{nvm_text}")
+    for warning in result["warnings"]:
+        print("WARNING:", warning)
     for problem in result["problems"]:
         print("PROBLEM:", problem)
     print("FAILED" if result["problems"] else f"OK: {args.run}")
+    if args.run == "smoke":
+        shutil.rmtree(out)  # 735 MB of throw-away weights
     return 1 if result["problems"] else 0
 
 

@@ -2,7 +2,7 @@
 
 from finsight.extract.fields import field_ids, get_field, load_fields
 from finsight.extract.passages import QAPassage, build_passages
-from finsight.extract.qa_pretrained import QAExtractor, RawAnswer
+from finsight.extract.qa_pretrained import QAExtractor, RawAnswer, answer_value
 from finsight.extract.rules import COVER_PAGES, RulesExtractor
 from finsight.extract.select import Selection, same_value, select_field
 from finsight.extract.table import TableExtractor, objects_pure_ofs
@@ -17,6 +17,7 @@ __all__ = [
     "RulesExtractor",
     "Selection",
     "TableExtractor",
+    "answer_value",
     "build_passages",
     "build_xray",
     "field_ids",
