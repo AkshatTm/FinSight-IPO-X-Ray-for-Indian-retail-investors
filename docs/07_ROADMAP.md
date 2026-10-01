@@ -152,7 +152,7 @@ Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 
 - [x] `extract/qa_finetuned.py`; `evaluate/ladder.py` → `ladder_table.{csv,json,tex}`
 - [x] `evaluate/run_gold.py` runs all rungs on gold v1 → E2, E3
 - [x] Choose extractor per field in `fields.yaml` from results (ADR-018); regenerate X-Rays
-**Done when:** ladder table has 3 rows with real numbers and `n`. → test NVM full / body-only: rules 0.839 / 0.229, pretrained 0.357 / 0.371, fine-tuned 0.720 / 0.848 (n = 56 / 35); fine-tuned beats pretrained (paired CI excludes 0), rules beat fine-tuned on the full document; #52.
+**Done when:** ladder table has 3 rows with real numbers and `n`. → test NVM full / body-only: rules 0.857 / 0.229, pretrained 0.357 / 0.371, fine-tuned 0.738 / 0.848 (n = 56 / 35, names metric ADR-045); fine-tuned beats pretrained (+0.38, CI 0.23-0.52), rules beat fine-tuned on the full document; G2 passed with decisions in ADR-018/045; #52, #54.
 
 ### P2.7 Buffer + G2 review — Wed 14 Oct
 - [ ] Update `10_FINSIGHT_EXPLAINED.md` (extractive QA, distant supervision, fine-tuning, metrics); tag `v0.2.0`
