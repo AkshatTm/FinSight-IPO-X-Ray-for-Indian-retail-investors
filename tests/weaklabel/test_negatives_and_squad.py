@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import pytest
 from weaklabel_docs import CAPITAL, COVER, FILLER, OFFER, acme, sections_for
 
 from finsight.extract import get_field
@@ -13,6 +14,7 @@ from finsight.weaklabel import (
     negatives,
     propagate,
     sample_audit,
+    score_audit,
     split_by_ipo,
     to_squad,
 )
@@ -145,3 +147,20 @@ def test_audit_never_exceeds_n_when_many_fields_are_present() -> None:
     sample = sample_audit(rows, n=50)
     assert len(sample) == 50
     assert min(sum(r["field_id"] == f"field{k}" for r in sample) for k in range(8)) >= 6
+
+
+def test_audit_score_is_precision_with_a_wilson_interval() -> None:
+    rows = [{"field_id": "face_value", "label": "correct"}] * 45
+    rows += [{"field_id": "face_value", "label": "wrong_value"}] * 2
+    rows += [{"field_id": "promoters", "label": "wrong_span", "label_source": "x"}] * 3
+    score = score_audit(rows)
+    assert (score["n"], score["correct"], score["precision"]) == (50, 45, 0.9)
+    assert score["wilson_95"] == [0.7864, 0.9565]
+    assert score["labels"] == {"correct": 45, "wrong_span": 3, "wrong_value": 2, "ambiguous": 0}
+    assert score["per_field"]["promoters"]["wrong_span"] == 3
+    assert score["label_sources"] == ["hand", "x"]
+
+
+def test_audit_score_rejects_an_unfilled_or_unknown_label() -> None:
+    with pytest.raises(ValueError, match="audit labels"):
+        score_audit([{"field_id": "face_value", "label": ""}])

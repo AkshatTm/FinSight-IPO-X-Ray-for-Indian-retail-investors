@@ -2,7 +2,7 @@
 
 Each row shows the passage around the answer with the answer between « and », and an empty
 ``label`` to fill with ``correct | wrong_span | wrong_value | ambiguous`` (05 section 3). The
-result is weak-label precision with a 95 % Wilson interval (P2.4 / E1).
+result is weak-label precision with a 95 % Wilson interval (P2.4 / E1): ``score_audit``.
 """
 
 from __future__ import annotations
@@ -12,6 +12,8 @@ import random
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
+
+from finsight.evaluate import wilson_interval
 
 AUDIT_SEED = 2026
 MIN_PER_FIELD = 10
@@ -81,3 +83,25 @@ def write_audit(path: Path, sample: list[dict[str, Any]], force: bool = False) -
         for row in sample:
             fh.write(json.dumps(row, ensure_ascii=False) + "\n")
     return path
+
+
+def score_audit(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Precision of the labelled sample (``correct`` / all) with a 95 % Wilson interval."""
+    bad = sorted({r["label"] for r in rows} - set(LABELS))
+    if bad:
+        raise ValueError(f"audit labels must be one of {', '.join(LABELS)}; found {bad}")
+    n = len(rows)
+    correct = sum(r["label"] == "correct" for r in rows)
+    low, high = wilson_interval(correct, n)
+    per_field: dict[str, dict[str, int]] = defaultdict(lambda: dict.fromkeys(LABELS, 0))
+    for r in rows:
+        per_field[r["field_id"]][r["label"]] += 1
+    return {
+        "n": n,
+        "correct": correct,
+        "precision": round(correct / n, 4) if n else 0.0,
+        "wilson_95": [round(low, 4), round(high, 4)],
+        "labels": {label: sum(r["label"] == label for r in rows) for label in LABELS},
+        "per_field": {f: per_field[f] for f in sorted(per_field)},
+        "label_sources": sorted({r.get("label_source", "hand") for r in rows}),
+    }
