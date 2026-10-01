@@ -1,4 +1,5 @@
 {
+ "label_version": 2,
  "n_ipos": 389,
  "by_doc_kind": {
   "prospectus": 279,
@@ -13,7 +14,7 @@
   "face_value": "255/389",
   "book_running_lead_managers": "110/389",
   "registrar": "99/389",
-  "promoters": "126/389"
+  "promoters": "127/389"
  },
  "seed_dropped": {
   "fresh_issue_size": {
@@ -57,8 +58,8 @@
   },
   "promoters": {
    "ambiguous": 2,
-   "no_match": 217,
-   "not_cover_format": 44
+   "no_match": 213,
+   "not_cover_format": 47
   }
  },
  "seed_agrees_with_excel": {
@@ -74,13 +75,13 @@
  "split_seed": 2026,
  "train": {
   "ipos": 272,
-  "examples": 4155,
-  "positives": 1669
+  "examples": 4047,
+  "positives": 1624
  },
  "dev": {
   "ipos": 30,
-  "examples": 505,
-  "positives": 200
+  "examples": 491,
+  "positives": 194
  },
  "per_field": {
   "fresh_issue_size": {
@@ -104,8 +105,8 @@
    "ipos": 110
   },
   "face_value": {
-   "positives": 939,
-   "negatives": 1400,
+   "positives": 893,
+   "negatives": 1339,
    "ipos": 255
   },
   "book_running_lead_managers": {
@@ -119,10 +120,10 @@
    "ipos": 87
   },
   "promoters": {
-   "positives": 93,
-   "negatives": 140,
-   "ipos": 78
+   "positives": 88,
+   "negatives": 130,
+   "ipos": 73
   }
  },
- "avg_context_chars": 1084
+ "avg_context_chars": 1087
 }
