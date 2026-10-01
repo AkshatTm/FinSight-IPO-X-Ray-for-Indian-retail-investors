@@ -39,6 +39,7 @@ function Facts({ ipoId, facts }: { ipoId: string; facts: Schemas["FactSummary"][
 export function GuardCard({ turn }: { turn: Turn }) {
   const { t, lang } = useT();
   const ask = useChat((s) => s.ask);
+  const openGlossary = useUi((s) => s.openGlossary);
   const g = turn.guard!;
   const kind = guardKind(g.reason);
   return (
@@ -49,9 +50,9 @@ export function GuardCard({ turn }: { turn: Turn }) {
         <>
           <Facts ipoId={turn.ipoId} facts={g.facts} />
           <p className="mt-3">
-            <a href="#glossary-sebi" className="text-stamp underline underline-offset-2" onClick={(e) => e.preventDefault()}>
+            <button type="button" className="inline-flex h-11 items-center text-stamp underline underline-offset-2" onClick={() => openGlossary("sebi")}>
               {t("guard.advice.sebi")}
-            </a>
+            </button>
           </p>
         </>
       )}

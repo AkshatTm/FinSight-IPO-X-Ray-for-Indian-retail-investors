@@ -5,7 +5,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { AskPane } from "@/components/chat/AskPane";
 import { FactsPane } from "@/components/facts/FactsPane";
+import { InspectorDrawer } from "@/components/inspector/InspectorDrawer";
+import { ShortcutsDialog } from "@/components/ui/ShortcutsDialog";
+import { GlossaryDrawer } from "@/components/ui/GlossaryDrawer";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
+import { useChat } from "@/lib/chatStore";
 import { useIpo, useIpos, useXray } from "@/lib/api/hooks";
 import { formatDate, formatMoney, formatRupee } from "@/lib/format";
 import { useUi } from "@/lib/store";
@@ -14,9 +18,12 @@ import { useT } from "@/lib/useT";
 import { fieldById, resolveField } from "@/lib/xray";
 import { DocumentPane } from "./DocumentPane";
 import { ResizablePanes } from "./ResizablePanes";
+import { Tour } from "./Tour";
 import { UnitToggle } from "./UnitToggle";
 
 type Tab = "facts" | "document" | "ask";
+
+const headBtn = "h-11 rounded-[6px] border border-rule px-3 text-sm hover:bg-surface-2";
 
 function Header({ id }: { id: string }) {
   const { t, lang } = useT();
@@ -24,6 +31,9 @@ function Header({ id }: { id: string }) {
   const { data: ipos } = useIpos();
   const { data: xray } = useXray(id);
   const ipo = ipos?.find((i) => i.id === id);
+  const openGlossary = useUi((s) => s.openGlossary);
+  const setInspector = useUi((s) => s.setInspector);
+  const answered = useChat((s) => (s.turns[id] ?? []).some((x) => x.final));
   const price = xray && fieldById(xray.fields, "offer_price");
   const r = price ? resolveField(price) : null;
   const priceText = r?.value?.kind === "money" && r.value.value_inr ? formatRupee(r.value.value_inr) : null;
@@ -52,7 +62,18 @@ function Header({ id }: { id: string }) {
         {item(t("ws.issueSize"), ipo?.issue_size_inr ? formatMoney(ipo.issue_size_inr, unit, lang) : null)}
         {item(t("ws.listed"), ipo?.listing_date ? formatDate(ipo.listing_date, lang) : null)}
       </dl>
-      <div className="flex items-center gap-2">
+      <div className="flex max-w-full flex-wrap items-center gap-2">
+        <button type="button" onClick={() => openGlossary()} className={headBtn}>{t("ws.glossary")}</button>
+        <button
+          type="button"
+          onClick={() => setInspector(true)}
+          disabled={!answered}
+          title={t("ws.inspectTip")}
+          aria-label={`${t("ws.inspect")}: ${t("ws.inspectTip")}`}
+          className={`${headBtn} disabled:cursor-not-allowed disabled:opacity-50`}
+        >
+          {t("ws.inspect")}
+        </button>
         <UnitToggle />
       </div>
     </div>
@@ -115,6 +136,10 @@ export function Workspace({ id }: { id: string }) {
   return (
     <div className="pt-4">
       <Header id={id} />
+      <GlossaryDrawer />
+      <InspectorDrawer ipoId={id} />
+      <ShortcutsDialog />
+      <Tour ready={!!detail} />
       <div className="h-[calc(100dvh-13.5rem)] min-h-[34rem]" data-layout={layout}>
         {layout === "wide" && (
           <ResizablePanes
