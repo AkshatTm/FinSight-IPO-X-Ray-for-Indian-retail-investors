@@ -2,7 +2,7 @@
 
     uv run python -m finsight.evaluate.seeded_errors [--split dev|test|all]
 
-This is a **unit benchmark**: answers are written from gold values with templates (English and
+This is a **unit-level benchmark**: answers are written from gold values with templates (English and
 Hindi), the evidence is the real passage of the demo document that states the value, and one
 number per answer is corrupted by a known rule. High recall is expected by design; evidence on
 natural errors comes from real LLM answers (E7) and frontier answers (E9).
@@ -17,6 +17,10 @@ natural errors comes from real LLM answers (E7) and frontier answers (E9).
 
 Detection = the corrupted number is not ✅. False alarm = any number of a correct answer is
 not ✅. Rules are tuned on the dev IPOs only; the report shows dev and test separately.
+
+Headline numbers are the **held-out** ones: the first run on all 10 IPOs with the rules frozen
+on the dev IPOs (``HELD_OUT``). One rule was fixed after that run showed misses on test IPOs,
+so what the current code scores is reported beside it as "after one rule fix" (ADR-044).
 """
 
 from __future__ import annotations
@@ -55,17 +59,20 @@ EXPECTED = {
     "correct": "verified",
     "rounding_ok": "verified",
 }
-# Kept for honesty: the first run on all 10 IPOs, with rules frozen after tuning on the 3 dev
-# IPOs (1 Oct 2026). Five rounded unit slips on test IPOs were caught as wrong_value, not
-# scale_mismatch; the power-of-ten check was then made precision-aware. See ADR-044.
-FIRST_RUN = {
-    "rules": "frozen on dev IPOs",
-    "detection": "100/100",
-    "false_alarm": "0/100",
-    "scale_mismatch_recall": "35/40",
-    "exact_reason": "95/100",
-    "misses": "5 scale_lakh_crore items on test IPOs, flagged as wrong_value",
+# The first run on all 10 IPOs (1 Oct 2026), rules frozen after tuning on the 3 dev IPOs: the
+# only run in which the 7 test IPOs were unseen, so it is the headline. Five rounded unit slips
+# on test IPOs came out as wrong_value, not scale_mismatch; the power-of-ten check was then
+# made precision-aware. Recorded here because re-running today's code cannot reproduce it.
+HELD_OUT = {  # (hits, n)
+    "detection": (100, 100),
+    "scale_mismatch_recall": (35, 40),
+    "exact_reason": (95, 100),
+    "false_alarm": (0, 100),
 }
+HELD_OUT_SCALE_BY_SPLIT = {"dev": (13, 13), "test": (22, 27)}
+HELD_OUT_LABEL = "held-out: rules frozen on the 3 dev IPOs, first run on all 10 (1 Oct 2026)"
+AFTER_FIX_LABEL = "after one rule fix, made on seeing the test-IPO misses; not held-out"
+HELD_OUT_MISSES = "5 scale_lakh_crore items on test IPOs, flagged as wrong_value"
 TEMPLATES = {
     "fresh_issue_size": ("The fresh issue is of {v} [1].", "फ्रेश इश्यू {v} का है [1]।"),
     "ofs_shares": ("The offer for sale is of {v} [1].", "ऑफर फॉर सेल {v} का है [1]।"),
@@ -346,6 +353,19 @@ def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def headline(metrics: dict[str, Any]) -> dict[str, Any]:
+    """Each rate twice: the held-out first run (the number to quote) and the current rules."""
+    out: dict[str, Any] = {}
+    for name, (hits, n) in HELD_OUT.items():
+        out[name] = {"held_out": _rate(hits, n), "after_one_rule_fix": metrics[name]}
+    out["scale_mismatch_recall"]["held_out"]["by_split"] = {
+        split: _rate(hits, n) for split, (hits, n) in HELD_OUT_SCALE_BY_SPLIT.items()
+    }
+    out["labels"] = {"held_out": HELD_OUT_LABEL, "after_one_rule_fix": AFTER_FIX_LABEL}
+    out["held_out_misses"] = HELD_OUT_MISSES
+    return out
+
+
 def _git_sha() -> str | None:
     try:
         out = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True,
@@ -356,9 +376,11 @@ def _git_sha() -> str | None:
 
 
 def report(rows: list[dict[str, Any]], skipped: list[str], n_bases: int) -> dict[str, Any]:
+    metrics = summarise(rows)
     out: dict[str, Any] = {
         "experiment": "E5",
         "name": "verifier_seeded_errors",
+        "benchmark_level": "unit",
         "seed": SEED,
         "created_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "git_sha": _git_sha(),
@@ -369,7 +391,9 @@ def report(rows: list[dict[str, Any]], skipped: list[str], n_bases: int) -> dict
             "n_items": len(rows),
             "skipped_gold_values": skipped,
         },
-        "metrics": summarise(rows),
+        "headline": headline(metrics),
+        "metrics_label": AFTER_FIX_LABEL,
+        "metrics": metrics,
         "by_split": {s: summarise([r for r in rows if r["split"] == s]) for s in ("dev", "test")},
         "by_language": {
             lang: summarise([r for r in rows if r["language"] == lang]) for lang in ("en", "hi")
@@ -379,11 +403,13 @@ def report(rows: list[dict[str, Any]], skipped: list[str], n_bases: int) -> dict
             for r in rows
             if not r["ok"] or not r["exact"]
         ],
-        "first_run": FIRST_RUN,
         "notes": (
-            "Unit benchmark: errors are constructed by known rules on templated answers, so high "
-            "recall is expected by design. Rules were tuned on the dev IPOs, then one rule was "
-            "generalised after the first full run (see first_run and ADR-044)."
+            "E5 is a unit-level benchmark: errors are built by known rules on templated answers, "
+            "so high recall is expected by design; it says nothing about free LLM text (E7, E9). "
+            "Quote the held-out figures in `headline`: scale-mismatch recall 35/40 with rules "
+            "frozen on the dev IPOs. `metrics`, `by_split` and `by_language` are the current "
+            "rules, after one rule fix made on seeing test-IPO misses: 40/40, not held-out "
+            "(ADR-044)."
         ),
     }
     return out
@@ -407,6 +433,10 @@ def main(argv: list[str] | None = None) -> int:
     rows = [run_item(item) for item in build_items(bases)]
     result = report(rows, skipped, len(bases))
     m = result["metrics"]
+    held = result["headline"]["scale_mismatch_recall"]["held_out"]
+    print(f"HEADLINE scale_mismatch_recall {held['hits']}/{held['n']}  {held['wilson_95']}  "
+          f"({HELD_OUT_LABEL})")  # fmt: skip
+    print(f"below: {AFTER_FIX_LABEL}")
     for name in ("detection", "scale_mismatch_recall", "exact_reason", "false_alarm"):
         print(f"{name:22} {m[name]['hits']}/{m[name]['n']}  {m[name]['wilson_95']}")
     for kind, row in m["per_type"].items():

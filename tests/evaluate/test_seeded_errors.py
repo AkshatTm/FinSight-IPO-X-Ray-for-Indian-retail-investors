@@ -7,6 +7,7 @@ from finsight.evaluate.seeded_errors import (
     build_items,
     change_digit,
     load_bases,
+    report,
     rounded,
     run_item,
     scale_lakh_crore,
@@ -136,3 +137,25 @@ def test_summary_counts_detection_and_false_alarms_separately() -> None:
     assert (s["scale_mismatch_recall"]["hits"], s["scale_mismatch_recall"]["n"]) == (0, 1)
     assert (s["false_alarm"]["hits"], s["false_alarm"]["n"]) == (1, 2)
     assert s["per_type"]["digit"] == {"n": 1, "ok": 1, "exact": 1, "got": {"wrong_value": 1}}
+
+
+def test_the_headline_is_the_held_out_run_with_the_fix_beside_it() -> None:
+    bases, skipped = load_bases(GOLD, PASSAGES, SPLITS)
+    rows = [run_item(i) for i in build_items(bases)]
+    result = report(rows, skipped, len(bases))
+    assert result["benchmark_level"] == "unit"
+    scale = result["headline"]["scale_mismatch_recall"]
+    assert (scale["held_out"]["hits"], scale["held_out"]["n"]) == (35, 40)
+    assert scale["held_out"]["rate"] == 0.875
+    assert scale["held_out"]["wilson_95"][0] < 0.875 < scale["held_out"]["wilson_95"][1]
+    by_split = scale["held_out"]["by_split"]
+    assert (by_split["dev"]["hits"], by_split["test"]["hits"], by_split["test"]["n"]) == (
+        13,
+        22,
+        27,
+    )
+    assert scale["after_one_rule_fix"] == result["metrics"]["scale_mismatch_recall"]
+    assert set(result["headline"]) >= {"detection", "exact_reason", "false_alarm", "labels"}
+    assert "not held-out" in result["headline"]["labels"]["after_one_rule_fix"]
+    assert "unit-level" in result["notes"]
+    assert "35/40" in result["notes"]
