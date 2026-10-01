@@ -284,7 +284,7 @@ For each claim (sentence) in the answer:
 3. Search evidence: cited passages first, then the other retrieved passages. Normalize every amount in the evidence; attach nearest metric keyword within a window of ~20 tokens.
 4. Decide:
    - **✅ verified** — an evidence amount is equal (within stated precision, §10.4) and its metric matches (or the claim has no metric and the value is unique in the evidence).
-   - **❌ contradicted / scale_mismatch** — same metric, values differ by exactly 10ᵏ (k = 1, 2, 3) after normalization **and** either the scale words differ (lakh↔crore, million↔crore, thousand↔million) **or** the printed digits are identical. Always ❌. A 10× gap with different digits and the same scale word is `wrong_value` (e.g. face value ₹10 vs ₹1). See ADR-027.
+   - **❌ contradicted / scale_mismatch** — the values differ by exactly a power of ten after normalization (within printed precision), and one of: **(a)** the printed digits are identical and the unit is different or missing ("₹ 26,260 crore" or a bare "₹ 26,260" against "₹ 26,260 million"): this holds for any power of ten (up to 10⁹) and needs no metric match; **(b)** the digits differ, the scale words differ (lakh↔crore, million↔crore, thousand↔million), the gap is 10ᵏ with k = 1, 2, 3, and the metric is compatible. Always ❌. A 10× gap with different digits and the same scale word is `wrong_value` (e.g. face value ₹10 vs ₹1). See ADR-027 and ADR-044.
    - **❌ contradicted / wrong_value** — same metric, different value.
    - **❌ contradicted / wrong_metric** — equal value found but attached to a different metric (e.g. the answer calls the OFS amount the fresh issue).
    - **⚠️ unverifiable / not_found** — number absent from all evidence.
