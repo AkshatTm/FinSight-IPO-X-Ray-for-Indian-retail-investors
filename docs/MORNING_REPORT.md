@@ -17,7 +17,10 @@ Updated after every merge. Plain language.
 
 - F5b Voice, inspector, glossary, tour (this PR): mic button with MediaRecorder (20 s cap, level ring, timer, all eight states), transcript lands editable in the box and is never auto-sent, Hindi transcript switches the answer language; inspector drawer (steps and time, pages read incl. dropped, number checks, exact prompt from `/api/traces/{id}`); glossary drawer (17 terms, search) opened from the header, the advice card and the term popover; three-step first-visit tour (`fs_tour_workspace`, never in `?demo=1`); `?` shortcuts dialog. Composer drafts now live in the chat store.
 
+- L Landing (this PR): all sections of spec 5 in EN and HI; hero lens over a stand-in cover page (CSS lens, solid box when reduced motion/transparency), tag after 400 ms, cursor-follow on mouse only; chatbot example card; three steps with marks; interactive mini demo on Ather (own highlight state, shared PageViewer); Hindi question with "Play the example" (hi_q02.m4a); limits; stats hidden when missing; final CTA. Glossary terms linked on first mention.
+
 ## Look at first
+- docs/screenshots/l/: desktop-light-en-full.png, desktop-dark-hi-full.png, mobile-dark-hi-full.png, desktop-hero.png
 - docs/screenshots/f5b/: inspector-1366.png, voice-recording-1366.png, voice-done-1366.png, glossary-1366.png, tour-1366.png, composer-mobile-hi-dark.png
 - docs/screenshots/f1/: desktop-light-en.png, desktop-dark-hi.png, mobile-menu.png
 - docs/screenshots/f5/: desktop-answer.png, desktop-evidence-drawer.png, desktop-advice.png, desktop-abstain.png, mobile-dark-hi-drawer.png
@@ -30,7 +33,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: L Landing.
+- Next: H How it works, About, 404/500.
 
 ## RAM peak
 - not yet measured
