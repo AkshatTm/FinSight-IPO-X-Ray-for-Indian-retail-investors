@@ -15,7 +15,10 @@ Updated after every merge. Plain language.
 
 - F5 Ask (this PR): SSE client and parser (property-tested), reducer, seven mock streams (normal, scale trick, abstain, advice, forecast, privacy, error), stage line, tick-and-tie reveal (marks stagger 120 ms, space reserved, leader line when the cited page is on screen, reduced motion = instant), faithfulness meter, citation chips with preview, Copy toast, evidence drawer with the 13.1 reason templates, guard/abstain/error cards, composer (Enter, Shift+Enter, `/`, 300 limit). Measured layout shift while an answer streams: 0.008.
 
+- F5b Voice, inspector, glossary, tour (this PR): mic button with MediaRecorder (20 s cap, level ring, timer, all eight states), transcript lands editable in the box and is never auto-sent, Hindi transcript switches the answer language; inspector drawer (steps and time, pages read incl. dropped, number checks, exact prompt from `/api/traces/{id}`); glossary drawer (17 terms, search) opened from the header, the advice card and the term popover; three-step first-visit tour (`fs_tour_workspace`, never in `?demo=1`); `?` shortcuts dialog. Composer drafts now live in the chat store.
+
 ## Look at first
+- docs/screenshots/f5b/: inspector-1366.png, voice-recording-1366.png, voice-done-1366.png, glossary-1366.png, tour-1366.png, composer-mobile-hi-dark.png
 - docs/screenshots/f1/: desktop-light-en.png, desktop-dark-hi.png, mobile-menu.png
 - docs/screenshots/f5/: desktop-answer.png, desktop-evidence-drawer.png, desktop-advice.png, desktop-abstain.png, mobile-dark-hi-drawer.png
 - docs/screenshots/f4/: desktop-popover.png, desktop-split-objects-compare.png, desktop-pure-ofs.png, mobile-dark-hi.png
@@ -27,7 +30,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: F5b voice, inspector, glossary, tour.
+- Next: L Landing.
 
 ## RAM peak
 - not yet measured
