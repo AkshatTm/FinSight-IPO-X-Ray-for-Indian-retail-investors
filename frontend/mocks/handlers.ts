@@ -59,4 +59,28 @@ export const handlers = [
     });
     return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache" } });
   }),
+  http.post("/api/voice", async () => {
+    await delay(900);
+    return HttpResponse.json({
+      transcript: "इस आईपीओ का पैसा कहाँ लगेगा?",
+      language: "hi",
+      asr_model: "mock",
+      ms: 900,
+    });
+  }),
+  http.get("/api/traces/:id", ({ params }) =>
+    HttpResponse.json({
+      trace_id: String(params.id),
+      question: "(mock)",
+      stages: [],
+      passages: [],
+      prompt:
+        "You answer questions about an IPO offer document. Use only the passages below. Cite them as [n]. " +
+        "If the passages do not contain the answer, say so.\n\n" +
+        "[1] RHP p.120: Objects of the Offer. Capital expenditure (Rs. in million) 20,000.00 ...\n\n" +
+        "Question: (mock)",
+      checks: [],
+      timings_ms: { guard: 3, retrieving: 410, generating: 5200, verifying: 40 },
+    }),
+  ),
 ];

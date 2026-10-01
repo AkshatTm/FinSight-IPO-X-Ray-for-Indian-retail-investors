@@ -1,15 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { useChat } from "@/lib/chatStore";
 import { Composer } from "./Composer";
 
 describe("Composer", () => {
+  beforeEach(() => useChat.setState({ drafts: {} }));
   it("sends on Enter, adds a line on Shift+Enter, ignores empty text", async () => {
     const onSend = vi.fn();
-    render(<Composer disabled={false} onSend={onSend} />);
+    render(<Composer ipoId="x" disabled={false} onSend={onSend} />);
     const box = screen.getByPlaceholderText("Ask a question");
     await userEvent.type(box, "Who are the promoters?{Enter}");
-    expect(onSend).toHaveBeenCalledWith("Who are the promoters?");
+    expect(onSend).toHaveBeenCalledWith("Who are the promoters?", false);
     expect(box).toHaveValue("");
     await userEvent.type(box, "a{Shift>}{Enter}{/Shift}b");
     expect(box).toHaveValue("a\nb");
@@ -20,13 +22,13 @@ describe("Composer", () => {
   });
   it("does not send while an answer is streaming", async () => {
     const onSend = vi.fn();
-    render(<Composer disabled onSend={onSend} />);
+    render(<Composer ipoId="x" disabled onSend={onSend} />);
     await userEvent.type(screen.getByPlaceholderText("Ask a question"), "hello{Enter}");
     expect(onSend).not.toHaveBeenCalled();
     expect(screen.getByRole("button", { name: "Ask" })).toBeDisabled();
   });
   it("shows the counter after 250 characters and stops at 300", async () => {
-    render(<Composer disabled={false} onSend={() => {}} />);
+    render(<Composer ipoId="x" disabled={false} onSend={() => {}} />);
     const box = screen.getByPlaceholderText("Ask a question");
     expect(screen.queryByText(/of 300/)).toBeNull();
     await userEvent.click(box);
@@ -36,7 +38,7 @@ describe("Composer", () => {
     expect((box as HTMLTextAreaElement).value.length).toBe(300);
   });
   it("focuses the box when / is pressed outside a field", async () => {
-    render(<Composer disabled={false} onSend={() => {}} />);
+    render(<Composer ipoId="x" disabled={false} onSend={() => {}} />);
     await userEvent.keyboard("/");
     expect(screen.getByPlaceholderText("Ask a question")).toHaveFocus();
   });
