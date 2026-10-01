@@ -1,5 +1,6 @@
 # PROGRESS (≤ 10 lines; newest first; Claude Code updates at the end of each sub-phase)
 
+- 3 Oct — F5 Ask (#80): lib/sse (incremental parser), lib/chat (pure reducer, 13.1 reason templates, meter, segments), chatStore, 7 MSW streams, tick-and-tie answer, evidence drawer, guard/abstain/error cards, composer; guard `forecast` reason is a proposal for P3.6 (contract lists only advice_intent/privacy). Next F5b.
 - 3 Oct — F4 Facts (#78): X-Ray pane per spec 7.3/12 (field content table, resolveField prefers prospectus when RHP is blank, scalarText/sentenceAround/parseObjectsTable with tests), VerdictMark SVGs, FactRow + popover, MoneySplit, ObjectsBars, compare toggle; mock words endpoint. Next F5 Ask.
 - 3 Oct — F3 Workspace + Document (#76): resizable three-pane layout (two panes + tabs at 1024-1279, tabs below), header key facts, unit toggle, PageViewer with percentage-positioned highlight layer driven by the one Zustand highlight, doc switch, section jump, thumbnails, keyboard; mock page images. Facts and Ask are placeholder panes until F4/F5. Next F4 Facts.
 - 3 Oct — F2 Library (#72): /ipos on mocks with search, sort, filter chips, fresh/OFS bar, hover preview from X-Ray, first-visit hint, loading/empty/error states; Hindi unit words in `formatMoney`; X-Ray mock generator (all field states) for F3-F5. Next F3 Workspace + Document.
