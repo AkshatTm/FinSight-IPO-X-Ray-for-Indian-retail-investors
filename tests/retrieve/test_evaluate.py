@@ -129,3 +129,45 @@ def test_evaluate_end_to_end_with_bm25_and_dev_only_threshold() -> None:
     assert method["abstain"]["test_unanswerable_abstained"] == "1/1"
     assert method["abstain"]["test_answerable_wrongly_abstained"] == "0/1"
     assert report["thresholds"]["bm25"] is not None  # type: ignore[index]
+
+
+def test_dev_only_mode_never_searches_the_test_questions() -> None:
+    seen: list[str] = []
+
+    def search(q: Question):  # type: ignore[no-untyped-def]
+        seen.append(q.question)
+        return [
+            hit(3, 1, score=2.0 if q.answerable else 0.1, ipo=q.ipo_id)
+        ], 2.0 if q.answerable else 0.1
+
+    dev = [
+        Question(
+            ipo_id=ipo,
+            question=f"{ipo}-{k}",
+            language="en",
+            evidence_page=3 if k else None,
+            answerable=bool(k),
+        )
+        for ipo in ("a-2025", "b-2025", "c-2025")
+        for k in (0, 1, 1)
+    ]
+    report = evaluate(dev, None, {"bm25": search})
+    method = report["methods"]["bm25"]  # type: ignore[index]
+    assert "test" not in method
+    assert all(name.endswith(("-0", "-1")) for name in seen)
+    loo = method["abstain"]["dev_leave_one_ipo_out"]
+    assert loo["unanswerable_abstained"] == "3/3"
+    assert loo["answerable_wrongly_abstained"] == "0/6"
+    assert set(loo["per_held_out_ipo"]) == {"a-2025", "b-2025", "c-2025"}
+
+
+def test_constrained_threshold_refuses_few_answerable_questions() -> None:
+    from finsight.retrieve.evaluate import tune_threshold_constrained
+
+    answerable = [(True, s) for s in (0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05)]
+    unanswerable = [(False, s) for s in (0.45, 0.25, 0.02)]
+    t = tune_threshold_constrained(answerable + unanswerable, max_false_abstain=0.10)
+    assert t == 0.1  # refusing one of ten answerable questions (0.05) is the limit
+    refused = sum(s < t for a, s in answerable if a)
+    assert refused / len(answerable) <= 0.10
+    assert tune_threshold_constrained(answerable, 0.1) is None  # nothing to tune against
