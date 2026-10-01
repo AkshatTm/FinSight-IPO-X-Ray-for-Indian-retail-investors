@@ -1,8 +1,9 @@
 """Offline pipeline CLI.
 
 uv run python -m finsight.pipeline build --ipo meesho-2025 [--doc rhp|prospectus|both]
-                                        [--stage parse|sections|tables|rules|qa|xray] [--no-images]
-uv run python -m finsight.pipeline build-all [--stage parse|sections|tables|rules|qa|xray]
+                                        [--stage parse|sections|tables|rules|qa|xray|index]
+                                        [--no-images]
+uv run python -m finsight.pipeline build-all [--stage parse|sections|tables|rules|qa|xray|index]
                                             [--no-images]
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 [--doc rhp] --stats
 uv run python -m finsight.pipeline inspect --ipo meesho-2025 --page 1 [--lines 20]
@@ -24,6 +25,7 @@ from finsight.extract import QAExtractor
 from finsight.ingest.registry import DemoIpo, get_demo_ipo, list_demo_ipos
 from finsight.parse import KEY_SECTIONS
 from finsight.pipeline import inspect as insp
+from finsight.pipeline.index_stage import run_index
 from finsight.pipeline.parse_stage import ParseReport, load_parsed, run_parse
 from finsight.pipeline.rules_stage import (
     RulesRun,
@@ -34,8 +36,9 @@ from finsight.pipeline.rules_stage import (
 from finsight.pipeline.sections_stage import run_sections, section_matrix, write_matrix
 from finsight.pipeline.tables_stage import TablesReport, run_tables, update_summary
 from finsight.pipeline.xray_stage import run_qa, run_xray, write_xray_summary, xray_summary
+from finsight.retrieve import BgeM3Embedder
 
-STAGES = ["parse", "sections", "tables", "rules", "qa", "xray"]
+STAGES = ["parse", "sections", "tables", "rules", "qa", "xray", "index"]
 
 
 def _docs(choice: str) -> list[DocType]:
@@ -137,10 +140,14 @@ def main(argv: list[str] | None = None) -> int:
     build.add_argument("--doc", choices=["rhp", "prospectus", "both"], default="both")
     build.add_argument("--stage", choices=STAGES, default="parse")
     build.add_argument("--no-images", action="store_true")
+    build.add_argument("--dense", action="store_true", help="index stage: also embed (ml group)")
 
     build_all = sub.add_parser("build-all", help="run pipeline stages for every demo IPO")
     build_all.add_argument("--stage", choices=STAGES, default="parse")
     build_all.add_argument("--no-images", action="store_true")
+    build_all.add_argument(
+        "--dense", action="store_true", help="index stage: also embed (ml group)"
+    )
 
     ins = sub.add_parser("inspect", help="capped view of a parsed document (<= 40 lines)")
     ins.add_argument("--ipo", required=True)
@@ -153,7 +160,15 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
 
-    if args.command == "build" and args.stage == "sections":
+    if args.stage == "index":
+        embedder = BgeM3Embedder() if args.dense else None  # one model load for every IPO
+        ipos = [get_demo_ipo(args.ipo)] if args.command == "build" else list_demo_ipos()
+        for ipo in ipos:
+            r = run_index(get_settings().paths.processed_dir, ipo.ipo_id, embedder=embedder)
+            print(
+                f"{r.ipo_id:28} passages={r.passages:5} table_passages={r.tables:4} dense={r.dense}"
+            )
+    elif args.command == "build" and args.stage == "sections":
         _sections(get_demo_ipo(args.ipo), _docs(args.doc))
     elif args.command == "build" and args.stage == "rules":
         _rules(get_demo_ipo(args.ipo), _docs(args.doc))
