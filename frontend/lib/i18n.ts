@@ -384,6 +384,40 @@ export const STRINGS = d({
   "compare.toggle": { en: "Show how each method read this", hi: "दिखाएँ कि हर तरीके ने इसे कैसे पढ़ा" },
   "compare.foot": { en: "Gold = values checked by hand against the PDF.", hi: "गोल्ड = पीडीएफ़ से हाथ से जाँचे गए मान।" },
 
+  // 7.5 Ask
+  "ask.empty": {
+    en: "Ask anything about this IPO's documents. Each number in the answer will be checked against the pages.",
+    hi: "इस आईपीओ के दस्तावेज़ों के बारे में कुछ भी पूछें। जवाब का हर आंकड़ा पन्नों से जाँचा जाएगा।",
+  },
+  "ask.placeholder": { en: "Ask a question", hi: "सवाल पूछें" },
+  "ask.send": { en: "Ask", hi: "पूछें" },
+  "ask.counter": { en: "{n} of 300", hi: "{n} / 300" },
+  "ask.chip.money": { en: "How much money is the company raising?", hi: "कंपनी कितना पैसा जुटा रही है?" },
+  "ask.chip.use": { en: "What will the money be used for?", hi: "पैसा किस काम में लगेगा?" },
+  "ask.chip.promoters": { en: "Who are the promoters?", hi: "प्रमोटर कौन हैं?" },
+  "ask.chip.price": { en: "What was the final offer price?", hi: "अंतिम ऑफ़र प्राइस क्या था?" },
+  "ask.chip.ofs": { en: "Who is selling shares in the offer for sale?", hi: "ओएफएस में शेयर कौन बेच रहा है?" },
+  "ask.copy": { en: "Copy", hi: "कॉपी करें" },
+  "ask.answerOf": { en: "Answer", hi: "उत्तर" },
+  "ask.you": { en: "Your question", hi: "आपका सवाल" },
+  "ask.pastRevenue": { en: "What were the past revenue and profit?", hi: "पिछली आमदनी और मुनाफ़ा क्या था?" },
+  "mark.open": { en: "Open the check for {value}", hi: "{value} की जाँच खोलें" },
+  "cite.jump": { en: "Show source {n} in the document", hi: "स्रोत {n} दस्तावेज़ में दिखाएँ" },
+
+  // 7.6 Evidence drawer
+  "ev.inAnswer": { en: "In the answer", hi: "जवाब में" },
+  "ev.inDoc": { en: "In the document", hi: "दस्तावेज़ में" },
+  "ev.asWritten": { en: "As written", hi: "जैसा लिखा है" },
+  "ev.inCrore": { en: "In ₹ crore", hi: "₹ करोड़ में" },
+  "ev.inMillion": { en: "In ₹ million", hi: "₹ मिलियन में" },
+  "ev.reason": { en: "Reason", hi: "कारण" },
+  "ev.source": { en: "Source", hi: "स्रोत" },
+  "ev.sourceLine": { en: "{doc}, page {page}", hi: "{doc}, पन्ना {page}" },
+  "ev.foot": {
+    en: "FinSight compares numbers with code, not with another AI model.",
+    hi: "FinSight आंकड़ों की तुलना कोड से करता है, किसी दूसरे एआई मॉडल से नहीं।",
+  },
+
   // 17 keyboard shortcuts dialog (copy not in the spec: written per spec section 1, see AKSHAT_TODO)
   "keys.title": { en: "Keyboard shortcuts", hi: "कीबोर्ड शॉर्टकट" },
   "keys.focusInput": { en: "Focus the question box", hi: "सवाल वाले बॉक्स पर जाएँ" },
