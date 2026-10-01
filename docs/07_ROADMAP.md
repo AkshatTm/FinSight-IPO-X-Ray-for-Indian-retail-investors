@@ -186,8 +186,8 @@ Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 
 - [x] `guard/advice.py` keyword/regex EN/HI/Hinglish + facts payload; scored on Akshat's advice set (≥ 50 advice + ≥ 50 factual, written by him and friends) + tests → E8 (keyword row) → 60/60 advice blocked, 0/60 factual blocked, in-sample on an AI-drafted set; 33/36 and 0/49 on unseen probes; privacy guard added; ADR-046; #56
 
 ### P3.5 Voice `feat/p3.5-voice` [CC→AKSHAT] — Sun 18 Oct (afternoon)
-- [ ] `voice/asr.py` backends + lazy load/unload; ASR bake-off script → E12 + ADR
-- [ ] [AKSHAT] Record 10 Hindi questions to `data/raw/audio/`
+- [x] `voice/asr.py` backends + lazy load/unload; ASR bake-off script → E12 + ADR-021 (turbo CER 0.06 vs small 0.36, 9.8 s per 6.5 s clip: misses the 6 s target; references not yet reviewed by Akshat); #64
+- [x] [AKSHAT] Record 10 Hindi questions to `data/raw/audio/`
 
 ### P3.6 Chat orchestrator + traces `feat/p3.6-chat` [CC] — Mon 19 Oct
 - [ ] `chat/orchestrator.py` emitting the event sequence of `06_API_CONTRACT.md`; traces to SQLite; E7 script

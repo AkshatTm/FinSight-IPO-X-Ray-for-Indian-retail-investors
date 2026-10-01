@@ -1,0 +1,428 @@
+{
+ "compute_type": "int8",
+ "device": "cpu",
+ "n_clips": 10,
+ "references_reviewed_by_akshat": "0/10",
+ "reference_sources": [
+  "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context"
+ ],
+ "draft_model": "large-v3-turbo",
+ "note": "no reference has been reviewed by Akshat: `reference` is the raw Whisper draft (large-v3-turbo), `reference_corrected` (primary) is Claude Code's reading of what was said; CER against either is optimistic for the drafting model",
+ "run_at": "2026-10-02 02:32",
+ "models": {
+  "small": {
+   "summary": {
+    "mean_cer": 0.3633,
+    "median_cer": 0.2977,
+    "mean_cer_vs_raw_draft": 0.3465,
+    "mean_wer": 0.5569,
+    "median_seconds_per_clip": 2.935,
+    "max_seconds_per_clip": 3.35,
+    "first_clip_seconds": 3.1,
+    "real_time_factor": 0.45,
+    "mean_audio_s": 6.55,
+    "load_s": 11.5,
+    "rss_mb_before": 35,
+    "rss_mb_after_load_and_run": 374
+   },
+   "clips": [
+    {
+     "clip": "hi_q01",
+     "hypothesis": "ग्रोग के अईपियु में फ्रेश इशू कितने का है?",
+     "reference": "ग्रो के आईपीओ में फ्रेश इश्यू कितने का है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.2121,
+     "cer_vs_raw_draft": 0.125,
+     "cer_with_spaces": 0.1707,
+     "wer": 0.3333,
+     "audio_s": 5.63,
+     "seconds": 3.1
+    },
+    {
+     "clip": "hi_q02",
+     "hypothesis": "लेंस कार्ट के प्रमोड़त कोन है?",
+     "reference": "लेंसकार्ट के प्रमोटर कौन हैं",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1667,
+     "cer_vs_raw_draft": 0.1304,
+     "cer_with_spaces": 0.1786,
+     "wer": 1.0,
+     "audio_s": 4.22,
+     "seconds": 2.65
+    },
+    {
+     "clip": "hi_q03",
+     "hypothesis": "मीशो के अईपियो कारज़िस्चार कोन है?",
+     "reference": "मीशो के IPO का रजिस्ट्रार कौन है?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.3846,
+     "cer_vs_raw_draft": 0.36,
+     "cer_with_spaces": 0.3438,
+     "wer": 0.5714,
+     "audio_s": 5.7,
+     "seconds": 2.78
+    },
+    {
+     "clip": "hi_q04",
+     "hypothesis": "लगी एक्ट्रोनिक्स के अईबियो से कमपनी को कितना पैसा मेलेगा",
+     "reference": "LG Electronics के IPO से कंपनी को कितना पैसा मिलेगा",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.5476,
+     "cer_vs_raw_draft": 0.5476,
+     "cer_with_spaces": 0.451,
+     "wer": 0.5,
+     "audio_s": 8.19,
+     "seconds": 3.35
+    },
+    {
+     "clip": "hi_q05",
+     "hypothesis": "ताता केपिटल का अफर प्रैस कितना था?",
+     "reference": "टाटा कैपिटल का ऑफर प्राइस कितना था?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.2143,
+     "cer_vs_raw_draft": 0.1786,
+     "cer_with_spaces": 0.1765,
+     "wer": 0.5714,
+     "audio_s": 6.91,
+     "seconds": 2.79
+    },
+    {
+     "clip": "hi_q06",
+     "hypothesis": "विजिक्स वाला आईपियो का पैसा किस काम में लगेगा?",
+     "reference": "फिजिक्स वाला IPO का पैसा किस काम में लगेगा?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.2059,
+     "cer_vs_raw_draft": 0.2059,
+     "cer_with_spaces": 0.1667,
+     "wer": 0.2222,
+     "audio_s": 6.66,
+     "seconds": 3.03
+    },
+    {
+     "clip": "hi_q07",
+     "hypothesis": "अज्दीवी फिनेश्यल्ते अईप्यो का कुल साएस किता है?",
+     "reference": "HDB Financial के IPO का कुल साइज़ कितना है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.7879,
+     "cer_vs_raw_draft": 0.8485,
+     "cer_with_spaces": 0.6585,
+     "wer": 0.6667,
+     "audio_s": 8.32,
+     "seconds": 3.14
+    },
+    {
+     "clip": "hi_q08",
+     "hypothesis": "आदर अनर्जी के एक शियर की फेस वेलिव कितनी है",
+     "reference": "एथर एनर्जी के एक शेयर की फेस वैल्यू कितनी है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.2286,
+     "cer_vs_raw_draft": 0.2727,
+     "cer_with_spaces": 0.1818,
+     "wer": 0.4,
+     "audio_s": 6.98,
+     "seconds": 3.0
+    },
+    {
+     "clip": "hi_q09",
+     "hypothesis": "अबन कम्पनी के लीध मैनजर कोई गोन है",
+     "reference": "अर्बन कंपनी के लीड मैनेजर कौन कौन हैं?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.3667,
+     "cer_vs_raw_draft": 0.2963,
+     "cer_with_spaces": 0.2973,
+     "wer": 0.875,
+     "audio_s": 6.72,
+     "seconds": 2.78
+    },
+    {
+     "clip": "hi_q10",
+     "hypothesis": "क्या मुझे ग्रो का अईप्यो लेना जाहिये?",
+     "reference": "क्या मुझे Groww का IPO लेना चाहिए?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.5185,
+     "cer_vs_raw_draft": 0.5,
+     "cer_with_spaces": 0.4242,
+     "wer": 0.4286,
+     "audio_s": 6.21,
+     "seconds": 2.87
+    }
+   ]
+  },
+  "medium": {
+   "summary": {
+    "mean_cer": 0.2893,
+    "median_cer": 0.1795,
+    "mean_cer_vs_raw_draft": 0.2988,
+    "mean_wer": 0.3523,
+    "median_seconds_per_clip": 7.6899999999999995,
+    "max_seconds_per_clip": 8.84,
+    "first_clip_seconds": 8.28,
+    "real_time_factor": 1.18,
+    "mean_audio_s": 6.55,
+    "load_s": 39.0,
+    "rss_mb_before": 35,
+    "rss_mb_after_load_and_run": 883
+   },
+   "clips": [
+    {
+     "clip": "hi_q01",
+     "hypothesis": "ग्रोग के IPO में फ्रेश इशू कितने का है?",
+     "reference": "ग्रो के आईपीओ में फ्रेश इश्यू कितने का है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.2424,
+     "cer_vs_raw_draft": 0.1562,
+     "cer_with_spaces": 0.1951,
+     "wer": 0.3333,
+     "audio_s": 5.63,
+     "seconds": 8.28
+    },
+    {
+     "clip": "hi_q02",
+     "hypothesis": "लेन्स कार्ट के प्रमोटर कों हैं?",
+     "reference": "लेंसकार्ट के प्रमोटर कौन हैं",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1667,
+     "cer_vs_raw_draft": 0.2174,
+     "cer_with_spaces": 0.1786,
+     "wer": 0.6,
+     "audio_s": 4.22,
+     "seconds": 7.66
+    },
+    {
+     "clip": "hi_q03",
+     "hypothesis": "मेशो के IPO का रजिस्ट्राद कों हैं?",
+     "reference": "मीशो के IPO का रजिस्ट्रार कौन है?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1923,
+     "cer_vs_raw_draft": 0.24,
+     "cer_with_spaces": 0.1562,
+     "wer": 0.5714,
+     "audio_s": 5.7,
+     "seconds": 7.76
+    },
+    {
+     "clip": "hi_q04",
+     "hypothesis": "LG Electronics के IPO से Company को कितना पैसा मिलेगा",
+     "reference": "LG Electronics के IPO से कंपनी को कितना पैसा मिलेगा",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1667,
+     "cer_vs_raw_draft": 0.1667,
+     "cer_with_spaces": 0.1373,
+     "wer": 0.1,
+     "audio_s": 8.19,
+     "seconds": 7.61
+    },
+    {
+     "clip": "hi_q05",
+     "hypothesis": "Tata Capital का offer price कितना था?",
+     "reference": "टाटा कैपिटल का ऑफर प्राइस कितना था?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.75,
+     "cer_vs_raw_draft": 0.75,
+     "cer_with_spaces": 0.6471,
+     "wer": 0.5714,
+     "audio_s": 6.91,
+     "seconds": 6.81
+    },
+    {
+     "clip": "hi_q06",
+     "hypothesis": "फिजिक्स वाला IPO का पैसा किस काम में लगेगा?",
+     "reference": "फिजिक्स वाला IPO का पैसा किस काम में लगेगा?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0,
+     "wer": 0.0,
+     "audio_s": 6.66,
+     "seconds": 8.51
+    },
+    {
+     "clip": "hi_q07",
+     "hypothesis": "HDB Financial के IPO का कुल size कितना है?",
+     "reference": "HDB Financial के IPO का कुल साइज़ कितना है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1212,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0976,
+     "wer": 0.1111,
+     "audio_s": 8.32,
+     "seconds": 7.09
+    },
+    {
+     "clip": "hi_q08",
+     "hypothesis": "एथर एनर्जी के एक शियर की फेस वैल्यू कितनी हैं?",
+     "reference": "एथर एनर्जी के एक शेयर की फेस वैल्यू कितनी है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0571,
+     "cer_vs_raw_draft": 0.1515,
+     "cer_with_spaces": 0.0455,
+     "wer": 0.2,
+     "audio_s": 6.98,
+     "seconds": 8.84
+    },
+    {
+     "clip": "hi_q09",
+     "hypothesis": "Urban Company के Lead Manager कों कों हैं?",
+     "reference": "अर्बन कंपनी के लीड मैनेजर कौन कौन हैं?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.9,
+     "cer_vs_raw_draft": 1.037,
+     "cer_with_spaces": 0.7297,
+     "wer": 0.75,
+     "audio_s": 6.72,
+     "seconds": 6.84
+    },
+    {
+     "clip": "hi_q10",
+     "hypothesis": "क्या मुझे ग्रो का IPO लेना जाहिये?",
+     "reference": "क्या मुझे Groww का IPO लेना चाहिए?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.2963,
+     "cer_vs_raw_draft": 0.2692,
+     "cer_with_spaces": 0.2424,
+     "wer": 0.2857,
+     "audio_s": 6.21,
+     "seconds": 7.72
+    }
+   ]
+  },
+  "large-v3-turbo": {
+   "summary": {
+    "mean_cer": 0.0617,
+    "median_cer": 0.0566,
+    "mean_cer_vs_raw_draft": 0.0,
+    "mean_wer": 0.2277,
+    "median_seconds_per_clip": 9.785,
+    "max_seconds_per_clip": 9.99,
+    "first_clip_seconds": 9.99,
+    "real_time_factor": 1.49,
+    "mean_audio_s": 6.55,
+    "load_s": 4.6,
+    "rss_mb_before": 35,
+    "rss_mb_after_load_and_run": 910
+   },
+   "clips": [
+    {
+     "clip": "hi_q01",
+     "hypothesis": "ग्रोग के आई पीउ में फ्रेश इशू कितने का है",
+     "reference": "ग्रो के आईपीओ में फ्रेश इश्यू कितने का है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1212,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.122,
+     "wer": 0.4444,
+     "audio_s": 5.63,
+     "seconds": 9.99
+    },
+    {
+     "clip": "hi_q02",
+     "hypothesis": "लेंस कार्ट के प्रमोटर कौन है",
+     "reference": "लेंसकार्ट के प्रमोटर कौन हैं",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0417,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0714,
+     "wer": 0.6,
+     "audio_s": 4.22,
+     "seconds": 9.58
+    },
+    {
+     "clip": "hi_q03",
+     "hypothesis": "मीशो के IPO का रजिस्टरार कौन है?",
+     "reference": "मीशो के IPO का रजिस्ट्रार कौन है?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0385,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0312,
+     "wer": 0.1429,
+     "audio_s": 5.7,
+     "seconds": 9.61
+    },
+    {
+     "clip": "hi_q04",
+     "hypothesis": "LG Electronics के IPO से कंपनी को कितना पैसा मिलेगा",
+     "reference": "LG Electronics के IPO से कंपनी को कितना पैसा मिलेगा",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0,
+     "wer": 0.0,
+     "audio_s": 8.19,
+     "seconds": 9.77
+    },
+    {
+     "clip": "hi_q05",
+     "hypothesis": "टाटा केपिटल का ओफर प्राइस कितना था?",
+     "reference": "टाटा कैपिटल का ऑफर प्राइस कितना था?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0714,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0588,
+     "wer": 0.2857,
+     "audio_s": 6.91,
+     "seconds": 9.8
+    },
+    {
+     "clip": "hi_q06",
+     "hypothesis": "फिजिक्स वाला IPO का पैसा किस काम में लगेगा?",
+     "reference": "फिजिक्स वाला IPO का पैसा किस काम में लगेगा?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0,
+     "wer": 0.0,
+     "audio_s": 6.66,
+     "seconds": 9.88
+    },
+    {
+     "clip": "hi_q07",
+     "hypothesis": "HDB financial के IPO का कुल size कितना है",
+     "reference": "HDB Financial के IPO का कुल साइज़ कितना है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1212,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0976,
+     "wer": 0.1111,
+     "audio_s": 8.32,
+     "seconds": 9.48
+    },
+    {
+     "clip": "hi_q08",
+     "hypothesis": "एथर एनरजी के एक शेर की फेस वेल्यू कितनी है",
+     "reference": "एथर एनर्जी के एक शेयर की फेस वैल्यू कितनी है",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.0857,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0682,
+     "wer": 0.3,
+     "audio_s": 6.98,
+     "seconds": 9.93
+    },
+    {
+     "clip": "hi_q09",
+     "hypothesis": "अबन कंपनी के लीड मैनेजर कौन कौन है?",
+     "reference": "अर्बन कंपनी के लीड मैनेजर कौन कौन हैं?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.1,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0811,
+     "wer": 0.25,
+     "audio_s": 6.72,
+     "seconds": 9.85
+    },
+    {
+     "clip": "hi_q10",
+     "hypothesis": "क्या मुझे Grow का IPO लेना चाहिए?",
+     "reference": "क्या मुझे Groww का IPO लेना चाहिए?",
+     "reference_source": "asr_draft_large-v3-turbo; corrected_by_claude_code_from_context",
+     "cer": 0.037,
+     "cer_vs_raw_draft": 0.0,
+     "cer_with_spaces": 0.0303,
+     "wer": 0.1429,
+     "audio_s": 6.21,
+     "seconds": 9.66
+    }
+   ]
+  }
+ }
+}

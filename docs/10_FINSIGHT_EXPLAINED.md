@@ -320,6 +320,13 @@ If a company's passages appear in both training and test, scores look better tha
 **Related, same fix round:** the bake-off now scores an answer with the verifier against the gold value, so "₹26.260 crore" for "₹26,260 million" is wrong, not "contains the digits"; answers that change a unit, add investor opinions or write Devanagari digits are corrected or rejected by `generate/postprocess.py`; the reranker was tested (fp16 vs fp32 vs int8, 512 vs 1,024 tokens, input order) and kept (ADR-049); abstaining on retrieval score is weak, so the verifier and the model's own "not found" carry that load.
 **Try it:** `uv run python -c "from finsight.guard import check_output as c; print(c('The CEO lives at 12 Maple Court, Springfield [1].'))"` and `uv run python scripts/privacy_scan.py`.
 
+### C14. Speaking a question (built in P3.5)
+**Why it exists:** many retail investors would rather ask in Hindi aloud than type it. The model that turns speech into text is large, so it must not sit in memory all the time.
+**How it works:** `voice/asr.py` wraps faster-whisper (Whisper compiled for the CPU, int8). `voice/manager.py` loads it when the first voice question arrives and drops it after 120 seconds without one, so the 0.9 GB is free again for the language model. The transcript goes through the same guard and answer path as a typed question; nothing about speech skips a safety rule.
+**Measuring it (ADR-021):** for Hindi we count wrong *characters*, not words, because where a space goes in Devanagari is a matter of taste (`voice/metrics.py` also folds spelling variants like ऑफ़र/ऑफर). Three Whisper sizes on ten recorded questions: small is quick (2.9 s) but gets about a third of the characters wrong; medium is slower and not better than large-v3-turbo; large-v3-turbo is accurate but takes about 10 s for a 6.5 s clip, so it misses our 6 s goal and the UI says "transcribing".
+**Say honestly:** the "correct" text for each clip is a machine draft that I corrected from context; Akshat has not reviewed it yet, and the model that wrote the draft is the one that scores best, so its 0.06 is optimistic. The ranking of the three sizes is safe; the exact gap is not. Ten clips from one speaker is a smoke test.
+**Try it:** `uv run --group asr python scripts/asr_bakeoff.py run --models small` (needs the clips in `data/raw/audio/`) and `uv run python -c "from finsight.voice import cer; print(cer('ऑफर प्राइस', 'ऑफ़र प्राइस'))"`.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
