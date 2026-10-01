@@ -49,7 +49,9 @@ class RawAnswer:
 Answerer = Callable[[str, list[str]], list[RawAnswer | None]]
 
 
-def default_answerer(model: str = MODEL, batch_size: int = 16) -> Answerer:
+def default_answerer(
+    model: str = MODEL, batch_size: int = 16, max_answer_tokens: int = 40
+) -> Answerer:
     """The real model on the GPU in fp16 (CPU fp32 otherwise).
 
     transformers 5 no longer ships the ``question-answering`` pipeline, so the span is found
@@ -67,7 +69,7 @@ def default_answerer(model: str = MODEL, batch_size: int = 16) -> Answerer:
         model, torch_dtype=torch.float16 if cuda else torch.float32
     )
     net = net.to(device).eval()  # type: ignore[arg-type]
-    max_answer_tokens, top_n = 40, 20
+    top_n = 20
 
     def answer(question: str, contexts: list[str]) -> list[RawAnswer | None]:
         best: list[RawAnswer | None] = [None] * len(contexts)
@@ -144,7 +146,8 @@ def answer_value(kind: str, answer: RawAnswer, context: str) -> Value | None:
 
 
 class QAExtractor:
-    """Implements ``core.interfaces.Extractor``; fields opt in with ``fallback: qa_pretrained``."""
+    """Implements ``core.interfaces.Extractor``; a field opts in by naming it as its extractor
+    or fallback in ``fields.yaml`` (``fallback: qa_pretrained``)."""
 
     name = "qa_pretrained"
 
@@ -164,7 +167,7 @@ class QAExtractor:
         tables: list[Table],
         field: FieldSpec,
     ) -> list[Candidate]:
-        if field.fallback != self.name or not field.questions:
+        if self.name not in (field.extractor, field.fallback) or not field.questions:
             return []
         passages = build_passages(doc, sections, field)
         answers = self._answer(field.questions[0], [p.text for p in passages])
