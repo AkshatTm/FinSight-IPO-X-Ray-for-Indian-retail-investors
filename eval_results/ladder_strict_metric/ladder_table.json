@@ -3,7 +3,7 @@
  "name": "ladder_table",
  "headline_split": "test",
  "gold_version": "v1",
- "git_sha": "48d42e2",
+ "git_sha": "69a5bd3",
  "seeds": [
   13,
   42,
@@ -44,9 +44,9 @@
     "full": {
      "n": 56,
      "n_ipos": 7,
-     "nvm": 0.8571,
+     "nvm": 0.8393,
      "nvm_ci95": [
-      0.7857,
+      0.75,
       0.9286
      ],
      "em": 0.8393,
@@ -162,10 +162,10 @@
     "full": {
      "n": 56,
      "n_ipos": 7,
-     "nvm": 0.7381,
+     "nvm": 0.7202,
      "nvm_ci95": [
-      0.6607,
-      0.7976
+      0.6429,
+      0.7857
      ],
      "em": 0.5833,
      "f1": 0.7537,
@@ -191,10 +191,10 @@
  "paired_test": {
   "qa_finetuned_minus_qa_pretrained": {
    "full": {
-    "diff": 0.381,
+    "diff": 0.3631,
     "ci95": [
-     0.2262,
-     0.5238
+     0.2143,
+     0.5
     ],
     "excludes_zero": true
    },
@@ -227,10 +227,10 @@
   },
   "qa_pretrained_minus_rules": {
    "full": {
-    "diff": -0.5,
+    "diff": -0.4821,
     "ci95": [
      -0.6071,
-     -0.375
+     -0.3571
     ],
     "excludes_zero": true
    },
@@ -269,7 +269,7 @@
     },
     "promoters": {
      "n": 7,
-     "nvm": 0.8571
+     "nvm": 0.7143
     },
     "registrar": {
      "n": 7,
@@ -385,7 +385,7 @@
     },
     "promoters": {
      "n": 7,
-     "nvm": 1.0
+     "nvm": 0.8571
     },
     "registrar": {
      "n": 7,
@@ -573,254 +573,5 @@
    }
   }
  },
- "notes": "NVM on gold v1. Headline = test IPOs, bootstrap over IPOs (1,000 resamples), paired differences with the same IPOs drawn for both rungs. Fine-tuned = mean over 3 seeds per row. body_only blanks pages 1-15 and is scored on rows whose value is still stated in the searched pages (registrar, managers and promoters are read from the cover only, so they have no body-only rows). Per-field numbers are descriptive. Dev is used only to choose the extractor per field (ADR-018). Names are compared ignoring case, punctuation and spacing (ADR-045); `strict_metric` holds the first run, which only ignored case.",
- "headline": "Fine-tuning beats the pretrained model (+0.38, 95% CI 0.23 to 0.52); rules win on templated cover pages; the fine-tuned model is far more robust when the cover is unavailable (0.85 against 0.23 for rules, body-only). The PRD target of beating rules on at least 5 of 8 fields was not met: the fine-tuned model is ahead on 1.",
- "strict_metric": {
-  "note": "First run: names compared ignoring case only (before ADR-045).",
-  "ladder": {
-   "rules": {
-    "label": "Rung 1: rules",
-    "dev": {
-     "full": {
-      "n": 24,
-      "n_ipos": 3,
-      "nvm": 1.0,
-      "nvm_ci95": [
-       1.0,
-       1.0
-      ],
-      "em": 0.875,
-      "f1": 0.947,
-      "nvm_seed_std": null,
-      "n_files": 1
-     },
-     "body_only": {
-      "n": 14,
-      "n_ipos": 3,
-      "nvm": 0.2857,
-      "nvm_ci95": [
-       0.2,
-       0.4
-      ],
-      "em": 0.2143,
-      "f1": 0.2143,
-      "nvm_seed_std": null,
-      "n_files": 1
-     }
-    },
-    "test": {
-     "full": {
-      "n": 56,
-      "n_ipos": 7,
-      "nvm": 0.8393,
-      "nvm_ci95": [
-       0.75,
-       0.9286
-      ],
-      "em": 0.8393,
-      "f1": 0.9486,
-      "nvm_seed_std": null,
-      "n_files": 1
-     },
-     "body_only": {
-      "n": 35,
-      "n_ipos": 7,
-      "nvm": 0.2286,
-      "nvm_ci95": [
-       0.2,
-       0.2857
-      ],
-      "em": 0.1714,
-      "f1": 0.1714,
-      "nvm_seed_std": null,
-      "n_files": 1
-     }
-    }
-   },
-   "qa_pretrained": {
-    "label": "Rung 2: pretrained QA",
-    "dev": {
-     "full": {
-      "n": 24,
-      "n_ipos": 3,
-      "nvm": 0.375,
-      "nvm_ci95": [
-       0.375,
-       0.375
-      ],
-      "em": 0.125,
-      "f1": 0.3353,
-      "nvm_seed_std": null,
-      "n_files": 1
-     },
-     "body_only": {
-      "n": 14,
-      "n_ipos": 3,
-      "nvm": 0.3571,
-      "nvm_ci95": [
-       0.0,
-       0.6
-      ],
-      "em": 0.0714,
-      "f1": 0.2008,
-      "nvm_seed_std": null,
-      "n_files": 1
-     }
-    },
-    "test": {
-     "full": {
-      "n": 56,
-      "n_ipos": 7,
-      "nvm": 0.3571,
-      "nvm_ci95": [
-       0.25,
-       0.4643
-      ],
-      "em": 0.1786,
-      "f1": 0.3462,
-      "nvm_seed_std": null,
-      "n_files": 1
-     },
-     "body_only": {
-      "n": 35,
-      "n_ipos": 7,
-      "nvm": 0.3714,
-      "nvm_ci95": [
-       0.2,
-       0.5429
-      ],
-      "em": 0.0571,
-      "f1": 0.3094,
-      "nvm_seed_std": null,
-      "n_files": 1
-     }
-    }
-   },
-   "qa_finetuned": {
-    "label": "Rung 3: fine-tuned QA",
-    "dev": {
-     "full": {
-      "n": 24,
-      "n_ipos": 3,
-      "nvm": 0.6111,
-      "nvm_ci95": [
-       0.5833,
-       0.625
-      ],
-      "em": 0.4028,
-      "f1": 0.5808,
-      "nvm_seed_std": 0.0481,
-      "n_files": 3
-     },
-     "body_only": {
-      "n": 14,
-      "n_ipos": 3,
-      "nvm": 0.7143,
-      "nvm_ci95": [
-       0.6,
-       0.8
-      ],
-      "em": 0.5,
-      "f1": 0.5857,
-      "nvm_seed_std": 0.0,
-      "n_files": 3
-     }
-    },
-    "test": {
-     "full": {
-      "n": 56,
-      "n_ipos": 7,
-      "nvm": 0.7202,
-      "nvm_ci95": [
-       0.6429,
-       0.7857
-      ],
-      "em": 0.5833,
-      "f1": 0.7537,
-      "nvm_seed_std": 0.0103,
-      "n_files": 3
-     },
-     "body_only": {
-      "n": 35,
-      "n_ipos": 7,
-      "nvm": 0.8476,
-      "nvm_ci95": [
-       0.8,
-       0.9048
-      ],
-      "em": 0.6857,
-      "f1": 0.7872,
-      "nvm_seed_std": 0.0165,
-      "n_files": 3
-     }
-    }
-   }
-  },
-  "paired_test": {
-   "qa_finetuned_minus_qa_pretrained": {
-    "full": {
-     "diff": 0.3631,
-     "ci95": [
-      0.2143,
-      0.5
-     ],
-     "excludes_zero": true
-    },
-    "body_only": {
-     "diff": 0.4762,
-     "ci95": [
-      0.3048,
-      0.6571
-     ],
-     "excludes_zero": true
-    }
-   },
-   "qa_finetuned_minus_rules": {
-    "full": {
-     "diff": -0.119,
-     "ci95": [
-      -0.2143,
-      -0.0119
-     ],
-     "excludes_zero": true
-    },
-    "body_only": {
-     "diff": 0.619,
-     "ci95": [
-      0.6,
-      0.6571
-     ],
-     "excludes_zero": true
-    }
-   },
-   "qa_pretrained_minus_rules": {
-    "full": {
-     "diff": -0.4821,
-     "ci95": [
-      -0.6071,
-      -0.3571
-     ],
-     "excludes_zero": true
-    },
-    "body_only": {
-     "diff": 0.1429,
-     "ci95": [
-      -0.0571,
-      0.3143
-     ],
-     "excludes_zero": false
-    }
-   }
-  },
-  "choice_on_dev": {
-   "book_running_lead_managers": "rules",
-   "face_value": "rules",
-   "fresh_issue_size": "qa_finetuned",
-   "ofs_amount": "rules",
-   "ofs_shares": "rules",
-   "promoters": "rules",
-   "registrar": "rules",
-   "total_issue_size": "qa_finetuned"
-  }
- }
+ "notes": "NVM on gold v1. Headline = test IPOs, bootstrap over IPOs (1,000 resamples), paired differences with the same IPOs drawn for both rungs. Fine-tuned = mean over 3 seeds per row. body_only blanks pages 1-15 and is scored on rows whose value is still stated in the searched pages (registrar, managers and promoters are read from the cover only, so they have no body-only rows). Per-field numbers are descriptive. Dev is used only to choose the extractor per field (ADR-018)."
 }

@@ -1,0 +1,1490 @@
+{
+ "experiment": "E2+E3",
+ "name": "xray_accuracy",
+ "created_at": "2026-10-01T12:22:11+00:00",
+ "data": {
+  "gold_version": "v1",
+  "n_values": 80,
+  "dev_choice_fields": [
+   "fresh_issue_size",
+   "total_issue_size"
+  ]
+ },
+ "configs": {
+  "rules_first": {
+   "dev": {
+    "n": 24,
+    "nvm": 1.0,
+    "nvm_ci95": [
+     1.0,
+     1.0
+    ],
+    "per_field": {
+     "book_running_lead_managers": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "face_value": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "fresh_issue_size": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "ofs_amount": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "ofs_shares": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "promoters": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "registrar": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "total_issue_size": {
+      "n": 3,
+      "nvm": 1.0
+     }
+    }
+   },
+   "test": {
+    "n": 56,
+    "nvm": 0.875,
+    "nvm_ci95": [
+     0.8036,
+     0.9464
+    ],
+    "per_field": {
+     "book_running_lead_managers": {
+      "n": 7,
+      "nvm": 0.2857
+     },
+     "face_value": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "fresh_issue_size": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "ofs_amount": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "ofs_shares": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "promoters": {
+      "n": 7,
+      "nvm": 0.8571
+     },
+     "registrar": {
+      "n": 7,
+      "nvm": 0.8571
+     },
+     "total_issue_size": {
+      "n": 7,
+      "nvm": 1.0
+     }
+    }
+   }
+  },
+  "dev_choice": {
+   "dev": {
+    "n": 24,
+    "nvm": 1.0,
+    "nvm_ci95": [
+     1.0,
+     1.0
+    ],
+    "per_field": {
+     "book_running_lead_managers": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "face_value": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "fresh_issue_size": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "ofs_amount": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "ofs_shares": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "promoters": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "registrar": {
+      "n": 3,
+      "nvm": 1.0
+     },
+     "total_issue_size": {
+      "n": 3,
+      "nvm": 1.0
+     }
+    }
+   },
+   "test": {
+    "n": 56,
+    "nvm": 0.8571,
+    "nvm_ci95": [
+     0.75,
+     0.9464
+    ],
+    "per_field": {
+     "book_running_lead_managers": {
+      "n": 7,
+      "nvm": 0.2857
+     },
+     "face_value": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "fresh_issue_size": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "ofs_amount": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "ofs_shares": {
+      "n": 7,
+      "nvm": 1.0
+     },
+     "promoters": {
+      "n": 7,
+      "nvm": 0.8571
+     },
+     "registrar": {
+      "n": 7,
+      "nvm": 0.8571
+     },
+     "total_issue_size": {
+      "n": 7,
+      "nvm": 0.8571
+     }
+    }
+   }
+  }
+ },
+ "paired": {
+  "rules_first_minus_dev_choice_dev": {
+   "diff": 0.0,
+   "ci95": [
+    0.0,
+    0.0
+   ]
+  },
+  "rules_first_minus_dev_choice_test": {
+   "diff": 0.0179,
+   "ci95": [
+    0.0,
+    0.0536
+   ]
+  }
+ },
+ "records": {
+  "rules_first": [
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "promoters",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": null,
+    "verdict": "verified",
+    "reason_code": "not_in_document"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "extractors_disagree"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "registrar",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "extractors_disagree"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": null,
+    "verdict": "verified",
+    "reason_code": "not_in_document"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   }
+  ],
+  "dev_choice": [
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "ather-energy-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "groww-2025",
+    "field_id": "promoters",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hdb-financial-services-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": null,
+    "verdict": "verified",
+    "reason_code": "not_in_document"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "hexaware-technologies-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "total_issue_size",
+    "nvm": false,
+    "extractor": "qa_finetuned",
+    "verdict": "unverifiable",
+    "reason_code": "extractors_disagree"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "registrar",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "extractors_disagree"
+   },
+   {
+    "ipo_id": "lenskart-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": null,
+    "verdict": "verified",
+    "reason_code": "not_in_document"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "lg-electronics-india-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "meesho-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "physicswallah-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": false,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "tata-capital-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "fresh_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "ofs_shares",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "unverifiable",
+    "reason_code": "placeholder"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "ofs_amount",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "total_issue_size",
+    "nvm": true,
+    "extractor": "qa_finetuned",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "face_value",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "book_running_lead_managers",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "registrar",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   },
+   {
+    "ipo_id": "urban-company-2025",
+    "field_id": "promoters",
+    "nvm": true,
+    "extractor": "rules",
+    "verdict": "verified",
+    "reason_code": "verified"
+   }
+  ]
+ },
+ "notes": "System accuracy: the X-Ray's chosen value per ladder field against gold, NVM. rules_first = fields.yaml as shipped (G2 decision, informed by test results); dev_choice = the dev-only choice of ADR-018 (fine-tuned model primary for fresh and total issue size). Same saved candidates for both. Clean re-check on gold v2 in P5.1."
+}

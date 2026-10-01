@@ -1,7 +1,7 @@
 rung,split,setting,n,n_ipos,nvm,ci_low,ci_high,em,f1,nvm_seed_std
 rules,dev,full,24,3,1.0,1.0,1.0,0.875,0.947,
 rules,dev,body_only,14,3,0.2857,0.2,0.4,0.2143,0.2143,
-rules,test,full,56,7,0.8393,0.75,0.9286,0.8393,0.9486,
+rules,test,full,56,7,0.8571,0.7857,0.9286,0.8393,0.9486,
 rules,test,body_only,35,7,0.2286,0.2,0.2857,0.1714,0.1714,
 qa_pretrained,dev,full,24,3,0.375,0.375,0.375,0.125,0.3353,
 qa_pretrained,dev,body_only,14,3,0.3571,0.0,0.6,0.0714,0.2008,
@@ -9,5 +9,5 @@ qa_pretrained,test,full,56,7,0.3571,0.25,0.4643,0.1786,0.3462,
 qa_pretrained,test,body_only,35,7,0.3714,0.2,0.5429,0.0571,0.3094,
 qa_finetuned,dev,full,24,3,0.6111,0.5833,0.625,0.4028,0.5808,0.0481
 qa_finetuned,dev,body_only,14,3,0.7143,0.6,0.8,0.5,0.5857,0.0
-qa_finetuned,test,full,56,7,0.7202,0.6429,0.7857,0.5833,0.7537,0.0103
+qa_finetuned,test,full,56,7,0.7381,0.6607,0.7976,0.5833,0.7537,0.0103
 qa_finetuned,test,body_only,35,7,0.8476,0.8,0.9048,0.6857,0.7872,0.0165
