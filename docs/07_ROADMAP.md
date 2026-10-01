@@ -145,7 +145,7 @@ How to use this file
 
 ### P2.5 Training runs [CC on Kaggle, ADR-042/043] — Sun 11 Oct (runs in background)
 Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 and 2026 start.
-- [ ] 3 seeds on Kaggle; download weights to `models/extractor/`; commit metrics JSON
+- [x] 3 seeds on Kaggle; download weights to `models/extractor/`; commit metrics JSON → seeds 13 / 42 / 2026 all pass the gate: dev EM 0.968 ± 0.001, F1 0.975 ± 0.002, NVM 0.968 (baseline 0.719 / 0.804 / 0.809); effective batch 32 on two T4s; ADR-043
 - [ ] Optional ablations E4 if quota allows
 
 ### P2.6 Fine-tuned extractor + ladder `feat/p2.6-ladder` [CC] — Mon 12 – Tue 13 Oct
