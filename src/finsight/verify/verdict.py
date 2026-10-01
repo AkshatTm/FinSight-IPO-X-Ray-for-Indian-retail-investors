@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 from finsight.core.schemas import CheckResult, Passage
 from finsight.verify.claims import mask_citations, split_claims
-from finsight.verify.metrics import find_metrics, metric_at
+from finsight.verify.metrics import metric_at
 from finsight.verify.numeric_check import check_number, evidence_amounts
 
 MARKS = {"verified": "✅", "unverifiable": "⚠️", "contradicted": "❌"}
@@ -54,10 +54,9 @@ def verify_answer(answer: str, passages: list[Passage]) -> AnswerVerdict:
     for item in split_claims(answer, len(passages)):
         lo, hi = item.claim.char_span
         sentence = masked[lo:hi]
-        hits = find_metrics(sentence)
         where = [(n.start - lo, n.end - lo) for n in item.numbers]
         for number in item.numbers:
-            metric = metric_at(sentence, number.start - lo, number.end - lo, hits, where)
+            metric = metric_at(sentence, number.start - lo, number.end - lo, where)
             check = check_number(number.amount, metric, evidence, item.claim.cited)
             verdicts.append(NumberVerdict(len(verdicts), (number.start, number.end), metric, check))
     return AnswerVerdict(verdicts, answer_score([v.check for v in verdicts]))

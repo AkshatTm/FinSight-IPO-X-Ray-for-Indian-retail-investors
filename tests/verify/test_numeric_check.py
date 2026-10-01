@@ -200,3 +200,11 @@ def test_protocol_check_returns_one_result_per_amount() -> None:
     results = NumericCheck().check(claim, EVIDENCE)
     assert [r.reason_code for r in results] == ["verified", "scale_mismatch"]
     assert all(r.check == "numeric" for r in results)
+
+
+def test_a_rounded_unit_slip_is_still_a_scale_mismatch() -> None:
+    evidence = parse_amount("₹ 54,211.87 million")
+    assert is_scale_mismatch(parse_amount("₹ 5,421.2 lakh"), evidence)  # type: ignore[arg-type]
+    assert not is_scale_mismatch(parse_amount("₹ 5,431.2 lakh"), evidence)  # type: ignore[arg-type]
+    # too few digits to call it a slip: ₹ 3 crore is not "₹ 312 million with the wrong unit"
+    assert not is_scale_mismatch(parse_amount("₹ 3 crore"), parse_amount("₹ 312 million"))  # type: ignore[arg-type]

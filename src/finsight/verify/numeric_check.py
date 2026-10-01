@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from decimal import Decimal, InvalidOperation
+from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 
 from finsight.core.schemas import (
     Amount,
@@ -34,12 +34,13 @@ from finsight.core.schemas import (
     ReasonCode,
     Verdict,
 )
-from finsight.normalize import equal, parse_amounts
+from finsight.normalize import MULTIPLIER, equal, parse_amounts
 from finsight.verify.claims import mask_citations
-from finsight.verify.metrics import find_metrics, metric_at
+from finsight.verify.metrics import MetricIndex, metric_at
 
 CHECK = "numeric"
 MAX_POWER = 9  # identical digits: any unit slip up to a billion-fold
+MIN_SIGNIFICANT = 3  # digits needed before a rounded power-of-ten gap counts
 MAX_POWER_WORDS = 3  # different scale words, different digits: 10, 100, 1,000 only (ADR-027)
 _DEVANAGARI_DIGITS = str.maketrans({chr(0x0966 + d): str(d) for d in range(10)})
 _PRINTED = re.compile(r"\d[\d,]*(?:\.\d+)?")
@@ -52,7 +53,7 @@ class EvidenceAmount:
     order: int  # position of the passage in the retrieved list, 0-based
     start: int
     end: int
-    metric: str | None
+    metrics: tuple[str, ...]  # usually one; a pure offer for sale is also the total
 
 
 def evidence_amounts(passages: list[Passage]) -> list[EvidenceAmount]:
@@ -60,11 +61,10 @@ def evidence_amounts(passages: list[Passage]) -> list[EvidenceAmount]:
     out = []
     for order, passage in enumerate(passages):
         spans = parse_amounts(passage.text)
-        hits = find_metrics(passage.text)
-        where = [(s.start, s.end) for s in spans]
+        index = MetricIndex(passage.text, [(s.start, s.end) for s in spans])
         for s in spans:
-            metric = metric_at(passage.text, s.start, s.end, hits, where)
-            out.append(EvidenceAmount(s.amount, passage, order, s.start, s.end, metric))
+            metrics = index.at(s.start, s.end)
+            out.append(EvidenceAmount(s.amount, passage, order, s.start, s.end, metrics))
     return out
 
 
@@ -97,21 +97,55 @@ def _printed(money: Money) -> Decimal | None:
         return None
 
 
+def same_digits(a: Amount, b: Amount) -> bool:
+    """Both print the same number ("26,260"), whatever unit follows it."""
+    ma, mb = _as_money(a), _as_money(b)
+    if ma is None or mb is None:
+        return False
+    return _printed(ma) is not None and _printed(ma) == _printed(mb)
+
+
 def power_of_ten_gap(a: Amount, b: Amount) -> int | None:
-    """k when the two values differ by exactly 10**k (k >= 1), else None."""
+    """k when the two values are 10**k apart (k >= 1) within their printed precision, else None.
+
+    "₹ 5,421.2 lakh" against "₹ 54,211.87 million": the lakh figure times 100 is ₹ 54,212
+    million, which is the evidence rounded to the one decimal the answer printed. A side with
+    fewer than three significant digits must match exactly ("₹ 3 crore" proves nothing).
+    """
     ma, mb = _as_money(a), _as_money(b)
     if a.kind != b.kind or ma is None or mb is None or ma.currency != mb.currency:
         return None
     if ma.value_inr is None or mb.value_inr is None:
         return None
-    lo, hi = sorted((abs(ma.value_inr), abs(mb.value_inr)))
+    va, vb = abs(ma.value_inr), abs(mb.value_inr)
+    small, big = (ma, mb) if va <= vb else (mb, ma)
+    lo, hi = min(va, vb), max(va, vb)
     if lo == 0:
         return None
-    ratio = hi / lo
+    exact_only = min(_significant(small), _significant(big)) < MIN_SIGNIFICANT
     for k in range(1, MAX_POWER + 1):
-        if ratio == Decimal(10) ** k:
+        shifted = lo * Decimal(10) ** k
+        if shifted == hi:
+            return k
+        step = max(_step(small) * Decimal(10) ** k, _step(big))
+        if not exact_only and _round(shifted, step) == _round(hi, step):
             return k
     return None
+
+
+def _step(money: Money) -> Decimal:
+    """The smallest amount the printed form can show: decimals times the scale word."""
+    scale = MULTIPLIER[money.scale_word] if money.scale_word else Decimal(1)
+    return Decimal(10) ** -money.precision * scale
+
+
+def _round(value: Decimal, step: Decimal) -> Decimal:
+    return (value / step).to_integral_value(rounding=ROUND_HALF_UP)
+
+
+def _significant(money: Money) -> int:
+    printed = _printed(money)
+    return len(printed.as_tuple().digits) if printed is not None else 0
 
 
 def is_scale_mismatch(a: Amount, b: Amount) -> bool:
@@ -120,7 +154,7 @@ def is_scale_mismatch(a: Amount, b: Amount) -> bool:
     ma, mb = _as_money(a), _as_money(b)
     if k is None or ma is None or mb is None:
         return False
-    if _printed(ma) is not None and _printed(ma) == _printed(mb):
+    if same_digits(a, b):
         return True  # same digits, different or missing unit
     return ma.scale_word != mb.scale_word and k <= MAX_POWER_WORDS
 
@@ -159,18 +193,22 @@ def check_number(
         return _result("unverifiable", "placeholder", reason, amount, blank)
 
     equals = [e for e in ordered if same_value(amount, e.amount)]
-    named = [e for e in ordered if metric is not None and e.metric == metric]
+    named = [e for e in ordered if metric is not None and metric in e.metrics]
     named_real = [e for e in named if not isinstance(e.amount, Placeholder)]
     other_values = [e for e in named_real if e.amount.kind == amount.kind and e not in equals]
-    agreeing = [e for e in equals if metric is None or e.metric in (None, metric)]
+
+    def fits(e: EvidenceAmount) -> bool:  # nothing says this amount is another metric
+        return metric is None or not e.metrics or metric in e.metrics
+
+    agreeing = [e for e in equals if fits(e)]
 
     if agreeing:
-        best = next((e for e in agreeing if e.metric == metric), agreeing[0])
+        best = next((e for e in agreeing if metric in e.metrics), agreeing[0])
         reason = f"Matches {_where(best)}: {best.amount.raw}."
         return _result("verified", "verified", reason, amount, best)
     if equals and other_values:
         e, real = equals[0], other_values[0]
-        other = (e.metric or "").replace("_", " ")
+        other = (e.metrics[0] if e.metrics else "").replace("_", " ")
         reason = (
             f"{e.amount.raw} is the {other} in {_where(e)}; the {name} there is {real.amount.raw}."
         )
@@ -180,8 +218,14 @@ def check_number(
         reason = f"Matches {_where(e)}: {e.amount.raw}."
         return _result("verified", "verified", reason, amount, e)
 
-    near = [e for e in ordered if metric is None or e.metric in (None, metric)]
-    slip = next((e for e in near if is_scale_mismatch(amount, e.amount)), None)
+    slip = next(
+        (
+            e
+            for e in ordered
+            if is_scale_mismatch(amount, e.amount) and (fits(e) or same_digits(amount, e.amount))
+        ),
+        None,
+    )
     if slip:
         times = 10 ** (power_of_ten_gap(amount, slip.amount) or 0)
         reason = (
@@ -210,10 +254,9 @@ class NumericCheck:
         amounts = evidence_amounts(evidence)
         sentence = mask_citations(claim.sentence)
         spans = parse_amounts(sentence)
-        hits = find_metrics(sentence)
         where = [(s.start, s.end) for s in spans]
         results = []
         for s in spans:
-            metric = metric_at(sentence, s.start, s.end, hits, where)
+            metric = metric_at(sentence, s.start, s.end, where)
             results.append(check_number(s.amount, metric, amounts, claim.cited))
         return results

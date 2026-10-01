@@ -72,7 +72,7 @@ def metric_of(text: str, needle: str, nth: int = 0) -> str | None:
     spans = parse_amounts(text)
     where = [(s.start, s.end) for s in spans]
     span = [s for s in spans if s.amount.raw == needle][nth]
-    return metric_at(text, span.start, span.end, amounts=where)
+    return metric_at(text, span.start, span.end, where)
 
 
 def test_the_metric_named_before_the_amount_wins() -> None:
@@ -116,3 +116,34 @@ def test_overlapping_keywords_keep_the_earlier_one() -> None:
         "total_issue",
         "ofs",
     ]
+
+
+PROSPECTUS = (
+    "INITIAL PUBLIC OFFERING OF 92,867,945 EQUITY SHARES OF FACE VALUE OF ₹ 1 EACH FOR CASH AT A "
+    "PRICE OF ₹ 321 ^ PER EQUITY SHARE INCLUDING A SECURITIES PREMIUM OF ₹ 320 ^ PER EQUITY SHARE "
+    "(THE “OFFER PRICE”) AGGREGATING UP TO ₹ 29,808 MILLION *^ (THE “OFFER”). THE OFFER COMPRISES "
+    "A FRESH ISSUE OF 81,816,199 EQUITY SHARES AGGREGATING UP TO ₹ 26,260 MILLION (THE “FRESH "
+    "ISSUE”) AND AN OFFER FOR SALE OF 11,051,746 EQUITY SHARES AGGREGATING UP TO ₹ 3,548 MILLION."
+)
+
+
+def test_a_defined_term_after_the_amount_names_it() -> None:
+    assert metric_of(PROSPECTUS, "₹ 321") == "offer_price"  # "at a price of"
+    assert metric_of(PROSPECTUS, "₹ 320") == "premium"
+    assert metric_of(PROSPECTUS, "₹ 29,808 MILLION") == "total_issue"  # (THE "OFFER")
+    assert metric_of(PROSPECTUS, "₹ 26,260 MILLION") == "fresh_issue"
+    assert metric_of(PROSPECTUS, "₹ 3,548 MILLION") == "ofs"
+
+
+def test_a_pure_offer_for_sale_total_carries_both_metrics() -> None:
+    from finsight.normalize import parse_amounts
+    from finsight.verify import MetricIndex
+
+    text = (
+        "INITIAL PUBLIC OFFERING THROUGH AN OFFER FOR SALE OF 123,587,570 EQUITY SHARES "
+        "AGGREGATING UP TO ₹ 87,500 MILLION (THE “OFFER”)."
+    )
+    spans = parse_amounts(text)
+    index = MetricIndex(text, [(s.start, s.end) for s in spans])
+    money = next(s for s in spans if s.amount.kind == "money")
+    assert set(index.at(money.start, money.end)) == {"total_issue", "ofs"}
