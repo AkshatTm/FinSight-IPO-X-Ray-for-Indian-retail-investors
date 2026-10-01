@@ -348,6 +348,42 @@ export const STRINGS = d({
   "doc.section.promoters": { en: "Promoters", hi: "प्रमोटर" },
   "doc.section.general_information": { en: "General information", hi: "सामान्य जानकारी" },
 
+  // 7.3 Facts
+  "facts.group.offer": { en: "The offer", hi: "ऑफ़र" },
+  "facts.group.split": { en: "Money split", hi: "पैसे का बँटवारा" },
+  "facts.group.people": { en: "People", hi: "लोग" },
+  "facts.group.use": { en: "Use of the money", hi: "पैसे का उपयोग" },
+  "facts.perShare": { en: "per share", hi: "प्रति शेयर" },
+  "facts.chip": { en: "{doc} p.{n}", hi: "{doc} पन्ना {n}" },
+  "facts.filled": { en: "Filled in the final prospectus", hi: "फ़ाइनल प्रॉस्पेक्टस में भरा गया" },
+  "facts.more": { en: "+{n} more", hi: "+{n} और" },
+  "facts.less": { en: "Show fewer", hi: "कम दिखाएँ" },
+  "facts.showOnPage": { en: "Press Enter to show on page.", hi: "पन्ने पर दिखाने के लिए एंटर दबाएँ।" },
+  "facts.details": { en: "Details", hi: "ब्यौरा" },
+  "facts.loadingRows": { en: "Loading facts", hi: "तथ्य लोड हो रहे हैं" },
+  "pop.found": { en: "Found on {doc} page {page}", hi: "{doc} के पन्ना {page} पर मिला" },
+  "pop.readBy": { en: "Read by", hi: "किसने पढ़ा" },
+  "pop.confidence": { en: "Confidence", hi: "भरोसा" },
+  "pop.asWritten": { en: "As written", hi: "जैसा लिखा है" },
+  "split.title": { en: "Where the money goes", hi: "पैसा किसके पास जाता है" },
+  "split.company": { en: "To the company (fresh issue)", hi: "कंपनी को (फ्रेश इश्यू)" },
+  "split.sellers": { en: "To selling shareholders (OFS)", hi: "बेचने वाले शेयरधारकों को (ओएफएस)" },
+  "split.helper": {
+    en: "Only the fresh issue part goes to the company. The offer-for-sale part goes to the people selling their shares.",
+    hi: "केवल फ्रेश इश्यू वाला हिस्सा कंपनी को मिलता है। ओएफएस वाला हिस्सा शेयर बेचने वालों को जाता है।",
+  },
+  "split.pureOfs": {
+    en: "This IPO is only an offer for sale. The company receives none of the money.",
+    hi: "यह आईपीओ केवल बिक्री प्रस्ताव (ओएफएस) है। कंपनी को इसमें से कोई पैसा नहीं मिलता।",
+  },
+  "split.unknown": {
+    en: "The split will be known once the final price is set.",
+    hi: "अंतिम कीमत तय होने पर बँटवारा पता चलेगा।",
+  },
+  "objects.notSet": { en: "[●] amount not set yet", hi: "[●] रकम अभी तय नहीं" },
+  "compare.toggle": { en: "Show how each method read this", hi: "दिखाएँ कि हर तरीके ने इसे कैसे पढ़ा" },
+  "compare.foot": { en: "Gold = values checked by hand against the PDF.", hi: "गोल्ड = पीडीएफ़ से हाथ से जाँचे गए मान।" },
+
   // 17 keyboard shortcuts dialog (copy not in the spec: written per spec section 1, see AKSHAT_TODO)
   "keys.title": { en: "Keyboard shortcuts", hi: "कीबोर्ड शॉर्टकट" },
   "keys.focusInput": { en: "Focus the question box", hi: "सवाल वाले बॉक्स पर जाएँ" },

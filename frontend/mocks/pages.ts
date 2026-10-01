@@ -19,3 +19,17 @@ ${lines.join("\n")}
 <text x="297" y="820" font-family="sans-serif" font-size="9" fill="#5a6578">${n}</text>
 </svg>`;
 }
+
+const SENTENCE = "Fresh Issue of up to Rs. 26,260 million (mock text)";
+
+/** Word boxes for the mock sentence (5.4 pt per character at 11 pt). */
+export function pageWords(n: number): { page: number; width: number; height: number; words: { t: string; b: [number, number, number, number] }[] } {
+  let x = 72;
+  const words = SENTENCE.split(" ").map((t) => {
+    const w = t.length * 5.4;
+    const b: [number, number, number, number] = [x, 410, x + w, 423];
+    x += w + 5.4;
+    return { t, b };
+  });
+  return { page: n, width: 595, height: 842, words };
+}
