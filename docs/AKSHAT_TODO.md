@@ -9,6 +9,7 @@
 ## New copy to review (strings the spec did not provide)
 - Library: HI for the buttons/links the spec gave only in English: "Clear search" -> "खोज हटाएँ"; "Open Ather Energy" -> "Ather Energy खोलें"; filter group and sort labels (sr-only) "Sort" -> "क्रम".
 - Keyboard shortcuts dialog (spec 17 asks for it, gives no copy): `keys.*` in frontend/lib/i18n.ts, EN and HI both drafted by the builder.
+- Facts pane: Hindi tooltips for every field (spec 12 gave English only), `facts.chip` ("{doc} पन्ना {n}"), "Show fewer" / "+{n} और", "Details" label, `lib/content/fields.ts` and `facts.*`/`pop.*`/`split.*` in i18n.ts are builder drafts where the spec had no Hindi.
 - Hindi unit words after amounts in the Hindi UI (`₹2,626.00 करोड़`): spec 15 only shows English; used करोड़ / मिलियन / लाख from the unit toggle labels.
 
 ## Data and evaluation
@@ -17,6 +18,8 @@
 
 ## Backend notes the frontend found
 - Thumbnails reuse the full page endpoint (`/pages/{n}`); a `?w=` or `/thumb` variant would cut payload. Decide in P4.1 (needs your review of the contract).
+
+- The API X-Ray field has no source sentence. The popover rebuilds it from `/pages/{n}/words` around the field bbox. If P4.1 adds a `sentence` field it would be exact; for now it is derived.
 
 ## Skills and tooling notes
 - impeccable's launcher (`scripts/impeccable`) downloads a self-contained binary on first run (SKILL.md Setup). I did not run it unattended; design process steps are followed from its reference/*.md instead. Say if you want the detector binary installed.
