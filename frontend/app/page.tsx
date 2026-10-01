@@ -1,8 +1,20 @@
-// Placeholder until step L (landing, spec section 5).
+import { Hero } from "@/components/landing/Hero";
+import { MiniDemo } from "@/components/landing/MiniDemo";
+import { OpenStats } from "@/components/landing/OpenStats";
+import { AskLang, Chatbot, FinalCta, NewToIpos, Steps, WontDo } from "@/components/landing/Sections";
+
 export default function Home() {
   return (
-    <div className="py-16">
-      <h1 className="text-4xl font-semibold tracking-tight">FinSight</h1>
-    </div>
+    <>
+      <Hero />
+      <NewToIpos />
+      <Chatbot />
+      <Steps />
+      <MiniDemo />
+      <AskLang />
+      <WontDo />
+      <OpenStats />
+      <FinalCta />
+    </>
   );
 }

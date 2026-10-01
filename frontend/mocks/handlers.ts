@@ -59,6 +59,14 @@ export const handlers = [
     });
     return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache" } });
   }),
+  // Lab payloads: dev fixtures shaped like evaluate/seeded_errors.py and evaluate/ladder.py output.
+  http.get("/api/lab/verifier", () => HttpResponse.json({ detection: { rate: 1, hits: 100, n: 100, wilson_95: [0.963, 1] } })),
+  http.get("/api/lab/ladder", () =>
+    HttpResponse.json({
+      headline_split: "test",
+      ladder: { qa_finetuned: { test: { full: { nvm: 0.74 }, body_only: { nvm: 0.85 } } } },
+    }),
+  ),
   http.post("/api/voice", async () => {
     await delay(900);
     return HttpResponse.json({
