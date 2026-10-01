@@ -39,7 +39,7 @@ class CrossEncoderReranker:
         self._tok = AutoTokenizer.from_pretrained(model)
         dtype = torch.float16 if self.device == "cuda" else torch.float32
         self._model = (
-            AutoModelForSequenceClassification.from_pretrained(model, torch_dtype=dtype)
+            AutoModelForSequenceClassification.from_pretrained(model, dtype=dtype)
             .to(self.device)
             .eval()
         )

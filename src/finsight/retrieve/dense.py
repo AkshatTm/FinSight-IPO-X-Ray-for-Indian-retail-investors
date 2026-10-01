@@ -48,7 +48,7 @@ class BgeM3Embedder:
         self.max_len, self.batch = max_len, batch
         self._tok = AutoTokenizer.from_pretrained(model)
         dtype = torch.float16 if self.device == "cuda" else torch.float32
-        self._model = AutoModel.from_pretrained(model, torch_dtype=dtype).to(self.device).eval()
+        self._model = AutoModel.from_pretrained(model, dtype=dtype).to(self.device).eval()
 
     def embed(self, texts: list[str]) -> Vectors:
         order = sorted(range(len(texts)), key=lambda i: len(texts[i]))  # similar lengths per batch

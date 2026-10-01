@@ -264,6 +264,16 @@ If a company's passages appear in both training and test, scores look better tha
 **Packager (`weaklabel/package.py`):** copies the training files, adds 200-example slices and a Kaggle metadata file. Slices keep the answerable and unanswerable mix, so the smoke run exercises both paths.
 **Run it (Akshat):** `uv run python -m finsight.weaklabel.package --username <kaggle-username>`, then `kaggle datasets create -p data/processed/kaggle/finsight-weaklabel` (private), open the notebook on Kaggle with GPU and the dataset attached; run with `SLICE = 200`, `SEEDS = [13]`, `EPOCHS = 1` until it prints `SMOKE OK`; then `SLICE = None` and all three seeds. Download `extractor/seed-*/final` to `models/extractor/` and the `metrics*.json` files to `eval_results/` (P2.5).
 
+### C8. Retrieval: finding the right passages (built in P3.1)
+**Why retrieval at all:** an RHP has 500 pages and the chat model reads only a few thousand words. So for each question we first *find* the handful of passages most likely to contain the answer, and the model answers from those only (and cites them).
+**Chunking (`retrieve/chunk.py`):** each page is cut into passages of about 350 tokens at sentence ends. A table is never cut: it becomes one passage, one row per line, and its words are removed from the surrounding prose so a number never loses its row heading. Every passage remembers where each word sits on the page, which is what "Show in document" highlights.
+**Two kinds of search (`bm25.py`, `dense.py`):** BM25 is keyword matching that weights rare words; it is superb for exact names and numbers ("KFin", "4,720"). Dense search turns the question and every passage into a vector (bge-m3) and compares meanings, so "what will it cost me" can find a passage about fees, and a Hindi question can find an English passage. Each misses things the other finds.
+**Fusion (`fuse.py`):** the two ranked lists are merged by *reciprocal rank fusion*: a passage at rank r gets 1/(60 + r) from each list and the scores are added. Only positions are used, because BM25 and cosine scores are on different scales and cannot be added.
+**Rerank (`rerank.py`):** a cross-encoder (bge-reranker-v2-m3) reads the question and one passage together and re-orders the top 20. It is more accurate and slower, so it only sees a short list. If it is missing or crashes, the fused order is used.
+**Abstaining:** if even the best passage scores too low, the system says it cannot find the answer. The cut-off is tuned on the dev questions only, separately for each method, because the scores of BM25, fusion and the reranker are on different scales.
+**Honest scoring (E6, `retrieve/evaluate.py`):** a question counts as found when a top-5 passage covers the evidence page *or* states the gold answer (many facts appear on several pages). Recall@1, Recall@5 and MRR come with a bootstrap interval over IPOs, split English/Hindi.
+**Run it:** `uv run python -m finsight.pipeline build-all --stage index` (BM25 data, a minute); add `--dense` with `uv run --group ml` for the bge-m3 vectors (about 1.5 minutes per IPO on the laptop GPU).
+
 ---
 
 ## Part D — Viva drill (answer aloud without notes)

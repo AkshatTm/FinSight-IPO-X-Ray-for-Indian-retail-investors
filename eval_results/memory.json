@@ -1,0 +1,43 @@
+{
+  "device": "cuda",
+  "method": "hybrid+rerank",
+  "first_search_s": 1.72,
+  "warm_search_s": 0.67,
+  "steps": [
+    {
+      "step": "start",
+      "process_rss_gb": 0.49,
+      "torch_vram_gb": 0.0,
+      "system_ram_used_gb": 9.66,
+      "ollama_rss_gb": 0.1
+    },
+    {
+      "step": "10 IPO indexes loaded (chunks + vectors)",
+      "process_rss_gb": 3.43,
+      "torch_vram_gb": 0.0,
+      "system_ram_used_gb": 12.54,
+      "ollama_rss_gb": 0.1
+    },
+    {
+      "step": "+ bge-m3 query encoder",
+      "process_rss_gb": 5.02,
+      "torch_vram_gb": 1.06,
+      "system_ram_used_gb": 13.23,
+      "ollama_rss_gb": 0.1
+    },
+    {
+      "step": "+ bge-reranker-v2-m3",
+      "process_rss_gb": 5.42,
+      "torch_vram_gb": 2.12,
+      "system_ram_used_gb": 13.21,
+      "ollama_rss_gb": 0.05
+    },
+    {
+      "step": "after two searches",
+      "process_rss_gb": 6.05,
+      "torch_vram_gb": 2.12,
+      "system_ram_used_gb": 13.83,
+      "ollama_rss_gb": 0.05
+    }
+  ]
+}
