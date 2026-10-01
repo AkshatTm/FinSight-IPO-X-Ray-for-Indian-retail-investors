@@ -173,7 +173,9 @@ Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 
 - [x] Bake-off script; [AKSHAT] judge Hindi fluency (`data/gold/hindi_fluency_sheet.csv`, 1-5) → finalises ADR-020
 **Done when:** CLI `python -m finsight.generate ask --ipo <id> "question"` prints a cited answer (`finsight.chat ask` arrives in P3.6).
 
-**P3.2b chat-quality fixes (#58, ADR-047):** [x] cover-page injection + Prospectus-first; [x] loop stop, citation-only and dump rejection, repeat penalty; [x] prompt rules; [x] guard in `generate ask`; [x] bake-off re-run (3 models); [ ] ADR-020 update after Akshat's Hindi ratings.
+**P3.2b chat-quality fixes (#58, ADR-047):** [x] cover-page injection + Prospectus-first; [x] loop stop, citation-only and dump rejection, repeat penalty; [x] prompt rules; [x] guard in `generate ask`; [x] bake-off re-run (3 models); [x] ADR-020 final (2 Oct).
+
+**P3.2c / P3.2d review fixes (#60 PR #61, #62; ADR-048, ADR-049, ADR-020 final):** [x] privacy in three layers (one guarded `respond` path, address redaction at indexing, output filter; 06 guard reason `privacy`); [x] bake-off scored by the verifier on the gold value, old vs new reported; [x] gemma4:e2b empty Hindi outputs diagnosed (excluded for Hindi); [x] Hindi/Hinglish cover cues; [x] Devanagari digits, converted units and investor opinions rejected; [x] dev questions 20 to 50; [x] reranker experiment (fp16/fp32/int8 ONNX, 512/1024, order) and dev-only abstain thresholds; [x] bake-off re-run (4 models); [ ] first full Hindi chat run after P3.6.
 
 ### P3.3 ★ Verifier + seeded errors `feat/p3.3-verifier` [CC] — Sat 17 Oct
 - [x] `verify/claims.py`, `metrics.py`, `numeric_check.py` (all reason codes), `verdict.py`; tests per reason code
