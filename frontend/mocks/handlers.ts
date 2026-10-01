@@ -1,5 +1,6 @@
 import { http, HttpResponse, delay } from "msw";
 import { DETAILS, HEALTH, IPOS } from "./fixtures";
+import { scenario, speed } from "./chat";
 import { pageSvg, pageWords } from "./pages";
 import { buildXray, SUGGESTED } from "./xray";
 
@@ -42,4 +43,20 @@ export const handlers = [
   http.get("/api/ipos/:id/pages/:n/words", ({ params }) =>
     DETAILS[String(params.id)] ? HttpResponse.json(pageWords(Number(params.n))) : notFound(),
   ),
+  http.post("/api/chat", async ({ request }) => {
+    const body = (await request.json()) as { ipo_id: string; question: string; language: "en" | "hi" };
+    if (!DETAILS[body.ipo_id]) return notFound();
+    const steps = scenario(body.question, body.language);
+    const enc = new TextEncoder();
+    let i = 0;
+    const stream = new ReadableStream<Uint8Array>({
+      async pull(controller) {
+        if (i >= steps.length) return controller.close();
+        const { delay: ms, ev } = steps[i++];
+        await new Promise((r) => setTimeout(r, ms * speed()));
+        controller.enqueue(enc.encode("event: " + ev.event + "\ndata: " + JSON.stringify(ev.data) + "\n\n"));
+      },
+    });
+    return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache" } });
+  }),
 ];
