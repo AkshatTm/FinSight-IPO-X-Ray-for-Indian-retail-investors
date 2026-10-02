@@ -1,0 +1,13 @@
+.git
+.venv
+data
+models
+eval_results
+dist
+frontend
+notebooks
+docs
+tests
+**/__pycache__
+*.pdf
+.env

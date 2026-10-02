@@ -282,6 +282,13 @@ Paired per-IPO differences (same resampled IPOs): fine-tuned minus pretrained +0
 
 ---
 
+### ADR-022 Deployment target: Space (Docker, CPU) plus Vercel, BM25 and a 4-bit GGUF — proposed (2 Oct 2026; needs Akshat review)
+**Context:** the public demo has no GPU. ADR-049 measured BM25 recall@5 0.61 on dev and int8 ONNX reranking at 26 s per 20-passage pool on CPU, too slow to ship. Scripted questions are covered by the recorded demo cache.
+**Decision:** (1) API in a Docker Space on the free CPU tier (`Dockerfile`, `deploy/space/`), profile `deploy_cpu`, demo mode on. (2) Retrieval is BM25 only: the image sets `FINSIGHT_RETRIEVE__RERANK=false` (the YAML keeps `rerank: true`, which needs torch). (3) LLM through llama-cpp-python (`generate/llama_cpp_backend.py`, same contract as the Ollama backend; `get_llm` picks it from `llm.backend`) with `Qwen3.5-2B-Q4_K_M.gguf` from the Hub, the 4-bit file of the model measured on the laptop. (4) Data comes from `scripts/bundle_artifacts.py` (X-Rays, parsed text, sections, BM25 chunks, page images, demo cache, eval results; no PDFs, no dense index). (5) Website on Vercel; `/api/*` is rewritten to the Space, so no CORS rule.
+**Consequences:** the deployed model's answer quality is **not measured** (quantised file, BM25 only, no reranker): run E7 against it before quoting a number for the deployed system. Live answers on a shared CPU take tens of seconds and may hit the Vercel proxy time limit; the fix, if needed, is a CORS rule and a direct browser call (D7). Voice is off. Nothing was deployed or tested in a container in this run unless `docs/MORNING_REPORT.md` says so.
+
+---
+
 ## Pending ADRs (to be written during the build)
 
 | # | Topic | Phase |
@@ -291,7 +298,7 @@ Paired per-IPO differences (same resampled IPOs): fine-tuned minus pretrained +0
 | ADR-019 | Measured memory/latency; device assignments | P3.1 |
 | ~~ADR-020~~ | LLM choice (bake-off) (written above, accepted 2 Oct) | P3.2 |
 | ~~ADR-021~~ | ASR choice (written above) | P3.5 |
-| ADR-022 | Deployment target details | P6.1 |
+| ~~ADR-022~~ | Deployment target details (proposed above, 2 Oct) | P6.1 |
 
 ### ADR-052 addendum 2 (F7, 3 Oct) — lab routes, ACCEPTED with ADR-052
 `GET /api/lab/retrieval` (eval_results/retrieval.json) and `GET /api/lab/asr` (asr.json) added; `/api/lab/weaklabels` now merges weaklabel_audit.json under `audit`. All are free-form like the other lab routes and return `not_available` (404) when the file is missing; the Lab page hides that section. openapi.json and frontend types regenerated.
