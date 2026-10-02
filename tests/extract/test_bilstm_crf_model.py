@@ -1,8 +1,10 @@
 import itertools
 
-import torch
+import pytest
 
-from finsight.extract.bilstm_crf_model import (
+torch = pytest.importorskip("torch")  # CI installs no torch: the Kaggle model needs it
+
+from finsight.extract.bilstm_crf_model import (  # noqa: E402
     CRF,
     BiLSTMCRF,
     Vocab,
