@@ -25,7 +25,10 @@ Updated after every merge. Plain language.
 
 - P4.1 API (this PR): all 16 routes answer for real on the processed data (smoke-tested on Ather: X-Ray, 586 pages, words, suggested questions, Lab files). Health works without Ollama (reports `degraded`). `uv run poe api` serves it on :8000.
 
+- G3 gate (this PR): docs/gates/G3.md, PASS with three caveats, evidence from live runs through the real API. v0.3.0 not tagged: yours to tag.
+
 ## Look at first
+- docs/gates/G3.md
 - docs/screenshots/h/: how-desktop-light-en.png, about-mobile-dark-hi.png, 404-desktop-light-en.png
 - docs/screenshots/l/: desktop-light-en-full.png, desktop-dark-hi-full.png, mobile-dark-hi-full.png, desktop-hero.png
 - docs/screenshots/f5b/: inspector-1366.png, voice-recording-1366.png, voice-done-1366.png, glossary-1366.png, tour-1366.png, composer-mobile-hi-dark.png
