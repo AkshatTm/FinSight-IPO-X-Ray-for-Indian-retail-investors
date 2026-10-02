@@ -96,5 +96,6 @@ def test_is_available_checks_the_installed_models() -> None:
 def test_get_llm_follows_the_config() -> None:
     backend = get_llm(LLMConfig(model="qwen3.5:2b", num_ctx=4096))
     assert (backend.model, backend.num_ctx) == ("qwen3.5:2b", 4096)
-    with pytest.raises(NotImplementedError, match="ADR-022"):
-        get_llm(LLMConfig(backend="llama-cpp"))
+    with pytest.raises(NotImplementedError, match="vllm"):
+        get_llm(LLMConfig(backend="vllm"))
+    assert get_llm(LLMConfig(backend="llama-cpp", model="m.gguf")).name == "llama-cpp"

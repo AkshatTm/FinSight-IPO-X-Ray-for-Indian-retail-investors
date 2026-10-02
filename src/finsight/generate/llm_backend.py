@@ -130,8 +130,12 @@ def _get_json(url: str, timeout: float) -> dict[str, Any]:
         raise LLMUnavailable(f"cannot reach Ollama at {url}: {exc}") from exc
 
 
-def get_llm(config: LLMConfig, **kwargs: Any) -> OllamaBackend:
-    """The backend the config names. ``llama-cpp`` arrives with the deploy profile (ADR-022)."""
+def get_llm(config: LLMConfig, **kwargs: Any) -> Any:
+    """The backend the config names: ``ollama`` (laptop) or ``llama-cpp`` (deploy, ADR-022)."""
+    if config.backend == "llama-cpp":
+        from finsight.generate.llama_cpp_backend import LlamaCppBackend
+
+        return LlamaCppBackend.from_config(config, **kwargs)
     if config.backend != "ollama":
-        raise NotImplementedError(f"LLM backend {config.backend!r} is not built yet (ADR-022)")
+        raise NotImplementedError(f"LLM backend {config.backend!r} is not built")
     return OllamaBackend.from_config(config, **kwargs)
