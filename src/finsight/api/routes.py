@@ -219,6 +219,16 @@ def lab_frontier(state: State) -> LabPayload:
     return content.lab(state.settings.paths.eval_dir, "frontier")
 
 
+@router.get("/lab/retrieval", tags=["lab"])
+def lab_retrieval(state: State) -> LabPayload:
+    return content.lab(state.settings.paths.eval_dir, "retrieval")
+
+
+@router.get("/lab/asr", tags=["lab"])
+def lab_asr(state: State) -> LabPayload:
+    return content.lab(state.settings.paths.eval_dir, "asr")
+
+
 @router.get("/glossary", tags=["content"])
 def glossary(lang: Language = "en") -> list[GlossaryEntry]:
     return content.glossary(lang)
