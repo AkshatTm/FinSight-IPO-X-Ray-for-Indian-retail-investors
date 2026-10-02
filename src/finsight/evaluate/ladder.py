@@ -112,6 +112,32 @@ def per_field_nvm(results: list[dict[str, Any]], split: str, setting: str) -> di
     return {f: {"n": len(v), "nvm": _r(sum(v) / len(v))} for f, v in sorted(by_field.items())}
 
 
+EXAMPLES_PER_CELL = 5
+
+
+def cell_examples(
+    results: list[dict[str, Any]], split: str, setting: str, k: int = EXAMPLES_PER_CELL
+) -> dict[str, list[dict[str, Any]]]:
+    """Up to ``k`` test rows per field for the Model Lab heatmap: the value this rung read next to
+    the value checked by hand. Misses come first (that is what a reader clicks to see), then hits,
+    each in IPO order. The first result file speaks for a rung with seeds."""
+    rows = _rows(results[0], split, setting)
+    out: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in sorted(rows, key=lambda r: (r["field_id"], bool(r[setting]["nvm"]), r["ipo_id"])):
+        if len(out[row["field_id"]]) < k:
+            out[row["field_id"]].append(
+                {
+                    "ipo_id": row["ipo_id"],
+                    "doc": row.get("doc"),
+                    "read": row[setting].get("pred_raw", ""),
+                    "page": row[setting].get("pred_page"),
+                    "checked": row.get("gold", ""),
+                    "correct": bool(row[setting]["nvm"]),
+                }
+            )
+    return dict(sorted(out.items()))
+
+
 def paired(
     a: list[dict[str, Any]], b: list[dict[str, Any]], split: str, setting: str
 ) -> dict[str, Any]:
@@ -200,6 +226,10 @@ def build(
         "paired_test": comparisons,
         "per_field_test": {
             rung: {s: per_field_nvm(results[rung], HEADLINE_SPLIT, s) for s in SETTINGS}
+            for rung in RUNGS
+        },
+        "examples_test": {
+            rung: {s: cell_examples(results[rung], HEADLINE_SPLIT, s) for s in SETTINGS}
             for rung in RUNGS
         },
         "choice_on_dev": choose_extractors(results),

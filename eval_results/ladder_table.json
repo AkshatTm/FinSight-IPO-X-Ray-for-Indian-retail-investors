@@ -420,6 +420,1664 @@
    }
   }
  },
+ "examples_test": {
+  "rules": {
+   "full": {
+    "book_running_lead_managers": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited",
+      "page": 2,
+      "checked": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Motilal Oswal Investment Advisors Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "JM Financial Limited; Goldman Sachs (India) Securities Private Limited; HSBC Securities and Capital Markets (India) Private Limited; IIFL Capital Services Limited; Jefferies India Private Limited; Morgan Stanley India Company Private Limited; Motilal Oswal Investment Advisors Limited; Nomura Financial Advisory and Securities (India) Private Limited; Nuvama Wealth Management Limited; UBS Securities India Private Limited",
+      "page": 2,
+      "checked": "JM Financial Limited; BNP Paribas; BofA Securities India Limited; Goldman Sachs (India) Securities Private Limited; HSBC Securities and Capital Markets (India) Private Limited; IIFL Capital Services Limited; Jefferies India Private Limited; Morgan Stanley India Company Private Limited; Motilal Oswal Investment Advisors Limited; Nomura Financial Advisory and Securities (India) Private Limited; Nuvama Wealth Management Limited; UBS Securities India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Avendus Capital Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited",
+      "page": 2,
+      "checked": "Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Avendus Capital Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Intensive Fiscal Services Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "Axis Capital Limited; Citigroup Global Markets India Private Limited; Morgan Stanley India Company Private Limited; J.P. Morgan India Private Limited",
+      "page": 1,
+      "checked": "Axis Capital Limited; Citigroup Global Markets India Private Limited; Morgan Stanley India Company Private Limited; J.P. Morgan India Private Limited; BofA Securities India Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "tata-capital-2025",
+      "doc": "rhp",
+      "read": "Kotak Mahindra Capital Company Limited; ICICI Securities Limited; Axis Capital Limited; IIFL Capital Services Limited; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; SBI Capital Markets Limited",
+      "page": 2,
+      "checked": "Kotak Mahindra Capital Company Limited; HSBC Securities and Capital Markets (India) Private Limited; ICICI Securities Limited; Axis Capital Limited; IIFL Capital Services Limited; BNP Paribas; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; HDFC Bank Limited; SBI Capital Markets Limited",
+      "correct": false
+     }
+    ],
+    "face_value": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 1,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹10",
+      "page": 1,
+      "checked": "₹10",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 1,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ 10",
+      "page": 1,
+      "checked": "₹ 10",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 1",
+      "page": 1,
+      "checked": "₹ 1",
+      "correct": true
+     }
+    ],
+    "fresh_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10,600.00 MILLION",
+      "page": 3,
+      "checked": "₹10,600.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹25,000.0 MILLION",
+      "page": 3,
+      "checked": "₹25,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹ 21,500.00 MILLION",
+      "page": 3,
+      "checked": "₹ 21,500.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 42,500 MILLION",
+      "page": 3,
+      "checked": "₹ 42,500 MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_amount": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹[●] MILLION",
+      "page": 3,
+      "checked": "₹[●] MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹100,000.0 MILLION",
+      "page": 3,
+      "checked": "₹100,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹ [●] MILLION",
+      "page": 3,
+      "checked": "₹ [●] MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ [●] million",
+      "page": 13,
+      "checked": "₹ [●] MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ [●] MILLION",
+      "page": 3,
+      "checked": "₹ [●] MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_shares": [
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "101,815,859 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "557,230,051 equity shares",
+      "page": 3,
+      "checked": "557,230,051 EQUITY SHARES",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "[●] equity shares",
+      "page": 3,
+      "checked": "[●] EQUITY SHARES",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "127,562,573 equity shares",
+      "page": 3,
+      "checked": "127,562,573 EQUITY SHARES",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "105,513,839 equity shares",
+      "page": 3,
+      "checked": "105,513,839 EQUITY SHARES",
+      "correct": true
+     }
+    ],
+    "promoters": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "LALIT KESHRE; HARSH JAIN; ISHAN BANSAL",
+      "page": 1,
+      "checked": "LALIT KESHRE; HARSH JAIN; ISHAN BANSAL; NEERAJ SINGH",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "HDFC BANK LIMITED",
+      "page": 1,
+      "checked": "HDFC BANK LIMITED",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "PEYUSH BANSAL; NEHA BANSAL; AMIT CHAUDHARY; SUMEET KAPAHI",
+      "page": 1,
+      "checked": "PEYUSH BANSAL; NEHA BANSAL; AMIT CHAUDHARY; SUMEET KAPAHI",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "LG ELECTRONICS INC",
+      "page": 1,
+      "checked": "LG ELECTRONICS INC.",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "VIDIT AATREY; SANJEEV KUMAR",
+      "page": 1,
+      "checked": "VIDIT AATREY; SANJEEV KUMAR",
+      "correct": true
+     }
+    ],
+    "registrar": [
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "Link Intime India Private Limited",
+      "page": 2,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "MUFG Intime India Private Limited",
+      "page": 2,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "MUFG Intime India Private Limited",
+      "page": 2,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "KFin Technologies Limited",
+      "page": 14,
+      "checked": "KFin Technologies Limited",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "KFin Technologies Limited",
+      "page": 2,
+      "checked": "KFin Technologies Limited",
+      "correct": true
+     }
+    ],
+    "total_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "prospectus",
+      "read": "₹66,323.01 MILLION",
+      "page": 3,
+      "checked": "₹66,323.01 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "prospectus",
+      "read": "₹125,000.0 MILLION",
+      "page": 3,
+      "checked": "₹125,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "prospectus",
+      "read": "₹72,780.15 MILLION",
+      "page": 3,
+      "checked": "₹72,780.15 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "prospectus",
+      "read": "₹116,047.32 million",
+      "page": 1,
+      "checked": "₹116,047.32 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "prospectus",
+      "read": "₹54,212.04 MILLION",
+      "page": 3,
+      "checked": "₹54,212.04 MILLION",
+      "correct": true
+     }
+    ]
+   },
+   "body_only": {
+    "face_value": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 111,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹ 10",
+      "page": 90,
+      "checked": "₹10",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 137,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹10",
+      "page": 124,
+      "checked": "₹ 10",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 1",
+      "page": 169,
+      "checked": "₹ 1",
+      "correct": true
+     }
+    ],
+    "fresh_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹10,600.00 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹25,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ 21,500.00 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ 42,500 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ 31,000.00 MILLION",
+      "correct": false
+     }
+    ],
+    "ofs_amount": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹[●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹100,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     }
+    ],
+    "ofs_shares": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "557,230,051 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "[●] EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "127,562,573 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "101,815,859 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "105,513,839 EQUITY SHARES",
+      "correct": false
+     }
+    ],
+    "total_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "prospectus",
+      "read": "",
+      "page": null,
+      "checked": "₹66,323.01 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "prospectus",
+      "read": "",
+      "page": null,
+      "checked": "₹125,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "prospectus",
+      "read": "",
+      "page": null,
+      "checked": "₹72,780.15 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "prospectus",
+      "read": "",
+      "page": null,
+      "checked": "₹116,047.32 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "prospectus",
+      "read": "",
+      "page": null,
+      "checked": "₹54,212.04 MILLION",
+      "correct": false
+     }
+    ]
+   }
+  },
+  "qa_pretrained": {
+   "full": {
+    "book_running_lead_managers": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "LALIT KESHRE, HARSH JAIN, ISHAN BANSAL AND NEERAJ SINGH",
+      "page": 1,
+      "checked": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Motilal Oswal Investment Advisors Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "Jaykumar Pravinchandra Shah",
+      "page": 5,
+      "checked": "JM Financial Limited; BNP Paribas; BofA Securities India Limited; Goldman Sachs (India) Securities Private Limited; HSBC Securities and Capital Markets (India) Private Limited; IIFL Capital Services Limited; Jefferies India Private Limited; Morgan Stanley India Company Private Limited; Motilal Oswal Investment Advisors Limited; Nomura Financial Advisory and Securities (India) Private Limited; Nuvama Wealth Management Limited; UBS Securities India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "Kotak Mahindra Bank Limited",
+      "page": 15,
+      "checked": "Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Avendus Capital Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Intensive Fiscal Services Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "Axis, Morgan Stanley, JPM, BofA and Citi",
+      "page": 10,
+      "checked": "Axis Capital Limited; Citigroup Global Markets India Private Limited; Morgan Stanley India Company Private Limited; J.P. Morgan India Private Limited; BofA Securities India Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "Vidit Aatrey and Sanjeev Kumar",
+      "page": 11,
+      "checked": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Morgan Stanley India Company Private Limited; Axis Capital Limited; Citigroup Global Markets India Private Limited",
+      "correct": false
+     }
+    ],
+    "face_value": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10",
+      "page": 116,
+      "checked": "₹2",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹200,000",
+      "page": 11,
+      "checked": "₹10",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "face value of ₹2 each",
+      "page": 1,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹10",
+      "page": 12,
+      "checked": "₹ 10",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹1",
+      "page": 13,
+      "checked": "₹ 1",
+      "correct": true
+     }
+    ],
+    "fresh_issue_size": [
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "Bid Amount being up to ₹500,000",
+      "page": 13,
+      "checked": "₹25,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "at least ₹ 100 million",
+      "page": 8,
+      "checked": "",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10,600.00 million",
+      "page": 12,
+      "checked": "₹10,600.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹ 21,500.00 MILLION",
+      "page": 3,
+      "checked": "₹ 21,500.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 42,500 MILLION",
+      "page": 3,
+      "checked": "₹ 42,500 MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_amount": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹200,000",
+      "page": 12,
+      "checked": "₹[●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "[●] TIMES THE FACE VALUE OF THE EQUITY SHARES",
+      "page": 3,
+      "checked": "₹100,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "₹ 31,000.00 million",
+      "page": 13,
+      "checked": "₹ 3,800.00 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "[●] TIMES THE FACE VALUE OF THE EQUITY SHARES",
+      "page": 3,
+      "checked": "₹ [●] MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ [●] MILLION",
+      "page": 3,
+      "checked": "₹ [●] MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_shares": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "449",
+      "page": 5,
+      "checked": "557,230,051 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "86",
+      "page": 4,
+      "checked": "[●] EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "123",
+      "page": 5,
+      "checked": "127,562,573 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "210,728",
+      "page": 3,
+      "checked": "101,815,859 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "594",
+      "page": 6,
+      "checked": "105,513,839 EQUITY SHARES",
+      "correct": false
+     }
+    ],
+    "promoters": [
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "NRIs",
+      "page": 7,
+      "checked": "LG ELECTRONICS INC.",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "LALIT KESHRE, HARSH JAIN, ISHAN BANSAL AND NEERAJ SINGH",
+      "page": 1,
+      "checked": "LALIT KESHRE; HARSH JAIN; ISHAN BANSAL; NEERAJ SINGH",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "HDFC BANK LIMITED",
+      "page": 1,
+      "checked": "HDFC BANK LIMITED",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "PEYUSH BANSAL, NEHA BANSAL, AMIT CHAUDHARY AND SUMEET KAPAHI",
+      "page": 1,
+      "checked": "PEYUSH BANSAL; NEHA BANSAL; AMIT CHAUDHARY; SUMEET KAPAHI",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "VIDIT AATREY AND SANJEEV KUMAR",
+      "page": 1,
+      "checked": "VIDIT AATREY; SANJEEV KUMAR",
+      "correct": true
+     }
+    ],
+    "registrar": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "share transfer agent",
+      "page": 15,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "Shanti Gopalkrishnan",
+      "page": 3,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "NKGJ Trading LLP",
+      "page": 7,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "Securities and Exchange Board of India",
+      "page": 8,
+      "checked": "KFin Technologies Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "Karan Singh Hundal",
+      "page": 4,
+      "checked": "KFin Technologies Limited",
+      "correct": false
+     }
+    ],
+    "total_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "prospectus",
+      "read": "₹9,948.45 million",
+      "page": 90,
+      "checked": "₹66,323.01 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "prospectus",
+      "read": "₹ 200.00 million",
+      "page": 10,
+      "checked": "₹125,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "prospectus",
+      "read": "₹150.00 million",
+      "page": 14,
+      "checked": "₹72,780.15 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "prospectus",
+      "read": "₹217.47 MILLION",
+      "page": 3,
+      "checked": "₹116,047.32 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "prospectus",
+      "read": "₹ 8,131.81 million",
+      "page": 142,
+      "checked": "₹54,212.04 MILLION",
+      "correct": false
+     }
+    ]
+   },
+   "body_only": {
+    "face_value": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10",
+      "page": 116,
+      "checked": "₹2",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "₹ [●]",
+      "page": 136,
+      "checked": "₹ 1",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹ 10",
+      "page": 90,
+      "checked": "₹10",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹2 each 4,580,000,000.00",
+      "page": 137,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ 10",
+      "page": 124,
+      "checked": "₹ 10",
+      "correct": true
+     }
+    ],
+    "fresh_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹1,000,000",
+      "page": 91,
+      "checked": "₹10,600.00 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹1,000,000",
+      "page": 75,
+      "checked": "₹25,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ 200,000 and up to ₹ 1,000,000",
+      "page": 106,
+      "checked": "",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "21,500.00 million",
+      "page": 119,
+      "checked": "₹ 21,500.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "42,500 million",
+      "page": 142,
+      "checked": "₹ 42,500 MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_amount": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹[●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "at least [●]% of the post-Offer paid-up Equity Share capital",
+      "page": 75,
+      "checked": "₹100,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "face value of ₹ 10 each",
+      "page": 105,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "₹ 200,000",
+      "page": 117,
+      "checked": "₹ 3,800.00 MILLION",
+      "correct": false
+     }
+    ],
+    "ofs_shares": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "at least [●]% of the post-Offer paid- up Equity Share capital",
+      "page": 91,
+      "checked": "557,230,051 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "at least [●]% of the post-Offer paid-up Equity Share capital",
+      "page": 120,
+      "checked": "127,562,573 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "678,772,392",
+      "page": 105,
+      "checked": "101,815,859 EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "2,575,223,963",
+      "page": 116,
+      "checked": "[●] EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "tata-capital-2025",
+      "doc": "rhp",
+      "read": "475,824,280",
+      "page": 102,
+      "checked": "265,824,280 EQUITY SHARES",
+      "correct": false
+     }
+    ],
+    "total_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "prospectus",
+      "read": "₹9,948.45 million",
+      "page": 90,
+      "checked": "₹66,323.01 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "prospectus",
+      "read": "",
+      "page": null,
+      "checked": "₹125,000.0 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "prospectus",
+      "read": "₹59.70 million",
+      "page": 119,
+      "checked": "₹72,780.15 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "prospectus",
+      "read": "₹ 1,000,000",
+      "page": 106,
+      "checked": "₹116,047.32 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "prospectus",
+      "read": "₹ 8,131.81 million",
+      "page": 142,
+      "checked": "₹54,212.04 MILLION",
+      "correct": false
+     }
+    ]
+   }
+  },
+  "qa_finetuned": {
+   "full": {
+    "book_running_lead_managers": [
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "Goldman Sachs (India) Securities Private Limited",
+      "page": 3,
+      "checked": "JM Financial Limited; BNP Paribas; BofA Securities India Limited; Goldman Sachs (India) Securities Private Limited; HSBC Securities and Capital Markets (India) Private Limited; IIFL Capital Services Limited; Jefferies India Private Limited; Morgan Stanley India Company Private Limited; Motilal Oswal Investment Advisors Limited; Nomura Financial Advisory and Securities (India) Private Limited; Nuvama Wealth Management Limited; UBS Securities India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "Axis Capital Limited",
+      "page": 3,
+      "checked": "Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Avendus Capital Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Intensive Fiscal Services Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "Axis, Morgan Stanley, JPM, BofA and Citi",
+      "page": 10,
+      "checked": "Axis Capital Limited; Citigroup Global Markets India Private Limited; Morgan Stanley India Company Private Limited; J.P. Morgan India Private Limited; BofA Securities India Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "KFin Technologies Limited",
+      "page": 4,
+      "checked": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Morgan Stanley India Company Private Limited; Axis Capital Limited; Citigroup Global Markets India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "Kotak, JPM, GS and Axis Capital",
+      "page": 11,
+      "checked": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Goldman Sachs (India) Securities Private Limited; Axis Capital Limited",
+      "correct": false
+     }
+    ],
+    "face_value": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 1,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹ 10",
+      "page": 90,
+      "checked": "₹10",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 1,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ 10",
+      "page": 1,
+      "checked": "₹ 10",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 1",
+      "page": 1,
+      "checked": "₹ 1",
+      "correct": true
+     }
+    ],
+    "fresh_issue_size": [
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ [●] million",
+      "page": 13,
+      "checked": "",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10,600.00 MILLION",
+      "page": 3,
+      "checked": "₹10,600.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹25,000.0 MILLION",
+      "page": 3,
+      "checked": "₹25,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹ 21,500.00 MILLION",
+      "page": 3,
+      "checked": "₹ 21,500.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 42,500 MILLION",
+      "page": 3,
+      "checked": "₹ 42,500 MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_amount": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10,600.00 million",
+      "page": 1,
+      "checked": "₹[●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹21,500.00 million",
+      "page": 15,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 42,500 million",
+      "page": 1,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹100,000.0 MILLION",
+      "page": 3,
+      "checked": "₹100,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ [●] MILLION",
+      "page": 3,
+      "checked": "₹ [●] MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_shares": [
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "100,000",
+      "page": 74,
+      "checked": "[●] EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "2,575,223,963 Equity Shares",
+      "page": 116,
+      "checked": "[●] EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "557,230,051 Equity Shares",
+      "page": 1,
+      "checked": "557,230,051 EQUITY SHARES",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "127,562,573 EQUITY SHARES",
+      "page": 3,
+      "checked": "127,562,573 EQUITY SHARES",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "101,815,859 Equity Shares",
+      "page": 105,
+      "checked": "101,815,859 EQUITY SHARES",
+      "correct": true
+     }
+    ],
+    "promoters": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "LALIT KESHRE, HARSH JAIN, ISHAN BANSAL AND NEERAJ SINGH",
+      "page": 1,
+      "checked": "LALIT KESHRE; HARSH JAIN; ISHAN BANSAL; NEERAJ SINGH",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "HDFC BANK LIMITED",
+      "page": 1,
+      "checked": "HDFC BANK LIMITED",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "PEYUSH BANSAL, NEHA BANSAL, AMIT CHAUDHARY AND SUMEET KAPAHI",
+      "page": 1,
+      "checked": "PEYUSH BANSAL; NEHA BANSAL; AMIT CHAUDHARY; SUMEET KAPAHI",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "LG ELECTRONICS INC",
+      "page": 1,
+      "checked": "LG ELECTRONICS INC.",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "VIDIT AATREY AND SANJEEV KUMAR",
+      "page": 1,
+      "checked": "VIDIT AATREY; SANJEEV KUMAR",
+      "correct": true
+     }
+    ],
+    "registrar": [
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "Intensive Fiscal Services Private Limited",
+      "page": 3,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "Citigroup Global Markets India Private Limited",
+      "page": 15,
+      "checked": "KFin Technologies Limited",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "MUFG Intime India Private Limited",
+      "page": 14,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "MUFG Intime India Private Limited",
+      "page": 2,
+      "checked": "MUFG Intime India Private Limited",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "KFin Technologies Limited",
+      "page": 14,
+      "checked": "KFin Technologies Limited",
+      "correct": true
+     }
+    ],
+    "total_issue_size": [
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "prospectus",
+      "read": "₹51,280.15 million",
+      "page": 15,
+      "checked": "₹72,780.15 MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "prospectus",
+      "read": "₹66,323.01 MILLION",
+      "page": 3,
+      "checked": "₹66,323.01 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "prospectus",
+      "read": "₹125,000.0 MILLION",
+      "page": 3,
+      "checked": "₹125,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "prospectus",
+      "read": "₹ 116,047.32 million",
+      "page": 105,
+      "checked": "₹116,047.32 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "prospectus",
+      "read": "₹54,212.04 MILLION",
+      "page": 3,
+      "checked": "₹54,212.04 MILLION",
+      "correct": true
+     }
+    ]
+   },
+   "body_only": {
+    "face_value": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 111,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹ 10",
+      "page": 90,
+      "checked": "₹10",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹2",
+      "page": 137,
+      "checked": "₹2",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹10",
+      "page": 124,
+      "checked": "₹ 10",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 1",
+      "page": 169,
+      "checked": "₹ 1",
+      "correct": true
+     }
+    ],
+    "fresh_issue_size": [
+     {
+      "ipo_id": "tata-capital-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10,600.00 million",
+      "page": 90,
+      "checked": "₹10,600.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹25,000.0 million",
+      "page": 74,
+      "checked": "₹25,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹21,500.00 million",
+      "page": 119,
+      "checked": "₹ 21,500.00 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "",
+      "page": null,
+      "checked": "",
+      "correct": true
+     }
+    ],
+    "ofs_amount": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "₹10,600.00 million",
+      "page": 90,
+      "checked": "₹[●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "₹21,500.00 million",
+      "page": 119,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "rhp",
+      "read": "₹ 42,500 million",
+      "page": 142,
+      "checked": "₹ [●] MILLION",
+      "correct": false
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "₹100,000.0 million",
+      "page": 74,
+      "checked": "₹100,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "₹ [●] million",
+      "page": 105,
+      "checked": "₹ [●] MILLION",
+      "correct": true
+     }
+    ],
+    "ofs_shares": [
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "rhp",
+      "read": "100,000",
+      "page": 74,
+      "checked": "[●] EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "physicswallah-2025",
+      "doc": "rhp",
+      "read": "2,575,223,963 Equity Shares",
+      "page": 116,
+      "checked": "[●] EQUITY SHARES",
+      "correct": false
+     },
+     {
+      "ipo_id": "groww-2025",
+      "doc": "rhp",
+      "read": "557,230,051 Equity Shares",
+      "page": 90,
+      "checked": "557,230,051 EQUITY SHARES",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "rhp",
+      "read": "127,562,573 Equity Shares",
+      "page": 119,
+      "checked": "127,562,573 EQUITY SHARES",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "rhp",
+      "read": "101,815,859 equity shares",
+      "page": 105,
+      "checked": "101,815,859 EQUITY SHARES",
+      "correct": true
+     }
+    ],
+    "total_issue_size": [
+     {
+      "ipo_id": "groww-2025",
+      "doc": "prospectus",
+      "read": "₹66,323.01 million",
+      "page": 90,
+      "checked": "₹66,323.01 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "hdb-financial-services-2025",
+      "doc": "prospectus",
+      "read": "₹125,000.0 million",
+      "page": 74,
+      "checked": "₹125,000.0 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lenskart-2025",
+      "doc": "prospectus",
+      "read": "₹72,780.15 million",
+      "page": 119,
+      "checked": "₹72,780.15 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "lg-electronics-india-2025",
+      "doc": "prospectus",
+      "read": "₹ 116,047.32 million",
+      "page": 105,
+      "checked": "₹116,047.32 MILLION",
+      "correct": true
+     },
+     {
+      "ipo_id": "meesho-2025",
+      "doc": "prospectus",
+      "read": "₹ 54,212.04 million",
+      "page": 142,
+      "checked": "₹54,212.04 MILLION",
+      "correct": true
+     }
+    ]
+   }
+  }
+ },
  "choice_on_dev": {
   "book_running_lead_managers": {
    "extractor": "rules",

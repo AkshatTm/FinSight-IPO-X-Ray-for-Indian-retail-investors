@@ -176,3 +176,16 @@ def test_the_strict_metric_run_is_kept_beside_the_fixed_one(tmp_path: Path) -> N
         != table["strict_metric"]["ladder"]["rules"]["dev"]["full"]
     )
     assert "strict_metric" not in build(results)
+
+
+def test_heatmap_examples_are_at_most_five_per_cell_and_misses_come_first(tmp_path: Path) -> None:
+    from finsight.evaluate.ladder import cell_examples
+
+    results = load_results(write_results(tmp_path))["rules"]
+    out = cell_examples(results, "test", "full", k=2)
+    assert set(out) == {"fresh_issue_size", "registrar"}
+    assert all(len(v) <= 2 for v in out.values())
+    fresh = out["fresh_issue_size"]
+    assert [e["correct"] for e in fresh] == sorted(e["correct"] for e in fresh)  # misses first
+    assert {e["ipo_id"] for e in fresh} <= {"t1", "t2", "t3"}  # test IPOs only
+    assert set(fresh[0]) == {"ipo_id", "doc", "read", "page", "checked", "correct"}
