@@ -274,6 +274,12 @@ Paired per-IPO differences (same resampled IPOs): fine-tuned minus pretrained +0
 **Result (qwen3.5:2b, full profile):** Ather 5/5 amounts verified, Groww 4/4, Lenskart 5/5 (one earlier run had one unverifiable sum), LG English says the company gets no money (and appends the not-found sentence), LG Hindi still says not found (weak Hindi, ADR-020).
 **Consequences:** two more edge cases rely on the X-Ray (if the table was not read, retrieval alone answers); the evidence drawer shows a page, not a highlighted row.
 
+### ADR-054 API and extract changes found in run 1: stored boxes, source sentence, thumbnails, lab examples, bid-closed date — proposed (2 Oct 2026; needs Akshat review)
+**Context:** Run 1 found that no candidate carried a box (the API matched text on every request), that the popover rebuilt each fact's sentence in the browser, that the thumbnail strip downloaded full pages, and that the lab heatmap had numbers but no examples (spec 8.2).
+**Decision:** (1) `extract.fill_boxes` stores each candidate's box (+ its existing doc and page) when the X-Ray is built; the API prefers it and only falls back to text matching for older X-Rays (`locate_bbox` moved from `api` to `extract`). (2) `XRayField.sentence = {text, hit}` from `extract.sentence_around`, the same tight-band logic the browser used, 10 words each side. (3) `GET /pages/{n}?w=` returns a WebP scaled to `w` pixels (40-1200, never enlarged, cached in memory); the strip asks for 160. (4) `ladder_table.json` gains `examples_test` (up to 5 test rows per rung, field and setting; misses first); the numbers in the file did not change (checked against the committed file).
+(5) `XRay.bid_closed = {closed_on, page}` read from the Prospectus cover by `extract.find_bid_closed` ("BID/OFFER CLOSED ON ...", with the variants the ten prospectuses print: no ON, the typo CLOSEED, a comma after the month); the API sends it on the X-Ray and the workspace header shows "Bid closed {date} (Prospectus p. {n})". All ten dates were found; each listing date in `ipo_meta.yaml` is that date plus three working days.
+**Consequences:** `openapi.json` and `frontend/lib/api/types.ts` regenerated; 06 updated; the X-Rays must be rebuilt (`pipeline build --stage xray`) to carry stored boxes. Examples are the first result file of a rung (seed 13 for the fine-tuned rung), not an average.
+
 ---
 
 ## Pending ADRs (to be written during the build)
