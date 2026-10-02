@@ -265,6 +265,19 @@ def test_lab_serves_result_files_and_404s_when_missing(client: TestClient) -> No
     assert missing.json()["error"]["code"] == "not_available"
 
 
+def test_weaklabels_payload_carries_the_audit_when_present(
+    client: TestClient, app_state: AppState
+) -> None:
+    eval_dir = app_state.settings.paths.eval_dir
+    (eval_dir / "weaklabel_stats.json").write_text('{"n_ipos": 389}', encoding="utf-8")
+    assert client.get("/api/lab/weaklabels").json() == {"n_ipos": 389}
+    (eval_dir / "weaklabel_audit.json").write_text('{"precision": 0.9}', encoding="utf-8")
+    assert client.get("/api/lab/weaklabels").json() == {"n_ipos": 389, "audit": {"precision": 0.9}}
+    (eval_dir / "asr.json").write_text('{"models": {}}', encoding="utf-8")
+    assert client.get("/api/lab/asr").status_code == 200
+    assert client.get("/api/lab/retrieval").status_code == 404
+
+
 def test_health_degraded_without_ollama_and_ok_in_demo_mode(
     client: TestClient, app_state: AppState
 ) -> None:

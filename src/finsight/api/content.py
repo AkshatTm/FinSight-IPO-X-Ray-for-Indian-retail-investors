@@ -21,7 +21,11 @@ LAB_FILES = {
     "verifier": "verifier.json",
     "weaklabels": "weaklabel_stats.json",
     "frontier": "frontier.json",
+    "retrieval": "retrieval.json",
+    "asr": "asr.json",
 }
+# Extra files merged into a payload under a key (06: weaklabels = stats + audit precision).
+LAB_EXTRAS = {"weaklabels": {"audit": "weaklabel_audit.json"}}
 
 
 def glossary(lang: Language) -> list[GlossaryEntry]:
@@ -46,4 +50,7 @@ def lab(eval_dir: Path, name: str) -> dict[str, Any]:
             hint="The experiment has not been run on this machine.",
         )  # fmt: skip
     payload: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+    for key, extra in LAB_EXTRAS.get(name, {}).items():
+        if (eval_dir / extra).exists():
+            payload[key] = json.loads((eval_dir / extra).read_text(encoding="utf-8"))
     return payload

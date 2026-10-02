@@ -26,6 +26,8 @@ ROUTES = [
     ("GET", "/api/lab/verifier"),
     ("GET", "/api/lab/weaklabels"),
     ("GET", "/api/lab/frontier"),
+    ("GET", "/api/lab/retrieval"),
+    ("GET", "/api/lab/asr"),
     ("GET", "/api/glossary"),
 ]
 
