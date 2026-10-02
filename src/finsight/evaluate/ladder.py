@@ -241,7 +241,7 @@ def build(
         },
         "examples_test": {
             rung: {s: cell_examples(results[rung], HEADLINE_SPLIT, s) for s in SETTINGS}
-            for rung in RUNGS
+            for rung in rungs
         },
         "choice_on_dev": choose_extractors(results),
         "notes": (
