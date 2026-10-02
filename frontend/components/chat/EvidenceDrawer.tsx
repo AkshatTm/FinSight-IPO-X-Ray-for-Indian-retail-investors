@@ -1,8 +1,7 @@
 "use client";
 
-import { X } from "@phosphor-icons/react";
-import { useEffect, useRef } from "react";
 import { MarkIcon } from "@/components/facts/VerdictMark";
+import { Drawer } from "@/components/ui/Drawer";
 import { comparison, reasonText } from "@/lib/chat";
 import { useChat } from "@/lib/chatStore";
 import { useUi } from "@/lib/store";
@@ -18,22 +17,8 @@ export function EvidenceDrawer({ ipoId }: { ipoId: string }) {
   const turns = useChat((s) => s.turns[ipoId]);
   const close = useChat((s) => s.closeEvidence);
   const setHighlight = useUi((s) => s.setHighlight);
-  const closeBtn = useRef<HTMLButtonElement>(null);
-  const opener = useRef<Element | null>(null);
 
   const open = !!ref && ref.ipoId === ipoId;
-  useEffect(() => {
-    if (!open) return;
-    opener.current = document.activeElement;
-    closeBtn.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
-    window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      if (opener.current instanceof HTMLElement) opener.current.focus();
-    };
-  }, [open, close]);
-
   const turn = turns?.find((x) => x.id === ref?.turnId);
   const v = turn?.verdicts.find((x) => x.index === ref?.index);
   if (!open || !turn || !v) return null;
@@ -54,24 +39,7 @@ export function EvidenceDrawer({ ipoId }: { ipoId: string }) {
     );
 
   return (
-    <>
-      <div className="fixed inset-0 z-40 bg-black/20" onClick={close} aria-hidden />
-      <aside
-        role="dialog"
-        aria-modal="true"
-        aria-label={t(`evidence.title.${v.status}`)}
-        className="drawer-in fixed inset-y-0 right-0 z-50 flex w-full flex-col overflow-y-auto border-l border-rule bg-surface p-5 shadow-[var(--shadow-float)] sm:w-[440px]"
-      >
-        <div className="flex items-start justify-between gap-3">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
-            <MarkIcon state={v.status} size={20} />
-            {t(`evidence.title.${v.status}`)}
-          </h2>
-          <button ref={closeBtn} type="button" onClick={close} aria-label={t("nav.close")} className="-mr-2 -mt-2 inline-flex h-11 w-11 items-center justify-center text-muted hover:text-text">
-            <X size={20} />
-          </button>
-        </div>
-
+    <Drawer title={t(`evidence.title.${v.status}`)} icon={<MarkIcon state={v.status} size={20} />} onClose={close}>
         <table className="mt-4 w-full">
           <thead>
             <tr className="text-left text-xs text-muted">
@@ -123,7 +91,6 @@ export function EvidenceDrawer({ ipoId }: { ipoId: string }) {
         )}
 
         <p className="mt-auto pt-6 text-xs text-muted">{t("ev.foot")}</p>
-      </aside>
-    </>
+    </Drawer>
   );
 }
