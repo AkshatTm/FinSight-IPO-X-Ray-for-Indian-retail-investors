@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { DemoMode } from "@/components/demo/DemoMode";
 import { ToastHost } from "@/components/ui/ToastHost";
 import { useT } from "@/lib/useT";
 import { ColdStartBanner } from "./ColdStartBanner";
@@ -27,6 +28,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </main>
       <Footer />
       <ToastHost />
+      <DemoMode />
     </>
   );
 }

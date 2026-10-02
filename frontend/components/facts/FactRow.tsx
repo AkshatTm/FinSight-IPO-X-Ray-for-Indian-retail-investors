@@ -145,6 +145,7 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
 
   return (
     <li
+      data-field={f.field_id}
       className="relative border-b border-rule last:border-b-0"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

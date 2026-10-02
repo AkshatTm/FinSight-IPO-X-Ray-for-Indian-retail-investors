@@ -469,6 +469,8 @@ export const STRINGS = d({
   "keys.pages": { en: "Previous or next page", hi: "पिछला या अगला पन्ना" },
   "keys.zoom": { en: "Zoom in or out", hi: "ज़ूम बढ़ाएँ या घटाएँ" },
   "keys.help": { en: "Show this list", hi: "यह सूची दिखाएँ" },
+  // 16 demo mode (Hindi is a builder draft)
+  "demo.step": { en: "Demo step {n} of 7 · press the next number", hi: "डेमो चरण {n} / 7 · अगला नंबर दबाएँ" },
 });
 
 export type StringKey = keyof typeof STRINGS;
