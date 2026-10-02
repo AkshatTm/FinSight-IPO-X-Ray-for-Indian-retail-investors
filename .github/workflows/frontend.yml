@@ -39,3 +39,23 @@ jobs:
       - run: pnpm build
         env:
           NEXT_PUBLIC_USE_MOCKS: "1"
+
+  e2e:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      # Demo flow on the mock API; the real-API run needs models and is done on the laptop (E2E_REAL=1).
+      - run: pnpm test:e2e
