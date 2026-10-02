@@ -32,9 +32,12 @@ RUNG_LABELS = {
     "rules": "Rung 1: rules",
     "qa_pretrained": "Rung 2: pretrained QA",
     "qa_finetuned": "Rung 3: fine-tuned QA",
+    "bilstm_crf": "Rung 4: BiLSTM-CRF",
 }
+LADDER_BASE = ("rules", "qa_pretrained", "qa_finetuned")  # the three rungs of the G2 headline
+OPTIONAL = ("bilstm_crf",)  # joins the ladder as soon as its three seed files exist (P5.3)
 RUNGS = tuple(RUNG_LABELS)
-TIE_ORDER = ("rules", "qa_finetuned", "qa_pretrained")  # the simplest rung wins a tie
+TIE_ORDER = ("rules", "qa_finetuned", "bilstm_crf", "qa_pretrained")  # the simplest rung wins a tie
 HEADLINE_SPLIT = "test"
 
 
@@ -42,9 +45,12 @@ def load_results(ladder_dir: Path) -> dict[str, list[dict[str, Any]]]:
     """Result files grouped by rung; the fine-tuned rung has one file per seed."""
     out: dict[str, list[dict[str, Any]]] = {}
     for rung in RUNGS:
-        names = [f"qa_finetuned_seed{s}" for s in SEEDS] if rung == "qa_finetuned" else [rung]
+        seeded = rung in ("qa_finetuned", "bilstm_crf")
+        names = [f"{rung}_seed{s}" for s in SEEDS] if seeded else [rung]
         files = [ladder_dir / f"{n}.json" for n in names]
         missing = [f.name for f in files if not f.exists()]
+        if missing and rung in OPTIONAL and len(missing) == len(files):
+            continue  # that rung has not been run yet
         if missing:
             raise FileNotFoundError(f"missing result files: {', '.join(missing)}")
         out[rung] = [json.loads(f.read_text(encoding="utf-8")) for f in files]
@@ -154,7 +160,7 @@ def choose_extractors(results: dict[str, list[dict[str, Any]]]) -> dict[str, Any
     choice: dict[str, Any] = {}
     for field_id in fields:
         board: dict[str, dict[str, Any]] = {}
-        for rung in RUNGS:
+        for rung in (r for r in RUNGS if r in results):
             by_setting = {}
             for setting in SETTINGS:
                 scores = [
@@ -177,7 +183,7 @@ def choose_extractors(results: dict[str, list[dict[str, Any]]]) -> dict[str, Any
 def headline_text(table: dict[str, Any]) -> str:
     """The sentence the report and the Model Lab quote, written from the numbers (G2 framing)."""
     gain = table["paired_test"]["qa_finetuned_minus_qa_pretrained"]["full"]
-    body = {r: table["ladder"][r][HEADLINE_SPLIT]["body_only"]["nvm"] for r in RUNGS}
+    body = {r: table["ladder"][r][HEADLINE_SPLIT]["body_only"]["nvm"] for r in LADDER_BASE}
     per_field = table["per_field_test"]
     n_fields = len(per_field["rules"]["full"])
     wins = sum(
@@ -199,7 +205,8 @@ def build(
     strict: dict[str, list[dict[str, Any]]] | None = None,
 ) -> dict[str, Any]:
     ladder: dict[str, Any] = {}
-    for rung in RUNGS:
+    rungs = [r for r in RUNGS if r in results]
+    for rung in rungs:
         ladder[rung] = {
             "label": RUNG_LABELS[rung],
             **{
@@ -213,7 +220,11 @@ def build(
             ("qa_finetuned", "qa_pretrained"),
             ("qa_finetuned", "rules"),
             ("qa_pretrained", "rules"),
+            ("bilstm_crf", "qa_pretrained"),
+            ("bilstm_crf", "rules"),
+            ("qa_finetuned", "bilstm_crf"),
         )
+        if a in results and b in results
     }
     table = {
         "experiment": "E2+E3",
@@ -226,7 +237,7 @@ def build(
         "paired_test": comparisons,
         "per_field_test": {
             rung: {s: per_field_nvm(results[rung], HEADLINE_SPLIT, s) for s in SETTINGS}
-            for rung in RUNGS
+            for rung in rungs
         },
         "examples_test": {
             rung: {s: cell_examples(results[rung], HEADLINE_SPLIT, s) for s in SETTINGS}

@@ -189,3 +189,31 @@ def test_heatmap_examples_are_at_most_five_per_cell_and_misses_come_first(tmp_pa
     assert [e["correct"] for e in fresh] == sorted(e["correct"] for e in fresh)  # misses first
     assert {e["ipo_id"] for e in fresh} <= {"t1", "t2", "t3"}  # test IPOs only
     assert set(fresh[0]) == {"ipo_id", "doc", "read", "page", "checked", "correct"}
+
+
+def add_bilstm(ladder: Path, seeds: tuple[int, ...] = (13, 42, 2026)) -> None:
+    for s in seeds:
+        name = f"bilstm_crf_seed{s}"
+        (ladder / f"{name}.json").write_text(
+            json.dumps(result(name, {("t1", "fresh_issue_size"), ("t1", "registrar")}, s)),
+            encoding="utf-8",
+        )
+
+
+def test_the_bilstm_rung_joins_the_ladder_when_its_files_exist(tmp_path: Path) -> None:
+    ladder = write_results(tmp_path)
+    assert "bilstm_crf" not in build(load_results(ladder))["ladder"]  # not run yet: not an error
+    add_bilstm(ladder)
+    table = build(load_results(ladder))
+    assert table["ladder"]["bilstm_crf"]["label"] == "Rung 4: BiLSTM-CRF"
+    assert "bilstm_crf_minus_rules" in table["paired_test"]
+    assert "bilstm_crf" in table["per_field_test"]
+    # the G2 headline still reads the three original rungs
+    assert "Fine-tuning beats the pretrained model" in table["headline"]
+
+
+def test_a_partly_run_bilstm_rung_is_an_error_naming_the_missing_seeds(tmp_path: Path) -> None:
+    ladder = write_results(tmp_path)
+    add_bilstm(ladder, seeds=(13,))
+    with pytest.raises(FileNotFoundError, match=r"bilstm_crf_seed42\.json"):
+        load_results(ladder)

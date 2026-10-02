@@ -26,7 +26,7 @@ from finsight.core.schemas import (
     TextValue,
     Value,
 )
-from finsight.extract.passages import build_passages
+from finsight.extract.passages import QAPassage, build_passages
 from finsight.normalize import parse_amount
 
 MODEL = "deepset/deberta-v3-base-squad2"
@@ -161,6 +161,10 @@ class QAExtractor:
             self._answerer = default_answerer()
         return self._answerer(question, contexts)
 
+    def _answers(self, field: FieldSpec, passages: list[QAPassage]) -> list[RawAnswer | None]:
+        """One answer (or ``None``) per passage; the BiLSTM-CRF rung tags the passages instead."""
+        return self._answer(field.questions[0], [p.text for p in passages])
+
     def extract(
         self,
         doc: ParsedDoc,
@@ -171,7 +175,7 @@ class QAExtractor:
         if self.name not in (field.extractor, field.fallback) or not field.questions:
             return []
         passages = build_passages(doc, sections, field)
-        answers = self._answer(field.questions[0], [p.text for p in passages])
+        answers = self._answers(field, passages)
         found: list[Candidate] = []
         seen: set[str] = set()
         for passage, answer in zip(passages, answers, strict=True):

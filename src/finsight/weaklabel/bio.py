@@ -15,22 +15,14 @@ EM, F1 and NVM code as the QA rungs): each dev sequence lists the rows it answer
 from __future__ import annotations
 
 import json
-import re
 import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
 from finsight.core.config import get_settings
+from finsight.extract import tokenize
 from finsight.weaklabel.package import DATASET_NAME, SLICE_SEED, SLICE_SIZE
-
-# A number with its commas and decimals stays one token ("19,000.00"); words; single symbols.
-TOKEN = re.compile(r"\d+(?:,\d+)*(?:\.\d+)?|\w+|[^\w\s]")
-
-
-def tokenize(text: str) -> list[tuple[str, int, int]]:
-    """``(token, start, end)`` with character offsets into ``text``."""
-    return [(m.group(), m.start(), m.end()) for m in TOKEN.finditer(text)]
 
 
 def tag_span(

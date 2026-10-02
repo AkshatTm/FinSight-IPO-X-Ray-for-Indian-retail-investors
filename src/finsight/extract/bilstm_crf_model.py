@@ -171,6 +171,21 @@ class BiLSTMCRF(nn.Module):
         return self.crf.decode(self.emissions(words, chars, mask), mask)
 
 
+def predict_with_confidence(
+    model: BiLSTMCRF, words: torch.Tensor, chars: torch.Tensor, mask: torch.Tensor
+) -> tuple[list[list[int]], list[list[float]]]:
+    """Best tag paths plus, per token, the softmax probability of the tag the path chose.
+
+    The CRF path is exact; the probabilities are the BiLSTM's own per-token beliefs, a cheap
+    confidence for ranking spans from different passages, not a calibrated probability.
+    """
+    with torch.no_grad():
+        emissions = model.emissions(words, chars, mask)
+        paths = model.crf.decode(emissions, mask)
+        probs = emissions.softmax(-1)
+    return paths, [[float(probs[k, i, t]) for i, t in enumerate(p)] for k, p in enumerate(paths)]
+
+
 def spans_from_tags(tags: list[str]) -> list[tuple[str, int, int]]:
     """``(field, first_token, last_token)`` for every B-/I- run; a stray I- starts a span."""
     spans: list[tuple[str, int, int]] = []
