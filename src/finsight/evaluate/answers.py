@@ -22,9 +22,16 @@ from pathlib import Path
 from typing import Any
 
 from finsight.chat.orchestrator import ChatOrchestrator, Event
+from finsight.generate.prompts import Language
 
 SAMPLE_SIZE = 20  # answers handed to the author for a hand check
 QUESTION_FILES = {"dev": "questions_dev.jsonl", "test": "questions_test.jsonl"}
+
+
+def answer_language(question: dict[str, Any]) -> Language:
+    """The language the UI would send. Hinglish is a question style, not an answer language: the
+    product offers English and Hindi, so a Hinglish question is asked from the English page."""
+    return "hi" if question.get("language") == "hi" else "en"
 
 
 def turn_record(question: dict[str, Any], events: Iterable[Event]) -> dict[str, Any]:
@@ -131,9 +138,7 @@ def main(argv: list[str] | None = None) -> int:
     chat = ChatOrchestrator.from_settings(args.profile)
     rows = []
     for q in load_questions(settings.paths.data_dir / "gold", args.split, args.limit):
-        rows.append(
-            turn_record(q, chat.events(q["ipo_id"], q["question"], q.get("language", "en")))
-        )
+        rows.append(turn_record(q, chat.events(q["ipo_id"], q["question"], answer_language(q))))
         print(f"{len(rows)}: {rows[-1]['outcome']} {len(rows[-1]['verdicts'])} numbers", flush=True)
     out = settings.paths.eval_dir
     out.mkdir(parents=True, exist_ok=True)
