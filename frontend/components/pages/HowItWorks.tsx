@@ -1,7 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import type { StringKey } from "@/lib/i18n";
 import { useT } from "@/lib/useT";
+
+/** Each step points at a real, already-built IPO so the box can be checked against a page. */
+const EXAMPLE: Record<string, { ipo: string; key: StringKey }> = {
+  p1: { ipo: "ather-energy-2025", key: "how.link.ather" },
+  p2: { ipo: "ather-energy-2025", key: "how.link.ather" },
+  p3: { ipo: "ather-energy-2025", key: "how.link.ather" },
+  p4: { ipo: "ather-energy-2025", key: "how.link.ather" },
+  p5: { ipo: "ather-energy-2025", key: "how.link.ather" },
+  p6: { ipo: "lenskart-2025", key: "how.link.lenskart" },
+  q1: { ipo: "lenskart-2025", key: "how.link.lenskart" },
+  q2: { ipo: "lenskart-2025", key: "how.link.lenskart" },
+  q3: { ipo: "lenskart-2025", key: "how.link.lenskart" },
+  q4: { ipo: "ather-energy-2025", key: "how.link.ather" },
+  q5: { ipo: "ather-energy-2025", key: "how.link.ather" },
+};
 
 function Flow({ prefix, count, heading }: { prefix: "p" | "q"; count: number; heading: string }) {
   const { t } = useT();
@@ -15,6 +31,14 @@ function Flow({ prefix, count, heading }: { prefix: "p" | "q"; count: number; he
             <span className="grid h-7 w-7 place-items-center rounded-full border border-rule font-mono text-xs">{n}</span>
             <h3 className="mt-3 font-semibold">{t(`how.${prefix}${n}.h` as StringKey)}</h3>
             <p className="mt-1 text-sm text-muted">{t(`how.${prefix}${n}.b` as StringKey)}</p>
+            {EXAMPLE[`${prefix}${n}`] && (
+              <Link
+                href={`/ipos/${EXAMPLE[`${prefix}${n}`].ipo}`}
+                className="mt-3 inline-flex min-h-11 items-center text-sm text-stamp underline underline-offset-4"
+              >
+                {t(EXAMPLE[`${prefix}${n}`].key)}
+              </Link>
+            )}
             {n < count && (
               <svg aria-hidden viewBox="0 0 24 24" className="absolute -right-[14px] top-1/2 z-10 hidden h-6 w-6 -translate-y-1/2 text-muted lg:block" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 12h10M13 8l4 4-4 4" />
