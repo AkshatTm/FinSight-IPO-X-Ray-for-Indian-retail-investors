@@ -327,6 +327,14 @@ If a company's passages appear in both training and test, scores look better tha
 **Say honestly:** the "correct" text for each clip is a machine draft that I corrected from context; Akshat has not reviewed it yet, and the model that wrote the draft is the one that scores best, so its 0.06 is optimistic. The ranking of the three sizes is safe; the exact gap is not. Ten clips from one speaker is a smoke test.
 **Try it:** `uv run --group asr python scripts/asr_bakeoff.py run --models small` (needs the clips in `data/raw/audio/`) and `uv run python -c "from finsight.voice import cer; print(cer('ऑफर प्राइस', 'ऑफ़र प्राइस'))"`.
 
+### C15. The chat orchestrator: one question, one stream of events (built in P3.6)
+**What it does.** `finsight.chat` turns one question into the events the browser draws: guard, retrieval, tokens, the vetted answer, one verdict per number, then a final summary with a trace id. Nothing here is new logic: it calls the guard, the retriever, `generate.respond` and the verifier in that order and reports what each did and how long it took.
+**Why it is built this way.** `respond` blocks while the model writes, so it runs in a thread and the tokens come back through a queue; the browser sees them as they appear. Those tokens are a draft: the `answer` event carries the text after the output rules, and the page replaces the draft with it. A refused or "not found" answer has no numbers, so it gets no verdicts.
+**Traces.** Every turn, including refusals and abstentions, saves a row in SQLite (`data/traces.sqlite`): the stages with their times, every passage seen (dropped ones marked), the exact prompt and the number checks. The Inspector reads it with the trace id from the `final` event.
+**Retrieval nudge.** Use-of-money questions add the objects-of-the-offer passages to the pool (ADR-051), because the table shares almost no words with the question.
+**How to run.** `uv run python -m finsight.chat ask --ipo ather-energy-2025 "How will the money be used?"` prints every event; `uv run python -m finsight.evaluate.answers --limit 20` runs dev questions and writes `eval_results/e7_sample.jsonl` for hand-checking.
+**Viva check.** Why are the streamed tokens not final? Because the output rules (loops, pasted text, converted units, privacy) can still reject the whole answer.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
