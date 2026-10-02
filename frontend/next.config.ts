@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const API_ORIGIN = process.env.FINSIGHT_API_ORIGIN ?? "http://localhost:8000";
 
 const nextConfig: NextConfig = {
+  // The e2e run on mocks uses its own build folder so it can sit beside a real-API `pnpm dev`.
+  distDir: process.env.NEXT_DIST_DIR ?? ".next",
   // msw/browser exports "node": null, which fails the SSR pass of the client bundle even though
   // the worker is only ever started in the browser. Point the browser build at the real file.
   turbopack: {

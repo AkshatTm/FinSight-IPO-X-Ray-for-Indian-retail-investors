@@ -56,3 +56,4 @@ data/gold/~$*
 
 # chat traces (P3.6)
 data/traces.sqlite
+data/demo_cache/
