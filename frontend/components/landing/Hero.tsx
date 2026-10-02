@@ -59,13 +59,13 @@ function Lens() {
         aria-hidden
       >
         {glass ? (
-          <div className="lens-css h-full w-full" />
+          <div className="lens-css h-full w-full ring-2 ring-stamp/70" />
         ) : (
           <div className="h-9 w-full rounded-[6px] border-2 border-stamp bg-stamp/10" />
         )}
       </div>
       <p
-        className="mark-in absolute left-[6%] top-[31%] inline-flex items-center gap-2 rounded-[10px] border border-rule bg-surface px-3 py-1.5 text-sm shadow-[var(--shadow-float)]"
+        className="mark-in absolute left-[30%] top-[29%] inline-flex items-center gap-2 rounded-[10px] border border-rule bg-surface px-3 py-1.5 text-sm shadow-[var(--shadow-float)]"
         style={{ animationDelay: "400ms" }}
       >
         <VerdictMark state="verified" />
