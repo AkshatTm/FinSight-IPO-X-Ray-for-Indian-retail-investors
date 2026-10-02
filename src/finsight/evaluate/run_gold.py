@@ -47,6 +47,7 @@ from finsight.evaluate.metrics import exact_match, nvm, token_f1
 from finsight.extract import (
     COVER_PAGES,
     SEEDS,
+    BiLSTMCRFExtractor,
     FineTunedExtractor,
     QAExtractor,
     RawAnswer,
@@ -61,15 +62,16 @@ from finsight.normalize import equal, parse_amount, parse_amounts
 from finsight.pipeline.layout import doc_outputs
 from finsight.pipeline.sections_stage import load_sections
 
+SEEDED = ("qa_finetuned", "bilstm_crf")  # one result file per seed
 SETTINGS = ("full", "body_only")
 SPLITS = ("dev", "test")
-RUNGS = ("rules", "qa_pretrained", "qa_finetuned")
+RUNGS = ("rules", "qa_pretrained", "qa_finetuned", "bilstm_crf")
 GOLD_VERSION = "v1"
 _MARKS = str.maketrans("", "", "^*#†‡")
 
 
 def result_name(rung: str, seed: int | None = None) -> str:
-    return f"qa_finetuned_seed{seed}" if rung == "qa_finetuned" else rung
+    return f"{rung}_seed{seed}" if rung in SEEDED else rung
 
 
 # ----------------------------------------------------------------------------- gold rows
@@ -170,6 +172,9 @@ def make_extractor(
     if rung == "qa_finetuned":
         assert seed is not None
         return FineTunedExtractor(seed, answerer=answerer and cached(answerer))
+    if rung == "bilstm_crf":
+        assert seed is not None
+        return BiLSTMCRFExtractor(seed)
     raise ValueError(f"unknown rung {rung!r}")
 
 
@@ -283,7 +288,7 @@ def _split_ids(predictions: list[dict[str, Any]], splits: dict[str, str]) -> dic
 def report(
     rung: str, seed: int | None, predictions: list[dict[str, Any]], splits: dict[str, str]
 ) -> dict[str, Any]:
-    experiment = "E2" if rung == "rules" else "E3"
+    experiment = {"rules": "E2", "bilstm_crf": "E11"}.get(rung, "E3")
     return {
         "experiment": experiment,
         "name": result_name(rung, seed),
@@ -365,7 +370,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     jobs: list[tuple[str, int | None]] = []
     for rung in RUNGS if args.rung == "all" else (args.rung,):
-        if rung == "qa_finetuned":
+        if rung in SEEDED:
             jobs += [(rung, s) for s in ([args.seed] if args.seed else SEEDS)]
         else:
             jobs.append((rung, None))
