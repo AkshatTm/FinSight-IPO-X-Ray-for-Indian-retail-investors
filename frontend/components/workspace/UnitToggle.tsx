@@ -16,7 +16,7 @@ export function UnitToggle() {
       role="radiogroup"
       aria-label={t("unit.tooltip")}
       title={t("unit.tooltip")}
-      className="flex overflow-hidden rounded-[6px] border border-rule bg-surface"
+      className="flex max-w-full overflow-hidden rounded-[6px] border border-rule bg-surface"
     >
       {UNITS.map((u) => (
         <button
@@ -25,7 +25,7 @@ export function UnitToggle() {
           role="radio"
           aria-checked={unit === u}
           onClick={() => setUnit(u)}
-          className={`h-11 px-3 text-sm ${unit === u ? "bg-stamp/10 font-semibold text-text" : "text-muted hover:text-text"}`}
+          className={`h-11 px-2 text-sm sm:px-3 ${unit === u ? "bg-stamp/10 font-semibold text-text" : "text-muted hover:text-text"}`}
         >
           {t(`unit.${u}`)}
         </button>

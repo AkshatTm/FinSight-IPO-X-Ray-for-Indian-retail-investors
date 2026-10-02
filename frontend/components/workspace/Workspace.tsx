@@ -53,11 +53,11 @@ function Header({ id }: { id: string }) {
           <ArrowLeft size={16} /> {t("ws.back")}
         </Link>
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-2xl font-semibold tracking-tight">{ipo?.company ?? xray?.company ?? " "}</h1>
-          {ipo?.sector && <span className="rounded-full border border-rule px-3 py-0.5 text-sm text-muted">{ipo.sector}</span>}
+          <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">{ipo?.company ?? xray?.company ?? " "}</h1>
+          {ipo?.sector && <span className="hidden rounded-full border border-rule px-3 py-0.5 text-sm text-muted sm:inline">{ipo.sector}</span>}
         </div>
       </div>
-      <dl className="flex flex-wrap gap-x-8 gap-y-2 text-sm">
+      <dl className="grid w-full grid-cols-3 gap-x-4 gap-y-2 text-sm sm:flex sm:w-auto sm:flex-wrap sm:gap-x-8">
         {item(t("ws.offerPrice"), priceText)}
         {item(t("ws.issueSize"), ipo?.issue_size_inr ? formatMoney(ipo.issue_size_inr, unit, lang) : null)}
         {item(t("ws.listed"), ipo?.listing_date ? formatDate(ipo.listing_date, lang) : null)}
@@ -134,13 +134,17 @@ export function Workspace({ id }: { id: string }) {
   const askBox = "h-full overflow-hidden rounded-[10px] border border-rule bg-surface";
 
   return (
-    <div className="pt-4">
+    // On a phone the page itself must not scroll: the header stays compact and the panes take the rest.
+    <div className={layout === "narrow" ? "flex h-[calc(100dvh-4.5rem)] min-h-[30rem] flex-col pt-2" : "pt-4"}>
       <Header id={id} />
       <GlossaryDrawer />
       <InspectorDrawer ipoId={id} />
       <ShortcutsDialog />
       <Tour ready={!!detail} />
-      <div className="h-[calc(100dvh-13.5rem)] min-h-[34rem]" data-layout={layout}>
+      <div
+        className={layout === "narrow" ? "min-h-0 flex-1" : "h-[calc(100dvh-13.5rem)] min-h-[34rem]"}
+        data-layout={layout}
+      >
         {layout === "wide" && (
           <ResizablePanes
             initial={[30, 40, 30]}
