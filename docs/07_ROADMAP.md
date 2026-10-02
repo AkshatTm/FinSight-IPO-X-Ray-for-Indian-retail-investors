@@ -217,7 +217,7 @@ Gate: seed 13 must beat the zero-shot baseline on dev EM and F1 before seeds 42 
 Overnight run (3 Oct) follows `12_FRONTEND_SPEC.md` §18, whose step names differ from the table above (spec F2 = Library, F3 = Workspace + Document, F4 = Facts, F5 = Ask, F5b = voice/inspector/glossary/tour, L = Landing, H = How it works/About/404). Status by spec step:
 - [x] F1 scaffold (#70)
 - [x] F2 Library (#72) · [x] F3 Workspace + Document (#76) · [x] F4 Facts (#78) · [x] F5 Ask (#80) · [x] F5b voice/inspector/glossary/tour (#82) · [x] L Landing (#84) · [x] H How it works + About + 404/500 (#86)
-- [x] P3.6 chat orchestrator · [ ] P4.1 API · [ ] G3 (docs/gates/G3.md)
+- [x] P3.6 chat orchestrator · [x] P4.1 API (#90) · [ ] G3 (docs/gates/G3.md)
 - [ ] F6 real API · [ ] F7 Model Lab · [ ] F8 demo mode + E2E · [ ] G4 (docs/gates/G4.md) · [ ] P polish
 
 [AKSHAT] after each F sub-phase: review in the browser for 10 minutes and file issues for anything off.

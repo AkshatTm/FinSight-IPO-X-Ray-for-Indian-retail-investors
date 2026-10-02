@@ -23,6 +23,8 @@ Updated after every merge. Plain language.
 
 - P3.6 chat orchestrator (this PR): `python -m finsight.chat ask --ipo <id> "<question>"` prints the real event stream (guard, retrieval, tokens, answer, verdicts, final); traces saved to SQLite; `forecast` guard reason; objects-of-the-offer retrieval fix with tests on Ather and Urban Company; E7 script written (full run not done). Backend tests: 1043 pass.
 
+- P4.1 API (this PR): all 16 routes answer for real on the processed data (smoke-tested on Ather: X-Ray, 586 pages, words, suggested questions, Lab files). Health works without Ollama (reports `degraded`). `uv run poe api` serves it on :8000.
+
 ## Look at first
 - docs/screenshots/h/: how-desktop-light-en.png, about-mobile-dark-hi.png, 404-desktop-light-en.png
 - docs/screenshots/l/: desktop-light-en-full.png, desktop-dark-hi-full.png, mobile-dark-hi-full.png, desktop-hero.png
@@ -38,7 +40,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: P4.1 API (all routes), then G3.
+- Next: G3 gate document, then F6 (frontend on the real API).
 
 ## RAM peak
 - not yet measured

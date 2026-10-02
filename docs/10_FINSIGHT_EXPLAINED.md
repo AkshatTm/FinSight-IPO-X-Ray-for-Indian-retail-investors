@@ -335,6 +335,13 @@ If a company's passages appear in both training and test, scores look better tha
 **How to run.** `uv run python -m finsight.chat ask --ipo ather-energy-2025 "How will the money be used?"` prints every event; `uv run python -m finsight.evaluate.answers --limit 20` runs dev questions and writes `eval_results/e7_sample.jsonl` for hand-checking.
 **Viva check.** Why are the streamed tokens not final? Because the output rules (loops, pasted text, converted units, privacy) can still reject the whole answer.
 
+### C16. The API: serving what the pipeline built (built in P4.1)
+**What it does.** FastAPI exposes the files `pipeline build` wrote: the IPO list with issue sizes taken from each X-Ray, the X-Ray itself (with the Prospectus value shown beside an RHP `[●]`), page images, word boxes for the highlight, suggested questions (the scale-trick question is made from the IPO's own fresh-issue amount), the glossary, Lab results, and the chat stream.
+**How a chat request flows.** `POST /api/chat` checks the IPO id and question length, then returns a server-sent event stream from the orchestrator (C15). In demo mode it replays a recorded stream instead, and with no recording it says so rather than inventing one.
+**Health and memory.** `ModelManager` only reports: it asks Ollama what is loaded and says whether the retriever and ASR model exist. The retriever and ASR load on first use, so the API starts fast and `/health` answers in under a second. The ASR model unloads after 120 s idle (P3.5).
+**Errors.** One envelope everywhere (`code`, `message`, `hint`); no stack traces. Problems that are known before a stream starts (unknown IPO, bad question) are plain JSON errors, not stream events.
+**Viva check.** Why is page size read from an image? Because the detail route must not load a 100 MB JSON for two numbers.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

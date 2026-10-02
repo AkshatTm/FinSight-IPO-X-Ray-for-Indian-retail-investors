@@ -12,7 +12,7 @@ All non-2xx responses:
 ```json
 {"error": {"code": "ipo_not_found", "message": "No IPO with id 'xyz'.", "hint": "Check /api/ipos for valid ids.", "trace_id": null}}
 ```
-Codes: `ipo_not_found`, `page_out_of_range`, `llm_unavailable`, `models_warming_up`, `asr_failed`, `audio_too_long`, `rate_limited`, `validation_error`, `internal_error`. Stack traces never appear in responses.
+Codes: `ipo_not_found`, `not_available` (a Lab result or trace that does not exist; ADR-052), `page_out_of_range`, `llm_unavailable`, `models_warming_up`, `asr_failed`, `audio_too_long`, `rate_limited`, `validation_error`, `internal_error`. Stack traces never appear in responses.
 
 ---
 
@@ -87,7 +87,7 @@ Events (in order; `event:` name + JSON `data:`):
 | Event | Data | Notes |
 |---|---|---|
 | `stage` | `{"name": "guard|retrieving|generating|verifying|done", "status": "start|end", "ms": 12}` | Drives the stage line and Inspector timeline |
-| `guard` | `{"blocked": true, "reason": "advice_intent" \| "privacy", "facts": [<xray field summaries>]}` | If `blocked`, stream ends after `final`. `privacy` = a private person's address, phone, e-mail or ID number was asked for (approved 1 Oct 2026, ADR-048) |
+| `guard` | `{"blocked": true, "reason": "advice_intent" \| "privacy" \| "forecast", "facts": [<xray field summaries>]}` | If `blocked`, stream ends after `final`. `privacy` = a private person's address, phone, e-mail or ID number was asked for (approved 1 Oct 2026, ADR-048) |
 | `retrieval` | `{"passages": [{"n": 1, "id": "...", "page_start": 67, "page_end": 67, "section": "the_offer", "snippet": "...", "bm25_rank": 2, "dense_rank": 1, "fused_rank": 1, "rerank_score": 0.91}], "dropped": [...]}` | |
 | `abstain` | `{"reason": "low_retrieval_score", "closest_passage": {...}}` | Stream ends after `final` |
 | `token` | `{"text": "The fresh"}` | Many |
