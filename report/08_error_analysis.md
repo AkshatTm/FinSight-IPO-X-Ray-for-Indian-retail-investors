@@ -8,7 +8,7 @@ All extractor rows are test IPOs, full-document setting, from `eval_results/ladd
 
 | # | Where | What happened | Why (as far as known) |
 |---|---|---|---|
-| 1 | Rules, Lenskart `registrar` | Read "Link Intime India Private Limited"; gold "MUFG Intime India Private Limited". | Link Intime was renamed MUFG Intime in 2025; the rules rely on known-name lists (ADR-036) that predate the rename (*likely*). A name list ages. |
+| 1 | Rules, Lenskart `registrar` | Read "Link Intime India Private Limited"; gold "MUFG Intime India Private Limited". | The cover prints "MUFG Intime India … Private Limited (Formerly Link Intime India Private Limited)" (gold quote, page 2); the known-name rule (ADR-036) matched the old name inside the parenthesis. Confirmed from the gold quote. |
 | 2 | Rules, Groww `promoters` | Read three promoters, gold has four (Neeraj Singh missing). | The list ends early; list spans are the weakest part of the cover rules (see also the dot-after-initial bug, ADR-041). |
 | 3 | Rules, LG `ofs_shares` | Read nothing; gold "101,815,859 equity shares". | LG is a pure offer for sale with a different cover layout; no pattern matched, and the rule abstains rather than guess. |
 | 4 | Fine-tuned, Meesho `registrar` | Read "Citigroup Global Markets India Private Limited"; gold "KFin Technologies Limited". | A book-running lead manager's name was read as the registrar: both sit in the same cover block (*likely*). Tata Capital shows the same confusion (an SBI Capital Markets reading). |
