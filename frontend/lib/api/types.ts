@@ -379,6 +379,13 @@ export interface components {
             page: number;
             /** Value */
             value?: (components["schemas"]["Money"] | components["schemas"]["Count"] | components["schemas"]["Percent"] | components["schemas"]["Placeholder"] | components["schemas"]["Range"] | components["schemas"]["TextValue"] | components["schemas"]["ListValue"] | components["schemas"]["TableValue"]) | null;
+            /** Bbox */
+            bbox?: [
+                number,
+                number,
+                number,
+                number
+            ] | null;
         };
         /** Count */
         Count: {
