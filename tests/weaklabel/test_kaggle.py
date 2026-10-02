@@ -222,3 +222,29 @@ def test_collect_needs_the_baseline_and_keeps_nothing_from_a_smoke_run(tmp_path:
     assert not results.exists()
     with pytest.raises(FileNotFoundError, match="baseline"):
         collect(out, "13", models, results, DEV)
+
+
+# ---- BiLSTM-CRF runs (P5.3) -----------------------------------------------------------------
+def test_bilstm_runs_and_slugs() -> None:
+    from finsight.weaklabel.kaggle import kernel_slug, run_params
+
+    assert run_params("bilstm-smoke")["SLICE"] == 200
+    assert run_params("bilstm-42") == {"SLICE": None, "SEEDS": [42]}
+    assert kernel_slug("bilstm-42") == "finsight-bilstm-seed-42"
+    assert kernel_slug("bilstm-smoke") == "finsight-bilstm-smoke"
+    with pytest.raises(ValueError, match="bilstm-7"):
+        run_params("bilstm-7")
+
+
+def test_bilstm_kernel_embeds_the_model_source(tmp_path: Path) -> None:
+    from finsight.weaklabel.kaggle import write_kernel
+
+    folder = write_kernel(tmp_path / "k", "akshat-user", "bilstm-13")
+    nb = json.loads((folder / "notebook.ipynb").read_text(encoding="utf-8"))
+    text = "\n".join("".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code")
+    assert "class BiLSTMCRF" in text
+    assert "SHARED-MODEL" not in text
+    assert "SEEDS = [13]" in text
+    for cell in nb["cells"]:  # every pasted cell is valid Python (a notebook compiles per cell)
+        if cell["cell_type"] == "code":
+            compile("".join(cell["source"]), "cell", "exec")
