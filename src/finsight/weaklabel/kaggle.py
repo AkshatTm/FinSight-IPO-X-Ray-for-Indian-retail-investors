@@ -43,8 +43,25 @@ CODE_FILE = "notebook.ipynb"
 _USERNAME = re.compile(r"^[a-z0-9][a-z0-9-]{2,}$")
 
 
+BILSTM_PREFIX = "bilstm-"  # BiLSTM-CRF runs: bilstm-smoke, bilstm-13, ... (P5.3, notebook 02)
+BILSTM_NOTEBOOK = NOTEBOOK.with_name("02_bilstm_crf.ipynb")
+BILSTM_MODEL_SOURCE = Path(__file__).resolve().parents[1] / "extract" / "bilstm_crf_model.py"
+SHARED_MARK = "# SHARED-MODEL"
+
+
+def is_bilstm(run: str) -> bool:
+    return run.startswith(BILSTM_PREFIX)
+
+
 def run_params(run: str) -> dict[str, Any]:
     """``smoke``, ``baseline`` or a seed number -> the values written into the parameters cell."""
+    if is_bilstm(run):
+        rest = run[len(BILSTM_PREFIX) :]
+        if rest == "smoke":
+            return {"SLICE": SLICE_SIZE, "SEEDS": [SEEDS[0]], "EPOCHS": 2}
+        if rest.isdigit() and int(rest) in SEEDS:
+            return {"SLICE": None, "SEEDS": [int(rest)]}
+        raise ValueError(f"bilstm run must be bilstm-smoke or bilstm-<seed>; got {run!r}")
     if run == "smoke":
         return {"SLICE": SLICE_SIZE, "SEEDS": [SEEDS[0]], "EPOCHS": 1}
     if run == "baseline":
@@ -57,6 +74,9 @@ def run_params(run: str) -> dict[str, Any]:
 
 def kernel_slug(run: str) -> str:
     run_params(run)
+    if is_bilstm(run):
+        rest = run[len(BILSTM_PREFIX) :]
+        return f"finsight-bilstm-{rest}" if rest == "smoke" else f"finsight-bilstm-seed-{rest}"
     return f"finsight-extractor-{run}" if not run.isdigit() else f"finsight-extractor-seed-{run}"
 
 
@@ -73,6 +93,16 @@ def render_notebook(nb: dict[str, Any], params: dict[str, Any]) -> dict[str, Any
             raise ValueError(f"parameter {name} must be assigned exactly once in the cell")
         lines[hits[0]] = f"{name} = {value!r}\n"
     cells[0]["source"] = lines
+    return out
+
+
+def inject_shared_model(nb: dict[str, Any], source: str) -> dict[str, Any]:
+    """Paste the model module into the notebook cell tagged ``shared-model``."""
+    out: dict[str, Any] = json.loads(json.dumps(nb))
+    cells = [c for c in out["cells"] if "shared-model" in c.get("metadata", {}).get("tags", [])]
+    if len(cells) != 1 or not "".join(cells[0]["source"]).startswith(SHARED_MARK):
+        raise ValueError("the notebook needs one 'shared-model' cell starting with the marker")
+    cells[0]["source"] = source.splitlines(keepends=True)
     return out
 
 
@@ -96,9 +126,12 @@ def kernel_metadata(username: str, run: str) -> dict[str, Any]:
     }
 
 
-def write_kernel(folder: Path, username: str, run: str, notebook: Path = NOTEBOOK) -> Path:
+def write_kernel(folder: Path, username: str, run: str, notebook: Path | None = None) -> Path:
     """The folder ``kaggle kernels push -p`` uploads: the rendered notebook and its metadata."""
+    notebook = notebook or (BILSTM_NOTEBOOK if is_bilstm(run) else NOTEBOOK)
     nb = render_notebook(json.loads(notebook.read_text(encoding="utf-8")), run_params(run))
+    if is_bilstm(run):
+        nb = inject_shared_model(nb, BILSTM_MODEL_SOURCE.read_text(encoding="utf-8"))
     folder.mkdir(parents=True, exist_ok=True)
     (folder / CODE_FILE).write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8", newline="\n")
     meta = kernel_metadata(username, run)
@@ -210,6 +243,7 @@ def collect(
     epoch, and for a seed the gate verdict against the baseline.
     """
     params = run_params(run)
+    bilstm = is_bilstm(run)
     if run == "baseline":
         metrics_file = _one(downloaded, "metrics-baseline.json")
         metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
@@ -223,19 +257,25 @@ def collect(
         return {**report, "problems": problems, "warnings": []}
 
     seed = params["SEEDS"][0]
+    kind = "bilstm" if bilstm else "extractor"
     metrics_file = _one(downloaded, f"metrics-{seed}.json")
     metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
     finals = [p for p in sorted(downloaded.rglob("final")) if p.parent.name == f"seed-{seed}"]
     final = next((p for p in finals if p.is_dir()), None)
     problems = check_outputs(metrics, [p.name for p in final.iterdir()] if final else [])
-    if run == "smoke" or problems:
+    if run.endswith("smoke") or problems:
         return {"run": run, "per_epoch": metrics.get("per_epoch", []), "problems": problems,
                 "warnings": []}  # fmt: skip
 
-    baseline_file = eval_dir / "extractor_dev-baseline.json"
-    if not baseline_file.exists():
-        raise FileNotFoundError("no baseline yet: run `push baseline`, then `fetch baseline`")
-    baseline = json.loads(baseline_file.read_text(encoding="utf-8"))["per_epoch"][0]
+    if bilstm:  # the trivial baseline is scored inside the same run, on the same dev rows
+        base_metrics = json.loads(_one(downloaded, "metrics-baseline.json").read_text("utf-8"))
+        base_preds = json.loads(_one(downloaded, "predictions-baseline.json").read_text("utf-8"))
+        baseline = _per_epoch(base_metrics, dev_rows, base_preds)[0]
+    else:
+        baseline_file = eval_dir / "extractor_dev-baseline.json"
+        if not baseline_file.exists():
+            raise FileNotFoundError("no baseline yet: run `push baseline`, then `fetch baseline`")
+        baseline = json.loads(baseline_file.read_text(encoding="utf-8"))["per_epoch"][0]
     predictions = json.loads(_one(downloaded, f"predictions-{seed}.json").read_text("utf-8"))
     per_epoch = _per_epoch(metrics, dev_rows, predictions)
     best = next(e for e in per_epoch if e["epoch"] == metrics["best_epoch"])
@@ -252,14 +292,14 @@ def collect(
         "warnings": [warning] if warning else [],
     }
     assert final is not None
-    target = models_dir / "extractor" / f"seed-{seed}"
+    target = models_dir / ("bilstm_crf" if bilstm else "extractor") / f"seed-{seed}"
     if target.exists():
         shutil.rmtree(target)
     target.parent.mkdir(parents=True, exist_ok=True)
     eval_dir.mkdir(parents=True, exist_ok=True)
     shutil.move(str(final), str(target))  # one copy on disk: the best epoch's weights
-    _keep(metrics_file, eval_dir / f"extractor_metrics-{seed}.json")
-    _write(eval_dir / f"extractor_dev-{seed}.json", report)
+    _keep(metrics_file, eval_dir / f"{kind}_metrics-{seed}.json")
+    _write(eval_dir / f"{kind}_dev-{seed}.json", report)
     return report
 
 
@@ -285,7 +325,9 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(prog="finsight.weaklabel.kaggle")
     parser.add_argument("command", choices=("push", "status", "fetch"))
-    parser.add_argument("run", help="smoke | baseline | 13 | 42 | 2026")
+    parser.add_argument(
+        "run", help="smoke | baseline | 13 | 42 | 2026 | bilstm-smoke | bilstm-13 ..."
+    )
     parser.add_argument("--username", default=os.environ.get("KAGGLE_USERNAME", ""))
     args = parser.parse_args(argv)
     if not args.username:
@@ -320,7 +362,7 @@ def main(argv: list[str] | None = None) -> int:
     for problem in result["problems"]:
         print("PROBLEM:", problem)
     print("FAILED" if result["problems"] else f"OK: {args.run}")
-    if args.run == "smoke":
+    if args.run.endswith("smoke"):
         shutil.rmtree(out)  # 735 MB of throw-away weights
     return 1 if result["problems"] else 0
 
