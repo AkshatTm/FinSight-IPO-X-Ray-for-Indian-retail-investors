@@ -71,6 +71,12 @@ class VerifyConfig(BaseModel):
     nli: bool = False
 
 
+class GuardConfig(BaseModel):
+    # keyword = rules (ADR-046); muril = fine-tuned classifier (P5.4). Privacy is always rules.
+    backend: Literal["keyword", "muril"] = "keyword"
+    threshold: float = 0.5  # probability of "advice" at or above which the classifier blocks
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_prefix="FINSIGHT_", env_nested_delimiter="__", extra="ignore"
@@ -83,6 +89,7 @@ class Settings(BaseSettings):
     retrieve: RetrieveConfig = Field(default_factory=RetrieveConfig)
     voice: VoiceConfig = Field(default_factory=VoiceConfig)
     verify: VerifyConfig = Field(default_factory=VerifyConfig)
+    guard: GuardConfig = Field(default_factory=GuardConfig)
     demo_mode: bool = Field(default=False, validation_alias=AliasChoices("DEMO_MODE", "demo_mode"))
 
     @classmethod

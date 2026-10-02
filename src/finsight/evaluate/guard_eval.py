@@ -30,7 +30,7 @@ from typing import Any
 
 from finsight.core.config import get_settings
 from finsight.evaluate.metrics import wilson_interval
-from finsight.guard import check_question
+from finsight.guard import check_advice, check_question
 
 LABEL_SOURCE = "ai_drafted_claude_chat"
 QUESTION, LANGUAGE, ADVICE, NOTE, REVIEWED = (
@@ -174,7 +174,19 @@ def main(argv: list[str] | None = None) -> int:
     paths = get_settings().paths
     parser = argparse.ArgumentParser(prog="finsight.evaluate.guard_eval")
     parser.add_argument("--csv", type=Path, default=Path(paths.gold_dir) / "advice_guard_set.csv")
+    parser.add_argument("--compare", action="store_true", help="keyword vs MuRIL on the test part")
     args = parser.parse_args(argv)
+    if args.compare:
+        clf = json.loads((Path(paths.eval_dir) / "guard_clf.json").read_text(encoding="utf-8"))
+        result = compare(clf)
+        for name in ("keyword", "muril"):
+            print(_line(name, result[name]["overall"]))
+        out = Path(paths.eval_dir) / "guard_compare.json"
+        out.write_text(
+            json.dumps(result, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+        )
+        print(f"wrote {out}")
+        return 0
     rows = load_set(args.csv)
     result = report(rows, run(rows))
     print(_line("overall", result["overall"]))
@@ -189,3 +201,65 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+# ----------------------------------------------------------------------------- keyword vs MuRIL
+def compare(clf: dict[str, Any], threshold: float = 0.5) -> dict[str, Any]:
+    """E8, classifier row: keyword rules and the MuRIL classifier on the same held-out questions.
+
+    The test part is 15 % of the AI-drafted set (about 18 questions): the intervals are wide and
+    the rules were tuned after reading the whole set (in-sample), so a tie or a small difference
+    here is not evidence either way. Reported as measured, per language.
+    """
+    test = clf["best_seed_predictions"]["test"]
+    scored = [
+        r
+        | {
+            "is_advice": r["label"] == "advice",
+            "muril": r["p_advice"] >= threshold,
+            "keyword": check_advice(r["question"]).blocked,
+        }
+        for r in test
+    ]
+
+    def part(rows: list[dict[str, Any]], key: str) -> dict[str, Any]:
+        adv = [r for r in rows if r["is_advice"]]
+        fact = [r for r in rows if not r["is_advice"]]
+        return {
+            "block_rate": _rate(sum(r[key] for r in adv), len(adv)),
+            "false_block_rate": _rate(sum(r[key] for r in fact), len(fact)),
+        }
+
+    langs = sorted({s["language"] for s in scored})
+    return {
+        "experiment": "E8",
+        "name": "guard_compare",
+        "created_at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "git_sha": _git_sha(),
+        "n_test": len(scored),
+        "threshold": threshold,
+        "best_seed": clf.get("best_seed_by_val_f1"),
+        "keyword": {
+            "overall": part(scored, "keyword"),
+            "by_language": {
+                lg: part([s for s in scored if s["language"] == lg], "keyword") for lg in langs
+            },
+        },
+        "muril": {
+            "overall": part(scored, "muril"),
+            "by_language": {
+                lg: part([s for s in scored if s["language"] == lg], "muril") for lg in langs
+            },
+        },
+        "disagreements": [
+            {k: s[k] for k in ("question", "language", "is_advice", "keyword", "muril", "p_advice")}
+            for s in scored
+            if s["keyword"] != s["muril"]
+        ],
+        "notes": (
+            "Held-out 15 % (seed 2026 split, stratified by language and label) of the AI-drafted "
+            "E8 set, not reviewed by Akshat. The keyword rules were tuned on the whole set, so "
+            "their number is in-sample; MuRIL never saw these questions. The test part is tiny: "
+            "read the intervals, not the point estimates."
+        ),
+    }
