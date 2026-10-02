@@ -7,6 +7,7 @@ page) are cached, two at a time.
 
 from __future__ import annotations
 
+import io
 import json
 from collections.abc import Callable
 from datetime import date
@@ -19,9 +20,9 @@ import yaml
 from PIL import Image
 
 from finsight.api.errors import ApiError
-from finsight.api.locate import locate_bbox
 from finsight.api.models import (
     ApiCandidate,
+    BidClosedInfo,
     Companion,
     FieldCheck,
     IpoDetail,
@@ -30,12 +31,14 @@ from finsight.api.models import (
     PageWord,
     PageWords,
     SectionInfo,
+    SourceSentence,
     SuggestedQuestion,
     XRayField,
     XRayResponse,
 )
 from finsight.core.config import project_root
 from finsight.core.schemas import BBox, Candidate, DocType, FieldResult, FieldSpec, ParsedDoc, XRay
+from finsight.extract import locate_bbox, sentence_around
 from finsight.ingest.registry import DemoIpo, list_demo_ipos
 from finsight.pipeline.layout import doc_outputs, xray_path
 
@@ -151,6 +154,11 @@ class IpoStore:
             )
         return path
 
+    def page_bytes(self, ipo_id: str, n: int, doc: DocType, width: int | None = None) -> bytes:
+        """The page image; with ``width`` a smaller WebP of the same page (never enlarged)."""
+        path = self.page_path(ipo_id, n, doc)
+        return _thumbnail(str(path), width) if width else path.read_bytes()
+
     def words(self, ipo_id: str, n: int, doc: DocType) -> PageWords:
         self.page_path(ipo_id, n, doc)  # validates the id and the page number
         parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, doc).parsed))
@@ -181,6 +189,11 @@ class IpoStore:
             built_at=xray.built_at,
             fields=[self._field(f, ipo_id) for f in xray.fields],
             derived=xray.derived,
+            bid_closed=(
+                BidClosedInfo(closed_on=xray.bid_closed.closed_on, page=xray.bid_closed.page)
+                if xray.bid_closed
+                else None
+            ),
         )
 
     def _bbox(self, ipo_id: str, c: Candidate) -> BBox | None:
@@ -192,11 +205,24 @@ class IpoStore:
             return None
         return locate_bbox(parsed.pages[c.page - 1].words, c.raw)
 
+    def _sentence(
+        self, ipo_id: str, c: Candidate | None, box: BBox | None
+    ) -> SourceSentence | None:
+        """The line the value is printed in, cut from the page words (not rebuilt by the UI)."""
+        if c is None or box is None:
+            return None
+        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, c.doc_type).parsed))
+        if parsed is None or not 1 <= c.page <= len(parsed.pages):
+            return None
+        found = sentence_around(parsed.pages[c.page - 1].words, box)
+        return SourceSentence(text=found[0], hit=found[1]) if found else None
+
     def _field(self, f: FieldResult, ipo_id: str) -> XRayField:
         spec = self.fields.get(f.field_id)
         c = f.chosen
         other = [x for x in f.candidates if c is not None and x.doc_type != c.doc_type]
         companion = _companion(other, lambda x: self._bbox(ipo_id, x))
+        box = self._bbox(ipo_id, c) if c else None
         return XRayField(
             field_id=f.field_id,
             label_en=spec.label_en if spec else f.field_id,
@@ -206,7 +232,8 @@ class IpoStore:
             doc=c.doc_type if c else (spec.doc if spec else "rhp"),
             page=c.page if c else 0,
             printed_page=c.printed_page if c else None,
-            bbox=self._bbox(ipo_id, c) if c else None,
+            bbox=box,
+            sentence=self._sentence(ipo_id, c, box),
             extractor=c.extractor if c else "none",
             score=c.score if c else 0.0,
             verdict=f.verdict,
@@ -281,6 +308,19 @@ def _crore_number(inr: str | None) -> str | None:
     except InvalidOperation:
         return None
     return f"{int(crore):,}"
+
+
+@lru_cache(maxsize=600)
+def _thumbnail(path: str, width: int) -> bytes:
+    """A page scaled to ``width`` pixels (kept in memory: a strip of ten is about 150 KB)."""
+    with Image.open(path) as image:
+        if width >= image.width:
+            return Path(path).read_bytes()
+        height = max(1, round(image.height * width / image.width))
+        small = image.convert("RGB").resize((width, height), Image.Resampling.LANCZOS)
+    out = io.BytesIO()
+    small.save(out, format="WEBP", quality=70)
+    return out.getvalue()
 
 
 @lru_cache(maxsize=16)

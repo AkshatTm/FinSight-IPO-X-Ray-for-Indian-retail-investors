@@ -8,7 +8,7 @@ number printed on the page, when one can be read.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from decimal import Decimal
 from typing import Annotated, Literal
 
@@ -214,12 +214,21 @@ class FieldResult(BaseModel):
     checks: list[CheckResult]
 
 
+class BidClosed(BaseModel):
+    """The "bid/offer closed on" date printed on the Prospectus cover, with its page."""
+
+    closed_on: date
+    page: int  # PDF page of the Prospectus
+    text: str  # the words it was read from
+
+
 class XRay(BaseModel):
     ipo_id: str
     company: str
     built_at: datetime
     fields: list[FieldResult]
     derived: dict[str, str]  # decimal strings, as in 06
+    bid_closed: BidClosed | None = None  # from the Prospectus; absent in older X-Rays
 
 
 # --------------------------------------------------------------------------- chat

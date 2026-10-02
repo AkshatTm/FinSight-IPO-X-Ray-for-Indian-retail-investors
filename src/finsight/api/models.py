@@ -93,6 +93,13 @@ class ApiCandidate(BaseModel):
     gold_match: bool | None = None  # only for IPOs that have gold labels
 
 
+class SourceSentence(BaseModel):
+    """The line of the page a value sits on; ``hit`` is the character span of the value in it."""
+
+    text: str
+    hit: tuple[int, int]
+
+
 class XRayField(BaseModel):
     field_id: str
     label_en: str
@@ -103,6 +110,7 @@ class XRayField(BaseModel):
     page: int
     printed_page: str | None = None
     bbox: BBox | None = None
+    sentence: SourceSentence | None = None
     extractor: str
     score: float
     verdict: Verdict
@@ -113,12 +121,21 @@ class XRayField(BaseModel):
     candidates: list[ApiCandidate]
 
 
+class BidClosedInfo(BaseModel):
+    """ "Bid/offer closed on" as printed on the Prospectus cover (read by the extract stage)."""
+
+    closed_on: date
+    doc: DocType = "prospectus"
+    page: int
+
+
 class XRayResponse(BaseModel):
     ipo_id: str
     company: str
     built_at: datetime
     fields: list[XRayField]
     derived: dict[str, str]  # decimal strings, e.g. {"fresh_share_pct": "64.00"}
+    bid_closed: BidClosedInfo | None = None  # absent in X-Rays built before run 2
 
 
 # ------------------------------------------------------------------------- pages

@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 from finsight.core.schemas import (
+    BidClosed,
     Candidate,
     CheckResult,
     DocType,
@@ -37,6 +38,7 @@ class DocInputs:
 
     candidates: dict[str, list[Candidate]] = field(default_factory=dict)  # by field id
     pure_ofs: bool = False
+    bid_closed: BidClosed | None = None  # Prospectus only
     missing_sections: list[str] = field(default_factory=list)
 
 
@@ -113,4 +115,5 @@ def build_xray(
         built_at=built_at,
         fields=[results[f.id] for f in fields],
         derived=report.derived,
+        bid_closed=docs.get("prospectus", DocInputs()).bid_closed,
     )
