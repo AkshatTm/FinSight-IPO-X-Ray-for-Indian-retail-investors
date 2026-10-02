@@ -230,11 +230,11 @@ Overnight run (3 Oct) follows `12_FRONTEND_SPEC.md` §18, whose step names diffe
 |---|---|---|---|
 | P5.1 Gold v2 | `data/p5.1-gold-v2` | [AKSHAT] + [CC] tooling | +10 held-out IPOs (RHP + Prospectus), parse + label (assisted, disclosed) → final ladder numbers |
 | P5.2 Frontier comparison | `eval/p5.2-frontier` | [AKSHAT] runs, [CC] scoring | E9 incl. verifier on frontier answers |
-| P5.3 BiLSTM-CRF rung | `feat/p5.3-bilstm-crf` | [CC→AKSHAT] | BIO conversion, notebook, 3 seeds → E11, auto-appears in ladder |
-| P5.4 Advice classifier | `feat/p5.4-guard-clf` | [CC→AKSHAT] | MuRIL on advice set → E8 row; swap via config |
-| P5.5 NLI text check | `feat/p5.5-nli` | [CC] | Inference-only check for non-numeric claims; off in `deploy_cpu` |
+| P5.3 BiLSTM-CRF rung | `feat/p5.3-bilstm-crf` | [CC→AKSHAT] | BIO conversion, notebook, 3 seeds → E11, auto-appears in ladder ✅ done 2 Oct (run 2) |
+| P5.4 Advice classifier | `feat/p5.4-guard-clf` | [CC→AKSHAT] | MuRIL on advice set → E8 row; swap via config ✅ done 2 Oct (run 2) |
+| P5.5 NLI text check | `feat/p5.5-nli` | [CC] | Inference-only check for non-numeric claims; off in `deploy_cpu` ✅ done 2 Oct (run 2) |
 | P5.6 Glossary content | `feat/p5.6-glossary` | [CC] drafts, [AKSHAT] reviews HI | FR-19 |
-| P5.7 Latency + memory benchmark | `eval/p5.7-latency` | [CC] | E10, both profiles |
+| P5.7 Latency + memory benchmark | `eval/p5.7-latency` | [CC] | E10, both profiles ✅ done 2 Oct (run 2) |
 
 ## Phase 6 — Deploy and harden (Sat 24 – Mon 26 Oct) → G5
 

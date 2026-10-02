@@ -77,6 +77,16 @@ Updated after every merge. Plain language. Tests were green (1060) at the start.
 - #113 BiLSTM-CRF as an optional fourth rung of the ladder (3 Kaggle seeds). It passes its dev gate against the trivial baseline but is clearly weaker than the fine-tuned QA model on the gold test set; reported as measured.
 - #112 Landing section 5.7 shows the real recorded Lenskart Hindi answer (copied unchanged, caption says the Hindi is imperfect); the How-it-works steps link to a real built IPO. ADR-020 wording corrected: the Hindi fluency scores are Claude drafts, **pending your confirmation** (the earlier text said confirmed).
 
-## Needs you
+## Needs you (short version; full list in docs/AKSHAT_TODO.md, section Run 2)
 - Confirm or edit the fluency scores in `data/gold/hindi_fluency_sheet_rated.csv` (ADR-020 is provisional until then).
 - Review ADR-053 and ADR-054, and the new Hindi strings (`land.lang.cap`, `how.link.*`).
+
+## Later merges
+- #115 Deploy prep (not deployed): Dockerfile (API group only, CPU wheels), `generate/llama_cpp_backend.py`, `scripts/bundle_artifacts.py` (tested), Space README, Vercel config, env templates, `docs/DEPLOY_STEPS.md`, ADR-022 proposed. The Docker image was **not built**: Docker Desktop was off and free RAM was about 3 GB.
+- #116 Evaluation: E7 on dev and test with `full` (qwen3.5:2b, one run). Numbers marked ✅: dev 52/68 (0.76), test 59/86 (0.69); ❌ 8 and 5, all of the kind "true number from the wrong place" or "million turned into crore". Most unanswerable questions still get a fluent answer (abstain or not found: 3 of 9 dev, 4 of 11 test). A first run had 6 errors, all Hinglish questions, a harness bug (fixed, rerun). NLI on name claims is near chance (30/54 dev, 67/126 test), so it stays off. Latency: dev_light 3.5 s median per answer, full 32 s (17 s of it in retrieval with the LLM resident, not investigated).
+- #117 Report drafts (sections 3-8, 11), README with a generated results table, Part C and viva questions for run-2 modules, 48 route screenshots (1366 and 390, light/dark, EN/HI; no horizontal scroll anywhere; the only console error is the missing `/api/lab/frontier`, expected until E9 exists).
+
+## Not done
+- Docker image build (see above); anything needing an account (deploy).
+- Full Playwright e2e re-run beyond the screenshot sweep (CI e2e passed on the PRs).
+- Frontier comparison (E9), gold v2 (P5.1), glossary content (P5.6) are not part of run 2.
