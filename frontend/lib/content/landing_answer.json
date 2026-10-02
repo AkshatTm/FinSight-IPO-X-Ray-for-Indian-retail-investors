@@ -1,0 +1,21 @@
+{
+ "ipo_id": "lenskart-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "answer": "प्राप्त दस्तावेज़ में प्रमोटर्स के नाम और उनकी संख्या स्पष्ट रूप से नहीं दी गई है। [1] और [2] दोनों अंशों में समान जानकारी उपलब्ध है, जो कि वे सभी एक ही हैं: पेयुष बंसाल (Peyush Bansal), नीहा बंसाल (Neha Bansal), एमिट चौहारी (Amit Chaudhary) और सुमेत कपही (Sumeet Kapahi)[1][2]।",
+ "passages": [
+  {
+   "n": 1,
+   "doc": "rhp",
+   "page_start": 398,
+   "section": "our_promoters",
+   "snippet": "OUR PROMOTERS AND PROMOTER GROUP Peyush Bansal, Neha Bansal, Amit Chaudhary and Sumeet Kapahi are the Promoters of our Company. As on the date of this Red Herring Prospectus, our Promoters hold in aggregate, 334,186,084 Equity Shares of fac"
+  },
+  {
+   "n": 2,
+   "doc": "prospectus",
+   "page_start": 398,
+   "section": "our_promoters",
+   "snippet": "OUR PROMOTERS AND PROMOTER GROUP Peyush Bansal, Neha Bansal, Amit Chaudhary and Sumeet Kapahi are the Promoters of our Company. As on the date of this Prospectus, our Promoters hold in aggregate, 331,698,523 Equity Shares of face value of ₹"
+  }
+ ]
+}
