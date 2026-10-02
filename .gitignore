@@ -53,3 +53,6 @@ data/gold/~$*
 # tool scratch
 .playwright-mcp/
 .dev.log
+
+# chat traces (P3.6)
+data/traces.sqlite
