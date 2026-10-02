@@ -33,6 +33,8 @@ Updated after every merge. Plain language.
 
 - F8 demo mode and G4 (this PR): `?demo=1` then keys 1 to 7 (0 resets); e2e green on mocks and on the real API; docs/gates/G4.md PASS with caveats.
 
+- P polish (this PR): phone workspace fits one screen, EvidenceDrawer on the shared Drawer, overflow and tap-target sweep over all routes.
+
 ## Look at first
 - docs/screenshots/f6/: workspace-highlight.png, chat-real.png, inspector-real.png, landing-demo.png
 - docs/gates/G3.md
@@ -46,7 +48,7 @@ Updated after every merge. Plain language.
 - docs/screenshots/f2/: desktop-light-en.png, desktop-hover-preview.png, desktop-empty.png, mobile-dark-hi.png
 
 ## Failed or skipped
-- Mobile workspace: the page header is tall, so the window scrolls as well as the panes (queued for the polish pass).
+- Phone document toolbar is still three rows (design call, see AKSHAT_TODO).
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
