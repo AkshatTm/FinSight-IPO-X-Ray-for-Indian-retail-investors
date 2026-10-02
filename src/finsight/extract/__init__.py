@@ -1,6 +1,8 @@
 """Field extractors (rules, pretrained QA, fine-tuned QA, BiLSTM-CRF) and the X-Ray builder."""
 
+from finsight.extract.bid_dates import find_bid_closed, parse_closed
 from finsight.extract.fields import field_ids, get_field, load_fields
+from finsight.extract.locate import fill_boxes, locate_bbox, sentence_around
 from finsight.extract.passages import QAPassage, build_passages
 from finsight.extract.qa_finetuned import (
     DEFAULT_SEED,
@@ -32,10 +34,15 @@ __all__ = [
     "build_passages",
     "build_xray",
     "field_ids",
+    "fill_boxes",
+    "find_bid_closed",
     "get_field",
     "load_fields",
+    "locate_bbox",
     "objects_pure_ofs",
+    "parse_closed",
     "same_value",
     "select_field",
+    "sentence_around",
     "weights_dir",
 ]

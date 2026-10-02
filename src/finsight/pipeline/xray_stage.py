@@ -16,7 +16,15 @@ from pathlib import Path
 from pydantic import TypeAdapter
 
 from finsight.core.schemas import Candidate, DocType, XRay
-from finsight.extract import DocInputs, QAExtractor, build_xray, load_fields, objects_pure_ofs
+from finsight.extract import (
+    DocInputs,
+    QAExtractor,
+    build_xray,
+    fill_boxes,
+    find_bid_closed,
+    load_fields,
+    objects_pure_ofs,
+)
 from finsight.ingest.registry import DemoIpo
 from finsight.parse import KEY_SECTIONS
 from finsight.pipeline.layout import doc_outputs, xray_path
@@ -57,13 +65,14 @@ def load_inputs(processed_dir: Path, ipo_id: str, doc: DocType) -> DocInputs:
     parsed = load_parsed(processed_dir, ipo_id, doc)
     sections = load_sections(processed_dir, ipo_id, doc)
     rules, qa = load_candidates(processed_dir, ipo_id, doc), _load_qa(processed_dir, ipo_id, doc)
-    merged: dict[str, list[Candidate]] = {
-        f.id: rules.get(f.id, []) + qa.get(f.id, []) for f in load_fields()
+    merged: dict[str, list[Candidate]] = {  # each value's box is stored here (and its doc, page)
+        f.id: fill_boxes(rules.get(f.id, []) + qa.get(f.id, []), parsed) for f in load_fields()
     }
     found = {s.id for s in sections}
     return DocInputs(
         candidates=merged,
         pure_ofs=objects_pure_ofs(parsed, sections),
+        bid_closed=find_bid_closed(parsed) if doc == "prospectus" else None,
         missing_sections=[s for s in KEY_SECTIONS if s != "cover" and s not in found],
     )
 

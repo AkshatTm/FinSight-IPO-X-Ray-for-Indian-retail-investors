@@ -80,10 +80,17 @@ def get_xray(id: str, state: State) -> XRayResponse:
         200: {"content": {"image/webp": {"schema": {"type": "string", "format": "binary"}}}}
     },
 )
-def get_page_image(id: str, n: int, state: State, doc: Doc = "rhp") -> Response:
-    path = state.store.page_path(id, n, doc)
+def get_page_image(
+    id: str,
+    n: int,
+    state: State,
+    doc: Doc = "rhp",
+    w: Annotated[
+        int | None, Query(ge=40, le=1200, description="Width in pixels (thumbnail)")
+    ] = None,
+) -> Response:
     return Response(
-        path.read_bytes(),
+        state.store.page_bytes(id, n, doc, w),
         media_type="image/webp",
         headers={"Cache-Control": "public, max-age=31536000, immutable"},
     )
