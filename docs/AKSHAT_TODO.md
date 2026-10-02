@@ -24,6 +24,8 @@
 
 - Demo mode (F8): the step indicator Hindi (`demo.step`) is a builder draft. Before the demo run `uv run poe record-demo` (cache is not committed) and preferably with the `full` profile; v0.4.0 is yours to tag.
 
+- Polish pass: the impeccable critique command was not run (its launcher downloads a binary on first run); I did the layout, overflow and tap-target checks by script and by eye instead. Humanizer pass on Landing, How it works and About changed nothing: the copy is the spec's, verbatim. On a phone the document toolbar still takes three rows; a one-row toolbar is a design call for you.
+
 ## Data and evaluation
 - X-Ray boxes: the extractors do not store a bbox for any value (found in F6). The API now locates boxes by matching text on the page (ADR-052), which is good for numbers and names but not for every list value. Consider storing the box in the extract stage in the next pipeline pass.
 - `configs/ipo_meta.yaml` (sector and listing date for the 10 IPOs) was typed from memory of public listing dates: please verify each line.
