@@ -54,6 +54,8 @@ Generated from `eval_results/` by `scripts/readme_results.py`; each number is on
 | Advice guard (keyword), in-sample | block / false-block | 60/60 / 0/60 | `guard.json` |
 | Retrieval, bm25 | recall@1 / recall@5, 56 test questions | 0.30 / 0.62 | `retrieval.json` |
 | Retrieval, hybrid+rerank | recall@1 / recall@5, 56 test questions | 0.46 / 0.61 | `retrieval.json` |
+| Chat answers (E7, dev), one run | numbers marked ✅ | 0.76 of 68 | `e7.json` |
+| Chat answers (E7, test), one run | numbers marked ✅ | 0.69 of 86 | `e7.json` |
 <!-- results:end -->
 
 ## Run locally
