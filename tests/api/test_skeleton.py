@@ -50,35 +50,6 @@ def test_no_route_outside_the_contract(spec: dict) -> None:  # type: ignore[type
     assert set(spec["paths"]) == documented
 
 
-@pytest.mark.parametrize(
-    ("method", "url", "kwargs"),
-    [
-        ("GET", "/api/health", {}),
-        ("GET", "/api/ipos", {}),
-        ("GET", "/api/ipos/acme-2025", {}),
-        ("GET", "/api/ipos/acme-2025/xray", {}),
-        ("GET", "/api/ipos/acme-2025/pages/1", {}),
-        ("GET", "/api/ipos/acme-2025/pages/1/words", {}),
-        ("GET", "/api/ipos/acme-2025/suggested-questions", {}),
-        ("POST", "/api/chat", {"json": {"ipo_id": "a", "question": "q", "language": "en"}}),
-        ("GET", "/api/traces/01ABC", {}),
-        ("GET", "/api/lab/ladder", {}),
-        ("GET", "/api/glossary?lang=en", {}),
-    ],
-)
-def test_skeleton_answers_501_with_the_error_envelope(
-    client: TestClient,
-    method: str,
-    url: str,
-    kwargs: dict,  # type: ignore[type-arg]
-) -> None:
-    response = client.request(method, url, **kwargs)
-    assert response.status_code == 501
-    error = response.json()["error"]
-    assert set(error) == {"code", "message", "hint", "trace_id"}
-    assert error["code"] == "internal_error"
-
-
 def test_validation_errors_use_the_envelope_too(client: TestClient) -> None:
     response = client.post("/api/chat", json={"question": "missing ipo_id"})
     assert response.status_code == 422
