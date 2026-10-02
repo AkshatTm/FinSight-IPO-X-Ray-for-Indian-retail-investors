@@ -403,7 +403,7 @@ export interface components {
              * Code
              * @enum {string}
              */
-            code: "ipo_not_found" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error";
+            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error";
             /** Message */
             message: string;
             /** Hint */
