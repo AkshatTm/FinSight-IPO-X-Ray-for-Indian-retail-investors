@@ -187,7 +187,7 @@ class IpoStore:
             ipo_id=xray.ipo_id,
             company=xray.company,
             built_at=xray.built_at,
-            fields=[self._field(f, ipo_id) for f in xray.fields],
+            fields=[self._field(f, ipo_id, xray.boxes_located) for f in xray.fields],
             derived=xray.derived,
             bid_closed=(
                 BidClosedInfo(closed_on=xray.bid_closed.closed_on, page=xray.bid_closed.page)
@@ -196,10 +196,16 @@ class IpoStore:
             ),
         )
 
-    def _bbox(self, ipo_id: str, c: Candidate) -> BBox | None:
-        """The candidate's box, or one found by matching its text on its page (see ``locate``)."""
+    def _bbox(self, ipo_id: str, c: Candidate, located: bool = False) -> BBox | None:
+        """The candidate's box, or one found by matching its text on its page (see ``locate``).
+
+        ``located``: the build already looked, so no box means none exists; opening the parsed
+        documents (about 2.5 s of CPU each) to look again would stall every other request.
+        """
         if c.bbox is not None:
             return c.bbox
+        if located:
+            return None
         parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, c.doc_type).parsed))
         if parsed is None or not 1 <= c.page <= len(parsed.pages):
             return None
@@ -211,18 +217,20 @@ class IpoStore:
         """The line the value is printed in, cut from the page words (not rebuilt by the UI)."""
         if c is None or box is None:
             return None
+        if c.sentence is not None and c.sentence_hit is not None:
+            return SourceSentence(text=c.sentence, hit=c.sentence_hit)  # stored at build time
         parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, c.doc_type).parsed))
         if parsed is None or not 1 <= c.page <= len(parsed.pages):
             return None
         found = sentence_around(parsed.pages[c.page - 1].words, box)
         return SourceSentence(text=found[0], hit=found[1]) if found else None
 
-    def _field(self, f: FieldResult, ipo_id: str) -> XRayField:
+    def _field(self, f: FieldResult, ipo_id: str, located: bool = False) -> XRayField:
         spec = self.fields.get(f.field_id)
         c = f.chosen
         other = [x for x in f.candidates if c is not None and x.doc_type != c.doc_type]
-        companion = _companion(other, lambda x: self._bbox(ipo_id, x))
-        box = self._bbox(ipo_id, c) if c else None
+        companion = _companion(other, lambda x: self._bbox(ipo_id, x, located))
+        box = self._bbox(ipo_id, c, located) if c else None
         return XRayField(
             field_id=f.field_id,
             label_en=spec.label_en if spec else f.field_id,

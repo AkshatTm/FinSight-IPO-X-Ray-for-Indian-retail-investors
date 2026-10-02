@@ -88,13 +88,22 @@ def sentence_around(words: Sequence[Word], bbox: BBox) -> tuple[str, tuple[int, 
 
 
 def fill_boxes(candidates: Sequence[Candidate], doc: ParsedDoc) -> list[Candidate]:
-    """Candidates with the box of their value stored: kept when set, else found on the page by
-    text (``locate_bbox``). A value that cannot be matched keeps ``bbox = None``."""
+    """Candidates with the box and the source sentence of their value stored: kept when set, else
+    found on the page (the box by text with ``locate_bbox``, the sentence from the box with
+    ``sentence_around``). A value that cannot be matched keeps ``bbox = None``."""
     out: list[Candidate] = []
     for c in candidates:
-        if c.bbox is None and 1 <= c.page <= len(doc.pages) and c.doc_type == doc.doc_type:
-            box = locate_bbox(doc.pages[c.page - 1].words, c.raw)
-            if box is not None:
-                c = c.model_copy(update={"bbox": box})
+        if c.doc_type == doc.doc_type and 1 <= c.page <= len(doc.pages):
+            words = doc.pages[c.page - 1].words
+            update: dict[str, object] = {}
+            box = c.bbox if c.bbox is not None else locate_bbox(words, c.raw)
+            if c.bbox is None and box is not None:
+                update["bbox"] = box
+            if box is not None and c.sentence is None:
+                found = sentence_around(words, box)
+                if found is not None:
+                    update["sentence"], update["sentence_hit"] = found[0], found[1]
+            if update:
+                c = c.model_copy(update=update)
         out.append(c)
     return out
