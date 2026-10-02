@@ -1,6 +1,7 @@
 """Chunking, BM25, dense retrieval, fusion and reranking."""
 
 from finsight.retrieve.bm25 import BM25Index, tokenize
+from finsight.retrieve.boost import wants_objects
 from finsight.retrieve.chunk import build_chunks
 from finsight.retrieve.dense import BgeM3Embedder, DenseIndex, Embedder
 from finsight.retrieve.fuse import rrf
@@ -32,4 +33,5 @@ __all__ = [
     "redact_table",
     "rrf",
     "tokenize",
+    "wants_objects",
 ]
