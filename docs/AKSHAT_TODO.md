@@ -21,6 +21,8 @@
 - How it works: spec 9 says each box opens a real example (recorded trace or screenshot). None exists yet, so the boxes are static. Add them after P4.1 records the demo cache. About Hindi (spec 10 has English only) is a builder draft: every `about.*` string. Humanizer pass: no change, copy is fixed verbatim.
 
 ## Data and evaluation
+- E7 (answers on dev questions through the real orchestrator): script is ready (`uv run python -m finsight.evaluate.answers --limit 20 --profile dev_light` with `ollama serve` running). I ran only one live smoke question (Ather, "How will the money be used?", qwen3.5:0.8b: right section, no numbers in the answer). The full run and the hand-check of `eval_results/e7_sample.jsonl` are not done.
+- Approve or reject ADR-051 (`forecast` guard reason; objects-of-the-offer retrieval nudge).
 - `data/gold/asr_references.csv`: references are now the script you read aloud; `reviewed_by_akshat` is empty. Confirm them, then re-score ASR CER (ADR-021's 0.06 for turbo was measured on the old machine-drafted references).
 - Rate `data/gold/hindi_fluency_sheet.csv`; review `advice_guard_set.csv` and `questions_*.jsonl` (from earlier PROGRESS entries).
 

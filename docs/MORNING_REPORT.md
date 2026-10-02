@@ -21,6 +21,8 @@ Updated after every merge. Plain language.
 
 - H How it works, About, 404, 500 (this PR): two-row flow diagram (6 + 5 steps) with FAQ, About with limits and licences, not-found and error pages, all EN+HI.
 
+- P3.6 chat orchestrator (this PR): `python -m finsight.chat ask --ipo <id> "<question>"` prints the real event stream (guard, retrieval, tokens, answer, verdicts, final); traces saved to SQLite; `forecast` guard reason; objects-of-the-offer retrieval fix with tests on Ather and Urban Company; E7 script written (full run not done). Backend tests: 1043 pass.
+
 ## Look at first
 - docs/screenshots/h/: how-desktop-light-en.png, about-mobile-dark-hi.png, 404-desktop-light-en.png
 - docs/screenshots/l/: desktop-light-en-full.png, desktop-dark-hi-full.png, mobile-dark-hi-full.png, desktop-hero.png
@@ -36,7 +38,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: P3.6 chat orchestrator (backend), then P4.1 API.
+- Next: P4.1 API (all routes), then G3.
 
 ## RAM peak
 - not yet measured

@@ -254,6 +254,12 @@ Paired per-IPO differences (same resampled IPOs): fine-tuned minus pretrained +0
 **Update (L Landing, F5b):** the landing lens and the mic button also use CSS glass. In a test the library element rendered outside its parent even inside a transformed box, so it could not be pinned over the cover image or kept inside the composer row. The library stays installed for compact free-standing uses (demo step indicator) and is lazy-loaded.
 **Consequences:** the nav is not refractive glass; revisit if a polish pass wants it. IPO fixtures in `frontend/mocks/` are placeholders and never used in demo mode.
 
+### ADR-051 Chat events: `forecast` guard reason and objects-of-the-offer retrieval — proposed (3 Oct 2026; needs Akshat review)
+**Context:** the contract (06) lists two guard reasons, `advice_intent` and `privacy`. The frontend words a prediction refusal ("I can't predict listing prices") differently from an advice refusal, and the guard already classifies the question as `forecast`. Separately, "How will the money be used?" returned no objects-of-the-offer page in the top 5 for Ather (BM25 dev_light): the table's words do not overlap the question.
+**Options:** (1) keep two reasons, one card for both; (2) add `forecast` to the `guard` event. For retrieval: (a) leave it, (b) a third question-aware nudge like the cover-page one.
+**Decision:** (2) and (b). `GuardEvent.reason` is a free string, so the OpenAPI schema does not change; the orchestrator sends `forecast` when the guard category is `forecast`. `retrieve/boost.py` adds up to 4 `objects_of_the_offer` passages to the candidate pool when the question asks about the use of money (EN, HI, Hinglish cues), so the reranker still decides. Verified on Ather, Urban Company and Lenskart: an objects passage is in the top 5 for English and Hinglish questions (BM25 only).
+**Consequences:** 06 should list `forecast` if accepted. Per-passage `bm25_rank` / `dense_rank` are not exposed by `Retriever.search`, so the retrieval event carries the fused rank and the rerank score only; the Inspector shows "—" for the other two.
+
 ---
 
 ## Pending ADRs (to be written during the build)
