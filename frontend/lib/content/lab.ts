@@ -38,6 +38,11 @@ export const LAB = {
     en: "the same model trained on about 4,000 examples FinSight labelled automatically.",
     hi: "वही मॉडल, FinSight के अपने-आप लेबल किए लगभग 4,000 उदाहरणों पर ट्रेन किया हुआ।",
   },
+  "lab.rung.bilstm_crf": { en: "Small tagging network", hi: "छोटा टैगिंग नेटवर्क" },
+  "lab.rung.bilstm_crf.d": {
+    en: "a BiLSTM-CRF that tags the words of a page, trained on the same automatic labels, no pretrained knowledge.",
+    hi: "एक BiLSTM-CRF जो पन्ने के शब्दों पर टैग लगाता है, उन्हीं अपने-आप बने लेबल पर ट्रेन किया हुआ, बिना पहले से सीखी जानकारी के।",
+  },
   "lab.ladder.take": {
     en: "When the cover page is there, simple rules do best because the cover follows a fixed format. When the cover is hidden, the rules drop to {rules_body}% while our model stays at {ft_body}%. Training on automatic labels made the model {delta} points better than the pretrained version.",
     hi: "जब कवर पेज मौजूद होता है, तो साधारण नियम सबसे अच्छा करते हैं क्योंकि कवर एक तय ढाँचे में होता है। कवर छिपाने पर नियम {rules_body}% पर गिर जाते हैं, जबकि हमारा मॉडल {ft_body}% पर रहता है। अपने-आप बने लेबल पर ट्रेनिंग से मॉडल प्रीट्रेंड वर्ज़न से {delta} अंक बेहतर हुआ।",
@@ -59,6 +64,15 @@ export const LAB = {
     en: "Whole document, tested IPOs. Each fact has about 7 values, so one miss moves a cell by 14 points.",
     hi: "पूरा दस्तावेज़, टेस्ट वाले आईपीओ। हर तथ्य के लगभग 7 मान हैं, इसलिए एक गलती से खाना 14 अंक हिलता है।",
   },
+
+  "lab.fields.click": { en: "Click a number to see examples.", hi: "उदाहरण देखने के लिए किसी संख्या पर क्लिक करें।" },
+  "lab.fields.examples": { en: "Examples: {method}, {fact}", hi: "उदाहरण: {method}, {fact}" },
+  "lab.fields.read": { en: "Value read", hi: "पढ़ा गया मान" },
+  "lab.fields.checked": { en: "Checked by hand", hi: "हाथ से जाँचा गया" },
+  "lab.fields.right": { en: "Right", hi: "सही" },
+  "lab.fields.wrong": { en: "Wrong", hi: "गलत" },
+  "lab.fields.blank": { en: "(nothing read)", hi: "(कुछ नहीं पढ़ा)" },
+  "lab.fields.close": { en: "Close examples", hi: "उदाहरण बंद करें" },
 
   // 8.3 automatic labels
   "lab.weak.h": { en: "Automatic labels", hi: "अपने-आप बने लेबल" },

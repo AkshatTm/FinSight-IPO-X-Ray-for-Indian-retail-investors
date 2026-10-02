@@ -303,6 +303,26 @@
               "title": "Doc"
             },
             "description": "Which document: the RHP or the final Prospectus."
+          },
+          {
+            "name": "w",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 1200,
+                  "minimum": 40
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Width in pixels (thumbnail)",
+              "title": "W"
+            },
+            "description": "Width in pixels (thumbnail)"
           }
         ],
         "responses": {
@@ -1117,6 +1137,35 @@
           "score"
         ],
         "title": "ApiCandidate"
+      },
+      "BidClosedInfo": {
+        "properties": {
+          "closed_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Closed On"
+          },
+          "doc": {
+            "type": "string",
+            "enum": [
+              "rhp",
+              "prospectus"
+            ],
+            "title": "Doc",
+            "default": "prospectus"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          }
+        },
+        "type": "object",
+        "required": [
+          "closed_on",
+          "page"
+        ],
+        "title": "BidClosedInfo",
+        "description": "\"Bid/offer closed on\" as printed on the Prospectus cover (read by the extract stage)."
       },
       "Body_voice_api_voice_post": {
         "properties": {
@@ -2095,6 +2144,35 @@
         ],
         "title": "SectionInfo"
       },
+      "SourceSentence": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "hit": {
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Hit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "hit"
+        ],
+        "title": "SourceSentence",
+        "description": "The line of the page a value sits on; ``hit`` is the character span of the value in it."
+      },
       "SuggestedQuestion": {
         "properties": {
           "text": {
@@ -2381,6 +2459,16 @@
             ],
             "title": "Bbox"
           },
+          "sentence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceSentence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "extractor": {
             "type": "string",
             "title": "Extractor"
@@ -2488,6 +2576,16 @@
             },
             "type": "object",
             "title": "Derived"
+          },
+          "bid_closed": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BidClosedInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",

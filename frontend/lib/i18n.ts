@@ -74,6 +74,7 @@ export const STRINGS = d({
   "error.title": { en: "Something went wrong here.", hi: "यहाँ कुछ गड़बड़ हो गई।" },
   "error.retry": { en: "Try again", hi: "फिर से कोशिश करें" },
   "loading": { en: "Loading", hi: "लोड हो रहा है" },
+  "glossary.what": { en: "What is {term}?", hi: "{term} क्या है?" },
   "glossary.more": { en: "More in the glossary", hi: "शब्दकोश में और देखें" },
 
   // 2.4 / 7.6 verdict marks
@@ -310,6 +311,8 @@ export const STRINGS = d({
   "ws.offerPrice": { en: "Offer price", hi: "ऑफ़र प्राइस" },
   "ws.issueSize": { en: "Issue size", hi: "इश्यू का आकार" },
   "ws.listed": { en: "Listed", hi: "सूचीबद्ध" },
+  "ws.bidClosed": { en: "Bid closed", hi: "बोली बंद हुई" },
+  "ws.bidClosedValue": { en: "{date} (Prospectus p. {page})", hi: "{date} (प्रॉस्पेक्टस पृ. {page})" },
   "ws.glossary": { en: "Glossary", hi: "शब्दकोश" },
   "ws.inspect": { en: "Inspect", hi: "जाँचें" },
   "ws.inspectTip": {
@@ -347,6 +350,8 @@ export const STRINGS = d({
   "doc.jump": { en: "Jump to section", hi: "सेक्शन पर जाएँ" },
   "doc.thumbs": { en: "Thumbnails", hi: "थंबनेल" },
   "doc.pageLabel": { en: "Page number", hi: "पन्ना नंबर" },
+  "doc.more": { en: "More: zoom, sections, thumbnails", hi: "और: ज़ूम, सेक्शन, थंबनेल" },
+  "doc.pageOf": { en: "Page {n} / {total}", hi: "पन्ना {n} / {total}" },
   "doc.pageImageAlt": { en: "{doc} page {n}", hi: "{doc} का पन्ना {n}" },
   "doc.section.cover": { en: "Cover page", hi: "कवर पेज" },
   "doc.section.the_offer": { en: "The offer", hi: "ऑफ़र" },

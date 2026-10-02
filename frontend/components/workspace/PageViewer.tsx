@@ -6,7 +6,9 @@ import { useT } from "@/lib/useT";
 
 export type Zoom = "fit" | "100" | "150";
 
-export const pageUrl = (ipoId: string, doc: string, n: number) => `/api/ipos/${ipoId}/pages/${n}?doc=${doc}`;
+/** `width` asks the API for a smaller WebP (the thumbnail strip); omit it for the full page. */
+export const pageUrl = (ipoId: string, doc: string, n: number, width?: number) =>
+  `/api/ipos/${ipoId}/pages/${n}?doc=${doc}${width ? `&w=${width}` : ""}`;
 
 const VERDICT_VAR: Record<Highlight["kind"], string> = {
   source: "--stamp",

@@ -3,6 +3,7 @@
 // as of 3 Oct 2026). Only for development and tests; the real API serves the files themselves.
 const c = (nvm: number, lo: number, hi: number, n: number) => ({ n, n_ipos: 7, nvm, nvm_ci95: [lo, hi] });
 const f = (nvm: number) => ({ n: 7, nvm });
+const ex = (ipo: string, read: string, checked: string, correct: boolean) => ({ ipo_id: ipo, doc: "rhp", read, checked, page: 3, correct });
 
 export const LAB_LADDER = {
   headline_split: "test",
@@ -22,6 +23,17 @@ export const LAB_LADDER = {
   },
   paired_test: {
     qa_finetuned_minus_qa_pretrained: { full: { diff: 0.381, ci95: [0.2262, 0.5238], excludes_zero: true } },
+  },
+  examples_test: {
+    rules: { full: { face_value: [ex("groww-2025", "₹2", "₹2", true), ex("lenskart-2025", "₹2", "₹2", true)] } },
+    qa_finetuned: {
+      full: {
+        promoters: [
+          ex("lenskart-2025", "Peyush Bansal", "Peyush Bansal, Neha Bansal, Amit Chaudhary", false),
+          ex("groww-2025", "Lalit Keshre", "Lalit Keshre", true),
+        ],
+      },
+    },
   },
   per_field_test: {
     rules: {

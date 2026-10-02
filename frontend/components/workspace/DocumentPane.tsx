@@ -22,7 +22,7 @@ function Thumbnails({ ipoId, doc, page, total, onPage }: { ipoId: string; doc: "
           className={`relative h-24 w-[4.5rem] shrink-0 overflow-hidden rounded-[4px] border bg-white ${n === page ? "border-stamp" : "border-rule"}`}
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- API page renders */}
-          <img src={pageUrl(ipoId, doc, n)} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
+          <img src={pageUrl(ipoId, doc, n, 160)} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
           <span className="absolute bottom-0 right-0 bg-surface/90 px-1 text-xs">{n}</span>
         </button>
       ))}

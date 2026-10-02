@@ -334,6 +334,25 @@ export interface components {
             /** Gold Match */
             gold_match?: boolean | null;
         };
+        /**
+         * BidClosedInfo
+         * @description "Bid/offer closed on" as printed on the Prospectus cover (read by the extract stage).
+         */
+        BidClosedInfo: {
+            /**
+             * Closed On
+             * Format: date
+             */
+            closed_on: string;
+            /**
+             * Doc
+             * @default prospectus
+             * @enum {string}
+             */
+            doc: "rhp" | "prospectus";
+            /** Page */
+            page: number;
+        };
         /** Body_voice_api_voice_post */
         Body_voice_api_voice_post: {
             /**
@@ -671,6 +690,19 @@ export interface components {
             /** End Page */
             end_page: number;
         };
+        /**
+         * SourceSentence
+         * @description The line of the page a value sits on; ``hit`` is the character span of the value in it.
+         */
+        SourceSentence: {
+            /** Text */
+            text: string;
+            /** Hit */
+            hit: [
+                number,
+                number
+            ];
+        };
         /** SuggestedQuestion */
         SuggestedQuestion: {
             /** Text */
@@ -770,6 +802,7 @@ export interface components {
                 number,
                 number
             ] | null;
+            sentence?: components["schemas"]["SourceSentence"] | null;
             /** Extractor */
             extractor: string;
             /** Score */
@@ -809,6 +842,7 @@ export interface components {
             derived: {
                 [key: string]: string;
             };
+            bid_closed?: components["schemas"]["BidClosedInfo"] | null;
         };
         /** StageEvent */
         StageEvent: {
@@ -1193,6 +1227,8 @@ export interface operations {
             query?: {
                 /** @description Which document: the RHP or the final Prospectus. */
                 doc?: "rhp" | "prospectus";
+                /** @description Width in pixels (thumbnail) */
+                w?: number | null;
             };
             header?: never;
             path: {

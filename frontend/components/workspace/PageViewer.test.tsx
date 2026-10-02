@@ -19,5 +19,6 @@ describe("HighlightBox", () => {
   });
   it("builds page URLs with the document", () => {
     expect(pageUrl("a", "prospectus", 7)).toBe("/api/ipos/a/pages/7?doc=prospectus");
+    expect(pageUrl("a", "rhp", 7, 160)).toBe("/api/ipos/a/pages/7?doc=rhp&w=160");
   });
 });

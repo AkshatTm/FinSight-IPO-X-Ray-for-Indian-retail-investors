@@ -94,6 +94,7 @@ export function buildXray(ipoId: string): Schemas["XRayResponse"] | null {
     company: ipo.company,
     built_at: "2026-10-01T00:00:00Z",
     fields,
+    bid_closed: { closed_on: "2025-04-30", doc: "prospectus", page: 3 },
     derived: t > 0 ? { fresh_share_pct: ((f / t) * 100).toFixed(2), ofs_share_pct: (((t - f) / t) * 100).toFixed(2) } : {},
   };
 }

@@ -1,8 +1,10 @@
 "use client";
 
 import { Info } from "@phosphor-icons/react";
+import { GlossaryTerm } from "@/components/ui/GlossaryTerm";
 import { useState } from "react";
 import { CHECK_LABEL, EXTRACTOR_NAME, FIELD_CONTENT, pick } from "@/lib/content/fields";
+import { FIELD_TERM } from "@/lib/content/glossary";
 import { useWords } from "@/lib/api/hooks";
 import type { Lang } from "@/lib/format";
 import { useUi } from "@/lib/store";
@@ -15,8 +17,19 @@ type Box = [number, number, number, number];
 const docName = (doc: "rhp" | "prospectus", t: ReturnType<typeof useT>["t"]) =>
   t(doc === "rhp" ? "doc.rhpShort" : "doc.prospectusShort");
 
-function Sentence({ ipoId, bbox, doc, page }: { ipoId: string; bbox: Box | null; doc: "rhp" | "prospectus"; page: number }) {
-  const { data } = useWords(ipoId, doc, page, !!bbox);
+function Sentence({ ipoId, bbox, doc, page, exact }: { ipoId: string; bbox: Box | null; doc: "rhp" | "prospectus"; page: number; exact?: { text: string; hit: [number, number] } | null }) {
+  // The API sends the exact line (X-Rays built after boxes were stored); without it the line is rebuilt from the page words.
+  const { data } = useWords(ipoId, doc, page, !!bbox && !exact);
+  if (exact) {
+    const [a, b] = exact.hit;
+    return (
+      <p className="rounded-[6px] bg-surface-2 px-2 py-1.5 text-sm">
+        {exact.text.slice(0, a)}
+        <span className="underline decoration-stamp decoration-2 underline-offset-2">{exact.text.slice(a, b)}</span>
+        {exact.text.slice(b)}
+      </p>
+    );
+  }
   if (!data || !bbox) return null;
   const s = sentenceAround(data.words, bbox);
   if (!s.text) return null;
@@ -40,7 +53,7 @@ function Popover({ ipoId, f, doc, page, bbox, lang }: { ipoId: string; f: XField
       className="absolute left-2 right-2 top-full z-20 -mt-1 space-y-2 rounded-[10px] border border-rule bg-surface p-3 text-sm shadow-[var(--shadow-float)]"
     >
       <p className="font-medium">{t("pop.found", { doc: docName(doc, t), page })}</p>
-      <Sentence ipoId={ipoId} bbox={bbox} doc={doc} page={page} />
+      <Sentence ipoId={ipoId} bbox={bbox} doc={doc} page={page} exact={f.sentence} />
       {f.value && "raw" in f.value && (
         <p className="text-muted">
           {t("pop.asWritten")}: <span className="font-mono text-text">{f.value.raw}</span>
@@ -152,25 +165,37 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
       onKeyDown={(e) => e.key === "Escape" && (setPinned(false), setHover(false))}
     >
       <div className="flex items-start gap-1">
-        <button
-          type="button"
-          onClick={go}
-          disabled={r.notInDocument}
-          aria-label={`${sr}. ${r.notInDocument ? "" : t("facts.showOnPage")}`}
-          className="grid min-h-11 flex-1 grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] items-start gap-x-3 gap-y-1 rounded-[6px] px-2 py-2.5 text-left hover:bg-surface-2 disabled:cursor-default disabled:hover:bg-transparent"
-        >
-          <span className="text-sm text-muted">
-            <span className={content ? "term" : ""}>{label}</span>
+        <div className="grid min-h-11 flex-1 grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] items-start gap-x-3 rounded-[6px] px-2 hover:bg-surface-2">
+          <span className="flex items-start text-sm text-muted">
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden
+              onClick={go}
+              disabled={r.notInDocument}
+              className="py-2.5 text-left disabled:cursor-default"
+            >
+              <span className={content ? "term" : ""}>{label}</span>
+            </button>
+            {FIELD_TERM[f.field_id] && <GlossaryTerm id={FIELD_TERM[f.field_id]} icon />}
           </span>
-          <span className="text-right text-sm md:text-left">{valueNode}</span>
-          <span className="col-span-2 flex flex-wrap items-center justify-between gap-2">
-            {mark ? <VerdictMark state={mark} /> : <span />}
-            {showChip && (
-              <span className="rounded-full border border-rule px-2 py-0.5 text-xs text-muted">{chip}</span>
-            )}
-          </span>
-          {r.filledInProspectus && <span className="col-span-2 text-xs text-muted">{t("facts.filled")}</span>}
-        </button>
+          <button
+            type="button"
+            onClick={go}
+            disabled={r.notInDocument}
+            aria-label={`${sr}. ${r.notInDocument ? "" : t("facts.showOnPage")}`}
+            className="grid grid-cols-1 gap-y-1 py-2.5 text-left disabled:cursor-default"
+          >
+            <span className="text-right text-sm md:text-left">{valueNode}</span>
+            <span className="flex flex-wrap items-center justify-between gap-2">
+              {mark ? <VerdictMark state={mark} /> : <span />}
+              {showChip && (
+                <span className="rounded-full border border-rule px-2 py-0.5 text-xs text-muted">{chip}</span>
+              )}
+            </span>
+            {r.filledInProspectus && <span className="text-xs text-muted">{t("facts.filled")}</span>}
+          </button>
+        </div>
         {!r.notInDocument && (
           <button
             type="button"

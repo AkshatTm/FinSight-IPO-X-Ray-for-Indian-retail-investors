@@ -61,6 +61,11 @@ function Header({ id }: { id: string }) {
         {item(t("ws.offerPrice"), priceText)}
         {item(t("ws.issueSize"), ipo?.issue_size_inr ? formatMoney(ipo.issue_size_inr, unit, lang) : null)}
         {item(t("ws.listed"), ipo?.listing_date ? formatDate(ipo.listing_date, lang) : null)}
+        {xray?.bid_closed &&
+          item(
+            t("ws.bidClosed"),
+            t("ws.bidClosedValue", { date: formatDate(xray.bid_closed.closed_on, lang), page: xray.bid_closed.page }),
+          )}
       </dl>
       <div className="flex max-w-full flex-wrap items-center gap-2">
         <button type="button" onClick={() => openGlossary()} className={headBtn}>{t("ws.glossary")}</button>
