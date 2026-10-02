@@ -60,3 +60,11 @@ def test_the_sample_is_spread_evenly_not_picked() -> None:
     assert len(got) == 20
     assert [r["i"] for r in got][:3] == [0, 5, 10]
     assert pick_sample(rows[:5], 20) == rows[:5]
+
+
+def test_a_hinglish_question_is_asked_with_an_answer_language_the_product_has() -> None:
+    from finsight.evaluate.answers import answer_language
+
+    assert answer_language({"language": "hinglish"}) == "en"  # KeyError in the prompt before
+    assert answer_language({"language": "hi"}) == "hi"
+    assert answer_language({}) == "en"
