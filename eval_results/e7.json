@@ -1,0 +1,41 @@
+{
+  "dev": {
+    "profile": "full",
+    "n_questions": 50,
+    "outcomes": {
+      "answered": 42,
+      "refused": 3,
+      "abstained": 5
+    },
+    "errors": {},
+    "answers_with_numbers": 26,
+    "n_numbers": 68,
+    "verdicts": {
+      "verified": 52,
+      "unverifiable": 8,
+      "contradicted": 8
+    },
+    "verified_share": 0.7647,
+    "unanswerable_n": 9,
+    "unanswerable_abstained_or_not_found": 3
+  },
+  "test": {
+    "profile": "full",
+    "n_questions": 67,
+    "outcomes": {
+      "answered": 60,
+      "refused": 7
+    },
+    "errors": {},
+    "answers_with_numbers": 37,
+    "n_numbers": 86,
+    "verdicts": {
+      "verified": 59,
+      "contradicted": 5,
+      "unverifiable": 22
+    },
+    "verified_share": 0.686,
+    "unanswerable_n": 11,
+    "unanswerable_abstained_or_not_found": 4
+  }
+}
