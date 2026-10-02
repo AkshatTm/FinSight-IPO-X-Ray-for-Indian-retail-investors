@@ -49,3 +49,17 @@
 - impeccable's launcher (`scripts/impeccable`) downloads a self-contained binary on first run (SKILL.md Setup). I did not run it unattended; design process steps are followed from its reference/*.md instead. Say if you want the detector binary installed.
 - Only humanizer ships a LICENSE (MIT). The other three skills have no licence file, so `.claude/skills/` is git-ignored; `skills-lock.json` (names, sources, hashes) is committed.
 - Landing check (spec 5.11): ask a friend who has never heard of an RHP what FinSight does after the first three sections.
+
+## Run 2 (overnight, 2 Oct)
+- **Confirm the Hindi fluency scores** in `data/gold/hindi_fluency_sheet_rated.csv`. They are Claude drafts; ADR-020 now says "pending your confirmation" (an earlier line said confirmed).
+- **Review ADR-053, ADR-054 and the proposed ADR-022** (deployment: Docker Space, BM25 only, 4-bit GGUF, Vercel rewrite).
+- **Hand-check the E7 samples** (`eval_results/e7_sample_dev.jsonl`, `e7_sample_test.jsonl`, 20 answers each; fill `reviewed_by_akshat`). E7 is one run.
+- **Review the Hindi strings** added in run 2: `land.lang.cap`, `how.link.ather`, `how.link.lenskart`, plus the glossary "i" button label and the toolbar menu strings.
+- **Review the AI-drafted sets**: advice-guard set (0/120 reviewed), question sets, weak-label audit, gold v1 corrections log. The report discloses all of them (`report/README.md`).
+- **Hindi use-of-money for LG still says "not found"** (weak 2B Hindi; LG is a pure offer for sale with no objects table). Decide whether to show the retrieved passages instead for Hindi (ADR-020 fallback).
+- **Full-profile latency is 32 s median on this laptop** (17 s in retrieval with the LLM resident, against 0.7 s measured alone). Not investigated; worth a look before the demo (try the reranker on CPU or a smaller `rerank_top_n`).
+- **Model Lab text says "Answer accuracy on real model answers is not measured yet"**: E7 now exists (`e7.json`); decide whether the lab shows it (needs a lab route and copy).
+- **Frontier comparison (E9, P5.2)** is still yours; `/api/lab/frontier` returns 404 until `eval_results/frontier.json` exists (the lab hides the section).
+- **Deploy** (P6): follow `docs/DEPLOY_STEPS.md`. I did not create accounts or upload anything, and I did **not** build the Docker image (Docker Desktop was off and free RAM was about 3 GB). Build it once locally before the Space.
+- **Vercel rewrite and slow live answers**: a long CPU answer may be cut by the proxy limit; the fix is a CORS rule and a direct call (see DEPLOY_STEPS).
+- **Report**: every file in `report/` is a draft to rewrite in your voice; sections 1, 2, 9, 10 are not drafted. Check each `[verify]` citation. README "What I learned" is yours.
