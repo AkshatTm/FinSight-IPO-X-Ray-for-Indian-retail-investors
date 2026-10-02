@@ -31,6 +31,8 @@ Updated after every merge. Plain language.
 
 - F7 Model Lab (this PR): /lab reads real eval_results through three new or extended routes (retrieval, asr, weaklabels with audit). Numbers match PROGRESS (rules 86% / 23%, fine-tuned 74% / 85%, verifier 100/100, 0 false alarms). Frontier section hidden until an E9 file exists.
 
+- F8 demo mode and G4 (this PR): `?demo=1` then keys 1 to 7 (0 resets); e2e green on mocks and on the real API; docs/gates/G4.md PASS with caveats.
+
 ## Look at first
 - docs/screenshots/f6/: workspace-highlight.png, chat-real.png, inspector-real.png, landing-demo.png
 - docs/gates/G3.md
@@ -48,7 +50,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: F8 demo mode, G4, polish pass.
+- Next: polish pass (P), then the optional ASR CER step if references get reviewed.
 
 ## RAM peak
 - not yet measured
