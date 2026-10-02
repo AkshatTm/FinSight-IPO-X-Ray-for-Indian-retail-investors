@@ -43,7 +43,7 @@ export function MiniDemo() {
                   const c = FIELD_CONTENT[f.field_id];
                   const label = c ? pick(c.label, lang) : lang === "hi" ? f.label_hi : f.label_en;
                   const value = r.value ? (scalarText(f.field_id, r.value, "crore", lang, t("facts.perShare")) ?? "") : "";
-                  const active = h?.page === r.page && h?.doc === r.doc && h.ipoId === DEMO_IPO && h.bbox === (r.doc === f.doc ? f.bbox : null);
+                  const active = h?.page === r.page && h?.doc === r.doc && h.ipoId === DEMO_IPO && h.bbox === r.bbox;
                   return (
                     <li key={f.field_id} className="border-b border-rule last:border-b-0">
                       <button
@@ -51,7 +51,7 @@ export function MiniDemo() {
                         aria-pressed={active}
                         onClick={() => {
                           setNonce(nonce + 1);
-                          setH({ ipoId: DEMO_IPO, doc: r.doc, page: r.page, bbox: r.doc === f.doc ? f.bbox : null, kind: "source", nonce: nonce + 1 });
+                          setH({ ipoId: DEMO_IPO, doc: r.doc, page: r.page, bbox: r.bbox, kind: "source", nonce: nonce + 1 });
                         }}
                         className={`flex min-h-14 w-full items-center justify-between gap-3 px-4 py-2 text-left hover:bg-surface-2 ${active ? "bg-stamp/5" : ""}`}
                       >
