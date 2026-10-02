@@ -1,0 +1,2033 @@
+{
+ "experiment": "E11",
+ "name": "bilstm_crf_seed2026",
+ "rung": "bilstm_crf",
+ "seed": 2026,
+ "created_at": "2026-10-02T05:31:27+00:00",
+ "git_sha": "e3a04b0",
+ "data": {
+  "gold_version": "v1",
+  "n_ipos": 10,
+  "n_values": 80,
+  "splits": {
+   "dev": [
+    "ather-energy-2025",
+    "hexaware-technologies-2025",
+    "urban-company-2025"
+   ],
+   "test": [
+    "groww-2025",
+    "hdb-financial-services-2025",
+    "lenskart-2025",
+    "lg-electronics-india-2025",
+    "meesho-2025",
+    "physicswallah-2025",
+    "tata-capital-2025"
+   ]
+  },
+  "cover_pages_masked": 15,
+  "max_answer_tokens": 128
+ },
+ "metrics": {
+  "dev": {
+   "full": {
+    "n": 24,
+    "nvm": 0.4583,
+    "em": 0.25,
+    "f1": 0.4728,
+    "coverage": 0.5833
+   },
+   "body_only": {
+    "n": 14,
+    "nvm": 0.3571,
+    "em": 0.2143,
+    "f1": 0.319,
+    "coverage": 0.4286
+   }
+  },
+  "test": {
+   "full": {
+    "n": 56,
+    "nvm": 0.4464,
+    "em": 0.3571,
+    "f1": 0.4963,
+    "coverage": 0.6071
+   },
+   "body_only": {
+    "n": 35,
+    "nvm": 0.2571,
+    "em": 0.2286,
+    "f1": 0.2733,
+    "coverage": 0.3429
+   }
+  }
+ },
+ "per_field": {
+  "dev": {
+   "book_running_lead_managers": {
+    "full": {
+     "n": 3,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.0,
+     "coverage": 0.0
+    },
+    "body_only": {
+     "n": 0,
+     "nvm": null,
+     "em": null,
+     "f1": null,
+     "coverage": null
+    }
+   },
+   "face_value": {
+    "full": {
+     "n": 3,
+     "nvm": 1.0,
+     "em": 0.6667,
+     "f1": 0.6667,
+     "coverage": 1.0
+    },
+    "body_only": {
+     "n": 3,
+     "nvm": 1.0,
+     "em": 0.6667,
+     "f1": 0.6667,
+     "coverage": 1.0
+    }
+   },
+   "fresh_issue_size": {
+    "full": {
+     "n": 3,
+     "nvm": 1.0,
+     "em": 0.6667,
+     "f1": 0.8,
+     "coverage": 0.6667
+    },
+    "body_only": {
+     "n": 3,
+     "nvm": 0.3333,
+     "em": 0.3333,
+     "f1": 0.3333,
+     "coverage": 0.0
+    }
+   },
+   "ofs_amount": {
+    "full": {
+     "n": 3,
+     "nvm": 0.3333,
+     "em": 0.0,
+     "f1": 0.4889,
+     "coverage": 1.0
+    },
+    "body_only": {
+     "n": 3,
+     "nvm": 0.3333,
+     "em": 0.0,
+     "f1": 0.4889,
+     "coverage": 1.0
+    }
+   },
+   "ofs_shares": {
+    "full": {
+     "n": 3,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.0,
+     "coverage": 0.0
+    },
+    "body_only": {
+     "n": 3,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.0,
+     "coverage": 0.0
+    }
+   },
+   "promoters": {
+    "full": {
+     "n": 3,
+     "nvm": 0.6667,
+     "em": 0.0,
+     "f1": 0.6269,
+     "coverage": 0.6667
+    },
+    "body_only": {
+     "n": 0,
+     "nvm": null,
+     "em": null,
+     "f1": null,
+     "coverage": null
+    }
+   },
+   "registrar": {
+    "full": {
+     "n": 3,
+     "nvm": 0.3333,
+     "em": 0.3333,
+     "f1": 0.8667,
+     "coverage": 1.0
+    },
+    "body_only": {
+     "n": 0,
+     "nvm": null,
+     "em": null,
+     "f1": null,
+     "coverage": null
+    }
+   },
+   "total_issue_size": {
+    "full": {
+     "n": 3,
+     "nvm": 0.3333,
+     "em": 0.3333,
+     "f1": 0.3333,
+     "coverage": 0.3333
+    },
+    "body_only": {
+     "n": 2,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.0,
+     "coverage": 0.0
+    }
+   }
+  },
+  "test": {
+   "book_running_lead_managers": {
+    "full": {
+     "n": 7,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.2174,
+     "coverage": 0.4286
+    },
+    "body_only": {
+     "n": 0,
+     "nvm": null,
+     "em": null,
+     "f1": null,
+     "coverage": null
+    }
+   },
+   "face_value": {
+    "full": {
+     "n": 7,
+     "nvm": 0.8571,
+     "em": 0.5714,
+     "f1": 0.5714,
+     "coverage": 1.0
+    },
+    "body_only": {
+     "n": 7,
+     "nvm": 0.8571,
+     "em": 0.7143,
+     "f1": 0.7143,
+     "coverage": 1.0
+    }
+   },
+   "fresh_issue_size": {
+    "full": {
+     "n": 7,
+     "nvm": 0.8571,
+     "em": 0.7143,
+     "f1": 0.7714,
+     "coverage": 0.7143
+    },
+    "body_only": {
+     "n": 7,
+     "nvm": 0.1429,
+     "em": 0.1429,
+     "f1": 0.1429,
+     "coverage": 0.0
+    }
+   },
+   "ofs_amount": {
+    "full": {
+     "n": 7,
+     "nvm": 0.2857,
+     "em": 0.2857,
+     "f1": 0.5095,
+     "coverage": 0.7143
+    },
+    "body_only": {
+     "n": 7,
+     "nvm": 0.2857,
+     "em": 0.2857,
+     "f1": 0.5095,
+     "coverage": 0.7143
+    }
+   },
+   "ofs_shares": {
+    "full": {
+     "n": 7,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.0,
+     "coverage": 0.0
+    },
+    "body_only": {
+     "n": 7,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.0,
+     "coverage": 0.0
+    }
+   },
+   "promoters": {
+    "full": {
+     "n": 7,
+     "nvm": 0.4286,
+     "em": 0.1429,
+     "f1": 0.5293,
+     "coverage": 0.5714
+    },
+    "body_only": {
+     "n": 0,
+     "nvm": null,
+     "em": null,
+     "f1": null,
+     "coverage": null
+    }
+   },
+   "registrar": {
+    "full": {
+     "n": 7,
+     "nvm": 0.7143,
+     "em": 0.7143,
+     "f1": 0.9429,
+     "coverage": 1.0
+    },
+    "body_only": {
+     "n": 0,
+     "nvm": null,
+     "em": null,
+     "f1": null,
+     "coverage": null
+    }
+   },
+   "total_issue_size": {
+    "full": {
+     "n": 7,
+     "nvm": 0.4286,
+     "em": 0.4286,
+     "f1": 0.4286,
+     "coverage": 0.4286
+    },
+    "body_only": {
+     "n": 7,
+     "nvm": 0.0,
+     "em": 0.0,
+     "f1": 0.0,
+     "coverage": 0.0
+    }
+   }
+  }
+ },
+ "notes": "NVM = normalized value match of the top candidate against gold. body_only blanks pages 1-15 and is scored on rows whose gold value is still stated in the searched pages. Choose rungs on dev, quote test (ADR-031, ADR-018).",
+ "predictions": [
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹26,260 MILLION",
+   "full": {
+    "pred_raw": "₹ 26,260 million",
+    "pred_page": 12,
+    "pred_score": 0.5959,
+    "nvm": true,
+    "em": false,
+    "f1": 0.4
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "11,051,746 EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "₹[●] MILLION",
+   "full": {
+    "pred_raw": "₹ 26,260 million",
+    "pred_page": 1,
+    "pred_score": 0.5485,
+    "nvm": false,
+    "em": false,
+    "f1": 0.4
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 26,260 million",
+    "pred_page": 112,
+    "pred_score": 0.5382,
+    "nvm": false,
+    "em": false,
+    "f1": 0.4
+   }
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 1",
+   "full": {
+    "pred_raw": "₹ 1",
+    "pred_page": 1,
+    "pred_score": 0.8633,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 1",
+    "pred_page": 129,
+    "pred_score": 0.9461,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Axis Capital Limited; HSBC Securities and Capital Markets (India) Private Limited; JM Financial Limited; Nomura Financial Advisory and Securities (India) Private Limited",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "MUFG Intime India Private Limited",
+   "full": {
+    "pred_raw": "Link Intime India Private Limited",
+    "pred_page": 2,
+    "pred_score": 0.6047,
+    "nvm": false,
+    "em": false,
+    "f1": 0.8
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "TARUN SANJAY MEHTA; SWAPNIL BABANLAL JAIN; HERO MOTOCORP LIMITED",
+   "full": {
+    "pred_raw": "TARUN SANJAY MEHTA, SWAPNIL BABANLAL JAIN AND HERO MOTOCORP LIMITED",
+    "pred_page": 3,
+    "pred_score": 0.8321,
+    "nvm": true,
+    "em": false,
+    "f1": 0.9474
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹ 29,808 MILLION",
+   "full": {
+    "pred_raw": "₹ 29,808 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.4696,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹10,600.00 MILLION",
+   "full": {
+    "pred_raw": "₹10,600.00 million",
+    "pred_page": 12,
+    "pred_score": 0.485,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "557,230,051 EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "₹[●] MILLION",
+   "full": {
+    "pred_raw": "₹10,600.00 million",
+    "pred_page": 1,
+    "pred_score": 0.5443,
+    "nvm": false,
+    "em": false,
+    "f1": 0.5
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹10,600.00 million",
+    "pred_page": 90,
+    "pred_score": 0.5413,
+    "nvm": false,
+    "em": false,
+    "f1": 0.5
+   }
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹2",
+   "full": {
+    "pred_raw": "₹1",
+    "pred_page": 113,
+    "pred_score": 0.9552,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹1",
+    "pred_page": 113,
+    "pred_score": 0.9552,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Motilal Oswal Investment Advisors Limited",
+   "full": {
+    "pred_raw": "Morgan India Private Limited, Citigroup Global Markets India Private Limited, Axis Capital Limited, and Motilal Oswal Investment Advisors Limited",
+    "pred_page": 10,
+    "pred_score": 0.8725,
+    "nvm": false,
+    "em": false,
+    "f1": 0.8372
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "MUFG Intime India Private Limited",
+   "full": {
+    "pred_raw": "MUFG Intime India Private Limited",
+    "pred_page": 14,
+    "pred_score": 0.9191,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "LALIT KESHRE; HARSH JAIN; ISHAN BANSAL; NEERAJ SINGH",
+   "full": {
+    "pred_raw": "LALIT KESHRE, HARSH JAIN, ISHAN BANSAL AND NEERAJ",
+    "pred_page": 3,
+    "pred_score": 0.5715,
+    "nvm": false,
+    "em": false,
+    "f1": 0.875
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "groww-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹66,323.01 MILLION",
+   "full": {
+    "pred_raw": "₹66,323.01 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.474,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹25,000.0 MILLION",
+   "full": {
+    "pred_raw": "₹25,000.0 million",
+    "pred_page": 10,
+    "pred_score": 0.8081,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "[●] EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹100,000.0 MILLION",
+   "full": {
+    "pred_raw": "₹100,000.0 million",
+    "pred_page": 11,
+    "pred_score": 0.4816,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹100,000.0 million",
+    "pred_page": 74,
+    "pred_score": 0.4959,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹10",
+   "full": {
+    "pred_raw": "₹ 10",
+    "pred_page": 90,
+    "pred_score": 0.9256,
+    "nvm": true,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 10",
+    "pred_page": 90,
+    "pred_score": 0.9256,
+    "nvm": true,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "JM Financial Limited; BNP Paribas; BofA Securities India Limited; Goldman Sachs (India) Securities Private Limited; HSBC Securities and Capital Markets (India) Private Limited; IIFL Capital Services Limited; Jefferies India Private Limited; Morgan Stanley India Company Private Limited; Motilal Oswal Investment Advisors Limited; Nomura Financial Advisory and Securities (India) Private Limited; Nuvama Wealth Management Limited; UBS Securities India Private Limited",
+   "full": {
+    "pred_raw": ") Securities Private Limited, HSBC Securities and Capital Markets (India) Private Limited",
+    "pred_page": 8,
+    "pred_score": 0.5903,
+    "nvm": false,
+    "em": false,
+    "f1": 0.3143
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "MUFG Intime India Private Limited",
+   "full": {
+    "pred_raw": "MUFG Intime India Private Limited",
+    "pred_page": 12,
+    "pred_score": 0.9144,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "HDFC BANK LIMITED",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "hdb-financial-services-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹125,000.0 MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "not_in_document",
+   "gold": "",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "[●] EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 87,500 MILLION",
+   "full": {
+    "pred_raw": "₹87,500 million",
+    "pred_page": 1,
+    "pred_score": 0.5419,
+    "nvm": true,
+    "em": false,
+    "f1": 0.4
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹87,500 million",
+    "pred_page": 79,
+    "pred_score": 0.5204,
+    "nvm": true,
+    "em": false,
+    "f1": 0.4
+   }
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 1",
+   "full": {
+    "pred_raw": "₹ 1",
+    "pred_page": 1,
+    "pred_score": 0.9789,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹1",
+    "pred_page": 96,
+    "pred_score": 0.9662,
+    "nvm": true,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Kotak Mahindra Capital Company Limited; Citigroup Global Markets India Private Limited; J.P. Morgan India Private Limited; HSBC Securities and Capital Markets (India) Private Limited; IIFL Capital Services Limited",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "KFin Technologies Limited",
+   "full": {
+    "pred_raw": "KFin Technologies Limited",
+    "pred_page": 11,
+    "pred_score": 0.8917,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "CA MAGNUM HOLDINGS",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹ 87,500 MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 21,500.00 MILLION",
+   "full": {
+    "pred_raw": "₹21,500.00 million",
+    "pred_page": 15,
+    "pred_score": 0.3812,
+    "nvm": true,
+    "em": false,
+    "f1": 0.4
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "127,562,573 EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "₹ [●] MILLION",
+   "full": {
+    "pred_raw": "₹21,500.00 million",
+    "pred_page": 15,
+    "pred_score": 0.4552,
+    "nvm": false,
+    "em": false,
+    "f1": 0.4
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹21,500.00 million",
+    "pred_page": 119,
+    "pred_score": 0.5349,
+    "nvm": false,
+    "em": false,
+    "f1": 0.4
+   }
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹2",
+   "full": {
+    "pred_raw": "₹2",
+    "pred_page": 1,
+    "pred_score": 0.9434,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹2",
+    "pred_page": 137,
+    "pred_score": 0.9613,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Avendus Capital Private Limited; Citigroup Global Markets India Private Limited; Axis Capital Limited; Intensive Fiscal Services Private Limited",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "MUFG Intime India Private Limited",
+   "full": {
+    "pred_raw": "Link Intime India Private Limited",
+    "pred_page": 2,
+    "pred_score": 0.6694,
+    "nvm": false,
+    "em": false,
+    "f1": 0.8
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "PEYUSH BANSAL; NEHA BANSAL; AMIT CHAUDHARY; SUMEET KAPAHI",
+   "full": {
+    "pred_raw": "PEYUSH BANSAL, NEHA BANSAL, AMIT CHAUDHARY AND SUMEET KAPAHI",
+    "pred_page": 3,
+    "pred_score": 0.699,
+    "nvm": true,
+    "em": false,
+    "f1": 0.9412
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "lenskart-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹72,780.15 MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "not_in_document",
+   "gold": "",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "101,815,859 EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "₹ [●] MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 10",
+   "full": {
+    "pred_raw": "₹10",
+    "pred_page": 12,
+    "pred_score": 0.8769,
+    "nvm": true,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 10",
+    "pred_page": 124,
+    "pred_score": 0.9249,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Axis Capital Limited; Citigroup Global Markets India Private Limited; Morgan Stanley India Company Private Limited; J.P. Morgan India Private Limited; BofA Securities India Limited",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "KFin Technologies Limited",
+   "full": {
+    "pred_raw": "KFin Technologies Limited",
+    "pred_page": 14,
+    "pred_score": 0.9471,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "LG ELECTRONICS INC.",
+   "full": {
+    "pred_raw": "LG ELECTRONICS INC",
+    "pred_page": 3,
+    "pred_score": 0.4778,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "lg-electronics-india-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹116,047.32 MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 42,500 MILLION",
+   "full": {
+    "pred_raw": "₹ 42,500 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.4088,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "105,513,839 EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "₹ [●] MILLION",
+   "full": {
+    "pred_raw": "₹ 42,500 million",
+    "pred_page": 1,
+    "pred_score": 0.3926,
+    "nvm": false,
+    "em": false,
+    "f1": 0.6667
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 42,500 million",
+    "pred_page": 142,
+    "pred_score": 0.5323,
+    "nvm": false,
+    "em": false,
+    "f1": 0.6667
+   }
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 1",
+   "full": {
+    "pred_raw": "₹ 1",
+    "pred_page": 1,
+    "pred_score": 0.9029,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 1",
+    "pred_page": 169,
+    "pred_score": 0.9428,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Morgan Stanley India Company Private Limited; Axis Capital Limited; Citigroup Global Markets India Private Limited",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "KFin Technologies Limited",
+   "full": {
+    "pred_raw": "KFin Technologies Limited",
+    "pred_page": 4,
+    "pred_score": 0.8085,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "VIDIT AATREY; SANJEEV KUMAR",
+   "full": {
+    "pred_raw": "VIDIT AATREY AND SANJEEV KUMAR",
+    "pred_page": 3,
+    "pred_score": 0.6295,
+    "nvm": true,
+    "em": false,
+    "f1": 0.8889
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "meesho-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹54,212.04 MILLION",
+   "full": {
+    "pred_raw": "₹54,212.04 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.4803,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 31,000.00 MILLION",
+   "full": {
+    "pred_raw": "₹ 31,000.00 million",
+    "pred_page": 13,
+    "pred_score": 0.3641,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "[●] EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 3,800.00 MILLION",
+   "full": {
+    "pred_raw": "₹ 3,800.00 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.5963,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 3,800.00 million",
+    "pred_page": 116,
+    "pred_score": 0.6395,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 1",
+   "full": {
+    "pred_raw": "₹ 1",
+    "pred_page": 1,
+    "pred_score": 0.9626,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 1",
+    "pred_page": 136,
+    "pred_score": 0.9299,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Kotak Mahindra Capital Company Limited; J.P. Morgan India Private Limited; Goldman Sachs (India) Securities Private Limited; Axis Capital Limited",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "MUFG Intime India Private Limited",
+   "full": {
+    "pred_raw": "Link Intime India Private Limited",
+    "pred_page": 15,
+    "pred_score": 0.5625,
+    "nvm": false,
+    "em": false,
+    "f1": 0.8
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "ALAKH PANDEY; PRATEEK BOOB",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "physicswallah-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹ 34,800.00 MILLION",
+   "full": {
+    "pred_raw": "₹ 34,800.00 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.5308,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "₹ [●] MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "265,824,280 EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "₹[●] MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹10",
+   "full": {
+    "pred_raw": "₹10",
+    "pred_page": 1,
+    "pred_score": 0.8674,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹10",
+    "pred_page": 119,
+    "pred_score": 0.8685,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Kotak Mahindra Capital Company Limited; HSBC Securities and Capital Markets (India) Private Limited; ICICI Securities Limited; Axis Capital Limited; IIFL Capital Services Limited; BNP Paribas; J.P. Morgan India Private Limited; Citigroup Global Markets India Private Limited; HDFC Bank Limited; SBI Capital Markets Limited",
+   "full": {
+    "pred_raw": "Capital Services (India) Private Limited, Kotak Securities Limited and SBICAP Securities",
+    "pred_page": 14,
+    "pred_score": 0.5497,
+    "nvm": false,
+    "em": false,
+    "f1": 0.3704
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "MUFG Intime India Private Limited",
+   "full": {
+    "pred_raw": "MUFG Intime India Private Limited",
+    "pred_page": 3,
+    "pred_score": 0.8523,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "TATA SONS PRIVATE LIMITED",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "tata-capital-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹155,118.7 MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "fresh_issue_size",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 4,720 MILLION",
+   "full": {
+    "pred_raw": "₹ 4,720 MILLION",
+    "pred_page": 3,
+    "pred_score": 0.8491,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "ofs_shares",
+   "doc": "rhp",
+   "status": "placeholder",
+   "gold": "[●] EQUITY SHARES",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   }
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "ofs_amount",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹ 14,280 MILLION",
+   "full": {
+    "pred_raw": "₹ 19,000 million",
+    "pred_page": 1,
+    "pred_score": 0.6337,
+    "nvm": false,
+    "em": false,
+    "f1": 0.6667
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹ 4,720 million",
+    "pred_page": 92,
+    "pred_score": 0.4867,
+    "nvm": false,
+    "em": false,
+    "f1": 0.6667
+   }
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "face_value",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "₹1",
+   "full": {
+    "pred_raw": "₹ 1",
+    "pred_page": 1,
+    "pred_score": 0.98,
+    "nvm": true,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": true,
+   "body_only": {
+    "pred_raw": "₹1",
+    "pred_page": 109,
+    "pred_score": 0.9358,
+    "nvm": true,
+    "em": true,
+    "f1": 1.0
+   }
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "book_running_lead_managers",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Goldman Sachs (India) Securities Private Limited; JM Financial Limited",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "registrar",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "MUFG Intime India Private Limited",
+   "full": {
+    "pred_raw": "Link Intime India Private Limited",
+    "pred_page": 14,
+    "pred_score": 0.8806,
+    "nvm": false,
+    "em": false,
+    "f1": 0.8
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "promoters",
+   "doc": "rhp",
+   "status": "present",
+   "gold": "ABHIRAJ SINGH BHAL; RAGHAV CHANDRA; VARUN KHAITAN",
+   "full": {
+    "pred_raw": "ABHIRAJ SINGH BHAL, RAGHAV CHANDRA AND VARUN KHAITAN",
+    "pred_page": 3,
+    "pred_score": 0.54,
+    "nvm": true,
+    "em": false,
+    "f1": 0.9333
+   },
+   "in_body": false,
+   "body_only": null
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "field_id": "total_issue_size",
+   "doc": "prospectus",
+   "status": "present",
+   "gold": "₹ 19,000 MILLION",
+   "full": {
+    "pred_raw": "",
+    "pred_page": null,
+    "pred_score": null,
+    "nvm": false,
+    "em": false,
+    "f1": 0.0
+   },
+   "in_body": false,
+   "body_only": null
+  }
+ ]
+}

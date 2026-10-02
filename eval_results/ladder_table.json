@@ -186,6 +186,65 @@
      "n_files": 3
     }
    }
+  },
+  "bilstm_crf": {
+   "label": "Rung 4: BiLSTM-CRF",
+   "dev": {
+    "full": {
+     "n": 24,
+     "n_ipos": 3,
+     "nvm": 0.5278,
+     "nvm_ci95": [
+      0.4583,
+      0.5833
+     ],
+     "em": 0.3472,
+     "f1": 0.5536,
+     "nvm_seed_std": 0.0636,
+     "n_files": 3
+    },
+    "body_only": {
+     "n": 14,
+     "n_ipos": 3,
+     "nvm": 0.4048,
+     "nvm_ci95": [
+      0.25,
+      0.6
+     ],
+     "em": 0.2381,
+     "f1": 0.2921,
+     "nvm_seed_std": 0.0412,
+     "n_files": 3
+    }
+   },
+   "test": {
+    "full": {
+     "n": 56,
+     "n_ipos": 7,
+     "nvm": 0.4881,
+     "nvm_ci95": [
+      0.4107,
+      0.5595
+     ],
+     "em": 0.3929,
+     "f1": 0.5671,
+     "nvm_seed_std": 0.0881,
+     "n_files": 3
+    },
+    "body_only": {
+     "n": 35,
+     "n_ipos": 7,
+     "nvm": 0.2762,
+     "nvm_ci95": [
+      0.2,
+      0.3619
+     ],
+     "em": 0.219,
+     "f1": 0.2521,
+     "nvm_seed_std": 0.0595,
+     "n_files": 3
+    }
+   }
   }
  },
  "paired_test": {
@@ -241,6 +300,60 @@
      0.3143
     ],
     "excludes_zero": false
+   }
+  },
+  "bilstm_crf_minus_qa_pretrained": {
+   "full": {
+    "diff": 0.131,
+    "ci95": [
+     -0.0179,
+     0.2619
+    ],
+    "excludes_zero": false
+   },
+   "body_only": {
+    "diff": -0.0952,
+    "ci95": [
+     -0.2952,
+     0.0857
+    ],
+    "excludes_zero": false
+   }
+  },
+  "bilstm_crf_minus_rules": {
+   "full": {
+    "diff": -0.369,
+    "ci95": [
+     -0.4643,
+     -0.2798
+    ],
+    "excludes_zero": true
+   },
+   "body_only": {
+    "diff": 0.0476,
+    "ci95": [
+     -0.0095,
+     0.1048
+    ],
+    "excludes_zero": false
+   }
+  },
+  "qa_finetuned_minus_bilstm_crf": {
+   "full": {
+    "diff": 0.25,
+    "ci95": [
+     0.1369,
+     0.375
+    ],
+    "excludes_zero": true
+   },
+   "body_only": {
+    "diff": 0.5714,
+    "ci95": [
+     0.4952,
+     0.6476
+    ],
+    "excludes_zero": true
    }
   }
  },
@@ -416,6 +529,64 @@
     "total_issue_size": {
      "n": 7,
      "nvm": 1.0
+    }
+   }
+  },
+  "bilstm_crf": {
+   "full": {
+    "book_running_lead_managers": {
+     "n": 7,
+     "nvm": 0.0476
+    },
+    "face_value": {
+     "n": 7,
+     "nvm": 0.9524
+    },
+    "fresh_issue_size": {
+     "n": 7,
+     "nvm": 0.7619
+    },
+    "ofs_amount": {
+     "n": 7,
+     "nvm": 0.2857
+    },
+    "ofs_shares": {
+     "n": 7,
+     "nvm": 0.2381
+    },
+    "promoters": {
+     "n": 7,
+     "nvm": 0.4762
+    },
+    "registrar": {
+     "n": 7,
+     "nvm": 0.4286
+    },
+    "total_issue_size": {
+     "n": 7,
+     "nvm": 0.7143
+    }
+   },
+   "body_only": {
+    "face_value": {
+     "n": 7,
+     "nvm": 0.9524
+    },
+    "fresh_issue_size": {
+     "n": 7,
+     "nvm": 0.1905
+    },
+    "ofs_amount": {
+     "n": 7,
+     "nvm": 0.0952
+    },
+    "ofs_shares": {
+     "n": 7,
+     "nvm": 0.0476
+    },
+    "total_issue_size": {
+     "n": 7,
+     "nvm": 0.0952
     }
    }
   }
@@ -2093,6 +2264,10 @@
     "qa_finetuned": {
      "score": 0.0,
      "full": 0.0
+    },
+    "bilstm_crf": {
+     "score": 0.0,
+     "full": 0.0
     }
    }
   },
@@ -2110,6 +2285,11 @@
      "body_only": 0.6667
     },
     "qa_finetuned": {
+     "score": 1.0,
+     "full": 1.0,
+     "body_only": 1.0
+    },
+    "bilstm_crf": {
      "score": 1.0,
      "full": 1.0,
      "body_only": 1.0
@@ -2133,6 +2313,11 @@
      "score": 0.8334,
      "full": 0.6667,
      "body_only": 1.0
+    },
+    "bilstm_crf": {
+     "score": 0.6111,
+     "full": 0.8889,
+     "body_only": 0.3333
     }
    }
   },
@@ -2153,6 +2338,11 @@
      "score": 0.3889,
      "full": 0.4444,
      "body_only": 0.3333
+    },
+    "bilstm_crf": {
+     "score": 0.3333,
+     "full": 0.5556,
+     "body_only": 0.1111
     }
    }
   },
@@ -2173,6 +2363,11 @@
      "score": 0.3333,
      "full": 0.3333,
      "body_only": 0.3333
+    },
+    "bilstm_crf": {
+     "score": 0.1111,
+     "full": 0.2222,
+     "body_only": 0.0
     }
    }
   },
@@ -2190,6 +2385,10 @@
     "qa_finetuned": {
      "score": 1.0,
      "full": 1.0
+    },
+    "bilstm_crf": {
+     "score": 0.6667,
+     "full": 0.6667
     }
    }
   },
@@ -2207,6 +2406,10 @@
     "qa_finetuned": {
      "score": 0.4444,
      "full": 0.4444
+    },
+    "bilstm_crf": {
+     "score": 0.3333,
+     "full": 0.3333
     }
    }
   },
@@ -2227,6 +2430,11 @@
      "score": 1.0,
      "full": 1.0,
      "body_only": 1.0
+    },
+    "bilstm_crf": {
+     "score": 0.6111,
+     "full": 0.5556,
+     "body_only": 0.6667
     }
    }
   }
