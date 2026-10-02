@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 ErrorCode = Literal[
     "ipo_not_found",
+    "not_available",
     "page_out_of_range",
     "llm_unavailable",
     "models_warming_up",
