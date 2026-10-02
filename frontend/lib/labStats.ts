@@ -19,7 +19,9 @@ const pct = (x: unknown): number | null =>
   typeof x === "number" && Number.isFinite(x) && x >= 0 && x <= 1 ? Math.round(x * 100) : null;
 
 export function detectionPct(verifier: unknown): number | null {
-  const d = find(verifier, "detection");
+  // `metrics.detection` is the overall rate; `headline.detection` splits held-out and after-fix.
+  const metrics = isObj(verifier) ? verifier.metrics : undefined;
+  const d = isObj(metrics) && "detection" in metrics ? metrics.detection : find(verifier, "detection");
   return isObj(d) ? pct(d.rate) : pct(d);
 }
 

@@ -6,6 +6,10 @@ describe("labStats", () => {
     expect(detectionPct({ summary: { detection: { rate: 0.995, n: 200 } } })).toBe(100);
     expect(detectionPct({ detection: { rate: 0.875 } })).toBe(88);
   });
+  it("prefers metrics.detection over the headline split", () => {
+    const v = { headline: { detection: { held_out: { rate: 0.5 } } }, metrics: { detection: { rate: 1 } } };
+    expect(detectionPct(v)).toBe(100);
+  });
   it("returns null when missing or malformed", () => {
     expect(detectionPct({})).toBeNull();
     expect(detectionPct(undefined)).toBeNull();
