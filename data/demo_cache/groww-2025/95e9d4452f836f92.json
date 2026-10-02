@@ -1,0 +1,874 @@
+{
+ "ipo_id": "groww-2025",
+ "question": "Is the fresh issue ₹1,060 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1032
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "groww-2025:p150:c0",
+      "doc": "rhp",
+      "page_start": 150,
+      "page_end": 150,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises a Fresh Issue of [●] Equity Shares, aggregating up to ₹10,600.00 million by our Company and an Offer for Sale of 557,230,051 Equity Shares, aggregating up to ₹[●] million by the Selling Shareholders.",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 0.8984
+     },
+     {
+      "n": 2,
+      "id": "groww-2025:prospectus:p150:c0",
+      "doc": "prospectus",
+      "page_start": 150,
+      "page_end": 150,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises a Fresh Issue of 106,000,000* Equity Shares, aggregating to ₹10,600.00 million* by our Company and an Offer for Sale of 557,230,051* Equity Shares, aggregating to ₹55,723.01 million* by the Selling S",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 0.833
+     },
+     {
+      "n": 3,
+      "id": "groww-2025:p150:c2",
+      "doc": "rhp",
+      "page_start": 150,
+      "page_end": 150,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated Amount (in ₹ million) Gross Proceeds of the Fresh Issue | 10,600.00 Less: Offer expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company) | [●] (1) Total Net P",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 0.6191
+     },
+     {
+      "n": 4,
+      "id": "groww-2025:prospectus:p150:c2",
+      "doc": "prospectus",
+      "page_start": 150,
+      "page_end": 150,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated Amount (in ₹ million) Gross Proceeds of the Fresh Issue | 10,600.00* Less: Offer expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company) | 440.16 Total Net P",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 0.6055
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "groww-2025:p12:c2",
+      "doc": "rhp",
+      "page_start": 12,
+      "page_end": 12,
+      "section": "definitions",
+      "snippet": "subject to valid Bids being received at or above the Offer Price. Non-Resident A person resident outside India, as defined under FEMA and includes NRIs, FPIs and FVCIs. Offer Initial public offering of [●] Equity Shares of face value of ₹2 ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.2209
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggregates"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " up"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specifies"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Gross"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Proceed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " millions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " One"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " hundred"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " sixty"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equals"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " one"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " thousand"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ten"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " billion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " six"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " hundred"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lakh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " units"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ";"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " therefore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " there"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " no"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " labeled"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " as"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " \""
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\""
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equivalent"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " within"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " text"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " confirm"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specific"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " figure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " issues"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " alone"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " without"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " further"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " calculation"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " beyond"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " standard"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " conversion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " rules"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " which"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " permitted"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 11282
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document states that the Fresh Issue aggregates up to ₹10,600 million and specifies a Gross Proceeds of 10,600.00 in millions [2]. One hundred sixty crore rupees equals one thousand ten billion six hundred lakh units; therefore, there is no amount labeled as \"₹1,060\" or equivalent within the text to confirm this specific figure for fresh issues alone without further calculation beyond standard conversion rules which are not permitted. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 2,
+      "char_start": 130,
+      "char_end": 133
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 8
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     58,
+     73
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "10600000000",
+     "currency": "INR",
+     "raw": "₹10,600 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 150): ₹10,600.00 million.",
+    "evidence": {
+     "passage_id": "groww-2025:prospectus:p150:c0",
+     "doc": "prospectus",
+     "page": 150,
+     "char_span": [
+      101,
+      119
+     ],
+     "bbox": [
+      438.0379333496094,
+      95.28618621826172,
+      488.1618347167969,
+      106.39158630371094
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "10600000000.00",
+      "currency": "INR",
+      "raw": "₹10,600.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     264,
+     270
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "1060",
+     "currency": "INR",
+     "raw": "₹1,060",
+     "scale_word": null,
+     "precision": 0
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "₹1,060 does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE139556YM2CMC2YMFKMX3",
+    "score": 0.5,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1032,
+     "generating": 11282,
+     "verifying": 8
+    }
+   }
+  }
+ ]
+}

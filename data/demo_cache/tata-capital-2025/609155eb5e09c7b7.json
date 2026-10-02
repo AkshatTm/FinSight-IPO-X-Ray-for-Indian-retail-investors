@@ -1,0 +1,393 @@
+{
+ "ipo_id": "tata-capital-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1052
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "tata-capital-2025:prospectus:p409:c0",
+      "doc": "prospectus",
+      "page_start": 409,
+      "page_end": 409,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTER AND PROMOTER GROUP Our Promoter The Promoter of our Company is Tata Sons Private Limited. As on the date of this Prospectus, our Promoter holds 3,575,064,262 Equity Shares of face value of ₹10 each, representing 88.6% of the is",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 0.8091
+     },
+     {
+      "n": 2,
+      "id": "tata-capital-2025:p409:c0",
+      "doc": "rhp",
+      "page_start": 409,
+      "page_end": 409,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTER AND PROMOTER GROUP Our Promoter The Promoter of our Company is Tata Sons Private Limited. As on the date of this Red Herring Prospectus, our Promoter holds 3,575,064,262 Equity Shares of face value of ₹10 each, representing 88.",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 0.6777
+     },
+     {
+      "n": 3,
+      "id": "tata-capital-2025:p719:c2",
+      "doc": "rhp",
+      "page_start": 719,
+      "page_end": 719,
+      "section": "government_and_other_approvals",
+      "snippet": "Our Promoter is not a promoter of any other company which has been debarred from accessing the capital markets under any order or direction passed by SEBI or any securities market regulator in any other jurisdiction or any other authority/c",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -0.1172
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "tata-capital-2025:prospectus:p719:c2",
+      "doc": "prospectus",
+      "page_start": 719,
+      "page_end": 719,
+      "section": "government_and_other_approvals",
+      "snippet": "Our Directors are not directors or promoters of any other company which has been debarred from accessing the capital markets under any order or direction passed by SEBI or any securities market regulator in any other jurisdiction or any oth",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -0.2358
+     },
+     {
+      "n": 2,
+      "id": "tata-capital-2025:p22:c2",
+      "doc": "rhp",
+      "page_start": 22,
+      "page_end": 22,
+      "section": "summary",
+      "snippet": "# To be updated at the Prospectus stage. For further details of the Offer, see “ Capital Structure ” beginning on page 114. Pre-Offer shareholding as at the date of the Price Band advertisement and post-Offer shareholding as at Allotment fo",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.7051
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उत्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "तर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अनुसार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंपनी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "मुख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ाय"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ोज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ाय"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ोज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "rup"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Tata"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Sons"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Private"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Limited"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 6168
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "[3] उत्तर के अनुसार, कंपनी का प्रमुख समायोजक और समायोजक गrup Tata Sons Private Limited है। [2][109]",
+    "citations": [
+     {
+      "n": 3,
+      "char_start": 0,
+      "char_end": 3
+     },
+     {
+      "n": 2,
+      "char_start": 91,
+      "char_end": 94
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 3
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE6DHN6T829AGB503VXCYC",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1052,
+     "generating": 6168,
+     "verifying": 3
+    }
+   }
+  }
+ ]
+}

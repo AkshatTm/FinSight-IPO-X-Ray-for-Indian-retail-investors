@@ -1,0 +1,859 @@
+{
+ "ipo_id": "ather-energy-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 4375
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 172,
+      "page_end": 172,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 172, amounts as printed): 1. Capital expenditure to be incurred by our Company for establishment of an E2W factory in Maharashtra, India: ₹ 9,272 million 2. Repaymen",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.5371
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " establish"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " E"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "W"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " factory"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Maharashtra"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " cost"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " repay"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " borrow"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ings"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " totaling"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Additionally"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " research"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " development"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " costs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " will"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " be"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " invested"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Marketing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " initiatives"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " require"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenditure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " while"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " general"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " corporate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " purposes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funded"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " by"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocation"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 19036
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The funds are allocated to establish an E2W factory in Maharashtra at a cost of ₹9,272 million and repay borrowings totaling ₹400 million. Additionally, research development costs amounting to ₹7,500 million will be invested [1]. Marketing initiatives require expenditure of ₹3,000 million while general corporate purposes are funded by an allocation of ₹4,922 million [1][2]",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 225,
+      "char_end": 228
+     },
+     {
+      "n": 1,
+      "char_start": 369,
+      "char_end": 372
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     80,
+     94
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "9272000000",
+     "currency": "INR",
+     "raw": "₹9,272 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 9,272 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      213,
+      228
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "9272000000",
+      "currency": "INR",
+      "raw": "₹ 9,272 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     125,
+     137
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "400000000",
+     "currency": "INR",
+     "raw": "₹400 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 400 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      319,
+      332
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "400000000",
+      "currency": "INR",
+      "raw": "₹ 400 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     193,
+     207
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "7500000000",
+     "currency": "INR",
+     "raw": "₹7,500 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 7,500 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      376,
+      391
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "7500000000",
+      "currency": "INR",
+      "raw": "₹ 7,500 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 3,
+    "answer_char_span": [
+     275,
+     289
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "3000000000",
+     "currency": "INR",
+     "raw": "₹3,000 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 3,000 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      438,
+      453
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "3000000000",
+      "currency": "INR",
+      "raw": "₹ 3,000 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 4,
+    "answer_char_span": [
+     354,
+     368
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "4922000000",
+     "currency": "INR",
+     "raw": "₹4,922 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 4,922 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      485,
+      500
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "4922000000",
+      "currency": "INR",
+      "raw": "₹ 4,922 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XFD3RXMM4AVN0CQ6FYPBH7",
+    "score": 1.0,
+    "n_numbers": 5,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 4375,
+     "generating": 19036,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}

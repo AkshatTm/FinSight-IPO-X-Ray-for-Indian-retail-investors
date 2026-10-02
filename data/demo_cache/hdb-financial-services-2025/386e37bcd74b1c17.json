@@ -1,0 +1,520 @@
+{
+ "ipo_id": "hdb-financial-services-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3991
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "hdb-financial-services-2025:prospectus:p583:c1",
+      "doc": "prospectus",
+      "page_start": 583,
+      "page_end": 583,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "COPIES OF MEMORANDUM AND ARTICLES TO BE SENT TO MEMBERS 120. Copies of Memorandum and Articles of the Company shall be furnished to every shareholder of the Company at his request on payment of an amount as may be fixed by the Board to reco",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -3.5938
+     },
+     {
+      "n": 2,
+      "id": "hdb-financial-services-2025:p583:c1",
+      "doc": "rhp",
+      "page_start": 583,
+      "page_end": 583,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "COPIES OF MEMORANDUM AND ARTICLES TO BE SENT TO MEMBERS 120. Copies of Memorandum and Articles of the Company shall be furnished to every shareholder of the Company at his request on payment of an amount as may be fixed by the Board to reco",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -3.5938
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "hdb-financial-services-2025:p297:c1",
+      "doc": "rhp",
+      "page_start": 297,
+      "page_end": 297,
+      "section": "history_and_certain_corporate_matters",
+      "snippet": "two wheeler loans 2019 Our Company achieved AUM of ₹500,000 million 2020 Our Company introduced micro finance loans 2020 Our Company introduced lifestyle finance loans 2021 Our Company achieved AUM of ₹600,000 million 2023 Our Company achie",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -3.959
+     },
+     {
+      "n": 2,
+      "id": "hdb-financial-services-2025:prospectus:p297:c1",
+      "doc": "prospectus",
+      "page_start": 297,
+      "page_end": 297,
+      "section": "history_and_certain_corporate_matters",
+      "snippet": "two wheeler loans 2019 Our Company achieved AUM of ₹500,000 million 2020 Our Company introduced micro finance loans 2020 Our Company introduced lifestyle finance loans 2021 Our Company achieved AUM of ₹600,000 million 2023 Our Company achie",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -3.959
+     },
+     {
+      "n": 3,
+      "id": "hdb-financial-services-2025:p597:c1",
+      "doc": "rhp",
+      "page_start": 597,
+      "page_end": 597,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "266.1. to sell, lease or otherwise dispose of the whole or substantially the whole of the undertaking of the Company or where the Company owns more than 1 (One) undertaking, of the whole or substantially the whole of any of such undertaking",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -5.0391
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " does"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " state"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specific"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " money"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " being"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raised"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " text"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " describes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " powers"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " borrowing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " but"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " sets"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " conditions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " regarding"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " limits"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " on"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " borrowed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " sums"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " relative"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " paid"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-up"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " free"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " reserves"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " rather"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " than"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " providing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " explicit"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " figure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " section"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 6833
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document does not state a specific amount of money being raised. [1] The text describes powers for borrowing but sets conditions regarding limits on borrowed sums relative to paid-up capital and free reserves rather than providing an explicit total figure in this section. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 69,
+      "char_end": 72
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 4
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE84SW1Z54J56C888EBVYX",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3991,
+     "generating": 6833,
+     "verifying": 4
+    }
+   }
+  }
+ ]
+}

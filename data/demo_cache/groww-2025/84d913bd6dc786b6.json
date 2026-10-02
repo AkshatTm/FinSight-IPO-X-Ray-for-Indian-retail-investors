@@ -1,0 +1,1018 @@
+{
+ "ipo_id": "groww-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 5277
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "groww-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 151,
+      "page_end": 151,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 151, amounts as printed): 1. Expenditure towards cloud infrastructure: ₹ 1,525.00 million 2. Brand building and performance marketing activities: ₹ 2,250.00 million ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.0078
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " cloud"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " infrastructure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " brand"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " building"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " marketing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " activities"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " totaling"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " investment"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " subsidiary"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " G"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "CS"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " augmentation"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Additionally"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " money"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " will"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " fund"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " GIT"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "'s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " M"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "TF"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " business"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " while"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funding"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " unidentified"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " acquisitions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " general"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " corporate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " purposes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 19637
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The funds are allocated to cloud infrastructure at ₹1,525.00 million [1], brand building and marketing activities totaling ₹2,250.00 million [1], investment in subsidiary GCS for capital augmentation of ₹2,050.00 million [1]. Additionally, the money will fund GIT's MTF business at ₹1,675.00 million [1] while funding unidentified acquisitions and general corporate purposes amounting to a total of ₹2,659.84 million [1].",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 69,
+      "char_end": 72
+     },
+     {
+      "n": 1,
+      "char_start": 141,
+      "char_end": 144
+     },
+     {
+      "n": 1,
+      "char_start": 221,
+      "char_end": 224
+     },
+     {
+      "n": 1,
+      "char_start": 300,
+      "char_end": 303
+     },
+     {
+      "n": 1,
+      "char_start": 417,
+      "char_end": 420
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 2
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     51,
+     68
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "1525000000.00",
+     "currency": "INR",
+     "raw": "₹1,525.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 151): ₹ 1,525.00 million.",
+    "evidence": {
+     "passage_id": "groww-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 151,
+     "char_span": [
+      146,
+      164
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "1525000000.00",
+      "currency": "INR",
+      "raw": "₹ 1,525.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     123,
+     140
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "2250000000.00",
+     "currency": "INR",
+     "raw": "₹2,250.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 151): ₹ 2,250.00 million.",
+    "evidence": {
+     "passage_id": "groww-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 151,
+     "char_span": [
+      221,
+      239
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "2250000000.00",
+      "currency": "INR",
+      "raw": "₹ 2,250.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     203,
+     220
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "2050000000.00",
+     "currency": "INR",
+     "raw": "₹2,050.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 151): ₹ 2,050.00 million.",
+    "evidence": {
+     "passage_id": "groww-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 151,
+     "char_span": [
+      338,
+      356
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "2050000000.00",
+      "currency": "INR",
+      "raw": "₹ 2,050.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 3,
+    "answer_char_span": [
+     282,
+     299
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "1675000000.00",
+     "currency": "INR",
+     "raw": "₹1,675.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 151): ₹ 1,675.00 million.",
+    "evidence": {
+     "passage_id": "groww-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 151,
+     "char_span": [
+      443,
+      461
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "1675000000.00",
+      "currency": "INR",
+      "raw": "₹ 1,675.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 4,
+    "answer_char_span": [
+     399,
+     416
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "2659840000.00",
+     "currency": "INR",
+     "raw": "₹2,659.84 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 151): ₹ 2,659.84 million.",
+    "evidence": {
+     "passage_id": "groww-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 151,
+     "char_span": [
+      556,
+      574
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "2659840000.00",
+      "currency": "INR",
+      "raw": "₹ 2,659.84 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XF4WG24TA6T5W2TM8KPWEV",
+    "score": 1.0,
+    "n_numbers": 5,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 5277,
+     "generating": 19637,
+     "verifying": 2
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,1118 @@
+{
+ "ipo_id": "ather-energy-2025",
+ "question": "पैसा कहाँ लगेगा?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1845
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 172,
+      "page_end": 172,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 172, amounts as printed): 1. Capital expenditure to be incurred by our Company for establishment of an E2W factory in Maharashtra, India: ₹ 9,272 million 2. Repaymen",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -5.3008
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ै"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उपयोग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "म्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "लि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ित"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "द्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "देश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्यों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " किया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जाएगा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]:"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " E"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "W"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्या"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "लय"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " की"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " स्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "था"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ना"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लाग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "त"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ";"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ब"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क्षा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "/"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "पूर्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "व"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " भ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "गत"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ";"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िस"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "च"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " विकास"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "वेश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ";"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " मार्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िंग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "पा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "त"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ";"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " साम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्या"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "लय"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उपयोग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 28305
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "पैसों का उपयोग निम्नलिखित उद्देश्यों के लिए किया जाएगा [1]:\n- E2W कार्यालय की स्थापना में लागत ₹ 9,272.0 million;\n- बजट परीक्षा/पूर्व भुगतान ₹ 400.0 million;\n- रिसर्च और विकास के लिए निवेश ₹ 7,500.0 million;\n- मार्केटिंग उपायों में खपत ₹ 3,000.0 million;\n- सामाजिक कार्यालय का उपयोग ₹ 4,922.0 million।",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 55,
+      "char_end": 58
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     95,
+     112
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "9272000000.0",
+     "currency": "INR",
+     "raw": "₹ 9,272.0 million",
+     "scale_word": "million",
+     "precision": 1
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 9,272 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      213,
+      228
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "9272000000",
+      "currency": "INR",
+      "raw": "₹ 9,272 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     141,
+     156
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "400000000.0",
+     "currency": "INR",
+     "raw": "₹ 400.0 million",
+     "scale_word": "million",
+     "precision": 1
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 400 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      319,
+      332
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "400000000",
+      "currency": "INR",
+      "raw": "₹ 400 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     189,
+     206
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "7500000000.0",
+     "currency": "INR",
+     "raw": "₹ 7,500.0 million",
+     "scale_word": "million",
+     "precision": 1
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 7,500 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      376,
+      391
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "7500000000",
+      "currency": "INR",
+      "raw": "₹ 7,500 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 3,
+    "answer_char_span": [
+     236,
+     253
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "3000000000.0",
+     "currency": "INR",
+     "raw": "₹ 3,000.0 million",
+     "scale_word": "million",
+     "precision": 1
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 172): ₹ 3,000 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      438,
+      453
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "3000000000",
+      "currency": "INR",
+      "raw": "₹ 3,000 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 4,
+    "answer_char_span": [
+     283,
+     292
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "4922.0",
+     "currency": "INR",
+     "raw": "₹ 4,922.0",
+     "scale_word": null,
+     "precision": 1
+    },
+    "status": "contradicted",
+    "reason_code": "scale_mismatch",
+    "reason": "The answer says ₹ 4,922.0; passage [1] (p. 172) says ₹ 4,922 million: a unit slip, 1,000,000x apart.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 172,
+     "char_span": [
+      485,
+      500
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "4922000000",
+      "currency": "INR",
+      "raw": "₹ 4,922 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XFE17FTJGF3NQCGE2E3BNH",
+    "score": 0.8,
+    "n_numbers": 5,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1845,
+     "generating": 28305,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}

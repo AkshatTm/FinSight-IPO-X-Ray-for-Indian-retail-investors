@@ -1,0 +1,1766 @@
+{
+ "ipo_id": "lenskart-2025",
+ "question": "पैसा कहाँ लगेगा?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1872
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 212,
+      "page_end": 212,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 212, amounts as printed): 1. Capital expenditure towards set-up of new CoCo stores in India: ₹ 2,726.22 million 2. Expenditure for lease/rent/license agreements rela",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -5.4141
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ैसे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उपयोग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "म्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "लि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ित"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "द्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "देश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्यों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " किया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जाएगा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]:"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कॉ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "को"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " स्ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ोर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " की"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " स्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "था"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ना"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " करने"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " वाले"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Co"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "Co"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " स्ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "च"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सकता"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंपनी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " द्वारा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अपने"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंप"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "नी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-oper"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Co"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "Co"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " स्ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लाग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ू"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " होने"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " वाली"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ले"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "/"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "रे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "/"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ला"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "इ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंस"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "झ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ौ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ता"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ओं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ड़े"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " भ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "गत"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "च"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " होगा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " तक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "नी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्ला"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "उ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ड"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " इ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "न्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "फ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्रा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "च"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "वेश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सकता"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ब"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्रा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंड"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "व"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "रे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ेशन"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " बढ़"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "े"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "चार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "चे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "गे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अन"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "श्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "चित"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " इन"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "जे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "श"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िय"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंस"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " साम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंपनी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "द्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "देश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्यों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " रा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "शि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " होग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 39143
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "पैसे का उपयोग निम्नलिखित उद्देश्यों के लिए किया जाएगा [1]:\n- कॉको स्टोरों की स्थापना करने वाले नए CoCo स्टोर्स में खर्च ₹ 2,726.22 million हो सकता है। - कंपनी द्वारा अपने कंपनी-operated CoCo स्टोर्स पर लागू होने वाली लेस/रेनट/लाइसेंस समझौताओं से जुड़े भुगतानों के लिए खर्च ₹ 5,914.40 million होगा [2]। - तकनीक और क्लाउड इन्फ्रास्ट्रक्चर में निवेश ₹ 2,133.75 million हो सकता है [3]। - ब्रांड एवरेजेशन बढ़ाने के लिए प्रचार खर्चे ₹ 3,200.63 million होंगे [4]। - अनिश्चित इनरजेनिक अक्शियंस और सामान्य कंपनी उद्देश्यों के लिए कुल राशि ₹ 6,831.25 million होगी [5]।",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 54,
+      "char_end": 57
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 2
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     120,
+     138
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "2726220000.00",
+     "currency": "INR",
+     "raw": "₹ 2,726.22 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 2,726.22 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      168,
+      186
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "2726220000.00",
+      "currency": "INR",
+      "raw": "₹ 2,726.22 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     273,
+     291
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "5914400000.00",
+     "currency": "INR",
+     "raw": "₹ 5,914.40 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 5,914.40 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      308,
+      326
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "5914400000.00",
+      "currency": "INR",
+      "raw": "₹ 5,914.40 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     347,
+     365
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "2133750000.00",
+     "currency": "INR",
+     "raw": "₹ 2,133.75 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 2,133.75 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      380,
+      398
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "2133750000.00",
+      "currency": "INR",
+      "raw": "₹ 2,133.75 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 3,
+    "answer_char_span": [
+     427,
+     445
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "3200630000.00",
+     "currency": "INR",
+     "raw": "₹ 3,200.63 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 3,200.63 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      481,
+      499
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "3200630000.00",
+      "currency": "INR",
+      "raw": "₹ 3,200.63 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 4,
+    "answer_char_span": [
+     530,
+     548
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "6831250000.00",
+     "currency": "INR",
+     "raw": "₹ 6,831.25 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 6,831.25 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      571,
+      589
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "6831250000.00",
+      "currency": "INR",
+      "raw": "₹ 6,831.25 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XF7WZFFAY2RK40MQMCJ3PJ",
+    "score": 1.0,
+    "n_numbers": 5,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1872,
+     "generating": 39143,
+     "verifying": 2
+    }
+   }
+  }
+ ]
+}

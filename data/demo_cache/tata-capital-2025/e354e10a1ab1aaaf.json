@@ -1,0 +1,407 @@
+{
+ "ipo_id": "tata-capital-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 5814
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "tata-capital-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 144,
+      "page_end": 144,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 144, amounts as printed): 1. Augmentation of our Company's Tier - I capital base to meet our Company's future capital requirements including onward lending: ₹ 66,966",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.5977
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " intended"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " solely"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " augment"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "'s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Tier"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " base"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " meeting"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " its"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " future"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " requirements"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " through"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " onward"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lending"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " No"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " other"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specific"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " uses"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amounts"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " were"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " listed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 10017
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The funds are intended solely for augmenting the company's Tier-I capital base and meeting its future capital requirements through onward lending [1]. No other specific uses or amounts were listed in this document. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 146,
+      "char_end": 149
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XF9436PWMRWGPP72F7R3R3",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 5814,
+     "generating": 10017,
+     "verifying": 0
+    }
+   }
+  }
+ ]
+}

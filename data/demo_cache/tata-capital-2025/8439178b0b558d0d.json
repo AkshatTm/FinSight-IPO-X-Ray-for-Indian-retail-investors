@@ -1,0 +1,1036 @@
+{
+ "ipo_id": "tata-capital-2025",
+ "question": "Is the fresh issue ₹6,846 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1065
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "tata-capital-2025:prospectus:p144:c3",
+      "doc": "prospectus",
+      "page_start": 144,
+      "page_end": 144,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated amount (₹ in million) (2) Gross proceeds of the Fresh Issue | 68,460.0 (Less) Fresh Issue expenses (1) | 1,494.0 Net Proceeds | 66,966.0",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 3.6387
+     },
+     {
+      "n": 2,
+      "id": "tata-capital-2025:prospectus:p1:c0",
+      "doc": "prospectus",
+      "page_start": 1,
+      "page_end": 1,
+      "section": "cover",
+      "snippet": "PROSPECTUS Dated: October 8, 2025 Please read Section 26 of the Companies Act, 2013 100% Book Built Offer (Please scan this QR code to view this Prospectus) TATA CAPITAL LIMITED Corporate Identity Number: U65990MH1991PLC060670 REGISTERED AN",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 2.7109
+     },
+     {
+      "n": 3,
+      "id": "tata-capital-2025:prospectus:p102:c3",
+      "doc": "prospectus",
+      "page_start": 102,
+      "page_end": 102,
+      "section": "the_offer",
+      "snippet": "The Offer (1)(2) | 475,824,280 Equity Shares * of face value of ₹10 each, aggregating to ₹155,118.7 million * consists of: Fresh Issue (1) | 210,000,000 Equity Shares * of face value of ₹10 each, aggregating to ₹68,460.0 million * Offer for",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 2.5957
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "tata-capital-2025:prospectus:p21:c2",
+      "doc": "prospectus",
+      "page_start": 21,
+      "page_end": 21,
+      "section": "summary",
+      "snippet": "For further details in relation to the NBFC Scale Based Regulations, see “Key Regulations and Policies – 1. Sector specific key regulations applicable to our Company and our Material Subsidiary - Master Direction – Reserve Bank of India (No",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 2.5
+     },
+     {
+      "n": 2,
+      "id": "tata-capital-2025:prospectus:p119:c1",
+      "doc": "prospectus",
+      "page_start": 119,
+      "page_end": 119,
+      "section": "capital_structure",
+      "snippet": "[Table, ₹] Aggregate nominal value | Aggregate value at Offer Price * A | AUTHORISED SHARE CAPITAL (1) Equity Shares comprising 7,750,000,000 Equity Shares of face value of ₹10 each | 77,500,000,000 | - Preference Shares comprising 32,500,0",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": 1.7148
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Gross"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Proceed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Net"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Proceed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " listed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " as"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Equity"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Shares"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggreg"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ating"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " table"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " section"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " page"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " while"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " another"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " passage"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " shows"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " it"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggregates"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " on"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " page"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " figure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " presented"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " as"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " millions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "),"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lak"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ";"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " therefore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " converting"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " value"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " yields"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " approximately"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Rs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " billion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " does"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " match"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " stated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " six"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " point"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " eight"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " four"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-six"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lakh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " any"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " part"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 14274
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "I could not find this in the document.",
+    "citations": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE66FK2Y0M3RE6KXPZWFYC",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1065,
+     "generating": 14274,
+     "verifying": 0
+    }
+   }
+  }
+ ]
+}

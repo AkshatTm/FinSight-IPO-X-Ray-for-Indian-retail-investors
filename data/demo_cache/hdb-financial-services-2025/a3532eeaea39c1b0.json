@@ -1,0 +1,550 @@
+{
+ "ipo_id": "hdb-financial-services-2025",
+ "question": "Is the fresh issue ₹2,500 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1049
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "hdb-financial-services-2025:prospectus:p10:c1",
+      "doc": "prospectus",
+      "page_start": 10,
+      "page_end": 10,
+      "section": "definitions",
+      "snippet": "the Revision Form and in case of joint Bids, whose name also appeared as the first holder of the beneficiary account held in joint names “Floor Price” The lower end of the Price Band, i.e., ₹700 per Equity Share “Fraudulent Borrower” Fraudu",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 1.9717
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "hdb-financial-services-2025:p537:c0",
+      "doc": "rhp",
+      "page_start": 537,
+      "page_end": 537,
+      "section": "offer_structure",
+      "snippet": "OFFER STRUCTURE The Offer is of up to [●] Equity Shares of face value of ₹10 at an Offer Price of ₹[●] per Equity Share for cash (including a share premium of ₹[●] per Equity Share) aggregating up to ₹125,000.0 million comprising a Fresh Is",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 1.3633
+     },
+     {
+      "n": 2,
+      "id": "hdb-financial-services-2025:prospectus:p148:c3",
+      "doc": "prospectus",
+      "page_start": 148,
+      "page_end": 148,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated amount (₹ in million) (2) Gross proceeds of the Fresh Issue | 25,000* (Less) Fresh Issue expenses (1) | 413.8 Net Proceeds | 24,586.2",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 1.251
+     },
+     {
+      "n": 3,
+      "id": "hdb-financial-services-2025:p148:c3",
+      "doc": "rhp",
+      "page_start": 148,
+      "page_end": 148,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated amount (₹ in million) (2) Gross proceeds of the Fresh Issue | 25,000 (Less) Fresh Issue expenses (1)(2) | [●] Net Proceeds | [●]",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 0.8174
+     },
+     {
+      "n": 4,
+      "id": "hdb-financial-services-2025:prospectus:p537:c0",
+      "doc": "prospectus",
+      "page_start": 537,
+      "page_end": 537,
+      "section": "offer_structure",
+      "snippet": "OFFER STRUCTURE The Offer is of 168,918,917* Equity Shares of face value of ₹10 at an Offer Price of ₹740 per Equity Share for cash (including a share premium of ₹730 per Equity Share) aggregating up to ₹125,000.0 million comprising a Fresh",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": 0.7778
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " prospect"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "us"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggreg"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ating"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " This"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equals"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " billion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " approximately"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lak"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " value"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Indian"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " currency"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " system"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " where"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " one"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lakh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " has"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ten"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " thousand"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " units"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " one"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " has"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ten"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lak"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 7283
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "I could not find this in the document.",
+    "citations": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE8JN8AEDAXR79XMGSB2BS",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1049,
+     "generating": 7283,
+     "verifying": 0
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,820 @@
+{
+ "ipo_id": "meesho-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1099
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "meesho-2025:prospectus:p40:c1",
+      "doc": "prospectus",
+      "page_start": 40,
+      "page_end": 40,
+      "section": "summary",
+      "snippet": "Source: Redseer Report. For further details, see “ Industry Overview ” on page 281. Promoters As on the date of this Prospectus, the Promoters of our Company are Vidit Aatrey and Sanjeev Kumar. For further details, see “ Our Promoters and P",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 1.7881
+     },
+     {
+      "n": 2,
+      "id": "meesho-2025:prospectus:p417:c0",
+      "doc": "prospectus",
+      "page_start": 417,
+      "page_end": 417,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Our Promoters Vidit Aatrey and Sanjeev Kumar are the Promoters of our Company. As on the date of this Prospectus, our Promoters hold in aggregate 788,214,937 Equity Shares of face value of ₹ 1 each which con",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 1.4619
+     },
+     {
+      "n": 3,
+      "id": "meesho-2025:p417:c0",
+      "doc": "rhp",
+      "page_start": 417,
+      "page_end": 417,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Our Promoters Vidit Aatrey and Sanjeev Kumar are the Promoters of our Company. As on the date of this Red Herring Prospectus, our Promoters hold in aggregate 788,214,937 Equity Shares of face value of ₹ 1 ea",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 1.2432
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "meesho-2025:prospectus:p418:c1",
+      "doc": "prospectus",
+      "page_start": 418,
+      "page_end": 418,
+      "section": "our_promoters",
+      "snippet": "For details of the shareholding of our Promoters in our Company, see “ Capital Structure - Build-up of Promoter’s shareholding in our Company” on page 184. Our Promoters, Vidit Aatrey and Sanjeev Kumar, who are Directors, may be deemed to b",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 1.0605
+     },
+     {
+      "n": 2,
+      "id": "meesho-2025:p418:c1",
+      "doc": "rhp",
+      "page_start": 418,
+      "page_end": 418,
+      "section": "our_promoters",
+      "snippet": "For details of the shareholding of our Promoters in our Company, see “ Capital Structure - Build-up of Promoter’s shareholding in our Company” on page 184. Our Promoters, Vidit Aatrey and Sanjeev Kumar, who are Directors, may be deemed to b",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": 1.0469
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "म"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ोट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " वि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "द"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ित"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " आ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "त"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "rey"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "जी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "व"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कुमार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " वे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंपनी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ाय"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ोज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "देश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " मुख्य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कार्य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "कारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अधिक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "CEO"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ")"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " दोनों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ने"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " मिल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िय"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पू"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "जी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " भा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " को"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "मा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " किया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " शे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "यर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "भ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "%"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "सा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " बना"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ता"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 11079
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "[1] [2][3] प्रमोटर्स विदित आतrey और संजीव कुमार हैं। वे कंपनी के समायोजक, निदेशक और मुख्य कार्यकारी अधिकारी (CEO) हैं। दोनों ने 788.2 मिलियन पूंजी भागों को जमा किया है जो कि कुल शेयर capital का लगभग 18.5% हिस्सा बनाता है [4][6]।",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 0,
+      "char_end": 3
+     },
+     {
+      "n": 2,
+      "char_start": 4,
+      "char_end": 7
+     },
+     {
+      "n": 3,
+      "char_start": 7,
+      "char_end": 10
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 6
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     128,
+     140
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "788200000.0",
+     "currency": "INR",
+     "raw": "788.2 मिलियन",
+     "scale_word": "million",
+     "precision": 1
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "788.2 मिलियन does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     199,
+     204
+    ],
+    "answer_value": {
+     "kind": "percent",
+     "value": "18.5",
+     "raw": "18.5%",
+     "is_bps": false
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 417): 18.50%.",
+    "evidence": {
+     "passage_id": "meesho-2025:prospectus:p417:c0",
+     "doc": "prospectus",
+     "page": 417,
+     "char_span": [
+      249,
+      255
+     ],
+     "bbox": [
+      72.02400207519531,
+      155.04620361328125,
+      105.83843994140625,
+      166.15159606933594
+     ],
+     "value": {
+      "kind": "percent",
+      "value": "18.50",
+      "raw": "18.50%",
+      "is_bps": false
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XDXRMPR11XCKTZKMD6M1X1",
+    "score": 0.5,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1099,
+     "generating": 11079,
+     "verifying": 6
+    }
+   }
+  }
+ ]
+}

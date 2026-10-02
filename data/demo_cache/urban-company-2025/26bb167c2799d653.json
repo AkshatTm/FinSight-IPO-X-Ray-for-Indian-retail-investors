@@ -1,0 +1,524 @@
+{
+ "ipo_id": "urban-company-2025",
+ "question": "Is the fresh issue ₹472 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1167
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "urban-company-2025:p163:c0",
+      "doc": "rhp",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises a Fresh Issue of [●] Equity Shares of face value of ₹ 1 each, aggregating up to ₹ 4,720 million by our Company and an Offer for Sale of [●] Equity Shares of face value of ₹ 1 each, aggregating up to ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -0.9141
+     },
+     {
+      "n": 2,
+      "id": "urban-company-2025:p163:c2",
+      "doc": "rhp",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated Amount (in ₹ million) Gross Proceeds of the Fresh Issue | 4,720 Less: Offer expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company) | [●] (1) Total Net Proce",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -0.98
+     },
+     {
+      "n": 3,
+      "id": "urban-company-2025:prospectus:p163:c2",
+      "doc": "prospectus",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated Amount (in ₹ million) Gross Proceeds of the Fresh Issue | 4,720 ^ Less: Offer expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company) | 269.15 Total Net Proc",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -1.0225
+     },
+     {
+      "n": 4,
+      "id": "urban-company-2025:prospectus:p163:c0",
+      "doc": "prospectus",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises a Fresh Issue of 45,848,481 ^ Equity Shares of face value of ₹ 1 each, aggregating to ₹ 4,720 ^ million by our Company and an Offer for Sale of 138,640,774 ^ Equity Shares of face value of ₹ 1 each, ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -1.127
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "urban-company-2025:prospectus:p12:c1",
+      "doc": "prospectus",
+      "page_start": 12,
+      "page_end": 12,
+      "section": "definitions",
+      "snippet": "aggregating to ₹ 4,720 ^@ million by our Company ^ Subject to finalisation of Basis of Allotment. @ A discount of ₹9 per Equity Share was offered to Eligible Employees bidding in the Employee Reservation Portion. General Information Documen",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -1.5146
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Gross"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Proceed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " estimated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " This"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equal"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " less"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " than"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lakh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 7070
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document states that Gross Proceeds are estimated at ₹ 4,720 million [3]. This amount is not equal to or less than ₹ 472 lakh. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 3,
+      "char_start": 73,
+      "char_end": 76
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 7
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     57,
+     72
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "4720000000",
+     "currency": "INR",
+     "raw": "₹ 4,720 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 163): ₹ 4,720 million.",
+    "evidence": {
+     "passage_id": "urban-company-2025:p163:c0",
+     "doc": "rhp",
+     "page": 163,
+     "char_span": [
+      121,
+      136
+     ],
+     "bbox": [
+      462.4759521484375,
+      95.90560913085938,
+      467.4559631347656,
+      106.93132781982422
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "4720000000",
+      "currency": "INR",
+      "raw": "₹ 4,720 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     119,
+     129
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "47200000",
+     "currency": "INR",
+     "raw": "₹ 472 lakh",
+     "scale_word": "lakh",
+     "precision": 0
+    },
+    "status": "contradicted",
+    "reason_code": "scale_mismatch",
+    "reason": "The answer says ₹ 472 lakh; passage [1] (p. 163) says ₹ 4,720 million: a unit slip, 100x apart.",
+    "evidence": {
+     "passage_id": "urban-company-2025:p163:c0",
+     "doc": "rhp",
+     "page": 163,
+     "char_span": [
+      121,
+      136
+     ],
+     "bbox": [
+      462.4759521484375,
+      95.90560913085938,
+      467.4559631347656,
+      106.93132781982422
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "4720000000",
+      "currency": "INR",
+      "raw": "₹ 4,720 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE75YJKP82K9EZ9ERVK4PA",
+    "score": 0.5,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1167,
+     "generating": 7070,
+     "verifying": 7
+    }
+   }
+  }
+ ]
+}

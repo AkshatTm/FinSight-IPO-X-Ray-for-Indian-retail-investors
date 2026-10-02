@@ -1,0 +1,896 @@
+{
+ "ipo_id": "urban-company-2025",
+ "question": "पैसा कहाँ लगेगा?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3135
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "urban-company-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 164,
+      "page_end": 164,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 164, amounts as printed): 1. Expenditure for new technology development and cloud infrastructure: ₹ 1,900.00 million 2. Expenditure for lease payments for our office",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -5.5312
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ैसे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उपयोग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ई"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " तक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "नी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " विकास"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्ला"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "उ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ड"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " इं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "फ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्रा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "च"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " किया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जाएगा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " इसके"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ला"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "वा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ऑ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "फ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िस"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " की"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ले"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िंग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " भ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "गत"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "गे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "गा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " मार्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िंग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क्ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िव"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "टी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ज"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " साम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " व्या"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "द्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "देश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्यों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उपयोग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " किया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जाएगा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 23101
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "पैसे का उपयोग नई तकनीक विकास और क्लाउड इंफ्रास्ट्रक्चर के लिए किया जाएगा। [1] इसके अलावा, ऑफिस की लेसिंग भुगतान ₹ 750.00 million में लगेगा। [2] मार्केटिंग एक्टिविटीज के लिए ₹ 900.00 million और सामान्य व्यापारिक उद्देश्यों के लिए ₹ 900.85 million का उपयोग किया जाएगा।",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 74,
+      "char_end": 77
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     112,
+     128
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "750000000.00",
+     "currency": "INR",
+     "raw": "₹ 750.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 164): ₹ 750.00 million.",
+    "evidence": {
+     "passage_id": "urban-company-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 164,
+     "char_span": [
+      243,
+      259
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "750000000.00",
+      "currency": "INR",
+      "raw": "₹ 750.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     173,
+     189
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "900000000.00",
+     "currency": "INR",
+     "raw": "₹ 900.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 164): ₹ 900.00 million.",
+    "evidence": {
+     "passage_id": "urban-company-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 164,
+     "char_span": [
+      305,
+      321
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "900000000.00",
+      "currency": "INR",
+      "raw": "₹ 900.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     229,
+     245
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "900850000.00",
+     "currency": "INR",
+     "raw": "₹ 900.85 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 164): ₹ 900.85 million.",
+    "evidence": {
+     "passage_id": "urban-company-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 164,
+     "char_span": [
+      353,
+      369
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "900850000.00",
+      "currency": "INR",
+      "raw": "₹ 900.85 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XFAVKSCDTN1YP4GZSTRD26",
+    "score": 1.0,
+    "n_numbers": 3,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3135,
+     "generating": 23101,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}

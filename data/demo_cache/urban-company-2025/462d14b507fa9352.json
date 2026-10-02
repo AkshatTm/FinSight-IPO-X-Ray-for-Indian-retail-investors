@@ -1,0 +1,476 @@
+{
+ "ipo_id": "urban-company-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 5150
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "urban-company-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 164,
+      "page_end": 164,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 164, amounts as printed): 1. Expenditure for new technology development and cloud infrastructure: ₹ 1,900.00 million 2. Expenditure for lease payments for our office",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.1348
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " new"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " technology"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " development"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " cloud"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " infrastructure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lease"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " payments"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " offices"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " marketing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " activities"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " general"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " corporate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " purposes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenditure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amounts"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " include"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " billion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " office"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " leases"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " plus"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specific"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocations"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " tech"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " growth"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " operations"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 13370
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The funds are allocated to new technology development and cloud infrastructure, lease payments for offices, marketing activities, or general corporate purposes [1]. The total expenditure amounts include ₹ 4.720 billion in office leases plus specific allocations for tech growth and operations [1][3].",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 160,
+      "char_end": 163
+     },
+     {
+      "n": 1,
+      "char_start": 293,
+      "char_end": 296
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     203,
+     218
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "4720000000.000",
+     "currency": "INR",
+     "raw": "₹ 4.720 billion",
+     "scale_word": "billion",
+     "precision": 3
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "₹ 4.720 billion does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XFA1Z9VXKX0QS5A7DYQH3J",
+    "score": 0.0,
+    "n_numbers": 1,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 5150,
+     "generating": 13370,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}

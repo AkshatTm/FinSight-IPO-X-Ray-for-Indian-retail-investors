@@ -1,0 +1,1095 @@
+{
+ "ipo_id": "hdb-financial-services-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1010
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "hdb-financial-services-2025:p64:c0",
+      "doc": "rhp",
+      "page_start": 64,
+      "page_end": 64,
+      "section": "risk_factors",
+      "snippet": "of operations, cash flows and financial condition. 56. Our Promoter is a listed entity and any violation of rules and regulations applicable to listed companies by our Promoter may adversely impact our business, reputation, results of opera",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 0.563
+     },
+     {
+      "n": 2,
+      "id": "hdb-financial-services-2025:p318:c0",
+      "doc": "rhp",
+      "page_start": 318,
+      "page_end": 318,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTER AND PROMOTER GROUP Our Promoter As on the date of this Red Herring Prospectus, our Promoter is HDFC Bank Limited As on the date of this Red Herring Prospectus, our Promoter holds 750,596,670 Equity Shares of face value of ₹10, ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -0.6313
+     },
+     {
+      "n": 3,
+      "id": "hdb-financial-services-2025:p323:c0",
+      "doc": "rhp",
+      "page_start": 323,
+      "page_end": 323,
+      "section": "our_promoters",
+      "snippet": "I. Entities forming part of the Promoter Group 1. HDFC Life Insurance Company Limited 2. HDFC Asset Management Company Limited 3. HDFC ERGO General Insurance Company Limited 4. HDFC Trustee Company Limited 5. HDFC Securities Limited 6. HDFC",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -0.6421
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "hdb-financial-services-2025:prospectus:p34:c0",
+      "doc": "prospectus",
+      "page_start": 34,
+      "page_end": 34,
+      "section": "risk_factors",
+      "snippet": "Currently, our Company offers the same products as those offered by our Promoter and certain members of our Promoter Group, namely, HDFC Sales Private Limited which is engaged in providing BPO services and is a registered corporate agent fo",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -0.7104
+     },
+     {
+      "n": 2,
+      "id": "hdb-financial-services-2025:p34:c0",
+      "doc": "rhp",
+      "page_start": 34,
+      "page_end": 34,
+      "section": "risk_factors",
+      "snippet": "Currently, our Company offers the same products as those offered by our Promoter and certain members of our Promoter Group, namely, HDFC Sales Private Limited which is engaged in providing BPO services and is a registered corporate agent fo",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.7104
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "फ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ते"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंत"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ें"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " एक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ई"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " योजना"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " की"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " घो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ष"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "णा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " यह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जानकारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " द"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्ता"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "वे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ज़"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " मिल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ती"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " HDF"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "C"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Bank"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Limited"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " को"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " करो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ड़"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ब"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " शे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "यर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंपनी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पू"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "रा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "वेश"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " करते"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हुए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "भ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "%"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "द"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "दान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " रहे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " इस"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्थ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ारे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "म"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "टर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पास"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पूरी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " तरह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " वि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्त"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ित"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " आधार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंप"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "न"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ियों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " द्वारा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " किया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " गया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ब"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " शे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "यर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " की"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्रति"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "श"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "त"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "सा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " रहा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 12055
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "हफ्ते के अंत में, हमें एक नई योजना की घोषणा है। [2] यह जानकारी दस्तावेज़ से मिलती है। HDFC Bank Limited को 750.6 करोड़ बंटों शेयर हैं जो कंपनी का पूरा निवेश करते हुए लगभग 94% हिस्सेदारी प्रदान कर रहे हैं, और इसका अर्थ है कि हमारे प्रमोटर के पास पूरी तरह से विस्तारित आधार पर कंपनियों द्वारा जारी किया गया कुल बंटों शेयर की 94.04 प्रतिशत हिस्सा हो रहा है। [2]",
+    "citations": [
+     {
+      "n": 2,
+      "char_start": 48,
+      "char_end": 51
+     },
+     {
+      "n": 2,
+      "char_start": 355,
+      "char_end": 358
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 4
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     107,
+     118
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "7506000000.0",
+     "currency": "INR",
+     "raw": "750.6 करोड़",
+     "scale_word": "crore",
+     "precision": 1
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "750.6 करोड़ does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     171,
+     174
+    ],
+    "answer_value": {
+     "kind": "percent",
+     "value": "94",
+     "raw": "94%",
+     "is_bps": false
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 318): 94.04%.",
+    "evidence": {
+     "passage_id": "hdb-financial-services-2025:p318:c0",
+     "doc": "rhp",
+     "page": 318,
+     "char_span": [
+      254,
+      260
+     ],
+     "bbox": [
+      64.46399688720703,
+      133.94564819335938,
+      95.3206787109375,
+      144.97137451171875
+     ],
+     "value": {
+      "kind": "percent",
+      "value": "94.04",
+      "raw": "94.04%",
+      "is_bps": false
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     323,
+     336
+    ],
+    "answer_value": {
+     "kind": "percent",
+     "value": "94.04",
+     "raw": "94.04 प्रतिशत",
+     "is_bps": false
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 318): 94.04%.",
+    "evidence": {
+     "passage_id": "hdb-financial-services-2025:p318:c0",
+     "doc": "rhp",
+     "page": 318,
+     "char_span": [
+      254,
+      260
+     ],
+     "bbox": [
+      64.46399688720703,
+      133.94564819335938,
+      95.3206787109375,
+      144.97137451171875
+     ],
+     "value": {
+      "kind": "percent",
+      "value": "94.04",
+      "raw": "94.04%",
+      "is_bps": false
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE8ZDZ2M30VAPZW12XZ97Q",
+    "score": 0.6666666666666666,
+    "n_numbers": 3,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1010,
+     "generating": 12055,
+     "verifying": 4
+    }
+   }
+  }
+ ]
+}

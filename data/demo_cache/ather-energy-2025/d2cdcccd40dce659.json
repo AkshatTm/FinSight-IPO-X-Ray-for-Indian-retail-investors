@@ -1,0 +1,582 @@
+{
+ "ipo_id": "ather-energy-2025",
+ "question": "Is the fresh issue ₹2,626 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1112
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:p12:c2",
+      "doc": "rhp",
+      "page_start": 12,
+      "page_end": 12,
+      "section": "definitions",
+      "snippet": "Fresh Issue The issue of [●] Equity Shares of face value of ₹1 each, at ₹ [●] per Equity Share (including a premium of ₹ [●] per Equity Share) aggregating up to ₹ 26,260 million by our Company. Fugitive Economic Offender An individual who i",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 3.5898
+     },
+     {
+      "n": 2,
+      "id": "ather-energy-2025:p171:c2",
+      "doc": "rhp",
+      "page_start": 171,
+      "page_end": 171,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated Amount (in ₹ million) Gross Proceeds of the Fresh Issue | 26,260 Less: Offer expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company) | [●] (1) Total Net Proc",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 3.3828
+     },
+     {
+      "n": 3,
+      "id": "ather-energy-2025:prospectus:p171:c2",
+      "doc": "prospectus",
+      "page_start": 171,
+      "page_end": 171,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated Amount (in ₹ million) Gross Proceeds of the Fresh Issue | 26,260*^ Less: Offer expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company) | 1,166 Total Net Proc",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 3.3828
+     },
+     {
+      "n": 4,
+      "id": "ather-energy-2025:p171:c0",
+      "doc": "rhp",
+      "page_start": 171,
+      "page_end": 171,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises of a Fresh Issue of [●] Equity Shares, aggregating up to 26,260 million by our Company and an Offer for Sale of up to 11,051,746 Equity Shares, aggregating to ₹ [●] million by the Selling Shareholder",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 2.957
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:p26:c2",
+      "doc": "rhp",
+      "page_start": 26,
+      "page_end": 26,
+      "section": "summary",
+      "snippet": "For further details, see “ Our Promoters and Promoter Group ” on page 351. Offer Size The following table summarizes the details of the Offer. For further details, see “ The Offer ” and “ Offer Structure ” beginning on pages 107 and 514, re",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": 2.1445
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Gross"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Proceed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " This"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equals"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " approximately"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equal"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lak"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 6874
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document states that Gross Proceeds are 26,260 million rupees [3]. This amount equals approximately 471 crore and is not equal to 2,626 lakhs. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 3,
+      "char_start": 66,
+      "char_end": 69
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 8
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     44,
+     65
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "26260000000",
+     "currency": "INR",
+     "raw": "26,260 million rupees",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 12): ₹ 26,260 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:p12:c2",
+     "doc": "rhp",
+     "page": 12,
+     "char_span": [
+      161,
+      177
+     ],
+     "bbox": [
+      446.468017578125,
+      543.2109985351562,
+      450.968017578125,
+      553.1739501953125
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "26260000000",
+      "currency": "INR",
+      "raw": "₹ 26,260 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     104,
+     113
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "4710000000",
+     "currency": "INR",
+     "raw": "471 crore",
+     "scale_word": "crore",
+     "precision": 0
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "471 crore does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     134,
+     145
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "262600000",
+     "currency": "INR",
+     "raw": "2,626 lakhs",
+     "scale_word": "lakh",
+     "precision": 0
+    },
+    "status": "contradicted",
+    "reason_code": "scale_mismatch",
+    "reason": "The answer says 2,626 lakhs; passage [1] (p. 12) says ₹ 26,260 million: a unit slip, 100x apart.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:p12:c2",
+     "doc": "rhp",
+     "page": 12,
+     "char_span": [
+      161,
+      177
+     ],
+     "bbox": [
+      446.468017578125,
+      543.2109985351562,
+      450.968017578125,
+      553.1739501953125
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "26260000000",
+      "currency": "INR",
+      "raw": "₹ 26,260 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XEA9QS7TEM76QP9BBZW862",
+    "score": 0.3333333333333333,
+    "n_numbers": 3,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1112,
+     "generating": 6874,
+     "verifying": 8
+    }
+   }
+  }
+ ]
+}

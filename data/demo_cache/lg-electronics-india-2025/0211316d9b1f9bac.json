@@ -1,0 +1,556 @@
+{
+ "ipo_id": "lg-electronics-india-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3126
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lg-electronics-india-2025:p243:c0",
+      "doc": "rhp",
+      "page_start": 243,
+      "page_end": 243,
+      "section": "history_and_certain_corporate_matters",
+      "snippet": "Details of amendment Date of Shareholders’ resolution/Effective date representative in connection with the same .” Sub-clauses 33 and 34 of clause III(B) of the Memorandum of Association of our Company were amended and updated as follows: “",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -3.709
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "lg-electronics-india-2025:prospectus:p243:c0",
+      "doc": "prospectus",
+      "page_start": 243,
+      "page_end": 243,
+      "section": "history_and_certain_corporate_matters",
+      "snippet": "Details of amendment Date of Shareholders’ resolution/Effective date representative in connection with the same .” Sub-clauses 33 and 34 of clause III(B) of the Memorandum of Association of our Company were amended and updated as follows: “",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -3.709
+     },
+     {
+      "n": 2,
+      "id": "lg-electronics-india-2025:prospectus:p334:c4",
+      "doc": "prospectus",
+      "page_start": 334,
+      "page_end": 334,
+      "section": "restated_financial_information",
+      "snippet": "The Company has recorded claim aggregating to INR 75.77 Millions for the period ended June 30, 2025 (June 30, 2024: INR 87.55 Millions, March 31, 2025: INR 352.16 Millions, March 31, 2024: INR 264.72 Millions, March 31, 2023: INR 255.85 Mil",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -4.3984
+     },
+     {
+      "n": 3,
+      "id": "lg-electronics-india-2025:p334:c4",
+      "doc": "rhp",
+      "page_start": 334,
+      "page_end": 334,
+      "section": "restated_financial_information",
+      "snippet": "The Company has recorded claim aggregating to INR 75.77 Millions for the period ended June 30, 2025 (June 30, 2024: INR 87.55 Millions, March 31, 2025: INR 352.16 Millions, March 31, 2024: INR 264.72 Millions, March 31, 2023: INR 255.85 Mil",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -4.3984
+     },
+     {
+      "n": 4,
+      "id": "lg-electronics-india-2025:p49:c3",
+      "doc": "rhp",
+      "page_start": 49,
+      "page_end": 49,
+      "section": "risk_factors",
+      "snippet": "7. Our Company is subject to various outstanding tax claims amounting to ₹47,170.55 million which is approximately 73.16% of our Company’s net worth of ₹64,478.48 million as on June 30, 2025. We cannot assure you that these claims will be d",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -5.0586
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " does"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " state"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " how"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " much"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specific"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " money"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " IPO"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " prospect"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "us"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raises"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " It"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " only"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " mentions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " costs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenses"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " be"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " paid"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " from"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " profits"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " but"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " no"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " figure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " new"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " issuance"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " under"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "writing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " commissions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " provided"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " text"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " excerpt"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " given"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " here"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 7569
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document does not state how much specific amount of money this IPO prospectus raises. [1] It only mentions that costs and expenses are to be paid from profits, but no total figure for new capital issuance or underwriting commissions is provided in the text excerpt given here. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 90,
+      "char_end": 93
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE4JH0Y7T0073ZD613WY5F",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3126,
+     "generating": 7569,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}

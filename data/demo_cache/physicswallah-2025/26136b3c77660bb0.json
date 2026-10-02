@@ -1,0 +1,897 @@
+{
+ "ipo_id": "physicswallah-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 981
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "physicswallah-2025:prospectus:p350:c0",
+      "doc": "prospectus",
+      "page_start": 350,
+      "page_end": 350,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Alakh Pandey and Prateek Boob are the Promoters of our Company. As on the date of this Prospectus, our Promoters hold an aggregate of 2,102,400,000 Equity Shares of face value of ₹1 each, comprising 80.62 % ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 1.3184
+     },
+     {
+      "n": 2,
+      "id": "physicswallah-2025:p350:c0",
+      "doc": "rhp",
+      "page_start": 350,
+      "page_end": 350,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Alakh Pandey and Prateek Boob are the Promoters of our Company. As on the date of this Red Herring Prospectus, our Promoters hold an aggregate of 2,102,400,000 Equity Shares of face value of ₹1 each, compris",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 1.2959
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "physicswallah-2025:p106:c2",
+      "doc": "rhp",
+      "page_start": 106,
+      "page_end": 106,
+      "section": "risk_factors",
+      "snippet": "55. The Promoters of our Company who are substantial shareholders, will receive proceeds from the Offer. As on the date of this RHP, our Promoters hold approximately 80.62% of our pre-Offer paid-up Equity Share capital on a fully diluted ba",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -0.4326
+     },
+     {
+      "n": 2,
+      "id": "physicswallah-2025:prospectus:p106:c2",
+      "doc": "prospectus",
+      "page_start": 106,
+      "page_end": 106,
+      "section": "risk_factors",
+      "snippet": "55. The Promoters of our Company who are substantial shareholders, will receive proceeds from the Offer. As on the date of this RHP, our Promoters hold approximately 80.62% of our pre-Offer paid-up Equity Share capital on a fully diluted ba",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -0.4326
+     },
+     {
+      "n": 3,
+      "id": "physicswallah-2025:p350:c1",
+      "doc": "rhp",
+      "page_start": 350,
+      "page_end": 350,
+      "section": "our_promoters",
+      "snippet": "For details of other ventures, see “ Entities forming part of the Promoter Group ” on page 346. His PAN is AQWPB1125B. Our Company confirms that the respective PAN, bank account numbers, Aadhaar card numbers, passport numbers for our Promot",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.6973
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "श"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अनुसार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंपनी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "मुख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ू"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंड"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "े"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "Al"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "akh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Pand"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ey"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ")"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्रति"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " बु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ब"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "Pr"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ek"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Bo"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ob"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ")"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " दोनों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ने"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लाख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "द"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क्ष"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ित"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पू"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "रे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " शे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "यर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " बा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "जार"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " लग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "भ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ८"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "०"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "६"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "२"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "%"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " योग"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "दान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " करते"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हुए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "मुख"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ू"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " रूप"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कार्य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " रहे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 11643
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "अंशों के अनुसार [1] और [2], कंपनी का प्रमुख समूह अलख पंडेय (Alakh Pandey) और प्रतिीक बुब (Prateek Boob) है। दोनों ने 3,064.8 लाख हिस्सेदारी संरक्षित हैं जो पूरे शेयर बाजार में लगभग 80.62% का योगदान करते हुए प्रमुख समूह के रूप में कार्य कर रहे हैं [1][2]।",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 16,
+      "char_end": 19
+     },
+     {
+      "n": 2,
+      "char_start": 23,
+      "char_end": 26
+     },
+     {
+      "n": 1,
+      "char_start": 247,
+      "char_end": 250
+     },
+     {
+      "n": 2,
+      "char_start": 250,
+      "char_end": 253
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 4
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     117,
+     128
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "306480000.0",
+     "currency": "INR",
+     "raw": "3,064.8 लाख",
+     "scale_word": "lakh",
+     "precision": 1
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "3,064.8 लाख does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     181,
+     187
+    ],
+    "answer_value": {
+     "kind": "percent",
+     "value": "80.62",
+     "raw": "80.62%",
+     "is_bps": false
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 350): 80.62 %.",
+    "evidence": {
+     "passage_id": "physicswallah-2025:prospectus:p350:c0",
+     "doc": "prospectus",
+     "page": 350,
+     "char_span": [
+      232,
+      239
+     ],
+     "bbox": [
+      465.2200012207031,
+      106.94564819335938,
+      487.72003173828125,
+      117.97136688232422
+     ],
+     "value": {
+      "kind": "percent",
+      "value": "80.62",
+      "raw": "80.62 %",
+      "is_bps": false
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XDZ8SGDQN1FDF4N8N81R8P",
+    "score": 0.5,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 981,
+     "generating": 11643,
+     "verifying": 4
+    }
+   }
+  }
+ ]
+}

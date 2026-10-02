@@ -1,0 +1,479 @@
+{
+ "ipo_id": "physicswallah-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 4858
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "physicswallah-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 163, amounts as printed): 1. Capital expenditure for fit-outs of new offline and hybrid centers of our Company: ₹ 4,605.51 million 2. Expenditure towards lease payme",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.7383
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " fit"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-outs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " new"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " centers"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lease"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " payments"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " existing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " locations"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " totaling"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " over"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " five"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " billion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " server"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " infrastructure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " costs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " up"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " two"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " billion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Additionally"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " there"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenditure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " on"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " marketing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " initiatives"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " worth"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " seven"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " thousand"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " one"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " hundred"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 12832
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The funds are allocated to fit-outs of new centers [1], lease payments at existing locations totaling over five billion rupees [2][3], and server infrastructure costs up to two billion rupees. Additionally, there is an expenditure on marketing initiatives worth seven thousand one hundred million rupees [4].",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 51,
+      "char_end": 54
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XF37SRQSS2AMB2XWVTFWWH",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 4858,
+     "generating": 12832,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,883 @@
+{
+ "ipo_id": "lenskart-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1012
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:p398:c0",
+      "doc": "rhp",
+      "page_start": 398,
+      "page_end": 398,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Peyush Bansal, Neha Bansal, Amit Chaudhary and Sumeet Kapahi are the Promoters of our Company. As on the date of this Red Herring Prospectus, our Promoters hold in aggregate, 334,186,084 Equity Shares of fac",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 1.2393
+     },
+     {
+      "n": 2,
+      "id": "lenskart-2025:prospectus:p398:c0",
+      "doc": "prospectus",
+      "page_start": 398,
+      "page_end": 398,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Peyush Bansal, Neha Bansal, Amit Chaudhary and Sumeet Kapahi are the Promoters of our Company. As on the date of this Prospectus, our Promoters hold in aggregate, 331,698,523 Equity Shares of face value of ₹",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 1.1582
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:p80:c1",
+      "doc": "rhp",
+      "page_start": 80,
+      "page_end": 80,
+      "section": "risk_factors",
+      "snippet": "Our dependence on our franchisees exposes us to significant risks that are beyond our control and could adversely affect our business, financial condition, and results of operations. 13. We are dependent on our Promoters, Key Managerial Per",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -0.1146
+     },
+     {
+      "n": 2,
+      "id": "lenskart-2025:p399:c2",
+      "doc": "rhp",
+      "page_start": 399,
+      "page_end": 399,
+      "section": "our_promoters",
+      "snippet": "Confirmations Our Promoters and members of our Promoter Group have not been prohibited from accessing or operating in capital markets or restrained from buying, selling or dealing in securities under any order or direction passed by SEBI or",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -0.2108
+     },
+     {
+      "n": 3,
+      "id": "lenskart-2025:prospectus:p399:c2",
+      "doc": "prospectus",
+      "page_start": 399,
+      "page_end": 399,
+      "section": "our_promoters",
+      "snippet": "Confirmations Our Promoters and members of our Promoter Group have not been prohibited from accessing or operating in capital markets or restrained from buying, selling or dealing in securities under any order or direction passed by SEBI or",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.3735
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "्रा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प्त"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " द"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्ता"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "वे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ज़"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "म"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ोट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नाम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उनकी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ख्या"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " स्प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ष्ट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " रूप"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नहीं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " दी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " गई"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " दोनों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "श"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ान"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जानकारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " उप"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ब्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ध"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " वे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सभी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " एक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ही"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ":"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "य"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ष"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ब"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंस"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ाल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "P"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ey"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ush"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Bans"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "al"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "),"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "हा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ब"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ंस"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ाल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "N"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "eh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Bans"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "al"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "),"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "म"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " चौ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "A"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "mit"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Ch"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "aud"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "h"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ary"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ")"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " सु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "मे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "त"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ही"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "S"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ume"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "et"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Kap"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ahi"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ")["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 11759
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "प्राप्त दस्तावेज़ में प्रमोटर्स के नाम और उनकी संख्या स्पष्ट रूप से नहीं दी गई है। [1] और [2] दोनों अंशों में समान जानकारी उपलब्ध है, जो कि वे सभी एक ही हैं: पेयुष बंसाल (Peyush Bansal), नीहा बंसाल (Neha Bansal), एमिट चौहारी (Amit Chaudhary) और सुमेत कपही (Sumeet Kapahi)[1][2]।",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 83,
+      "char_end": 86
+     },
+     {
+      "n": 2,
+      "char_start": 90,
+      "char_end": 93
+     },
+     {
+      "n": 1,
+      "char_start": 271,
+      "char_end": 274
+     },
+     {
+      "n": 2,
+      "char_start": 274,
+      "char_end": 277
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 3
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE3KK3F00WGZS9B4RNBWX6",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1012,
+     "generating": 11759,
+     "verifying": 3
+    }
+   }
+  }
+ ]
+}

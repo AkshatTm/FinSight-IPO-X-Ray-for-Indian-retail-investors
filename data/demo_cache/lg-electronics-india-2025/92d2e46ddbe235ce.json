@@ -1,0 +1,99 @@
+{
+ "ipo_id": "lg-electronics-india-2025",
+ "question": "Should I apply for this IPO?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "guard",
+   "data": {
+    "blocked": true,
+    "reason": "advice_intent",
+    "facts": [
+     {
+      "field_id": "ofs_amount",
+      "label_en": "Offer for sale (amount)",
+      "label_hi": "बिक्री हेतु प्रस्ताव (राशि)",
+      "display": "₹ [●] million",
+      "doc": "rhp",
+      "page": 13
+     },
+     {
+      "field_id": "total_issue_size",
+      "label_en": "Total issue size",
+      "label_hi": "कुल निर्गम आकार",
+      "display": "₹116,047.32 million",
+      "doc": "prospectus",
+      "page": 1
+     },
+     {
+      "field_id": "price_band",
+      "label_en": "Price band",
+      "label_hi": "मूल्य सीमा (प्राइस बैंड)",
+      "display": "₹ [●]",
+      "doc": "rhp",
+      "page": 13
+     },
+     {
+      "field_id": "offer_price",
+      "label_en": "Offer price",
+      "label_hi": "निर्गम मूल्य",
+      "display": "₹ 1,140",
+      "doc": "prospectus",
+      "page": 3
+     },
+     {
+      "field_id": "face_value",
+      "label_en": "Face value",
+      "label_hi": "अंकित मूल्य",
+      "display": "₹ 10",
+      "doc": "rhp",
+      "page": 1
+     },
+     {
+      "field_id": "promoters",
+      "label_en": "Promoters",
+      "label_hi": "प्रवर्तक",
+      "display": "LG ELECTRONICS INC",
+      "doc": "rhp",
+      "page": 1
+     },
+     {
+      "field_id": "registrar",
+      "label_en": "Registrar to the offer",
+      "label_hi": "निर्गम के रजिस्ट्रार",
+      "display": "KFin Technologies Limited",
+      "doc": "rhp",
+      "page": 14
+     }
+    ]
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE4XS2XDC1AG897X73KFC0",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0
+    }
+   }
+  }
+ ]
+}
