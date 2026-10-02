@@ -342,6 +342,34 @@ If a company's passages appear in both training and test, scores look better tha
 **Errors.** One envelope everywhere (`code`, `message`, `hint`); no stack traces. Problems that are known before a stream starts (unknown IPO, bad question) are plain JSON errors, not stream events.
 **Viva check.** Why is page size read from an image? Because the detail route must not load a 100 MB JSON for two numbers.
 
+### C17. The objects table leads a use-of-money answer (built in run 2)
+**What it does.** "What will the money be used for?" is answered by one table, each purpose with its amount. The retriever used to find boilerplate about "proceeds" first, and the table arrives in pieces (rows 1-2 on one page, rows 3-5 on the next), so the 2B model wrote prose without numbers. For these questions the chat now puts one passage built from the rows the X-Ray already read at the front: each purpose, its amount and the unit printed in the table header. A pure offer for sale has no table, so the real passage that says the company receives no proceeds leads instead.
+**Worked example.** Ather: five purposes, each with its amount in ₹ million; the answer lists all five and the verifier marks all five numbers ✅ because the passage it checks against is the same text the model saw.
+**Limits.** LG's Hindi answer still says "not found" (the model is weak in Hindi, ADR-020). The pin is a rule for one kind of question, not a general fix, and a prompt rule for lists in general showed no consistent gain and was reverted.
+**Likely viva questions.** (1) *Why build the passage yourself instead of improving retrieval?* (2) *Is it honest to show the model a passage you assembled?* (It is made of the extracted rows with their page; the verifier checks against it like any passage, and the chip points at the table's page.)
+
+### C18. Where a value sits on its page, its sentence, thumbnails and the bid-closed date (built in run 2)
+**What it does.** The extract stage now stores each value's box next to its page (`fill_boxes`, text matching over the page's word boxes), so "show it on the page" no longer matches text on every request; the API falls back to matching only for older X-Rays. Each fact also carries the exact source sentence (`sentence_around`) with the matched part marked, the strip of page thumbnails asks for a 160-pixel image (`?w=160`) instead of the full page, and the Prospectus cover's "BID/OFFER CLOSED ON ..." date is read (`find_bid_closed`) and shown in the workspace header as "Bid closed 10 Nov 2025 (Prospectus p. 3)".
+**Key idea.** A position is a pointer to evidence, not a new fact: when nothing matches, the box is left out instead of guessed. The date parser accepts the variants the ten prospectuses print (no "ON", the typo "CLOSEED", a comma after the month) and drops an impossible date such as February 30.
+**Limits.** Boxes cover 6 to 8 of about 11 fields; list and table values are not matched.
+**Likely viva questions.** (1) *Why store boxes at build time rather than compute them per request?* (2) *How do you know the closing date is right?* (It is read from the document, and all ten agree with the listing dates, which fall three working days after close.)
+
+### C19. BiLSTM-CRF, the fourth rung (built in P5.3)
+**What it does.** A sequence tagger labels each word of a passage with a BIO tag for one of the eight fields. Words are embedded together with a small character-level CNN (so "₹26,260" and "₹10,527" share shape features), a BiLSTM reads left and right, and a CRF layer picks the best tag sequence (it knows "I-" cannot follow "O"). It trains on the same weak labels as the fine-tuned QA model, on Kaggle, with three seeds.
+**Gate.** It must beat a trivial baseline (the most common answer per field) on dev before it is kept (ADR-043); it does.
+**Result.** On the test IPOs: 0.49 full document, 0.28 body-only, against 0.74 and 0.85 for the fine-tuned QA model; not distinguishable from the pretrained model. A model that never saw pretraining text cannot match one that did; the ladder shows how much pretraining is worth.
+**Likely viva questions.** (1) *What does the CRF add over a softmax on each word?* (2) *Why report a weak baseline?* (It shows the size of the gain from pretraining, which is the point of the ladder.)
+
+### C20. The MuRIL advice classifier as a guard backend (built in P5.4)
+**What it does.** `guard.backend: muril` swaps the keyword rules for a fine-tuned `google/muril-base-cased` that returns the probability that a question asks for advice, a forecast or a rating. Privacy stays rule-based. Weights are trained on Kaggle (70/15/15 split by question, stratified by language, three seeds) and are not committed.
+**Result.** On the 18 held-out questions it blocks 9/9 advice questions but also 4/9 factual ones; the keyword rules block 9/9 and 0/9. The sample is tiny and the set was drafted by Claude, so the keyword guard stays the default.
+**Likely viva questions.** (1) *Why is a classifier not automatically better than rules?* (2) *What does a false block cost the user?* (A refused factual question; the guard's job is also not to be annoying.)
+
+### C21. Packaging for a CPU Space (built in P6.1 prep; not deployed)
+**What it does.** `llama_cpp_backend.py` gives the chat a second LLM backend with the same contract as Ollama, running a 4-bit GGUF on CPU; `bundle_artifacts.py` copies exactly the files the API reads (X-Rays, parsed text, sections, BM25 chunks, page images, demo cache, results, configs) with a manifest of sizes and hashes and never touches the PDFs; the Dockerfile installs only the API group, so the image has no torch. `docs/DEPLOY_STEPS.md` lists every click.
+**Limits (stated in ADR-022).** The deployed model is a quantised file whose answers were not re-measured, retrieval there is BM25 only, voice is off.
+**Likely viva questions.** (1) *Why no GPU and no torch in the deployed image?* (2) *What would you measure before claiming the deployed system is as good as the laptop one?*
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
@@ -374,3 +402,8 @@ If a company's passages appear in both training and test, scores look better tha
 28. **What would you do with one more month?** More fields, QLoRA generator, concall adapter, larger gold set, user study.
 29. **How is the demo mode honest?** It replays recorded real outputs only; never edited.
 30. **Walk me through one chat answer end to end.** Guard → BM25 + dense → RRF → rerank → prompt with [1]–[5] → stream → claims → numbers normalized → matched → marks → trace.
+31. **Why did you build a BiLSTM-CRF if the fine-tuned transformer is better?** It is the classical sequence-labelling baseline; its gap to the fine-tuned model (0.49 against 0.74 full, 0.28 against 0.85 body-only) measures what pretraining buys.
+32. **Is "verified" the same as "correct"?** No: it means the number is in the cited passage with the right unit. A correct number in the wrong role passes (Lenskart total issue size read as a component).
+33. **Why did MuRIL not replace the keyword guard?** It blocked 4 of 9 factual questions on the held-out part; tiny sample, AI-drafted set, so the simpler guard stays.
+34. **What did you do after seeing test results, and how do you say so?** Reverted fresh and total issue size to rules-first after test showed the dev-only choice cost accuracy; disclosed as test-informed, dev-only choice kept as a second configuration.
+35. **What is not measured about the deployed demo?** The quantised model's answer quality, BM25-only retrieval, and live latency on a shared CPU.
