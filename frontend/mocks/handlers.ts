@@ -1,5 +1,6 @@
 import { http, HttpResponse, delay } from "msw";
 import { DETAILS, HEALTH, IPOS } from "./fixtures";
+import { LAB_ASR, LAB_LADDER, LAB_RETRIEVAL, LAB_VERIFIER, LAB_WEAKLABELS } from "./lab";
 import { scenario, speed } from "./chat";
 import { pageSvg, pageWords } from "./pages";
 import { buildXray, SUGGESTED } from "./xray";
@@ -59,13 +60,15 @@ export const handlers = [
     });
     return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache" } });
   }),
-  // Lab payloads: dev fixtures shaped like evaluate/seeded_errors.py and evaluate/ladder.py output.
-  http.get("/api/lab/verifier", () => HttpResponse.json({ detection: { rate: 1, hits: 100, n: 100, wilson_95: [0.963, 1] } })),
-  http.get("/api/lab/ladder", () =>
-    HttpResponse.json({
-      headline_split: "test",
-      ladder: { qa_finetuned: { test: { full: { nvm: 0.74 }, body_only: { nvm: 0.85 } } } },
-    }),
+  // Lab payloads: fixtures cut from the real eval_results files (mocks/lab.ts). No frontier file: the
+  // Lab hides that section when the API has nothing, as it does on a machine without the E9 run.
+  http.get("/api/lab/ladder", () => HttpResponse.json(LAB_LADDER)),
+  http.get("/api/lab/verifier", () => HttpResponse.json(LAB_VERIFIER)),
+  http.get("/api/lab/weaklabels", () => HttpResponse.json(LAB_WEAKLABELS)),
+  http.get("/api/lab/retrieval", () => HttpResponse.json(LAB_RETRIEVAL)),
+  http.get("/api/lab/asr", () => HttpResponse.json(LAB_ASR)),
+  http.get("/api/lab/:name", () =>
+    HttpResponse.json({ error: { code: "not_available", message: "No results yet." } }, { status: 404 }),
   ),
   http.post("/api/voice", async () => {
     await delay(900);

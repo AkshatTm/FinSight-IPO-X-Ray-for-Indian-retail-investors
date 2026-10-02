@@ -1,0 +1,147 @@
+// Model Lab copy: docs/12_FRONTEND_SPEC.md section 8 (verbatim where the spec gives text).
+// Headings, column and stat labels the spec only names in English are builder drafts in Hindi
+// and are listed in docs/AKSHAT_TODO.md.
+type Entry = { en: string; hi: string };
+
+export const LAB = {
+  "lab.title": { en: "Model Lab", hi: "मॉडल लैब" },
+  "lab.intro": {
+    en: "FinSight was tested on IPOs it never saw during training. These are the results, including where it falls short.",
+    hi: "FinSight को उन आईपीओ पर जाँचा गया जो उसने ट्रेनिंग में कभी नहीं देखे। ये नतीजे हैं, उन जगहों समेत जहाँ यह कमज़ोर है।",
+  },
+  "lab.shows": { en: "What this shows", hi: "यह क्या दिखाता है" },
+  "lab.missing": { en: "No results for this section on this machine yet.", hi: "इस मशीन पर इस हिस्से के नतीजे अभी नहीं हैं।" },
+
+  // 8.1 ladder
+  "lab.ladder.h": { en: "Reading the facts (the extractor ladder)", hi: "तथ्य पढ़ना (निकालने के तरीकों की सीढ़ी)" },
+  "lab.ladder.shows": {
+    en: "Three ways of pulling facts out of a prospectus, scored against values checked by hand.",
+    hi: "प्रॉस्पेक्टस से तथ्य निकालने के तीन तरीके, हाथ से जाँचे गए मानों के मुक़ाबले।",
+  },
+  "lab.col.method": { en: "Method", hi: "तरीका" },
+  "lab.col.whole": { en: "Whole document", hi: "पूरा दस्तावेज़" },
+  "lab.col.hidden": { en: "Cover page hidden", hi: "कवर पेज छिपा" },
+  "lab.col.tested": { en: "Tested on", hi: "जाँच किस पर हुई" },
+  "lab.tested": { en: "{n} values, {k} IPOs", hi: "{k} आईपीओ के {n} मान" },
+  "lab.rung.rules": { en: "Rules", hi: "नियम" },
+  "lab.rung.rules.d": {
+    en: "hand-written patterns for the standard cover-page sentence.",
+    hi: "कवर पेज के तय वाक्य के लिए हाथ से लिखे पैटर्न।",
+  },
+  "lab.rung.qa_pretrained": { en: "Pretrained model", hi: "प्रीट्रेंड मॉडल" },
+  "lab.rung.qa_pretrained.d": {
+    en: "a question-answering model (DeBERTa) used as it comes.",
+    hi: "एक सवाल-जवाब मॉडल (DeBERTa), जैसा मिला वैसा इस्तेमाल किया।",
+  },
+  "lab.rung.qa_finetuned": { en: "Our fine-tuned model", hi: "हमारा फ़ाइन-ट्यून मॉडल" },
+  "lab.rung.qa_finetuned.d": {
+    en: "the same model trained on about 4,000 examples FinSight labelled automatically.",
+    hi: "वही मॉडल, FinSight के अपने-आप लेबल किए लगभग 4,000 उदाहरणों पर ट्रेन किया हुआ।",
+  },
+  "lab.ladder.take": {
+    en: "When the cover page is there, simple rules do best because the cover follows a fixed format. When the cover is hidden, the rules drop to {rules_body}% while our model stays at {ft_body}%. Training on automatic labels made the model {delta} points better than the pretrained version.",
+    hi: "जब कवर पेज मौजूद होता है, तो साधारण नियम सबसे अच्छा करते हैं क्योंकि कवर एक तय ढाँचे में होता है। कवर छिपाने पर नियम {rules_body}% पर गिर जाते हैं, जबकि हमारा मॉडल {ft_body}% पर रहता है। अपने-आप बने लेबल पर ट्रेनिंग से मॉडल प्रीट्रेंड वर्ज़न से {delta} अंक बेहतर हुआ।",
+  },
+  "lab.ladder.note": {
+    en: "Small test set: {n} values from {k} IPOs. Treat differences of a few points as noise.",
+    hi: "छोटा टेस्ट सेट: {k} आईपीओ से {n} मान। कुछ अंकों के अंतर को संयोग मानें।",
+  },
+  "lab.chart.alt": {
+    en: "Bar chart of the share of facts read correctly by each method, with a 95% range.",
+    hi: "हर तरीके से सही पढ़े गए तथ्यों का बार चार्ट, 95% दायरे के साथ।",
+  },
+
+  // 8.2 heatmap
+  "lab.fields.h": { en: "Fact by fact", hi: "तथ्य दर तथ्य" },
+  "lab.fields.shows": { en: "Which method gets each fact right.", hi: "कौन सा तरीका कौन सा तथ्य सही पढ़ता है।" },
+  "lab.fields.fact": { en: "Fact", hi: "तथ्य" },
+  "lab.fields.note": {
+    en: "Whole document, tested IPOs. Each fact has about 7 values, so one miss moves a cell by 14 points.",
+    hi: "पूरा दस्तावेज़, टेस्ट वाले आईपीओ। हर तथ्य के लगभग 7 मान हैं, इसलिए एक गलती से खाना 14 अंक हिलता है।",
+  },
+
+  // 8.3 automatic labels
+  "lab.weak.h": { en: "Automatic labels", hi: "अपने-आप बने लेबल" },
+  "lab.weak.shows": {
+    en: "FinSight's model learned from examples labelled by a program, not by people. We checked a random 50 by hand.",
+    hi: "FinSight का मॉडल उन उदाहरणों से सीखा जिन्हें किसी प्रोग्राम ने लेबल किया, इंसानों ने नहीं। हमने 50 बेतरतीब उदाहरण हाथ से जाँचे।",
+  },
+  "lab.weak.examples": { en: "examples created", hi: "उदाहरण बने" },
+  "lab.weak.ipos": { en: "IPOs used", hi: "आईपीओ इस्तेमाल हुए" },
+  "lab.weak.precision": { en: "audit precision", hi: "ऑडिट की सटीकता" },
+  "lab.weak.range": { en: "95% range {lo}–{hi}%", hi: "95% दायरा {lo}–{hi}%" },
+  "lab.weak.note": {
+    en: "Audit labels were drafted with AI help and reviewed by the author.",
+    hi: "ऑडिट लेबल एआई की मदद से बनाए गए और लेखक ने जाँचे।",
+  },
+
+  // 8.4 verifier
+  "lab.ver.h": { en: "Catching wrong numbers (the verifier)", hi: "गलत आंकड़े पकड़ना (वेरिफ़ायर)" },
+  "lab.ver.shows": {
+    en: "We planted wrong numbers in correct answers and checked how many FinSight caught.",
+    hi: "हमने सही जवाबों में जानबूझकर गलत आंकड़े डाले और देखा कि FinSight ने कितने पकड़े।",
+  },
+  "lab.ver.caught": { en: "caught", hi: "पकड़े गए" },
+  "lab.ver.false": { en: "false alarms", hi: "झूठे अलार्म" },
+  "lab.ver.unit": { en: "unit mix-ups caught on unseen IPOs", hi: "अनदेखे आईपीओ पर पकड़ी गई इकाई की गड़बड़ियाँ" },
+  "lab.ver.unitFix": { en: "{hits}/{n} after one rule fix", hi: "एक नियम सुधारने के बाद {hits}/{n}" },
+  "lab.ver.col.type": { en: "Kind of error", hi: "गलती का प्रकार" },
+  "lab.ver.col.n": { en: "Tests", hi: "टेस्ट" },
+  "lab.ver.col.ok": { en: "Handled right", hi: "सही संभाले" },
+  "lab.ver.type.digit": { en: "Wrong digit", hi: "गलत अंक" },
+  "lab.ver.type.scale": { en: "Wrong unit", hi: "गलत इकाई" },
+  "lab.ver.type.swap_metric": { en: "Wrong metric", hi: "गलत चीज़" },
+  "lab.ver.type.invented": { en: "Invented number", hi: "गढ़ा हुआ आंकड़ा" },
+  "lab.ver.type.rounding_ok": { en: "Harmless rounding", hi: "बेअसर राउंडिंग" },
+  "lab.ver.type.correct": { en: "Correct number", hi: "सही आंकड़ा" },
+  "lab.ver.note": {
+    en: "This is a controlled test with planted errors. Real answers are harder.",
+    hi: "यह जानबूझकर डाली गई गलतियों वाला नियंत्रित टेस्ट है। असली जवाब ज़्यादा कठिन होते हैं।",
+  },
+
+  // 8.5 retrieval
+  "lab.ret.h": { en: "Finding the right pages (retrieval) and answers", hi: "सही पन्ने ढूँढना (रिट्रीवल) और जवाब" },
+  "lab.ret.shows": {
+    en: "How often the right page is among the five FinSight reads, and how its answers score.",
+    hi: "कितनी बार सही पन्ना उन पाँच में होता है जिन्हें FinSight पढ़ता है, और इसके जवाब कितने सही हैं।",
+  },
+  "lab.ret.col.method": { en: "Way of finding pages", hi: "पन्ने ढूँढने का तरीका" },
+  "lab.ret.col.recall": { en: "Right page in the five", hi: "सही पन्ना पाँच में" },
+  "lab.ret.col.abstain": { en: "Unanswerable questions declined", hi: "बिना जवाब वाले सवाल छोड़े गए" },
+  "lab.ret.bm25": { en: "Keyword", hi: "शब्दों से खोज" },
+  "lab.ret.dense": { en: "Meaning", hi: "अर्थ से खोज" },
+  "lab.ret.hybrid": { en: "Combined", hi: "दोनों मिलाकर" },
+  "lab.ret.hybrid+rerank": { en: "Combined + re-check", hi: "दोनों मिलाकर + दोबारा जाँच" },
+  "lab.ret.note": {
+    en: "56 answerable and 11 unanswerable questions on the tested IPOs. Answer accuracy on real model answers is not measured yet.",
+    hi: "टेस्ट वाले आईपीओ पर 56 जवाब वाले और 11 बिना जवाब वाले सवाल। असली मॉडल जवाबों की सटीकता अभी नहीं मापी गई।",
+  },
+
+  // 8.6 frontier
+  "lab.front.h": { en: "Compared with general chatbots", hi: "आम चैटबॉट से तुलना" },
+  "lab.front.shows": {
+    en: "The same questions given to a general chatbot with the full PDF.",
+    hi: "वही सवाल, पूरी पीडीएफ़ के साथ, एक आम चैटबॉट से पूछे गए।",
+  },
+
+  // 8.7 Hindi
+  "lab.hi.h": { en: "Hindi", hi: "हिंदी" },
+  "lab.hi.shows": { en: "How well FinSight hears and reads Hindi.", hi: "FinSight हिंदी कितनी अच्छी तरह सुनता और पढ़ता है।" },
+  "lab.hi.cer": { en: "speech recognition character error on {n} clips", hi: "{n} क्लिप पर बोली पहचान की अक्षर-त्रुटि" },
+  "lab.hi.refs": {
+    en: "The reference texts have not been checked by the author yet, so this figure is optimistic.",
+    hi: "संदर्भ टेक्स्ट अभी लेखक ने नहीं जाँचे हैं, इसलिए यह आंकड़ा ज़रूरत से अच्छा दिख सकता है।",
+  },
+  "lab.hi.retrieval": { en: "right page in the five, Hindi questions (combined + re-check)", hi: "सही पन्ना पाँच में, हिंदी सवाल (दोनों मिलाकर + दोबारा जाँच)" },
+  "lab.hi.line": {
+    en: "All the small open models we tried answer Hindi less fluently than English. The number checks still apply.",
+    hi: "हमने जितने छोटे ओपन मॉडल आज़माए, सभी हिंदी में अंग्रेज़ी जितने सहज नहीं हैं। आंकड़ों की जाँच फिर भी लागू होती है।",
+  },
+
+  // 8.8 footer
+  "lab.foot": {
+    en: "Every number on this page is generated by scripts in the repository from the files in eval_results/.",
+    hi: "इस पेज का हर आंकड़ा रिपॉज़िटरी की स्क्रिप्ट से, eval_results/ की फ़ाइलों से बना है।",
+  },
+  "lab.foot.link": { en: "Read the scripts on GitHub", hi: "GitHub पर स्क्रिप्ट पढ़ें" },
+} satisfies Record<string, Entry>;
