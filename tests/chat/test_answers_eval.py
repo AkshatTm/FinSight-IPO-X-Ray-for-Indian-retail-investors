@@ -44,3 +44,19 @@ def test_summary_counts() -> None:
     assert s["verdicts"] == {"verified": 1, "contradicted": 1}
     assert s["verified_share"] == 0.5
     assert s["unanswerable_abstained_or_not_found"] == 1
+
+
+def test_an_error_turn_keeps_its_code_and_message() -> None:
+    row = turn_record(Q, [("error", NS(code="llm_unavailable", message="Ollama is down"))])
+    assert row["error"] == {"code": "llm_unavailable", "message": "Ollama is down"}
+    assert summarise([row])["errors"] == {"llm_unavailable: Ollama is down": 1}
+
+
+def test_the_sample_is_spread_evenly_not_picked() -> None:
+    from finsight.evaluate.answers import pick_sample
+
+    rows = [{"i": i} for i in range(100)]
+    got = pick_sample(rows, 20)
+    assert len(got) == 20
+    assert [r["i"] for r in got][:3] == [0, 5, 10]
+    assert pick_sample(rows[:5], 20) == rows[:5]
