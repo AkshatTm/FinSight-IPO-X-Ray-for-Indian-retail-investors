@@ -189,6 +189,10 @@ class Candidate(BaseModel):
     page: int
     printed_page: str | None = None
     bbox: BBox | None = None
+    # The line the value is printed in and the character span of the value inside it, stored with
+    # the box so the API never has to open the parsed document to answer an X-Ray request.
+    sentence: str | None = None
+    sentence_hit: tuple[int, int] | None = None
     score: float
     passage_id: str | None = None
 
@@ -229,6 +233,9 @@ class XRay(BaseModel):
     fields: list[FieldResult]
     derived: dict[str, str]  # decimal strings, as in 06
     bid_closed: BidClosed | None = None  # from the Prospectus; absent in older X-Rays
+    # True when the build looked for each value's box and sentence: a candidate without a box then
+    # has none to find, and the API must not open the parsed documents to look again.
+    boxes_located: bool = False
 
 
 # --------------------------------------------------------------------------- chat

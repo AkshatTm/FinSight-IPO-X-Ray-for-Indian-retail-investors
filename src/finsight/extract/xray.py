@@ -116,4 +116,5 @@ def build_xray(
         fields=[results[f.id] for f in fields],
         derived=report.derived,
         bid_closed=docs.get("prospectus", DocInputs()).bid_closed,
+        boxes_located=True,  # the pipeline runs fill_boxes before this (xray_stage)
     )
