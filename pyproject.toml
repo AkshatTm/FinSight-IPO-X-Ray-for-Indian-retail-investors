@@ -83,6 +83,7 @@ test-all = { cmd = "pytest", help = "All tests including slow (real models)" }
 fmt = { sequence = [{ cmd = "ruff check --fix ." }, { cmd = "ruff format ." }], help = "Auto-fix and format" }
 typecheck = { cmd = "mypy -p finsight.core -p finsight.normalize -p finsight.verify", help = "mypy on the correctness-critical packages" }
 api = { cmd = "uvicorn finsight.api.app:app --reload --port 8000", help = "FastAPI on :8000" }
+record-demo = { cmd = "python scripts/record_demo.py", help = "Record real chat streams into data/demo_cache (needs Ollama)" }
 gen-openapi = { cmd = "python scripts/gen_openapi.py", help = "Write openapi.json (add --check to verify it is current)" }
 
 [tool.poe.tasks.lint]
@@ -108,6 +109,8 @@ ignore = ["RUF001", "RUF002", "RUF003"]
 "src/finsight/guard/privacy.py" = ["E501"]
 "src/finsight/generate/postprocess.py" = ["E501"]
 "src/finsight/retrieve/boost.py" = ["E501"]
+# Dense fixture builders: one record per line reads better than wrapped keyword arguments.
+"tests/api/test_endpoints.py" = ["E501"]
 # One-off experiment and data scripts keep long f-strings and table rows readable.
 "scripts/*.py" = ["E501"]
 
