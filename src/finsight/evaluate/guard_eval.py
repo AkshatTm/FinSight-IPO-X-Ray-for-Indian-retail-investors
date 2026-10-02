@@ -199,10 +199,6 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-
 # ----------------------------------------------------------------------------- keyword vs MuRIL
 def compare(clf: dict[str, Any], threshold: float = 0.5) -> dict[str, Any]:
     """E8, classifier row: keyword rules and the MuRIL classifier on the same held-out questions.
@@ -263,3 +259,7 @@ def compare(clf: dict[str, Any], threshold: float = 0.5) -> dict[str, Any]:
             "read the intervals, not the point estimates."
         ),
     }
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

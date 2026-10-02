@@ -1,0 +1,648 @@
+{
+ "experiment": "E8-classifier",
+ "model": "google/muril-base-cased",
+ "run": "full",
+ "problems": [],
+ "seeds": {
+  "13": {
+   "seed": 13,
+   "model": "google/muril-base-cased",
+   "best_epoch": 7,
+   "epochs": 8,
+   "learning_rate": 3e-05,
+   "batch_size": 16,
+   "n_train": 84,
+   "val": {
+    "n": 18,
+    "accuracy": 0.7777777777777778,
+    "precision": 0.6923076923076923,
+    "recall": 1.0,
+    "f1": 0.8181818181818181,
+    "block_rate": 1.0,
+    "false_block_rate": 0.4444444444444444,
+    "tp": 9,
+    "fp": 4,
+    "fn": 0,
+    "tn": 5,
+    "per_language": {
+     "en": {
+      "n": 8,
+      "accuracy": 0.875,
+      "blocked": 4,
+      "advice": 4,
+      "false_blocks": 1,
+      "facts": 4
+     },
+     "hi": {
+      "n": 4,
+      "accuracy": 0.75,
+      "blocked": 2,
+      "advice": 2,
+      "false_blocks": 1,
+      "facts": 2
+     },
+     "hinglish": {
+      "n": 6,
+      "accuracy": 0.6666666666666666,
+      "blocked": 3,
+      "advice": 3,
+      "false_blocks": 2,
+      "facts": 3
+     }
+    }
+   },
+   "test": {
+    "n": 18,
+    "accuracy": 0.7777777777777778,
+    "precision": 0.6923076923076923,
+    "recall": 1.0,
+    "f1": 0.8181818181818181,
+    "block_rate": 1.0,
+    "false_block_rate": 0.4444444444444444,
+    "tp": 9,
+    "fp": 4,
+    "fn": 0,
+    "tn": 5,
+    "per_language": {
+     "en": {
+      "n": 8,
+      "accuracy": 0.875,
+      "blocked": 4,
+      "advice": 4,
+      "false_blocks": 1,
+      "facts": 4
+     },
+     "hi": {
+      "n": 4,
+      "accuracy": 1.0,
+      "blocked": 2,
+      "advice": 2,
+      "false_blocks": 0,
+      "facts": 2
+     },
+     "hinglish": {
+      "n": 6,
+      "accuracy": 0.5,
+      "blocked": 3,
+      "advice": 3,
+      "false_blocks": 3,
+      "facts": 3
+     }
+    }
+   },
+   "per_epoch": [
+    {
+     "epoch": 1,
+     "train_loss": 0.6934455633163452,
+     "val_f1": 0.6666666666666666,
+     "val_accuracy": 0.5
+    },
+    {
+     "epoch": 2,
+     "train_loss": 0.692982941865921,
+     "val_f1": 0.6666666666666666,
+     "val_accuracy": 0.5
+    },
+    {
+     "epoch": 3,
+     "train_loss": 0.6929296851158142,
+     "val_f1": 0.6666666666666666,
+     "val_accuracy": 0.5
+    },
+    {
+     "epoch": 4,
+     "train_loss": 0.6917203466097513,
+     "val_f1": 0.6666666666666666,
+     "val_accuracy": 0.5
+    },
+    {
+     "epoch": 5,
+     "train_loss": 0.6905944446722666,
+     "val_f1": 0.6923076923076924,
+     "val_accuracy": 0.5555555555555556
+    },
+    {
+     "epoch": 6,
+     "train_loss": 0.6875080366929373,
+     "val_f1": 0.7499999999999999,
+     "val_accuracy": 0.6666666666666666
+    },
+    {
+     "epoch": 7,
+     "train_loss": 0.6837080319722494,
+     "val_f1": 0.8181818181818181,
+     "val_accuracy": 0.7777777777777778
+    },
+    {
+     "epoch": 8,
+     "train_loss": 0.6809560457865397,
+     "val_f1": 0.782608695652174,
+     "val_accuracy": 0.7222222222222222
+    }
+   ],
+   "train_runtime_s": 30,
+   "n_gpu": 2
+  },
+  "42": {
+   "seed": 42,
+   "model": "google/muril-base-cased",
+   "best_epoch": 8,
+   "epochs": 8,
+   "learning_rate": 3e-05,
+   "batch_size": 16,
+   "n_train": 84,
+   "val": {
+    "n": 18,
+    "accuracy": 0.6666666666666666,
+    "precision": 0.6,
+    "recall": 1.0,
+    "f1": 0.7499999999999999,
+    "block_rate": 1.0,
+    "false_block_rate": 0.6666666666666666,
+    "tp": 9,
+    "fp": 6,
+    "fn": 0,
+    "tn": 3,
+    "per_language": {
+     "en": {
+      "n": 8,
+      "accuracy": 0.625,
+      "blocked": 4,
+      "advice": 4,
+      "false_blocks": 3,
+      "facts": 4
+     },
+     "hi": {
+      "n": 4,
+      "accuracy": 0.75,
+      "blocked": 2,
+      "advice": 2,
+      "false_blocks": 1,
+      "facts": 2
+     },
+     "hinglish": {
+      "n": 6,
+      "accuracy": 0.6666666666666666,
+      "blocked": 3,
+      "advice": 3,
+      "false_blocks": 2,
+      "facts": 3
+     }
+    }
+   },
+   "test": {
+    "n": 18,
+    "accuracy": 0.7777777777777778,
+    "precision": 0.6923076923076923,
+    "recall": 1.0,
+    "f1": 0.8181818181818181,
+    "block_rate": 1.0,
+    "false_block_rate": 0.4444444444444444,
+    "tp": 9,
+    "fp": 4,
+    "fn": 0,
+    "tn": 5,
+    "per_language": {
+     "en": {
+      "n": 8,
+      "accuracy": 0.75,
+      "blocked": 4,
+      "advice": 4,
+      "false_blocks": 2,
+      "facts": 4
+     },
+     "hi": {
+      "n": 4,
+      "accuracy": 1.0,
+      "blocked": 2,
+      "advice": 2,
+      "false_blocks": 0,
+      "facts": 2
+     },
+     "hinglish": {
+      "n": 6,
+      "accuracy": 0.6666666666666666,
+      "blocked": 3,
+      "advice": 3,
+      "false_blocks": 2,
+      "facts": 3
+     }
+    }
+   },
+   "per_epoch": [
+    {
+     "epoch": 1,
+     "train_loss": 0.6932608584562937,
+     "val_f1": 0.6666666666666666,
+     "val_accuracy": 0.5
+    },
+    {
+     "epoch": 2,
+     "train_loss": 0.6927007039388021,
+     "val_f1": 0.5714285714285714,
+     "val_accuracy": 0.6666666666666666
+    },
+    {
+     "epoch": 3,
+     "train_loss": 0.6927253206570944,
+     "val_f1": 0.7000000000000001,
+     "val_accuracy": 0.6666666666666666
+    },
+    {
+     "epoch": 4,
+     "train_loss": 0.69209357102712,
+     "val_f1": 0.6956521739130435,
+     "val_accuracy": 0.6111111111111112
+    },
+    {
+     "epoch": 5,
+     "train_loss": 0.6899277170499166,
+     "val_f1": 0.7499999999999999,
+     "val_accuracy": 0.6666666666666666
+    },
+    {
+     "epoch": 6,
+     "train_loss": 0.6868985792001089,
+     "val_f1": 0.7499999999999999,
+     "val_accuracy": 0.6666666666666666
+    },
+    {
+     "epoch": 7,
+     "train_loss": 0.6842679778734843,
+     "val_f1": 0.7499999999999999,
+     "val_accuracy": 0.6666666666666666
+    },
+    {
+     "epoch": 8,
+     "train_loss": 0.6817226906617483,
+     "val_f1": 0.7499999999999999,
+     "val_accuracy": 0.6666666666666666
+    }
+   ],
+   "train_runtime_s": 21,
+   "n_gpu": 2
+  },
+  "2026": {
+   "seed": 2026,
+   "model": "google/muril-base-cased",
+   "best_epoch": 6,
+   "epochs": 8,
+   "learning_rate": 3e-05,
+   "batch_size": 16,
+   "n_train": 84,
+   "val": {
+    "n": 18,
+    "accuracy": 0.8333333333333334,
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "block_rate": 1.0,
+    "false_block_rate": 0.3333333333333333,
+    "tp": 9,
+    "fp": 3,
+    "fn": 0,
+    "tn": 6,
+    "per_language": {
+     "en": {
+      "n": 8,
+      "accuracy": 0.875,
+      "blocked": 4,
+      "advice": 4,
+      "false_blocks": 1,
+      "facts": 4
+     },
+     "hi": {
+      "n": 4,
+      "accuracy": 1.0,
+      "blocked": 2,
+      "advice": 2,
+      "false_blocks": 0,
+      "facts": 2
+     },
+     "hinglish": {
+      "n": 6,
+      "accuracy": 0.6666666666666666,
+      "blocked": 3,
+      "advice": 3,
+      "false_blocks": 2,
+      "facts": 3
+     }
+    }
+   },
+   "test": {
+    "n": 18,
+    "accuracy": 0.7777777777777778,
+    "precision": 0.6923076923076923,
+    "recall": 1.0,
+    "f1": 0.8181818181818181,
+    "block_rate": 1.0,
+    "false_block_rate": 0.4444444444444444,
+    "tp": 9,
+    "fp": 4,
+    "fn": 0,
+    "tn": 5,
+    "per_language": {
+     "en": {
+      "n": 8,
+      "accuracy": 0.875,
+      "blocked": 4,
+      "advice": 4,
+      "false_blocks": 1,
+      "facts": 4
+     },
+     "hi": {
+      "n": 4,
+      "accuracy": 1.0,
+      "blocked": 2,
+      "advice": 2,
+      "false_blocks": 0,
+      "facts": 2
+     },
+     "hinglish": {
+      "n": 6,
+      "accuracy": 0.5,
+      "blocked": 3,
+      "advice": 3,
+      "false_blocks": 3,
+      "facts": 3
+     }
+    }
+   },
+   "per_epoch": [
+    {
+     "epoch": 1,
+     "train_loss": 0.6926646133263906,
+     "val_f1": 0.0,
+     "val_accuracy": 0.5
+    },
+    {
+     "epoch": 2,
+     "train_loss": 0.6930899322032928,
+     "val_f1": 0.0,
+     "val_accuracy": 0.5
+    },
+    {
+     "epoch": 3,
+     "train_loss": 0.6917937199274699,
+     "val_f1": 0.7000000000000001,
+     "val_accuracy": 0.6666666666666666
+    },
+    {
+     "epoch": 4,
+     "train_loss": 0.6905045211315155,
+     "val_f1": 0.8181818181818181,
+     "val_accuracy": 0.7777777777777778
+    },
+    {
+     "epoch": 5,
+     "train_loss": 0.6875557204087576,
+     "val_f1": 0.8181818181818181,
+     "val_accuracy": 0.7777777777777778
+    },
+    {
+     "epoch": 6,
+     "train_loss": 0.6830221712589264,
+     "val_f1": 0.8571428571428571,
+     "val_accuracy": 0.8333333333333334
+    },
+    {
+     "epoch": 7,
+     "train_loss": 0.6799561381340027,
+     "val_f1": 0.8181818181818181,
+     "val_accuracy": 0.7777777777777778
+    },
+    {
+     "epoch": 8,
+     "train_loss": 0.6763948897520701,
+     "val_f1": 0.8181818181818181,
+     "val_accuracy": 0.7777777777777778
+    }
+   ],
+   "train_runtime_s": 19,
+   "n_gpu": 2
+  }
+ },
+ "best_seed_by_val_f1": 2026,
+ "best_seed_predictions": {
+  "val": [
+   {
+    "question": "Is this IPO better than buying Zomato shares?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5131535530090332
+   },
+   {
+    "question": "Is the GMP a good sign that I should apply?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5092436671257019
+   },
+   {
+    "question": "Is it a good idea to park my money in the Tata Capital IPO?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5122033953666687
+   },
+   {
+    "question": "Do you recommend subscribing to this issue?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5072475671768188
+   },
+   {
+    "question": "Who are the promoters of Lenskart?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.5027900338172913
+   },
+   {
+    "question": "Is there any pending litigation against the promoters?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.4998089671134949
+   },
+   {
+    "question": "How many shares are being sold in the offer for sale?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.4965354800224304
+   },
+   {
+    "question": "Who is the registrar for this IPO?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.49840301275253296
+   },
+   {
+    "question": "लेंसकार्ट और ग्रो में से किसमें निवेश करूँ?",
+    "language": "hi",
+    "label": "advice",
+    "p_advice": 0.5077534914016724
+   },
+   {
+    "question": "इस IPO को 10 में से कितने नंबर दोगे?",
+    "language": "hi",
+    "label": "advice",
+    "p_advice": 0.5021497011184692
+   },
+   {
+    "question": "फ्रेश इश्यू का आकार कितना है?",
+    "language": "hi",
+    "label": "fact",
+    "p_advice": 0.4974885582923889
+   },
+   {
+    "question": "ऑफर फॉर सेल में कितने शेयर बेचे जा रहे हैं?",
+    "language": "hi",
+    "label": "fact",
+    "p_advice": 0.4968632161617279
+   },
+   {
+    "question": "HDB Financial ya Tata Capital, kaunsa better hai?",
+    "language": "hinglish",
+    "label": "advice",
+    "p_advice": 0.5087460279464722
+   },
+   {
+    "question": "Listing gain milega kya Meesho me?",
+    "language": "hinglish",
+    "label": "advice",
+    "p_advice": 0.5130932927131653
+   },
+   {
+    "question": "Bhai ye IPO multibagger banega?",
+    "language": "hinglish",
+    "label": "advice",
+    "p_advice": 0.5132358074188232
+   },
+   {
+    "question": "IPO ka paisa company kaha use karegi?",
+    "language": "hinglish",
+    "label": "fact",
+    "p_advice": 0.5018853545188904
+   },
+   {
+    "question": "Face value kitni hai ek share ki?",
+    "language": "hinglish",
+    "label": "fact",
+    "p_advice": 0.4969935417175293
+   },
+   {
+    "question": "Company pe koi case chal raha hai kya?",
+    "language": "hinglish",
+    "label": "fact",
+    "p_advice": 0.5042569041252136
+   }
+  ],
+  "test": [
+   {
+    "question": "Will HDB Financial shares go up after listing?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5103786587715149
+   },
+   {
+    "question": "Is Urban Company a good long term investment?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5107029676437378
+   },
+   {
+    "question": "Should I apply from my wife's account too to improve my chances?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5095900893211365
+   },
+   {
+    "question": "Should I take a loan to apply in the HNI category?",
+    "language": "en",
+    "label": "advice",
+    "p_advice": 0.5089927315711975
+   },
+   {
+    "question": "What is the total issue size?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.4948986768722534
+   },
+   {
+    "question": "How much is being spent on cloud infrastructure from the proceeds?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.4972125291824341
+   },
+   {
+    "question": "What is the minimum bid lot?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.49640682339668274
+   },
+   {
+    "question": "Is the company profitable as per the restated financials?",
+    "language": "en",
+    "label": "fact",
+    "p_advice": 0.5038143992424011
+   },
+   {
+    "question": "क्या इस IPO का भाव ज़्यादा है?",
+    "language": "hi",
+    "label": "advice",
+    "p_advice": 0.5092976093292236
+   },
+   {
+    "question": "क्या कंपनी अगले साल मुनाफ़े में आएगी? मैं निवेश करूँ?",
+    "language": "hi",
+    "label": "advice",
+    "p_advice": 0.5092856884002686
+   },
+   {
+    "question": "फेस वैल्यू कितनी है?",
+    "language": "hi",
+    "label": "fact",
+    "p_advice": 0.4966220259666443
+   },
+   {
+    "question": "कंपनी के प्रमोटर कौन हैं?",
+    "language": "hi",
+    "label": "fact",
+    "p_advice": 0.49650511145591736
+   },
+   {
+    "question": "Mere 50,000 rupaye hai, kisme lagau?",
+    "language": "hinglish",
+    "label": "advice",
+    "p_advice": 0.5091792345046997
+   },
+   {
+    "question": "GMP dekh ke apply karna chahiye kya?",
+    "language": "hinglish",
+    "label": "advice",
+    "p_advice": 0.5080612301826477
+   },
+   {
+    "question": "Cut-off pe bid karu ya kam price pe?",
+    "language": "hinglish",
+    "label": "advice",
+    "p_advice": 0.5149036049842834
+   },
+   {
+    "question": "Bidding kab se kab tak hai?",
+    "language": "hinglish",
+    "label": "fact",
+    "p_advice": 0.5020625591278076
+   },
+   {
+    "question": "Offer for sale me kitne shares bik rahe hai?",
+    "language": "hinglish",
+    "label": "fact",
+    "p_advice": 0.5001333951950073
+   },
+   {
+    "question": "OFS ka paisa company ko milega ya promoters ko?",
+    "language": "hinglish",
+    "label": "fact",
+    "p_advice": 0.5048754215240479
+   }
+  ]
+ }
+}
