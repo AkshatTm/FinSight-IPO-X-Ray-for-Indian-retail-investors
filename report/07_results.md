@@ -48,10 +48,17 @@ two of 56 questions (ADR-049). Abstaining on the retrieval score is weak: on tes
 
 ## 7.3 Answers through the full pipeline (E7) — `e7.json`
 
-**TBD (E7 running).** Counts of answered, refused, abstained and error turns on the dev and test questions with the
-`full` profile (qwen3.5:2b), the share of numbers marked ✅, ⚠️ and ❌, and 20 answers per split in
-`e7_sample_<split>.jsonl` for the author to check by hand. One run, temperature 0.2; do not quote a single
-run as a stable rate.
+`full` profile (qwen3.5:2b, temperature 0.2, one run), questions through the real orchestrator:
+
+| Split | Questions | Answered | Refused | Abstained | Numbers | ✅ | ⚠️ | ❌ |
+|---|---|---|---|---|---|---|---|---|
+| Dev | 50 | 42 | 3 | 5 | 68 | 52 (0.76) | 8 | 8 |
+| Test | 67 | 60 | 7 | 0 | 86 | 59 (0.69) | 22 | 5 |
+
+Of the unanswerable questions, 3 of 9 (dev) and 4 of 11 (test) ended in abstention or "not found". ✅ means
+the number is in the cited passage with the right unit, not that the answer is correct. Twenty answers per
+split with numbers are in `e7_sample_<split>.jsonl` for the author to check by hand (not yet done). One run:
+a 13-item score moves by two or three between runs (ADR-020), so do not quote these as stable rates.
 
 ## 7.4 Number verifier on seeded errors (E5) — `verifier.json`
 
@@ -85,4 +92,22 @@ WER 0.228; medium 0.289 and 0.352; small 0.363 and 0.557. Median seconds per cli
 
 ## 7.8 Non-numeric claim check (P5.5) and latency (E10)
 
-**TBD** (P5.5 and P5.7 are run after E7; results go in `eval_results/nli.json` and `latency.json`).
+**NLI on non-numeric claims (P5.5, `nli.json`).** mDeBERTa-v3-xnli on 180 seeded name claims built from gold
+quotes (registrar, promoters, lead managers; English and Hindi hypotheses; entailed, contradicted and
+neutral): accuracy 30/54 [0.42, 0.68] on dev IPOs and 67/126 [0.45, 0.62] on test IPOs, near chance for three
+classes, with neutral claims the worst (14 of 54 correct) and Hindi no worse than English. Names are a hard
+case for NLI (the model treats any promoter name near a cover block as supported). Conclusion: the check is
+**not good enough to show users**; `verify.nli` stays off and nothing in the API uses it.
+
+**Latency and memory (E10, `latency.json`).** See the table below.
+
+| Profile | LLM | Median first token | Median total | 90th percentile total | Peak GPU | Peak process RAM |
+|---|---|---|---|---|---|---|
+| `dev_light` | qwen3.5:0.8b | 2.7 s | 3.5 s | 5.4 s | 2.6 GB | 0.8 GB |
+| `full` | qwen3.5:2b | 25.4 s | 32.0 s | 37.3 s | 3.8 GB | 3.7 GB |
+
+First 20 answerable dev questions, one at a time, RTX 2050 (4 GB), Ollama resident. In `full` the median
+answer spends 17 s in retrieval and 14 s in generation: with embedder, reranker and the 2B model all wanting
+the 4 GB GPU, retrieval is far slower than the 0.7 s measured with no LLM loaded (`memory.json`); the cause was
+not investigated (likely memory pressure and model swapping). The first question after start-up took 46 s. The
+deployed CPU Space will be slower still and is not measured. Whole-system RAM in use peaked at 15 GB of 16 GB.

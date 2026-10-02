@@ -29,6 +29,26 @@ All extractor rows are test IPOs, full-document setting, from `eval_results/ladd
   in the wrong role. The report must not say verified means correct.
 - **Language**: the same fact is easier in English than in Hindi at 2B parameters (§7.5).
 
-## E7 answer-level failures
+## E7 answer-level failures (one run, `eval_results/e7_turns_*.jsonl`)
 
-*To be filled from `eval_results/e7_turns_*.jsonl` after the E7 run (section 7.3).*
+The verifier's ❌ marks caught real model mistakes, and they follow a pattern: the model picks a **true
+number from the wrong place** or **changes the unit**.
+
+- Urban Company, fresh issue (dev, English, Hindi and Hinglish asks): "₹ 4,720 million" is the fresh issue,
+  but the answer to an *offer for sale* question quotes it as the OFS amount; marked ❌ `scale_mismatch`.
+- Ather, total issue size (dev, Hindi): "₹35,867 मिलियन" is the right total, but the same answer
+  writes the fresh issue as "26.260 करोड़" and the OFS as "9.417 करोड़": the unit changed from million to
+  crore with a moved decimal. Three ❌ marks in one answer.
+- Lenskart, fresh issue (test, English): the answer swaps the roles of "₹21,500 million" (fresh issue) and
+  "₹51,280.15 million" (OFS) and states a total of "₹72,780.15 million" next to them; ❌.
+- HDB, fresh issue (test, English): "₹25.0 million" is attached to the shares of a special resolution, and
+  "₹69 billion" appears in the same sentence; two ❌ `wrong_value`.
+- Groww, fresh issue (test, Hindi): "₹ 440.16 लाख" for net proceeds that the passage prints in million;
+  ❌ `scale_mismatch`. The Hindi text also mixes scripts ("गROSS प्रोसेस्ज्स").
+
+Counts (profile `full`, qwen3.5:2b, temperature 0.2, one run): dev 50 questions, 42 answered, 3 refused by
+the guard, 5 abstained; of 68 numbers, 52 ✅ (0.76), 8 ⚠️, 8 ❌. Test 67 questions, 60 answered, 7 refused;
+of 86 numbers, 59 ✅ (0.69), 22 ⚠️, 5 ❌. Of the unanswerable questions (9 dev, 11 test) the system
+abstained or said "not found" for 3 and 4, so **most unanswerable questions still get a fluent answer**.
+The first E7 run had 6 errors, all Hinglish questions: a harness bug (language passed to the prompt),
+fixed and rerun; the numbers above are from the corrected run.
