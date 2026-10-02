@@ -29,6 +29,8 @@ Updated after every merge. Plain language.
 
 - F6 real API (this PR): whole frontend checked against the live API (real X-Ray, real pages, real chat answer with marks). Highlight boxes needed work: the pipeline stores no boxes, so the API finds them from the page text (ADR-052 addendum). Mobile overflow from long section names fixed.
 
+- F7 Model Lab (this PR): /lab reads real eval_results through three new or extended routes (retrieval, asr, weaklabels with audit). Numbers match PROGRESS (rules 86% / 23%, fine-tuned 74% / 85%, verifier 100/100, 0 false alarms). Frontier section hidden until an E9 file exists.
+
 ## Look at first
 - docs/screenshots/f6/: workspace-highlight.png, chat-real.png, inspector-real.png, landing-demo.png
 - docs/gates/G3.md
@@ -46,7 +48,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: F7 Model Lab, then F8 demo mode.
+- Next: F8 demo mode, G4, polish pass.
 
 ## RAM peak
 - not yet measured

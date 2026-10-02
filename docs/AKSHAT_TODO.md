@@ -20,6 +20,8 @@
 
 - How it works: spec 9 says each box opens a real example (recorded trace or screenshot). None exists yet, so the boxes are static. Add them after P4.1 records the demo cache. About Hindi (spec 10 has English only) is a builder draft: every `about.*` string. Humanizer pass: no change, copy is fixed verbatim.
 
+- Model Lab (F7): every `lab.*` Hindi string is a builder draft except none from the spec (the spec gives Hindi only for page-level lines); headings and column names the spec names only in English are mine. The spec asks for "5 examples per heatmap cell": the lab payload carries no examples, so the grid shows numbers only. E7 answer accuracy is not measured, the retrieval note says so. The frontier section (spec 8.6) is hidden: no E9 result file. Hindi section states that the ASR references are unreviewed.
+
 ## Data and evaluation
 - X-Ray boxes: the extractors do not store a bbox for any value (found in F6). The API now locates boxes by matching text on the page (ADR-052), which is good for numbers and names but not for every list value. Consider storing the box in the extract stage in the next pipeline pass.
 - `configs/ipo_meta.yaml` (sector and listing date for the 10 IPOs) was typed from memory of public listing dates: please verify each line.
