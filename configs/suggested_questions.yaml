@@ -1,0 +1,9 @@
+# Suggested questions per IPO (06: /suggested-questions). {fresh_lakh} is the fresh-issue amount in
+# crore written with the wrong unit ("lakh"): the scale trick. Filled from the IPO's X-Ray; the
+# trick question is dropped when the X-Ray has no fresh-issue amount.
+questions:
+  - { text: "How much money is the company raising?", language: en, kind: normal }
+  - { text: "What will the money be used for?", language: en, kind: normal }
+  - { text: "Is the fresh issue ₹{fresh_lakh} lakh?", language: en, kind: trick }
+  - { text: "प्रमोटर कौन हैं?", language: hi, kind: normal }
+  - { text: "Should I apply for this IPO?", language: en, kind: advice }
