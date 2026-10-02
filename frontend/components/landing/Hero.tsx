@@ -6,8 +6,11 @@ import { VerdictMark } from "@/components/facts/VerdictMark";
 import { detectCssGlass } from "@/components/glass/GlassSurface";
 import { useT } from "@/lib/useT";
 
-// The fresh-issue sentence on public/landing/rhp-cover.svg, as a share of the 600 x 800 page.
-const REST = { x: 34.3, y: 59.3 };
+// The fresh-issue line of Ather's RHP page 3 (public/landing/ather-rhp-p3.webp, the pipeline's own
+// page image, 595.44 x 841.68 pt). The "₹26,260 MILLION" value sits at x 432.6-485.6, y 161.3-168.5
+// (the X-Ray box); the lens centre is nudged left of it so the lens stays inside the page and
+// still covers the value. Shares of the page, from /api/ipos/ather-energy-2025/pages/3/words.
+const REST = { x: 70, y: 19.6 };
 const never = () => () => {};
 const calm = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -30,16 +33,16 @@ function Lens() {
     <div
       ref={box}
       className="relative mx-auto w-full max-w-[420px] -rotate-[1.5deg] select-none"
-      style={{ aspectRatio: "3 / 4" }}
+      style={{ aspectRatio: "595.44 / 841.68" }}
       onPointerMove={follow}
       onPointerLeave={() => setPos(REST)}
     >
       {/* eslint-disable-next-line @next/next/no-img-element -- static illustration, nothing to optimise */}
       <img
-        src="/landing/rhp-cover.svg"
+        src="/landing/ather-rhp-p3.webp"
         alt={t("land.lens.alt")}
-        width={600}
-        height={800}
+        width={910}
+        height={1286}
         className="absolute inset-0 h-full w-full rounded-[6px] border border-rule opacity-70 shadow-[var(--shadow-float)]"
         draggable={false}
       />
@@ -62,7 +65,7 @@ function Lens() {
         )}
       </div>
       <p
-        className="mark-in absolute left-[6%] top-[69%] inline-flex items-center gap-2 rounded-[10px] border border-rule bg-surface px-3 py-1.5 text-sm shadow-[var(--shadow-float)]"
+        className="mark-in absolute left-[6%] top-[31%] inline-flex items-center gap-2 rounded-[10px] border border-rule bg-surface px-3 py-1.5 text-sm shadow-[var(--shadow-float)]"
         style={{ animationDelay: "400ms" }}
       >
         <VerdictMark state="verified" />

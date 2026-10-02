@@ -35,6 +35,9 @@ def main(argv: list[str] | None = None) -> int:
         "--ipo", action="append", help="IPO id (repeatable); default: all with an X-Ray"
     )
     parser.add_argument("--profile")
+    parser.add_argument(
+        "--question", action="append", help="record only this question text (repeatable)"
+    )
     args = parser.parse_args(argv)
 
     settings = load_settings(args.profile) if args.profile else get_settings()
@@ -47,6 +50,8 @@ def main(argv: list[str] | None = None) -> int:
     failed = 0
     for ipo_id in ids:
         questions = [(q.text, q.language) for q in store.suggested(ipo_id)] + EXTRAS
+        if args.question:
+            questions = [q for q in questions if q[0] in args.question]
         for text, language in questions:
             events = list(chat.events(ipo_id, text, language))  # type: ignore[arg-type]
             try:

@@ -24,6 +24,20 @@ describe("ladder", () => {
     expect(h.fields).toHaveLength(8);
     expect(h.rows[0].cells.fresh_issue_size).toBe(1);
   });
+  it("carries the examples of each cell, misses first as the API sends them", () => {
+    const h = heatmap(LAB_LADDER)!;
+    const ft = h.rows.find((r) => r.key === "qa_finetuned")!;
+    expect(ft.examples.promoters).toHaveLength(2);
+    expect(ft.examples.promoters[0]).toMatchObject({ ipo: "lenskart-2025", correct: false });
+    expect(ft.examples.registrar).toEqual([]);
+  });
+  it("adds a rung the page does not know by name (the BiLSTM-CRF) to the grid", () => {
+    const more = {
+      ...LAB_LADDER,
+      per_field_test: { ...LAB_LADDER.per_field_test, bilstm_crf: { full: { registrar: { n: 7, nvm: 0.5 } } } },
+    };
+    expect(heatmap(more)!.rows.map((r) => r.key)).toContain("bilstm_crf");
+  });
   it("returns nothing for missing or malformed data", () => {
     expect(ladderRows(undefined)).toEqual([]);
     expect(ladderRows({ ladder: { rules: {} } })).toEqual([]);

@@ -50,6 +50,7 @@ Metadata + section list. Page endpoints take `?doc=rhp|prospectus` (default `rhp
    "type": "money",
    "value": {"kind": "money", "value_inr": "8000000000.00", "raw": "₹ 800.00 crore", "scale_word": "crore", "precision": 2},
    "doc": "rhp", "page": 12, "printed_page": "8", "bbox": [72.0, 410.2, 301.5, 422.8],
+   "sentence": {"text": "THE OFFER COMPRISES A FRESH ISSUE OF ... AGGREGATING UP TO ₹26,260 MILLION", "hit": [58, 74]},
    "extractor": "qa_finetuned", "score": 0.93,
    "verdict": "verified", "reason_code": "verified", "reason": "Matches The Offer (p. 67).",
    "companion": {"doc": "prospectus", "page": 14, "value": {"kind": "money", "value_inr": "8000000000.00", "raw": "₹ 800.00 crore", "scale_word": "crore", "precision": 2}},
@@ -58,10 +59,12 @@ Metadata + section list. Page endpoints take `?doc=rhp|prospectus` (default `rhp
  }],
  "derived": {"fresh_share_pct": "64.00", "ofs_share_pct": "36.00"}}
 ```
+`bbox` and `sentence` come from the extract stage: the box of each value is stored in `xray.json` (found by matching the value on its page when the extractor records none); `sentence` is the line the value is printed in, cut from the page words, with `hit` the character span of the value inside `text`. Both are absent when the value could not be matched. (Run 2, ADR-054.)
+
 `value.kind` ∈ `money | count | percent | range | placeholder | text | list | table` (same names as the `kind` discriminator in `02` §6). `reason_code` for X-Ray fields ∈ `verified | section_not_found | extractors_disagree | placeholder | not_in_document`. `companion` holds the same field from the other document when both exist (e.g. RHP `[●]` beside the Prospectus value). `gold_match` present only for IPOs with gold labels.
 
 ### `GET /api/ipos/{id}/pages/{n}`
-`image/webp`. `Cache-Control: public, max-age=31536000, immutable`.
+`image/webp`. `Cache-Control: public, max-age=31536000, immutable`. Optional `?w=<40..1200>` returns the same page scaled to that width in pixels (never enlarged), for the thumbnail strip (the frontend asks for `w=160`).
 
 ### `GET /api/ipos/{id}/pages/{n}/words`
 ```json
@@ -123,7 +126,7 @@ Full `Trace` (see `02_ARCHITECTURE.md` §6): stages, passages (incl. dropped), p
 ```
 
 ### Lab endpoints (read `eval_results/`)
-- `GET /api/lab/ladder` → `ladder_table.json`
+- `GET /api/lab/ladder` → `ladder_table.json`; `examples_test[rung][setting][field]` holds up to 5 test rows per heatmap cell (`ipo_id`, `doc`, `page`, `read`, `checked`, `correct`), misses first
 - `GET /api/lab/fields` → per-field × extractor matrix + 5 examples per cell
 - `GET /api/lab/verifier` → P/R/F1 by type + confusion matrix
 - `GET /api/lab/weaklabels` → stats + audit precision

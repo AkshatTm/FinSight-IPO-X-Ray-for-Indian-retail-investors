@@ -65,20 +65,42 @@ export function ladderSize(ladder: unknown): { n: number; k: number } | null {
   return { n: Math.max(...rows.map((r) => r.full.n)), k: Math.max(...rows.map((r) => r.full.nIpos)) };
 }
 
+export interface Example {
+  ipo: string;
+  doc: string;
+  page: number | null;
+  read: string;
+  checked: string;
+  correct: boolean;
+}
 export interface Heatmap {
   fields: string[];
-  rows: { key: string; cells: Record<string, number | null> }[];
+  rows: { key: string; cells: Record<string, number | null>; examples: Record<string, Example[]> }[];
+}
+
+function examples(v: unknown): Example[] {
+  if (!Array.isArray(v)) return [];
+  return v.flatMap((e): Example[] =>
+    isObj(e) && typeof e.read === "string" && typeof e.checked === "string"
+      ? [{ ipo: String(e.ipo_id ?? ""), doc: String(e.doc ?? ""), page: num(e.page), read: e.read, checked: e.checked, correct: e.correct === true }]
+      : [],
+  );
 }
 
 export function heatmap(ladder: unknown): Heatmap | null {
   const per = get(ladder, "per_field_test");
   if (!isObj(per)) return null;
-  const rungs = KNOWN_RUNGS.filter((k) => isObj(get(per, k, "full")));
+  const present = Object.keys(per).filter((k) => isObj(get(per, k, "full")));
+  const rungs = [...KNOWN_RUNGS.filter((k) => present.includes(k)), ...present.filter((k) => !KNOWN_RUNGS.includes(k))];
   if (!rungs.length) return null;
   const fields = [...new Set(rungs.flatMap((k) => Object.keys(get(per, k, "full") as Json)))];
   return {
     fields,
-    rows: rungs.map((key) => ({ key, cells: Object.fromEntries(fields.map((f) => [f, num(get(per, key, "full", f, "nvm"))])) })),
+    rows: rungs.map((key) => ({
+      key,
+      cells: Object.fromEntries(fields.map((f) => [f, num(get(per, key, "full", f, "nvm"))])),
+      examples: Object.fromEntries(fields.map((f) => [f, examples(get(ladder, "examples_test", key, "full", f))])),
+    })),
   };
 }
 
