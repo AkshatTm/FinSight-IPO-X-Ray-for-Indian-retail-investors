@@ -91,13 +91,19 @@ def collect(downloaded: Path, run: str, models_dir: Path, eval_dir: Path) -> dic
         finals = [p for p in downloaded.rglob("final") if p.parent.name == f"seed-{seed}"]
         files = [p.name for p in finals[0].iterdir()] if finals else []
         problems += [f"seed {seed}: {p}" for p in check_metrics(metrics, files)]
-        per_seed[seed] = {"metrics": metrics, "final": finals[0] if finals else None}
+        pfile = next(iter(sorted(downloaded.rglob(f"predictions-{seed}.json"))), None)
+        per_seed[seed] = {
+            "metrics": metrics,
+            "final": finals[0] if finals else None,
+            "predictions": json.loads(pfile.read_text(encoding="utf-8")) if pfile else None,
+        }
     report = {"run": run, "problems": problems, "seeds": {}}
     if run == "smoke" or problems:
         return report
     best = max(per_seed, key=lambda s: per_seed[s]["metrics"]["val"]["f1"])
     report["best_seed_by_val_f1"] = best
     report["seeds"] = {str(s): v["metrics"] for s, v in per_seed.items()}
+    report["best_seed_predictions"] = per_seed[best]["predictions"]  # val and test, per question
     target = models_dir / "guard_clf"
     if target.exists():
         shutil.rmtree(target)
