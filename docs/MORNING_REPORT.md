@@ -72,3 +72,11 @@ Updated after every merge. Plain language. Tests were green (1060) at the start.
 ## Merged so far
 - #104 Use-of-money answers lead with the objects table (each purpose with amount and unit). Live with qwen3.5:2b: Ather, Groww, Lenskart list every amount and the verifier marks them all ✅; LG says the company gets no money (English; Hindi still says "not found": the 2B model is weak in Hindi). HDB, Meesho, Physicswallah, Tata Capital and Urban Company still produce prose with few or no checkable numbers: that is the model, not the retrieval.
 - Demo cache (this PR): 78 real recorded streams for all 10 IPOs, `full` profile (qwen3.5:2b), committed on purpose (792 KB). Nothing edited by hand; money questions were re-recorded after the fix.
+- #110 MuRIL advice classifier (trained on Kaggle, 3 seeds, best by validation F1). On the tiny held-out part (18 questions) it blocks 9/9 advice questions but also blocks 4/9 factual ones; the keyword guard blocks 9/9 and 0/9. **The keyword guard stays the default**; MuRIL is switchable in config. Read the intervals, not the point estimates.
+- #111 Frontend and API: hero shows the real Ather RHP page 3 with a lens over the fresh-issue sentence; phone document toolbar in one row; separate "i" glossary buttons; Model Lab heatmap cells open up to five real examples; stored value boxes, exact source sentence per fact and `?w=160` thumbnails in the API; "Bid closed {date} (Prospectus p.n)" in the workspace header (all 10 dates read from the Prospectus cover and consistent with the listing dates).
+- #113 BiLSTM-CRF as an optional fourth rung of the ladder (3 Kaggle seeds). It passes its dev gate against the trivial baseline but is clearly weaker than the fine-tuned QA model on the gold test set; reported as measured.
+- #112 Landing section 5.7 shows the real recorded Lenskart Hindi answer (copied unchanged, caption says the Hindi is imperfect); the How-it-works steps link to a real built IPO. ADR-020 wording corrected: the Hindi fluency scores are Claude drafts, **pending your confirmation** (the earlier text said confirmed).
+
+## Needs you
+- Confirm or edit the fluency scores in `data/gold/hindi_fluency_sheet_rated.csv` (ADR-020 is provisional until then).
+- Review ADR-053 and ADR-054, and the new Hindi strings (`land.lang.cap`, `how.link.*`).
