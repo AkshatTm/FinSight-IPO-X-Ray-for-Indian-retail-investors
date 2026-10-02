@@ -1,0 +1,14 @@
+# Sector and listing date per demo IPO (shown in the Library and the workspace header).
+# Not in the filings' structured data; entered by hand from public listing records.
+# [AKSHAT] please verify before the demo.
+ipos:
+  ather-energy-2025: { sector: "Electric vehicles", listing_date: 2025-05-06 }
+  groww-2025: { sector: "Fintech", listing_date: 2025-11-12 }
+  hdb-financial-services-2025: { sector: "Financial services", listing_date: 2025-07-02 }
+  hexaware-technologies-2025: { sector: "IT services", listing_date: 2025-02-19 }
+  lenskart-2025: { sector: "Eyewear retail", listing_date: 2025-11-10 }
+  lg-electronics-india-2025: { sector: "Consumer durables", listing_date: 2025-10-14 }
+  meesho-2025: { sector: "E-commerce", listing_date: 2025-12-10 }
+  physicswallah-2025: { sector: "Education", listing_date: 2025-11-18 }
+  tata-capital-2025: { sector: "Financial services", listing_date: 2025-10-13 }
+  urban-company-2025: { sector: "Home services", listing_date: 2025-09-17 }
