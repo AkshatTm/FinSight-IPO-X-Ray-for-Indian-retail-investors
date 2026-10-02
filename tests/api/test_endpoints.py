@@ -214,6 +214,7 @@ def test_xray_maps_value_companion_and_not_in_document(client: TestClient) -> No
     assert ofs["value"]["kind"] == "placeholder"
     assert ofs["companion"]["doc"] == "prospectus"
     assert ofs["companion"]["value"]["value_inr"] == "3550000000.00"
+    assert ofs["companion"]["bbox"] == [1.0, 2.0, 3.0, 4.0]
     registrar = fields["registrar"]
     assert registrar["value"] is None
     assert registrar["reason_code"] == "not_in_document"

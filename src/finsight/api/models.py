@@ -80,6 +80,7 @@ class Companion(BaseModel):
     doc: DocType
     page: int
     value: Value | None = None
+    bbox: BBox | None = None  # where the companion value sits, so "show on page" can draw the box
 
 
 class ApiCandidate(BaseModel):

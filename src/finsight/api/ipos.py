@@ -8,6 +8,7 @@ page) are cached, two at a time.
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from datetime import date
 from decimal import Decimal, InvalidOperation
 from functools import lru_cache
@@ -18,6 +19,7 @@ import yaml
 from PIL import Image
 
 from finsight.api.errors import ApiError
+from finsight.api.locate import locate_bbox
 from finsight.api.models import (
     ApiCandidate,
     Companion,
@@ -33,7 +35,7 @@ from finsight.api.models import (
     XRayResponse,
 )
 from finsight.core.config import project_root
-from finsight.core.schemas import Candidate, DocType, FieldResult, FieldSpec, ParsedDoc, XRay
+from finsight.core.schemas import BBox, Candidate, DocType, FieldResult, FieldSpec, ParsedDoc, XRay
 from finsight.ingest.registry import DemoIpo, list_demo_ipos
 from finsight.pipeline.layout import doc_outputs, xray_path
 
@@ -177,15 +179,24 @@ class IpoStore:
             ipo_id=xray.ipo_id,
             company=xray.company,
             built_at=xray.built_at,
-            fields=[self._field(f) for f in xray.fields],
+            fields=[self._field(f, ipo_id) for f in xray.fields],
             derived=xray.derived,
         )
 
-    def _field(self, f: FieldResult) -> XRayField:
+    def _bbox(self, ipo_id: str, c: Candidate) -> BBox | None:
+        """The candidate's box, or one found by matching its text on its page (see ``locate``)."""
+        if c.bbox is not None:
+            return c.bbox
+        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, c.doc_type).parsed))
+        if parsed is None or not 1 <= c.page <= len(parsed.pages):
+            return None
+        return locate_bbox(parsed.pages[c.page - 1].words, c.raw)
+
+    def _field(self, f: FieldResult, ipo_id: str) -> XRayField:
         spec = self.fields.get(f.field_id)
         c = f.chosen
         other = [x for x in f.candidates if c is not None and x.doc_type != c.doc_type]
-        companion = _companion(other)
+        companion = _companion(other, lambda x: self._bbox(ipo_id, x))
         return XRayField(
             field_id=f.field_id,
             label_en=spec.label_en if spec else f.field_id,
@@ -195,7 +206,7 @@ class IpoStore:
             doc=c.doc_type if c else (spec.doc if spec else "rhp"),
             page=c.page if c else 0,
             printed_page=c.printed_page if c else None,
-            bbox=c.bbox if c else None,
+            bbox=self._bbox(ipo_id, c) if c else None,
             extractor=c.extractor if c else "none",
             score=c.score if c else 0.0,
             verdict=f.verdict,
@@ -233,7 +244,9 @@ class IpoStore:
 
 
 # ---------------------------------------------------------------------- helpers
-def _companion(other: list[Candidate]) -> Companion | None:
+def _companion(
+    other: list[Candidate], locate: Callable[[Candidate], BBox | None]
+) -> Companion | None:
     """The best candidate from the other document that has a real value (RHP ``[●]`` beside the
     Prospectus number)."""
     real = [x for x in other if x.value is not None and x.value.kind != "placeholder"]
@@ -241,7 +254,7 @@ def _companion(other: list[Candidate]) -> Companion | None:
     if not pool:
         return None
     best = max(pool, key=lambda x: x.score)
-    return Companion(doc=best.doc_type, page=best.page, value=best.value)
+    return Companion(doc=best.doc_type, page=best.page, value=best.value, bbox=locate(best))
 
 
 def _money_inr(xray: XRay | None, field_id: str) -> str | None:
