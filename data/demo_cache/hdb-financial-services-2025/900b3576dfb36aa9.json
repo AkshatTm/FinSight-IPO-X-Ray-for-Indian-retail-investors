@@ -1,0 +1,547 @@
+{
+ "ipo_id": "hdb-financial-services-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 4973
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "hdb-financial-services-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 148,
+      "page_end": 148,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 148, amounts as printed): 1. Augmentation of our Company's Tier - I Capital base to meet our Company's future capital requirements including onward lending under any",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -3.002
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " intended"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " augment"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Tier"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " base"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " by"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " meeting"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " future"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " requirements"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " including"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " onward"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lending"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " under"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " any"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " our"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "'s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " business"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " This"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specifically"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " across"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " vertical"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " such"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " as"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Enterprise"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " L"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ending"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Asset"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Finance"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Consumer"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Finance"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " totaling"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " each"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 14582
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The funds are intended to augment Tier-I capital base by meeting future requirements including onward lending under any of our Company's business [1]. This total amount is allocated specifically across verticals such as Enterprise Lending, Asset Finance and Consumer Finance totaling ₹ 24,586.2 million each [1][3]",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 146,
+      "char_end": 149
+     },
+     {
+      "n": 1,
+      "char_start": 308,
+      "char_end": 311
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     284,
+     302
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "24586200000.0",
+     "currency": "INR",
+     "raw": "₹ 24,586.2 million",
+     "scale_word": "million",
+     "precision": 1
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 148): ₹ 24,586.2 million.",
+    "evidence": {
+     "passage_id": "hdb-financial-services-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 148,
+     "char_span": [
+      268,
+      286
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "24586200000.0",
+      "currency": "INR",
+      "raw": "₹ 24,586.2 million",
+      "scale_word": "million",
+      "precision": 1
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XFBEQVM3C2MNEMZ9Z8GNDS",
+    "score": 1.0,
+    "n_numbers": 1,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 4973,
+     "generating": 14582,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}

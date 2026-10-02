@@ -1,0 +1,652 @@
+{
+ "ipo_id": "meesho-2025",
+ "question": "Is the fresh issue ₹4,250 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1071
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "meesho-2025:p210:c0",
+      "doc": "rhp",
+      "page_start": 210,
+      "page_end": 210,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises of the Fresh Issue of [●] Equity Shares, aggregating up to ₹42,500 million by our Company and an Offer for Sale of up to 105,513,839 Equity Shares, aggregating to ₹ [●] million by the Selling Shareho",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 0.0598
+     },
+     {
+      "n": 2,
+      "id": "meesho-2025:prospectus:p210:c0",
+      "doc": "prospectus",
+      "page_start": 210,
+      "page_end": 210,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises of the Fresh Issue of 382,882,882* Equity Shares, aggregating to ₹42,500 million* by our Company and an Offer for Sale of 105,513,839* Equity Shares, aggregating to ₹ 11,712.04 million* by the Sellin",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -0.1091
+     },
+     {
+      "n": 3,
+      "id": "meesho-2025:prospectus:p210:c1",
+      "doc": "prospectus",
+      "page_start": 210,
+      "page_end": 210,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | Estimated Amount Gross Proceeds of the Fresh Issue | 42,500* (Less) Offer related expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company)* | 1,621.70",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -0.834
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "meesho-2025:p41:c0",
+      "doc": "rhp",
+      "page_start": 41,
+      "page_end": 41,
+      "section": "summary",
+      "snippet": "Offer Size The following table summarizes the details of the Offer. For further details, see “ The Offer ” and “ Offer Structure ” beginning on pages 136 and 602, respectively. Offer [●] Equity Shares of face value of ₹ 1 each, aggregating ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -0.8447
+     },
+     {
+      "n": 2,
+      "id": "meesho-2025:prospectus:p41:c0",
+      "doc": "prospectus",
+      "page_start": 41,
+      "page_end": 41,
+      "section": "summary",
+      "snippet": "Offer Size The following table summarizes the details of the Offer. For further details, see “ The Offer ” and “ Offer Structure ” beginning on pages 136 and 602, respectively. Offer 488,396,721* Equity Shares of face value of ₹ 1 each, agg",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.853
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggregate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equity"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " shares"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " This"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " figure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equals"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " billion"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " approximately"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "/"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "th"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " part"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lakh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " units"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " which"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " does"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " match"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " question"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "'s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " value"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " four"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " hundred"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " twenty"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-five"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " thousand"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lak"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 8897
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "I could not find this in the document.",
+    "citations": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XDXCQNG91KMXEDGX32M0NK",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1071,
+     "generating": 8897,
+     "verifying": 0
+    }
+   }
+  }
+ ]
+}

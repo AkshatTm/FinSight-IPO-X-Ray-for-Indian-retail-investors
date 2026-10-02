@@ -1,0 +1,644 @@
+{
+ "ipo_id": "physicswallah-2025",
+ "question": "Is the fresh issue ₹3,100 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1165
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "physicswallah-2025:p163:c0",
+      "doc": "rhp",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises a Fresh Issue of Equity Shares of face value of ₹1 each, aggregating up to ₹ 31,000.00 million by our Company and an Offer for Sale of up to [●] Equity Shares of face value of ₹1 each, aggregating to",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 0.7949
+     },
+     {
+      "n": 2,
+      "id": "physicswallah-2025:p3:c1",
+      "doc": "rhp",
+      "page_start": 3,
+      "page_end": 3,
+      "section": "cover",
+      "snippet": "THE OFFER COMPRISES A FRESH ISSUE OF [●] EQUITY SHARES OF FACE VALUE OF ₹ 1 BY OUR COMPANY AGGREGATING UP TO ₹ 31,000.00 MILLION (“FRESH ISSUE”) AND AN OFFER FOR SALE OF [●] EQUITY SHARES OF FACE VALUE OF ₹ 1 EACH AGGREGATING UP TO ₹ 3,800.",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 0.3833
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "physicswallah-2025:prospectus:p163:c0",
+      "doc": "prospectus",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises a Fresh Issue of 284,468,537 * Equity Shares of face value of ₹1 each, aggregating to ₹ 31,000.00 * million by our Company and an Offer for Sale of 34,862,384 * Equity Shares of face value of ₹1 each",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 0.2107
+     },
+     {
+      "n": 2,
+      "id": "physicswallah-2025:prospectus:p3:c1",
+      "doc": "prospectus",
+      "page_start": 3,
+      "page_end": 3,
+      "section": "cover",
+      "snippet": "THE OFFER COMPRISES A FRESH ISSUE OF 284,468,537* EQUITY SHARES OF FACE VALUE OF ₹ 1 BY OUR COMPANY AGGREGATING TO ₹ 31,000.00 MILLION (“FRESH ISSUE”) AND AN OFFER FOR SALE OF 34,862,384 * EQUITY SHARES OF FACE VALUE OF ₹ 1 EACH AGGREGATING",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 0.0497
+     },
+     {
+      "n": 3,
+      "id": "physicswallah-2025:p1:c0",
+      "doc": "rhp",
+      "page_start": 1,
+      "page_end": 1,
+      "section": "cover",
+      "snippet": "RED HERRING PROSPECTUS Dated November 4, 2025 (Please read Section 32 of the Companies Act, 2013) 100% Book Built Offer (Please scan this QR code to view the RHP) PHYSICSWALLAH LIMITED CORPORATE IDENTITY NUMBER : U80900UP2020PLC129223 REGIS",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.5645
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggreg"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ating"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " up"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " proposed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "organic"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " growth"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " corporate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " purposes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " This"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equals"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " approximately"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " three"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " hundred"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " one"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " thousand"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " does"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " match"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " figure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lakh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " mentioned"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " your"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " question"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 8518
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document states that a Fresh Issue aggregating up to ₹ 31,000 million is proposed for inorganic growth and corporate purposes [2]. This amount equals approximately three hundred one thousand crore rupees. The fresh issue does not match the figure of ₹ 3,100 lakh mentioned in your question.",
+    "citations": [
+     {
+      "n": 2,
+      "char_start": 130,
+      "char_end": 133
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 5
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     57,
+     73
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "31000000000",
+     "currency": "INR",
+     "raw": "₹ 31,000 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 3): ₹ 31,000.00 MILLION.",
+    "evidence": {
+     "passage_id": "physicswallah-2025:p3:c1",
+     "doc": "rhp",
+     "page": 3,
+     "char_span": [
+      109,
+      128
+     ],
+     "bbox": [
+      403.6600036621094,
+      181.5139923095703,
+      406.6600036621094,
+      188.15599060058594
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "31000000000.00",
+      "currency": "INR",
+      "raw": "₹ 31,000.00 MILLION",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     254,
+     266
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "310000000",
+     "currency": "INR",
+     "raw": "₹ 3,100 lakh",
+     "scale_word": "lakh",
+     "precision": 0
+    },
+    "status": "contradicted",
+    "reason_code": "scale_mismatch",
+    "reason": "The answer says ₹ 3,100 lakh; passage [1] (p. 163) says ₹ 31,000.00 million: a unit slip, 100x apart.",
+    "evidence": {
+     "passage_id": "physicswallah-2025:p163:c0",
+     "doc": "rhp",
+     "page": 163,
+     "char_span": [
+      116,
+      135
+     ],
+     "bbox": [
+      445.2352294921875,
+      95.42562866210938,
+      450.2152404785156,
+      106.45134735107422
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "31000000000.00",
+      "currency": "INR",
+      "raw": "₹ 31,000.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XDYWEHPRPNSJ2V879N2FWS",
+    "score": 0.5,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1165,
+     "generating": 8518,
+     "verifying": 5
+    }
+   }
+  }
+ ]
+}

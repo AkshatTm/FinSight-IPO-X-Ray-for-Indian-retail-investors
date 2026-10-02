@@ -1,0 +1,70 @@
+{
+ "ipo_id": "hexaware-technologies-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 5449
+   }
+  },
+  {
+   "event": "abstain",
+   "data": {
+    "reason": "low_retrieval_score",
+    "closest_passage": {
+     "n": 1,
+     "id": "hexaware-technologies-2025:p622:c1",
+     "doc": "rhp",
+     "page_start": 622,
+     "page_end": 622,
+     "section": "restriction_on_foreign_ownership_of_indian_securities",
+     "snippet": "The Board may also at any time appoint some individual (who need not be the Secretary), to maintain the Registers required to be kept by the Company. BORROWING POWERS 108. a. Subject to the provisions of Sections 73, 179 and 180, and other ",
+     "bm25_rank": null,
+     "dense_rank": null,
+     "fused_rank": 1,
+     "rerank_score": -4.6641
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XEBD2MZKP33NZRY7NJA7BB",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 5449
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,682 @@
+{
+ "ipo_id": "urban-company-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1029
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "urban-company-2025:p26:c1",
+      "doc": "rhp",
+      "page_start": 26,
+      "page_end": 26,
+      "section": "summary",
+      "snippet": "We have launched the ‘Native’ brand offering water purifiers and electronic door locks manufactured by third-party contract manufacturers. For further details, see “ Our Business ” beginning on page 218 . Summary of the industry in which ou",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 2.2617
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "urban-company-2025:prospectus:p26:c1",
+      "doc": "prospectus",
+      "page_start": 26,
+      "page_end": 26,
+      "section": "summary",
+      "snippet": "We have launched the ‘Native’ brand offering water purifiers and electronic door locks manufactured by third-party contract manufacturers. For further details, see “ Our Business ” beginning on page 218 . Summary of the industry in which ou",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 2.127
+     },
+     {
+      "n": 2,
+      "id": "urban-company-2025:p303:c0",
+      "doc": "rhp",
+      "page_start": 303,
+      "page_end": 303,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Our Promoters Abhiraj Singh Bhal, Raghav Chandra and Varun Khaitan are the Promoters of our Company. As on the date of this Red Herring Prospectus, our Promoters hold in aggregate 293,287,500 Equity Shares o",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 2.0938
+     },
+     {
+      "n": 3,
+      "id": "urban-company-2025:prospectus:p303:c0",
+      "doc": "prospectus",
+      "page_start": 303,
+      "page_end": 303,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Our Promoters Abhiraj Singh Bhal, Raghav Chandra and Varun Khaitan are the Promoters of our Company. As on the date of this Prospectus, our Promoters hold in aggregate 293,287,500 Equity Shares on a fully di",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 1.7705
+     },
+     {
+      "n": 4,
+      "id": "urban-company-2025:p239:c0",
+      "doc": "rhp",
+      "page_start": 239,
+      "page_end": 239,
+      "section": "our_business",
+      "snippet": "The positive impact of growth and our efficiency initiatives on margins is evidenced by the fact that the adjusted EBITDA margin for our India consumer services (as a percentage of NTV) has increased to 3.30% of NTV in Fiscal 2025 from (9.7",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": 0.9277
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "म"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ोट"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "र्स"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नाम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " अ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "श"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " दिए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " गए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " इन"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " से"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " एक"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ए"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कर"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Ab"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hir"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "aj"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Singh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " B"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hal"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " R"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "agh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "av"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Ch"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "andra"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " और"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Var"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "un"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Kh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ait"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " शामिल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हैं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " यह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जानकारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " कंपनी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " की"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ली"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ृ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ष्ठ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "भ"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ूम"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " का"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " हि"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "सा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जो"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " IPO"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " प्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "क्र"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "िया"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " के"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " पहले"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " च"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "रण"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ों"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " को"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " दर्"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "शा"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ती"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " है"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 9039
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "[3] प्रमोटर्स के नाम अंश [1][4] में दिए गए हैं। इनमें से एक-एक करके Abhiraj Singh Bhal, Raghav Chandra और Varun Khaitan शामिल हैं। यह जानकारी कंपनी की पहली पृष्ठभूमि का हिस्सा है जो IPO प्रक्रिया के पहले चरणों को दर्शाती है।",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 25,
+      "char_end": 28
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 2
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE7FSNG1H18AX212XWJSCC",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1029,
+     "generating": 9039,
+     "verifying": 2
+    }
+   }
+  }
+ ]
+}

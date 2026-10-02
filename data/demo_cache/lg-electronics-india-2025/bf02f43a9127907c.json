@@ -1,0 +1,244 @@
+{
+ "ipo_id": "lg-electronics-india-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1026
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lg-electronics-india-2025:p420:c0",
+      "doc": "rhp",
+      "page_start": 420,
+      "page_end": 420,
+      "section": "other_regulatory_and_statutory_disclosures",
+      "snippet": "The Book Running Lead Managers and their respective associates and affiliates in their capacity as principals or agents may engage in transactions with, and perform services for, our Company, our Promoter, members of the Promoter Group and ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -0.0941
+     },
+     {
+      "n": 2,
+      "id": "lg-electronics-india-2025:prospectus:p420:c0",
+      "doc": "prospectus",
+      "page_start": 420,
+      "page_end": 420,
+      "section": "other_regulatory_and_statutory_disclosures",
+      "snippet": "The Book Running Lead Managers and their respective associates and affiliates in their capacity as principals or agents may engage in transactions with, and perform services for, our Company, our Promoter, members of the Promoter Group and ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -0.1282
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "lg-electronics-india-2025:p270:c0",
+      "doc": "rhp",
+      "page_start": 270,
+      "page_end": 270,
+      "section": "our_promoters",
+      "snippet": "Sr No. Members of the Promoter Group 8) Alphonso UK Limited 9) Arcelik-LG Klima Sanayi ve Ticaret A.S. 10) Athom B.V. 11) Athom Holding B.V. 12) Athom Inc. 13) Bear Robotics Ireland, Limited 14) Bear Robotics Japan LLC 15) Bear Robotics Kor",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -0.1805
+     },
+     {
+      "n": 2,
+      "id": "lg-electronics-india-2025:p267:c0",
+      "doc": "rhp",
+      "page_start": 267,
+      "page_end": 267,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTER AND PROMOTER GROUP Our Promoter As on the date of this Red Herring Prospectus, LG Electronics Inc. is the Promoter of our Company. As on the date of this Red Herring Prospectus, our Promoter, holds 678,772,392 equity shares of ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -0.2083
+     },
+     {
+      "n": 3,
+      "id": "lg-electronics-india-2025:prospectus:p267:c0",
+      "doc": "prospectus",
+      "page_start": 267,
+      "page_end": 267,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTER AND PROMOTER GROUP Our Promoter As on the date of this Prospectus, LG Electronics Inc. is the Promoter of our Company. As on the date of this Prospectus, our Promoter, holds 678,772,392 equity shares of face value of ₹ 10 each,",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.3137
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "मु"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "झे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " यह"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " जानकारी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " द"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "स्ता"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "वे"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ज़"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " में"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " नहीं"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " मिल"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ी"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "।"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 4611
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "मुझे यह जानकारी दस्तावेज़ में नहीं मिली।",
+    "citations": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 5
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE4XRS1HPRG85TV3FVMEPH",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1026,
+     "generating": 4611,
+     "verifying": 5
+    }
+   }
+  }
+ ]
+}

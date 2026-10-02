@@ -1,0 +1,281 @@
+{
+ "ipo_id": "lg-electronics-india-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 6772
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lg-electronics-india-2025:objects-pure-ofs:prospectus",
+      "doc": "prospectus",
+      "page_start": 135,
+      "page_end": 135,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer (Prospectus page 135): the Company will not receive any money from this Offer. The Offer is entirely an offer for sale, so no money from it will be used by the Company.",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -4.9961
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " receives"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " no"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " money"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " uses"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " none"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " its"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 7125
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document states that the company receives no money and uses none of its funds [1]. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 82,
+      "char_end": 85
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XF8AJBTEH34E3MQ5MD0DJA",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 6772,
+     "generating": 7125,
+     "verifying": 0
+    }
+   }
+  }
+ ]
+}

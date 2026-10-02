@@ -1,0 +1,542 @@
+{
+ "ipo_id": "meesho-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3741
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "meesho-2025:p224:c1",
+      "doc": "rhp",
+      "page_start": 224,
+      "page_end": 224,
+      "section": "objects_of_the_offer",
+      "snippet": "Based on past expenditure, management estimates, current circumstances of business, targeted growth of the platform and prevailing market conditions, our Company intends to utilize ₹ 10,200 million of the Net Proceeds to invest in Subsidiar",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -3.7715
+     },
+     {
+      "n": 2,
+      "id": "meesho-2025:prospectus:p224:c1",
+      "doc": "prospectus",
+      "page_start": 224,
+      "page_end": 224,
+      "section": "objects_of_the_offer",
+      "snippet": "Based on past expenditure, management estimates, current circumstances of business, targeted growth of the platform and prevailing market conditions, our Company intends to utilize ₹ 10,200 million of the Net Proceeds to invest in Subsidiar",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -3.7715
+     },
+     {
+      "n": 3,
+      "id": "meesho-2025:prospectus:p118:c1",
+      "doc": "prospectus",
+      "page_start": 118,
+      "page_end": 118,
+      "section": "risk_factors",
+      "snippet": "Our Company has funded its marketing expenses in the last three Fiscals largely through proceeds from equity financing invested by Meesho Inc., our predecessor holding company, into our Company. Based on past expenditure, management estimat",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -4.25
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "meesho-2025:p118:c1",
+      "doc": "rhp",
+      "page_start": 118,
+      "page_end": 118,
+      "section": "risk_factors",
+      "snippet": "Our Company has funded its marketing expenses in the last three Fiscals largely through proceeds from equity financing invested by Meesho Inc., our predecessor holding company, into our Company. Based on past expenditure, management estimat",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -4.25
+     },
+     {
+      "n": 2,
+      "id": "meesho-2025:p531:c0",
+      "doc": "rhp",
+      "page_start": 531,
+      "page_end": 531,
+      "section": "management_s_discussion_and_analysis",
+      "snippet": "₹25,608.46 million as at September 30, 2025. See “ History and Certain Corporate Matters – Details regarding material acquisitions or divestments of business/undertakings, mergers, amalgamation, any revaluation of assets, etc. in the last 1",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -4.4258
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " intends"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " utilize"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " from"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Net"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Proceed"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " investment"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " purposes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raised"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " remains"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " unchanged"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 7370
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The Company intends to utilize ₹10,200 million from Net Proceeds for investment purposes [3]. The total amount raised remains unchanged at 10,200 million. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 3,
+      "char_start": 89,
+      "char_end": 92
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 6
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     31,
+     46
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "10200000000",
+     "currency": "INR",
+     "raw": "₹10,200 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [3] (p. 118): ₹10,200 million.",
+    "evidence": {
+     "passage_id": "meesho-2025:prospectus:p118:c1",
+     "doc": "prospectus",
+     "page": 118,
+     "char_span": [
+      376,
+      391
+     ],
+     "bbox": [
+      456.3787841796875,
+      413.67620849609375,
+      492.49371337890625,
+      424.7816162109375
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "10200000000",
+      "currency": "INR",
+      "raw": "₹10,200 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     139,
+     153
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "10200000000",
+     "currency": "INR",
+     "raw": "10,200 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 224): ₹ 10,200 million.",
+    "evidence": {
+     "passage_id": "meesho-2025:p224:c1",
+     "doc": "rhp",
+     "page": 224,
+     "char_span": [
+      181,
+      197
+     ],
+     "bbox": [
+      453.59173583984375,
+      577.6162109375,
+      459.1294860839844,
+      588.7216186523438
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "10200000000",
+      "currency": "INR",
+      "raw": "₹ 10,200 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XDWVAY9RRNX6W2416NTPS7",
+    "score": 1.0,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3741,
+     "generating": 7370,
+     "verifying": 6
+    }
+   }
+  }
+ ]
+}

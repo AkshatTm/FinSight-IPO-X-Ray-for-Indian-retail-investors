@@ -1,0 +1,70 @@
+{
+ "ipo_id": "urban-company-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3183
+   }
+  },
+  {
+   "event": "abstain",
+   "data": {
+    "reason": "low_retrieval_score",
+    "closest_passage": {
+     "n": 1,
+     "id": "urban-company-2025:prospectus:p89:c2",
+     "doc": "prospectus",
+     "page_start": 89,
+     "page_end": 89,
+     "section": "risk_factors",
+     "snippet": "India’s sovereign rating decreased from Baa2 with a negative outlook to Baa3 with a stable outlook by Moody’s in October 2021 which was reaffirmed in August 2023 and from BBB with a stable outlook to BBB- with a stable outlook by Fitch in J",
+     "bm25_rank": null,
+     "dense_rank": null,
+     "fused_rank": 1,
+     "rerank_score": -4.6094
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE6PYHCFFA5X8S03RM01DD",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3183
+    }
+   }
+  }
+ ]
+}

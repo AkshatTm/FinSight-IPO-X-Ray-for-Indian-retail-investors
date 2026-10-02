@@ -56,3 +56,19 @@ Updated after every merge. Plain language.
 
 ## RAM peak
 - Lowest free RAM seen: about 2.4 GB (while Ollama qwen3.5:2b recorded the demo cache with the API and dev server up). Never under the 1.5 GB floor. Ollama and the API were stopped after each use.
+
+
+---
+
+# Overnight run 2
+
+Updated after every merge. Plain language. Tests were green (1060) at the start.
+
+## Decisions applied
+- ADR-050, 051, 052 accepted (marked in docs/09_DECISIONS.md). New proposals for you: ADR-053 (objects table leads the use-of-money answer), ADR-054 (stored boxes, source sentence, thumbnails, lab examples).
+- Tags v0.3.0 (G3) and v0.4.0 (G4) created on the gate commits, with GitHub releases.
+- impeccable detector: not downloaded, as you said.
+
+## Merged so far
+- #104 Use-of-money answers lead with the objects table (each purpose with amount and unit). Live with qwen3.5:2b: Ather, Groww, Lenskart list every amount and the verifier marks them all ✅; LG says the company gets no money (English; Hindi still says "not found": the 2B model is weak in Hindi). HDB, Meesho, Physicswallah, Tata Capital and Urban Company still produce prose with few or no checkable numbers: that is the model, not the retrieval.
+- Demo cache (this PR): 78 real recorded streams for all 10 IPOs, `full` profile (qwen3.5:2b), committed on purpose (792 KB). Nothing edited by hand; money questions were re-recorded after the fix.

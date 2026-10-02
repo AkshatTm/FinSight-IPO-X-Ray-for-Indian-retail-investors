@@ -1,0 +1,956 @@
+{
+ "ipo_id": "ather-energy-2025",
+ "question": "प्रमोटर कौन हैं?",
+ "language": "hi",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1014
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:p342:c0",
+      "doc": "rhp",
+      "page_start": 342,
+      "page_end": 342,
+      "section": "our_management",
+      "snippet": "Brief profiles of our Directors Tarun Sanjay Mehta , one of the Promoters, is an Executive Director and the Chief Executive Officer of our Company. He has been associated with our Company since incorporation and leads operations in the prod",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 1.1289
+     },
+     {
+      "n": 2,
+      "id": "ather-energy-2025:p356:c0",
+      "doc": "rhp",
+      "page_start": 356,
+      "page_end": 356,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Our Promoters Tarun Sanjay Mehta, Swapnil Babanlal Jain and HMCL are the Promoters of our Company. As on the date of this Red Herring Prospectus, our Promoters hold in aggregate 156,118,716 Equity Shares, wh",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 1.0078
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:prospectus:p356:c0",
+      "doc": "prospectus",
+      "page_start": 356,
+      "page_end": 356,
+      "section": "our_promoters",
+      "snippet": "OUR PROMOTERS AND PROMOTER GROUP Our Promoters Tarun Sanjay Mehta, Swapnil Babanlal Jain and HMCL are the Promoters of our Company. As on the date of this Prospectus, our Promoters hold in aggregate 156,118,716 Equity Shares, which constitu",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 0.4573
+     },
+     {
+      "n": 2,
+      "id": "ather-energy-2025:prospectus:p362:c0",
+      "doc": "prospectus",
+      "page_start": 362,
+      "page_end": 362,
+      "section": "our_promoters",
+      "snippet": "Promoter Group Apart from our Promoters, the following individuals and entities constitute our Promoter Group in terms of Regulation 2(1)(pp) of the SEBI ICDR Regulations. A. Natural persons who are part of the Promoter Group The natural pe",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": 0.1648
+     },
+     {
+      "n": 3,
+      "id": "ather-energy-2025:prospectus:p361:c0",
+      "doc": "prospectus",
+      "page_start": 361,
+      "page_end": 361,
+      "section": "our_promoters",
+      "snippet": "Other than as disclosed in this section under “ - Promoter Group ” and in the section “ Our Management ” on page 334, our Promoters are not involved in any other ventures. Change in the management and control of our Company There has been n",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.0667
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "R"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "HP"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " page"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ")"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " OUR"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " PROM"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "OT"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ERS"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " AND PROM"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "OT"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ER"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " GROUP"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Our"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Prom"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "oters"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Tar"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "un"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " San"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "jay"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Me"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hta"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Swap"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "nil"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Bab"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "lal"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Jain"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " HM"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "CL"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " promoters"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " our"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " As"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " on"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " date"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Red"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " H"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "erring"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Prospect"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "us"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " these"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " individuals"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " hold"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggregate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equity"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " share"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "holding"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "),"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " which"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " constitutes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " approximately"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "%"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " our"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " issued"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " paid"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-up"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "\n\n["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 12824
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "[4] (RHP page 356) OUR PROMOTERS AND PROMOTER GROUP Our Promoters Tarun Sanjay Mehta, Swapnil Babanlal Jain and HMCL are the promoters of our Company. [1][2] As on the date of this Red Herring Prospectus, these individuals hold in aggregate a total equity shareholding amounting to ₹ 509.37 crore (₹ 486.86 million), which constitutes approximately 51.80% of our issued and paid-up capital [2]. [4]",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 151,
+      "char_end": 154
+     },
+     {
+      "n": 2,
+      "char_start": 154,
+      "char_end": 157
+     },
+     {
+      "n": 2,
+      "char_start": 390,
+      "char_end": 393
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 6
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     282,
+     296
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "5093700000.00",
+     "currency": "INR",
+     "raw": "₹ 509.37 crore",
+     "scale_word": "crore",
+     "precision": 2
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "₹ 509.37 crore does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     298,
+     314
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "486860000.00",
+     "currency": "INR",
+     "raw": "₹ 486.86 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "unverifiable",
+    "reason_code": "not_found",
+    "reason": "₹ 486.86 million does not appear in the retrieved passages.",
+    "evidence": null
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     349,
+     355
+    ],
+    "answer_value": {
+     "kind": "percent",
+     "value": "51.80",
+     "raw": "51.80%",
+     "is_bps": false
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 356): 51.80%.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:p356:c0",
+     "doc": "rhp",
+     "page": 356,
+     "char_span": [
+      256,
+      262
+     ],
+     "bbox": [
+      120.15646362304688,
+      151.65103149414062,
+      152.69647216796875,
+      163.34095764160156
+     ],
+     "value": {
+      "kind": "percent",
+      "value": "51.80",
+      "raw": "51.80%",
+      "is_bps": false
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XEAQ8VK42CW5QK47E7YHQN",
+    "score": 0.3333333333333333,
+    "n_numbers": 3,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1014,
+     "generating": 12824,
+     "verifying": 6
+    }
+   }
+  }
+ ]
+}

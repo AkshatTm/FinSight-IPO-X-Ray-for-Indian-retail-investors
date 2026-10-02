@@ -1,0 +1,684 @@
+{
+ "ipo_id": "groww-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 2997
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "groww-2025:prospectus:p66:c1",
+      "doc": "prospectus",
+      "page_start": 66,
+      "page_end": 66,
+      "section": "risk_factors",
+      "snippet": "As on June 30, 2025, GIT funded ₹8,757.69 million from internal accruals and ₹1,600.00 million through external financing. In the event that a customer incurs significant losses and the trading margin that they deposited with us proves to b",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.9434
+     },
+     {
+      "n": 2,
+      "id": "groww-2025:p66:c1",
+      "doc": "rhp",
+      "page_start": 66,
+      "page_end": 66,
+      "section": "risk_factors",
+      "snippet": "As on June 30, 2025, GIT funded ₹8,757.69 million from internal accruals and ₹1,600.00 million through external financing. In the event that a customer incurs significant losses and the trading margin that they deposited with us proves to b",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -2.9434
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "groww-2025:p153:c0",
+      "doc": "rhp",
+      "page_start": 153,
+      "page_end": 153,
+      "section": "objects_of_the_offer",
+      "snippet": "Our Company has entered into an agreement dated June 29, 2024 (“ Reseller Agreement ”), with Team Computers Private Limited, an authorised reseller for a global internet cloud computing service, in India. Pursuant to the Reseller Agreement,",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -3.8418
+     },
+     {
+      "n": 2,
+      "id": "groww-2025:prospectus:p279:c1",
+      "doc": "prospectus",
+      "page_start": 279,
+      "page_end": 279,
+      "section": "history_and_certain_corporate_matters",
+      "snippet": "4. Groww Trustee Limited Corporate Information Groww Trustee Limited was incorporated under the Companies Act, 1956 on April 10, 2008 as ‘Indiabulls Trustee Company Limited’, a public limited company. The name of the company was changed to ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -3.8848
+     },
+     {
+      "n": 3,
+      "id": "groww-2025:p279:c1",
+      "doc": "rhp",
+      "page_start": 279,
+      "page_end": 279,
+      "section": "history_and_certain_corporate_matters",
+      "snippet": "4. Groww Trustee Limited Corporate Information Groww Trustee Limited was incorporated under the Companies Act, 1956 on April 10, 2008 as ‘Indiabulls Trustee Company Limited’, a public limited company. The name of the company was changed to ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -3.8926
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raises"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " from"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " internal"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " accr"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ual"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " additional"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " through"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " external"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " financing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " total"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raised"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " remains"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " unchanged"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " regardless"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " whether"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " it"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " comes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " from"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " these"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " two"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " sources"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " calculated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " as"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " their"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " sum"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " without"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " rounding"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " conversions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " between"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " units"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 8101
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The company raises ₹8,757.69 million from internal accruals and an additional ₹1,600.00 million through external financing [2]. The total amount raised remains unchanged regardless of whether it comes from these two sources or is calculated as their sum [1][2] without rounding conversions between units.",
+    "citations": [
+     {
+      "n": 2,
+      "char_start": 123,
+      "char_end": 126
+     },
+     {
+      "n": 1,
+      "char_start": 254,
+      "char_end": 257
+     },
+     {
+      "n": 2,
+      "char_start": 257,
+      "char_end": 260
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 5
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     19,
+     36
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "8757690000.00",
+     "currency": "INR",
+     "raw": "₹8,757.69 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 66): ₹8,757.69 million.",
+    "evidence": {
+     "passage_id": "groww-2025:p66:c1",
+     "doc": "rhp",
+     "page": 66,
+     "char_span": [
+      32,
+      49
+     ],
+     "bbox": [
+      192.12892150878906,
+      368.94500732421875,
+      232.25088500976562,
+      378.9800109863281
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "8757690000.00",
+      "currency": "INR",
+      "raw": "₹8,757.69 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     78,
+     95
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "1600000000.00",
+     "currency": "INR",
+     "raw": "₹1,600.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 66): ₹1,600.00 million.",
+    "evidence": {
+     "passage_id": "groww-2025:p66:c1",
+     "doc": "rhp",
+     "page": 66,
+     "char_span": [
+      77,
+      94
+     ],
+     "bbox": [
+      381.28204345703125,
+      368.94500732421875,
+      421.2781066894531,
+      378.9800109863281
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "1600000000.00",
+      "currency": "INR",
+      "raw": "₹1,600.00 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE0C5F3734XX3R0PM6BY9Q",
+    "score": 1.0,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 2997,
+     "generating": 8101,
+     "verifying": 5
+    }
+   }
+  }
+ ]
+}

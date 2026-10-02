@@ -1,0 +1,636 @@
+{
+ "ipo_id": "ather-energy-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3491
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:p174:c1",
+      "doc": "rhp",
+      "page_start": 174,
+      "page_end": 174,
+      "section": "objects_of_the_offer",
+      "snippet": "We confirm that there are firm arrangements of finance under Regulation 7(1)(e) of the SEBI ICDR Regulations through verifiable means towards at least 75% of the stated means of finance of the Project, excluding the amount to be raised from",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -0.0853
+     },
+     {
+      "n": 2,
+      "id": "ather-energy-2025:prospectus:p174:c1",
+      "doc": "prospectus",
+      "page_start": 174,
+      "page_end": 174,
+      "section": "objects_of_the_offer",
+      "snippet": "We propose to utilize an aggregate of ₹ 9,272 million towards the capital expenditure to be incurred by our Company towards the Project, from the Net Proceeds. We confirm that there are firm arrangements of finance under Regulation 7(1)(e) ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -1.2012
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "ather-energy-2025:prospectus:p213:c1",
+      "doc": "prospectus",
+      "page_start": 213,
+      "page_end": 213,
+      "section": "statement_of_special_tax_benefits",
+      "snippet": "Hence, the ability of the Company or its shareholders to derive these direct and indirect tax benefits is dependent upon their fulfilling such conditions, which is based on business imperatives the Company may face in the near future and ac",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -4.5234
+     },
+     {
+      "n": 2,
+      "id": "ather-energy-2025:p213:c1",
+      "doc": "rhp",
+      "page_start": 213,
+      "page_end": 213,
+      "section": "statement_of_special_tax_benefits",
+      "snippet": "Hence, the ability of the Company or its shareholders to derive these direct and indirect tax benefits is dependent upon their fulfilling such conditions, which is based on business imperatives the Company may face in the near future and ac",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -4.5234
+     },
+     {
+      "n": 3,
+      "id": "ather-energy-2025:p3:c1",
+      "doc": "rhp",
+      "page_start": 3,
+      "page_end": 3,
+      "section": "cover",
+      "snippet": "Tel : +91 80 6646 5750; E-mail : cs@atherenergy.com; Website : www.atherenergy.com PROMOTERS OF OUR COMPANY: TARUN SANJAY MEHTA, SWAPNIL BABANLAL JAIN AND HERO MOTOCORP LIMITED INITIAL PUBLIC OFFERING OF [●] EQUITY SHARES OF FACE VALUE OF ₹",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -4.8672
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " proposes"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " utilize"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggregate"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " towards"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenditure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " from"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " net"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " proceeds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " also"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " confirms"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " private"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " placement"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raised"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " through"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " preference"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " shares"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " September"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " project"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "'s"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " balance"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " cost"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 7850
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The company proposes to utilize an aggregate amount of ₹ 9,272 million towards capital expenditure from net proceeds [2]. The document also confirms that a private placement raised ₹ 6,000 million through preference shares in September 2024 for the project's balance cost [1][2].",
+    "citations": [
+     {
+      "n": 2,
+      "char_start": 117,
+      "char_end": 120
+     },
+     {
+      "n": 1,
+      "char_start": 272,
+      "char_end": 275
+     },
+     {
+      "n": 2,
+      "char_start": 275,
+      "char_end": 278
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 3
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     55,
+     70
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "9272000000",
+     "currency": "INR",
+     "raw": "₹ 9,272 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [2] (p. 174): ₹ 9,272 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:prospectus:p174:c1",
+     "doc": "prospectus",
+     "page": 174,
+     "char_span": [
+      38,
+      53
+     ],
+     "bbox": [
+      207.4899444580078,
+      436.7356262207031,
+      212.46994018554688,
+      447.7613525390625
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "9272000000",
+      "currency": "INR",
+      "raw": "₹ 9,272 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     181,
+     196
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "6000000000",
+     "currency": "INR",
+     "raw": "₹ 6,000 million",
+     "scale_word": "million",
+     "precision": 0
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 174): ₹ 6,000 million.",
+    "evidence": {
+     "passage_id": "ather-energy-2025:p174:c1",
+     "doc": "rhp",
+     "page": 174,
+     "char_span": [
+      314,
+      329
+     ],
+     "bbox": [
+      188.1974334716797,
+      414.53564453125,
+      193.17742919921875,
+      425.5613708496094
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "6000000000",
+      "currency": "INR",
+      "raw": "₹ 6,000 million",
+      "scale_word": "million",
+      "precision": 0
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE9SRZZ2NVFXC7YGBEZZYZ",
+    "score": 1.0,
+    "n_numbers": 2,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3491,
+     "generating": 7850,
+     "verifying": 3
+    }
+   }
+  }
+ ]
+}

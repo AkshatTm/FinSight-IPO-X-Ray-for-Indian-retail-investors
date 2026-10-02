@@ -1,0 +1,411 @@
+{
+ "ipo_id": "physicswallah-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3451
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "physicswallah-2025:prospectus:p338:c1",
+      "doc": "prospectus",
+      "page_start": 338,
+      "page_end": 338,
+      "section": "our_management",
+      "snippet": "(2) The appointment was regularised by our Shareholders pursuant to their resolution dated March 1, 2025 Borrowing powers Pursuant to Section 180(1)(c) and other applicable provisions, if any, of the Companies Act, 2013 and our Articles of ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -3.5117
+     },
+     {
+      "n": 2,
+      "id": "physicswallah-2025:p338:c1",
+      "doc": "rhp",
+      "page_start": 338,
+      "page_end": 338,
+      "section": "our_management",
+      "snippet": "(2) The appointment was regularised by our Shareholders pursuant to their resolution dated March 1, 2025 Borrowing powers Pursuant to Section 180(1)(c) and other applicable provisions, if any, of the Companies Act, 2013 and our Articles of ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -3.748
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "physicswallah-2025:p622:c0",
+      "doc": "rhp",
+      "page_start": 622,
+      "page_end": 622,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "(ii) To authorize any person to exercise the right of renunciation for a second time on the ground that the person in whose favour the renunciation was first made has declined to take the shares compromised in the renunciation. (3) Nothing ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -4.4844
+     },
+     {
+      "n": 2,
+      "id": "physicswallah-2025:prospectus:p622:c0",
+      "doc": "prospectus",
+      "page_start": 622,
+      "page_end": 622,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "(ii) To authorize any person to exercise the right of renunciation for a second time on the ground that the person in whose favour the renunciation was first made has declined to take the shares compromised in the renunciation. (3) Nothing ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -4.4844
+     },
+     {
+      "n": 3,
+      "id": "physicswallah-2025:prospectus:p163:c0",
+      "doc": "prospectus",
+      "page_start": 163,
+      "page_end": 163,
+      "section": "objects_of_the_offer",
+      "snippet": "OBJECTS OF THE OFFER The Offer comprises a Fresh Issue of 284,468,537 * Equity Shares of face value of ₹1 each, aggregating to ₹ 31,000.00 * million by our Company and an Offer for Sale of 34,862,384 * Equity Shares of face value of ₹1 each",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -4.5781
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " does"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " state"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " how"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " much"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specific"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " money"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " will"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " be"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raised"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " by"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " IPO"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " prospect"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "us"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " only"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " information"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " regarding"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " borrowing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " powers"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 5824
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document does not state how much specific amount of money will be raised by this IPO prospectus, only information regarding borrowing powers [1][2]. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 145,
+      "char_end": 148
+     },
+     {
+      "n": 2,
+      "char_start": 148,
+      "char_end": 151
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 3
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XDYB050V4VMW8N7REMG0E3",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3451,
+     "generating": 5824,
+     "verifying": 3
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,628 @@
+{
+ "ipo_id": "lenskart-2025",
+ "question": "Is the fresh issue ₹2,150 lakh?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 1143
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:prospectus:p3:c1",
+      "doc": "prospectus",
+      "page_start": 3,
+      "page_end": 3,
+      "section": "cover",
+      "snippet": "Preeti Gupta, Company Secretary and Chief Compliance Officer Tel. : +91 124 429 3191; E-mail : compliance.officer@lenskart.com; Website : https://www.lenskart.com PROMOTERS OF OUR COMPANY: PEYUSH BANSAL, NEHA BANSAL, AMIT CHAUDHARY AND SUME",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": 1.3076
+     },
+     {
+      "n": 2,
+      "id": "lenskart-2025:p15:c0",
+      "doc": "rhp",
+      "page_start": 15,
+      "page_end": 15,
+      "section": "definitions",
+      "snippet": "Term Description Escrow Collection Bank(s) Bank(s), which are clearing members and registered with SEBI as a banker to an issue under the SEBI BTI Regulations and with whom the Escrow Account will be opened, in this case being, Kotak Mahind",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": 1.2031
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:p3:c1",
+      "doc": "rhp",
+      "page_start": 3,
+      "page_end": 3,
+      "section": "cover",
+      "snippet": "Preeti Gupta, Company Secretary and Chief Compliance Officer Tel. : +91 124 429 3191; E-mail : compliance.officer@lenskart.com; Website : https://www.lenskart.com PROMOTERS OF OUR COMPANY: PEYUSH BANSAL, NEHA BANSAL, AMIT CHAUDHARY AND SUME",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": 1.1016
+     },
+     {
+      "n": 2,
+      "id": "lenskart-2025:p211:c3",
+      "doc": "rhp",
+      "page_start": 211,
+      "page_end": 211,
+      "section": "objects_of_the_offer",
+      "snippet": "[Table, ₹ in million] Particulars | (₹ in million) Estimated Amount Gross proceeds of the Fresh Issue | 21,500.00 (Less) Offer related expenses to the extent applicable to the Fresh Issue (only those apportioned to our Company) * | [●] *# N",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -0.366
+     },
+     {
+      "n": 3,
+      "id": "lenskart-2025:p1:c0",
+      "doc": "rhp",
+      "page_start": 1,
+      "page_end": 1,
+      "section": "cover",
+      "snippet": "RED HERRING PROSPECTUS Dated: October 25, 2025 Please read Section 32 of the Companies Act, 2013 100% Book Built Offer (Please scan this QR code to view the Red Herring Prospectus) LENSKART SOLUTIONS LIMITED Corporate Identity Number: U3310",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -0.4075
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " aggreg"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ating"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " being"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " offered"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " This"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " equals"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " approximately"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " times"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " larger"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " than"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " one"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " crore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " thirty"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-four"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lak"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "hs"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ";"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " therefore"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " fresh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " issue"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " cannot"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " be"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " described"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " as"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " just"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " twenty"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-one"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lakh"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ru"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "pees"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 8499
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document states that a Fresh Issue aggregating to ₹ 21,500.00 million is being offered [1]. This amount equals approximately 34 times larger than one crore or thirty-four lakhs of rupees; therefore, the fresh issue cannot be described as just twenty-one lakh rupees [2][1].",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 91,
+      "char_end": 94
+     },
+     {
+      "n": 2,
+      "char_start": 270,
+      "char_end": 273
+     },
+     {
+      "n": 1,
+      "char_start": 273,
+      "char_end": 276
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 4
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     54,
+     73
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "21500000000.00",
+     "currency": "INR",
+     "raw": "₹ 21,500.00 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 3): ₹ 21,500.00 MILLION.",
+    "evidence": {
+     "passage_id": "lenskart-2025:prospectus:p3:c1",
+     "doc": "prospectus",
+     "page": 3,
+     "char_span": [
+      690,
+      709
+     ],
+     "bbox": [
+      330.6108093261719,
+      210.0216827392578,
+      333.3708190917969,
+      216.13232421875
+     ],
+     "value": {
+      "kind": "money",
+      "value_inr": "21500000000.00",
+      "currency": "INR",
+      "raw": "₹ 21,500.00 MILLION",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE373M8JH8K2ZFNN6BGN5K",
+    "score": 1.0,
+    "n_numbers": 1,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 1143,
+     "generating": 8499,
+     "verifying": 4
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,538 @@
+{
+ "ipo_id": "lenskart-2025",
+ "question": "How much money is the company raising?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 5511
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:prospectus:p1026:c1",
+      "doc": "prospectus",
+      "page_start": 1026,
+      "page_end": 1026,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "b. Convertible Redeemable Preference Shares The Company, subject to the applicable provisions of the Act and the consent of the Board, shall have power to issue on a cumulative or non-cumulative basis convertible redeemable preference Share",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.3848
+     }
+    ],
+    "dropped": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:p1026:c1",
+      "doc": "rhp",
+      "page_start": 1026,
+      "page_end": 1026,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "b. Convertible Redeemable Preference Shares The Company, subject to the applicable provisions of the Act and the consent of the Board, shall have power to issue on a cumulative or non-cumulative basis convertible redeemable preference Share",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 2,
+      "rerank_score": -2.3848
+     },
+     {
+      "n": 2,
+      "id": "lenskart-2025:p976:c0",
+      "doc": "rhp",
+      "page_start": 976,
+      "page_end": 976,
+      "section": "government_and_other_approvals",
+      "snippet": "Summary statement of price information of past issues (during the current Financial Year and two Financial Years preceding the current Financial Year) handled by Morgan Stanley: Total funds Nos. of IPOs trading at premium as Financial Year ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 3,
+      "rerank_score": -3.7832
+     },
+     {
+      "n": 3,
+      "id": "lenskart-2025:prospectus:p976:c0",
+      "doc": "prospectus",
+      "page_start": 976,
+      "page_end": 976,
+      "section": "government_and_other_approvals",
+      "snippet": "Summary statement of price information of past issues (during the current Financial Year and two Financial Years preceding the current Financial Year) handled by Morgan Stanley: Total funds Nos. of IPOs trading at premium as Financial Year ",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 4,
+      "rerank_score": -3.7832
+     },
+     {
+      "n": 4,
+      "id": "lenskart-2025:p1025:c0",
+      "doc": "rhp",
+      "page_start": 1025,
+      "page_end": 1025,
+      "section": "restrictions_on_foreign_ownership_of_indian_securities",
+      "snippet": "(3) Nothing in this Article shall apply to the increase of the subscribed Share capital of the Company caused by the exercise of an option as a term attached to the debentures issued or loans raised by the Company (i) to convert such debent",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 5,
+      "rerank_score": -4.2383
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " does"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " state"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " how"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " much"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " money"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " intends"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raise"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " text"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " only"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " mentions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " shares"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " were"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " issued"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " def"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ray"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " construction"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenses"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " which"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " indicates"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " a"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " past"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " action"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " rather"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " than"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " future"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funding"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amounts"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " or"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " specific"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " IPO"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " proceeds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " figures"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " available"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " excerpt"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 8006
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The document does not state how much money the company intends to raise. [1] The text only mentions that shares were issued for defraying construction expenses, which indicates a past action rather than future funding amounts or specific IPO proceeds figures available in this excerpt. I could not find this in the document.",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 73,
+      "char_end": 76
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 2
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XE2HS3SBHZ0G029T2WD729",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 5511,
+     "generating": 8006,
+     "verifying": 2
+    }
+   }
+  }
+ ]
+}

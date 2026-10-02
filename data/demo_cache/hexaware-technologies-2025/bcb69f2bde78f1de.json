@@ -1,0 +1,694 @@
+{
+ "ipo_id": "hexaware-technologies-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 3312
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "hexaware-technologies-2025:objects-pure-ofs:prospectus",
+      "doc": "prospectus",
+      "page_start": 252,
+      "page_end": 252,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer (Prospectus page 252): the Company will not receive any money from this Offer. The Offer is entirely an offer for sale, so no money from it will be used by the Company.",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.1875
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " states"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " raised"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " intended"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " solely"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " finance"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " its"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " own"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " operations"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " have"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " no"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " other"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " use"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " I"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " could"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " not"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " find"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " this"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " document"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ("
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "Wait"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " correction"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " based"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " on"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " rule"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " &"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " 7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ")"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " offer"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " entirely"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " an"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " offer"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " for"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " sale"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " with"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " no"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " money"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " from"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " it"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " being"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " used"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " by"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " the"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " Company"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "],"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " so"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " there"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " is"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " nothing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " else"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " mentioned"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " regarding"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " usage"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " elsewhere"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " than"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " that"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " statement"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " itself"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " which"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " implies"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " zero"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " use"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " beyond"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " its"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " own"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " operations"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " implicitly"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " stated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " as"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " non"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "-re"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ceipt"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 19767
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The company states that the funds raised are intended solely to finance its own operations and have no other use [1]. I could not find this in the document. (Wait, correction based on rule 6 & 7) The offer is entirely an offer for sale with no money from it being used by the Company [1], so there is nothing else mentioned regarding usage of funds elsewhere than that statement itself which implies zero use beyond its own operations implicitly stated as non-receipting.",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 113,
+      "char_end": 116
+     },
+     {
+      "n": 1,
+      "char_start": 284,
+      "char_end": 287
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XFEQS47DSFWW5KJPBRTD8J",
+    "score": null,
+    "n_numbers": 0,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 3312,
+     "generating": 19767,
+     "verifying": 0
+    }
+   }
+  }
+ ]
+}

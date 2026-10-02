@@ -1,0 +1,830 @@
+{
+ "ipo_id": "lenskart-2025",
+ "question": "What will the money be used for?",
+ "language": "en",
+ "events": [
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "guard",
+    "status": "end",
+    "ms": 0
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "retrieving",
+    "status": "end",
+    "ms": 7886
+   }
+  },
+  {
+   "event": "retrieval",
+   "data": {
+    "passages": [
+     {
+      "n": 1,
+      "id": "lenskart-2025:objects-table:prospectus",
+      "doc": "prospectus",
+      "page_start": 212,
+      "page_end": 212,
+      "section": "objects_of_the_offer",
+      "snippet": "Objects of the Offer: how the money will be used (table on Prospectus page 212, amounts as printed): 1. Capital expenditure towards set-up of new CoCo stores in India: ₹ 2,726.22 million 2. Expenditure for lease/rent/license agreements rela",
+      "bm25_rank": null,
+      "dense_rank": null,
+      "fused_rank": 1,
+      "rerank_score": -2.2441
+     }
+    ],
+    "dropped": []
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "The"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " funds"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " are"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " allocated"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " capital"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenditure"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " on"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " new"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " stores"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " lease"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " payments"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " of"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "9"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "4"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " technology"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " investment"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " totaling"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "7"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " marketing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " expenses"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " amount"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "ing"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " to"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "0"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " and"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " unidentified"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " in"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "organic"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " acquisitions"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " valued"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " at"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ₹"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "6"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": ","
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "8"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "3"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "."
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "2"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "5"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " million"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": " ["
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "1"
+   }
+  },
+  {
+   "event": "token",
+   "data": {
+    "text": "]."
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "generating",
+    "status": "end",
+    "ms": 15747
+   }
+  },
+  {
+   "event": "answer",
+   "data": {
+    "text": "The funds are allocated to capital expenditure on new stores at ₹2,726.22 million, lease payments of ₹5,914.40 million, technology investment totaling ₹2,133.75 million, marketing expenses amounting to ₹3,200.63 million, and unidentified inorganic acquisitions valued at ₹6,831.25 million [1].",
+    "citations": [
+     {
+      "n": 1,
+      "char_start": 289,
+      "char_end": 292
+     }
+    ]
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "start",
+    "ms": null
+   }
+  },
+  {
+   "event": "stage",
+   "data": {
+    "name": "verifying",
+    "status": "end",
+    "ms": 1
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 0,
+    "answer_char_span": [
+     64,
+     81
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "2726220000.00",
+     "currency": "INR",
+     "raw": "₹2,726.22 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 2,726.22 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      168,
+      186
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "2726220000.00",
+      "currency": "INR",
+      "raw": "₹ 2,726.22 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 1,
+    "answer_char_span": [
+     101,
+     118
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "5914400000.00",
+     "currency": "INR",
+     "raw": "₹5,914.40 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 5,914.40 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      308,
+      326
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "5914400000.00",
+      "currency": "INR",
+      "raw": "₹ 5,914.40 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 2,
+    "answer_char_span": [
+     151,
+     168
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "2133750000.00",
+     "currency": "INR",
+     "raw": "₹2,133.75 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 2,133.75 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      380,
+      398
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "2133750000.00",
+      "currency": "INR",
+      "raw": "₹ 2,133.75 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 3,
+    "answer_char_span": [
+     202,
+     219
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "3200630000.00",
+     "currency": "INR",
+     "raw": "₹3,200.63 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 3,200.63 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      481,
+      499
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "3200630000.00",
+      "currency": "INR",
+      "raw": "₹ 3,200.63 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "verdict",
+   "data": {
+    "index": 4,
+    "answer_char_span": [
+     271,
+     288
+    ],
+    "answer_value": {
+     "kind": "money",
+     "value_inr": "6831250000.00",
+     "currency": "INR",
+     "raw": "₹6,831.25 million",
+     "scale_word": "million",
+     "precision": 2
+    },
+    "status": "verified",
+    "reason_code": "verified",
+    "reason": "Matches passage [1] (p. 212): ₹ 6,831.25 million.",
+    "evidence": {
+     "passage_id": "lenskart-2025:objects-table:prospectus",
+     "doc": "prospectus",
+     "page": 212,
+     "char_span": [
+      571,
+      589
+     ],
+     "bbox": null,
+     "value": {
+      "kind": "money",
+      "value_inr": "6831250000.00",
+      "currency": "INR",
+      "raw": "₹ 6,831.25 million",
+      "scale_word": "million",
+      "precision": 2
+     }
+    }
+   }
+  },
+  {
+   "event": "final",
+   "data": {
+    "trace_id": "01M3XF6MXA1ZX4TW9BBQ0SS1P5",
+    "score": 1.0,
+    "n_numbers": 5,
+    "timings_ms": {
+     "guard": 0,
+     "retrieving": 7886,
+     "generating": 15747,
+     "verifying": 1
+    }
+   }
+  }
+ ]
+}
