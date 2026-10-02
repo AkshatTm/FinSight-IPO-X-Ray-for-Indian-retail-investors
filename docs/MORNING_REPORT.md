@@ -52,7 +52,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: polish pass (P), then the optional ASR CER step if references get reviewed.
+- Whole frontend run is done (F1 to F8, G3, G4, P). Left for you: review docs/AKSHAT_TODO.md, tag v0.3.0 and v0.4.0, record the demo cache with the full profile, and fill `reviewed_by_akshat` in data/gold/asr_references.csv so the ASR CER step can run.
 
 ## RAM peak
-- not yet measured
+- Lowest free RAM seen: about 2.4 GB (while Ollama qwen3.5:2b recorded the demo cache with the API and dev server up). Never under the 1.5 GB floor. Ollama and the API were stopped after each use.
