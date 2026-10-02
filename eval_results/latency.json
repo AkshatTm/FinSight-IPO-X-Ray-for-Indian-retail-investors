@@ -1,0 +1,84 @@
+{
+  "dev_light": {
+    "profile": "dev_light",
+    "llm": {
+      "backend": "ollama",
+      "model": "qwen3.5:0.8b"
+    },
+    "created_at": "2026-10-02T06:16:41+00:00",
+    "n_questions": 20,
+    "outcomes": {
+      "answered": 20
+    },
+    "first_token_ms": {
+      "median": 2679.4,
+      "p90": 4794.7,
+      "max": 8919.6
+    },
+    "total_ms": {
+      "median": 3515.2,
+      "p90": 5441.8,
+      "max": 9705.1
+    },
+    "stage_median_ms": {
+      "generating": 3391.5,
+      "guard": 0.0,
+      "retrieving": 1.0,
+      "verifying": 4.0
+    },
+    "first_question_total_ms": 9705.053999990923,
+    "memory_peak": {
+      "process_rss_gb": 0.84,
+      "ollama_rss_gb": 0.05,
+      "system_ram_used_gb": 14.51,
+      "gpu_used_gb": 2.58
+    },
+    "memory_before": {
+      "process_rss_gb": 0.09,
+      "ollama_rss_gb": 0.05,
+      "system_ram_used_gb": 12.41,
+      "gpu_used_gb": 1.29
+    }
+  },
+  "full": {
+    "profile": "full",
+    "llm": {
+      "backend": "ollama",
+      "model": "qwen3.5:2b"
+    },
+    "created_at": "2026-10-02T06:28:11+00:00",
+    "n_questions": 20,
+    "outcomes": {
+      "answered": 20
+    },
+    "first_token_ms": {
+      "median": 25410.6,
+      "p90": 27576.4,
+      "max": 40208.6
+    },
+    "total_ms": {
+      "median": 31958.5,
+      "p90": 37267.2,
+      "max": 45744.5
+    },
+    "stage_median_ms": {
+      "generating": 14072.5,
+      "guard": 0.0,
+      "retrieving": 17380.5,
+      "verifying": 4.0
+    },
+    "first_question_total_ms": 45744.47939998936,
+    "memory_peak": {
+      "process_rss_gb": 3.66,
+      "ollama_rss_gb": 0.02,
+      "system_ram_used_gb": 14.99,
+      "gpu_used_gb": 3.8
+    },
+    "memory_before": {
+      "process_rss_gb": 3.06,
+      "ollama_rss_gb": 0.01,
+      "system_ram_used_gb": 13.82,
+      "gpu_used_gb": 3.8
+    }
+  }
+}
