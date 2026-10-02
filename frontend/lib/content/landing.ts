@@ -95,6 +95,10 @@ export const LANDING = {
     hi: "सवाल लिखिए, या माइक दबाकर हिंदी में पूछिए। जवाब देने से पहले आपको दिखेगा कि FinSight ने क्या सुना, ताकि आप उसे ठीक कर सकें।",
   },
   "land.lang.q": { en: "लेंसकार्ट के प्रमोटर कौन हैं?", hi: "लेंसकार्ट के प्रमोटर कौन हैं?" },
+  "land.lang.cap": {
+    en: "The answer above was recorded from the Lenskart workspace for the question “प्रमोटर कौन हैं?” and is shown exactly as the model wrote it. The Hindi is imperfect: the names are spelled out in both scripts and the first sentence is wrong to say they are not given. The passages it cites say who the promoters are.",
+    hi: "ऊपर का उत्तर लेंसकार्ट वर्कस्पेस में “प्रमोटर कौन हैं?” पूछने पर रिकॉर्ड हुआ था और ठीक वैसा ही दिखाया गया है जैसा मॉडल ने लिखा। हिंदी अधूरी है: नाम दोनों लिपियों में लिखे हैं और पहला वाक्य गलत कहता है कि नाम नहीं दिए गए। जिन अंशों का हवाला है, उनमें प्रमोटरों के नाम दिए हैं।",
+  },
   "land.lang.play": { en: "Play the example", hi: "उदाहरण सुनें" },
   "land.lang.stop": { en: "Stop", hi: "रोकें" },
 
