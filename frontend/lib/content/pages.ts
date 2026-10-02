@@ -11,6 +11,8 @@ export const PAGES = {
   },
   "how.row1": { en: "Preparing an IPO (once)", hi: "आईपीओ तैयार करना (एक बार)" },
   "how.row2": { en: "Answering a question (every time)", hi: "सवाल का जवाब देना (हर बार)" },
+  "how.link.ather": { en: "See it on Ather Energy", hi: "Ather Energy पर देखें" },
+  "how.link.lenskart": { en: "See it on Lenskart", hi: "Lenskart पर देखें" },
   "how.p1.h": { en: "Read the PDF", hi: "पीडीएफ़ पढ़ना" },
   "how.p1.b": { en: "Text and the position of every word on every page.", hi: "हर पन्ने का टेक्स्ट और हर शब्द की जगह।" },
   "how.p2.h": { en: "Find the sections", hi: "सेक्शन ढूँढना" },
