@@ -21,6 +21,7 @@
 - How it works: spec 9 says each box opens a real example (recorded trace or screenshot). None exists yet, so the boxes are static. Add them after P4.1 records the demo cache. About Hindi (spec 10 has English only) is a builder draft: every `about.*` string. Humanizer pass: no change, copy is fixed verbatim.
 
 ## Data and evaluation
+- X-Ray boxes: the extractors do not store a bbox for any value (found in F6). The API now locates boxes by matching text on the page (ADR-052), which is good for numbers and names but not for every list value. Consider storing the box in the extract stage in the next pipeline pass.
 - `configs/ipo_meta.yaml` (sector and listing date for the 10 IPOs) was typed from memory of public listing dates: please verify each line.
 - Demo cache: `data/demo_cache/` is empty until you run `ollama serve` and `uv run poe record-demo` (about 8 questions per IPO; slow on this laptop). The Landing page and demo mode (F8) use it.
 - Approve or reject ADR-052 (page addressing, `not_available`, hand-entered sector/date).

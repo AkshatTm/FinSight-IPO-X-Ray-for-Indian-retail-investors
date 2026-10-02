@@ -27,7 +27,10 @@ Updated after every merge. Plain language.
 
 - G3 gate (this PR): docs/gates/G3.md, PASS with three caveats, evidence from live runs through the real API. v0.3.0 not tagged: yours to tag.
 
+- F6 real API (this PR): whole frontend checked against the live API (real X-Ray, real pages, real chat answer with marks). Highlight boxes needed work: the pipeline stores no boxes, so the API finds them from the page text (ADR-052 addendum). Mobile overflow from long section names fixed.
+
 ## Look at first
+- docs/screenshots/f6/: workspace-highlight.png, chat-real.png, inspector-real.png, landing-demo.png
 - docs/gates/G3.md
 - docs/screenshots/h/: how-desktop-light-en.png, about-mobile-dark-hi.png, 404-desktop-light-en.png
 - docs/screenshots/l/: desktop-light-en-full.png, desktop-dark-hi-full.png, mobile-dark-hi-full.png, desktop-hero.png
@@ -43,7 +46,7 @@ Updated after every merge. Plain language.
 - ASR CER normalisation: skipped, `reviewed_by_akshat` is empty.
 
 ## Where to resume
-- Next: G3 gate document, then F6 (frontend on the real API).
+- Next: F7 Model Lab, then F8 demo mode.
 
 ## RAM peak
 - not yet measured
