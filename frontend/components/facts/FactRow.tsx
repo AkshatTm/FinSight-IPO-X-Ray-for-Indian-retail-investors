@@ -10,13 +10,15 @@ import { useT } from "@/lib/useT";
 import { needsPerShare, resolveField, scalarText, sentenceAround, type XField } from "@/lib/xray";
 import { MarkIcon, VerdictMark, type MarkState } from "./VerdictMark";
 
+type Box = [number, number, number, number];
+
 const docName = (doc: "rhp" | "prospectus", t: ReturnType<typeof useT>["t"]) =>
   t(doc === "rhp" ? "doc.rhpShort" : "doc.prospectusShort");
 
-function Sentence({ ipoId, f, doc, page }: { ipoId: string; f: XField; doc: "rhp" | "prospectus"; page: number }) {
-  const { data } = useWords(ipoId, doc, page, !!f.bbox && doc === f.doc);
-  if (!data || !f.bbox) return null;
-  const s = sentenceAround(data.words, f.bbox);
+function Sentence({ ipoId, bbox, doc, page }: { ipoId: string; bbox: Box | null; doc: "rhp" | "prospectus"; page: number }) {
+  const { data } = useWords(ipoId, doc, page, !!bbox);
+  if (!data || !bbox) return null;
+  const s = sentenceAround(data.words, bbox);
   if (!s.text) return null;
   return (
     <p className="rounded-[6px] bg-surface-2 px-2 py-1.5 text-sm">
@@ -29,7 +31,7 @@ function Sentence({ ipoId, f, doc, page }: { ipoId: string; f: XField; doc: "rhp
   );
 }
 
-function Popover({ ipoId, f, doc, page, lang }: { ipoId: string; f: XField; doc: "rhp" | "prospectus"; page: number; lang: Lang }) {
+function Popover({ ipoId, f, doc, page, bbox, lang }: { ipoId: string; f: XField; doc: "rhp" | "prospectus"; page: number; bbox: Box | null; lang: Lang }) {
   const { t } = useT();
   const model = f.extractor.startsWith("qa_");
   return (
@@ -38,7 +40,7 @@ function Popover({ ipoId, f, doc, page, lang }: { ipoId: string; f: XField; doc:
       className="absolute left-2 right-2 top-full z-20 -mt-1 space-y-2 rounded-[10px] border border-rule bg-surface p-3 text-sm shadow-[var(--shadow-float)]"
     >
       <p className="font-medium">{t("pop.found", { doc: docName(doc, t), page })}</p>
-      <Sentence ipoId={ipoId} f={f} doc={doc} page={page} />
+      <Sentence ipoId={ipoId} bbox={bbox} doc={doc} page={page} />
       {f.value && "raw" in f.value && (
         <p className="text-muted">
           {t("pop.asWritten")}: <span className="font-mono text-text">{f.value.raw}</span>
@@ -136,7 +138,7 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
       ipoId,
       doc: r.doc,
       page: r.page,
-      bbox: r.doc === f.doc ? f.bbox : null,
+      bbox: r.bbox,
       kind: "source",
     });
   };
@@ -192,7 +194,7 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
         </button>
       )}
       {content && <span className="sr-only-keep">{pick(content.tip, lang)}</span>}
-      {open && !r.notInDocument && <Popover ipoId={ipoId} f={f} doc={r.doc} page={r.page} lang={lang} />}
+      {open && !r.notInDocument && <Popover ipoId={ipoId} f={f} doc={r.doc} page={r.page} bbox={r.bbox} lang={lang} />}
       {compare && f.candidates.length > 0 && (
         <ul className="mb-2 ml-4 space-y-1 border-l-2 border-rule pl-3 text-sm">
           {f.candidates.map((c) => (

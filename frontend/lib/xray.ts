@@ -16,6 +16,8 @@ export interface Resolved {
   blank: boolean;
   /** True when the field is not in the document at all (e.g. no fresh issue). */
   notInDocument: boolean;
+  /** Where the shown value sits on `doc`'s page: the field's box, or the companion's. */
+  bbox: [number, number, number, number] | null;
 }
 
 /** Spec section 12: placeholder rows prefer the prospectus value, with a note. */
@@ -23,11 +25,11 @@ export function resolveField(f: XField): Resolved {
   const notInDocument = f.reason_code === "not_in_document" || (f.value == null && f.reason_code !== "placeholder");
   if (f.value?.kind === "placeholder") {
     if (f.companion?.value && f.companion.value.kind !== "placeholder") {
-      return { value: f.companion.value, doc: f.companion.doc, page: f.companion.page, filledInProspectus: true, blank: false, notInDocument: false };
+      return { value: f.companion.value, doc: f.companion.doc, page: f.companion.page, filledInProspectus: true, blank: false, notInDocument: false, bbox: f.companion.bbox ?? null };
     }
-    return { value: f.value, doc: f.doc, page: f.page, filledInProspectus: false, blank: true, notInDocument: false };
+    return { value: f.value, doc: f.doc, page: f.page, filledInProspectus: false, blank: true, notInDocument: false, bbox: f.bbox ?? null };
   }
-  return { value: f.value ?? null, doc: f.doc, page: f.page, filledInProspectus: false, blank: false, notInDocument };
+  return { value: f.value ?? null, doc: f.doc, page: f.page, filledInProspectus: false, blank: false, notInDocument, bbox: f.bbox ?? null };
 }
 
 export const fieldById = (fields: XField[], id: string) => fields.find((f) => f.field_id === id);
@@ -77,17 +79,21 @@ export function sentenceAround(
   bbox: [number, number, number, number],
 ): { text: string; parts: { text: string; hit: boolean }[] } {
   const [x0, y0, x1, y1] = bbox;
-  const tol = (y1 - y0) * 0.6;
+  // Tight tolerance: dense pages set lines about one box-height apart, so a looser band pulls in
+  // the neighbouring lines and the sentence reads as nonsense.
+  const mid = (y0 + y1) / 2;
+  const tol = (y1 - y0) * 0.35;
   const line = words
-    .filter((w) => {
-      const cy = (w.b[1] + w.b[3]) / 2;
-      return cy >= y0 - tol && cy <= y1 + tol;
-    })
+    .filter((w) => Math.abs((w.b[1] + w.b[3]) / 2 - mid) <= tol)
     .sort((a, b) => a.b[0] - b.b[0]);
-  const parts = line.map((w) => {
+  const all = line.map((w) => {
     const cx = (w.b[0] + w.b[2]) / 2;
     return { text: w.t, hit: cx >= x0 - 1 && cx <= x1 + 1 };
   });
+  // At most 10 words each side of the value, so a full-width line stays a short quote.
+  const first = all.findIndex((p) => p.hit);
+  const last = all.length - 1 - [...all].reverse().findIndex((p) => p.hit);
+  const parts = first === -1 ? all.slice(0, 20) : all.slice(Math.max(0, first - 10), last + 11);
   return { text: parts.map((p) => p.text).join(" "), parts };
 }
 

@@ -116,12 +116,12 @@ export function DocToolbar(p: Props) {
         ))}
       </div>
       {sections.length > 0 && (
-        <label className="text-sm">
+        <label className="min-w-0 max-w-full text-sm">
           <span className="sr-only-keep">{t("doc.jump")}</span>
           <select
             value=""
             onChange={(e) => e.target.value && p.onPage(Number(e.target.value))}
-            className="h-11 rounded-[6px] border border-rule bg-surface px-2 text-muted"
+            className="h-11 w-full max-w-full truncate rounded-[6px] border border-rule bg-surface px-2 text-muted"
           >
             <option value="">{t("doc.jump")}</option>
             {sections.map((s) => (
