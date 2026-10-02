@@ -40,6 +40,7 @@ from finsight.api.events import (
     TokenEvent,
     VerdictEvent,
 )
+from finsight.chat.objects import objects_passage
 from finsight.chat.traces import TraceStore, new_trace_id
 from finsight.core.schemas import CheckResult, Language, Passage, Trace
 from finsight.generate import (
@@ -50,12 +51,13 @@ from finsight.generate import (
     respond,
 )
 from finsight.guard import check_question, facts_payload
-from finsight.retrieve import SearchResult
+from finsight.retrieve import Hit, SearchResult, wants_objects
 from finsight.verify import NumberVerdict, verify_answer
 
 Event = tuple[str, BaseModel]
 Search = Callable[[str, str], SearchResult]
 FactsLoader = Callable[[str], list[FactSummary]]
+Pin = Callable[[str], Passage | None]  # ipo id -> the objects-of-the-offer passage, if any
 
 _CITATION = re.compile(r"\[(\d+)\]")
 _DONE = object()
@@ -121,6 +123,7 @@ class ChatOrchestrator:
     facts: FactsLoader
     budget_chars: int
     max_tokens: int = 300
+    pin_objects: Pin | None = None
 
     @classmethod
     def from_settings(cls, profile: str | None = None) -> ChatOrchestrator:
@@ -168,12 +171,20 @@ class ChatOrchestrator:
                 for f in facts_payload(xray, fields, "en")
             ]
 
+        def pin_objects(ipo_id: str) -> Passage | None:
+            try:
+                xray = load_xray(settings.paths.processed_dir, ipo_id)
+                return objects_passage(xray, retriever.index(ipo_id).passages)
+            except FileNotFoundError:
+                return None
+
         return cls(
             search=retriever.search,
             llm=get_llm(settings.llm),
             traces=TraceStore(settings.paths.data_dir / "traces.sqlite"),
             facts=facts,
             budget_chars=max(1500, (settings.llm.num_ctx - 700) * 3),
+            pin_objects=pin_objects,
         )
 
     # ------------------------------------------------------------------------------------
@@ -233,6 +244,13 @@ class ChatOrchestrator:
         timings["retrieving"] = _ms(t0)
         yield stage("retrieving", "end", timings["retrieving"])
         hits = result.hits
+        pinned = self.pin_objects(ipo_id) if self.pin_objects and wants_objects(question) else None
+        if (
+            pinned is not None
+        ):  # ADR-053: the objects passage answers alone; neighbours only distract
+            top = result.top_score if result.top_score is not None else 0.0
+            hits = [Hit(pinned, top, 1)]
+            result = SearchResult(hits, result.method, False, top, result.notes)
         if result.abstain or not hits:
             closest = hits[0] if hits else None
             ev = AbstainEvent(
