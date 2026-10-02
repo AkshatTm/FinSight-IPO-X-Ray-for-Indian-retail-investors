@@ -280,6 +280,9 @@ Paired per-IPO differences (same resampled IPOs): fine-tuned minus pretrained +0
 | ~~ADR-021~~ | ASR choice (written above) | P3.5 |
 | ADR-022 | Deployment target details | P6.1 |
 
+### ADR-052 addendum 2 (F7, 3 Oct) — lab routes, needs Akshat review
+`GET /api/lab/retrieval` (eval_results/retrieval.json) and `GET /api/lab/asr` (asr.json) added; `/api/lab/weaklabels` now merges weaklabel_audit.json under `audit`. All are free-form like the other lab routes and return `not_available` (404) when the file is missing; the Lab page hides that section. openapi.json and frontend types regenerated.
+
 ## Template
 
 ```markdown

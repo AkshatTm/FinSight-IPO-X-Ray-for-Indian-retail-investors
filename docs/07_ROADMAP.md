@@ -218,7 +218,7 @@ Overnight run (3 Oct) follows `12_FRONTEND_SPEC.md` §18, whose step names diffe
 - [x] F1 scaffold (#70)
 - [x] F2 Library (#72) · [x] F3 Workspace + Document (#76) · [x] F4 Facts (#78) · [x] F5 Ask (#80) · [x] F5b voice/inspector/glossary/tour (#82) · [x] L Landing (#84) · [x] H How it works + About + 404/500 (#86)
 - [x] P3.6 chat orchestrator · [x] P4.1 API (#90) · [x] G3 (docs/gates/G3.md, PASS with caveats; tag v0.3.0 waits for Akshat)
-- [x] F6 real API (#94) · [ ] F7 Model Lab · [ ] F8 demo mode + E2E · [ ] G4 (docs/gates/G4.md) · [ ] P polish
+- [x] F6 real API (#94) · [x] F7 Model Lab (#96) · [ ] F8 demo mode + E2E · [ ] G4 (docs/gates/G4.md) · [ ] P polish
 
 [AKSHAT] after each F sub-phase: review in the browser for 10 minutes and file issues for anything off.
 
