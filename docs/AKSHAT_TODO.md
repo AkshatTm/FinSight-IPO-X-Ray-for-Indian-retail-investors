@@ -21,6 +21,9 @@
 - How it works: spec 9 says each box opens a real example (recorded trace or screenshot). None exists yet, so the boxes are static. Add them after P4.1 records the demo cache. About Hindi (spec 10 has English only) is a builder draft: every `about.*` string. Humanizer pass: no change, copy is fixed verbatim.
 
 ## Data and evaluation
+- `configs/ipo_meta.yaml` (sector and listing date for the 10 IPOs) was typed from memory of public listing dates: please verify each line.
+- Demo cache: `data/demo_cache/` is empty until you run `ollama serve` and `uv run poe record-demo` (about 8 questions per IPO; slow on this laptop). The Landing page and demo mode (F8) use it.
+- Approve or reject ADR-052 (page addressing, `not_available`, hand-entered sector/date).
 - E7 (answers on dev questions through the real orchestrator): script is ready (`uv run python -m finsight.evaluate.answers --limit 20 --profile dev_light` with `ollama serve` running). I ran only one live smoke question (Ather, "How will the money be used?", qwen3.5:0.8b: right section, no numbers in the answer). The full run and the hand-check of `eval_results/e7_sample.jsonl` are not done.
 - Approve or reject ADR-051 (`forecast` guard reason; objects-of-the-offer retrieval nudge).
 - `data/gold/asr_references.csv`: references are now the script you read aloud; `reviewed_by_akshat` is empty. Confirm them, then re-score ASR CER (ADR-021's 0.06 for turbo was measured on the old machine-drafted references).
