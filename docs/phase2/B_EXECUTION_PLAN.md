@@ -69,6 +69,21 @@
 | 44 | B1.1a → Sonnet (high effort); check the cloud credit after every session | B07, B11 §5 |
 | 45 | Phase 1 leftovers (ADR-022/053/054 reviews, E7 hand-check, Hindi strings) listed in AKSHAT_TODO as "after BG1" | AKSHAT_TODO (this PR) |
 
+## 1a. Issues created in B0.2
+
+| Part | Issue | Label | Part | Issue | Label |
+|---|---|---|---|---|---|
+| B0.2 | #120 | cloud | B1.2 | #127 | cloud |
+| B0.1 | #121 | local | B1.3a | #128 | cloud |
+| B0.3 | #122 | cloud | B1.3b | #129 | local |
+| B0.4 | #123 | local | B1.4 | #130 | cloud |
+| hand-work B0/B1 | #124 | akshat | B1.5 | #131 | cloud |
+| B1.1a | #125 | cloud | B2.1a | #132 | cloud |
+| B1.1b | #126 | local | B2.3a | #133 | cloud |
+| B2.4a | #134 | cloud | B2.5a | #135 | cloud |
+
+Later issues (B2 local halves, B2.2a, B2.6a, B3, B4) are opened by the session that starts them.
+
 ## 2. Calendar at a glance (2026)
 
 | Day | ☁️ cloud (parallel sessions) | 💻 local | 👤 Akshat |
