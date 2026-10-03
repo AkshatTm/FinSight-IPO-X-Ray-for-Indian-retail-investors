@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
+import { useAuth } from "@/lib/auth/supabase";
 import { useUi } from "@/lib/store";
 import { USE_MOCKS } from "@/lib/api/client";
 
@@ -35,6 +36,10 @@ export function Providers({ children }: { children: ReactNode }) {
     void Promise.resolve(useUi.persist.rehydrate()).then(() => {
       if (!saved) useUi.getState().setTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
     });
+  }, []);
+
+  useEffect(() => {
+    useAuth.getState().init();
   }, []);
 
   useEffect(() => {

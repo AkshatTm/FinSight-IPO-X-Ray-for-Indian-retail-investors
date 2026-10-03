@@ -20,6 +20,24 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
   } catch {
     throw new ApiError("network", "network", 0);
   }
+  return readJson<T>(res);
+}
+
+/** JSON request with an optional bearer token (the Supabase access token for upload routes). */
+export async function apiSend<T>(method: "POST" | "PUT", path: string, body?: unknown, token?: string | null): Promise<T> {
+  const headers: Record<string, string> = { Accept: "application/json" };
+  if (body !== undefined) headers["Content-Type"] = "application/json";
+  if (token) headers.Authorization = `Bearer ${token}`;
+  let res: Response;
+  try {
+    res = await fetch(path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+  } catch {
+    throw new ApiError("network", "network", 0);
+  }
+  return readJson<T>(res);
+}
+
+export async function readJson<T>(res: Response): Promise<T> {
   if (!res.ok) {
     let code = "internal_error";
     let message = res.statusText;
