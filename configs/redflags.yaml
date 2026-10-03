@@ -1,0 +1,67 @@
+# Red-flag checks (B01 §5, B05 §5.4). Thresholds are B01's initial definitions; tune them on dev
+# IPOs only and bump `version` with every change (it is stored in each redflags.json).
+# Titles are B05 §5.4 verbatim. `rule` is the "How this check works" text: a builder draft listed
+# in docs/AKSHAT_TODO.md for copy approval.
+version: "b01-initial-1"
+default_missing: "FinSight couldn't find this in the document."
+
+checks:
+  RF01:
+    title: Profit or loss
+    rule: "Watch if the latest year shows a loss. Concern if each of the last 3 years shows a loss."
+  RF02:
+    title: Cash from the business
+    rule: "Watch if the business used more cash than it brought in last year. Concern if that happened in 2 or more of the last 3 years."
+    concern_negative_years: 2
+  RF03:
+    title: Debt
+    rule: "Total borrowings divided by net worth. Watch above 1.0, Concern above 2.0. Not used for lenders."
+    watch_above: "1.0"
+    concern_above: "2.0"
+  RF04:
+    title: Who gets the IPO money
+    rule: "The share of the IPO that goes to existing shareholders who are selling. Watch above 50%, Concern above 80%."
+    watch_above_pct: "50"
+    concern_above_pct: "80"
+  RF05:
+    title: What insiders paid
+    rule: "The IPO price divided by the average price selling shareholders paid. Watch at 5 times or more, Concern at 20 times or more."
+    watch_at_least: "5"
+    concern_at_least: "20"
+  RF06:
+    title: Founders' stake after the IPO
+    rule: "Promoter and promoter group holding after the IPO. Watch below 40%, Concern below 25% or when there is no identifiable promoter."
+    watch_below_pct: "40"
+    concern_below_pct: "25"
+  RF07:
+    title: Vague use of money
+    rule: "The share of the new money set aside for general purposes or acquisitions not yet named. Watch above 20%, Concern at 30% or more."
+    watch_above_pct: "20"
+    concern_at_least_pct: "30"
+  RF08:
+    title: Court cases
+    rule: "Watch if there is any criminal case involving the company, promoters or directors. Concern if the amounts in dispute are more than 10% of net worth."
+    concern_above_pct_of_net_worth: "10"
+  RF09:
+    title: Dealings with related companies
+    rule: "Business with related parties as a share of revenue. Watch above 10%, Concern above 25%."
+    watch_above_pct: "10"
+    concern_above_pct: "25"
+  RF10:
+    title: Dependence on a few customers
+    rule: "Watch if the top 10 customers bring in more than 50% of revenue or the top customer more than 20%. Concern if the top customer brings in more than 40%."
+    watch_top10_above_pct: "50"
+    watch_top1_above_pct: "20"
+    concern_top1_above_pct: "40"
+  RF11:
+    title: Price compared with listed peers
+    rule: "The P/E at the IPO price compared with the median P/E of the listed peers the document names. Watch above 1.5 times the median, Concern above 2.5 times."
+    watch_above_x: "1.5"
+    concern_above_x: "2.5"
+  RF12:
+    title: Auditor's remarks
+    rule: "Watch if the auditor adds an emphasis of matter or a CARO remark. Concern if the auditor gives a qualified opinion."
+  RF13:
+    title: Pledged promoter shares
+    rule: "The share of promoter shares pledged as security for loans. Watch for any pledge, Concern above 10%."
+    concern_above_pct: "10"

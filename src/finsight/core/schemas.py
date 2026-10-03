@@ -332,6 +332,52 @@ Status3 = Literal["ok", "watch", "concern", "not_available", "not_applicable"]
 Level = Literal["low", "medium", "high"]
 
 
+SummaryStatus = Literal["found", "placeholder", "not_found"]
+
+
+class SummaryValue(BaseModel):
+    """One red-flag input read from the document (B02 §5): the value, its period and its page.
+
+    ``placeholder`` is a blank such as ``[●]`` in an RHP; ``not_found`` means the section or row
+    was missing. Money keeps its raw text and scale word, so sentences show units as written.
+    """
+
+    key: str
+    value: Amount | str | None = None
+    period: str | None = None  # "latest", "latest-1", "latest-2" or the printed fiscal label
+    evidence: PageEvidence | None = None
+    status: SummaryStatus = "not_found"
+
+
+class FinancialSummary(BaseModel):
+    """``summary.json``: the inputs to the 13 red-flag checks (B02 §5; built by ``summary``, B1.3).
+
+    Lists of yearly values are latest first. ``litigation`` maps ``criminal_cases`` and
+    ``amount_total`` (and any extra counts) to values. ``general_purposes_pct`` (RF07) and
+    ``promoter_identifiable`` (RF06) are additions to the B02 sketch that the checks need.
+    """
+
+    doc_id: str
+    currency_unit: str = ""
+    revenue: list[SummaryValue] = Field(default_factory=list)
+    profit_after_tax: list[SummaryValue] = Field(default_factory=list)
+    operating_cash_flow: list[SummaryValue] = Field(default_factory=list)
+    total_borrowings: SummaryValue | None = None
+    net_worth: SummaryValue | None = None
+    waca: list[SummaryValue] = Field(default_factory=list)
+    litigation: dict[str, SummaryValue] = Field(default_factory=dict)
+    rpt_total: SummaryValue | None = None
+    promoter_holding_post: SummaryValue | None = None
+    promoter_identifiable: bool = True
+    pledged_pct: SummaryValue | None = None
+    customer_top1_pct: SummaryValue | None = None
+    customer_top10_pct: SummaryValue | None = None
+    general_purposes_pct: SummaryValue | None = None
+    peers: list[Peer] = Field(default_factory=list)
+    auditor_remarks: list[SummaryValue] = Field(default_factory=list)
+    is_financial_company: bool = False
+
+
 class RedFlag(BaseModel):
     """One of the 13 red-flag checks (B01 §5, B02 §5); ``points`` 2 concern, 1 watch, else 0."""
 
