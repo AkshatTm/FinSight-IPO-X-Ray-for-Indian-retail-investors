@@ -37,6 +37,12 @@
   - The no-advice phrase list (`configs/forbidden_phrases.yaml`) now also checks every UI string in the tests.
   - Nothing ran on a GPU tonight. The smoke → pilot → full run is the local part B2.3b, and its prompt is in AKSHAT_TODO.
 
+- **B2.4a (#134): the risk-category classifier, ready to train.**
+  - A quick baseline (TF-IDF + logistic regression) trains on the laptop in seconds. Two Kaggle notebooks fine-tune DeBERTa: base with 3 seeds, large with 1.
+  - Train and dev are split by company, so no company's wording leaks into the score.
+  - The winner is picked by dev macro-F1 and exported to a small int8 ONNX file, so the cloud worker runs it without PyTorch.
+  - Training is the local part B2.4b; its prompt is in AKSHAT_TODO.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
