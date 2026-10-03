@@ -1,7 +1,8 @@
-"""Risk intelligence: teacher prompt and filters, rewrite checks (numbers, phrases, length,
-certainty), the category classifier (TF-IDF baseline, ONNX int8 serving); segmentation and
-simplification arrive with B2.1 and B2.5."""
+"""Risk intelligence: features (numbers, hedging, novelty against the risk bank), the category
+classifier (TF-IDF baseline, ONNX int8 serving), plain-English rewrites with post-checks, and
+the teacher that makes their training data. Segmentation arrives with B2.1."""
 
+from finsight.risks.bank import RiskBank, company_key, load_bank, risks_config
 from finsight.risks.certainty import certainty_changed
 from finsight.risks.checks import unmatched_numbers, word_count
 from finsight.risks.classify import (
@@ -12,7 +13,12 @@ from finsight.risks.classify import (
     split_by_company,
 )
 from finsight.risks.clf_metrics import scores
+from finsight.risks.features import Embedder, add_features
 from finsight.risks.filters import FilterReport, Kept, TeacherItem, check_one, filter_outputs
+from finsight.risks.hedging import hedge_count, hedging
+from finsight.risks.novelty import NoveltyResult, embed_text, novelty, unusualness_label
+from finsight.risks.numbers import risk_numbers
+from finsight.risks.simplify import Rewrite, Simplifier, make_simplifier, post_check
 from finsight.risks.teacher import (
     CATEGORIES,
     OUTPUT_SCHEMA,
@@ -27,22 +33,39 @@ __all__ = [
     "CATEGORIES",
     "OUTPUT_SCHEMA",
     "PROMPT_VERSION",
+    "Embedder",
     "Example",
     "FilterReport",
     "Kept",
+    "NoveltyResult",
     "OnnxClassifier",
     "ParseError",
+    "Rewrite",
+    "RiskBank",
+    "Simplifier",
     "TeacherItem",
     "TeacherOutput",
     "TfidfBaseline",
+    "add_features",
     "certainty_changed",
     "check_one",
+    "company_key",
+    "embed_text",
     "filter_outputs",
+    "hedge_count",
+    "hedging",
+    "load_bank",
+    "make_simplifier",
     "messages",
+    "novelty",
     "parse_output",
+    "post_check",
     "predict",
+    "risk_numbers",
+    "risks_config",
     "scores",
     "split_by_company",
     "unmatched_numbers",
+    "unusualness_label",
     "word_count",
 ]
