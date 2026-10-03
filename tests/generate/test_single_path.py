@@ -3,6 +3,7 @@
 The first Hindi bake-off called the model directly and bypassed the guard. This test fails when
 any module outside ``generate`` (the ask CLI, bake-off scripts, chat, API) streams from a backend
 itself: new callers must use ``respond`` so the question guard and the output filters apply.
+The risk simplifier is the documented exception (see ``ALLOWED``).
 """
 
 import re
@@ -15,7 +16,12 @@ CALLS_THE_MODEL = re.compile(
 ALLOWED = {
     "src/finsight/generate/llama_cpp_backend.py",
     "src/finsight/generate/llm_backend.py",
+    "src/finsight/generate/vllm_backend.py",
     "src/finsight/generate/respond.py",
+    # B2.5a: the risk simplifier is the one other caller. Its input is document text, never a
+    # user question, and every output passes its own post-checks (numbers, forbidden phrases,
+    # length, certainty) before it can be shown.
+    "src/finsight/risks/simplify.py",
 }
 
 
