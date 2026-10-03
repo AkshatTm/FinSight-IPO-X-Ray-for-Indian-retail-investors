@@ -12,10 +12,10 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import CostConfig, load_settings
+from finsight.core.config import load_settings
 from finsight.core.schemas import DocRecord
 from finsight.db import Database
-from finsight.jobs import JobContext, Stage, StageRejected, estimate_cost, run_job, upload_stages
+from finsight.jobs import JobContext, Stage, StageRejected, run_job, upload_stages
 from finsight.storage import LocalStorage, doc_key, put_json
 
 T0 = datetime(2026, 10, 3, 6, 0, tzinfo=UTC)
@@ -146,25 +146,6 @@ def test_error_messages_never_reach_the_event_stream(db: Database, storage: Loca
     text = str([e.data for e in db.events_after(ctx.job_id)])
     assert "secret" not in text
     assert "token" not in text
-
-
-def test_job_records_a_cost_estimate(db: Database, storage: LocalStorage) -> None:
-    ctx = _ctx(db, storage)
-    run_job(ctx, _stages(None))
-    job = db.get_job(ctx.job_id)
-    assert job is not None
-    cost = job.progress["cost_estimate"]
-    assert cost["vcpu_s"] == pytest.approx(cost["wall_s"] * ctx.settings.costs.cpu_vcpu, abs=1e-2)
-    assert cost["usd"] is not None
-
-
-def test_cost_estimate_arithmetic() -> None:
-    cfg = CostConfig()
-    cpu = estimate_cost(100, cfg)
-    assert (cpu["vcpu_s"], cpu["gib_s"], cpu["gpu_s"]) == (400, 800, 0.0)
-    assert cpu["usd"] == pytest.approx(400 * 0.000018 + 800 * 0.000002)
-    assert estimate_cost(100, cfg, gpu=True)["usd"] is None  # GPU rate not set yet
-    assert estimate_cost(-1, cfg)["wall_s"] == 0.0
 
 
 def test_real_upload_stages_follow_the_b02_graph() -> None:

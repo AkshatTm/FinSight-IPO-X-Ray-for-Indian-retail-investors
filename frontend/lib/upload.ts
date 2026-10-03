@@ -38,7 +38,7 @@ export async function sha256Hex(file: Blob): Promise<string> {
   return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-/** init → send the bytes (PUT to a signed GCS URL, or POST to the local API) → complete. */
+/** init → send the bytes (POST to the API) → complete. */
 export async function uploadDocument(
   file: File,
   opts: { token: string | null; maxMb: number; onPhase?: (p: UploadPhase) => void },

@@ -59,7 +59,7 @@ flowchart LR
   C --> Rep
 ```
 
-The API runs on Cloud Run CPU, the pipeline as a Cloud Run job (an optional L4 GPU job speeds up the rewrites), with Supabase for sign-in and Postgres. The definitions are in `deploy/gcp/`; nothing is deployed yet. See the [architecture page](docs/architecture/index.md).
+FinSight runs on the laptop: the API and the upload pipeline in one process, models through Ollama or llama.cpp, SQLite and local files. Supabase sign-in and Postgres are optional. Google Cloud was dropped when the credit ran out (B-ADR-16). See the [architecture page](docs/architecture/index.md).
 
 Two ideas carry the project. The extractor is trained without hand labels: seeds from cover-page rules are propagated across 389 older prospectuses and used to fine-tune a QA model (distant supervision). The number check involves no model: each number in an answer is normalised (lakh, crore, million, Hindi words and digits) and compared with the number in the passage the answer cites.
 
@@ -95,7 +95,7 @@ NEXT_PUBLIC_USE_MOCKS=1 pnpm dev            # the site on fixtures, no backend
 
 Documentation site: `uv sync --group docs` then `uv run poe docs` (http://localhost:8000; the API uses the same port, so stop one first). It holds tutorials, how-to guides, the API and configuration reference, the [evaluation page](docs/evaluation.md), model cards, datasheets and runbooks; [troubleshooting](docs/troubleshooting.md) lists the 15 most common problems.
 
-The PDFs are public filings but are not in the repository. To rebuild an IPO: put its RHP and Prospectus under `data/raw/` as listed in `configs/demo_ipos.yaml`, then `uv run python -m finsight.pipeline build --ipo <id>`. Chat needs [Ollama](https://ollama.com) with `qwen3.5:2b` (profile `full`). Model work needs `uv sync --group ml` (CUDA PyTorch) and, for voice, `--group asr`; training ran on Kaggle only. Deployment is prepared but not done: see the [deploy runbook](docs/runbooks/DEPLOY_RUNBOOK.md). Planning documents: [`docs/00_README.md`](docs/00_README.md) (Phase 1) and [`docs/phase2/B00_README.md`](docs/phase2/B00_README.md) (Phase 2); decisions: [ADR index](docs/adr/index.md).
+The PDFs are public filings but are not in the repository. To rebuild an IPO: put its RHP and Prospectus under `data/raw/` as listed in `configs/demo_ipos.yaml`, then `uv run python -m finsight.pipeline build --ipo <id>`. Chat needs [Ollama](https://ollama.com) with `qwen3.5:2b` (profile `full`). Model work needs `uv sync --group ml` (CUDA PyTorch) and, for voice, `--group asr`; training ran on Kaggle only. Planning documents: [`docs/00_README.md`](docs/00_README.md) (Phase 1) and [`docs/phase2/B00_README.md`](docs/phase2/B00_README.md) (Phase 2); decisions: [ADR index](docs/adr/index.md).
 
 ## Limitations
 

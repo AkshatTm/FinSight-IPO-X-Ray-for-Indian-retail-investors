@@ -84,6 +84,6 @@ def test_sha256_matches_hashlib(tmp_path: Path) -> None:
 
 
 def test_limits_come_from_config_yaml() -> None:
-    uploads = load_settings("cloud").uploads
+    uploads = load_settings("full").uploads
     assert (uploads.max_mb, uploads.max_pages) == (50, 1500)
     assert uploads.scanned_min_median_chars == 100

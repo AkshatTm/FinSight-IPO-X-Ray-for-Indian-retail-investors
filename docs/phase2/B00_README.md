@@ -1,5 +1,7 @@
 # Big Phase 2 — Documentation index
 
+> **Superseded in part (4 Oct 2026, B-ADR-16):** Google Cloud (Cloud Run, Cloud Storage, GPU job, `deploy/gcp/`, `cloud` and `cloud_gpu` profiles) was removed when the credit ran out. The product runs locally. Read the Cloud Run, GCS, GPU and deploy parts below as history.
+
 **What Big Phase 2 is:** FinSight changes from "find facts in 10 prospectuses" to **"upload any IPO offer document and understand, in plain English, what could go wrong and how risky it looks."**
 **Period:** Sun 4 Oct → Sun 1 Nov 2026 (feature freeze Sun 25 Oct).
 **Owner:** Akshat Tomar · built with Claude Code · designed with Claude (chat).
@@ -22,7 +24,7 @@ All Phase 1 docs (`docs/00`–`12`) stay valid unless a Phase 2 doc says otherwi
 | B09 | `B09_DOCUMENTATION_STANDARDS.md` | Industry-grade documentation the project must ship with | Throughout; mainly B4 |
 | B10 | `B10_PROMPTS.md` | Kickoff, resume (after `/clear`), overnight, stuck and gate-review prompts; **cloud and local versions** | Akshat, each session |
 | — | `B_EXECUTION_PLAN.md` | Per part: location, issue, branch, model, files, tests, commits, dependencies, dated hand-work; the approved review fixes (§1) | **Every session**, with B07 |
-| B11 | `B11_CLOUD_WORKFLOW.md` | **Where work runs**: cloud sessions vs local sessions vs Akshat, fixture pack, hand-off loop, credit budget | Before starting any session |
+| B11 | ~~`B11_CLOUD_WORKFLOW.md`~~ | Removed (B-ADR-16): all work runs in local sessions | — |
 
 ## Precedence
 

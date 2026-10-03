@@ -17,7 +17,7 @@
 
 ## Steps
 
-1. **Stop writes:** set `UPLOADS_ENABLED=false` on the API (see the [rollback runbook](ROLLBACK.md), step 4).
+1. **Stop writes:** set `UPLOADS_ENABLED=false` on the API.
 2. **Take a dump of what is there now**, even if it is damaged:
 
    ```bash
@@ -39,7 +39,7 @@
 
 - `psql "$DB_URL" -c "select count(*) from docs"` matches what you expect.
 - Open two showcase reports and one uploaded report on the site.
-- `uv run python scripts/cloud_smoke.py --base-url <api-url> --synthetic` passes.
+- Upload one small PDF and check it reaches `ready`.
 
 ## Rollback
 

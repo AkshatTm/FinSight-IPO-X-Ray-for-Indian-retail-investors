@@ -155,7 +155,7 @@ def _pending(state: UState, doc_id: str, user_id: str) -> DocRecord:
 async def upload_file(
     doc_id: DocId, request: Request, state: UState, user: CurrentUser
 ) -> dict[str, str]:
-    """Local profiles only: the raw PDF bytes (the cloud profiles PUT to a signed GCS URL)."""
+    """Local profiles only: the raw PDF bytes (the client never talks to storage directly)."""
     _pending(state, doc_id, user.id)
     limit = state.settings.uploads.max_mb * 1024 * 1024
     declared = request.headers.get("content-length", "")
@@ -180,7 +180,7 @@ def complete_upload(doc_id: DocId, state: UState, user: CurrentUser) -> UploadCo
     key = doc_key(doc_id, SOURCE)
     if not state.storage.exists(key):
         raise ApiError(409, "upload_not_started", "The file has not arrived yet. Please try again.")
-    # A signed PUT does not cap the size, so check the stored size before reading the file.
+    # Check the stored size again before reading the file back.
     try:
         _too_large(state, state.storage.size(key))
     except ApiError:
@@ -199,7 +199,7 @@ def complete_upload(doc_id: DocId, state: UState, user: CurrentUser) -> UploadCo
         state.launcher.launch(doc_id, job.job_id)
     except LaunchError as err:
         # The file is stored and the job recorded: an operator can start it again by hand
-        # (docs/runbooks/DEPLOY_RUNBOOK.md); the reader sees a failed job, not a hang.
+        # ; the reader sees a failed job, not a hang.
         state.db.update_job(
             job.job_id, status="failed", finished_at=utcnow(), error=f"launch: {err}"[:500]
         )

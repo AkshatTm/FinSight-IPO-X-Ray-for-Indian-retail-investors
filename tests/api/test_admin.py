@@ -66,19 +66,6 @@ def _token(email: str) -> str:
     return jwt.encode(claims, SECRET, algorithm="HS256")
 
 
-def test_costs_count_uploads_jobs_and_cpu_seconds(client: TestClient, tmp_path: Path) -> None:
-    _upload(client, build_offer_pdf(tmp_path / "a.pdf", "rhp").read_bytes())
-    body = client.get("/api/admin/costs").json()
-    assert body["total"]["uploads"] == 1
-    assert body["total"]["jobs"] == 1
-    assert body["total"]["vcpu_s"] > 0
-    share = body["total"]["vcpu_s"] / 240_000
-    assert body["total"]["free_vcpu_share"] == pytest.approx(share, abs=1e-6)
-    assert body["provisional"] is True
-    assert body["days"][0]["uploads"] == 1
-    assert body["window_days"] == 31
-
-
 def test_failed_jobs_list_names_the_reason(client: TestClient, tmp_path: Path) -> None:
     _upload(client, build_offer_pdf(tmp_path / "ok.pdf", "rhp").read_bytes())
     doc_id = _upload(client, build_offer_pdf(tmp_path / "s.pdf", "scanned").read_bytes())
@@ -95,10 +82,10 @@ def test_only_allow_listed_emails_get_in(client: TestClient, state: UploadState)
         jwt_secret=SECRET,
         admin_emails=["Akshat@Example.com"],
     )
-    assert client.get("/api/admin/costs").status_code == 401
+    assert client.get("/api/admin/jobs").status_code == 401
     other = {"Authorization": f"Bearer {_token('someone@example.com')}"}
-    resp = client.get("/api/admin/costs", headers=other)
+    resp = client.get("/api/admin/jobs", headers=other)
     assert (resp.status_code, resp.json()["error"]["code"]) == (403, "forbidden")
     assert client.get("/api/admin/jobs", headers=other).status_code == 403
     admin = {"Authorization": f"Bearer {_token('akshat@example.com')}"}
-    assert client.get("/api/admin/costs", headers=admin).status_code == 200
+    assert client.get("/api/admin/jobs", headers=admin).status_code == 200

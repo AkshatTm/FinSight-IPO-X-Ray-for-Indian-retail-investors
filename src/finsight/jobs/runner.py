@@ -19,7 +19,6 @@ from finsight.core.config import Settings
 from finsight.core.logging import get_logger
 from finsight.core.schemas import RejectionCode
 from finsight.db import Database, utcnow
-from finsight.jobs.costs import estimate
 from finsight.storage import Storage, doc_key
 
 logger = get_logger("finsight.jobs")
@@ -119,7 +118,6 @@ def run_job(ctx: JobContext, stages: Sequence[Stage]) -> JobResult:
     """Run ``stages`` for ``ctx.doc_id`` and return the final status (also stored and emitted)."""
     db = ctx.db
     db.update_job(ctx.job_id, status="running", started_at=utcnow())
-    job_start = time.perf_counter()
     failed: list[str] = []
     timings: dict[str, float] = {}
     rejection: RejectionCode | None = None
@@ -180,7 +178,6 @@ def run_job(ctx: JobContext, stages: Sequence[Stage]) -> JobResult:
         progress={
             "timings_s": timings,
             "failed_stages": failed,
-            "cost_estimate": estimate(time.perf_counter() - job_start, ctx.settings.costs),
         },
     )
     ctx.emit("done", {"status": status, "failed_stages": failed})

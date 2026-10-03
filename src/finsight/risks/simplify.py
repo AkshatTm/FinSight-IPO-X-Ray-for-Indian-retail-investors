@@ -1,9 +1,8 @@
 """Plain-English rewrites of risk factors (B02 §8): prompt contract, post-checks, fallback.
 
-The student (Qwen ~4B, QLoRA on Kaggle, served as GGUF Q4 by llama.cpp or by vLLM on the GPU
-path) gets ``student_prompt``; its training pairs use the same prompt
-(``notebooks/b2_student_qlora_kaggle.ipynb`` is generated from this module). A rewrite is shown
-only if it passes the post-checks, in this order:
+The student (Qwen ~4B, QLoRA on Kaggle, served as GGUF Q4 by llama.cpp) gets ``student_prompt``;
+its training pairs use the same prompt (``notebooks/b2_student_qlora_kaggle.ipynb`` is
+generated from this module). A rewrite is shown only if it passes the post-checks, in this order:
 
 1. numbers: every number in the rewrite matches one in the original (``risks.checks``);
 2. forbidden phrases (``configs/forbidden_phrases.yaml``);
@@ -83,7 +82,7 @@ def post_check(original: str, rewrite: str) -> tuple[str, str] | None:
 
 
 class TextLLM(Protocol):
-    """The ``generate`` part of the LLM backends (Ollama, llama.cpp, vLLM)."""
+    """The ``generate`` part of the LLM backends (Ollama, llama.cpp)."""
 
     def generate(self, prompt: str, **kwargs: Any) -> str:
         """The model's full reply to ``prompt``."""
@@ -163,7 +162,7 @@ class Simplifier:
         return Rewrite("ready", text, "", "", model, fell_back, seconds)
 
 
-def _backend(backend: str, model: str, models_dir: Path, vllm_url: str | None) -> TextLLM:
+def _backend(backend: str, model: str, models_dir: Path) -> TextLLM:
     if backend == "llama-cpp":
         from finsight.generate.llama_cpp_backend import LlamaCppBackend
 
@@ -171,12 +170,6 @@ def _backend(backend: str, model: str, models_dir: Path, vllm_url: str | None) -
         if not path.is_absolute() and not path.exists():
             path = models_dir / "simplifier" / model
         return LlamaCppBackend(model_path=path, num_ctx=2048)
-    if backend == "vllm":
-        if not vllm_url:
-            raise ValueError("simplify.backend is vllm but FINSIGHT_SIMPLIFY__VLLM_URL is not set")
-        from finsight.generate.vllm_backend import VllmBackend
-
-        return VllmBackend(vllm_url, model)
     from finsight.generate import OllamaBackend
 
     return OllamaBackend(model=model, num_ctx=2048)
@@ -187,10 +180,10 @@ def make_simplifier(cfg: SimplifyConfig, models_dir: Path) -> Simplifier:
 
     llama-cpp model names are files in ``<models_dir>/simplifier/`` unless given as a path.
     """
-    llm = _backend(cfg.backend, cfg.model, models_dir, cfg.vllm_url)
+    llm = _backend(cfg.backend, cfg.model, models_dir)
     fallback = None
     if cfg.fallback_model:
-        fallback = _backend(cfg.backend, cfg.fallback_model, models_dir, cfg.vllm_url)
+        fallback = _backend(cfg.backend, cfg.fallback_model, models_dir)
     return Simplifier(llm, cfg.model, fallback, cfg.fallback_model or "")
 
 

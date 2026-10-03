@@ -41,6 +41,11 @@ def _utc(value: datetime) -> datetime:
     return value if value.tzinfo is not None else value.replace(tzinfo=UTC)
 
 
+def _bound(value: datetime) -> datetime:
+    """UTC filter value: SQLite drops the zone, so an IST clock would be read as UTC."""
+    return value.astimezone(UTC)
+
+
 @dataclass(frozen=True)
 class StoredEvent:
     """One row of ``job_events``: what the SSE stream sends, in ``seq`` order."""
@@ -136,25 +141,17 @@ class Database:
 
     def count_uploads(self, since: datetime, user_id: str | None = None) -> int:
         """Uploads since ``since``, for one user or for everyone."""
-        query = sa.select(sa.func.count()).select_from(uploads).where(uploads.c.ts >= since)
+        query = sa.select(sa.func.count()).select_from(uploads).where(uploads.c.ts >= _bound(since))
         if user_id is not None:
             query = query.where(uploads.c.user_id == user_id)
         with self.engine.connect() as conn:
             return int(conn.execute(query).scalar_one())
 
-    def upload_times(self, since: datetime) -> list[datetime]:
-        """When each upload since ``since`` was accepted (admin cost page)."""
-        query = sa.select(uploads.c.ts).where(uploads.c.ts >= since).order_by(uploads.c.ts)
-        with self.engine.connect() as conn:
-            stamps: list[datetime] = list(conn.execute(query).scalars())
-        return [_utc(ts) for ts in stamps]
-
-    # ------------------------------------------------------------------ jobs
     def jobs_since(
         self, since: datetime, status: str | None = None, limit: int | None = None
     ) -> list[tuple[Job, datetime]]:
         """Jobs created since ``since``, newest first, with their creation time (admin pages)."""
-        query = sa.select(jobs).where(jobs.c.created_at >= since)
+        query = sa.select(jobs).where(jobs.c.created_at >= _bound(since))
         if status is not None:
             query = query.where(jobs.c.status == status)
         query = query.order_by(jobs.c.created_at.desc(), jobs.c.job_id.desc())

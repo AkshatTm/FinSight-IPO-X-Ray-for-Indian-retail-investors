@@ -9,7 +9,7 @@ import sqlalchemy as sa
 from alembic.autogenerate import compare_metadata
 from alembic.migration import MigrationContext
 
-from finsight.core.config import load_settings
+from finsight.core.config import DbConfig, load_settings
 from finsight.db import metadata, normalise_url, upgrade, url_from_settings
 
 
@@ -28,10 +28,12 @@ def test_postgres_urls_use_psycopg3() -> None:
     assert normalise_url("sqlite:///x.db") == "sqlite:///x.db"
 
 
-def test_postgres_profile_needs_the_env_url(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_postgres_backend_needs_the_env_url(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("FINSIGHT_DB__URL", raising=False)
     with pytest.raises(ValueError, match="DB__URL"):
-        url_from_settings(load_settings("cloud"))
+        url_from_settings(
+            load_settings("full").model_copy(update={"db": DbConfig(backend="postgres")})
+        )
 
 
 @pytest.mark.postgres

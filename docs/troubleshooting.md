@@ -44,7 +44,7 @@ The fifteen problems most likely to stop you, with the fix. Each one names what 
 ### 8. An upload stays on "Processing" or fails at a stage
 
 **You see:** the progress screen stops, or a `done` event with a failed stage.
-**Fix:** read the job's events (`GET /api/docs/{doc_id}/events`) and the worker log, filtered by `doc_id` and `job_id` (see [Monitoring](runbooks/MONITORING.md)). A failed stage shows ⚠️ on its part of the report; the other stages still finish. `worker_unavailable` (503) means Cloud Run refused to start the job: check the job exists and its service account.
+**Fix:** read the job's events (`GET /api/docs/{doc_id}/events`) and the worker log, filtered by `doc_id` and `job_id`. A failed stage shows ⚠️ on its part of the report; the other stages still finish. `worker_unavailable` (503) means the worker thread could not start: look at the API log.
 
 ### 9. `hash_mismatch` after uploading
 

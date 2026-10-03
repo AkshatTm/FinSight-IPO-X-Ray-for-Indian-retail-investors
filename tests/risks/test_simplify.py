@@ -117,13 +117,7 @@ def test_make_simplifier_picks_backends(tmp_path: Path) -> None:
     assert s.llm.model_path == tmp_path / "simplifier" / "s.gguf"  # type: ignore[attr-defined]
     assert s.fallback is not None
     assert s.fallback_model == "b.gguf"
-    v = make_simplifier(
-        SimplifyConfig(backend="vllm", model="m", vllm_url="http://gpu:8000"), tmp_path
-    )
-    assert v.llm.base_url == "http://gpu:8000"  # type: ignore[attr-defined]
-    assert v.fallback is None
-    with pytest.raises(ValueError, match="VLLM_URL"):
-        make_simplifier(SimplifyConfig(backend="vllm", model="m"), tmp_path)
+    assert s.fallback is not None
     assert make_simplifier(SimplifyConfig(), tmp_path).llm.model == "qwen3.5:2b"  # type: ignore[attr-defined]
 
 

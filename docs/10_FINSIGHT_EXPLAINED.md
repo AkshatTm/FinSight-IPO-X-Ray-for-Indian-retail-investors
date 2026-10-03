@@ -1,5 +1,7 @@
 # 10 — FinSight Explained (learning doc + viva prep)
 
+> **Superseded in part (4 Oct 2026, B-ADR-16):** Google Cloud (Cloud Run, Cloud Storage, GPU job, `deploy/gcp/`, `cloud` and `cloud_gpu` profiles) was removed when the credit ran out. The product runs locally. Read the Cloud Run, GCS, GPU and deploy parts below as history.
+
 Written for someone starting NLP from zero. Read Part A and B now; Part C grows as each module is built (Claude Code appends a section per module); Part D is the viva drill. If a paragraph doesn't make sense, ask Claude to explain it with a different example — that's what this doc is for.
 
 ---

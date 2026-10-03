@@ -239,7 +239,7 @@ export const LAB = {
 
   "labb.sc.h": { en: "Speed and cost", hi: "गति और लागत" },
   "labb.sc.shows": {
-    en: "How long each step takes on the hosted service, and what one upload costs.",
+    en: "How long each step takes on the machine running the API, and what one upload costs.",
     hi: "होस्ट की गई सेवा पर हर चरण में कितना समय लगता है, और एक अपलोड की लागत कितनी है।",
   },
   "labb.sc.col.stage": { en: "Step", hi: "चरण" },

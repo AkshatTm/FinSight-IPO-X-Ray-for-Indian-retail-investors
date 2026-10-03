@@ -116,7 +116,4 @@ with the issuer's P/E computed from the offer price when the RHP leaves it blank
 offer-for-sale share, the price gap to what sellers paid, P/E) are placed among past IPOs as percentiles. No
 judgement is attached.
 
-**Serving.** The API runs on Cloud Run CPU (no PyTorch, BM25 chat); the pipeline runs as a Cloud Run job;
-an optional L4 GPU job does rewrites and dense indexing when billing allows; Supabase provides sign-in and
-Postgres; files live in Cloud Storage with signed URLs. The definitions are code in `deploy/gcp/`; nothing
-is deployed yet (B-ADR-04).
+**Serving.** Everything runs on the laptop: the API and the upload pipeline in one process, models through Ollama or llama.cpp, SQLite and local files; Supabase sign-in is optional. Google Cloud was removed when the credit ran out (B-ADR-16); nothing is hosted.
