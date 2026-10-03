@@ -84,6 +84,8 @@
 
 - [ ] **B2.1a ★ Risk segmentation (fixtures)** · ☁️ C · **O** · `feat/b2.1-risk-segmentation`
   Segmentation for PDF pages (bold/numbered) and corpus text, tested on the fixture pack.
+  - [x] Code half (#164): `risks.segment` (PDF + corpus rules), `pipeline/risks_stage.py` (`risks_split` → `risks.json`, addresses withheld), per-stage timeout in the job runner; synthetic bold / numbered / mixed tests.
+  - [ ] Left: golden tests on real fixture pages of 3 dev IPOs (needs B0.4), wiring into `upload_stages` with parse/sections (B1.3a).
 - [ ] **B2.1b Risk bank + E13** · 💻 L · **S** · `data/b2.1b-risk-bank`
   Segment the full corpus, embed with bge-m3 (GPU, Ollama stopped, or Kaggle), build `risk_bank.parquet`; E13/E13b; export the teacher input set (5,000 risks) as a private Kaggle dataset. 👤+Claude chat: segmentation spot-check + E13b boundaries.
 - [x] **B2.2a Unusualness, hedging, numbers (code)** · ☁️ C · **S** · `feat/b2.2-risk-features`

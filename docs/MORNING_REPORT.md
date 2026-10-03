@@ -115,8 +115,15 @@
   - A script turns your **verified** gold v3 rows into the red-flag status gold, using the same rules. It refuses unverified rows.
   - Copy to OK: four sentences B05 doesn't have, and the 13 "How this check works" texts (AKSHAT_TODO).
 
+- **B2.1a code half (#164): splitting Risk Factors into single risks.**
+  - New code finds where each risk starts. In a PDF that is a bold title of at least five words at the left margin, followed by normal text. Sub-headings like "Internal Risks" become the risk's group, and the introduction is skipped. Bold table headers, page headers and page numbers are ignored, and a risk that runs over a page break is joined.
+  - Corpus text has no fonts, so there a risk is a numbered paragraph whose number follows the previous one.
+  - The new `risks_split` step writes `risks.json`. It hides any home address of a person in the risk text, the same rule the chat search uses.
+  - Two open items from the security review are closed. A step can now have a time limit (reading the PDF: 10 minutes), and the address hiding above.
+  - Tested on made-up pages only. The tests on real pages of 3 dev IPOs need the fixture pack (B0.4). The step joins the upload pipeline when B1.3a adds reading and sections.
+
 ### Blocked, and why
-- **B1.3a, the rest of B1.4, B2.1a (real-text tests)** need the B0.4 fixture pack, which can only be made on your laptop.
+- **B1.3a, the rest of B1.4, the rest of B2.1a (real-page tests)** need the B0.4 fixture pack, which can only be made on your laptop.
 
 ### Your morning to-do, in order
 1. Local session: **B0.4 fixture pack**. The L1 prompt is in `docs/AKSHAT_TODO.md`. It unblocks three cloud parts.

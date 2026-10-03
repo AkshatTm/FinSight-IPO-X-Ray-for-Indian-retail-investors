@@ -576,6 +576,20 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** Tested on synthetic numbers only: gold v3 is not filled yet and the summary extractor (B1.3a) waits for the fixture pack, so the `redflags` stage is not wired into the upload stages and E15 has not run. Thresholds are B01's first definitions, not tuned. Four sentences B05 doesn't give are drafts awaiting approval.
 **Likely viva questions.** (1) *Why rules and not a model?* (Each status must be explainable from two numbers and a page; a rule can be read, tested at its edges and versioned.) (2) *Why compute the status gold with the same code?* (The gold numbers are verified by hand; the status is then a deterministic function of them, so E15 measures the extraction, not a second labeller.) (3) *What stops a missing number from looking clean?* (`None` means not found, never zero; the check says "Not available" and the risk level divides by the checks that could run.)
 
+### C37. Splitting the Risk Factors section into risks (built in B2.1a, code half)
+**What it does.**
+- **PDF pages** (`risks.segment_pages`): words are grouped into lines. Running headers, page numbers and words inside table boxes are dropped.
+  - A risk starts at a line at the left margin whose first words are bold: at least 5 bold words, followed by regular text on the same line or the next one. The title ends with a full stop or is at most 3 lines long.
+  - A number prefix (`12.`, `(a)`) raises confidence. A line inside a longer bold block never starts a risk.
+  - Short bold sub-headings ("Internal Risks", "Risks Relating to the Offer") become the `group` of the risks under them. Text before the first one is the preamble and is skipped.
+  - A body that crosses a page break is merged; blank space splits paragraphs.
+- **Corpus text without fonts** (`risks.segment_text`): numbered paragraphs whose number follows the previous one. The title is the first sentence ("Rs." and "Ltd." don't end it) and must have ≥ 5 words and a capital start.
+- **Stage** `pipeline.risks_stage.risks_split`: finds the `risk_factors` section, passes the table boxes, writes `risks.json` with `r1`, `r2`… and withholds residential addresses.
+- **Runner**: stages can have a timeout (`jobs.stage_timeouts_s`; parse 10 min). A stage that runs over fails like any other failure.
+
+**Limits.** Tested on synthetic pages and text only. The golden tests on real pages of 3 dev IPOs, E13 and E13b wait for the fixture pack (B0.4) and the B2.1b labels. The stage joins the upload pipeline when parse and sections do (B1.3a). A timed-out stage's thread can't be killed in Python; it keeps running until the worker exits.
+**Likely viva questions.** (1) *Why bold + left margin and not a model?* (RHPs follow the ICDR layout, where every risk is a bold run-in title; a rule is explainable and fast, and E13 measures it.) (2) *How do you stop bold table headers from becoming risks?* (Words inside detected table boxes never start a risk; a test shows the header would split a risk without the boxes.) (3) *Why does numbering have to follow on in corpus text?* (Bodies contain their own numbered lists; only the next expected number can start a new risk.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
