@@ -88,7 +88,7 @@
   Logic + API, tested with a tiny fake bank fixture.
 - [ ] **B2.2b Run + τ choice + E22** · 💻 L · **S** · `eval/b2.2b-novelty`
   Run against the real bank; τ spot-check (👤+Claude chat); E22.
-- [ ] **B2.3a ★ Teacher notebook + filters** · ☁️ C · **O** · `feat/b2.3-teacher`
+- [x] **B2.3a ★ Teacher notebook + filters** · ☁️ C · **O** · `feat/b2.3-teacher`
   Prompt, **Kaggle** notebook (vLLM + Qwen ~14B AWQ) with checkpoint/resume, filters, forbidden-phrase filter, quality-100 sheet generator, datasheet, optional `COLAB_STEPS_teacher.md`; smoke test on the fake fixture set.
 - [ ] **B2.3b Teacher run** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `data/b2.3b-teacher-outputs`
   💻 pilot 500 (Sat 10) → filters → 👤+Claude chat rate quality-100 (go/no-go, Sun 11) → 💻 full 5,000 (Mon 12), drop rates.

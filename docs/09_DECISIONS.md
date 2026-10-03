@@ -323,7 +323,7 @@ Cloud Run CPU API + CPU worker job (top-15 rewrites with GGUF Q4 when there is n
 No hosted LLM APIs in the product. Claude (chat) may pre-fill gold labels, always disclosed and verified by Akshat (Phase 1 practice).
 
 ### B-ADR-07 Teacher → student distillation for simplification — proposed
-Qwen AWQ teacher (~14B on Kaggle; ~32B if Colab) → Qwen ~3–4B QLoRA student served as GGUF Q4 on CPU.
+Qwen AWQ teacher (~14B on Kaggle; ~32B if Colab) → Qwen ~3–4B QLoRA student served as GGUF Q4 on CPU. Teacher checkpoint (B2.3a): `Qwen/Qwen3-14B-AWQ` on vLLM 0.8.5 (V0 engine, runs on a T4), guided JSON.
 
 ### B-ADR-08 Classifier: base and large on Kaggle, pick by dev — proposed
 DeBERTa-v3-base (3 seeds) and -large (1 seed); ONNX int8 for serving; report both on gold-150.

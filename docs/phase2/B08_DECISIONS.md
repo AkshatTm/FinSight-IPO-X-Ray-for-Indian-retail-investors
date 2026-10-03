@@ -34,6 +34,7 @@ Status meanings as in `09_DECISIONS.md`. Claude Code adds these to `docs/09_DECI
 ### B-ADR-07 Teacher → student distillation for simplification — proposed
 **Decision:** A Qwen-family (Apache-2.0) teacher in AWQ 4-bit (~14B on Kaggle T4 with vLLM; ~32B if Colab Pro is bought), inference only, produces filtered labels and rewrites for ~5,000 corpus risks after a 500-item pilot. A Qwen ~3–4B student is fine-tuned with QLoRA on a Kaggle T4 and served as GGUF Q4 on CPU via llama.cpp; an ~8B variant only if a GPU host appears.
 **Consequences:** Free Kaggle GPU (≈ 10–11 h of the weekly quota); licences checked; the trained model inherits the corpus's non-commercial terms.
+**Teacher checkpoint (B2.3a):** `Qwen/Qwen3-14B-AWQ` (Apache-2.0, thinking off), fallback `Qwen/Qwen2.5-14B-Instruct-AWQ`. Served with vLLM 0.8.5, the last line with the V0 engine (xformers attention) that runs on a Turing T4, with guided JSON. The smoke run (50 risks) confirms it on Kaggle before the pilot.
 
 ### B-ADR-08 Classifier: base on Kaggle, large on Colab, pick by dev — proposed
 **Decision:** DeBERTa-v3-base (3 seeds, Kaggle) and DeBERTa-v3-large (1 seed, Kaggle; Colab optional; first to cut); select by dev macro-F1; report both on gold-150; serve as ONNX int8 on CPU.
