@@ -344,6 +344,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/lab/b/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lab B
+         * @description Model Lab, Phase 2 (E13–E24): one result from ``eval_results/b/`` (B06 §5).
+         */
+        get: operations["lab_b_api_lab_b__name__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/glossary": {
         parameters: {
             query?: never;
@@ -2877,6 +2897,48 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    lab_b_api_lab_b__name__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                name: "segmentation" | "summary" | "redflags" | "classifier" | "seriousness" | "simplify" | "readability" | "novelty" | "risklevel" | "latency" | "cost";
+            };
             cookie?: never;
         };
         requestBody?: never;

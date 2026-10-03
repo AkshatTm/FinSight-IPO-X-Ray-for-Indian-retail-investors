@@ -253,6 +253,18 @@ def lab_asr(state: State) -> LabPayload:
     return content.lab(state.settings.paths.eval_dir, "asr")
 
 
+LabBName = Literal[
+    "segmentation", "summary", "redflags", "classifier", "seriousness", "simplify",
+    "readability", "novelty", "risklevel", "latency", "cost",
+]  # fmt: skip
+
+
+@router.get("/lab/b/{name}", tags=["lab"])
+def lab_b(name: LabBName, state: State) -> LabPayload:
+    """Model Lab, Phase 2 (E13–E24): one result from ``eval_results/b/`` (B06 §5)."""
+    return content.lab_b(state.settings.paths.eval_dir, name)
+
+
 @router.get("/glossary", tags=["content"])
 def glossary(lang: Language = "en") -> list[GlossaryEntry]:
     """Glossary terms in the chosen language (English where Hindi is missing)."""
