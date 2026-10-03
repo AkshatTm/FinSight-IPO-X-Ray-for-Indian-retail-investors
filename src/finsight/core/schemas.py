@@ -269,6 +269,22 @@ class Trace(BaseModel):
     timings_ms: dict[str, int]
 
 
+# --------------------------------------------------------------------------- risks (Phase 2)
+RiskCategory = Literal[
+    "financial",
+    "debt_liquidity",
+    "customers_suppliers",
+    "competition",
+    "legal_litigation",
+    "regulatory",
+    "promoters_governance",
+    "operations",
+    "technology_data",
+    "market_macro",
+]
+SimpleStatus = Literal["pending", "ready", "rejected", "failed"]
+
+
 # --------------------------------------------------------------------------- uploads (Phase 2)
 RejectionCode = Literal[
     "scanned", "password", "too_large", "too_many_pages", "not_offer_document", "hash_mismatch"
