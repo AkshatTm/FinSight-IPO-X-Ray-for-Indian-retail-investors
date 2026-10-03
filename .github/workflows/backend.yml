@@ -23,8 +23,8 @@ jobs:
         with:
           python-version: "3.11"
           enable-cache: true
-      # dev + api groups only (default-groups); torch and ASR are never installed in CI.
-      - run: uv sync --locked
+      # default groups (dev, api, data, ml-cpu) + onnx runtime; torch and ASR are never installed in CI.
+      - run: uv sync --locked --group onnx
       - run: uv run poe lint
       - run: uv run poe typecheck
       - run: uv run poe test
