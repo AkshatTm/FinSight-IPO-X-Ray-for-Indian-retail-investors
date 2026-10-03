@@ -171,3 +171,40 @@ def test_rhp_adapter_is_registered() -> None:
     adapter = registry.get("doc_adapter", "rhp")
     assert adapter.doc_type == "rhp"
     assert {s.id for s in adapter.sections(_doc())} >= set(KEY_SECTIONS)
+
+
+@pytest.mark.parametrize(
+    ("title", "expected"),
+    [
+        ("RESTATED FINANCIAL INFORMATION", "restated_financial_information"),
+        ("RESTATED CONSOLIDATED FINANCIAL INFORMATION", "restated_financial_information"),
+        ("FINANCIAL INFORMATION", "restated_financial_information"),
+        ("SUMMARY OF FINANCIAL INFORMATION", "summary_financial_information"),
+        ("OTHER FINANCIAL INFORMATION", "other_financial_information"),
+        ("FINANCIAL INDEBTEDNESS", "financial_indebtedness"),
+        ("OUTSTANDING LITIGATION AND MATERIAL DEVELOPMENTS", "outstanding_litigation"),
+        ("Outstanding Litigation", "outstanding_litigation"),
+    ],
+)
+def test_financial_section_ids(title: str, expected: str) -> None:
+    assert canonical_id(title) == expected
+
+
+def test_subsection_pages_found_inside_restated_section() -> None:
+    from finsight.core.schemas import Section
+    from finsight.parse.sections import find_subsection_pages
+
+    pages = [
+        _page(1, "RESTATED FINANCIAL INFORMATION\nIndependent Auditor's Examination Report\ntext"),
+        _page(2, "Restated Consolidated Statement of Balance Sheet\nassets"),
+        _page(3, "Restated Consolidated Statement of Cash Flows\noperating"),
+        _page(4, "notes\nThe auditors drew an emphasis of matter on going concern"),
+        _page(5, "outside"),
+    ]
+    doc = ParsedDoc(ipo_id="x", doc_type="rhp", source_path="x.pdf", n_pages=5, pages=pages,
+                    sha256="0" * 64)  # fmt: skip
+    sec = Section(id="restated_financial_information", title="R", start_page=1, end_page=4,
+                  method="toc", confidence=1.0)  # fmt: skip
+    found = find_subsection_pages(doc, [sec])
+    assert found == {"cash_flows": [3], "auditors_report": [1, 4]}
+    assert find_subsection_pages(doc, []) == {}

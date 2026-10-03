@@ -55,7 +55,7 @@
   As before, plus: CLAUDE.md learns the **environment rule** (detect cloud vs local; in cloud, follow the cloud note and B11) and the hand-off loop; issues for B0–B1 with location labels (`cloud`, `local`, `akshat`).
 - [x] **B0.3 Hosting bootstrap (no deploy)** · ☁️ C · **S** · `chore/b0.3-hosting-bootstrap`
   `HOSTING_SETUP_STEPS.md` (Supabase + Vercel + Kaggle now; Google Cloud section "later, with your go"), `HOSTING_COMPARISON.md` (Cloud Run CPU vs with L4 vs HF PRO fallback), `.env.example`, `cloud` + `cloud_gpu` profiles, upload limits and kill switch config. 👤 Follow the steps (~45 min).
-- [ ] **B0.4 Fixture pack** · 💻 L · **S** · `test/b0.4-fixture-pack`
+- [x] **B0.4 Fixture pack** · 💻 L · **S** · `test/b0.4-fixture-pack`
   `scripts/export_fixtures.py` → `tests/fixtures/real/` per B11 §3 (≤ 20 MB, no PDFs or weights). Done when: merged and the size is reported.
 
 ### B1 — Upload and red flags (Tue 6 – Sun 11 Oct) → BG1
