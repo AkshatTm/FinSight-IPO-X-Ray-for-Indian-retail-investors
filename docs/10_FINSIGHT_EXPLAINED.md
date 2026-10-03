@@ -541,6 +541,19 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** Not published yet: GitHub Pages waits for Akshat's go. The risk classifier and simplifier get model cards only after they are trained (B2.4b, B2.5b). The runbooks have not been run end to end yet.
 **Likely viva questions.** (1) *What does "docs as code" mean here?* (Docs change in the same PR as the code, and generated pages fail CI when they drift from their source.) (2) *How do you stop a typed number from going stale?* (No number is typed: model cards and the evaluation page quote `eval_results/` through generated blocks, and a test fails if a block differs from what the generator writes.) (3) *Why markers instead of generating the whole model card?* (The limitations and ethics sections need human judgement; only the numbers must be mechanical.)
 
+### C34. Hardening: security review, failure paths and the admin page (built in B3.5a)
+**What it does.**
+- **Security review.** `docs/security_review.md` checks the code against B02 §11. Three fixes came out of it:
+  - the local upload route reads the body in chunks and stops at `uploads.max_mb`, so a chunked body can't fill memory;
+  - `complete` reads the stored file's size from metadata (`Storage.size()`: `stat` locally, `get_blob().size` on GCS) and deletes an oversized file before downloading it, because a signed PUT does not cap the size;
+  - the per-IP simplify limit can trust a set number of proxy hops in `X-Forwarded-For` (`uploads.trusted_proxy_hops`, 0 until checked on the deployed stack).
+- **Failure paths.** `tests/jobs/test_failure_paths.py` builds the B02 stage graph with stub stages and fails each one in turn. Only its dependents are skipped, a critical failure fails the job, a rejection stops it with its code, a retry runs only what is missing, and error text never reaches the event stream.
+- **Cost estimate.** Each job records `progress.cost_estimate`: wall-clock seconds × the configured vCPUs and GiB (`costs.*`) × the Cloud Run rates, plus the share of the monthly free grant. `jobs.summarise_costs` groups jobs by IST day.
+- **Admin.** `GET /api/admin/costs` and `GET /api/admin/jobs` need an email in `auth.admin_emails` (401 without a token, 403 for anyone else). `/admin/costs` shows the per-day table, the totals and the failed jobs with their rejection codes or failed stages.
+
+**Limits.** The cost is an estimate from run time, not the bill. The rates are Tier 1 list prices marked provisional (asia-southeast1 is Tier 2), and the GPU rate is unset, so GPU jobs are counted in seconds but not in dollars. The per-stage parse timeout and the redaction of risk text are still open (B1.3a, B2.1a).
+**Likely viva questions.** (1) *Why check the size again after the browser said how big the file is?* (The browser's number is a claim; the signed URL accepts any size, so the server checks the stored object before reading it.) (2) *Why not trust `X-Forwarded-For`?* (Anyone can write it; only the entries added by proxies you run are trustworthy, counted from the right.) (3) *How do you know a failing stage doesn't take the whole report down?* (A test fails every stage in turn and checks exactly which ones are skipped.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

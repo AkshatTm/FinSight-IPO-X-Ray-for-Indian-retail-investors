@@ -120,6 +120,8 @@
   👤 logins, GCP billing and console clicks; 💻 build/push images, upload showcase artefacts + model weights to GCS, deploy, run the smoke test. **Only with Akshat's explicit "go" in chat.**
 - [ ] **B3.4 Cloud evaluation + Model Lab + site copy** · B3.4a ☁️ C (Model Lab sections, landing/How it works/About copy) + B3.4b 💻 L (E23/E24, E7 on the cloud profile) · **S**
 - [ ] **B3.5 Hardening** · B3.5a ☁️ C (security review, failure-path tests, admin page) + B3.5b 💻 L (full Playwright sweep on the real API) · **S**
+  - [x] B3.5a cloud half (#158, overnight run 1): security review (`docs/security_review.md`) with three fixes (chunked upload body capped, stored size checked before download via `Storage.size()`, `uploads.trusted_proxy_hops` for the per-IP limit); failure-path tests over the B02 stage graph; `progress.cost_estimate` per job (`costs.*` settings, provisional rates); `/api/admin/costs` + `/api/admin/jobs` (admin allow-list, 403 `forbidden`); `/admin/costs` page on mocks.
+  - [ ] B3.5b 💻: Playwright sweep on the real API; set `trusted_proxy_hops` and check the region's rates on the deployed stack.
 - [ ] **BG3 review + FEATURE FREEZE** (Sun 25) · 💻 L.
 
 ### B4 — Documentation and finish (Sun 25 Oct – Sun 1 Nov)

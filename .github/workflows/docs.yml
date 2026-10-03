@@ -43,7 +43,7 @@ jobs:
       - name: Markdown lint on the site sources
         run: >-
           npx -y markdownlint-cli2@0.23.3 docs/index.md docs/glossary.md docs/evaluation.md
-          docs/troubleshooting.md "docs/reference/*.md" "docs/adr/*.md" "docs/architecture/*.md"
+          docs/troubleshooting.md docs/security_review.md "docs/reference/*.md" "docs/adr/*.md" "docs/architecture/*.md"
           "docs/tutorials/*.md" "docs/howto/*.md" "docs/model_cards/*.md" "docs/datasheets/*.md"
           "docs/runbooks/*.md" CHANGELOG.md CONTRIBUTING.md SECURITY.md PRIVACY.md
           CODE_OF_CONDUCT.md frontend/README.md

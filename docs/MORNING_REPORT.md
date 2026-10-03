@@ -96,6 +96,12 @@
   - Five new disclosures for the final report are listed in `report/README.md` (AI-made teacher labels, AI-pre-filled gold, provisional thresholds, outcome data only for checking, mock data on the report page).
   - Still yours: rewrite every section in your own voice; the result paragraphs get written once the laptop runs produce numbers.
 
+- **B3.5a (#158): hardening, cloud half.**
+  - A security review of the upload, storage, jobs and login code is in `docs/security_review.md` (15 checks). Three real holes were fixed: a local upload without a declared size could fill the server's memory; a too-big file sent to the cloud upload link was downloaded into the API before its size was checked; and the "Explain this" limit per person would have counted everyone as one person behind Vercel and Cloud Run. Two items stay open and are named for the parts that build them (a 10-minute parse timeout, removing personal contacts from risk text).
+  - New tests fail every processing step in turn and check that only the steps depending on it are skipped, that error details never reach the browser, and that a retry redoes only what is missing.
+  - Every job now records an estimated cost (run time × machine size × Google's list price). A new page, `/admin/costs`, shows per-day uploads, CPU seconds, the share of the monthly free allowance used and failed jobs. Only emails in `auth.admin_emails` can open it. The prices are marked provisional because Singapore is priced a little higher than the list price used.
+  - The page's text is new (not in the UI spec), so it is listed for your OK in AKSHAT_TODO.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
