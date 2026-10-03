@@ -365,6 +365,38 @@ class Risk(BaseModel):
     simple_checks: list[CheckResult] = Field(default_factory=list)
 
 
+# --------------------------------------------------------------------------- compare (Phase 2)
+CompareMetric = Literal["issue_size_inr", "ofs_share", "insider_price_gap", "pe"]
+
+
+class Peer(BaseModel):
+    """One row of the Basis for Offer Price peer table (B05 §5.6). ``None`` = not stated."""
+
+    name: str
+    pe: DecimalStr | None = None
+    eps: DecimalStr | None = None  # basic EPS, ₹
+    ronw: DecimalStr | None = None  # return on net worth, %
+    nav: DecimalStr | None = None  # net asset value (book value) per share, ₹
+    is_issuer: bool = False
+    evidence: Evidence | None = None
+
+
+class ComparePercentile(BaseModel):
+    metric: CompareMetric
+    value: float
+    percentile: float  # share (0-100) of reference IPOs with a lower value
+    corpus_n: int
+
+
+class Compare(BaseModel):
+    """``compare.json`` (B02 §3.1 stage 14, B06 ``/compare``)."""
+
+    peers: list[Peer] = Field(default_factory=list)
+    peer_median_pe: DecimalStr | None = None
+    percentiles: list[ComparePercentile] = Field(default_factory=list)
+    provisional: bool = True  # reference quantiles are placeholders until computed on the corpus
+
+
 # --------------------------------------------------------------------------- uploads (Phase 2)
 RejectionCode = Literal[
     "scanned", "password", "too_large", "too_many_pages", "not_offer_document", "hash_mismatch"
