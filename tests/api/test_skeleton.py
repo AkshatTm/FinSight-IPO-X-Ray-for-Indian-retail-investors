@@ -46,6 +46,8 @@ ROUTES = [
     ("GET", "/api/docs/{doc_id}/risk-level"),
     # B3.2
     ("GET", "/api/docs/{doc_id}/compare"),
+    # B3.1
+    ("GET", "/api/docs/{doc_id}/redflags"),
 ]
 
 

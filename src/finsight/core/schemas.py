@@ -301,6 +301,14 @@ class RedFlag(BaseModel):
     points: int = 0
 
 
+class RedFlags(BaseModel):
+    """``redflags.json`` (B06 §3 ``/redflags``)."""
+
+    flags: list[RedFlag] = Field(default_factory=list)
+    financial_company: bool = False  # lenders: debt checks are "not applicable"
+    thresholds_version: str = ""
+
+
 class RiskLevelReason(BaseModel):
     source: Literal["redflag", "risk"]
     id: str

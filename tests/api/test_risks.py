@@ -187,3 +187,24 @@ def test_compare_endpoint(client: TestClient, state: UploadState) -> None:
     assert {p["metric"] for p in body["percentiles"]} == {"ofs_share", "pe"}
     assert body["provisional"] is True
     assert client.get("/api/docs/doc_0000000000000000/compare").status_code == 404
+
+
+def test_redflags_endpoint(client: TestClient, state: UploadState) -> None:
+    assert client.get(f"/api/docs/{DOC}/redflags").json()["error"]["code"] == "not_available"
+    flag = {
+        "id": "RF04",
+        "title": "Who gets the IPO money",
+        "status": "concern",
+        "points": 2,
+        "sentence": "85.0% of the money goes to existing shareholders who are selling, "
+        "not to the company.",
+    }
+    put_json(
+        state.storage,
+        doc_key(DOC, "redflags.json"),
+        {"flags": [flag], "thresholds_version": "b01-v1"},
+    )
+    body = client.get(f"/api/docs/{DOC}/redflags").json()
+    assert body["flags"][0]["id"] == "RF04"
+    assert body["flags"][0]["evidence"] == []
+    assert body["financial_company"] is False

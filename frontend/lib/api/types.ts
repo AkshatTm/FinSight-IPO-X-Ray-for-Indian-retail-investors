@@ -562,6 +562,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/docs/{doc_id}/redflags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Redflags
+         * @description The 13 red-flag checks with their numbers and evidence (B01 §5, B05 §5.4).
+         */
+        get: operations["get_redflags_api_docs__doc_id__redflags_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1107,6 +1127,57 @@ export interface components {
             high: components["schemas"]["Money"];
             /** Raw */
             raw: string;
+        };
+        /**
+         * RedFlag
+         * @description One of the 13 red-flag checks (B01 §5, B02 §5); ``points`` 2 concern, 1 watch, else 0.
+         */
+        RedFlag: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ok" | "watch" | "concern" | "not_available" | "not_applicable";
+            /** Sentence */
+            sentence: string;
+            /** Numbers Used */
+            numbers_used?: {
+                [key: string]: string;
+            };
+            /** Evidence */
+            evidence?: components["schemas"]["PageEvidence"][];
+            /**
+             * Rule
+             * @default
+             */
+            rule: string;
+            /**
+             * Points
+             * @default 0
+             */
+            points: number;
+        };
+        /**
+         * RedFlags
+         * @description ``redflags.json`` (B06 §3 ``/redflags``).
+         */
+        RedFlags: {
+            /** Flags */
+            flags?: components["schemas"]["RedFlag"][];
+            /**
+             * Financial Company
+             * @default false
+             */
+            financial_company: boolean;
+            /**
+             * Thresholds Version
+             * @default
+             */
+            thresholds_version: string;
         };
         /**
          * ReportOverview
@@ -3025,6 +3096,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Compare"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_redflags_api_docs__doc_id__redflags_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RedFlags"];
                 };
             };
             /** @description Client Error */

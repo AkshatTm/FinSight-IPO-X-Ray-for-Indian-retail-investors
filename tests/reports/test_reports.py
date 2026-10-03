@@ -47,3 +47,14 @@ def test_parts_are_read_and_top_five_risks_ranked(tmp_path: Path) -> None:
     assert report.offer_line_params == {"price_band": "1-2"}
     assert get_json(storage, "docs/doc_a/report.json")["companion_doc_id"] == "doc_b"
     assert etag(report) == etag(assemble(storage, DOC, "doc_b"))
+
+
+def test_risks_json_as_a_plain_list_with_missing_importance(tmp_path: Path) -> None:
+    storage = LocalStorage(tmp_path)
+    risks = [
+        {"rid": "a", "order": 0, "importance": None},
+        {"rid": "b", "order": 1, "importance": 0.9},
+        {"rid": "c", "order": 2},
+    ]
+    put_json(storage, doc_key("doc_a", "risks.json"), risks)  # the shape B2.2a writes
+    assert [r["rid"] for r in assemble(storage, DOC).top_risks or []] == ["b", "a", "c"]
