@@ -3,6 +3,7 @@ import { DETAILS, HEALTH, IPOS } from "./fixtures";
 import { LAB_ASR, LAB_LADDER, LAB_RETRIEVAL, LAB_VERIFIER, LAB_WEAKLABELS } from "./lab";
 import { scenario, speed } from "./chat";
 import { pageSvg, pageWords } from "./pages";
+import { reportHandlers } from "./report";
 import { uploadHandlers } from "./uploads";
 import { buildXray, SUGGESTED } from "./xray";
 
@@ -14,6 +15,7 @@ const notFound = () =>
 
 export const handlers = [
   ...uploadHandlers,
+  ...reportHandlers,
   http.get("/api/health", () => HttpResponse.json(HEALTH)),
   http.get("/api/ipos", async () => {
     await delay(150);
