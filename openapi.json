@@ -1039,6 +1039,507 @@
           }
         }
       }
+    },
+    "/api/uploads/init": {
+      "post": {
+        "tags": [
+          "uploads"
+        ],
+        "summary": "Init Upload",
+        "description": "Start an upload, or point to the existing report when the file was already analysed.",
+        "operationId": "init_upload_api_uploads_init_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadInit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadInitResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/uploads/{doc_id}/file": {
+      "post": {
+        "tags": [
+          "uploads"
+        ],
+        "summary": "Upload File",
+        "description": "Local profiles only: the raw PDF bytes (the cloud profiles PUT to a signed GCS URL).",
+        "operationId": "upload_file_api_uploads__doc_id__file_post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^doc_[0-9a-f]{16}$",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Upload File Api Uploads  Doc Id  File Post"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/uploads/{doc_id}/complete": {
+      "post": {
+        "tags": [
+          "uploads"
+        ],
+        "summary": "Complete Upload",
+        "description": "Check the stored file's SHA-256 and size, then queue the processing job.",
+        "operationId": "complete_upload_api_uploads__doc_id__complete_post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^doc_[0-9a-f]{16}$",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadComplete"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/docs/{doc_id}": {
+      "get": {
+        "tags": [
+          "docs"
+        ],
+        "summary": "Get Doc",
+        "operationId": "get_doc_api_docs__doc_id__get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocDetail"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/docs/{doc_id}/events": {
+      "get": {
+        "tags": [
+          "docs"
+        ],
+        "summary": "Doc Events",
+        "description": "Stage events of the latest job; ``Last-Event-ID`` replays everything after that ``seq``.\n\nThe Supabase pooler has no LISTEN/NOTIFY, so the stream polls ``job_events`` about once a\nsecond (``jobs.poll_interval_s``) and ends after the ``done`` event.",
+        "operationId": "doc_events_api_docs__doc_id__events_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "last-event-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Last-Event-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server-sent events; see the x-sse-events map for each payload model.",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "x-sse-events": {
+                  "stage": {
+                    "$ref": "#/components/schemas/JobStageEvent"
+                  },
+                  "progress": {
+                    "$ref": "#/components/schemas/JobProgressEvent"
+                  },
+                  "ready": {
+                    "$ref": "#/components/schemas/JobReadyEvent"
+                  },
+                  "risk_simplified": {
+                    "$ref": "#/components/schemas/RiskSimplifiedEvent"
+                  },
+                  "done": {
+                    "$ref": "#/components/schemas/JobDoneEvent"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/me/uploads": {
+      "get": {
+        "tags": [
+          "docs"
+        ],
+        "summary": "My Uploads",
+        "operationId": "my_uploads_api_me_uploads_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MyUpload"
+                  },
+                  "title": "Response My Uploads Api Me Uploads Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/docs/{doc_id}/report": {
+      "get": {
+        "tags": [
+          "docs"
+        ],
+        "summary": "Get Report",
+        "description": "The assembled overview; ready reports are cacheable for an hour (B06 §3).",
+        "operationId": "get_report_api_docs__doc_id__report_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "if-none-match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportOverview"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1519,6 +2020,171 @@
         "title": "Count",
         "type": "object"
       },
+      "DocDetail": {
+        "properties": {
+          "doc": {
+            "$ref": "#/components/schemas/DocRecord"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageState"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "companion_doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Companion Doc Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc",
+          "stages"
+        ],
+        "title": "DocDetail"
+      },
+      "DocRecord": {
+        "properties": {
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256"
+          },
+          "doc_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "rhp",
+                  "drhp",
+                  "prospectus"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doc Type"
+          },
+          "company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          },
+          "uploaded_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uploaded By"
+          },
+          "is_showcase": {
+            "type": "boolean",
+            "title": "Is Showcase",
+            "default": false
+          },
+          "companion_of": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Companion Of"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "uploading",
+              "processing",
+              "ready",
+              "partial",
+              "failed"
+            ],
+            "title": "Status",
+            "default": "processing"
+          },
+          "rejection": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "scanned",
+                  "password",
+                  "too_large",
+                  "too_many_pages",
+                  "not_offer_document",
+                  "hash_mismatch"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejection"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc_id",
+          "sha256",
+          "created_at"
+        ],
+        "title": "DocRecord",
+        "description": "One uploaded or showcase document, keyed by ``doc_id`` (B02 §5).\n\n``doc_type``, ``company`` and ``pages`` are filled in by the ``detected`` stage, so they are\nempty while the job is queued. A rejected upload keeps its ``rejection`` code."
+      },
       "ErrorBody": {
         "properties": {
           "code": {
@@ -1533,7 +2199,15 @@
               "audio_too_long",
               "rate_limited",
               "validation_error",
-              "internal_error"
+              "internal_error",
+              "unauthorized",
+              "quota_exceeded",
+              "global_quota_exceeded",
+              "uploads_disabled",
+              "hash_mismatch",
+              "too_large",
+              "doc_not_found",
+              "upload_not_started"
             ],
             "title": "Code"
           },
@@ -1562,6 +2236,29 @@
               }
             ],
             "title": "Trace Id"
+          },
+          "limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit"
+          },
+          "resets_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resets At"
           }
         },
         "type": "object",
@@ -1939,6 +2636,59 @@
         "title": "Money",
         "type": "object"
       },
+      "MyUpload": {
+        "properties": {
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company"
+          },
+          "doc_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "rhp",
+                  "drhp",
+                  "prospectus"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doc Type"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc_id",
+          "company",
+          "doc_type",
+          "created_at",
+          "status"
+        ],
+        "title": "MyUpload"
+      },
       "PageSize": {
         "properties": {
           "width": {
@@ -2101,6 +2851,96 @@
         "title": "Range",
         "type": "object"
       },
+      "ReportOverview": {
+        "properties": {
+          "doc": {
+            "$ref": "#/components/schemas/DocRecord"
+          },
+          "companion_doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Companion Doc Id"
+          },
+          "facts_summary": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Facts Summary"
+          },
+          "risk_level": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Risk Level"
+          },
+          "top_risks": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top Risks"
+          },
+          "redflags_summary": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Redflags Summary"
+          },
+          "offer_line_params": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Offer Line Params"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc"
+        ],
+        "title": "ReportOverview",
+        "description": "``GET /api/docs/{doc_id}/report``."
+      },
       "SectionInfo": {
         "properties": {
           "id": {
@@ -2178,6 +3018,65 @@
         ],
         "title": "SourceSentence",
         "description": "The line of the page a value sits on; ``hit`` is the character span of the value in it."
+      },
+      "StageState": {
+        "properties": {
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "running",
+              "done",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stage",
+          "status"
+        ],
+        "title": "StageState"
       },
       "SuggestedQuestion": {
         "properties": {
@@ -2319,6 +3218,116 @@
           "timings_ms"
         ],
         "title": "Trace"
+      },
+      "UploadComplete": {
+        "properties": {
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "const": "queued",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc_id",
+          "job_id",
+          "status"
+        ],
+        "title": "UploadComplete"
+      },
+      "UploadInit": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "maxLength": 300,
+            "title": "Filename"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Size Bytes"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{64}$",
+            "title": "Sha256"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "size_bytes",
+          "sha256"
+        ],
+        "title": "UploadInit"
+      },
+      "UploadInitResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "exists",
+              "upload"
+            ],
+            "title": "Status"
+          },
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "upload_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upload Url"
+          },
+          "upload_method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "PUT",
+                  "POST"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upload Method"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "doc_id"
+        ],
+        "title": "UploadInitResponse"
       },
       "VoiceResponse": {
         "properties": {
@@ -3187,6 +4196,136 @@
           "message"
         ],
         "title": "ErrorEvent",
+        "type": "object"
+      },
+      "JobStageEvent": {
+        "properties": {
+          "stage": {
+            "title": "Stage",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "start",
+              "end",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Detail"
+          }
+        },
+        "required": [
+          "stage",
+          "status"
+        ],
+        "title": "JobStageEvent",
+        "type": "object"
+      },
+      "JobProgressEvent": {
+        "properties": {
+          "stage": {
+            "title": "Stage",
+            "type": "string"
+          },
+          "done": {
+            "title": "Done",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "stage",
+          "done",
+          "total"
+        ],
+        "title": "JobProgressEvent",
+        "type": "object"
+      },
+      "JobReadyEvent": {
+        "properties": {
+          "part": {
+            "enum": [
+              "facts",
+              "redflags",
+              "risk_level",
+              "risks",
+              "compare",
+              "chat"
+            ],
+            "title": "Part",
+            "type": "string"
+          }
+        },
+        "required": [
+          "part"
+        ],
+        "title": "JobReadyEvent",
+        "type": "object"
+      },
+      "RiskSimplifiedEvent": {
+        "properties": {
+          "rid": {
+            "title": "Rid",
+            "type": "string"
+          },
+          "simple_status": {
+            "enum": [
+              "pending",
+              "ready",
+              "rejected",
+              "failed"
+            ],
+            "title": "Simple Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rid",
+          "simple_status"
+        ],
+        "title": "RiskSimplifiedEvent",
+        "type": "object"
+      },
+      "JobDoneEvent": {
+        "properties": {
+          "status": {
+            "enum": [
+              "ready",
+              "partial",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "failed_stages": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Failed Stages",
+            "type": "array"
+          }
+        },
+        "required": [
+          "status",
+          "failed_stages"
+        ],
+        "title": "JobDoneEvent",
         "type": "object"
       }
     }

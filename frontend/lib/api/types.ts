@@ -310,6 +310,143 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/uploads/init": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Init Upload
+         * @description Start an upload, or point to the existing report when the file was already analysed.
+         */
+        post: operations["init_upload_api_uploads_init_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/uploads/{doc_id}/file": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload File
+         * @description Local profiles only: the raw PDF bytes (the cloud profiles PUT to a signed GCS URL).
+         */
+        post: operations["upload_file_api_uploads__doc_id__file_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/uploads/{doc_id}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete Upload
+         * @description Check the stored file's SHA-256 and size, then queue the processing job.
+         */
+        post: operations["complete_upload_api_uploads__doc_id__complete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/docs/{doc_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Doc */
+        get: operations["get_doc_api_docs__doc_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/docs/{doc_id}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Doc Events
+         * @description Stage events of the latest job; ``Last-Event-ID`` replays everything after that ``seq``.
+         *
+         *     The Supabase pooler has no LISTEN/NOTIFY, so the stream polls ``job_events`` about once a
+         *     second (``jobs.poll_interval_s``) and ends after the ``done`` event.
+         */
+        get: operations["doc_events_api_docs__doc_id__events_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My Uploads */
+        get: operations["my_uploads_api_me_uploads_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/docs/{doc_id}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Report
+         * @description The assembled overview; ready reports are cacheable for an hour (B06 §3).
+         */
+        get: operations["get_report_api_docs__doc_id__report_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -457,19 +594,74 @@ export interface components {
              */
             unit: string | null;
         };
+        /** DocDetail */
+        DocDetail: {
+            doc: components["schemas"]["DocRecord"];
+            /** Job Id */
+            job_id?: string | null;
+            /** Stages */
+            stages: components["schemas"]["StageState"][];
+            /** Companion Doc Id */
+            companion_doc_id?: string | null;
+        };
+        /**
+         * DocRecord
+         * @description One uploaded or showcase document, keyed by ``doc_id`` (B02 §5).
+         *
+         *     ``doc_type``, ``company`` and ``pages`` are filled in by the ``detected`` stage, so they are
+         *     empty while the job is queued. A rejected upload keeps its ``rejection`` code.
+         */
+        DocRecord: {
+            /** Doc Id */
+            doc_id: string;
+            /** Sha256 */
+            sha256: string;
+            /** Doc Type */
+            doc_type?: ("rhp" | "drhp" | "prospectus") | null;
+            /** Company */
+            company?: string | null;
+            /** Pages */
+            pages?: number | null;
+            /** Uploaded By */
+            uploaded_by?: string | null;
+            /**
+             * Is Showcase
+             * @default false
+             */
+            is_showcase: boolean;
+            /** Companion Of */
+            companion_of?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Status
+             * @default processing
+             * @enum {string}
+             */
+            status: "uploading" | "processing" | "ready" | "partial" | "failed";
+            /** Rejection */
+            rejection?: ("scanned" | "password" | "too_large" | "too_many_pages" | "not_offer_document" | "hash_mismatch") | null;
+        };
         /** ErrorBody */
         ErrorBody: {
             /**
              * Code
              * @enum {string}
              */
-            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error";
+            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started";
             /** Message */
             message: string;
             /** Hint */
             hint?: string | null;
             /** Trace Id */
             trace_id?: string | null;
+            /** Limit */
+            limit?: number | null;
+            /** Resets At */
+            resets_at?: string | null;
         };
         /** ErrorResponse */
         ErrorResponse: {
@@ -597,6 +789,22 @@ export interface components {
             /** Precision */
             precision: number;
         };
+        /** MyUpload */
+        MyUpload: {
+            /** Doc Id */
+            doc_id: string;
+            /** Company */
+            company: string | null;
+            /** Doc Type */
+            doc_type: ("rhp" | "drhp" | "prospectus") | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Status */
+            status: string;
+        };
         /** PageSize */
         PageSize: {
             /** Width */
@@ -672,6 +880,35 @@ export interface components {
             /** Raw */
             raw: string;
         };
+        /**
+         * ReportOverview
+         * @description ``GET /api/docs/{doc_id}/report``.
+         */
+        ReportOverview: {
+            doc: components["schemas"]["DocRecord"];
+            /** Companion Doc Id */
+            companion_doc_id?: string | null;
+            /** Facts Summary */
+            facts_summary?: {
+                [key: string]: unknown;
+            } | null;
+            /** Risk Level */
+            risk_level?: {
+                [key: string]: unknown;
+            } | null;
+            /** Top Risks */
+            top_risks?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Redflags Summary */
+            redflags_summary?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Offer Line Params */
+            offer_line_params?: {
+                [key: string]: unknown;
+            } | null;
+        };
         /** SectionInfo */
         SectionInfo: {
             /** Id */
@@ -702,6 +939,24 @@ export interface components {
                 number,
                 number
             ];
+        };
+        /** StageState */
+        StageState: {
+            /** Stage */
+            stage: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "running" | "done" | "failed";
+            /** Started At */
+            started_at?: string | null;
+            /** Finished At */
+            finished_at?: string | null;
+            /** Detail */
+            detail?: {
+                [key: string]: unknown;
+            } | null;
         };
         /** SuggestedQuestion */
         SuggestedQuestion: {
@@ -762,6 +1017,43 @@ export interface components {
             timings_ms: {
                 [key: string]: number;
             };
+        };
+        /** UploadComplete */
+        UploadComplete: {
+            /** Doc Id */
+            doc_id: string;
+            /** Job Id */
+            job_id: string;
+            /**
+             * Status
+             * @constant
+             */
+            status: "queued";
+        };
+        /** UploadInit */
+        UploadInit: {
+            /** Filename */
+            filename: string;
+            /** Size Bytes */
+            size_bytes: number;
+            /** Sha256 */
+            sha256: string;
+        };
+        /** UploadInitResponse */
+        UploadInitResponse: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "exists" | "upload";
+            /** Doc Id */
+            doc_id: string;
+            /** Upload Url */
+            upload_url?: string | null;
+            /** Upload Method */
+            upload_method?: ("PUT" | "POST") | null;
+            /** Expires At */
+            expires_at?: string | null;
         };
         /** VoiceResponse */
         VoiceResponse: {
@@ -1050,6 +1342,60 @@ export interface components {
             code: "llm_unavailable" | "models_warming_up" | "internal_error";
             /** Message */
             message: string;
+        };
+        /** JobStageEvent */
+        JobStageEvent: {
+            /** Stage */
+            stage: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "start" | "end" | "failed";
+            /**
+             * Detail
+             * @default null
+             */
+            detail: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** JobProgressEvent */
+        JobProgressEvent: {
+            /** Stage */
+            stage: string;
+            /** Done */
+            done: number;
+            /** Total */
+            total: number;
+        };
+        /** JobReadyEvent */
+        JobReadyEvent: {
+            /**
+             * Part
+             * @enum {string}
+             */
+            part: "facts" | "redflags" | "risk_level" | "risks" | "compare" | "chat";
+        };
+        /** RiskSimplifiedEvent */
+        RiskSimplifiedEvent: {
+            /** Rid */
+            rid: string;
+            /**
+             * Simple Status
+             * @enum {string}
+             */
+            simple_status: "pending" | "ready" | "rejected" | "failed";
+        };
+        /** JobDoneEvent */
+        JobDoneEvent: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ready" | "partial" | "failed";
+            /** Failed Stages */
+            failed_stages: string[];
         };
     };
     responses: never;
@@ -1774,6 +2120,304 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["GlossaryEntry"][];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    init_upload_api_uploads_init_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UploadInit"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadInitResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    upload_file_api_uploads__doc_id__file_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/pdf": string;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    complete_upload_api_uploads__doc_id__complete_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadComplete"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_doc_api_docs__doc_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocDetail"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    doc_events_api_docs__doc_id__events_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "last-event-id"?: string | null;
+            };
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Server-sent events; see the x-sse-events map for each payload model. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": string;
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    my_uploads_api_me_uploads_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyUpload"][];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_report_api_docs__doc_id__report_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "if-none-match"?: string | null;
+            };
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportOverview"];
                 };
             };
             /** @description Client Error */
