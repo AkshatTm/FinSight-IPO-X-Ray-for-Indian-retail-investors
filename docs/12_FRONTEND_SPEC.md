@@ -1,5 +1,7 @@
 # 12 — Frontend Specification (content, UX, copy, build order)
 
+> **Big Phase 2:** new screens and all their copy are in `docs/phase2/B05_UI_SPEC.md`, which wins for anything new on screen; this spec still applies to existing screens except where B05 changes them (landing "won't" lines, `/reports/[doc_id]` replacing `/ipos/[id]`).
+
 **Status:** authoritative for the frontend. Written by Claude (chat) for Akshat, 3 Oct 2026.
 **Precedence:** for anything on screen (words, layout, states, order of sections) this document wins over `03_UI_UX_DESIGN.md`. For colours, tokens and the "tick and tie" concept, `03` still applies. For payload shapes, `06_API_CONTRACT.md` / `openapi.json` win.
 
@@ -265,7 +267,7 @@ Visual: a static chat bubble pair:
 Three lines with a small "no" icon:
 - It won't tell you whether to apply. · यह नहीं बताएगा कि आपको आवेदन करना चाहिए या नहीं।
 - It won't predict listing prices or profits. · यह लिस्टिंग कीमत या मुनाफ़े का अनुमान नहीं लगाएगा।
-- It won't rate or rank IPOs. · यह आईपीओ को रेटिंग या रैंक नहीं देगा।
+- It won't rate or rank IPOs. · यह आईपीओ को रेटिंग या रैंक नहीं देगा।  *(Phase 2: replaced by the three lines in `docs/phase2/B05_UI_SPEC.md` §2.)*
 **Small paragraph:** In India, investment advice can only come from advisers registered with SEBI. FinSight sticks to what the documents say.
 HI: भारत में निवेश सलाह केवल सेबी में पंजीकृत सलाहकार ही दे सकते हैं। FinSight केवल वही बताता है जो दस्तावेज़ों में लिखा है।
 (Glossary link: SEBI.)

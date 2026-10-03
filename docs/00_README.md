@@ -1,5 +1,7 @@
 # FinSight — Documentation Index (read this first)
 
+> **Big Phase 2 (from 3 Oct 2026):** the Phase 2 docs live in `docs/phase2/` (start with `B00_README.md`, then `B07_ROADMAP.md` and `B_EXECUTION_PLAN.md`). Where they disagree with a numbered doc here, the Phase 2 doc wins (B00 precedence).
+
 FinSight is an **IPO X-Ray** for Indian retail investors: it reads a 400–700 page Red Herring Prospectus (RHP), extracts the key facts with page-level citations, answers questions in English or Hindi (including voice), and marks every number in an answer as ✅ verified / ⚠️ unverifiable / ❌ contradicted against the source document. Everything runs on open-weight models, locally first, deployed later.
 
 Course: CSE472 Deep Learning for NLP (LPU) · Solo build: Akshat Tomar + Claude Code · **Final deadline: Sun 1 Nov 2026**

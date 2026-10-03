@@ -1,5 +1,7 @@
 # 05 — Data and Evaluation
 
+> **Big Phase 2:** new gold sets and experiments E13–E24 (plus E8r, E7c) are in `docs/phase2/B04_DATA_AND_EVALUATION.md`. Outcome columns of the dataset may now be read only by `evaluate/outcomes.py` for E21 (B-ADR-03 narrows ADR-005).
+
 This doc owns datasets, splits, labelling protocols, metric definitions and the experiment list. Every number in the report must trace back to an experiment here and a JSON file in `eval_results/`.
 
 ---

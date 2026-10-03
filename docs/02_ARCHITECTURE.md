@@ -1,5 +1,7 @@
 # 02 — Architecture
 
+> **Big Phase 2:** upload pipeline, jobs, storage/db adapters, new packages, schemas and CPU-first hosting are in `docs/phase2/B02_ARCHITECTURE.md`, which wins where the two disagree. §8 profiles gain `cloud` and `cloud_gpu`; ADR-022's deployment is now the fallback (B-ADR-04).
+
 **Scope:** system design for FinSight v1 (local) and v1-deploy (public "lite"). Payload shapes live in `06_API_CONTRACT.md`; this doc owns module boundaries, data flow, storage and resource planning.
 
 ---

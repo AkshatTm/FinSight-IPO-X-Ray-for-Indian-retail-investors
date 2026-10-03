@@ -1,5 +1,7 @@
 # 06 — API Contract
 
+> **Big Phase 2:** auth, uploads, job events, report parts and `/api/lab/b/*` are in `docs/phase2/B06_API_CONTRACT.md`, which wins on new payloads; `/api/ipos/{id}/…` stays as an alias of `/api/docs/{doc_id}/…`.
+
 FastAPI backend, base path **`/api`**. Every response body is a pydantic model; `uv run poe gen-openapi` writes `openapi.json`, and the frontend generates `lib/api/types.ts` from it. Changing a shape = changing this doc + the model + regenerating types, in one PR (`feat(api)!:` if breaking).
 
 Conventions: JSON, `snake_case` keys, money values as **strings** of decimals (`"8000000000.00"`) to avoid float errors, pages 1-indexed, bboxes in PDF points `[x0, y0, x1, y1]` with page width/height provided so the client can scale.
