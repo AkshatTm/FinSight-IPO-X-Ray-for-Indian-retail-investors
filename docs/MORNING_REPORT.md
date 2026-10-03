@@ -91,6 +91,11 @@
   - Docstring coverage went from 52 % to 84 %; CI now fails below 70 %.
   - Not published yet: putting the site on GitHub Pages is free but waits for your "go". Testing the runbooks once is a laptop follow-up.
 
+- **B4.2 (#156): report drafts updated for Phase 2.**
+  - `report/` now has drafts for the Phase 2 data, the method (upload pipeline, red flags, risk features, rewrites and their checks, risk level, compare, hosting), a results table for E13–E24 that is generated from `eval_results/` (every row says "not run yet" today, so no number is invented), and notes for error analysis and reproducibility.
+  - Five new disclosures for the final report are listed in `report/README.md` (AI-made teacher labels, AI-pre-filled gold, provisional thresholds, outcome data only for checking, mock data on the report page).
+  - Still yours: rewrite every section in your own voice; the result paragraphs get written once the laptop runs produce numbers.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
