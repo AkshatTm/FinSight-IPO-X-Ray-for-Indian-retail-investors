@@ -94,6 +94,9 @@ A missing file → 404 `not_available` (Phase 1 rule); the Lab hides that sectio
 
 ## 6. Admin (Akshat only, by email allow-list)
 `GET /api/admin/costs` → per-day uploads, CPU (and GPU) seconds, share of the free grant, estimated cost; `GET /api/admin/jobs?status=failed`.
+Both need a signed-in user whose email is in `auth.admin_emails` (401 `unauthorized` without a token, 403 `forbidden` otherwise; with `auth.mode: off` the local user is the admin). Built in B3.5a; full shapes in `openapi.json`.
+- `GET /api/admin/costs?days=31` (1–92) → `{days: [{date (IST), uploads, jobs, failed, vcpu_s, gib_s, gpu_s, usd}], total: {uploads, jobs, vcpu_s, gib_s, usd, free_vcpu_share, free_gib_share}, usd_incomplete, provisional, window_days}`. Estimates from `jobs.progress.cost_estimate` (wall-clock × configured size × `costs.rates_usd`); `usd_incomplete` is true when a GPU job has no rate set.
+- `GET /api/admin/jobs?status=failed&days=31&limit=50` (status `failed|done|running|queued`, limit 1–200) → `[{job, created_at, company}]`, newest first; `job.error` holds the rejection code, the failed stage names or a short launch message, never a stack trace.
 
 ## 7. Health
 `/api/health` adds `{queue_length, uploads_enabled, llm: {backend, model, loaded}, worker_last_job_s, storage, db}` (`vllm` only on the optional GPU path).

@@ -127,6 +127,7 @@ nav:
       - Changelog: changelog.md
       - Contributing: contributing.md
       - Security policy: security.md
+      - Security review (B3.5a): security_review.md
       - Privacy: privacy.md
       - Documentation standards: phase2/B09_DOCUMENTATION_STANDARDS.md
       - Git workflow: 08_GIT_WORKFLOW.md

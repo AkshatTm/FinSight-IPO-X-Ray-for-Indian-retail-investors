@@ -243,9 +243,9 @@ Google Cloud is the host because it offers GPUs on Cloud Run. **Billing is not e
 
 - Uploads require a valid Supabase JWT, verified with the project JWKS (asymmetric keys) and an HS256 fallback, checking `aud = authenticated` and `iss`; per-user (3/day) and global (10/day) limits enforced in the DB; `UPLOADS_ENABLED=false` stops all uploads.
 - The client sends a SHA-256; `POST /uploads/{doc_id}/complete` **recomputes it on the server** and rejects a mismatch (422 `hash_mismatch`), so the dedupe can't be poisoned.
-- PDFs: size ≤ `uploads.max_mb` (50), pages ≤ 1,500, parse timeout 10 min, processed only inside the worker job (never in the API process).
+- PDFs: size ≤ `uploads.max_mb` (50), pages ≤ 1,500, parse timeout 10 min, processed only inside the worker job (never in the API process); the API checks the stored size from metadata before reading a file (a signed PUT has no size cap) and caps a local upload body while reading it.
 - Signed, short-lived Storage URLs for page images of non-public uploads; showcase pages public.
-- No secrets in the frontend; CORS restricted to the Vercel domains (production + previews); rate limits on chat/voice (Phase 1) and on `…/simplify` per IP.
+- No secrets in the frontend; CORS restricted to the Vercel domains (production + previews); rate limits on chat/voice (Phase 1) and on `…/simplify` per IP (behind proxies, the client IP comes from `X-Forwarded-For`, trusting only `uploads.trusted_proxy_hops` entries from the right). Review: `docs/security_review.md` (B3.5a).
 - Prompt-injection protections (Phase 1) apply to risk texts; rewrites go through output filters.
 - Privacy: redaction of personal addresses/contacts (Phase 1 B3 layers) applies to risk bodies before display.
 
