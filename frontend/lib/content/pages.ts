@@ -11,6 +11,17 @@ export const PAGES = {
   },
   "how.row1": { en: "Preparing an IPO (once)", hi: "आईपीओ तैयार करना (एक बार)" },
   "how.row2": { en: "Answering a question (every time)", hi: "सवाल का जवाब देना (हर बार)" },
+  // B05 §8 row 3 (English verbatim; Hindi and the no-number variant of step 6 are builder drafts)
+  "how.row3": { en: "Analysing an uploaded document", hi: "अपलोड किए गए दस्तावेज़ का विश्लेषण" },
+  "how.r1.h": { en: "Upload", hi: "अपलोड" },
+  "how.r2.h": { en: "Check it's an offer document", hi: "जाँचना कि यह ऑफ़र दस्तावेज़ है" },
+  "how.r3.h": { en: "Read and find sections", hi: "पढ़ना और सेक्शन ढूँढना" },
+  "how.r4.h": { en: "Red-flag checks", hi: "चेतावनी संकेतों की जाँच" },
+  "how.r5.h": { en: "Find every risk", hi: "हर जोखिम ढूँढना" },
+  "how.r6.h": { en: "Compare each risk with {n} past IPOs", hi: "हर जोखिम की {n} पिछले आईपीओ से तुलना" },
+  "how.r6.h0": { en: "Compare each risk with past IPOs", hi: "हर जोखिम की पिछले आईपीओ से तुलना" },
+  "how.r7.h": { en: "Rewrite in plain English and check the numbers", hi: "आसान अंग्रेज़ी में लिखना और आंकड़े जाँचना" },
+  "how.r8.h": { en: "Risk level", hi: "जोखिम स्तर" },
   "how.link.ather": { en: "See it on Ather Energy", hi: "Ather Energy पर देखें" },
   "how.link.lenskart": { en: "See it on Lenskart", hi: "Lenskart पर देखें" },
   "how.p1.h": { en: "Read the PDF", hi: "पीडीएफ़ पढ़ना" },
@@ -96,6 +107,19 @@ export const PAGES = {
   "about.limits.5": {
     en: "Some evaluation data was drafted with AI help and checked by the author.",
     hi: "कुछ मूल्यांकन डेटा AI की मदद से बनाया गया और लेखक ने उसे जाँचा।",
+  },
+  // B05 §8 additions [copy: Akshat to approve]; Hindi is a builder draft
+  "about.limits.6": {
+    en: "The risk level compares disclosures with past IPOs. It is not a prediction or a recommendation.",
+    hi: "जोखिम स्तर खुलासों की पिछले आईपीओ से तुलना करता है। यह भविष्यवाणी या सिफ़ारिश नहीं है।",
+  },
+  "about.limits.7": {
+    en: "Plain-English rewrites can miss nuance; the original is always one click away.",
+    hi: "आसान भाषा में लिखे वाक्यों में बारीकी छूट सकती है; मूल पाठ हमेशा एक क्लिक दूर है।",
+  },
+  "about.limits.8": {
+    en: "'Unusual' means rare among IPOs from 2018 to 2023, so very recent kinds of risk can look more unusual than they are.",
+    hi: "'असामान्य' का मतलब है 2018 से 2023 के आईपीओ में दुर्लभ, इसलिए बहुत नए तरह के जोखिम असल से ज़्यादा असामान्य दिख सकते हैं।",
   },
   "about.advice.h": { en: "Not investment advice", hi: "यह निवेश सलाह नहीं है" },
   "about.licence.h": { en: "Licences", hi: "लाइसेंस" },

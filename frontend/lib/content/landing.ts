@@ -1,4 +1,6 @@
-// Landing page copy, docs/12_FRONTEND_SPEC.md section 5 (verbatim). Hindi marked [HI review] in the
+// Landing page copy, docs/12_FRONTEND_SPEC.md section 5 (verbatim), with the Phase 2 changes from
+// docs/phase2/B05_UI_SPEC.md §2 (English verbatim; B05 gives no Hindi, so the Hindi of those lines
+// is a builder draft listed in docs/AKSHAT_TODO.md). Hindi marked [HI review] in the
 // spec is listed in docs/AKSHAT_TODO.md. `[[id|text]]` marks a glossary term (see components/ui/Rich.tsx).
 type Entry = { en: string; hi: string };
 
@@ -6,14 +8,15 @@ export const LANDING = {
   // 5.2 hero
   "land.h1": { en: "Read the fine print. All 500 pages of it.", hi: "बारीक़ शर्तें पढ़िए। पूरे 500 पन्ने।" },
   "land.sub": {
-    en: "FinSight reads an IPO's offer document for you, pulls out the numbers that matter, and shows you the exact page each one came from.",
-    hi: "FinSight आपके लिए आईपीओ का ऑफ़र दस्तावेज़ पढ़ता है, ज़रूरी आंकड़े निकालता है, और हर आंकड़ा किस पन्ने से आया है, वह भी दिखाता है।",
+    en: "Upload any IPO offer document. FinSight finds the risks, explains them in plain English, and shows you the exact page each one came from.",
+    hi: "कोई भी आईपीओ ऑफ़र दस्तावेज़ अपलोड करें। FinSight जोखिम ढूँढता है, उन्हें आसान भाषा में समझाता है, और हर एक किस पन्ने से आया है, वह भी दिखाता है।",
   },
-  "land.cta": { en: "Try it on a real IPO", hi: "किसी असली आईपीओ पर आज़माएँ" },
+  "land.cta": { en: "Analyse an IPO document", hi: "आईपीओ दस्तावेज़ का विश्लेषण करें" },
+  "land.sample": { en: "Explore a sample report", hi: "एक नमूना रिपोर्ट देखें" },
   "land.how": { en: "How it works", hi: "यह कैसे काम करता है" },
   "land.free": {
-    en: "Free. No sign-up. Runs on open-source models.",
-    hi: "मुफ़्त। कोई साइन-अप नहीं। ओपन-सोर्स मॉडल पर चलता है।",
+    en: "Free. Sign in with Google to upload. Runs on open-source models.",
+    hi: "मुफ़्त। अपलोड करने के लिए Google से साइन इन करें। ओपन-सोर्स मॉडल पर चलता है।",
   },
   "land.lens.alt": {
     en: "Cover page of a Red Herring Prospectus with the fresh issue amount highlighted and marked as matching the document.",
@@ -81,6 +84,29 @@ export const LANDING = {
   "land.marks.contradicted": { en: "the document says something different.", hi: "दस्तावेज़ में कुछ और लिखा है।" },
 
   // 5.6 mini demo
+  // B05 §2: "What you get", after "How FinSight works"
+  "land.get.h": { en: "What you get", hi: "आपको क्या मिलता है" },
+  "land.get.1.h": { en: "The key facts.", hi: "मुख्य तथ्य।" },
+  "land.get.1.b": {
+    en: "Issue size, price, who is selling, what the money is for. Each linked to its page.",
+    hi: "इश्यू का आकार, कीमत, कौन बेच रहा है, पैसा किस काम में लगेगा। हर एक उसके पन्ने से जुड़ा।",
+  },
+  "land.get.2.h": { en: "Red flags.", hi: "चेतावनी संकेत।" },
+  "land.get.2.b": {
+    en: "13 checks, like losses, cash burn, debt, and how cheaply insiders bought their shares. Each marked OK, Watch or Concern.",
+    hi: "13 जाँचें, जैसे घाटा, नकदी का खर्च, कर्ज़, और अंदरूनी लोगों ने अपने शेयर कितने सस्ते में ख़रीदे। हर एक पर ठीक, ध्यान दें या चिंता का निशान।",
+  },
+  "land.get.3.h": { en: "Every risk, in plain English.", hi: "हर जोखिम, आसान भाषा में।" },
+  "land.get.3.b": {
+    en: "Companies list dozens of risks in legal language. FinSight rewrites each one in simple words and shows the unusual ones first.",
+    hi: "कंपनियाँ दर्जनों जोखिम कानूनी भाषा में लिखती हैं। FinSight हर एक को आसान शब्दों में लिखता है और असामान्य जोखिम पहले दिखाता है।",
+  },
+  "land.get.4.h": { en: "A risk level.", hi: "एक जोखिम स्तर।" },
+  "land.get.4.b": {
+    en: "Low, Medium or High, compared with past Indian IPOs, with the reasons listed.",
+    hi: "कम, मध्यम या ऊँचा, पिछले भारतीय आईपीओ से तुलना करके, कारणों के साथ।",
+  },
+
   "land.demo.h": { en: "Try it here", hi: "यहीं आज़माएँ" },
   "land.demo.b": {
     en: "Click a fact. FinSight jumps to the page and highlights where it came from.",
@@ -104,9 +130,12 @@ export const LANDING = {
 
   // 5.8 limits
   "land.no.h": { en: "What FinSight won't do", hi: "FinSight क्या नहीं करेगा" },
-  "land.no.1": { en: "It won't tell you whether to apply.", hi: "यह नहीं बताएगा कि आपको आवेदन करना चाहिए या नहीं।" },
+  "land.no.1": { en: "It won't tell you whether to apply or buy.", hi: "यह नहीं बताएगा कि आपको आवेदन या ख़रीद करना चाहिए या नहीं।" },
   "land.no.2": { en: "It won't predict listing prices or profits.", hi: "यह लिस्टिंग कीमत या मुनाफ़े का अनुमान नहीं लगाएगा।" },
-  "land.no.3": { en: "It won't rate or rank IPOs.", hi: "यह आईपीओ को रेटिंग या रैंक नहीं देगा।" },
+  "land.no.3": {
+    en: "Its risk level describes what the document discloses. It is not a recommendation.",
+    hi: "इसका जोखिम स्तर बताता है कि दस्तावेज़ में क्या बताया गया है। यह कोई सिफ़ारिश नहीं है।",
+  },
   "land.no.p": {
     en: "In India, investment advice can only come from advisers registered with [[sebi|SEBI]]. FinSight sticks to what the documents say.",
     hi: "भारत में निवेश सलाह केवल [[sebi|सेबी]] में पंजीकृत सलाहकार ही दे सकते हैं। FinSight केवल वही बताता है जो दस्तावेज़ों में लिखा है।",
@@ -121,6 +150,8 @@ export const LANDING = {
   "land.stat.ipos": { en: "IPOs read", hi: "आईपीओ पढ़े गए" },
   "land.stat.pages": { en: "pages processed", hi: "पन्ने पढ़े गए" },
   "land.stat.detect": { en: "of planted number errors caught", hi: "जानबूझकर डाली गई गलतियों में से पकड़ी गईं" },
+  "land.stat.risks": { en: "risks explained", hi: "जोखिम समझाए गए" },
+  "land.stat.corpus": { en: "past IPOs used for comparison", hi: "तुलना के लिए इस्तेमाल हुए पिछले आईपीओ" },
   "land.stat.robust": {
     en: "accuracy of our model when the cover page is hidden",
     hi: "कवर पेज छिपाने पर हमारे मॉडल की सटीकता",

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef, useState, useSyncExternalStore } from "react";
 import { VerdictMark } from "@/components/facts/VerdictMark";
 import { detectCssGlass } from "@/components/glass/GlassSurface";
+import { SAMPLE_REPORT_DOC_ID } from "@/lib/showcase";
 import { useT } from "@/lib/useT";
 
 // The fresh-issue line of Ather's RHP page 3 (public/landing/ather-rhp-p3.webp, the pipeline's own
@@ -84,13 +85,13 @@ export function Hero() {
         <p className="mt-6 max-w-xl text-lg text-muted">{t("land.sub")}</p>
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Link
-            href="/ipos"
+            href="/upload"
             className="inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg transition-transform duration-150 active:scale-[0.97]"
           >
             {t("land.cta")}
           </Link>
-          <Link href="/how-it-works" className="inline-flex h-12 items-center text-stamp underline underline-offset-4">
-            {t("land.how")}
+          <Link href={`/reports/${SAMPLE_REPORT_DOC_ID}`} className="inline-flex h-12 items-center text-stamp underline underline-offset-4">
+            {t("land.sample")}
           </Link>
         </div>
         <p className="mt-4 text-sm text-muted">{t("land.free")}</p>
