@@ -12,9 +12,9 @@ concurrency:
 permissions:
   contents: read
 
-# B09 §9, B4.1 groundwork. Generated pages and openapi.json must be current (hard checks; the
-# same freshness check also runs in pytest). The site build, Markdown lint and docstring
-# coverage are warn-only until B4.1 proper. Publishing to GitHub Pages is added after Akshat's go.
+# B09 §9. Hard checks: generated pages and openapi.json are current (the page check also runs
+# in pytest), the strict site build, and the 70 % docstring floor. Warn-only: the 80 % docstring
+# target and Markdown lint. Publishing to GitHub Pages is added after Akshat's go.
 jobs:
   site:
     runs-on: ubuntu-latest
@@ -29,12 +29,13 @@ jobs:
         run: uv run poe docs-gen --check
       - name: openapi.json is current
         run: uv run poe gen-openapi --check
-      - name: Build the site (strict, warn-only)
-        continue-on-error: true
+      - name: Build the site (strict)
         run: uv run poe docs-build
-      - name: Docstring coverage (warn-only, B4.1 target 80 %)
+      - name: Docstring coverage floor (70 %)
+        run: uv run interrogate src/finsight
+      - name: Docstring coverage target (80 %, warn-only)
         continue-on-error: true
-        run: uv run interrogate src/finsight --fail-under 70
+        run: uv run interrogate src/finsight --fail-under 80
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
