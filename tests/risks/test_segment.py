@@ -190,6 +190,20 @@ def test_without_table_boxes_a_bold_table_header_would_start_a_risk() -> None:
     assert len(segment_pages(pages)) == 3  # why the table boxes matter
 
 
+def test_bold_figure_rows_and_lowercase_fragments_are_not_titles() -> None:
+    # Seen on the LG Electronics RHP (B1.2 local check): a bold table row and a bold quote.
+    p = PageBuilder(40).line(b("Internal Risks"))
+    p.line(b("We depend on our Promoter for licences and our supply chain."), r("Body text here."))
+    p.line(b("Purchases of 46,457.05 100.00% 42,917.24 100.00% 183,356.60 100.00%"), r("raw"))
+    p.line(r("more body"))
+    p.line(b("adverse change in our relationship with the Group could have an impact"), r("on"))
+    p.line(r("page 38."))
+    spans = segment_pages([p.page(), PageBuilder(41).page(), PageBuilder(42).page()])
+    assert [s.title for s in spans] == [
+        "We depend on our Promoter for licences and our supply chain."
+    ]
+
+
 def test_a_long_bold_paragraph_without_a_full_stop_is_not_a_title() -> None:
     p = PageBuilder(40).line(b("Internal Risks"))
     for _ in range(4):

@@ -29,6 +29,7 @@ MAX_TITLE_LINES = 3
 MARGIN_TOLERANCE = 15.0  # points right of the page's left margin a title may start
 PARAGRAPH_GAP = 1.6  # a vertical gap above this many line heights starts a new paragraph
 
+_FIGURE = re.compile(r"^[(₹$]?-?[\d,]*\d[\d,.]*%?\)?\*?$")
 NUMBER_PREFIX = re.compile(r"^(?:\d{1,3}\.|\(\w{1,4}\))$")
 _GROUP = re.compile(
     r"^(?:[A-Z]\.\s*|[IVX]{1,4}\.\s*)?(?:"
@@ -222,6 +223,10 @@ def _check(words: list[str], used: int, rest: int) -> tuple[list[str], int, int]
     """B02 §6: ≥ 5 words, and either ≤ 3 lines or ending with a full stop."""
     if len(words) < MIN_TITLE_WORDS:
         return None
+    if words[0][:1].islower():
+        return None  # a bold quote or cross-reference inside a body, not the start of a risk
+    if sum(bool(_FIGURE.match(w)) for w in words) * 5 >= len(words) * 2:
+        return None  # a bold table row the table detector missed
     if used > MAX_TITLE_LINES and not words[-1].endswith("."):
         return None
     return words, used, rest
