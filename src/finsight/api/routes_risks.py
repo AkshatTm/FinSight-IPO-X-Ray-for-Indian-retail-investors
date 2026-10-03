@@ -17,8 +17,10 @@ from pydantic import BaseModel
 from finsight.api.errors import ApiError, ErrorResponse
 from finsight.api.routes_docs import _doc
 from finsight.api.uploads_state import UState
-from finsight.core.schemas import Risk, RiskCategory, SimpleStatus
+from finsight.core.schemas import Risk, RiskCategory, RiskLevel, SimpleStatus
 from finsight.jobs import load_simplified
+from finsight.risklevel import RISKLEVEL_FILE
+from finsight.risklevel import load_config as risklevel_config
 from finsight.risks import risks_config
 from finsight.storage import doc_key, get_json
 
@@ -155,3 +157,15 @@ def simplify_risk(doc_id: DocId, rid: Rid, state: UState, request: Request) -> S
         return SimplifyQueued(rid=rid, simple_status=risk.simple_status, position=-1)
     position = state.db.bump(doc_id, rid)
     return SimplifyQueued(rid=rid, simple_status="pending", position=position)
+
+
+@router.get("/docs/{doc_id}/risk-level", tags=["risks"])
+def get_risk_level(doc_id: DocId, state: UState) -> RiskLevel:
+    """The level with its reasons (B02 §7.4). ``behind_click`` follows the current config, so the
+    teacher's "hide it" switch works without recomputing reports."""
+    _doc(state, doc_id)
+    key = doc_key(doc_id, RISKLEVEL_FILE)
+    if not state.storage.exists(key):
+        raise ApiError(404, "not_available", "The risk level for this report isn't ready yet.")
+    level = RiskLevel.model_validate(get_json(state.storage, key))
+    return level.model_copy(update={"behind_click": bool(risklevel_config()["behind_click"])})

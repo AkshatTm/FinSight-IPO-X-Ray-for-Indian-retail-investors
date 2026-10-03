@@ -521,6 +521,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/docs/{doc_id}/risk-level": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Risk Level
+         * @description The level with its reasons (B02 §7.4). ``behind_click`` follows the current config, so the
+         *     teacher's "hide it" switch works without recomputing reports.
+         */
+        get: operations["get_risk_level_api_docs__doc_id__risk_level_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1068,6 +1089,60 @@ export interface components {
             simple_status: "pending" | "ready" | "rejected" | "failed";
             /** Simple Checks */
             simple_checks?: components["schemas"]["CheckResult"][];
+        };
+        /**
+         * RiskLevel
+         * @description B02 §7.4: points over the checks available, placed among past IPOs (2018-2023).
+         */
+        RiskLevel: {
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "low" | "medium" | "high";
+            /** Points */
+            points: number;
+            /** Max Points */
+            max_points: number;
+            /** Score */
+            score: number;
+            /** Percentile */
+            percentile: number;
+            /** Checks Available */
+            checks_available: number;
+            /** Reasons */
+            reasons: components["schemas"]["RiskLevelReason"][];
+            /** Thresholds */
+            thresholds: {
+                [key: string]: number;
+            };
+            /** Corpus N */
+            corpus_n: number;
+            /** Provisional */
+            provisional: boolean;
+            /** Behind Click */
+            behind_click: boolean;
+            /**
+             * Disclaimer Key
+             * @default risklevel.disclaimer
+             */
+            disclaimer_key: string;
+        };
+        /** RiskLevelReason */
+        RiskLevelReason: {
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "redflag" | "risk";
+            /** Id */
+            id: string;
+            /** Label */
+            label: string;
+            /** Points */
+            points: number;
+            /** Link */
+            link: string;
         };
         /** RisksPage */
         RisksPage: {
@@ -2778,6 +2853,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SimplifyQueued"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_risk_level_api_docs__doc_id__risk_level_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RiskLevel"];
                 };
             };
             /** @description Client Error */
