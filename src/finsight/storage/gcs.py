@@ -18,7 +18,7 @@ class GCSStorage:
 
     def __init__(self, bucket: str, client: Any | None = None) -> None:
         if client is None:  # pragma: no cover - needs the cloud group and credentials
-            from google.cloud import storage as gcs  # type: ignore[import-not-found,unused-ignore]
+            from google.cloud import storage as gcs  # type: ignore[import-not-found,import-untyped,unused-ignore]
 
             client = gcs.Client()
         self.client = client
