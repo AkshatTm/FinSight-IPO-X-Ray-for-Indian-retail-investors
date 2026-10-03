@@ -1,10 +1,15 @@
 # FinSight — IPO X-Ray for Indian retail investors
 
 [![backend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml)
+[![frontend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml)
+[![docs](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/docs.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/docs.yml)
+[![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
+![Node 24](https://img.shields.io/badge/node-24-green.svg)
 
-**FinSight reads an Indian IPO prospectus and shows a fact sheet where every figure is cited to its page, then answers questions in English or Hindi and marks every number in the answer ✅ verified, ⚠️ unverifiable or ❌ contradicted.** Everything runs on open-weight models on a laptop.
+**FinSight reads an Indian IPO prospectus and shows a fact sheet where every figure is cited to its page, then answers questions in English or Hindi and marks every number in the answer ✅ verified, ⚠️ unverifiable or ❌ contradicted.** Phase 2 adds uploads: give it any IPO offer document and it builds a report with red flags, the risk factors in plain English, a risk level with its reasons, and comparisons with peers and past IPOs. Every model is open-weight.
 
-**Not investment advice.** FinSight summarises public disclosures. It never recommends whether to apply, rates an IPO or predicts a price.
+**Not investment advice.** FinSight summarises public disclosures. It never recommends whether to apply, buy or sell, and never predicts a price. The risk level describes what the document discloses, with its reasons and a disclaimer; it is not a rating.
 
 Course project for CSE472 (Deep Learning for NLP), due 1 November 2026.
 
@@ -36,6 +41,25 @@ flowchart LR
   F --> H
   E --> K
 ```
+
+### Phase 2: upload any offer document
+
+```mermaid
+flowchart LR
+  U[Upload an RHP, DRHP or Prospectus] --> V[Checks: type, size, text layer, duplicate]
+  V --> P[Parse and find sections]
+  P --> F[Red-flag inputs and checks]
+  P --> R[Risk factors: category, unusual?, hedging, numbers]
+  R --> S[Plain-English rewrites, number and certainty checked]
+  F --> L[Risk level with reasons and disclaimer]
+  R --> L
+  P --> C[Compare: peers and past IPOs]
+  L --> Rep[Report]
+  S --> Rep
+  C --> Rep
+```
+
+The API runs on Cloud Run CPU, the pipeline as a Cloud Run job (an optional L4 GPU job speeds up the rewrites), with Supabase for sign-in and Postgres. The definitions are in `deploy/gcp/`; nothing is deployed yet. See the [architecture page](docs/architecture/index.md).
 
 Two ideas carry the project. The extractor is trained without hand labels: seeds from cover-page rules are propagated across 389 older prospectuses and used to fine-tune a QA model (distant supervision). The number check involves no model: each number in an answer is normalised (lakh, crore, million, Hindi words and digits) and compared with the number in the passage the answer cites.
 
@@ -69,7 +93,20 @@ cd frontend && pnpm install && pnpm dev    # http://localhost:3000
 NEXT_PUBLIC_USE_MOCKS=1 pnpm dev            # the site on fixtures, no backend
 ```
 
-The PDFs are public filings but are not in the repository. To rebuild an IPO: put its RHP and Prospectus under `data/raw/` as listed in `configs/demo_ipos.yaml`, then `uv run python -m finsight.pipeline build --ipo <id>`. Chat needs [Ollama](https://ollama.com) with `qwen3.5:2b` (profile `full`). Model work needs `uv sync --group ml` (CUDA PyTorch) and, for voice, `--group asr`; training ran on Kaggle only. Deployment is prepared but not done: see [`docs/DEPLOY_STEPS.md`](docs/DEPLOY_STEPS.md). Documentation index: [`docs/00_README.md`](docs/00_README.md); decisions: [`docs/09_DECISIONS.md`](docs/09_DECISIONS.md).
+Documentation site: `uv sync --group docs` then `uv run poe docs` (http://localhost:8000; the API uses the same port, so stop one first). It holds tutorials, how-to guides, the API and configuration reference, the [evaluation page](docs/evaluation.md), model cards, datasheets and runbooks; [troubleshooting](docs/troubleshooting.md) lists the 15 most common problems.
+
+The PDFs are public filings but are not in the repository. To rebuild an IPO: put its RHP and Prospectus under `data/raw/` as listed in `configs/demo_ipos.yaml`, then `uv run python -m finsight.pipeline build --ipo <id>`. Chat needs [Ollama](https://ollama.com) with `qwen3.5:2b` (profile `full`). Model work needs `uv sync --group ml` (CUDA PyTorch) and, for voice, `--group asr`; training ran on Kaggle only. Deployment is prepared but not done: see the [deploy runbook](docs/runbooks/DEPLOY_RUNBOOK.md). Planning documents: [`docs/00_README.md`](docs/00_README.md) (Phase 1) and [`docs/phase2/B00_README.md`](docs/phase2/B00_README.md) (Phase 2); decisions: [ADR index](docs/adr/index.md).
+
+## Limitations
+
+- Scores rest on small, AI-assisted gold sets (7 test IPOs for the extractors); the [evaluation page](docs/evaluation.md) lists every caveat.
+- Phase 2 thresholds and past-IPO reference values are provisional placeholders until the local runs over the 2018–2023 corpus replace them; the pages say so.
+- Chat answers come from small local models and can be wrong; the verifier marks numbers, not reasoning.
+- Hindi output is checked by one reviewer.
+
+## Contributing, security and privacy
+
+[CONTRIBUTING.md](CONTRIBUTING.md) · [SECURITY.md](SECURITY.md) · [PRIVACY.md](PRIVACY.md) · [CHANGELOG.md](CHANGELOG.md) · [Code of conduct](CODE_OF_CONDUCT.md)
 
 ## Licences
 

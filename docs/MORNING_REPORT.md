@@ -83,6 +83,14 @@
   - Red flags are listed concerns first. Risks can be sorted, searched and filtered, and "Explain this" asks for a plain-English version, which appears on its own a few seconds later.
   - Everything runs on **made-up sample data** for now. Once the fixture pack exists, a short laptop session checks it against real documents and swaps in real samples; the prompt is in AKSHAT_TODO. A few new UI lines need your OK (AKSHAT_TODO, "New copy to review").
 
+- **B4.1 (#153): the documentation website, complete for the cloud half.**
+  - A docs website (MkDocs Material) builds from the `docs/` folder: getting-started tutorials, how-to guides (add a showcase IPO, add a fact, retrain the models, record the demo, deploy), a troubleshooting page with the 15 most likely problems, architecture diagrams, and runbooks for deploying, rolling back, cost incidents, rotating secrets, restoring the database and monitoring.
+  - Nothing with a number is typed by hand. The settings, data formats, glossary and design-decision list are generated, and so are the numbers inside the evaluation page, the model cards (extractor, BiLSTM-CRF, MuRIL guard) and the datasheets (corpus, weak labels, gold sets). CI fails if any of them goes stale.
+  - New project files: CHANGELOG, CONTRIBUTING, SECURITY, PRIVACY (checked against what the database really stores) and a code of conduct. The README now describes Phase 2.
+  - Two real bugs fixed on the way: the JSON logs were never switched on (now on in Cloud Run, with document and job ids on failures), and the frontend's API address had two different names (now `FINSIGHT_API_ORIGIN` everywhere).
+  - Docstring coverage went from 52 % to 84 %; CI now fails below 70 %.
+  - Not published yet: putting the site on GitHub Pages is free but waits for your "go". Testing the runbooks once is a laptop follow-up.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
