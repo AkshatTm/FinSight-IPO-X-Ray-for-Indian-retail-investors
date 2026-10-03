@@ -27,6 +27,7 @@ gcloud config set project "$GCP_PROJECT"
    only for the GPU path.
 5. **Render:** `uv run python scripts/render_deploy.py --set IMAGE_TAG=v2026-10-12` → `dist/deploy/`.
 6. **Deploy:**
+
    ```bash
    gcloud run jobs replace dist/deploy/worker-job.yaml --region "$GCP_REGION"
    gcloud run jobs replace dist/deploy/sweep-job.yaml --region "$GCP_REGION"
@@ -36,6 +37,7 @@ gcloud config set project "$GCP_PROJECT"
    # optional GPU path (quota + billing):
    gcloud run jobs replace dist/deploy/gpu-job.yaml --region "$GCP_REGION"
    ```
+
 7. **Retention schedule:** Cloud Scheduler job, daily 03:10 IST, HTTP POST to the Run Admin API
    `…/jobs/finsight-sweep:run` with OAuth as `finsight-worker@`.
 8. **Vercel:** set `FINSIGHT_API_ORIGIN` to the service URL (no trailing slash; Next.js rewrites `/api/*` to it); redeploy the site.

@@ -34,7 +34,7 @@ flowchart LR
 ```
 
 | Container | Code | Profile | Notes |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Web app | `frontend/` | — | MSW mocks with `NEXT_PUBLIC_USE_MOCKS=1` |
 | API | `finsight.api` (`deploy/api.Dockerfile`) | `cloud` | No PyTorch; BM25 chat; scales to zero |
 | Worker job | `python -m finsight.jobs run` (`deploy/worker.Dockerfile`) | `cloud` | Every stage; top-15 rewrites with the student GGUF when there is no GPU |

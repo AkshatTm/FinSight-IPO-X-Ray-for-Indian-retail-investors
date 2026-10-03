@@ -62,8 +62,8 @@ Three wrong answers from the test IPOs:
 | IPO | Field | Read | Checked value |
 | --- | --- | --- | --- |
 | `hdb-financial-services-2025` p.8 | `book_running_lead_managers` | JM Financial Limited, BNP Paribas, BofA Securities India Limited, Goldman Sachs (India) Securities Private Limited, HSB… | JM Financial Limited; BNP Paribas; BofA Securities India Limited; Goldman Sachs (India) Securities Private Limited; HSB… |
-| `lenskart-2025` p.None | `book_running_lead_managers` |  | Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Avendus Capital Private Limited;… |
-| `lg-electronics-india-2025` p.None | `book_running_lead_managers` |  | Axis Capital Limited; Citigroup Global Markets India Private Limited; Morgan Stanley India Company Private Limited; J.P… |
+| `lenskart-2025` | `book_running_lead_managers` | (nothing found) | Kotak Mahindra Capital Company Limited; Morgan Stanley India Company Private Limited; Avendus Capital Private Limited;… |
+| `lg-electronics-india-2025` | `book_running_lead_managers` | (nothing found) | Axis Capital Limited; Citigroup Global Markets India Private Limited; Morgan Stanley India Company Private Limited; J.P… |
 
 <!-- generated:failures end -->
 

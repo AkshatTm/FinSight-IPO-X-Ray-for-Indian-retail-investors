@@ -422,10 +422,9 @@ def _failures_block(rung: str) -> str:
     ][:3]
     rows = ["| IPO | Field | Read | Checked value |\n| --- | --- | --- | --- |\n"]
     for field, ex in wrong:
-        rows.append(
-            f"| `{ex['ipo_id']}` p.{ex['page']} | `{field}` | {_short(ex['read'])} | "
-            f"{_short(ex['checked'])} |\n"
-        )
+        where = f"`{ex['ipo_id']}`" + (f" p.{ex['page']}" if ex.get("page") else "")
+        read = _short(ex["read"]) if ex.get("read") else "(nothing found)"
+        rows.append(f"| {where} | `{field}` | {read} | {_short(ex['checked'])} |\n")
     return "".join(rows)
 
 

@@ -5,3 +5,5 @@ config:
   MD033: false        # inline HTML: the Redoc page needs a container and a script
   MD041: false        # generated pages start with a provenance comment
   MD046: false        # admonitions indent their body
+  MD024:
+    siblings_only: true  # Keep a Changelog repeats "Added" / "Changed" under each release
