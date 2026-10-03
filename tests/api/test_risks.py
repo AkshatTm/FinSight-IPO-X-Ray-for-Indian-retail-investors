@@ -210,3 +210,25 @@ def test_redflags_endpoint(client: TestClient, state: UploadState) -> None:
     assert body["flags"][0]["id"] == "RF04"
     assert body["flags"][0]["evidence"] == []
     assert body["financial_company"] is False
+
+
+@pytest.mark.parametrize(
+    ("hops", "header", "expected"),
+    [
+        (0, "1.1.1.1, 9.9.9.9", "peer"),  # default: the header is ignored
+        (1, "6.6.6.6, 1.1.1.1", "1.1.1.1"),  # spoofed left part is never used
+        (2, "6.6.6.6, 1.1.1.1, 9.9.9.9", "1.1.1.1"),
+        (2, "9.9.9.9", "peer"),  # fewer entries than proxies: fall back to the socket peer
+    ],
+)
+def test_client_ip_trusts_only_the_configured_proxy_hops(
+    hops: int, header: str, expected: str
+) -> None:
+    from starlette.requests import Request
+
+    scope = {
+        "type": "http",
+        "headers": [(b"x-forwarded-for", header.encode())],
+        "client": ("peer", 1234),
+    }
+    assert routes_risks.client_ip(Request(scope), hops) == expected

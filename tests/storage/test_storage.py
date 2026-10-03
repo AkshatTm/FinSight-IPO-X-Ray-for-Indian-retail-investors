@@ -34,6 +34,10 @@ class _FakeBlob:
     def exists(self) -> bool:
         return self.name in self.store
 
+    @property
+    def size(self) -> int:
+        return len(self.store[self.name])
+
     def delete(self) -> None:
         del self.store[self.name]
 
@@ -48,6 +52,9 @@ class _FakeBucket:
 
     def blob(self, name: str) -> _FakeBlob:
         return _FakeBlob(self.store, name)
+
+    def get_blob(self, name: str) -> _FakeBlob | None:
+        return _FakeBlob(self.store, name) if name in self.store else None
 
 
 class FakeGcsClient:
@@ -83,6 +90,13 @@ def test_round_trip_list_and_delete(storage: Storage) -> None:
 def test_missing_key_is_a_key_error(storage: Storage) -> None:
     with pytest.raises(KeyError):
         storage.get_bytes("docs/none/report.json")
+    with pytest.raises(KeyError):
+        storage.size("docs/none/report.json")
+
+
+def test_size_reads_metadata_only(storage: Storage) -> None:
+    storage.put_bytes(doc_key("doc_a", "source.pdf"), b"%PDF-1.7 x")
+    assert storage.size("docs/doc_a/source.pdf") == 10
 
 
 @pytest.mark.parametrize("bad", ["", "/etc/passwd", "docs/../x", "docs\\x"])

@@ -172,6 +172,38 @@ def test_too_large_at_init(client: TestClient) -> None:
     assert (resp.status_code, resp.json()["error"]["code"]) == (422, "too_large")
 
 
+def test_oversized_stored_file_is_refused_before_it_is_read(
+    client: TestClient, state: UploadState, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    data = _pdf(tmp_path)
+    started = _init(client, data)
+    client.post(started["upload_url"], content=data)
+    state.settings.uploads.max_mb = 0  # the stored file is now over the limit
+
+    def never(key: str) -> bytes:
+        raise AssertionError("an oversized file must not be downloaded")
+
+    monkeypatch.setattr(state.storage, "get_bytes", never)
+    resp = client.post(f"/api/uploads/{started['doc_id']}/complete")
+    assert (resp.status_code, resp.json()["error"]["code"]) == (422, "too_large")
+    assert state.storage.list(f"docs/{started['doc_id']}/") == []
+
+
+def test_chunked_body_without_length_is_cut_off_at_the_limit(
+    client: TestClient, state: UploadState
+) -> None:
+    started = _init(client, b"x" * 10)
+    state.settings.uploads.max_mb = 1
+
+    def body() -> Iterator[bytes]:
+        for _ in range(3):
+            yield b"x" * (600 * 1024)
+
+    resp = client.post(started["upload_url"], content=body())  # no Content-Length header
+    assert (resp.status_code, resp.json()["error"]["code"]) == (422, "too_large")
+    assert not state.storage.exists(f"docs/{started['doc_id']}/source.pdf")
+
+
 def test_complete_without_init_and_unknown_doc(client: TestClient) -> None:
     resp = client.post("/api/uploads/doc_0123456789abcdef/complete")
     assert (resp.status_code, resp.json()["error"]["code"]) == (409, "upload_not_started")

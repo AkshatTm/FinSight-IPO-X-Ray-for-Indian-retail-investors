@@ -30,6 +30,9 @@ class Storage(Protocol):
     def exists(self, key: str) -> bool:
         """Whether an object exists under ``key``."""
 
+    def size(self, key: str) -> int:
+        """The object's size in bytes without reading it; ``KeyError`` if there is none."""
+
     def list(self, prefix: str) -> list[str]:
         """Every key under ``prefix``, sorted."""
 

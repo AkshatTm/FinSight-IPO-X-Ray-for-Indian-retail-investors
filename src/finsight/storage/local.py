@@ -37,6 +37,13 @@ class LocalStorage:
         except FileNotFoundError:
             raise KeyError(key) from None
 
+    def size(self, key: str) -> int:
+        """The file's size from ``stat``; ``KeyError`` if it does not exist."""
+        try:
+            return self.path(key).stat().st_size
+        except FileNotFoundError:
+            raise KeyError(key) from None
+
     def exists(self, key: str) -> bool:
         """Whether the file exists."""
         return self.path(key).is_file()
