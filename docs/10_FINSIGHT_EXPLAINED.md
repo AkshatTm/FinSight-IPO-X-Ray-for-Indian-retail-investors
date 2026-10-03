@@ -476,6 +476,17 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** τ = 0.80 is a placeholder until the B2.2b spot-check. The real bank and its embeddings come from B2.1b, so tests use a 4.7 KB fake bank with known neighbours. "Unusual" means rare among 2018–2023 IPOs, so new kinds of risk can look more unusual than they are.
 **Likely viva questions.** (1) *Why count companies, not risks?* (One company repeating a risk five times shouldn't make it look common.) (2) *Why exclude the issuer itself?* (Its own earlier DRHP would always match.) (3) *Why only 2018–2023?* (Disclosure styles changed with ICDR; newer documents would look "unusual" only because they are newer.)
 
+### C29. Seriousness and the overall risk level (built in B2.6a)
+**What it does.**
+- **Seriousness (rule-based, B02 §7.3).** Each risk starts from its category's base weight (`configs/risks.yaml`). It goes up when the risk states a hard fact (C28) or a material number (≥ 10% of something, or a share ≥ 0.10). It goes down when it is boilerplate (novelty ≥ 0.80). The total maps to high / medium / low. **Importance** = seriousness weight × (1 − novelty), so a serious, unusual risk ranks first; the top 15 by importance are rewritten automatically (C27).
+- **Risk level (B02 §7.4).** Points: 2 for each red-flag *concern*, 1 for each *watch*, and 1 for each high-seriousness risk that is rare (novelty < 0.10), at most 4 from risks. The **score** is points ÷ the maximum points over the checks that could actually run, so a document where half the checks are "not available" is not made to look safer or riskier. The score is placed among past IPOs (2018–2023) as a percentile and mapped to low / medium / high with the thresholds in `configs/risklevel.yaml`.
+- **Reasons.** Every point is listed with a link to its red flag or risk card, so the level can always be traced back to the document.
+- **Guard.** "How risky is this IPO?" is now answered with the level, its reasons and the disclaimer. "Should I apply?" is still refused.
+- **API.** `GET /api/docs/{doc_id}/risk-level`; `behind_click` lets the UI hide the level until the reader asks (B01 §10.2).
+
+**Limits.** The thresholds and reference percentiles are **provisional placeholders** (`provisional: true`, `corpus_n: 0`) until B2.6b computes them over the corpus. The level describes how much risk the document *discloses* compared with past documents. It is not a prediction of returns and carries its disclaimer everywhere.
+**Likely viva questions.** (1) *Why normalise by available checks?* (Missing data would otherwise look like a clean record.) (2) *Why compare with 2018–2023 and not a fixed cut-off?* (Disclosure length and style drift; a percentile among past documents is honest about what "high" means.) (3) *Isn't a risk level investment advice?* (It summarises disclosed facts with reasons and a disclaimer; buy/apply questions are still refused, and E21 checks honestly whether it says anything about outcomes.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
