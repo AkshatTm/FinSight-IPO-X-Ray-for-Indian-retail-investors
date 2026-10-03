@@ -143,3 +143,7 @@
 - Mumbai (`asia-south1`) Cloud Run L4 GPUs are invitation-only, so the plan uses Singapore.
 - GCP free-trial credit does not cover GPUs.
 - Free HF accounts can no longer create Docker Spaces, so the HF fallback is paid (PRO).
+
+## Overnight 2026-10-03 (local)
+- B0.1 (#121): all 10 workspaces open on the real API with facts and a decoded page image; no bug left to fix, so the PR is the regression test only.
+- Chat shows "The answer model isn't running" when Ollama is off (seen on Meesho, Hindi question). Not an old-IPO issue; start Ollama (`ollama serve`) before chatting.

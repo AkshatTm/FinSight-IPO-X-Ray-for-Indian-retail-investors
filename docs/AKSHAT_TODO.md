@@ -4,7 +4,7 @@
 
 Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `git pull` first). Tick the box when the PR is merged.
 
-- [ ] **B0.1 workspace bug (#121)** — Sun 4 Oct, Sonnet.
+- [x] **B0.1 workspace bug (#121)** — Sun 4 Oct, Sonnet.
   ```text
   Resume FinSight Big Phase 2 LOCALLY. First `git pull` (cloud sessions merge PRs on GitHub). Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md and the "needs a LOCAL session" list in docs/AKSHAT_TODO.md. Do part B0.1 (#121) only. Run the tests (including @pytest.mark.local ones relevant to this part) and report in one line. Do the model check (both directions). Keep the session short and specific: real documents / corpus / models / Kaggle launches / evaluation / deploy steps, one heavy job at a time, Ollama only if needed. Never deploy or spend cloud credits without my explicit "go" in chat. End with the PR merged, the AKSHAT_TODO item ticked, PROGRESS.md updated, and the /clear message (B07 §0). Bug details: <describe the click and the error here, or "unknown: reproduce by opening all 10 workspaces on the real API">.
   ```
