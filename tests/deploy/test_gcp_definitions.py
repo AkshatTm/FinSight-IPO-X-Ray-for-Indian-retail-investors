@@ -128,6 +128,9 @@ def test_cpu_images_have_no_torch_and_gpu_image_is_not_built_in_pr_ci() -> None:
         assert "torch" not in text.replace("no torch", "")
         assert "--no-default-groups" in text
         assert "--frozen" in text
+    for path in [ROOT / "Dockerfile", *(ROOT / "deploy").glob("*.Dockerfile")]:
+        # the prebuilt "CPU" wheels there are musl-linked and fail on Debian (B3.3a CI)
+        assert "abetlen.github.io" not in path.read_text(encoding="utf-8"), path.name
     lint = (ROOT / ".github/workflows/deploy.yml").read_text(encoding="utf-8")
     assert "-f deploy/gpu.Dockerfile" not in lint  # hadolint only, never built in PR CI
 
