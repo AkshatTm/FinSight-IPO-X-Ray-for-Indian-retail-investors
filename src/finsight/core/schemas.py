@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, Field, PlainSerializer, WithJsonSchema
 
@@ -286,15 +286,36 @@ class Evidence(BaseModel):
 
 
 class DocRecord(BaseModel):
-    """One uploaded or showcase document, keyed by ``doc_id`` (B02 §5)."""
+    """One uploaded or showcase document, keyed by ``doc_id`` (B02 §5).
+
+    ``doc_type``, ``company`` and ``pages`` are filled in by the ``detected`` stage, so they are
+    empty while the job is queued. A rejected upload keeps its ``rejection`` code.
+    """
 
     doc_id: str
     sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
-    doc_type: DocType
+    doc_type: DocType | None = None
     company: str | None = None
-    pages: int = Field(ge=1)
+    pages: int | None = Field(default=None, ge=1)
     uploaded_by: str | None = None
     is_showcase: bool = False
     companion_of: str | None = None
     created_at: datetime
     status: DocStatus = "processing"
+    rejection: RejectionCode | None = None
+
+
+JobStatus = Literal["queued", "running", "done", "failed"]
+
+
+class Job(BaseModel):
+    """One processing run of a document (B02 §5)."""
+
+    job_id: str
+    doc_id: str
+    stage: str
+    status: JobStatus
+    progress: dict[str, Any] = Field(default_factory=dict)
+    error: str | None = None
+    started_at: datetime | None = None
+    finished_at: datetime | None = None

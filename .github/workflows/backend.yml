@@ -28,3 +28,25 @@ jobs:
       - run: uv run poe lint
       - run: uv run poe typecheck
       - run: uv run poe test
+
+  # B1.2: repository and migration tests against a real Postgres (the cloud database engine).
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: finsight-ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      FINSIGHT_TEST_PG_URL: postgresql://postgres:finsight-ci@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          python-version: "3.11"
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run pytest -m postgres
