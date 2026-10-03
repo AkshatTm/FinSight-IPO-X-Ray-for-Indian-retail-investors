@@ -89,7 +89,7 @@ Drop an example if: invalid JSON; category not in list; any number in `simple` n
 - Base: student candidate from §1, bake-off on 30 dev risks (zero-shot with our prompt) to pick it.
 - Training data: filtered teacher pairs (original → simple), split by company 95/5.
 - QLoRA (4-bit base, LoRA r=16, alpha=32, dropout 0.05, target attention + MLP projections), lr 2e-4, 1–2 epochs, max_seq 1,024, **fp16 on a Kaggle T4** (bf16 only on Colab A100/L4), gradient checkpointing; checkpoint every 200 steps to the Kaggle output; resume flag.
-- Merge the adapter and **export GGUF Q4_K_M** (llama.cpp convert + quantize, in the notebook) for the CPU host; keep the merged fp16 weights for the optional GPU path. Store in `models/simplifier/` and a **private** Hugging Face repo (licence note: trained on NC-SA-derived text → release under non-commercial terms if ever published).
+- Merge the adapter and **export GGUF Q4_K_M** (llama.cpp convert + quantize, in the notebook) for the Cloud Run CPU job; keep the merged fp16 weights (and an AWQ export) for the GPU path. Store in `models/simplifier/` and a **private** Hugging Face repo (licence note: trained on NC-SA-derived text → release under non-commercial terms if ever published).
 - Evaluation (B04): faithfulness (human), readability (FKGL/Flesch), number preservation (verifier), certainty preservation, forbidden phrases, length, **CPU seconds per rewrite (GGUF Q4)**; compare **zero-shot base** vs **QLoRA student** vs **teacher** on the same 50 gold risks.
 
 ## 6. Embeddings and the risk bank (B2.1–B2.2)
@@ -99,8 +99,8 @@ Drop an example if: invalid JSON; category not in list; any number in `simple` n
 
 ## 7. Serving (B3.3) — CPU first
 
-- **CPU host (default):** the worker job carries M1 and M3/M4 as ONNX int8, bge-m3 int8 for risk embeddings, and the student as GGUF Q4 through the existing `generate/llama_cpp_backend.py`; it rewrites the top 15 risks automatically and the rest on click. The API serves chat with qwen3.5:2b Q4 via llama.cpp (ADR-022) and the demo cache for showcase questions.
-- **Optional GPU path (`cloud_gpu`):** a GPU job runs vLLM offline with the student (AWQ 4-bit, or an ~8B variant if trained) for simplify, plus bge-m3 for dense chat indexes. Not built unless Akshat says "go".
+- **Cloud Run CPU job (`cloud`, works without billing for GPUs):** the worker job carries M1 and M3/M4 as ONNX int8, bge-m3 int8 for risk embeddings, and the student as GGUF Q4 through the existing `generate/llama_cpp_backend.py`; it rewrites the top 15 risks automatically and the rest on click. The API serves chat with qwen3.5:2b Q4 via llama.cpp (ADR-022) and the demo cache for showcase questions.
+- **Cloud Run L4 GPU job (`cloud_gpu`, once GCP billing is enabled):** vLLM offline with the student (AWQ 4-bit, or an ~8B variant if trained) for simplify, plus bge-m3 for dense chat indexes. The code and images are written now; deploying waits for Akshat's "go".
 - **Local profile:** Ollama with a small chat model + the classifier on the laptop GPU; the student GGUF runs locally too.
 
 ## 8. Model cards

@@ -13,8 +13,8 @@ Base path `/api`. Conventions from `06_API_CONTRACT.md` apply (snake_case, money
 ### `POST /api/uploads/init`
 Body: `{filename, size_bytes, sha256}` →
 - If `sha256` already processed: `{status: "exists", doc_id}`.
-- Else: `{status: "upload", doc_id, upload_url, expires_at}` (signed Storage upload URL in the cloud profiles — Supabase Storage or S3; local profile returns `/api/uploads/{doc_id}/file`).
-Checks: auth, `UPLOADS_ENABLED`, quota, size ≤ `uploads.max_mb` (50 on the Supabase Free plan).
+- Else: `{status: "upload", doc_id, upload_url, expires_at}` (V4 signed GCS PUT URL in the cloud profiles; local profile returns `/api/uploads/{doc_id}/file`).
+Checks: auth, `UPLOADS_ENABLED`, quota, size ≤ `uploads.max_mb` (50).
 
 ### `PUT {upload_url}` (direct to storage) or `POST /api/uploads/{doc_id}/file` (local)
 Raw PDF bytes.
@@ -56,7 +56,7 @@ Assembled overview: `{doc, facts_summary, risk_level, top_risks: [Risk (5)], red
 Full `Risk` + `nearest_examples`.
 
 ### `POST /api/docs/{doc_id}/risks/{rid}/simplify` (auth optional; rate-limited)
-Adds the risk to the simplification queue (or moves it to the front). On the CPU host only the top 15 risks are queued automatically; any other risk is queued by this call. → `{rid, simple_status, position}`.
+Adds the risk to the simplification queue (or moves it to the front). Only the top 15 risks are queued automatically; any other risk is queued by this call. → `{rid, simple_status, position}`.
 
 ### `GET /api/docs/{doc_id}/risk-level`
 `RiskLevel` (with `score`, `max_points`, `checks_available`, `corpus_n` and `behind_click: bool` from config).

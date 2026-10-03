@@ -15,10 +15,15 @@ Status meanings as in `09_DECISIONS.md`. Claude Code adds these to `docs/09_DECI
 ### B-ADR-03 Outcome data used only for validation (narrows Phase 1 ADR-005) — proposed
 **Decision:** Listing outcomes and broker opinions in the dataset may be used **only to evaluate** the risk level (E21), never to train or tune a predictor, never shown in the product except the Model Lab result.
 
-### B-ADR-04 Hosting: CPU-first and cloud-agnostic (Azure Container Apps for Students or HF Docker Space) + Supabase + Vercel; GCP GPU optional — proposed (revised 3 Oct 2026)
-**Context:** The first plan used Google Cloud Run (CPU API + L4 GPU job + vLLM service). GCP needs a ₹1,000 prepayment Akshat can't make now, and free-trial accounts get no GPUs. Azure for Students needs no card and gives student credit plus the Container Apps free grant (180,000 vCPU-s, 360,000 GiB-s and 2 M requests per month). Free HF accounts can no longer create Docker/Gradio CPU Spaces (PRO needed, about $9/month). Supabase Free gives Auth, Postgres and Storage (50 MB per file).
-**Decision:** Every stage runs on CPU. Default host: Azure Container Apps (API app + queue-scaled worker job, scale to zero); alternative: an HF Docker Space (single container). Akshat picks in B0.3 from `HOSTING_COMPARISON.md`. Supabase for Auth, Postgres (pooler) and Storage; Vercel for the site. Storage behind an adapter (local + S3-compatible). Simplification uses the student as GGUF Q4 via llama.cpp: the top 15 risks automatically, the rest on click. Chat uses qwen3.5:2b Q4 + the demo cache. The GCP Cloud Run L4 + vLLM design stays as an optional upgrade (`cloud_gpu`). Supersedes ADR-022 as the primary deployment; ADR-022 (`deploy_cpu`, showcase-only Space) stays as the cut-6 fallback.
-**Consequences:** Slower uploads (targets relaxed in B01 §7 and measured in E23); no idle cost; 50 MB upload limit while Storage is on the Free plan; nothing deployed without Akshat's "go".
+### B-ADR-04 Hosting: Google Cloud Run (CPU API + CPU job + optional L4 GPU job) + Supabase + GCS + Vercel — proposed (revised twice, 3 Oct 2026)
+**Context:** Google Cloud offers GPUs on Cloud Run (L4, scale to zero, per-second billing), which the simplifier and dense indexing benefit from. Billing needs a paid account (₹1,000 prepayment; free-trial accounts get no GPUs), which Akshat will set up later. An interim Azure-for-Students plan was dropped the same day.
+**Decision:**
+- Google Cloud in asia-southeast1: a Cloud Run CPU API service; a Cloud Run CPU worker job for every stage; an optional Cloud Run L4 GPU job (vLLM offline + bge-m3) for simplify + index (`cloud_gpu`); GCS for files with signed URLs; Artifact Registry; Secret Manager.
+- Supabase for Auth (Google) and Postgres (pooler); Vercel for the site.
+- Code stays CPU-first: without the GPU job, the CPU job rewrites the top 15 risks with the student GGUF Q4 and the rest on click.
+- Nothing is deployed, enabled or paid for without Akshat's explicit "go".
+- Supersedes ADR-022 as the primary deployment; ADR-022's HF Docker Space stays as a **paid, optional** showcase-only fallback (HF PRO).
+**Consequences:** One cloud vendor, GPU when billing allows; until then all deployment work is code, scripts and runbooks; budget alert ₹2,000/month and instance caps from the first deploy.
 
 ### B-ADR-05 Google login for uploads; public read for reports — proposed
 **Decision:** Supabase Auth with Google; 3 uploads/user/day, 10/day global, `UPLOADS_ENABLED` kill switch; same-file dedupe by a server-recomputed SHA-256; reports of public documents viewable by link; non-showcase docs deleted after 30 days.

@@ -20,7 +20,7 @@ FinSight = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sh
 - **Never read:** `data/raw/`, `data/processed/`, PDFs, audio, `models/`, weights, `node_modules/`, `.next/`, `.venv/`, notebook outputs. You may read `data/samples/`, `data/gold/` and `tests/fixtures/real/`. For schema questions, run a summary script or ask Akshat for 5 rows. To see a document, use `uv run python -m finsight.pipeline inspect` (prints ≤ 40 lines; may write ≤ 30 truncated snippets to `data/samples/`).
 - **Fixture pack exception (B-ADR-15):** `tests/fixtures/real/` may hold real section text, word boxes and tables from public offer documents and short corpus excerpts, gzip JSON ≤ 5 MB per file, ≤ 20 MB total, written only by `scripts/export_fixtures.py`. Never PDFs or weights.
 - **Never train models on the laptop or in a cloud session.** Write notebooks. On **Kaggle only** (local sessions), you may upload private datasets, push and run notebooks on GPU, poll status and download outputs (`python -m finsight.weaklabel.kaggle`, ADR-042). Official `kaggle` CLI only. Colab runs are started by Akshat.
-- **Never commit or print credentials** (Kaggle, Supabase service key, DB URL, Azure/HF/Vercel tokens, `.env`). Cloud sessions never receive them; `.env.example` lists names only.
+- **Never commit or print credentials** (Kaggle, Supabase service key, DB URL, GCP service-account keys, HF/Vercel tokens, `.env`). Cloud sessions never receive them; `.env.example` lists names only.
 - **Never deploy, create paid resources or spend credits** without Akshat's explicit "go" in chat.
 - **Never hand-edit model outputs or eval results.** Fix the pipeline or show ⚠️.
 - **Never add investment advice or predictions;** no buy/sell/apply/avoid instructions (forbidden phrases: `configs/forbidden_phrases.yaml`, B-ADR-13). The risk level always carries its disclaimer.
@@ -47,7 +47,7 @@ cd frontend && pnpm dev      # :3000   (NEXT_PUBLIC_USE_MOCKS=1 for fixtures)
 ```
 Laptop: 16 GB RAM (~8 GB used by other apps), RTX 2050 4 GB. Use `FINSIGHT_PROFILE=dev_light` while coding. Stop Ollama before GPU-heavy offline jobs.
 
-**Profiles:** `dev_light`, `full` (laptop) · `cloud` (CPU host: Supabase Postgres + Storage, llama.cpp GGUF, BM25) · `cloud_gpu` (optional GPU path, vLLM) · `deploy_cpu` (ADR-022 showcase-only fallback). Hosting is CPU-first and cloud-agnostic (B-ADR-04): Azure Container Apps for Students or an HF Docker Space + Supabase + Vercel.
+**Profiles:** `dev_light`, `full` (laptop) · `cloud` (Cloud Run on CPU: Supabase Postgres, GCS, llama.cpp GGUF, BM25) · `cloud_gpu` (adds the L4 GPU job with vLLM) · `deploy_cpu` (ADR-022 paid HF fallback). Hosting (B-ADR-04): Google Cloud Run + Supabase + GCS + Vercel; GCP billing is enabled later and nothing deploys before Akshat's "go".
 
 ## Stack
 Python 3.11 · uv · ruff · mypy · pytest/hypothesis · pydantic v2 · FastAPI + sse-starlette · PyMuPDF · pdfplumber/Docling · transformers · optimum/onnxruntime · bm25s · faiss-cpu · Ollama / llama-cpp-python · faster-whisper · SQLite / Postgres (SQLAlchemy Core + Alembic) · Supabase (Auth, Postgres, Storage)

@@ -36,7 +36,7 @@ All AI-assisted sets carry `label_source` and a count of values Akshat changed, 
 | E20 | Do rewrites keep numbers and certainty? | Verifier + certainty check over all rewrites of the 10 IPOs | % rejected; reasons | `b/simplify_checks.json` |
 | E21 | Does the risk level relate to real outcomes? | Compute normalised scores/levels for the 2018–2023 corpus IPOs; compare with listing-day return and later return (if present) and with broker "avoid" share from the dataset Excel, read only by `evaluate/outcomes.py` (B-ADR-03) | Spearman ρ (points vs outcome), Kruskal–Wallis across levels, mean outcome per level, bootstrap 95 % CIs | `b/risklevel_validation.json` |
 | E22 | Is "unusual" meaningful? | Spot-check 60 pairs at τ ∈ {0.75, 0.80, 0.85}; precision of "similar" | Precision@τ | `b/novelty.json` |
-| E23 | Speed and robustness on unseen PDFs | 5 unseen + 3 showcase uploads on the CPU host (and the GPU path if ever deployed) | Stage timings p50/p95; seconds per rewrite; stages failed | `b/latency_cloud.json` |
+| E23 | Speed and robustness on unseen PDFs | 5 unseen + 3 showcase uploads on Cloud Run (CPU job, and the L4 GPU job once billing is enabled) | Stage timings p50/p95; seconds per rewrite; stages failed | `b/latency_cloud.json` |
 | E24 | Cost | CPU (or GPU) seconds × price per upload; share of the free grant used | ₹ per upload (mean, max) | `b/cost.json` |
 | E8r | Does the guard still behave after allowing risk-level questions? | Re-run E8 on both guard sets + new risk-level probes | Blocked / false blocks | `guard_b.json` |
 | E7c | Chat answers on the deployed `cloud` profile (BM25, Q4) | E7 script against the cloud profile | as E7 | `b/e7_cloud.json` |

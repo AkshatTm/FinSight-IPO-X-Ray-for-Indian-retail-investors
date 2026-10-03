@@ -296,7 +296,7 @@ Paired per-IPO differences (same resampled IPOs): fine-tuned minus pretrained +0
 **Context:** the public demo has no GPU. ADR-049 measured BM25 recall@5 0.61 on dev and int8 ONNX reranking at 26 s per 20-passage pool on CPU, too slow to ship. Scripted questions are covered by the recorded demo cache.
 **Decision:** (1) API in a Docker Space on the free CPU tier (`Dockerfile`, `deploy/space/`), profile `deploy_cpu`, demo mode on. (2) Retrieval is BM25 only: the image sets `FINSIGHT_RETRIEVE__RERANK=false` (the YAML keeps `rerank: true`, which needs torch). (3) LLM through llama-cpp-python (`generate/llama_cpp_backend.py`, same contract as the Ollama backend; `get_llm` picks it from `llm.backend`) with `Qwen3.5-2B-Q4_K_M.gguf` from the Hub, the 4-bit file of the model measured on the laptop. (4) Data comes from `scripts/bundle_artifacts.py` (X-Rays, parsed text, sections, BM25 chunks, page images, demo cache, eval results; no PDFs, no dense index). (5) Website on Vercel; `/api/*` is rewritten to the Space, so no CORS rule.
 **Consequences:** the deployed model's answer quality is **not measured** (quantised file, BM25 only, no reranker): run E7 against it before quoting a number for the deployed system. Live answers on a shared CPU take tens of seconds and may hit the Vercel proxy time limit; the fix, if needed, is a CORS rule and a direct browser call (D7). Voice is off. Nothing was deployed or tested in a container in this run unless `docs/MORNING_REPORT.md` says so.
-**Phase 2 note (3 Oct 2026):** superseded **as the primary deployment** by B-ADR-04 (CPU-first: Azure Container Apps for Students or an HF Docker Space, plus Supabase and Vercel). Kept as the showcase-only fallback (B07 cut 6, profile `deploy_cpu`). Free HF accounts can no longer create Docker CPU Spaces; this fallback needs HF PRO.
+**Phase 2 note (3 Oct 2026):** superseded **as the primary deployment** by B-ADR-04 (Google Cloud Run CPU API + CPU job + optional L4 GPU job, Supabase, GCS, Vercel). Kept as a **paid, optional** showcase-only fallback (B07 cut 6, profile `deploy_cpu`): free HF accounts can no longer create Docker CPU Spaces, so it needs HF PRO.
 
 ---
 
@@ -313,8 +313,8 @@ Transparent, corpus-relative, fixed disclaimer, never buy/apply/avoid wording; t
 ### B-ADR-03 Outcome data used only for validation (narrows ADR-005) — proposed
 Listing outcomes and broker opinions only for E21, read only by `evaluate/outcomes.py`.
 
-### B-ADR-04 Hosting: CPU-first and cloud-agnostic; GCP GPU optional — proposed (revised 3 Oct)
-Azure Container Apps for Students (or an HF Docker Space) + Supabase (Auth, Postgres, Storage) + Vercel; student GGUF Q4 on CPU, top 15 rewrites automatic; GCP Cloud Run L4 + vLLM optional. Supersedes ADR-022 as primary.
+### B-ADR-04 Hosting: Google Cloud Run + Supabase + GCS + Vercel; L4 GPU job optional — proposed (revised 3 Oct)
+Cloud Run CPU API + CPU worker job (top-15 rewrites with GGUF Q4 when there is no GPU) + optional L4 GPU job (vLLM, bge-m3); billing not enabled yet, nothing deployed without Akshat's go. Supersedes ADR-022 as primary; HF Space = paid optional fallback.
 
 ### B-ADR-05 Google login for uploads; public read for reports — proposed
 3/user/day, 10/day global, kill switch, server-side SHA-256 dedupe, 30-day retention.

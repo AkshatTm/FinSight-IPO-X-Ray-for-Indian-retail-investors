@@ -39,5 +39,5 @@ Parser, section finder, tables, number normaliser, rules + fine-tuned DeBERTa ex
 - Any user (signed in with Google) can upload an RHP, DRHP or final Prospectus.
 - New: **red-flag scorecard**, **plain-English risk report** (English only), **risk level (Low / Medium / High) with reasons**, **comparisons**.
 - New models: risk-category classifier (base and large on Kaggle), teacher → student simplifier (Kaggle-first; Colab optional).
-- Public deployment, **CPU-first and cloud-agnostic**: Azure Container Apps for Students or a Hugging Face Docker Space + Supabase (Auth, Postgres, Storage) + Vercel, scaling to zero. Google Cloud Run GPU + vLLM is an optional upgrade (B-ADR-04, revised 3 Oct).
+- Public deployment on **Google Cloud Run** (CPU API + CPU worker job + optional L4 GPU job, scale to zero) + Supabase (Auth, Postgres) + Cloud Storage + Vercel. Billing is enabled later; nothing deploys before Akshat's "go" (B-ADR-04).
 - Phase 1 ADR-005 ("never use rating labels") is narrowed: outcome data may be used **only to validate** the risk level, never to train a buy/avoid predictor (B-ADR-03).

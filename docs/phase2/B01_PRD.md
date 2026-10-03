@@ -28,9 +28,9 @@ A beginner who is thinking about an Indian IPO uploads the offer document and, w
 ### J1 — Upload a new document (main journey)
 1. Landing → **Analyse an IPO document** → `/upload`.
 2. Sign in with Google (only required to upload).
-3. Choose a PDF (≤ 50 MB while storage is on the Supabase Free plan, configurable; ≤ 1,500 pages). FinSight checks it's a text PDF and an offer document.
+3. Choose a PDF (≤ 50 MB, configurable; ≤ 1,500 pages). FinSight checks it's a text PDF and an offer document.
 4. Progress screen with named stages. Results appear progressively:
-   - ≤ 3 min (CPU host): document type, company name, key facts, page viewer.
+   - ≤ 3 min (Cloud Run CPU job): document type, company name, key facts, page viewer.
    - ≤ 5 min: red flags + risk level.
    - Then the risk report fills in: all risks appear with their original text at once; the **top 15 by importance** are rewritten automatically (≈ 15 s each on CPU), the rest when the user clicks them (front of the queue).
 5. The report is saved; the user can share the link. If someone uploads the **same file again** (same SHA-256), the existing report opens instantly.
@@ -48,11 +48,11 @@ IDs continue the Phase 1 scheme with a **B** prefix.
 ### B-FR-01 Upload any offer document (P0)
 - Accept RHP, DRHP and final Prospectus PDFs from SEBI/NSE/BSE/company sites.
 - **Document type detection** from the first pages ("Red Herring Prospectus", "Draft Red Herring Prospectus", "Prospectus"); shown as a badge. DRHP → banner: "This is a draft. Many amounts are still blank."
-- Reject with a friendly message: scanned PDFs (too little text), password-protected PDFs, documents that aren't IPO offer documents (no matching cover/section structure), larger than `uploads.max_mb` (50 MB on the Supabase Free plan), > 1,500 pages.
+- Reject with a friendly message: scanned PDFs (too little text), password-protected PDFs, documents that aren't IPO offer documents (no matching cover/section structure), larger than `uploads.max_mb` (50 MB), > 1,500 pages.
 - Google login required to upload; anyone can view a shared report link.
 - Limits: 3 uploads per user per day, 10 per day overall (configurable), and an `UPLOADS_ENABLED` kill switch; same-file dedupe by SHA-256 (recomputed on the server).
 - Progressive results (see J1) with live stage events.
-- Target timings on the **CPU host** (p50, 600-page RHP): facts ≤ 3 min, red flags + risk level ≤ 5 min, rewrites progressive (top 15 automatic). The optional GPU path (B02 §10.3) keeps the original targets (facts ≤ 90 s, all risks ≤ 8 min). Measured in E23.
+- Target timings (p50, 600-page RHP), measured in E23: **CPU job** facts ≤ 3 min, red flags + risk level ≤ 5 min, rewrites progressive (top 15 automatic); **with the L4 GPU job** all risks rewritten ≤ 8 min.
 
 ### B-FR-02 Red-flag scorecard (P0)
 - 13 checks (table in §5), each: status (OK / Watch / Concern / Not available), one plain sentence, the numbers used, doc + page link, "How this check works" tooltip.
@@ -83,8 +83,8 @@ IDs continue the Phase 1 scheme with a **B** prefix.
 - Advice guard updated: questions about the risk level are allowed; "should I apply/buy?" still refused (with the risk level and reasons shown as facts).
 
 ### B-FR-07 Public deployment (P0)
-- Public URL (Vercel) backed by a **CPU host that scales to zero** (Azure Container Apps for Students, or a Hugging Face Docker Space; chosen in B0.3) plus Supabase (Auth, Postgres, Storage); showcase IPOs instant; uploads processed by a CPU worker job. A GPU path (GCP Cloud Run L4 + vLLM) is designed but optional (B-ADR-04).
-- Cost guards: budget alert where the host supports it, max replicas, per-user and global limits, kill switch.
+- Public URL (Vercel) backed by **Google Cloud Run** (CPU API + CPU worker job, optional L4 GPU job for rewrites and indexing; all scale to zero) plus Supabase (Auth, Postgres) and Cloud Storage; showcase IPOs instant. Billing is enabled later; nothing is deployed before Akshat's "go" (B-ADR-04).
+- Cost guards: GCP budget alert, max instances, per-user and global limits, kill switch.
 
 ### B-FR-08 Industry-grade documentation (P0, B4)
 - As defined in `B09_DOCUMENTATION_STANDARDS.md`.
@@ -121,8 +121,8 @@ Not applicable cases (e.g. P/E for loss-making companies) → status "Not applic
 
 | Area | Requirement |
 |---|---|
-| Speed (CPU host, p50) | Showcase report < 1.5 s; upload → facts ≤ 3 min; → red flags + level ≤ 5 min; rewrites progressive (top 15 automatic, ≈ 15 s each); GPU path optional with the original targets |
-| Cost | ₹0 idle; CPU host within its free grant / student credit for the expected volume (≤ 10 uploads/day); budget alert where supported; GPU path only after Akshat's "go" |
+| Speed (p50) | Showcase report < 1.5 s; upload → facts ≤ 3 min; → red flags + level ≤ 5 min; rewrites progressive on CPU (top 15 automatic, ≈ 15 s each), all risks ≤ 8 min with the GPU job |
+| Cost | ₹0 idle (everything scales to zero); GCP budget alert at ₹2,000/month; ≤ 10 uploads/day; GPU job only in `cloud_gpu`; nothing deployed before Akshat's "go" |
 | Reliability | Any stage can fail without losing earlier results; failed stages show "Couldn't do X" and the rest still renders |
 | Security | Google login for uploads; per-user limits; PDFs parsed in an isolated job container with time/page limits; no secrets in the frontend |
 | Privacy | No personal details of individuals shown (existing privacy guard + redaction apply to risks too); uploads deleted from storage after 30 days unless they're showcase |
@@ -141,7 +141,7 @@ Not applicable cases (e.g. P/E for loss-making companies) → status "Not applic
 | Readability gain (FKGL original → rewrite) | ≥ 4 grade levels lower | E19 |
 | Numbers changed by simplifier (verifier) | 0 shown to users | E20 |
 | Risk-level validation | Report correlation with outcomes, any result | E21 |
-| Upload latency (p50, CPU host) | per §7 | E23 |
+| Upload latency (p50, Cloud Run) | per §7 | E23 |
 
 ## 9. Out of scope (Phase 2)
 
@@ -151,4 +151,4 @@ Buy/avoid recommendations; price or listing predictions; Hindi for the risk repo
 
 1. Teacher acceptance of the reframed project → update the pitch: "making Indian IPO risk disclosures understandable" (B08 B-ADR-09).
 2. Risk level on a public site is advice-adjacent → transparent reasons + disclaimer; can be put behind a click if the teacher objects.
-3. Hosting cost → CPU-first free hosts, budget alert and limits from day 1; GCP postponed (B-ADR-04).
+3. Hosting cost → Google Cloud with budget alert, instance caps and upload limits from the first deploy; billing enabled only when Akshat is ready (B-ADR-04).

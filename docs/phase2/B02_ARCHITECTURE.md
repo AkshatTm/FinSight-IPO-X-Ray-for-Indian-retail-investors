@@ -2,8 +2,8 @@
 
 ## 1. Principles (additions to Phase 1 §1)
 
-1. **Same code locally and in the cloud.** Storage, database, queue and LLM sit behind adapters chosen by profile (`dev_light`, `full`, `cloud` = CPU host, `cloud_gpu` = optional GPU path; `deploy_cpu` stays as the showcase-only fallback of ADR-022). No `if cloud:` branches in business logic.
-6. **CPU first, cloud-agnostic.** Every stage must run on a CPU host within its free grant; the GPU path is an optional upgrade (B-ADR-04).
+1. **Same code locally and in the cloud.** Storage, database, queue and LLM sit behind adapters chosen by profile (`dev_light`, `full`, `cloud` = Cloud Run on CPU, `cloud_gpu` = with the L4 GPU job; `deploy_cpu` stays as the showcase-only fallback of ADR-022). No `if cloud:` branches in business logic.
+6. **CPU first, GPU when available.** Every stage must run on CPU; on Google Cloud the L4 GPU job speeds up simplification and indexing when billing is enabled (B-ADR-04).
 2. **Progressive, stage-by-stage results.** Every stage writes its output and an event; the UI renders whatever is ready. A failed stage never deletes earlier results.
 3. **Deterministic first, models second.** Red flags and the risk level are rules over extracted values; models extract, classify and simplify; the verifier checks numbers.
 4. **Pay only while working.** The API and the worker job scale to zero; the optional GPU path too.
@@ -15,18 +15,18 @@
 flowchart LR
   U[Browser] --> FE[Next.js on Vercel]
   FE -->|Google sign-in| AUTH[Supabase Auth]
-  FE -->|REST + SSE /api| API[FastAPI on the CPU host: Azure Container App or HF Space]
-  FE -->|signed upload URL| ST[(Supabase Storage: PDFs, pages, indexes, reports)]
+  FE -->|REST + SSE /api| API[FastAPI on Cloud Run CPU]
+  FE -->|signed upload URL| ST[(Cloud Storage: PDFs, pages, indexes, reports)]
   API --> DB[(Supabase Postgres via the pooler)]
   API --> ST
-  DB -->|queued jobs| JOB[CPU worker job: all stages; student GGUF Q4 via llama.cpp]
+  API -->|run job| JOB[Cloud Run Job, CPU: all stages; top-15 rewrites with GGUF Q4 when there is no GPU]
   JOB --> ST
   JOB --> DB
   API --> CHAT[Chat: qwen3.5:2b Q4 via llama.cpp in the API, demo cache for showcase]
-  JOB -. optional .-> GPU[GPU job: vLLM offline + bge-m3, simplify + index only]
+  JOB -. cloud_gpu .-> GPU[Cloud Run Job, L4 GPU: vLLM offline + bge-m3, simplify + index]
 ```
 
-Locally: the same FastAPI app, SQLite instead of Postgres, the local filesystem instead of Supabase Storage, an in-process worker instead of the worker job, Ollama (or llama.cpp) for the LLMs.
+Locally: the same FastAPI app, SQLite instead of Postgres, the local filesystem instead of GCS, an in-process worker instead of the worker job, Ollama (or llama.cpp) for the LLMs.
 
 ## 3. Processing pipeline (per uploaded document)
 
@@ -50,7 +50,7 @@ flowchart TD
 
 ### 3.1 Stages, outputs and events
 
-| # | Stage id | Output (in `docs/<doc_id>/`) | `detail` in the B06 events (B06 wins on shape) | Budget (CPU host, 600 pages; GPU path in brackets) |
+| # | Stage id | Output (in `docs/<doc_id>/`) | `detail` in the B06 events (B06 wins on shape) | Budget (CPU job, 600 pages; with the GPU job in brackets) |
 |---|---|---|---|---|
 | 1 | `received` | `source.pdf`, metadata row | `{stage, status}` | — |
 | 2 | `validated` | — / rejection reason | `{ok, reason?}` | 2 s |
@@ -68,7 +68,7 @@ flowchart TD
 | 14 | `compare` | `compare.json` | `{ready}` | 5 s |
 | 15 | `done` / `failed` | `report.json` (assembled) | `{status, failed_stages}` | — |
 
-Stages 6–8, 9–10 and 13 can run in parallel after stage 5. Stage 12 consumes a **priority queue** stored in the database: the top 15 risks by importance are queued automatically; a user click (`POST …/risks/{rid}/simplify`) adds or bumps that risk to the front. After the job finishes, clicked risks are served by a short-lived simplify job (or the API's llama.cpp process on the HF single-container variant).
+Stages 6–8, 9–10 and 13 can run in parallel after stage 5. Stage 12 consumes a **priority queue** stored in the database: the top 15 risks by importance are queued automatically; a user click (`POST …/risks/{rid}/simplify`) adds or bumps that risk to the front. After the job finishes, clicked risks are served by a short-lived simplify job (CPU, or GPU in `cloud_gpu`).
 
 ### 3.2 Document-type handling
 
@@ -85,7 +85,7 @@ Showcase IPOs keep both RHP and Prospectus (Phase 1 companion mechanism). The sh
 
 | Package | Responsibility | Public API (examples) | Phase |
 |---|---|---|---|
-| `storage` (new) | `Storage` protocol: `LocalStorage`, `S3Storage` (Supabase Storage or any S3 endpoint); signed upload/download URLs; `GCSStorage` optional later | `get_storage().put/get/url()` | B1.2 |
+| `storage` (new) | `Storage` protocol: `LocalStorage`, `GCSStorage` (V4 signed upload/download URLs) | `get_storage().put/get/url()` | B1.2 |
 | `db` (new) | Repository layer (SQLAlchemy 2 Core) over SQLite (local) / Supabase Postgres via the pooler (cloud; prepared statements off); migrations (Alembic) | `docs_repo`, `jobs_repo`, `users_repo` | B1.2 |
 | `jobs` (new) | Job model, stage runner, event emitter, priority queue, retries, idempotency | `submit(doc_id)`, `run_stage()`, `events(doc_id)` | B1.2 |
 | `auth` (new) | Verify Supabase JWT; per-user limits | `current_user()`, `check_quota()` | B1.5 |
@@ -192,44 +192,52 @@ class RiskLevel(BaseModel): level: Level; points: int; max_points: int; score: f
 
 ## 8. Simplification service
 
-- Order: the priority queue from §3.1 (top 15 automatic, the rest on click). CPU host: the student as GGUF Q4 via llama.cpp, one at a time (≈ 15 s each); GPU path: vLLM offline, batch 16.
+- Order: the priority queue from §3.1 (top 15 automatic, the rest on click). CPU job: the student as GGUF Q4 via llama.cpp, one at a time (≈ 15 s each); L4 GPU job (`cloud_gpu`): vLLM offline, batch 16.
 - Prompt contract (student model): input = title + body (+ numbers list); output ≤ 60 words, plain English, keep all numbers and units exactly, keep certainty words, no advice words, no new facts.
 - Post-checks, in order: (1) verifier — every number in the rewrite must match a number in the original (same unit); (2) forbidden-words filter (B01 §6); (3) length; (4) certainty check ("may/could" in original must not become definite). Fail → `simple_status = "rejected"`, UI shows the original with a note.
 - Fallback model if the student model is unavailable: the base instruct model with the same prompt (flagged in the trace).
 
 ## 9. Storage, database, caching
 
-- **Storage layout** (Supabase Storage bucket, or the local `data/` tree): `docs/<doc_id>/{source.pdf, doc.json, parsed.json, pages/, words/, xray.json, summary.json, redflags.json, risks.json, risklevel.json, compare.json, report.json, index/}`; `bank/risk_bank.parquet`. Upload size limit 50 MB per file on the Supabase Free plan.
+- **Storage layout** (GCS bucket, or the local `data/` tree): `docs/<doc_id>/{source.pdf, doc.json, parsed.json, pages/, words/, xray.json, summary.json, redflags.json, risks.json, risklevel.json, compare.json, report.json, index/}`; `bank/risk_bank.parquet`. Upload size limit `uploads.max_mb` = 50 MB.
 - **Retention:** 30 days after upload, everything for a non-showcase doc is deleted (files and rows, except the `uploads` counts used for quotas); a later upload of the same file is processed again.
 - **Postgres tables** (Supabase via the Supavisor pooler, port 6543, transaction mode; SSE replay polls `job_events` every ~1 s because the pooler has no LISTEN/NOTIFY): `users(id, email, created_at)`, `docs(…DocRecord)`, `jobs(…Job)`, `job_events(job_id, seq, stage, payload, ts)`, `uploads(user_id, doc_id, ts)`, `traces(…)` (Phase 1), `demo_cache`.
 - Reports are assembled into `report.json` and served with ETags; showcase reports are cached at the CDN (Vercel) for 1 hour.
 
-## 10. Hosting design (B0.3, B3.3) — CPU first, cloud-agnostic (B-ADR-04, revised 3 Oct 2026)
+## 10. Hosting design (B0.3, B3.3) — Google Cloud, CPU core with an optional GPU job (B-ADR-04, revised again 3 Oct 2026)
 
-GCP is postponed (prepayment needed; free-trial accounts get no GPUs). Everything below runs on CPU; §10.3 keeps the GPU design as an optional upgrade.
+Google Cloud is the host because it offers GPUs on Cloud Run. **Billing is not enabled yet**: everything below is written and tested as code, and nothing is deployed or paid for until Akshat says "go". The code stays CPU-first so the same images run with or without a GPU.
 
-### 10.1 Default: Azure Container Apps (Azure for Students) + Supabase + Vercel
+### 10.1 Google Cloud Run + Supabase + Vercel
 
 | Component | Service | Settings |
 |---|---|---|
 | Frontend | Vercel (Hobby) | `NEXT_PUBLIC_API_URL`, Supabase URL + anon key |
-| API | Azure Container App (Consumption plan) | 2 vCPU / 4 GiB, min 0, max 2; no torch; BM25 retrieval; chat model qwen3.5:2b Q4 via llama.cpp (ADR-022 measured this model); demo cache for showcase |
-| Worker | Azure Container Apps **Job**, event-driven by a KEDA PostgreSQL scaler on `jobs.status = 'queued'` (no Azure credentials in the API; B0.3 verifies the scaler on Container Apps jobs, fallback: the API starts the job through the management API with a managed identity) | 4 vCPU / 8 GiB (Consumption maximum), timeout 30 min, parallel 1; parse + ONNX int8 extractors/classifier + bge-m3 int8 for risk embeddings + student GGUF Q4 via llama.cpp |
-| Storage | Supabase Storage (S3-compatible) | private bucket `docs`; signed upload URLs; 50 MB per-file limit on the Free plan |
-| Database + Auth | Supabase (Free) | Google provider; pooler connection string; region Mumbai (`ap-south-1`) if offered, else Singapore |
-| Images | GitHub Container Registry | built by GitHub Actions on tags |
-| Secrets | Container Apps secrets | DB URL, Supabase service key; never in the frontend or the repo |
-| Region | Azure Central India if Container Apps and the Students policy allow it, else Southeast Asia | checked in B0.3 |
+| API | Cloud Run **service** (CPU) | 2 vCPU / 4 GiB, min 0, max 2, concurrency 40; no torch; BM25 retrieval; chat = qwen3.5:2b Q4 via llama.cpp (ADR-022 measured this model) + demo cache for showcase |
+| Worker (CPU) | Cloud Run **Job**, started by the API (`run.jobs.run` with a `DOC_ID` override) | 4 vCPU / 8 GiB, timeout 30 min, parallel 1; validate → parse → sections → facts → financials → red flags → split → score → risk level → compare (ONNX int8 models); without the GPU job it also rewrites the top 15 risks with the student GGUF Q4 via llama.cpp and builds the BM25 index |
+| Worker (GPU, profile `cloud_gpu`) | Cloud Run **Job** with 1× NVIDIA L4 (zonal redundancy off) | 4 vCPU / 16 GiB (L4 minimum), timeout 30 min, parallel 1; **simplify + index only**: vLLM offline with the student (AWQ 4-bit, weights from a GCS volume mount) + bge-m3 for dense chat indexes; started by the CPU job after `risk_level` |
+| Storage | Cloud Storage bucket (same region) | private; V4 signed URLs for upload (PUT) and page images; lifecycle deletes non-showcase `docs/` after 30 days; CORS for the Vercel domains |
+| Database + Auth | Supabase (Free) | Google provider; Postgres through the pooler (port 6543, transaction mode); region Mumbai (`ap-south-1`) if offered, else Singapore |
+| Images | Artifact Registry (same region) | built by a manual GitHub Actions workflow (no automatic deploys) |
+| Secrets | Secret Manager | DB URL, Supabase JWT secret (if HS256) |
+| Region | **asia-southeast1 (Singapore)**: it offers Cloud Run L4; asia-south1 (Mumbai) L4 is invitation-only | — |
 
-**Free grant (per subscription, per month):** 180,000 vCPU-seconds, 360,000 GiB-seconds and 2 million requests on the Consumption plan. One upload on a 4 vCPU / 8 GiB job for ~10 min uses ~2,400 vCPU-s and ~4,800 GiB-s, so about 70 uploads per month fit in the grant before the student credit is used.
+**GPU facts checked on 3 Oct 2026 (Cloud Run docs):**
+- L4 needs at least 4 vCPU / 16 GiB and instance-based billing, and still scales to zero.
+- New projects get an automatic quota of 3 L4 for services; job quota is checked in setup.
+- Free-trial accounts do not get GPUs, so billing must be a paid account.
 
-### 10.2 Alternative: Hugging Face Docker Space (single container)
-API + in-process worker in one container (2 vCPU / 16 GB, free CPU Basic hardware). **Creating a Docker Space now needs HF PRO (about $9/month)**; free accounts can only create ZeroGPU Gradio Spaces. The Space sleeps when idle (first request wakes it in tens of seconds). Kept as the ADR-022 fallback (`deploy_cpu`, showcase-only). B0.3 writes `HOSTING_COMPARISON.md` and Akshat picks.
+**Upload limit:** `uploads.max_mb = 50` (config; the UI copy reads it). GCS has no such cap, so it can be raised later.
 
-### 10.3 Optional GPU path (designed, not built unless Akshat says "go")
-A GPU job (GCP Cloud Run L4 in asia-southeast1 — Mumbai L4 is invitation-only — or any GPU host) runs **simplify + index only**: vLLM offline engine with the student in AWQ 4-bit loaded from a mounted bucket, plus bge-m3 for dense chat indexes. There is no always-on GPU service. Profile `cloud_gpu`. Cold start (image pull + weight load) is measured, not assumed: expect minutes for an 8B model.
+### 10.2 Fallbacks
+- **No GPU yet** (billing or quota missing): profile `cloud` runs every stage on the CPU job, rewrites the top 15 risks automatically and the rest on click (B01 §7 CPU targets).
+- **Showcase-only, no GCP at all:** ADR-022's Hugging Face Docker Space (`deploy_cpu`). It is now **paid and optional** (HF PRO, about $9/month), because free HF accounts can no longer create Docker CPU Spaces.
 
-**Cold starts (CPU path):** API ~5–15 s from zero; worker job ~30–60 s (image pull + model load) inside the stage budgets; the UI shows "Warming up the language model" when the first rewrite takes > 20 s.
+**Cold starts:**
+- API ~5–15 s from zero.
+- CPU job ~30–60 s (image pull + model load).
+- GPU job: image pull + vLLM load is minutes, measured in E23.
+- The UI shows "Warming up the language model" when the first rewrite takes > 20 s.
 
 ## 11. Security and abuse prevention
 
@@ -243,8 +251,8 @@ A GPU job (GCP Cloud Run L4 in asia-southeast1 — Mumbai L4 is invitation-only 
 
 ## 12. Cost controls
 
-- CPU host inside its free grant / student credit; Azure budget with alerts at 50 / 90 / 100 % (default ₹2,000-equivalent); HF PRO is a fixed monthly fee.
-- Max replicas: API 2, worker 1. All min 0.
+- GCP budget with alerts at 50 / 90 / 100 % of ₹2,000 per month (set when billing is enabled); GPU job only in `cloud_gpu`; HF PRO (fallback) is a fixed monthly fee.
+- Max instances: API 2, CPU job parallel 1, GPU job parallel 1. All min 0.
 - Dedupe by SHA-256; showcase precomputed; 3 uploads/user/day, 10/day global; `UPLOADS_ENABLED` kill switch.
 - CPU (and GPU, if used) seconds per upload logged in `jobs.progress.cost_estimate`; shown on `/admin/costs` (Akshat only).
 - Nothing is deployed and no paid resource is created without Akshat's explicit "go" in chat.

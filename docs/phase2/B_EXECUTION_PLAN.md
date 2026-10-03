@@ -13,27 +13,27 @@
 - **GitHub in cloud sessions:** no `gh` CLI; use the GitHub MCP tools (create issue / PR, merge with `merge_method: rebase`). Local sessions keep `gh`.
 - **Tests:** `@pytest.mark.local` = needs `data/processed`, full PDFs, the corpus or model weights. `poe test` (and CI) runs `-m "not slow and not local"`. `poe test-all` runs everything.
 - **No spend, no deploy** without Akshat's explicit "go" in chat. No credentials in any cloud session or commit.
-- **Hosting is cloud-agnostic and CPU-first** (B-ADR-04, revised): Supabase (Auth, Postgres via the pooler, Storage) + Vercel + one CPU host chosen in B0.3 (Azure Container Apps for Students, or a Hugging Face Docker Space on PRO). GCP Cloud Run L4 + vLLM stays designed but optional (profile `cloud_gpu`).
-- **Training is Kaggle-first** (Q12 was left open; this plan works either way). Teacher (Qwen ~14B AWQ, vLLM), classifiers and student QLoRA all run on Kaggle T4 / T4×2, launched by local sessions through the Kaggle CLI (ADR-042). If Akshat buys Colab Pro, B2.3b and B2.5b may switch to Colab (teacher up to ~32B AWQ; `COLAB_STEPS_*.md` written as the optional path). Nothing else in this plan changes.
+- **Hosting is Google Cloud** (B-ADR-04, revised twice on 3 Oct): Cloud Run CPU API + CPU worker job + optional L4 GPU job (`cloud_gpu`), GCS, Supabase (Auth, Postgres via the pooler), Vercel. GCP billing is enabled later; nothing deploys before Akshat's "go". HF Docker Space = paid, optional fallback.
+- **Training is Kaggle-first** (Colab not bought; optional later). Teacher (Qwen ~14B AWQ, vLLM), classifiers and student QLoRA all run on Kaggle T4 / T4×2, launched by local sessions through the Kaggle CLI (ADR-042). If Akshat buys Colab Pro, B2.3b and B2.5b may switch to Colab (teacher up to ~32B AWQ; `COLAB_STEPS_*.md` written as the optional path). Nothing else in this plan changes.
 
 ## 1. Fixes approved in STEP 2 (all of 1–45, with the hosting change) and where each lands
 
 | # | Decision | Lands in |
 |---|---|---|
-| H | **Hosting:** CPU-first and cloud-agnostic. Default host = Azure Container Apps (Azure for Students, Consumption plan, scale to zero; API app + worker *job*). Alternative = HF Docker Space (needs HF PRO, $9/month, since free accounts can no longer create Docker/Gradio CPU Spaces). Supabase for Auth + Postgres + Storage; Vercel for the site. GPU path optional | B-ADR-04 (revised), B02 §10–12, B01 §7, B11, B0.3, B3.3a/b |
+| H | **Hosting:** Google Cloud Run in asia-southeast1 — CPU API service, CPU worker job (all stages), optional L4 GPU job (simplify + index, vLLM); GCS; Supabase Auth + Postgres; Vercel. Billing later. HF Docker Space = paid optional fallback (free accounts can no longer create Docker Spaces). (An Azure plan was considered and dropped on 3 Oct.) | B-ADR-04 (revised), B02 §10–12, B01 §7, B11, B0.3, B3.3a/b |
 | H2 | **CPU speed plan:** auto-simplify only the top 15 risks by importance; the rest on click (priority queue). Targets on CPU: facts ≤ 3 min, red flags + level ≤ 5 min, rewrites progressive (≈ 15 s each, measured in E23) | B01 §7, B02 §3.1/§8, B1.2, B2.5a |
-| H3 | **Upload limit 50 MB** while Storage is on the Supabase Free plan (its per-file limit is 50 MB); config key `uploads.max_mb` | B01 B-FR-01, B05 §3 copy, B06 §2, B1.1a |
+| H3 | **Upload limit 50 MB** (Akshat's decision); config key `uploads.max_mb`; the UI copy reads it | B01 B-FR-01, B05 §3 copy, B06 §2, B1.1a |
 | 1 | Risk level uses a **normalised score** (points ÷ max points over the checks available) and a **2018–2023 reference population**; UI shows `corpus_n` from config, never a hard-coded 389 | B02 §7.4, B04 E21, B05 §2/§5.3/§6.3/§8, B2.6a/b |
 | 2 | Fixture pack: B0.4 adds section patterns (restated financial information, cash flows, outstanding litigation, auditor's report), exports pre-extracted tables, cash-flow / auditor / litigation pages; gzip JSON ≤ 5 MB per file, ~10 MB total; README maps each RF to its source pages | B11 §3, B0.4 |
 | 3 | B2 ☁️ parts (B2.1a, B2.3a, B2.4a, B2.5a) pulled into week 1; teacher pilot (500) by Sun 11 Oct | B07 §3, §5 below |
-| 4 | Week-2 **CPU smoke deploy** on the chosen free host (only with Akshat's "go") instead of a vLLM-on-L4 smoke | new part B2.7, B07 |
+| 4 | **Smoke deploy** of the Cloud Run API + CPU job as soon as GCP billing is enabled (only with Akshat's "go"); the L4 job follows | new part B2.7, B07 |
 | 5 | **CPU worker job** for every stage; simplification on CPU with the student as GGUF Q4 via llama.cpp; optional GPU job (vLLM offline + bge-m3) for simplify + index | B02 §10, B1.2, B2.5a, B3.3a |
-| 6 | Region: Supabase Mumbai (`ap-south-1`) if offered, else Singapore; Azure Central India if Container Apps + Students policy allow it, else Southeast Asia | B0.3 |
+| 6 | Region: GCP asia-southeast1 (L4 available; Mumbai L4 invitation-only); Supabase Mumbai (`ap-south-1`) if offered, else Singapore | B0.3 |
 | 7 | GPU path only: vLLM AWQ from a mounted bucket; cold start measured, not assumed | B02 §10 (optional path) |
-| 8 | API image has no torch: chat retrieval on the deployed CPU host is BM25 (+ optional ONNX int8 bge-m3 query encoder if measured fast enough); API memory ≥ 4 GiB | B02 §10, B3.3a |
-| 9 | Caps: 10 uploads/day global, 3/user/day, `UPLOADS_ENABLED` kill switch, budget alerts where the host supports them (Azure budgets: yes) | B01 §4/§7, B02 §12, B1.2, B1.5 |
+| 8 | API image has no torch: chat retrieval on the deployed Cloud Run API is BM25 (+ optional ONNX int8 bge-m3 query encoder if measured fast enough); API memory ≥ 4 GiB | B02 §10, B3.3a |
+| 9 | Caps: 10 uploads/day global, 3/user/day, `UPLOADS_ENABLED` kill switch, GCP budget alert at ₹2,000/month | B01 §4/§7, B02 §12, B1.2, B1.5 |
 | 10 | Supabase: pooler (6543, transaction mode, no prepared statements), SSE replay by polling `job_events` (~1 s), JWKS + HS256 fallback with `aud`/`iss` checks, Vercel preview redirect URLs, OAuth consent screen published; 7-day pause noted in runbooks | B02 §9/§11, B1.2, B1.5, B0.3 |
-| 11 | Signed upload URLs come from Supabase Storage (`createSignedUploadUrl`) or S3 presign; bucket CORS documented | B02 §9, B1.2, B0.3 |
+| 11 | V4 signed GCS URLs need the runtime service account to have Token Creator on itself (signBlob); bucket CORS for the Vercel domains documented | B02 §9, B1.2, B0.3 |
 | 12 | `complete` recomputes SHA-256 server-side; mismatch → 422 `hash_mismatch` | B06 §2, B1.2 |
 | 13 | Retention: delete everything for non-showcase docs after 30 days (source, pages, report, rows except `uploads` counts); a later dedupe hit re-processes | B01 §7, B02 §9, B1.2 |
 | 14 | Summary extraction anchors on ICDR Summary items; `not_found` over guessing; E14 NVM on test IPOs; unseen RHPs → coverage only | B02 §6a (new), B04 E14, B1.3a/b |
@@ -56,7 +56,7 @@
 | 31 | Showcase report primary doc = RHP, `companion_doc_id` = Prospectus (prices); `/ipos/[id]` redirects; demo hotkeys and `e2e/demo-flow.spec.ts` updated | B02 §3.2, B05 §1, B1.2, B3.1 |
 | 32 | `/api/lab/b/*` → file mapping table | B06 §5 |
 | 33 | Missing RF sentence templates: default NA = "FinSight couldn't find this in the document."; gaps listed for Akshat's copy approval | B05 §5.4, AKSHAT_TODO |
-| 34 | Profiles: `dev_light`, `full`, **`cloud`** (CPU host), **`cloud_gpu`** (optional); `deploy_cpu` kept as the showcase-only fallback (ADR-022) | B02 §1/§10, configs/config.yaml (B0.3) |
+| 34 | Profiles: `dev_light`, `full`, **`cloud`** (Cloud Run CPU), **`cloud_gpu`** (adds the L4 job); `deploy_cpu` kept as the showcase-only fallback (ADR-022) | B02 §1/§10, configs/config.yaml (B0.3) |
 | 35 | `evaluate/outcomes.py`: allow-listed outcome loader used only by E21; a test asserts no other module imports it | B-ADR-03, B2.6b |
 | 36 | B07 date fixed (today Sat 3 Oct); B0.2 done in the Opus kickoff session | B07 |
 | 37 | `local` pytest marker registered; `poe test` excludes it | pyproject (this PR) |
@@ -89,15 +89,15 @@ Later issues (B2 local halves, B2.2a, B2.6a, B3, B4) are opened by the session t
 | Day | ☁️ cloud (parallel sessions) | 💻 local | 👤 Akshat |
 |---|---|---|---|
 | Sat 3 Oct | B0.K + B0.2 (this PR) | — | answer review ✔, approve PR |
-| Sun 4 | B0.3 hosting bootstrap | B0.1 workspace bug; B0.4 fixture pack | claim cloud credit; accounts (Azure for Students, Supabase, Vercel, Kaggle check) |
-| Mon 5 **BG0** | B1.1a doc type + validation | BG0 review | follow `docs/phase2/HOSTING_SETUP_STEPS.md` (~45 min); pick Azure vs HF |
+| Sun 4 | B0.3 hosting bootstrap | B0.1 workspace bug; B0.4 fixture pack | claim cloud credit; accounts (Supabase, Vercel, Kaggle check) |
+| Mon 5 **BG0** | B1.1a doc type + validation | BG0 review | follow `docs/phase2/HOSTING_SETUP_STEPS.md` part A (~30 min) |
 | Tue 6 | B1.2 jobs/storage/db; B2.3a teacher notebook | B1.1b (after B1.1a) | download 5 unseen RHPs (by Wed 7) |
 | Wed 7 | B1.3a summary extraction; B2.1a segmentation | — | credit claim deadline 23:59 PT |
 | Thu 8 | B1.5 upload UI; B2.4a classifier code; B2.5a student code | — | gold v3 pre-fill with Claude chat |
 | Fri 9 | B1.4 red flags (after gold v3) | B1.3b + E14 | **verify gold v3** (1.5 h) |
 | Sat 10 | — | B1.4 follow-up (E15); B2.1b risk bank + teacher input export; B2.3b **pilot (500)** on Kaggle | segmentation spot-check (50) + E13b (5 excerpts) |
 | Sun 11 **BG1** | B2.2a features | BG1 review | rate pilot quality-100 (go/no-go) |
-| Mon 12 | B3.3a infra as code (CPU host) | B2.3b full teacher run (Kaggle) | — |
+| Mon 12 | B3.3a infra as code (Cloud Run) | B2.3b full teacher run (Kaggle) | — |
 | Tue 13 | B2.6a seriousness + risk level | B2.2b τ + E22 | τ spot-check (60 pairs) |
 | Wed 14 | B3.1 report UI (on mocks) | B2.4b classifiers (Kaggle) ; **B2.7 CPU smoke deploy** (after "go") | category gold-150 verification; smoke-deploy console steps |
 | Thu 15 | B3.2 compare (cuttable) | B2.5b student QLoRA (Kaggle) + GGUF | — |
@@ -132,11 +132,11 @@ STEP 2 review in chat (Sat 3 Oct); Akshat's answers recorded in §1.
 - **Tests:** `poe test` green (1124 before), `poe lint` green; marker test (`pytest --strict-markers -m local --collect-only` works).
 - **Commits:** `docs(phase2): execution plan with approved review fixes` · `docs(phase2): apply review fixes to B01–B11` · `docs: B-ADRs 01–15 proposed, ADR-022 and ADR-005 notes` · `docs: Phase 1 pointers to Phase 2 docs` · `docs: CLAUDE.md Phase 2 rules` · `chore(test): register local marker` · `data(gold): gold v3 template` · `docs: progress archive and Resume here`.
 
-#### B0.3 Hosting bootstrap (no deploy) — ☁️ · S · `chore/b0.3-hosting-bootstrap` · "B0.3 Hosting bootstrap: Azure for Students + Supabase + Vercel steps, cloud profile"
+#### B0.3 Hosting bootstrap (no deploy) — ☁️ · S · `chore/b0.3-hosting-bootstrap` · "B0.3 Hosting bootstrap: Google Cloud + Supabase + Vercel steps, cloud profile"
 - **Depends:** B0.2.
-- **Files:** `docs/phase2/HOSTING_SETUP_STEPS.md` (Azure for Students sign-up with no card, resource group, Container Apps environment, budget alert; Supabase project in Mumbai/Singapore, Google provider, Storage bucket `docs`, pooler URL; Vercel env; Kaggle check), `docs/phase2/HOSTING_COMPARISON.md` (Azure Container Apps vs HF Docker Space: CPU/RAM per replica, free grant 180k vCPU-s + 360k GiB-s per month, sleep behaviour, cold start, jobs support, cost, region; Akshat picks), `.env.example`, `configs/config.yaml` (`cloud`, `cloud_gpu` profiles; `uploads.*` limits; `UPLOADS_ENABLED`), `src/finsight/core/config.py` (new keys with defaults), `tests/core/test_config_profiles.py`, `scripts/check_env.py` (prints which settings are missing, never their values).
+- **Files:** `docs/phase2/HOSTING_SETUP_STEPS.md` (part A now: Supabase in Mumbai/Singapore with the Google provider and pooler URL, Vercel env, Kaggle check; part B later, only with Akshat's go: GCP project, billing + ₹2,000 budget alert, APIs, Artifact Registry, GCS bucket + CORS + lifecycle, service accounts, L4 job quota), `docs/phase2/HOSTING_COMPARISON.md` (Cloud Run CPU vs with the L4 job vs the paid HF fallback), `.env.example`, `configs/config.yaml` (`cloud`, `cloud_gpu` profiles; `uploads.*` limits; `UPLOADS_ENABLED`), `src/finsight/core/config.py` (new keys with defaults), `tests/core/test_config_profiles.py`, `scripts/check_env.py` (prints which settings are missing, never their values).
 - **Tests:** every profile loads; `cloud` resolves storage `s3`, db `postgres`, llm `llama-cpp`; `.env.example` lists every env key the settings read (test parses both).
-- **Commits:** `docs(phase2): hosting setup steps and Azure vs HF comparison` · `feat(core): cloud and cloud_gpu profiles with upload limits` · `chore: .env.example and check_env script`.
+- **Commits:** `docs(phase2): switch hosting to Google Cloud Run` · `feat(core): cloud and cloud_gpu profiles with upload limits` · `chore: .env.example and check_env script`.
 - **Hand-work:** 👤 follow the steps (~45 min, Mon 5 Oct); pick the host and write the choice in the issue.
 
 #### B0.4 Fixture pack — 💻 · S · `test/b0.4-fixture-pack` · "B0.4 Real-section fixture pack for cloud sessions"
@@ -163,7 +163,7 @@ STEP 2 review in chat (Sat 3 Oct); Akshat's answers recorded in §1.
 
 #### B1.2 ★ Jobs, storage, database, events — ☁️ · O · `feat/b1.2-jobs-pipeline` · "B1.2 Jobs, storage, database and stage events"
 - **Depends:** B1.1a (schemas).
-- **Files:** `src/finsight/storage/` (`Storage` protocol, `LocalStorage`, `S3Storage` for Supabase Storage / any S3 endpoint, `signed_upload_url()`), `src/finsight/db/` (SQLAlchemy 2 Core tables `users, docs, jobs, job_events, uploads, traces, demo_cache`; Alembic migrations; SQLite local, Postgres cloud via pooler with prepared statements off), `src/finsight/jobs/` (stage runner with idempotent stages, events with `seq`, priority queue table for simplification, retries, `UPLOADS_ENABLED`, quotas, retention sweep), `src/finsight/reports/` (assemble `report.json` from stage outputs), `src/finsight/api/routes_uploads.py` + `routes_docs.py` (B06 §2–3 skeletons; `complete` recomputes SHA-256), `api/events.py` (SSE with `Last-Event-ID` replay by polling), `configs/demo_ipos.yaml` (+ `doc_id`, `companion_doc_id`), `openapi.json`, `frontend/lib/api/types.ts`, `.github/workflows/backend.yml` (+ `postgres` service job running `-m postgres`), `pyproject.toml` (`sqlalchemy`, `alembic`, `psycopg[binary]`, `boto3` or `httpx` in `api`), tests in `tests/{storage,db,jobs,reports}/`.
+- **Files:** `src/finsight/storage/` (`Storage` protocol, `LocalStorage`, `GCSStorage` (V4 signed URLs; client in an optional `cloud` dependency group, tested with a fake), `signed_upload_url()`), `src/finsight/db/` (SQLAlchemy 2 Core tables `users, docs, jobs, job_events, uploads, traces, demo_cache`; Alembic migrations; SQLite local, Postgres cloud via pooler with prepared statements off), `src/finsight/jobs/` (stage runner with idempotent stages, events with `seq`, priority queue table for simplification, retries, `UPLOADS_ENABLED`, quotas, retention sweep), `src/finsight/reports/` (assemble `report.json` from stage outputs), `src/finsight/api/routes_uploads.py` + `routes_docs.py` (B06 §2–3 skeletons; `complete` recomputes SHA-256), `api/events.py` (SSE with `Last-Event-ID` replay by polling), `configs/demo_ipos.yaml` (+ `doc_id`, `companion_doc_id`), `openapi.json`, `frontend/lib/api/types.ts`, `.github/workflows/backend.yml` (+ `postgres` service job running `-m postgres`), `pyproject.toml` (`sqlalchemy`, `alembic`, `psycopg[binary]`, `boto3` or `httpx` in `api`), tests in `tests/{storage,db,jobs,reports}/`.
 - **Tests:** stage runner on a fake 3-stage pipeline (success, one stage failing → `partial`, earlier outputs kept); event replay from any `seq`; dedupe returns `exists`; hash mismatch → 422; quota 3/user and 10/global with the kill switch; priority bump reorders the queue; retention deletes only non-showcase; contract tests for every B06 §2 endpoint on the local profile; Postgres job green in CI.
 - **Commits:** `feat(storage): local and S3 storage behind one protocol` · `feat(db): repositories and migrations for SQLite and Postgres` · `feat(jobs): stage runner, events and priority queue` · `feat(jobs): quotas, kill switch and retention` · `feat(api): upload, doc and event endpoints` · `feat(reports): assemble report.json` · `ci: Postgres service job` · `chore(api): regenerate openapi and frontend types`.
 - **Local follow-up:** run one showcase doc end to end with the local worker (5 min).
@@ -239,7 +239,7 @@ STEP 2 review in chat (Sat 3 Oct); Akshat's answers recorded in §1.
 
 #### B2.4a Classifier code + notebooks — ☁️ · S · `feat/b2.4-risk-classifier` · "B2.4a Risk classifier: baseline, Kaggle notebooks"
 - **Depends:** B2.1a.
-- **Files:** `risks/classify.py` (TF-IDF+LR baseline with scikit-learn in a new `ml-cpu` group; DeBERTa inference via ONNX int8 for the CPU host), `notebooks/b2_classifier_base_kaggle.ipynb`, `notebooks/b2_classifier_large_kaggle.ipynb` (T4 fp16, 1 seed; Colab optional), `scripts/export_onnx_classifier.py`, `tests/risks/test_classify.py` (baseline on the fake set; ONNX path `@pytest.mark.local`).
+- **Files:** `risks/classify.py` (TF-IDF+LR baseline with scikit-learn in a new `ml-cpu` group; DeBERTa inference via ONNX int8 for the Cloud Run CPU job), `notebooks/b2_classifier_base_kaggle.ipynb`, `notebooks/b2_classifier_large_kaggle.ipynb` (T4 fp16, 1 seed; Colab optional), `scripts/export_onnx_classifier.py`, `tests/risks/test_classify.py` (baseline on the fake set; ONNX path `@pytest.mark.local`).
 - **Commits:** `feat(risks): TF-IDF baseline classifier` · `feat(notebooks): DeBERTa classifier notebooks for Kaggle` · `feat(risks): ONNX classifier inference`.
 
 #### B2.4b Train + evaluate — 💻 (Kaggle CLI) · S · `eval/b2.4b-classifier` · "B2.4b Classifier training and E16"
@@ -270,7 +270,7 @@ STEP 2 review in chat (Sat 3 Oct); Akshat's answers recorded in §1.
 - **Files:** `scripts/corpus_points.py`, `configs/risklevel.yaml` (real thresholds, date, `corpus_n`), `src/finsight/evaluate/outcomes.py` (allow-listed, E21 only) + import-guard test, `eval_results/b/{seriousness,risklevel_validation}.json`, `eval_results/guard_b.json`, honest write-up in `docs/10_FINSIGHT_EXPLAINED.md` Part C.
 - **Commits:** `feat(evaluate): outcome loader for E21 only` · `data(risklevel): corpus thresholds` · `eval(risklevel): E17 and E21` · `eval(guard): E8 re-run after the risk-level change`.
 
-#### B2.7 CPU smoke deploy — 💻 + 👤 · S · `chore/b2.7-smoke-deploy` · "B2.7 CPU smoke deploy on the chosen free host" — **only after Akshat's "go"**
+#### B2.7 Smoke deploy — 💻 + 👤 · S · `chore/b2.7-smoke-deploy` · "B2.7 Smoke deploy on Google Cloud Run" — **only after GCP billing is enabled and Akshat's "go"**
 - **Depends:** B0.3 choice, B1.2, B3.3a (minimal image).
 - **Steps:** build the API image, push, deploy API + worker job, Supabase wired, upload one fixture-sized PDF, record cold start and stage timings in `eval_results/b/smoke_deploy.json`; tear down or scale to zero.
 
@@ -286,11 +286,11 @@ STEP 2 review in chat (Sat 3 Oct); Akshat's answers recorded in §1.
 #### B3.2 Compare — ☁️ · S · `feat/b3.2-compare` · *(cuttable)* · "B3.2 Compare tab: peers and corpus percentiles"
 - `src/finsight/compare/`, `/compare`, frontend tab; percentiles from `corpus_stats.json` (2018–2023 subset).
 
-#### B3.3a ★ Infra as code (CPU host) — ☁️ · O · `feat/b3.3-hosting` · "B3.3a Dockerfiles, CI images and deploy scripts for the CPU host"
+#### B3.3a ★ Infra as code (Google Cloud Run) — ☁️ · O · `feat/b3.3-hosting` · "B3.3a Dockerfiles, images and Cloud Run definitions (no deploy)"
 - **Depends:** B0.3, B1.2. Pulled to Mon 12 for B2.7.
-- **Files:** `deploy/api.Dockerfile` (no torch; llama.cpp, ONNX runtime), `deploy/worker.Dockerfile` (CPU; parse + ONNX + llama.cpp), `deploy/gpu/` (optional vLLM worker, documented only), `deploy/azure/` (Container Apps app + job definitions; KEDA Postgres scaler on `jobs.status='queued'`), `deploy/hf_space/` (single-container variant), `.github/workflows/images.yml` (build + push to GHCR on tags), `scripts/cloud_smoke.py`, `docs/runbooks/DEPLOY_RUNBOOK.md`, `ROLLBACK.md`, `COST_INCIDENT.md`.
+- **Files:** `deploy/api.Dockerfile` (no torch; llama.cpp, ONNX runtime), `deploy/worker.Dockerfile` (CPU; parse + ONNX + llama.cpp GGUF), `deploy/gpu.Dockerfile` (optional L4 job; vLLM offline + bge-m3), `deploy/gcp/` (Cloud Run service YAML for the API, CPU job + GPU job YAML, GCS CORS + lifecycle JSON, IAM notes), `deploy/hf_space/` (paid optional single-container variant), `.github/workflows/images.yml` (manual dispatch only; build + push to Artifact Registry), `scripts/cloud_smoke.py`, `docs/runbooks/DEPLOY_RUNBOOK.md`, `ROLLBACK.md`, `COST_INCIDENT.md`.
 - **Tests:** actionlint + hadolint in CI; `cloud_smoke.py` against the local API in CI (fixture PDF).
-- **Commits:** `feat(deploy): CPU API and worker images` · `feat(deploy): Azure Container Apps app and queue-scaled job` · `feat(deploy): HF Space single-container variant` · `ci: image builds and Dockerfile lint` · `feat(scripts): cloud smoke test` · `docs(runbooks): deploy, rollback and cost incident`.
+- **Commits:** `feat(deploy): CPU API and worker images` · `feat(deploy): L4 GPU worker image with vLLM` · `feat(deploy): Cloud Run service and job definitions` · `ci: image builds and Dockerfile lint` · `feat(scripts): cloud smoke test` · `docs(runbooks): deploy, rollback and cost incident`.
 
 #### B3.3b Deploy — 💻 + 👤 · O · `chore/b3.3b-deploy` · "B3.3b Public deployment" — **only after Akshat's "go"**
 - Upload showcase artefacts + GGUF models to Storage, deploy, run `cloud_smoke.py`, set budget alerts, Vercel env.
@@ -318,7 +318,7 @@ STEP 2 review in chat (Sat 3 Oct); Akshat's answers recorded in §1.
 |---|---|---|
 | Sat 3 Oct | Approve this PR | B0.2 |
 | Sun 4 | Claim the cloud credit (deadline Wed 7, 23:59 PT); describe the B0.1 bug if you can | B0 |
-| Mon 5 | Follow `HOSTING_SETUP_STEPS.md` (~45 min); pick Azure vs HF; confirm Kaggle phone verification + GPU quota | B0.3, BG0 |
+| Mon 5 | Follow `HOSTING_SETUP_STEPS.md` part A (~30 min); confirm Kaggle phone verification + GPU quota; GCP part B whenever you can pay | B0.3, BG0 |
 | Wed 7 | 5 unseen RHPs → `data/raw/unseen/` | B1.1b, E23 |
 | Thu 8 – Fri 9 | Gold v3 pre-fill (Claude chat, from `gold_v3_template.jsonl`) + verify (1.5 h) | B1.3b, B1.4 |
 | Sat 10 | Segmentation spot-check (50) + E13b boundaries for 5 corpus excerpts | B2.1b |
