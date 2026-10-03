@@ -14,8 +14,8 @@ const notFound = () =>
   );
 
 export const handlers = [
+  ...reportHandlers, // before uploads: the sample report's /api/docs/<id> wins
   ...uploadHandlers,
-  ...reportHandlers,
   http.get("/api/health", () => HttpResponse.json(HEALTH)),
   http.get("/api/ipos", async () => {
     await delay(150);
