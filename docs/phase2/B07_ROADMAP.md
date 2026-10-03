@@ -49,7 +49,7 @@
   👤 Claim the $100 credit (by Wed 7 Oct) and connect GitHub to Claude Code on the web. 💻 Commit and push `docs/phase2/` (a quick local session or plain git).
 - [x] **B0.K Kickoff review** · ☁️ C · **O** (Sat 3 Oct)
   B10 Prompt C1: STEP 2 review and questions → (my answers via Claude chat) → STEP 3 `B_EXECUTION_PLAN.md`, part of B0.2.
-- [ ] **B0.1 Fix the IPO workspace bug** · 💻 L · **S** · `fix/b0.1-workspace-error`
+- [x] **B0.1 Fix the IPO workspace bug** · 💻 L · **S** · `fix/b0.1-workspace-error`
   Reproduce with Playwright against the real API; fix; regression test opening all 10 workspaces. Done when: all 10 open with facts and page images.
 - [x] **B0.2 Phase 2 docs + project rules** · ☁️ C · **O** (done inside the kickoff session) · `docs/b0.2-phase2-docs`
   As before, plus: CLAUDE.md learns the **environment rule** (detect cloud vs local; in cloud, follow the cloud note and B11) and the hand-off loop; issues for B0–B1 with location labels (`cloud`, `local`, `akshat`).

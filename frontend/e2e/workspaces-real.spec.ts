@@ -9,6 +9,7 @@ test.skip(process.env.E2E_REAL !== "1", "needs the real API: set E2E_REAL=1");
 
 const SLOW_XRAY_MS = 3_000; // it was 5 to 9 s while it opened the parsed documents; now about 20 ms
 
+test.setTimeout(300_000);
 test("every IPO opens from the Library with facts, no failed request and no error block", async ({ page }) => {
   await page.goto("/ipos");
   await page.locator('a[href^="/ipos/"]').first().waitFor();
@@ -40,6 +41,12 @@ test("every IPO opens from the Library with facts, no failed request and no erro
     await expect(page.getByRole("heading", { level: 1 })).not.toHaveText("");
     // Facts are listed (the X-Ray arrived): at least five fact rows with a source chip.
     await expect(page.locator('[data-pane="facts"] button').nth(4)).toBeVisible({ timeout: 15_000 });
+    // The page image has loaded (decoded, not a broken image).
+    await expect
+      .poll(() => page.locator('[data-pane="document"] img').first().evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth > 0), {
+        timeout: 15_000,
+      })
+      .toBe(true);
     // No ErrorBlock anywhere on the page.
     await expect(page.locator('#main [role="alert"]')).toHaveCount(0); // not Next's route announcer
 
