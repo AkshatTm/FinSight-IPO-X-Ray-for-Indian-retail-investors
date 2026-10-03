@@ -487,6 +487,20 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** The thresholds and reference percentiles are **provisional placeholders** (`provisional: true`, `corpus_n: 0`) until B2.6b computes them over the corpus. The level describes how much risk the document *discloses* compared with past documents. It is not a prediction of returns and carries its disclaimer everywhere.
 **Likely viva questions.** (1) *Why normalise by available checks?* (Missing data would otherwise look like a clean record.) (2) *Why compare with 2018–2023 and not a fixed cut-off?* (Disclosure length and style drift; a percentile among past documents is honest about what "high" means.) (3) *Isn't a risk level investment advice?* (It summarises disclosed facts with reasons and a disclaimer; buy/apply questions are still refused, and E21 checks honestly whether it says anything about outcomes.)
 
+### C30. Hosting as code: images, Cloud Run definitions and the smoke test (built in B3.3a)
+**What it does.**
+- **Three images.** The **API** has FastAPI, the database and storage clients, PyMuPDF and llama.cpp, and no PyTorch, so it starts fast on a CPU. The **CPU worker** adds the risk classifier (ONNX), the TF-IDF baseline and the risk bank. The optional **GPU worker** runs vLLM with the plain-English student on one L4.
+- **Cloud Run definitions** (`deploy/gcp/`):
+  - the API service, which scales to zero and to at most 2 instances;
+  - one worker job per document, plus a GPU job and a daily retention job;
+  - bucket rules: browser uploads by signed URL, and a 31-day delete as a backstop.
+  Secrets are only references to Secret Manager.
+- **Starting the worker.** After an upload, the API asks the Cloud Run Admin API to run the worker job with the document's id. It uses only the Python standard library and the service account's own token. If that fails, the reader gets "We couldn't start processing" (503) instead of a page that waits forever.
+- **CI.** Every PR that touches deploy or code lints the Dockerfiles and workflows. It then builds the two CPU images and runs `scripts/cloud_smoke.py` against the API container: health, limits, upload, processing and report. Pushing images is a separate workflow that only runs by hand and signs in to Google without keys.
+
+**Limits.** Nothing is deployed; there is no GCP billing yet. The GPU image is linted but never built in CI (too large). The API does not start the GPU job by itself yet. The Cloud Run YAML follows the documented schema, but only a real `gcloud run … replace` in B3.3b proves it.
+**Likely viva questions.** (1) *Why a job per document instead of a background thread in the API?* (Cloud Run may stop CPU after the response; a job has its own CPU, memory and timeout, and costs nothing when idle.) (2) *Why no torch in the API image?* (Size and cold start: the hosted chat uses BM25 and a GGUF model.) (3) *How do you stop a runaway bill?* (Scale-to-zero, max instances, a ₹2,000 budget alert, an upload kill switch and the cost-incident runbook.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

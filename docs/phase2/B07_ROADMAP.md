@@ -113,7 +113,7 @@
 - [ ] **B3.1 Report UI: Overview + Risks** · ☁️ C · **S** · `feat/b3.1-report-ui`
   On mocks built from fixture `report.json`. 💻 follow-up (short): check against the real local API.
 - [ ] **B3.2 Compare** · ☁️ C · **S** · `feat/b3.2-compare` · *(cuttable)*
-- [ ] **B3.3a ★ Infra as code (Google Cloud Run)** · ☁️ C · **O** · `feat/b3.3-hosting` · *pulled forward to Mon 12 Oct for B2.7*
+- [x] **B3.3a ★ Infra as code (Google Cloud Run)** · ☁️ C · **O** · `feat/b3.3-hosting` · *pulled forward to Mon 12 Oct for B2.7*
   Dockerfiles (API without torch; CPU worker with ONNX + llama.cpp; L4 GPU worker with vLLM), manual GitHub Actions workflow → Artifact Registry, Cloud Run service + job definitions, optional HF single-container variant, Supabase wiring, budget and limits config, `scripts/cloud_smoke.py`, runbooks. **No deploy.**
 - [ ] **B3.3b Deploy** · 💻 L + 👤 A · **O** · `chore/b3.3b-deploy`
   👤 logins, GCP billing and console clicks; 💻 build/push images, upload showcase artefacts + model weights to GCS, deploy, run the smoke test. **Only with Akshat's explicit "go" in chat.**
