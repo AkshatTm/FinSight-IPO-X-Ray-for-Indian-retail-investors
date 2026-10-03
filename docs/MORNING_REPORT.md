@@ -102,6 +102,12 @@
   - Every job now records an estimated cost (run time × machine size × Google's list price). A new page, `/admin/costs`, shows per-day uploads, CPU seconds, the share of the monthly free allowance used and failed jobs. Only emails in `auth.admin_emails` can open it. The prices are marked provisional because Singapore is priced a little higher than the list price used.
   - The page's text is new (not in the UI spec), so it is listed for your OK in AKSHAT_TODO.
 
+- **B3.4a (#160): Model Lab Phase 2 and the new site text.**
+  - The Model Lab has seven new sections for the Phase 2 experiments (splitting risks, the financial checks, sorting risks, plain-English rewrites, unusualness, whether the risk level matches what happened, speed and cost). None appear yet: each one shows up by itself once your laptop runs write its result file. The file formats are written down in B06 §5 so the eval scripts know what to produce.
+  - The "does the risk level match what happened?" section always shows when its file exists, even with a weak result. Its sentence ("no clear", "weak" or "moderate" relationship) is worked out from the numbers by code, never typed.
+  - The landing page now leads with uploading ("Analyse an IPO document", "Explore a sample report"), adds the "What you get" blocks and the new "won't do" lines, and can show two new stats once they have real values. How it works has the eight-step upload row; About has the three new known limits. The English is the UI spec's; the Hindi is mine and waits for your OK.
+  - One thing to decide: About still says "Covers 10 IPOs, not every IPO", which is no longer true for uploads (AKSHAT_TODO, "Needs your decision").
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 

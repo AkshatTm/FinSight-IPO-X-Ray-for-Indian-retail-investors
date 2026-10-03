@@ -91,6 +91,25 @@ Adds the risk to the simplification queue (or moves it to the front). Only the t
 | cost | `cost.json` |
 
 A missing file → 404 `not_available` (Phase 1 rule); the Lab hides that section.
+`classifier` answers `{systems: [{file, ...}]}` (one entry per file, `file` = its stem); `simplify` answers `{human?, checks?}` (404 only when both are missing). Unknown names → 422.
+
+**File shapes (B3.4a; the contract for the local eval scripts).** The Lab reads each file defensively (`frontend/lib/labB.ts`) and hides a part whose values are missing. Fractions are 0–1.
+
+| File | Fields the Lab reads |
+|---|---|
+| `segmentation.json` (E13) | `precision`, `recall`, `f1`, `n_docs`, optional `e13b: {f1}` |
+| `summary_extraction.json` (E14) | `nvm`, `n` |
+| `redflags.json` (E15) | `accuracy`, `n`, `labels: [..]`, `confusion: [[..]]` (rows = hand-worked, columns = FinSight) |
+| `classifier_*.json` (E16) | `model`, `gold: {macro_f1, n}` (else `dev`), optional `macro_f1_mean`, `macro_f1_std`, `seeds: [..]` |
+| `simplify_human.json` (E18) | `systems: [{system, yes, partly, no, n}]` (counts) |
+| `simplify_checks.json` (E20) | `n`, `rejected`, `reasons: {numbers, phrases, length, certainty}` (counts) |
+| `readability.json` (E19) | `fkgl_original`, `fkgl_rewrite`, optional `fkgl_drop` |
+| `novelty.json` (E22) | `chosen_tau`, `points: [{tau, precision, n}]` |
+| `risklevel_validation.json` (E21) | `outcomes: [{key, rho, ci95: [lo, hi], n, by_level: [{level, n, p25, median, p75}]}]`; the verdict sentence is generated: "no clear" when `ci95` contains 0, "weak" when \|ρ\| < 0.3, "moderate" otherwise |
+| `latency_cloud.json` (E23) | `stages: [{stage, p50_s, p95_s}]`, `n_docs`, `s_per_page` |
+| `cost.json` (E24) | `inr_per_upload_mean`, `inr_per_upload_max`, `free_share` |
+
+The landing "risks explained" stat is `simplify_checks.n − rejected`; "past IPOs used for comparison" is `corpus_n` from the risk-level endpoint (hidden while 0).
 
 ## 6. Admin (Akshat only, by email allow-list)
 `GET /api/admin/costs` → per-day uploads, CPU (and GPU) seconds, share of the free grant, estimated cost; `GET /api/admin/jobs?status=failed`.

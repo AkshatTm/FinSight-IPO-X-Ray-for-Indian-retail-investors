@@ -554,6 +554,17 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** The cost is an estimate from run time, not the bill. The rates are Tier 1 list prices marked provisional (asia-southeast1 is Tier 2), and the GPU rate is unset, so GPU jobs are counted in seconds but not in dollars. The per-stage parse timeout and the redaction of risk text are still open (B1.3a, B2.1a).
 **Likely viva questions.** (1) *Why check the size again after the browser said how big the file is?* (The browser's number is a claim; the signed URL accepts any size, so the server checks the stored object before reading it.) (2) *Why not trust `X-Forwarded-For`?* (Anyone can write it; only the entries added by proxies you run are trustworthy, counted from the right.) (3) *How do you know a failing stage doesn't take the whole report down?* (A test fails every stage in turn and checks exactly which ones are skipped.)
 
+### C35. Model Lab Phase 2 sections and the new site copy (built in B3.4a)
+**What it does.**
+- **API.** `GET /api/lab/b/{name}` serves the Phase 2 result files from `eval_results/b/` using the B06 §5 table (`api.content.LAB_B_FILES`). A missing file is 404 `not_available`. `classifier` merges every `classifier_*.json` into `{systems: [...]}`, and `simplify` merges the human ratings and the automatic checks.
+- **Lab.** Seven sections in the B05 §7 order: splitting risks (E13), reading the financial checks (E14, E15), sorting risks into categories (E16), plain-English rewrites (E18–E20), unusualness (E22), whether the risk level matches what happened (E21), and speed and cost (E23, E24).
+  - Every value is read defensively (`frontend/lib/labB.ts`), and a part with missing values is hidden.
+  - The E21 section is shown whenever its file exists. Its sentence comes from the numbers: "no clear" when the 95 % range of ρ crosses zero, "weak" below |ρ| 0.3, "moderate" otherwise. It never says "strong".
+- **Site copy.** The landing hero, "What you get", "What FinSight won't do" and two new stats follow B05 §2. How it works gains the eight-step upload row, and About gains three known limits (B05 §8). The English is verbatim; the Hindi is drafted for review.
+
+**Limits.** No Phase 2 result exists yet, so every new Lab section is hidden until the local runs write `eval_results/b/`. The section components are tested on synthetic payloads only. The file shapes in B06 §5 are a contract that the local eval scripts must follow.
+**Likely viva questions.** (1) *Why show the risk-level check even when it is weak?* (Hiding a weak result would overstate the level; the spec makes the section mandatory.) (2) *Who writes the verdict sentence?* (Code, from ρ and its interval, with fixed cut-offs; nobody types it.) (3) *What happens when an experiment was not run?* (The API answers 404 and the Lab leaves the section out, so no placeholder numbers appear.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

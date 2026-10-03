@@ -119,6 +119,8 @@
 - [ ] **B3.3b Deploy** · 💻 L + 👤 A · **O** · `chore/b3.3b-deploy`
   👤 logins, GCP billing and console clicks; 💻 build/push images, upload showcase artefacts + model weights to GCS, deploy, run the smoke test. **Only with Akshat's explicit "go" in chat.**
 - [ ] **B3.4 Cloud evaluation + Model Lab + site copy** · B3.4a ☁️ C (Model Lab sections, landing/How it works/About copy) + B3.4b 💻 L (E23/E24, E7 on the cloud profile) · **S**
+  - [x] B3.4a cloud half (#160, overnight run 1): `GET /api/lab/b/{name}` (B06 §5 mapping, merged classifier/simplify payloads, file shapes documented); seven Lab sections (E13–E24) hidden until their files exist, E21 verdict generated from ρ and its interval; landing (B05 §2: hero, What you get, won't-do lines, two stats), How it works row 3 and About limits (B05 §8).
+  - [ ] B3.4b 💻: E23/E24 and E7 on the cloud profile (after the deploy).
 - [ ] **B3.5 Hardening** · B3.5a ☁️ C (security review, failure-path tests, admin page) + B3.5b 💻 L (full Playwright sweep on the real API) · **S**
   - [x] B3.5a cloud half (#158, overnight run 1): security review (`docs/security_review.md`) with three fixes (chunked upload body capped, stored size checked before download via `Storage.size()`, `uploads.trusted_proxy_hops` for the per-IP limit); failure-path tests over the B02 stage graph; `progress.cost_estimate` per job (`costs.*` settings, provisional rates); `/api/admin/costs` + `/api/admin/jobs` (admin allow-list, 403 `forbidden`); `/admin/costs` page on mocks.
   - [ ] B3.5b 💻: Playwright sweep on the real API; set `trusted_proxy_hops` and check the region's rates on the deployed stack.
