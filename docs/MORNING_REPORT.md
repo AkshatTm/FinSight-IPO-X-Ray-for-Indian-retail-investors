@@ -29,6 +29,14 @@
   - The Hindi strings are my drafts, for you to review.
   - The finished report page itself comes in B3.1.
 
+- **B2.3a (#133): the teacher, ready to run on Kaggle.**
+  - The big model (Qwen3-14B, 4-bit) will label every corpus risk with a category, a 1–5 seriousness and "already happened?", and rewrite it in plain English.
+  - Its answers are saved every 100 risks, so a stopped Kaggle session just resumes.
+  - Back on the laptop, filters throw out any rewrite that changes a number, gives advice, runs past 70 words, turns "may" into "will" or repeats another. Each drop is counted by reason.
+  - A 100-row sheet is sampled for you to rate.
+  - The no-advice phrase list (`configs/forbidden_phrases.yaml`) now also checks every UI string in the tests.
+  - Nothing ran on a GPU tonight. The smoke → pilot → full run is the local part B2.3b, and its prompt is in AKSHAT_TODO.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
@@ -39,6 +47,7 @@
 4. After you put the 5 unseen RHPs in `data/raw/unseen/` (Wed 7): local **B1.1b**. The prompt is in `docs/AKSHAT_TODO.md`.
 5. Optional, 5 min: the B1.2 local check (one showcase RHP through the new upload API). The prompt is in AKSHAT_TODO.
 6. Gold v3 pre-fill with Claude chat (`data/gold/gold_v3_template.jsonl`), due Fri 9 Oct.
+7. Sat 10 (after B2.1b): local **B2.3b** teacher run on Kaggle. The prompt is in AKSHAT_TODO; it stops for your go/no-go on the 100-row quality sheet.
 
 ### Surprises
 - Mumbai (`asia-south1`) Cloud Run L4 GPUs are invitation-only, so the plan uses Singapore.

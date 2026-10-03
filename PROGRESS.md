@@ -2,13 +2,14 @@
 
 ## Resume here
 - **Phase:** Big Phase 2, B0 (setup) → BG0 Mon 5 Oct. Plan: `docs/phase2/B07_ROADMAP.md` + `docs/phase2/B_EXECUTION_PLAN.md`. Overnight cloud run 1 in progress: see `docs/MORNING_REPORT.md`.
-- **Last done:** B1.5 upload UI (#131): `/upload` (hashing, rejections, duplicate, quota), `/reports/[doc_id]` processing screen on job events, `/me/uploads`, Supabase Google sign-in (supabase/mock/off), nav account menu, `GET /api/uploads/limits`; e2e on mocks. Before that B1.2 (#139), B1.1a (#138), B0.3 (#137).
-- **Next ☁️ cloud parts:** B2.3a teacher (#133, O) → B2.4a (#134) → B2.5a (#135, O). After B0.4: B1.3a (#128), B1.4 (#130), B2.1a (#132).
+- **Last done:** B2.3a teacher code (#133): `risks` package (prompt `teacher-v1`, JSON schema, 8 filters with drop reasons, resumable run), `configs/forbidden_phrases.yaml` + `guard.find_forbidden`, Kaggle notebook `notebooks/b2_teacher_kaggle.ipynb` (generated, Qwen3-14B-AWQ on vLLM), quality-100 sheet, datasheet. Before that B1.5 upload UI (#131): `/upload` (hashing, rejections, duplicate, quota), `/reports/[doc_id]` processing screen on job events, `/me/uploads`, Supabase Google sign-in (supabase/mock/off), nav account menu, `GET /api/uploads/limits`; e2e on mocks. Before that B1.2 (#139), B1.1a (#138), B0.3 (#137).
+- **Next ☁️ cloud parts:** B2.4a (#134) → B2.5a (#135, O) → B2.2a → B2.6a → B3.3a → B3.2 → B3.1 → B4.1 groundwork. After B0.4: B1.3a (#128), B1.4 (#130), B2.1a (#132).
 - **Next 💻 local parts:** B0.1 workspace bug (#121), B0.4 fixture pack (#123). L1 prompts: `docs/AKSHAT_TODO.md`. 👤 Part A of `docs/phase2/HOSTING_SETUP_STEPS.md` (Supabase, Vercel, Kaggle; no GCP billing yet).
 - **Open questions:** B0.1 bug details.
-- **Tests:** 1241 passed, 6 skipped (`uv run poe test`, cloud session, 3 Oct).
+- **Tests:** 1297 passed, 6 skipped (`uv run poe test`, cloud session, 3 Oct).
 
 ## Log
+- 3 Oct — B2.3a (#133): teacher prompt + schema (10 categories), filters (JSON, category, schema, numbers by value, forbidden phrases, > 70 words, certainty, duplicates) shared with the student checks, checkpoint-every-100 run loop pasted into the generated Kaggle notebook (drift test), `teacher_data filter|sheet` with `label_source`. B2.3b (smoke → pilot → full on Kaggle) in AKSHAT_TODO.
 - 3 Oct — B1.5 (#131): upload page + processing screen + My uploads on MSW mocks (scenario by file name), Supabase sign-in, SSE `id` + Last-Event-ID reconnect, `/api/uploads/limits`; banned-word test now whole-word (B05 "unlocked copy"). Report view itself is B3.1.
 - 3 Oct — B1.2 (#127): upload flow init → file → complete (server SHA-256), worker stages with B06 events + Last-Event-ID replay by polling, IST-day quotas 3/10 + kill switch, retention sweep, simplify priority queue, Supabase JWT auth (off locally), report.json assembly, Alembic 0001 checked on SQLite and Postgres (new CI job), showcase doc_ids in demo_ipos.yaml.
 - 3 Oct — B1.1a (#125): upload validation (size → PDF → password → pages → scanned by median text density → offer-document cover with ≥ 2 offer markers), type from the largest-font cover title, `doc_id` from SHA-256, `drhp` in DocType (openapi + frontend types regenerated), shared `uploads:` block in config.yaml. Local follow-up B1.1b in AKSHAT_TODO.

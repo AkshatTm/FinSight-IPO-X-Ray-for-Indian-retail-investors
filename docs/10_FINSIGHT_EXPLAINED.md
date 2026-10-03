@@ -408,6 +408,30 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** The report view itself is B3.1; until then a finished document shows its header over empty sections. Hindi strings are drafts awaiting review.
 **Likely viva questions.** (1) *Why hash in the browser if the server recomputes it?* (So a duplicate is found before uploading 50 MB, and so the server's check can be strict.) (2) *Why upload straight to storage?* (Large files never pass through the API container.)
 
+### C25. Teacher labels and rewrites, and the forbidden phrases (built in B2.3a)
+**What it does.**
+- **Teacher.** A large open model (Qwen3-14B, 4-bit AWQ) reads each corpus risk factor once and answers in fixed JSON:
+  - a category (one of 10);
+  - seriousness from 1 to 5;
+  - whether it already happened;
+  - a plain-English version of at most 60 words, keeping every number.
+
+  vLLM's guided decoding forces valid JSON. The run happens on a free Kaggle T4, never on the laptop, and saves its answers every 100 risks, so a stopped session simply resumes.
+- **Filters.** The answers come home and are filtered in a fixed order. A rewrite is dropped when:
+  - a number in it is not in the original (money and percentages compared by value, plain numbers verbatim);
+  - it contains a forbidden phrase;
+  - it is longer than 70 words;
+  - it changes how certain the statement is ("may" → "will", or "may" added to a fact);
+  - it repeats another rewrite.
+
+  Each drop is counted by reason.
+- **Training data.** The kept rows train the risk classifier (labels) and the small simplifier model (rewrites). Each row carries `label_source`, so AI-made labels are never passed off as human ones.
+- **Quality check.** A seeded sample of 100 is rated for faithfulness by Akshat.
+- **Forbidden phrases.** `configs/forbidden_phrases.yaml` lists instruction-style patterns ("you should invest", "avoid this IPO") plus an allow-list for the disclaimers. One filter (`guard.find_forbidden`) checks every UI string in tests, the teacher's rewrites and, later, the student's rewrites.
+
+**Limits.** No teacher outputs exist yet; the pilot (500) runs in B2.3b. The certainty check is word-based, so it can miss a reworded hedge ("there is a chance").
+**Likely viva questions.** (1) *Why a teacher and a student instead of the big model in production?* (The 14B model needs a GPU; the 3–4B student runs on the CPU host.) (2) *Why filter numbers by value, not by string?* ("₹1,234.56 crore" may be rounded to "₹1,235 crore" but not changed.) (3) *How do you stop the notebook drifting from the tested code?* (It is generated from the module, and a test compares them.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
