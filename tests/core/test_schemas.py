@@ -160,7 +160,7 @@ def test_check_result_and_claim_round_trip() -> None:
 def test_doc_record_and_evidence_round_trip() -> None:
     from datetime import UTC, datetime
 
-    from finsight.core.schemas import DocRecord, Evidence
+    from finsight.core.schemas import DocRecord, PageEvidence
 
     rec = DocRecord(
         doc_id="doc_0123456789abcdef",
@@ -172,8 +172,8 @@ def test_doc_record_and_evidence_round_trip() -> None:
     assert DocRecord.model_validate_json(rec.model_dump_json()) == rec
     assert rec.status == "processing"
     assert not rec.is_showcase
-    ev = Evidence(doc_id=rec.doc_id, page=12, bbox=(1.0, 2.0, 3.0, 4.0), sentence="x")
-    assert Evidence.model_validate(ev.model_dump()) == ev
+    ev = PageEvidence(doc_id=rec.doc_id, page=12, bbox=(1.0, 2.0, 3.0, 4.0), sentence="x")
+    assert PageEvidence.model_validate(ev.model_dump()) == ev
 
 
 def test_doc_record_never_stores_unknown_type() -> None:

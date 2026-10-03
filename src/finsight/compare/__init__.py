@@ -27,7 +27,7 @@ from finsight.core.schemas import (
     Compare,
     CompareMetric,
     ComparePercentile,
-    Evidence,
+    PageEvidence,
     Peer,
     Table,
     TableCell,
@@ -150,7 +150,7 @@ def peers_from_table(table: Table, doc_id: str, issuer: str | None = None) -> li
                 eps=values.get("eps"),
                 ronw=values.get("ronw"),
                 nav=values.get("nav"),
-                evidence=Evidence(
+                evidence=PageEvidence(
                     doc_id=doc_id, page=name_cell.page, bbox=_union(row), sentence=name
                 ),
             )

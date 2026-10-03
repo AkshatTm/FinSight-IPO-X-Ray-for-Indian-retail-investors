@@ -820,38 +820,6 @@ export interface components {
         ErrorResponse: {
             error: components["schemas"]["ErrorBody"];
         };
-        /** Evidence */
-        Evidence: {
-            /** Passage Id */
-            passage_id: string;
-            /**
-             * Doc
-             * @enum {string}
-             */
-            doc: "rhp" | "drhp" | "prospectus";
-            /** Page */
-            page: number;
-            /** Char Span */
-            char_span: [
-                number,
-                number
-            ];
-            /**
-             * Bbox
-             * @default null
-             */
-            bbox: [
-                number,
-                number,
-                number,
-                number
-            ] | null;
-            /**
-             * Value
-             * @default null
-             */
-            value: (components["schemas"]["Money"] | components["schemas"]["Count"] | components["schemas"]["Percent"] | components["schemas"]["Placeholder"] | components["schemas"]["Range"]) | null;
-        };
         /** FieldCheck */
         FieldCheck: {
             /** Check */
@@ -1024,6 +992,25 @@ export interface components {
             /** Similarity */
             similarity: number;
         };
+        /**
+         * PageEvidence
+         * @description Where a value or risk came from: a page, optionally a box and the sentence.
+         */
+        PageEvidence: {
+            /** Doc Id */
+            doc_id: string;
+            /** Page */
+            page: number;
+            /** Bbox */
+            bbox?: [
+                number,
+                number,
+                number,
+                number
+            ] | null;
+            /** Sentence */
+            sentence?: string | null;
+        };
         /** PageSize */
         PageSize: {
             /** Width */
@@ -1074,7 +1061,7 @@ export interface components {
              * @default false
              */
             is_issuer: boolean;
-            evidence?: components["schemas"]["Evidence"] | null;
+            evidence?: components["schemas"]["PageEvidence"] | null;
         };
         /** Percent */
         Percent: {
@@ -1636,6 +1623,38 @@ export interface components {
             text: string;
             /** Citations */
             citations: components["schemas"]["Citation"][];
+        };
+        /** Evidence */
+        Evidence: {
+            /** Passage Id */
+            passage_id: string;
+            /**
+             * Doc
+             * @enum {string}
+             */
+            doc: "rhp" | "drhp" | "prospectus";
+            /** Page */
+            page: number;
+            /** Char Span */
+            char_span: [
+                number,
+                number
+            ];
+            /**
+             * Bbox
+             * @default null
+             */
+            bbox: [
+                number,
+                number,
+                number,
+                number
+            ] | null;
+            /**
+             * Value
+             * @default null
+             */
+            value: (components["schemas"]["Money"] | components["schemas"]["Count"] | components["schemas"]["Percent"] | components["schemas"]["Placeholder"] | components["schemas"]["Range"]) | null;
         };
         /** VerdictEvent */
         VerdictEvent: {

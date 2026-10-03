@@ -121,10 +121,10 @@ class DocRecord(BaseModel): doc_id: str; sha256: str; doc_type: DocType; company
 class Job(BaseModel): job_id: str; doc_id: str; stage: str; status: Literal["queued","running","done","failed"]
     progress: dict; error: str | None; started_at: datetime | None; finished_at: datetime | None
 
-class Evidence(BaseModel): doc_id: str; page: int; bbox: BBox | None; sentence: str | None
+class PageEvidence(BaseModel): doc_id: str; page: int; bbox: BBox | None; sentence: str | None  # named so it can't clash with the chat `Evidence` in OpenAPI (B3.2)
 
 class SummaryValue(BaseModel): key: str; value: Amount | Percent | Count | str | None
-    period: str | None; evidence: Evidence | None; status: Literal["found","placeholder","not_found"]
+    period: str | None; evidence: PageEvidence | None; status: Literal["found","placeholder","not_found"]
 
 class FinancialSummary(BaseModel): doc_id: str; currency_unit: str
     revenue: list[SummaryValue]; profit_after_tax: list[SummaryValue]; operating_cash_flow: list[SummaryValue]
@@ -134,7 +134,7 @@ class FinancialSummary(BaseModel): doc_id: str; currency_unit: str
     peers: list[dict]; auditor_remarks: list[SummaryValue]; is_financial_company: bool
 
 class RedFlag(BaseModel): id: str; title: str; status: Status3; sentence: str
-    numbers_used: dict[str, str]; evidence: list[Evidence]; rule: str; points: int
+    numbers_used: dict[str, str]; evidence: list[PageEvidence]; rule: str; points: int
 
 class Risk(BaseModel): rid: str; order: int; title: str; body: str; page_start: int; page_end: int
     category: RiskCategory | None; category_conf: float | None
