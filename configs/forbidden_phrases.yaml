@@ -1,0 +1,46 @@
+# Forbidden phrases (B01 §6, B-ADR-13): instruction-style phrases and verdicts on an IPO, not single
+# words. Shared by the UI copy test and every model rewrite (teacher filter, student post-check).
+# Patterns are case-insensitive regular expressions matched after the allow-list is removed.
+# Change this file only with a test showing what the change blocks or lets through.
+
+allow:
+  # fixed lines that must pass (disclaimers, document terms)
+  - "whether to apply or buy"
+  - "whether to apply"
+  - "whether to invest"
+  - "not investment advice"
+  - "investment advice"
+  - "selling shareholders"
+  - "offer for sale"
+  - "offer-for-sale"
+  # Hindi disclaimer form: "whether you should apply or not"
+  - "करना चाहिए या नहीं"
+
+patterns:
+  - id: tell_to_trade
+    note: telling someone to buy, sell, apply, subscribe, invest, hold or avoid
+    regex: "\\b(you|investors|one|we)\\s+(should|must|ought to|need to|had better)\\s+(not\\s+)?(buy|sell|apply|subscribe|invest|hold|avoid|skip|stay away)\\b"
+  - id: advisable_to
+    regex: "\\b(it is|it's|it would be)\\s+(advisable|better|wise|smart|best)\\s+to\\s+(buy|sell|apply|subscribe|invest|hold|avoid|skip)\\b"
+  - id: imperative_trade
+    note: a sentence that starts with the instruction
+    regex: "(^|[.!?]\\s+)(do not\\s+|don't\\s+)?(buy|sell|apply for|apply in|subscribe to|invest in|avoid|skip)\\s+(this|the|these)\\s+(ipo|issue|shares?|stock|offer)\\b"
+  - id: recommend
+    regex: "\\b(recommended|we recommend|i recommend|recommendation to)\\b"
+  - id: ipo_verdict
+    note: good / bad / strong / weak / safe / risky as a verdict on the IPO
+    regex: "\\b(good|bad|great|strong|weak|safe|risky|solid|attractive|unattractive)\\s+(ipo|investment|bet|buy|pick|issue to)\\b"
+  - id: safe_verdict
+    regex: "\\b(this|the)\\s+(ipo|issue|offer|investment)\\s+(is|looks|seems)\\s+(safe|a safe bet|risk-free)\\b"
+  - id: worth_it
+    regex: "\\bworth\\s+(it|buying|applying|investing|a bet|the risk)\\b"
+  - id: guaranteed_return
+    note: 'guaranteed about returns; loans guaranteed by our Promoters are document facts and pass'
+    regex: "\\bguaranteed\\s+(returns?|gains?|profits?|listing|allotment|money)\\b"
+  - id: listing_gain
+    regex: "\\blisting\\s+(gains?|pop|premium)\\b"
+  - id: target_price
+    regex: "\\b(target price|price target|multibagger)\\b"
+  - id: hi_instruction
+    note: Hindi instruction forms
+    regex: "(ज़रूर|अवश्य|बिल्कुल)\\s*(खरीदें|ख़रीदें|निवेश करें|आवेदन करें)|(खरीदना|ख़रीदना|निवेश करना|आवेदन करना)\\s+चाहिए|लिस्टिंग\\s*(गेन|लाभ)|टारगेट\\s*प्राइस"

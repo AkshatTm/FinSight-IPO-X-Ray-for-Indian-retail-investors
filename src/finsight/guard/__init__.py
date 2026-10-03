@@ -1,4 +1,5 @@
-"""Advice, forecast and privacy guard (no model call; decided on the question alone)."""
+"""Advice, forecast and privacy guard (no model call; decided on the question alone), and the
+forbidden-phrase filter for UI copy and model rewrites (B01 §6)."""
 
 from __future__ import annotations
 
@@ -9,6 +10,7 @@ from finsight.core.config import get_settings
 from finsight.guard.advice import AdviceCheck, check_advice, normalize_question
 from finsight.guard.clf import Scorer, load_scorer
 from finsight.guard.facts import Fact, facts_payload, refusal_text
+from finsight.guard.phrases import PhraseHit, find_forbidden, is_clean, load_phrases
 from finsight.guard.privacy import OutputCheck, PrivacyCheck, check_output, check_privacy
 
 
@@ -59,12 +61,16 @@ __all__ = [
     "Fact",
     "GuardResult",
     "OutputCheck",
+    "PhraseHit",
     "PrivacyCheck",
     "check_advice",
     "check_output",
     "check_privacy",
     "check_question",
     "facts_payload",
+    "find_forbidden",
+    "is_clean",
+    "load_phrases",
     "normalize_question",
     "refusal_text",
 ]
