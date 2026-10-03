@@ -383,6 +383,21 @@ The answer is either a type (RHP, DRHP or Prospectus) or one of the rejection co
 **Limits.** Tested on synthetic PDFs only. B1.1b runs it on the 20 showcase PDFs and 5 unseen RHPs and fixes what breaks.
 **Likely viva questions.** (1) *Why median text density instead of "any page without text"?* (Real RHPs contain image-only pages, such as charts and maps.) (2) *Why the largest-font title rather than counting phrases?* (A Prospectus cover mentions its RHP.)
 
+### C23. Jobs, storage, database and live events (built in B1.2)
+**What it does.** An upload goes in three steps:
+1. `init` checks the kill switch, the daily limits (3 per user, 10 overall, counted per Indian calendar day) and the size. It returns either "already analysed" (same SHA-256) or a place to send the file: a signed GCS link in the cloud, an API URL on the laptop.
+2. The file is sent there.
+3. `complete` recomputes the SHA-256 on the server, so nobody can claim someone else's report by sending a fake hash, and queues the job.
+
+The worker runs the stages in order (`jobs.run_job`):
+- Each stage writes its file under `docs/<doc_id>/` and emits B06 events (`stage`, `ready`, `done`) into `job_events` with an increasing `seq`.
+- A stage whose output already exists is skipped, so a retried job continues where it stopped.
+- A failing stage marks the report `partial` and skips only the stages that need it. A failing critical stage (validation, parsing) fails the job.
+
+The SSE endpoint replays events after `Last-Event-ID` by polling the table about once a second, because the Supabase pooler has no LISTEN/NOTIFY. Clicked "Explain in plain English" requests move a risk to the front of a priority queue table. A retention sweep deletes non-showcase documents after 30 days but keeps the upload counts, so the limits stay honest. One `Storage` protocol covers local files and GCS. One `Database` covers SQLite and Postgres, and Alembic migrations are checked against the table definitions in CI on a real Postgres.
+**Limits.** Only the `validated` and `detected` stages exist so far. Later parts add theirs. The Cloud Run launcher arrives with B3.3a.
+**Likely viva questions.** (1) *Why recompute the hash on the server?* (2) *Why poll instead of LISTEN/NOTIFY?* (The transaction-mode pooler drops session features.) (3) *What makes a stage idempotent?* (Its output file is the proof it ran.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

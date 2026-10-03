@@ -13,14 +13,14 @@ Base path `/api`. Conventions from `06_API_CONTRACT.md` apply (snake_case, money
 ### `POST /api/uploads/init`
 Body: `{filename, size_bytes, sha256}` →
 - If `sha256` already processed: `{status: "exists", doc_id}`.
-- Else: `{status: "upload", doc_id, upload_url, expires_at}` (V4 signed GCS PUT URL in the cloud profiles; local profile returns `/api/uploads/{doc_id}/file`).
-Checks: auth, `UPLOADS_ENABLED`, quota, size ≤ `uploads.max_mb` (50).
+- Else: `{status: "upload", doc_id, upload_url, upload_method, expires_at}` (`PUT` to a V4 signed GCS URL in the cloud profiles; `POST /api/uploads/{doc_id}/file` in the local profiles).
+Checks: auth, `UPLOADS_ENABLED` (503 `uploads_disabled`), quota (429 `quota_exceeded` / `global_quota_exceeded` with `limit` and `resets_at` = next midnight IST), size ≤ `uploads.max_mb` (422 `too_large`). A dedupe hit does not use quota. The doc row starts with `status: "uploading"` and is hidden from every read endpoint until `complete`.
 
 ### `PUT {upload_url}` (direct to storage) or `POST /api/uploads/{doc_id}/file` (local)
 Raw PDF bytes.
 
 ### `POST /api/uploads/{doc_id}/complete`
-→ `{doc_id, job_id, status: "queued"}`. **Recomputes SHA-256 on the server** (mismatch → 422 `hash_mismatch`), then starts validation + the job. Rejections return 422 with `code` ∈ `scanned | password | too_large | too_many_pages | not_offer_document | hash_mismatch`.
+→ `{doc_id, job_id, status: "queued"}`. **Recomputes SHA-256 on the server** (mismatch → 422 `hash_mismatch`, file deleted) and re-checks the size (422 `too_large`), then queues the job. `409 upload_not_started` if `init` was not called or the file has not arrived. The PDF is validated by the worker, never in the API process (B02 §11): `scanned | password | too_many_pages | not_offer_document` arrive as the `validated` stage failure (`detail.reason`) and as `doc.rejection`, with `doc.status = "failed"`.
 
 ### `GET /api/docs/{doc_id}`
 `DocRecord` + `{stages: [{stage, status, started_at, finished_at, detail}], companion_doc_id?}`.

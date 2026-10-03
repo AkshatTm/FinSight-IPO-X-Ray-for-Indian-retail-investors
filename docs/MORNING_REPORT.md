@@ -15,6 +15,14 @@
   - It rejects files that are too big, have too many pages, are password-locked or scanned, or aren't offer documents, with the reason codes the UI will show.
   - Tested on made-up PDFs. Real PDFs come in B1.1b on your laptop.
 
+- **B1.2 (#127): the backbone for uploads.**
+  - Files go to local disk or a Google Cloud bucket. Jobs, events and quotas live in SQLite on the laptop or Supabase Postgres in the cloud.
+  - Processing runs stage by stage. A failed stage still leaves a partial report.
+  - The live progress stream can resume where it left off.
+  - Limits: 3 uploads per person per day and 10 overall, plus an off switch. Files are deleted after 30 days.
+  - Google sign-in tokens are checked on the server.
+  - CI now also tests against a real Postgres.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
@@ -23,7 +31,8 @@
 2. Local session: **B0.1 workspace bug**. The L1 prompt is in `docs/AKSHAT_TODO.md`.
 3. Hosting steps, Part A only: `docs/phase2/HOSTING_SETUP_STEPS.md` (Supabase with Google sign-in, Vercel, Kaggle check; about 45 min). **Don't** enable GCP billing yet.
 4. After you put the 5 unseen RHPs in `data/raw/unseen/` (Wed 7): local **B1.1b**. The prompt is in `docs/AKSHAT_TODO.md`.
-5. Gold v3 pre-fill with Claude chat (`data/gold/gold_v3_template.jsonl`), due Fri 9 Oct.
+5. Optional, 5 min: the B1.2 local check (one showcase RHP through the new upload API). The prompt is in AKSHAT_TODO.
+6. Gold v3 pre-fill with Claude chat (`data/gold/gold_v3_template.jsonl`), due Fri 9 Oct.
 
 ### Surprises
 - Mumbai (`asia-south1`) Cloud Run L4 GPUs are invitation-only, so the plan uses Singapore.
