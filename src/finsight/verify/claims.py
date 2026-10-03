@@ -35,6 +35,8 @@ class AnswerNumber:
 
 @dataclass(frozen=True)
 class AnswerClaim:
+    """A sentence of the answer and the numbers in it."""
+
     claim: Claim
     numbers: list[AnswerNumber]
 

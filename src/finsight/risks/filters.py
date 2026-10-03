@@ -31,6 +31,8 @@ REASONS = (
 
 @dataclass(frozen=True)
 class TeacherItem:
+    """A risk as sent to the teacher and the teacher's raw reply."""
+
     risk_id: str
     original: str  # title + body as sent to the teacher
     raw: str  # the teacher's text
@@ -38,6 +40,8 @@ class TeacherItem:
 
 @dataclass(frozen=True)
 class Kept:
+    """A teacher reply that passed every filter."""
+
     risk_id: str
     original: str
     output: TeacherOutput
@@ -45,15 +49,19 @@ class Kept:
 
 @dataclass
 class FilterReport:
+    """Replies kept and dropped, with the reason for each drop."""
+
     kept: list[Kept] = field(default_factory=list)
     dropped: list[tuple[str, str, str]] = field(default_factory=list)  # (risk_id, reason, detail)
 
     @property
     def counts(self) -> dict[str, int]:
+        """Drops per filter reason (every reason listed, zero included)."""
         c = Counter(reason for _, reason, _ in self.dropped)
         return {r: c.get(r, 0) for r in REASONS}
 
     def summary(self) -> dict[str, object]:
+        """Totals and drop rates per reason, for the datasheet."""
         total = len(self.kept) + len(self.dropped)
         return {
             "total": total,
@@ -88,6 +96,7 @@ def check_one(item: TeacherItem) -> tuple[TeacherOutput | None, str | None, str]
 
 
 def filter_outputs(items: list[TeacherItem]) -> FilterReport:
+    """Run every filter on each reply and drop duplicate rewrites."""
     report = FilterReport()
     seen: set[str] = set()
     for item in items:

@@ -45,6 +45,7 @@ def make_engine(url: str) -> sa.Engine:
 
 
 def url_from_settings(settings: Settings) -> str:
+    """The database URL for the profile: Postgres from the env, else the SQLite file."""
     cfg = settings.db
     if cfg.backend == "postgres":
         if not cfg.url:

@@ -59,6 +59,8 @@ SEBI_NOTE: dict[Language, str] = {
 
 
 class Fact(TypedDict):
+    """One X-Ray fact shown on the refusal card instead of advice."""
+
     field_id: str
     label: str
     value: str
@@ -93,4 +95,5 @@ def facts_payload(xray: XRay, fields: list[FieldSpec], language: Language = "en"
 
 
 def refusal_text(reason: str, language: Language = "en") -> str:
+    """The refusal message for ``reason`` with the SEBI note, in one language."""
     return f"{REFUSALS[reason][language]}\n\n{SEBI_NOTE[language]}"

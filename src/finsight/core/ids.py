@@ -49,6 +49,7 @@ def passage_id(ipo_id: str, doc_type: DocType, page_start: int, k: int) -> str:
 
 
 def parse_passage_id(pid: str) -> tuple[str, DocType, int, int]:
+    """Split a passage id into IPO id, document type, start page and chunk number."""
     match = _PASSAGE.match(pid)
     if not match:
         raise ValueError(f"Not a valid passage id: {pid!r}")

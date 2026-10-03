@@ -38,12 +38,16 @@ _BLOCKED_TEXT = {
 
 
 class UploadInit(BaseModel):
+    """``POST /api/uploads/init`` body: file name, size and SHA-256."""
+
     filename: str = Field(max_length=300)
     size_bytes: int = Field(gt=0)
     sha256: str = Field(pattern=r"^[0-9a-fA-F]{64}$")
 
 
 class UploadInitResponse(BaseModel):
+    """Either the existing report (same hash) or where to upload the file."""
+
     status: Literal["exists", "upload"]
     doc_id: str
     upload_url: str | None = None
@@ -52,6 +56,8 @@ class UploadInitResponse(BaseModel):
 
 
 class UploadComplete(BaseModel):
+    """``POST /api/uploads/complete`` response: the queued job."""
+
     doc_id: str
     job_id: str
     status: Literal["queued"]
@@ -68,6 +74,7 @@ class UploadLimits(BaseModel):
 
 @router.get("/limits")
 def upload_limits(state: UState) -> UploadLimits:
+    """The upload limits the upload page shows before a file is chosen."""
     cfg = state.settings.uploads
     return UploadLimits(
         enabled=cfg.enabled,

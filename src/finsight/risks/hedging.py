@@ -39,6 +39,7 @@ _PERIOD = re.compile(
 
 @lru_cache(maxsize=4)
 def load_hedges(path: Path | None = None) -> tuple[re.Pattern[str], ...]:
+    """Hedge phrases as patterns, longest first (``configs/hedges.yaml``)."""
     data: dict[str, Any] = yaml.safe_load(
         (path or project_root() / "configs" / "hedges.yaml").read_text(encoding="utf-8")
     )
@@ -85,6 +86,7 @@ def fact_sentence(text: str) -> str | None:
 
 
 def hedging(text: str, min_hedges: int = FLAG_MIN_HEDGES) -> Hedging:
+    """Hedge count, the hard-fact sentence, and the flag when both are present."""
     count = hedge_count(text)
     fact = fact_sentence(text)
     return Hedging(

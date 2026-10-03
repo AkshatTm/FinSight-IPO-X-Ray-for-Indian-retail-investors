@@ -51,6 +51,8 @@ Categories: {"; ".join(f"{k} = {v}" for k, v in CATEGORY_HELP.items())}."""
 
 
 class TeacherOutput(BaseModel):
+    """The JSON the teacher must return for one risk."""
+
     category: RiskCategory
     seriousness_1to5: int = Field(ge=1, le=5)
     hard_fact: bool
@@ -68,6 +70,8 @@ def messages(title: str, body: str) -> list[dict[str, str]]:
 
 
 class ParseError(ValueError):
+    """The teacher's reply is not usable; ``reason`` names the filter."""
+
     def __init__(self, reason: str) -> None:
         super().__init__(reason)
         self.reason = reason  # invalid_json | bad_category | bad_schema

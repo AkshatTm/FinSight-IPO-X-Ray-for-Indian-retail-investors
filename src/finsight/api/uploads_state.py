@@ -22,6 +22,8 @@ from finsight.storage import Storage, make_storage
 
 @dataclass
 class UploadState:
+    """What the upload and report routes need: settings, database, storage, launcher."""
+
     settings: Settings
     db: Database
     storage: Storage
@@ -29,6 +31,7 @@ class UploadState:
 
 
 def build_upload_state(settings: Settings) -> UploadState:
+    """Wire the profile's database, storage and job launcher."""
     db, storage = make_database(settings), make_storage(settings)
     launcher: Launcher
     if settings.jobs.runner == "cloud_run":
@@ -42,6 +45,7 @@ def build_upload_state(settings: Settings) -> UploadState:
 
 @lru_cache(maxsize=1)
 def get_upload_state() -> UploadState:
+    """The cached upload state (a FastAPI dependency)."""
     return build_upload_state(get_settings())
 
 

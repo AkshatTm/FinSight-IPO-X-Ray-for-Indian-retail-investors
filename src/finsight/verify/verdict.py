@@ -20,6 +20,8 @@ MARKS = {"verified": "✅", "unverifiable": "⚠️", "contradicted": "❌"}
 
 @dataclass(frozen=True)
 class NumberVerdict:
+    """The verdict for one number of the answer."""
+
     index: int  # order of the number in the answer, 0-based (06: verdict event)
     answer_char_span: tuple[int, int]
     metric: str | None
@@ -28,19 +30,24 @@ class NumberVerdict:
 
 @dataclass(frozen=True)
 class AnswerVerdict:
+    """All number verdicts of an answer and its score."""
+
     verdicts: list[NumberVerdict]
     score: float | None
 
     @property
     def n_numbers(self) -> int:
+        """How many numbers were checked."""
         return len(self.verdicts)
 
     @property
     def checks(self) -> list[CheckResult]:
+        """The check result of every number."""
         return [v.check for v in self.verdicts]
 
 
 def answer_score(checks: list[CheckResult]) -> float | None:
+    """Share of numbers verified (``None`` when there are none)."""
     if not checks:
         return None
     return sum(c.status == "verified" for c in checks) / len(checks)

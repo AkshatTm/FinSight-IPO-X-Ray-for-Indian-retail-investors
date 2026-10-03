@@ -63,6 +63,8 @@ def tokenize(text: str) -> list[str]:
 
 
 class BM25Index:
+    """BM25 word-match index over passage texts."""
+
     def __init__(self, texts: Sequence[str]) -> None:
         self.size = len(texts)
         self._index = bm25s.BM25()

@@ -50,6 +50,8 @@ _PRINTED = re.compile(r"\d[\d,]*(?:\.\d+)?")
 
 @dataclass(frozen=True)
 class EvidenceAmount:
+    """An amount found in a cited passage, with where it sits."""
+
     amount: Amount
     passage: Passage
     order: int  # position of the passage in the retrieved list, 0-based
@@ -281,6 +283,7 @@ class NumericCheck:
     name = CHECK
 
     def check(self, claim: Claim, evidence: list[Passage]) -> list[CheckResult]:
+        """Match each number in the claim against amounts in the evidence."""
         amounts = evidence_amounts(evidence)
         sentence = mask_citations(claim.sentence)
         spans = parse_amounts(sentence)

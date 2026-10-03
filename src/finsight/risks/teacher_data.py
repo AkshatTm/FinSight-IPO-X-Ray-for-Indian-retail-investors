@@ -58,6 +58,7 @@ def filter_file(risks_path: Path, raw_path: Path) -> tuple[FilterReport, dict[st
 
 
 def label_source(meta: dict[str, Any]) -> str:
+    """``teacher:<model>:<prompt version>`` for AI-assisted labels."""
     return f"teacher:{meta.get('model', 'unknown')}:{meta.get('prompt_version', PROMPT_VERSION)}"
 
 
@@ -134,6 +135,7 @@ def quality_sheet(
 
 
 def write_sheet(rows: list[dict[str, Any]], path: Path) -> None:
+    """Write the quality-check sheet as CSV."""
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=SHEET_COLUMNS)
@@ -142,6 +144,7 @@ def write_sheet(rows: list[dict[str, Any]], path: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> None:
+    """CLI: ``filter`` the teacher replies or write the quality ``sheet``."""
     p = argparse.ArgumentParser(prog="python -m finsight.risks.teacher_data")
     p.add_argument("command", choices=["filter", "sheet"])
     p.add_argument("--dir", type=Path, default=Path("data/processed/teacher"))

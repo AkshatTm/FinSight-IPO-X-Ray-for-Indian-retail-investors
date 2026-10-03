@@ -19,6 +19,7 @@ Scorer = Callable[[str], float]  # question -> probability that it asks for advi
 
 
 def weights_dir(models_dir: Path | None = None) -> Path:
+    """Where the fine-tuned guard classifier's weights live."""
     return (models_dir or Path(get_settings().paths.models_dir)) / "guard_clf"
 
 

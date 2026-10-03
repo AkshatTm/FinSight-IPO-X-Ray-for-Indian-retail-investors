@@ -11,7 +11,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Health */
+        /**
+         * Health
+         * @description Service status, profile, demo mode and which models are loaded.
+         */
         get: operations["health_api_health_get"];
         put?: never;
         post?: never;
@@ -28,7 +31,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List Ipos */
+        /**
+         * List Ipos
+         * @description The showcase IPO library, filtered and sorted.
+         */
         get: operations["list_ipos_api_ipos_get"];
         put?: never;
         post?: never;
@@ -45,7 +51,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Ipo */
+        /**
+         * Get Ipo
+         * @description One showcase IPO's documents and sections.
+         */
         get: operations["get_ipo_api_ipos__id__get"];
         put?: never;
         post?: never;
@@ -62,7 +71,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Xray */
+        /**
+         * Get Xray
+         * @description The X-Ray fact sheet of one showcase IPO.
+         */
         get: operations["get_xray_api_ipos__id__xray_get"];
         put?: never;
         post?: never;
@@ -79,7 +91,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Page Image */
+        /**
+         * Get Page Image
+         * @description A rendered page as WebP (``w`` for a thumbnail); cached for a year.
+         */
         get: operations["get_page_image_api_ipos__id__pages__n__get"];
         put?: never;
         post?: never;
@@ -96,7 +111,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Page Words */
+        /**
+         * Get Page Words
+         * @description The words and boxes of one page.
+         */
         get: operations["get_page_words_api_ipos__id__pages__n__words_get"];
         put?: never;
         post?: never;
@@ -113,7 +131,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Suggested Questions */
+        /**
+         * Suggested Questions
+         * @description The question chips for one IPO.
+         */
         get: operations["suggested_questions_api_ipos__id__suggested_questions_get"];
         put?: never;
         post?: never;
@@ -132,7 +153,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Chat */
+        /**
+         * Chat
+         * @description Answer a question as server-sent events, replaying the demo cache in demo mode.
+         */
         post: operations["chat_api_chat_post"];
         delete?: never;
         options?: never;
@@ -149,7 +173,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Voice */
+        /**
+         * Voice
+         * @description Transcribe a short spoken question (at most 20 s).
+         */
         post: operations["voice_api_voice_post"];
         delete?: never;
         options?: never;
@@ -164,7 +191,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Trace */
+        /**
+         * Get Trace
+         * @description The full trace of one chat answer.
+         */
         get: operations["get_trace_api_traces__trace_id__get"];
         put?: never;
         post?: never;
@@ -181,7 +211,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lab Ladder */
+        /**
+         * Lab Ladder
+         * @description Model Lab: the extractor ladder results.
+         */
         get: operations["lab_ladder_api_lab_ladder_get"];
         put?: never;
         post?: never;
@@ -198,7 +231,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lab Fields */
+        /**
+         * Lab Fields
+         * @description Model Lab: per-field X-Ray accuracy.
+         */
         get: operations["lab_fields_api_lab_fields_get"];
         put?: never;
         post?: never;
@@ -215,7 +251,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lab Verifier */
+        /**
+         * Lab Verifier
+         * @description Model Lab: the number verifier's seeded-error results.
+         */
         get: operations["lab_verifier_api_lab_verifier_get"];
         put?: never;
         post?: never;
@@ -232,7 +271,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lab Weaklabels */
+        /**
+         * Lab Weaklabels
+         * @description Model Lab: weak-label statistics and the audit precision.
+         */
         get: operations["lab_weaklabels_api_lab_weaklabels_get"];
         put?: never;
         post?: never;
@@ -249,7 +291,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lab Frontier */
+        /**
+         * Lab Frontier
+         * @description Model Lab: FinSight against frontier chatbots on the same questions (E9).
+         */
         get: operations["lab_frontier_api_lab_frontier_get"];
         put?: never;
         post?: never;
@@ -266,7 +311,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lab Retrieval */
+        /**
+         * Lab Retrieval
+         * @description Model Lab: retrieval recall by method.
+         */
         get: operations["lab_retrieval_api_lab_retrieval_get"];
         put?: never;
         post?: never;
@@ -283,7 +331,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lab Asr */
+        /**
+         * Lab Asr
+         * @description Model Lab: speech recognition results.
+         */
         get: operations["lab_asr_api_lab_asr_get"];
         put?: never;
         post?: never;
@@ -300,7 +351,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Glossary */
+        /**
+         * Glossary
+         * @description Glossary terms in the chosen language (English where Hindi is missing).
+         */
         get: operations["glossary_api_glossary_get"];
         put?: never;
         post?: never;
@@ -317,7 +371,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Upload Limits */
+        /**
+         * Upload Limits
+         * @description The upload limits the upload page shows before a file is chosen.
+         */
         get: operations["upload_limits_api_uploads_limits_get"];
         put?: never;
         post?: never;
@@ -394,7 +451,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Doc */
+        /**
+         * Get Doc
+         * @description An uploaded document with the state of each stage of its latest job.
+         */
         get: operations["get_doc_api_docs__doc_id__get"];
         put?: never;
         post?: never;
@@ -434,7 +494,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** My Uploads */
+        /**
+         * My Uploads
+         * @description The signed-in user's uploads, newest first.
+         */
         get: operations["my_uploads_api_me_uploads_get"];
         put?: never;
         post?: never;
@@ -471,7 +534,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List Risks */
+        /**
+         * List Risks
+         * @description Risks sorted and filtered; bodies are cut to 1,200 characters.
+         */
         get: operations["list_risks_api_docs__doc_id__risks_get"];
         put?: never;
         post?: never;
@@ -586,7 +652,10 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** ApiCandidate */
+        /**
+         * ApiCandidate
+         * @description One extractor's value for a field, as shown in the inspector.
+         */
         ApiCandidate: {
             /** Extractor */
             extractor: string;
@@ -638,14 +707,20 @@ export interface components {
              */
             language: string;
         };
-        /** CategoryCount */
+        /**
+         * CategoryCount
+         * @description How many risks fall in one category (the filter chips).
+         */
         CategoryCount: {
             /** Category */
             category: ("financial" | "debt_liquidity" | "customers_suppliers" | "competition" | "legal_litigation" | "regulatory" | "promoters_governance" | "operations" | "technology_data" | "market_macro") | null;
             /** Count */
             count: number;
         };
-        /** ChatRequest */
+        /**
+         * ChatRequest
+         * @description ``POST /api/chat`` body: the IPO, the question and its language.
+         */
         ChatRequest: {
             /** Ipo Id */
             ipo_id: string;
@@ -669,7 +744,10 @@ export interface components {
              */
             demo: boolean;
         };
-        /** CheckResult */
+        /**
+         * CheckResult
+         * @description The result of one verifier check: verdict, reason and the values compared.
+         */
         CheckResult: {
             /** Check */
             check: string;
@@ -736,7 +814,10 @@ export interface components {
              */
             provisional: boolean;
         };
-        /** ComparePercentile */
+        /**
+         * ComparePercentile
+         * @description Where one metric of this IPO falls among past IPOs (0-100).
+         */
         ComparePercentile: {
             /**
              * Metric
@@ -750,7 +831,10 @@ export interface components {
             /** Corpus N */
             corpus_n: number;
         };
-        /** Count */
+        /**
+         * Count
+         * @description A whole-number count, such as a number of equity shares.
+         */
         Count: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -767,7 +851,10 @@ export interface components {
              */
             unit: string | null;
         };
-        /** DocDetail */
+        /**
+         * DocDetail
+         * @description ``GET /api/docs/{doc_id}``: the document, its latest job and stages.
+         */
         DocDetail: {
             doc: components["schemas"]["DocRecord"];
             /** Job Id */
@@ -818,7 +905,10 @@ export interface components {
             /** Rejection */
             rejection?: ("scanned" | "password" | "too_large" | "too_many_pages" | "not_offer_document" | "hash_mismatch") | null;
         };
-        /** ErrorBody */
+        /**
+         * ErrorBody
+         * @description The error envelope's body: code, message, hint, and quota details if any.
+         */
         ErrorBody: {
             /**
              * Code
@@ -836,11 +926,17 @@ export interface components {
             /** Resets At */
             resets_at?: string | null;
         };
-        /** ErrorResponse */
+        /**
+         * ErrorResponse
+         * @description Every API error: ``{"error": ErrorBody}`` (B06 §1).
+         */
         ErrorResponse: {
             error: components["schemas"]["ErrorBody"];
         };
-        /** FieldCheck */
+        /**
+         * FieldCheck
+         * @description One verifier check on an X-Ray field, as the UI shows it.
+         */
         FieldCheck: {
             /** Check */
             check: string;
@@ -852,7 +948,10 @@ export interface components {
             /** Reason */
             reason: string;
         };
-        /** GlossaryEntry */
+        /**
+         * GlossaryEntry
+         * @description A glossary term with its short definition.
+         */
         GlossaryEntry: {
             /** Term */
             term: string;
@@ -861,7 +960,10 @@ export interface components {
             /** Body */
             body: string;
         };
-        /** HealthResponse */
+        /**
+         * HealthResponse
+         * @description ``GET /api/health``: status, profile, demo mode and model states.
+         */
         HealthResponse: {
             /**
              * Status
@@ -904,7 +1006,10 @@ export interface components {
             /** Fact Sentence */
             fact_sentence?: string | null;
         };
-        /** IpoDetail */
+        /**
+         * IpoDetail
+         * @description A showcase IPO's documents: page counts, page size and sections.
+         */
         IpoDetail: {
             /** Id */
             id: string;
@@ -918,7 +1023,10 @@ export interface components {
             /** Sections */
             sections: components["schemas"]["SectionInfo"][];
         };
-        /** IpoSummary */
+        /**
+         * IpoSummary
+         * @description A showcase IPO in the library list, with its headline sizes.
+         */
         IpoSummary: {
             /** Id */
             id: string;
@@ -942,7 +1050,10 @@ export interface components {
              */
             xray_status: "ready" | "building" | "missing";
         };
-        /** ListValue */
+        /**
+         * ListValue
+         * @description A field value that is a list of strings.
+         */
         ListValue: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -952,7 +1063,10 @@ export interface components {
             /** Items */
             items: string[];
         };
-        /** ModelStatus */
+        /**
+         * ModelStatus
+         * @description Whether one model is loaded (or loads lazily on first use).
+         */
         ModelStatus: {
             /** Name */
             name?: string | null;
@@ -961,7 +1075,10 @@ export interface components {
             /** Lazy */
             lazy?: boolean | null;
         };
-        /** Money */
+        /**
+         * Money
+         * @description An amount of money with its raw text and scale word, normalised to rupees where known.
+         */
         Money: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -985,7 +1102,10 @@ export interface components {
             /** Precision */
             precision: number;
         };
-        /** MyUpload */
+        /**
+         * MyUpload
+         * @description One row of ``/api/me/uploads``.
+         */
         MyUpload: {
             /** Doc Id */
             doc_id: string;
@@ -1001,7 +1121,10 @@ export interface components {
             /** Status */
             status: string;
         };
-        /** NearestExample */
+        /**
+         * NearestExample
+         * @description A similar risk from a past IPO (company, year, title, similarity).
+         */
         NearestExample: {
             /** Company */
             company: string;
@@ -1031,14 +1154,20 @@ export interface components {
             /** Sentence */
             sentence?: string | null;
         };
-        /** PageSize */
+        /**
+         * PageSize
+         * @description Page width and height in PDF points.
+         */
         PageSize: {
             /** Width */
             width: number;
             /** Height */
             height: number;
         };
-        /** PageWord */
+        /**
+         * PageWord
+         * @description A word on a page: text ``t`` and box ``b``.
+         */
         PageWord: {
             /** T */
             t: string;
@@ -1050,7 +1179,10 @@ export interface components {
                 number
             ];
         };
-        /** PageWords */
+        /**
+         * PageWords
+         * @description Every word on one page, for highlighting and text selection.
+         */
         PageWords: {
             /** Page */
             page: number;
@@ -1083,7 +1215,10 @@ export interface components {
             is_issuer: boolean;
             evidence?: components["schemas"]["PageEvidence"] | null;
         };
-        /** Percent */
+        /**
+         * Percent
+         * @description A percentage (or basis points) as a decimal string.
+         */
         Percent: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -1116,7 +1251,10 @@ export interface components {
             /** Raw */
             raw: string;
         };
-        /** Range */
+        /**
+         * Range
+         * @description A price band or other money range with its low and high ends.
+         */
         Range: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -1291,7 +1429,10 @@ export interface components {
              */
             disclaimer_key: string;
         };
-        /** RiskLevelReason */
+        /**
+         * RiskLevelReason
+         * @description One reason behind the risk level: a red flag or a risk, with points and anchor.
+         */
         RiskLevelReason: {
             /**
              * Source
@@ -1307,7 +1448,10 @@ export interface components {
             /** Link */
             link: string;
         };
-        /** RisksPage */
+        /**
+         * RisksPage
+         * @description ``GET /api/docs/{doc_id}/risks``: counts, the filtered risks and the queue.
+         */
         RisksPage: {
             /** N Total */
             n_total: number;
@@ -1321,7 +1465,10 @@ export interface components {
              */
             queued: string[];
         };
-        /** SectionInfo */
+        /**
+         * SectionInfo
+         * @description A section of a document with its PDF and printed start pages.
+         */
         SectionInfo: {
             /** Id */
             id: string;
@@ -1339,7 +1486,10 @@ export interface components {
             /** End Page */
             end_page: number;
         };
-        /** SimplifyQueued */
+        /**
+         * SimplifyQueued
+         * @description Where a risk stands after asking for its plain-English version.
+         */
         SimplifyQueued: {
             /** Rid */
             rid: string;
@@ -1364,7 +1514,10 @@ export interface components {
                 number
             ];
         };
-        /** StageState */
+        /**
+         * StageState
+         * @description One pipeline stage of an uploaded document, rebuilt from its events.
+         */
         StageState: {
             /** Stage */
             stage: string;
@@ -1382,7 +1535,10 @@ export interface components {
                 [key: string]: unknown;
             } | null;
         };
-        /** SuggestedQuestion */
+        /**
+         * SuggestedQuestion
+         * @description A question chip under the chat box (normal, trick or advice).
+         */
         SuggestedQuestion: {
             /** Text */
             text: string;
@@ -1397,7 +1553,10 @@ export interface components {
              */
             kind: "normal" | "trick" | "advice";
         };
-        /** TableValue */
+        /**
+         * TableValue
+         * @description A field value that is a small table.
+         */
         TableValue: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -1409,7 +1568,10 @@ export interface components {
             /** Rows */
             rows: string[][];
         };
-        /** TextValue */
+        /**
+         * TextValue
+         * @description A field value that is free text.
+         */
         TextValue: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -1419,7 +1581,10 @@ export interface components {
             /** Text */
             text: string;
         };
-        /** Trace */
+        /**
+         * Trace
+         * @description Everything one chat answer went through, for the trace inspector.
+         */
         Trace: {
             /** Trace Id */
             trace_id: string;
@@ -1442,7 +1607,10 @@ export interface components {
                 [key: string]: number;
             };
         };
-        /** UploadComplete */
+        /**
+         * UploadComplete
+         * @description ``POST /api/uploads/complete`` response: the queued job.
+         */
         UploadComplete: {
             /** Doc Id */
             doc_id: string;
@@ -1454,7 +1622,10 @@ export interface components {
              */
             status: "queued";
         };
-        /** UploadInit */
+        /**
+         * UploadInit
+         * @description ``POST /api/uploads/init`` body: file name, size and SHA-256.
+         */
         UploadInit: {
             /** Filename */
             filename: string;
@@ -1463,7 +1634,10 @@ export interface components {
             /** Sha256 */
             sha256: string;
         };
-        /** UploadInitResponse */
+        /**
+         * UploadInitResponse
+         * @description Either the existing report (same hash) or where to upload the file.
+         */
         UploadInitResponse: {
             /**
              * Status
@@ -1493,7 +1667,10 @@ export interface components {
             /** Per User Per Day */
             per_user_per_day: number;
         };
-        /** VoiceResponse */
+        /**
+         * VoiceResponse
+         * @description ``POST /api/voice``: the transcript and the ASR model used.
+         */
         VoiceResponse: {
             /** Transcript */
             transcript: string;
@@ -1504,7 +1681,10 @@ export interface components {
             /** Ms */
             ms: number;
         };
-        /** XRayField */
+        /**
+         * XRayField
+         * @description One fact of the X-Ray with its source, verdict, checks and candidates.
+         */
         XRayField: {
             /** Field Id */
             field_id: string;
@@ -1555,7 +1735,10 @@ export interface components {
             /** Candidates */
             candidates: components["schemas"]["ApiCandidate"][];
         };
-        /** XRayResponse */
+        /**
+         * XRayResponse
+         * @description ``GET /api/ipos/{id}/xray``: all fields and derived numbers.
+         */
         XRayResponse: {
             /** Ipo Id */
             ipo_id: string;
@@ -1574,7 +1757,10 @@ export interface components {
             };
             bid_closed?: components["schemas"]["BidClosedInfo"] | null;
         };
-        /** StageEvent */
+        /**
+         * StageEvent
+         * @description A chat pipeline stage starting or ending, with its time in ms.
+         */
         StageEvent: {
             /**
              * Name
@@ -1613,7 +1799,10 @@ export interface components {
             /** Page */
             page: number;
         };
-        /** GuardEvent */
+        /**
+         * GuardEvent
+         * @description The guard's decision; when blocked, the facts shown instead of advice.
+         */
         GuardEvent: {
             /** Blocked */
             blocked: boolean;
@@ -1622,7 +1811,10 @@ export interface components {
             /** Facts */
             facts: components["schemas"]["FactSummary"][];
         };
-        /** RetrievedPassage */
+        /**
+         * RetrievedPassage
+         * @description One passage the retriever returned, with its rank in each method.
+         */
         RetrievedPassage: {
             /** N */
             n: number;
@@ -1662,14 +1854,20 @@ export interface components {
              */
             rerank_score: number | null;
         };
-        /** RetrievalEvent */
+        /**
+         * RetrievalEvent
+         * @description The passages kept for the prompt and the ones dropped.
+         */
         RetrievalEvent: {
             /** Passages */
             passages: components["schemas"]["RetrievedPassage"][];
             /** Dropped */
             dropped: components["schemas"]["RetrievedPassage"][];
         };
-        /** AbstainEvent */
+        /**
+         * AbstainEvent
+         * @description FinSight declines to answer because retrieval found nothing close enough.
+         */
         AbstainEvent: {
             /**
              * Reason
@@ -1679,12 +1877,18 @@ export interface components {
             /** @default null */
             closest_passage: components["schemas"]["RetrievedPassage"] | null;
         };
-        /** TokenEvent */
+        /**
+         * TokenEvent
+         * @description A piece of streamed answer text.
+         */
         TokenEvent: {
             /** Text */
             text: string;
         };
-        /** Citation */
+        /**
+         * Citation
+         * @description A ``[n]`` citation in the answer and its character span.
+         */
         Citation: {
             /** N */
             n: number;
@@ -1693,14 +1897,20 @@ export interface components {
             /** Char End */
             char_end: number;
         };
-        /** AnswerEvent */
+        /**
+         * AnswerEvent
+         * @description The full answer text with its citations, sent once streaming ends.
+         */
         AnswerEvent: {
             /** Text */
             text: string;
             /** Citations */
             citations: components["schemas"]["Citation"][];
         };
-        /** Evidence */
+        /**
+         * Evidence
+         * @description Where a checked number was found: passage, page, span and box.
+         */
         Evidence: {
             /** Passage Id */
             passage_id: string;
@@ -1732,7 +1942,10 @@ export interface components {
              */
             value: (components["schemas"]["Money"] | components["schemas"]["Count"] | components["schemas"]["Percent"] | components["schemas"]["Placeholder"] | components["schemas"]["Range"]) | null;
         };
-        /** VerdictEvent */
+        /**
+         * VerdictEvent
+         * @description The verifier's mark for one number in the answer.
+         */
         VerdictEvent: {
             /** Index */
             index: number;
@@ -1758,7 +1971,10 @@ export interface components {
             /** @default null */
             evidence: components["schemas"]["Evidence"] | null;
         };
-        /** FinalEvent */
+        /**
+         * FinalEvent
+         * @description The last chat event: trace id, score, number count and stage timings.
+         */
         FinalEvent: {
             /** Trace Id */
             trace_id: string;
@@ -1771,7 +1987,10 @@ export interface components {
                 [key: string]: number;
             };
         };
-        /** ErrorEvent */
+        /**
+         * ErrorEvent
+         * @description A chat error the UI can show (model unavailable, warming up, internal).
+         */
         ErrorEvent: {
             /**
              * Code
@@ -1781,7 +2000,10 @@ export interface components {
             /** Message */
             message: string;
         };
-        /** JobStageEvent */
+        /**
+         * JobStageEvent
+         * @description A document job stage starting, ending or failing (B06 §2).
+         */
         JobStageEvent: {
             /** Stage */
             stage: string;
@@ -1798,7 +2020,10 @@ export interface components {
                 [key: string]: unknown;
             } | null;
         };
-        /** JobProgressEvent */
+        /**
+         * JobProgressEvent
+         * @description Progress inside a long stage: ``done`` of ``total`` items.
+         */
         JobProgressEvent: {
             /** Stage */
             stage: string;
@@ -1807,7 +2032,10 @@ export interface components {
             /** Total */
             total: number;
         };
-        /** JobReadyEvent */
+        /**
+         * JobReadyEvent
+         * @description A report part is ready and the UI can fetch it.
+         */
         JobReadyEvent: {
             /**
              * Part
@@ -1815,7 +2043,10 @@ export interface components {
              */
             part: "facts" | "redflags" | "risk_level" | "risks" | "compare" | "chat";
         };
-        /** RiskSimplifiedEvent */
+        /**
+         * RiskSimplifiedEvent
+         * @description A risk's plain-English rewrite finished (or was rejected or failed).
+         */
         RiskSimplifiedEvent: {
             /** Rid */
             rid: string;
@@ -1825,7 +2056,10 @@ export interface components {
              */
             simple_status: "pending" | "ready" | "rejected" | "failed";
         };
-        /** JobDoneEvent */
+        /**
+         * JobDoneEvent
+         * @description The job finished: ready, partial (some stages failed) or failed.
+         */
         JobDoneEvent: {
             /**
              * Status

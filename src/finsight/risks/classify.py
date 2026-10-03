@@ -29,6 +29,8 @@ MAX_LENGTH = 384  # tokens; the DeBERTa notebooks and the ONNX export use the sa
 
 @dataclass(frozen=True)
 class Example:
+    """One labelled risk for training or evaluating the category classifier."""
+
     risk_id: str
     company: str
     text: str
@@ -36,9 +38,12 @@ class Example:
 
 
 class Classifier(Protocol):
+    """A risk category classifier (TF-IDF baseline or ONNX DeBERTa)."""
+
     labels: Sequence[str]
 
-    def predict_proba(self, texts: Sequence[str]) -> list[list[float]]: ...
+    def predict_proba(self, texts: Sequence[str]) -> list[list[float]]:
+        """Class probabilities per text, in ``labels`` order."""
 
 
 def predict(clf: Classifier, texts: Sequence[str]) -> list[tuple[str, float]]:
@@ -113,6 +118,7 @@ class TfidfBaseline:
         )
 
     def fit(self, texts: Sequence[str], labels: Sequence[str]) -> TfidfBaseline:
+        """Train on texts and their category labels."""
         self.pipeline.fit(list(texts), list(labels))
         return self
 
@@ -126,6 +132,7 @@ class TfidfBaseline:
         ]
 
     def save(self, path: Path) -> None:
+        """Save the labels and the fitted pipeline with joblib."""
         import joblib
 
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -133,6 +140,7 @@ class TfidfBaseline:
 
     @classmethod
     def load(cls, path: Path) -> TfidfBaseline:
+        """Load a baseline saved by :meth:`save` (only files this project wrote)."""
         import joblib
 
         data = joblib.load(path)  # only files this project wrote (models/ is never shared)
@@ -142,6 +150,7 @@ class TfidfBaseline:
 
 
 def evaluate(clf: Classifier, examples: Sequence[Example]) -> dict[str, Any]:
+    """Macro-F1, per-class scores and the confusion matrix on ``examples``."""
     if not examples:
         return scores([], [], clf.labels)
     pred = [p for p, _ in predict(clf, [ex.text for ex in examples])]
@@ -177,6 +186,7 @@ class OnnxClassifier:
         self.inputs = {i.name for i in self.session.get_inputs()}
 
     def predict_proba(self, texts: Sequence[str], batch_size: int = 16) -> list[list[float]]:
+        """Tokenise and run the ONNX model in batches; softmax per text."""
         import numpy as np
 
         out: list[list[float]] = []
@@ -197,6 +207,7 @@ class OnnxClassifier:
 
 # ----------------------------------------------------------------------------- CLI
 def main(argv: list[str] | None = None) -> None:
+    """CLI: ``split`` the teacher labels by company or train the ``baseline``."""
     p = argparse.ArgumentParser(prog="python -m finsight.risks.classify")
     p.add_argument("command", choices=["split", "baseline"])
     p.add_argument("--teacher-dir", type=Path, default=Path("data/processed/teacher"))

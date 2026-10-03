@@ -52,6 +52,7 @@ def get(kind: str, name: str, **kwargs: Any) -> Any:
 
 
 def available(kind: str) -> list[str]:
+    """Registered names of one component kind, sorted."""
     _check_kind(kind)
     return sorted(_classes[kind])
 

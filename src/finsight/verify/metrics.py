@@ -70,6 +70,8 @@ _MARKS_ONLY = re.compile(r"[\s*^†‡#]*")
 
 @dataclass(frozen=True)
 class MetricHit:
+    """A metric name (revenue, PAT, ...) found in a text span."""
+
     metric: str
     start: int
     end: int

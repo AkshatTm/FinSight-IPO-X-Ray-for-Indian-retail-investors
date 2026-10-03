@@ -51,6 +51,8 @@ def normalize_question(text: str) -> str:
 
 @dataclass(frozen=True)
 class AdviceCheck:
+    """Result of the advice-intent rules on one question."""
+
     blocked: bool
     reason: Reason | None = None
     category: str | None = None

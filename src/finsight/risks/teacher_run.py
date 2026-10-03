@@ -17,6 +17,7 @@ Generate = Callable[[list[list[dict[str, str]]]], list[str]]  # chats in, raw te
 
 
 def read_jsonl(path: Path) -> Iterator[dict[str, Any]]:
+    """Rows of a JSON Lines file (nothing if the file is missing)."""
     if not path.exists():
         return
     with path.open(encoding="utf-8") as f:
@@ -31,6 +32,7 @@ def read_jsonl(path: Path) -> Iterator[dict[str, Any]]:
 
 
 def done_ids(path: Path) -> set[str]:
+    """Risk ids already answered, so a resumed run skips them."""
     return {str(row["risk_id"]) for row in read_jsonl(path) if "risk_id" in row}
 
 

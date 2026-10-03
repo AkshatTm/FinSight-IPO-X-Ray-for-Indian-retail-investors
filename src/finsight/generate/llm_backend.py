@@ -47,6 +47,8 @@ def _urllib_opener(url: str, body: dict[str, Any], timeout: float) -> Iterator[b
 
 @register("llm", "ollama")
 class OllamaBackend:
+    """A model served by the local Ollama server (laptop profiles)."""
+
     name = "ollama"
 
     def __init__(
@@ -66,9 +68,11 @@ class OllamaBackend:
 
     @classmethod
     def from_config(cls, config: LLMConfig, **kwargs: Any) -> OllamaBackend:
+        """Build from the profile's ``llm`` settings."""
         return cls(model=config.model, num_ctx=config.num_ctx, **kwargs)
 
     def request_body(self, prompt: str, max_tokens: int, temperature: float) -> dict[str, Any]:
+        """The ``/api/chat`` request body (streaming, thinking off)."""
         return {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
@@ -92,6 +96,7 @@ class OllamaBackend:
         temperature: float = 0.2,
         language: Literal["en", "hi"] = "en",
     ) -> Iterator[str]:
+        """Yield the reply piece by piece."""
         body = self.request_body(prompt, max_tokens, temperature)
         for raw in self._open(f"{self.host}/api/chat", body, self.timeout):
             line = raw.strip()
@@ -109,6 +114,7 @@ class OllamaBackend:
                 return
 
     def generate(self, prompt: str, **kwargs: Any) -> str:
+        """The full reply as one string."""
         return "".join(self.stream(prompt, **kwargs))
 
     def is_available(self) -> bool:

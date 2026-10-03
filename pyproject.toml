@@ -159,7 +159,7 @@ markers = [
     "postgres: needs a Postgres server (CI service job); skipped by `poe test`",
 ]
 
-# Docstring coverage (B09 §7). Warn-only in CI until B4.1 sets the 70 % floor (80 % target).
+# Docstring coverage (B09 §7): CI fails below 70 % and warns below the 80 % target.
 [tool.interrogate]
 ignore-init-method = true
 ignore-init-module = false
@@ -167,5 +167,5 @@ ignore-magic = true
 ignore-private = true
 ignore-semiprivate = true
 ignore-nested-functions = true
-fail-under = 0
+fail-under = 70
 verbose = 0

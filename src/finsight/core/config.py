@@ -27,6 +27,8 @@ DEFAULT_PROFILE = "dev_light"
 
 
 class Paths(BaseModel):
+    """Where data, processed outputs, models and eval results live."""
+
     data_dir: Path = Path("data")
     processed_dir: Path = Path("data/processed")
     models_dir: Path = Path("models")
@@ -34,18 +36,23 @@ class Paths(BaseModel):
 
     @property
     def raw_dir(self) -> Path:
+        """Original PDFs (never read by sessions, never committed)."""
         return self.data_dir / "raw"
 
     @property
     def samples_dir(self) -> Path:
+        """Short, truncated snippets that sessions may read."""
         return self.data_dir / "samples"
 
     @property
     def gold_dir(self) -> Path:
+        """Hand-checked gold labels."""
         return self.data_dir / "gold"
 
 
 class LLMConfig(BaseModel):
+    """The chat model: backend, model name and context size (thinking always off)."""
+
     backend: str = "ollama"
     model: str = "qwen3.5:0.8b"
     num_ctx: int = 2048
@@ -54,6 +61,8 @@ class LLMConfig(BaseModel):
 
 
 class RetrieveConfig(BaseModel):
+    """Retrieval switches: dense search, reranking, top-k and abstain thresholds."""
+
     dense: bool = False
     rerank: bool = False
     rerank_top_n: int = 20
@@ -64,15 +73,21 @@ class RetrieveConfig(BaseModel):
 
 
 class VoiceConfig(BaseModel):
+    """Speech recognition model (``off`` disables voice) and idle unload time."""
+
     asr: str = "off"
     idle_unload_s: int = 120
 
 
 class VerifyConfig(BaseModel):
+    """Verifier switches (the optional NLI check)."""
+
     nli: bool = False
 
 
 class GuardConfig(BaseModel):
+    """Advice guard backend (keyword rules or the fine-tuned classifier)."""
+
     # keyword = rules (ADR-046); muril = fine-tuned classifier (P5.4). Privacy is always rules.
     backend: Literal["keyword", "muril"] = "keyword"
     threshold: float = 0.5  # probability of "advice" at or above which the classifier blocks
@@ -184,6 +199,8 @@ def missing_env(profile: str, environ: dict[str, str] | None = None) -> list[str
 
 
 class Settings(BaseSettings):
+    """All settings for one profile; environment variables win over the YAML."""
+
     model_config = SettingsConfigDict(
         env_prefix="FINSIGHT_", env_nested_delimiter="__", extra="ignore"
     )
@@ -213,6 +230,7 @@ class Settings(BaseSettings):
         dotenv_settings: PydanticBaseSettingsSource,
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
+        """Make environment variables beat the YAML values."""
         # Earlier sources win: environment beats the YAML values passed as init kwargs.
         return (env_settings, dotenv_settings, init_settings)
 
@@ -259,6 +277,7 @@ def load_settings(profile: str | None = None, config_path: Path | None = None) -
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
+    """The settings for ``FINSIGHT_PROFILE``, loaded once and cached."""
     return load_settings()
 
 

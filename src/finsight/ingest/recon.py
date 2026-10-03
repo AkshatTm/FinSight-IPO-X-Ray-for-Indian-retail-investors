@@ -108,6 +108,8 @@ def classify_cover(text: str) -> CoverKind:
 # ------------------------------------------------------------------------- Excel
 @dataclass
 class ExcelSummary:
+    """Shape, year counts and column coverage of the dataset spreadsheet."""
+
     n_rows: int
     n_cols: int
     years: dict[str, int]
@@ -131,6 +133,7 @@ def _blank(value: Any) -> bool:
 
 
 def summarize_excel(path: Path) -> ExcelSummary:
+    """Summarise the spreadsheet using only the allowed columns."""
     header, rows = _rows(path)
     index = {name: i for i, name in enumerate(header)}
     years = Counter(str(r[index["Close Year"]]) for r in rows if "Close Year" in index)
@@ -174,6 +177,8 @@ def demo_overlap(path: Path, demo_companies: list[str]) -> list[str]:
 # ------------------------------------------------------------------------- text zip
 @dataclass
 class ZipSummary:
+    """Counts and sizes of the documents in the dataset archive."""
+
     n_entries: int
     by_name_pattern: dict[str, int]
     by_cover: dict[str, int]
@@ -188,6 +193,7 @@ def _pattern(name: str) -> str:
 
 
 def summarize_zip(path: Path) -> ZipSummary:
+    """Summarise the archive: names, cover types, sizes and pages."""
     by_name: Counter[str] = Counter()
     by_cover: Counter[str] = Counter()
     by_both: Counter[str] = Counter()
@@ -221,6 +227,7 @@ def summarize_zip(path: Path) -> ZipSummary:
 
 # ------------------------------------------------------------------------- CLI
 def main(argv: list[str] | None = None) -> int:
+    """CLI: print the dataset summaries (optionally write 5 truncated rows)."""
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0] if __doc__ else "")
     parser.add_argument("--write-samples", action="store_true", help="write 5 truncated rows")
     args = parser.parse_args(argv)

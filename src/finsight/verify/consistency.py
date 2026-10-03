@@ -18,6 +18,8 @@ CHECK_TOTAL = "total_equals_fresh_plus_ofs"
 
 @dataclass
 class ConsistencyReport:
+    """Cross-field arithmetic checks and the derived numbers."""
+
     checks: list[CheckResult] = field(default_factory=list)
     derived: dict[str, str] = field(default_factory=dict)  # decimal strings, as in 06
 

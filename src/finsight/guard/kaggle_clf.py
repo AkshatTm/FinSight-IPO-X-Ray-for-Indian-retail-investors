@@ -31,6 +31,7 @@ SEEDS = (13, 42, 2026)
 
 
 def run_params(run: str) -> dict[str, Any]:
+    """Notebook parameters for a ``smoke`` (one seed, one epoch) or ``full`` run."""
     if run == "smoke":
         return {"SEEDS": [SEEDS[0]], "EPOCHS": 1}
     if run == "full":
@@ -39,11 +40,13 @@ def run_params(run: str) -> dict[str, Any]:
 
 
 def kernel_slug(run: str) -> str:
+    """The Kaggle kernel name for a run."""
     run_params(run)
     return f"finsight-muril-guard-{run}"
 
 
 def write_kernel(folder: Path, username: str, run: str, notebook: Path = NOTEBOOK) -> Path:
+    """Write the parameterised notebook and its Kaggle metadata to ``folder``."""
     nb = render_notebook(json.loads(notebook.read_text(encoding="utf-8")), run_params(run))
     folder.mkdir(parents=True, exist_ok=True)
     (folder / CODE_FILE).write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8", newline="\n")
@@ -69,6 +72,7 @@ def write_kernel(folder: Path, username: str, run: str, notebook: Path = NOTEBOO
 
 
 def check_metrics(metrics: dict[str, Any], weight_files: list[str]) -> list[str]:
+    """Problems with a downloaded run: missing F1 scores or weight files."""
     problems = []
     for part in ("val", "test"):
         f1 = (metrics.get(part) or {}).get("f1")
@@ -80,6 +84,7 @@ def check_metrics(metrics: dict[str, Any], weight_files: list[str]) -> list[str]
 
 
 def collect(downloaded: Path, run: str, models_dir: Path, eval_dir: Path) -> dict[str, Any]:
+    """Gather the downloaded seeds' metrics and weights into eval and model dirs."""
     seeds = run_params(run)["SEEDS"]
     per_seed, problems = {}, []
     for seed in seeds:
@@ -118,6 +123,7 @@ def collect(downloaded: Path, run: str, models_dir: Path, eval_dir: Path) -> dic
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI: ``push``, ``status`` or ``fetch`` a guard classifier run on Kaggle."""
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(prog="finsight.guard.kaggle_clf")

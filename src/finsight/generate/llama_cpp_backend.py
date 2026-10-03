@@ -32,6 +32,8 @@ def _load_llama(**kwargs: Any) -> Any:
 
 @register("llm", "llama-cpp")
 class LlamaCppBackend:
+    """Local GGUF model through llama-cpp-python (the CPU path in the cloud)."""
+
     name = "llama-cpp"
 
     def __init__(
@@ -48,6 +50,7 @@ class LlamaCppBackend:
 
     @classmethod
     def from_config(cls, config: LLMConfig, **kwargs: Any) -> LlamaCppBackend:
+        """Build from settings; the ``FINSIGHT_GGUF`` path wins over ``llm.model``."""
         path = os.environ.get(ENV_PATH) or config.model
         return cls(model_path=path, num_ctx=config.num_ctx, **kwargs)
 
@@ -71,6 +74,7 @@ class LlamaCppBackend:
         temperature: float = 0.2,
         language: Literal["en", "hi"] = "en",
     ) -> Iterator[str]:
+        """Yield the reply piece by piece (thinking off)."""
         chunks = self._model().create_chat_completion(
             messages=[{"role": "user", "content": prompt}],
             max_tokens=max_tokens,
@@ -88,6 +92,7 @@ class LlamaCppBackend:
             yield text
 
     def generate(self, prompt: str, **kwargs: Any) -> str:
+        """The full reply as one string."""
         return "".join(self.stream(prompt, **kwargs))
 
     def is_available(self) -> bool:

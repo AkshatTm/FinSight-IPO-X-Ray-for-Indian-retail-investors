@@ -76,6 +76,7 @@ _OBJECTS_CUES = re.compile(
 
 
 def wants_objects(question: str) -> bool:
+    """Whether the question asks about the objects of the offer."""
     return _OBJECTS_CUES.search(_norm(question)) is not None
 
 
@@ -87,10 +88,12 @@ def objects_candidates(passages: Sequence[Passage]) -> list[int]:
 
 
 def wants_cover(question: str) -> bool:
+    """Whether the question asks about something printed on the cover pages."""
     return _COVER_CUES.search(_norm(question)) is not None
 
 
 def prefers_prospectus(question: str) -> bool:
+    """Whether the question asks for a number fixed only in the Prospectus (price, size)."""
     return _PROSPECTUS_CUES.search(_norm(question)) is not None
 
 

@@ -20,6 +20,8 @@ from finsight.core.ids import make_doc_id
 
 
 class DocFile(BaseModel):
+    """One showcase document: file, pages, hash, cover date and doc id."""
+
     file: Path
     pages: int
     sha256: str
@@ -34,6 +36,8 @@ class DocFile(BaseModel):
 
 
 class DemoIpo(BaseModel):
+    """A showcase IPO from ``configs/demo_ipos.yaml`` with its RHP and Prospectus."""
+
     ipo_id: str
     company: str
     split: Literal["dev", "test"]
@@ -70,6 +74,7 @@ def list_demo_ipos(path: Path | None = None) -> list[DemoIpo]:
 
 
 def get_demo_ipo(ipo_id: str, path: Path | None = None) -> DemoIpo:
+    """The showcase IPO with this id (``KeyError`` lists the known ids)."""
     for ipo in list_demo_ipos(path):
         if ipo.ipo_id == ipo_id:
             return ipo

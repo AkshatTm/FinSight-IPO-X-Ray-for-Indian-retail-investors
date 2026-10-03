@@ -43,11 +43,15 @@ SIMPLIFY_PER_MINUTE = 20  # per IP (B06 §1: auth optional, rate-limited)
 
 
 class CategoryCount(BaseModel):
+    """How many risks fall in one category (the filter chips)."""
+
     category: RiskCategory | None
     count: int
 
 
 class RisksPage(BaseModel):
+    """``GET /api/docs/{doc_id}/risks``: counts, the filtered risks and the queue."""
+
     n_total: int  # every risk in the document, before filters
     groups: list[CategoryCount]  # counts per category over all risks (the filter chips)
     risks: list[Risk]
@@ -55,12 +59,15 @@ class RisksPage(BaseModel):
 
 
 class SimplifyQueued(BaseModel):
+    """Where a risk stands after asking for its plain-English version."""
+
     rid: str
     simple_status: SimpleStatus
     position: int  # 0 = next; -1 = not queued (already explained)
 
 
 def load_risks(state: UState, doc_id: str) -> list[Risk]:
+    """A document's risks with any finished plain-English rewrites merged in."""
     _doc(state, doc_id)
     key = doc_key(doc_id, "risks.json")
     if not state.storage.exists(key):
@@ -96,6 +103,7 @@ def list_risks(
     q: Annotated[str | None, Query(max_length=200)] = None,
     unusual_only: bool = False,
 ) -> RisksPage:
+    """Risks sorted and filtered; bodies are cut to 1,200 characters."""
     risks = load_risks(state, doc_id)
     counts: dict[RiskCategory | None, int] = defaultdict(int)
     for r in risks:

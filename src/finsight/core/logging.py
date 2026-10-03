@@ -12,7 +12,10 @@ _STANDARD = set(logging.LogRecord("", 0, "", 0, "", None, None).__dict__) | {"me
 
 
 class JsonFormatter(logging.Formatter):
+    """Formats a log record as one JSON line, keeping ``extra`` fields."""
+
     def format(self, record: logging.LogRecord) -> str:
+        """The record as JSON: time, level, logger, message, extras, traceback."""
         payload: dict[str, Any] = {
             "ts": datetime.fromtimestamp(record.created, UTC).isoformat(timespec="milliseconds"),
             "level": record.levelname,
@@ -40,6 +43,7 @@ def configure_logging(level: str = "INFO", stream: IO[str] | None = None) -> Non
 
 
 def get_logger(name: str) -> logging.Logger:
+    """A logger under the ``finsight`` hierarchy."""
     return logging.getLogger(name)
 
 

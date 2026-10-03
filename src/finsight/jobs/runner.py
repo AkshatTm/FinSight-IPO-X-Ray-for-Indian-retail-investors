@@ -52,9 +52,11 @@ class JobContext:
     scratch: dict[str, Any] = field(default_factory=dict)  # in-memory hand-over between stages
 
     def emit(self, event: str, data: dict[str, Any]) -> int:
+        """Append a job event and return its ``seq``."""
         return self.db.append_event(self.job_id, event, data)
 
     def key(self, name: str) -> str:
+        """The storage key ``docs/<doc_id>/<name>``."""
         return doc_key(self.doc_id, name)
 
 
@@ -74,6 +76,8 @@ class Stage:
 
 @dataclass(frozen=True)
 class JobResult:
+    """How a job ended: ready, partial or failed, plus any rejection code."""
+
     status: str  # ready | partial | failed
     failed_stages: list[str]
     rejection: RejectionCode | None = None

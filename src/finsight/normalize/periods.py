@@ -54,6 +54,8 @@ _ENDED_KIND: dict[str, PeriodKind] = {
 
 @dataclass(frozen=True)
 class Period:
+    """A reporting period (year, quarter, half year, nine months or a date)."""
+
     kind: PeriodKind
     fy: int  # the fiscal year by the calendar year it ends in (FY2024-25 -> 2025)
     quarter: int | None
@@ -66,10 +68,12 @@ def _year(text: str) -> int:
 
 
 def fiscal_year(day: date) -> int:
+    """The fiscal year a date falls in, named by its end year (April to March)."""
     return day.year + 1 if day.month >= 4 else day.year
 
 
 def fiscal_quarter(day: date) -> int:
+    """The fiscal quarter (1-4) of a date, April-June being 1."""
     return {4: 1, 5: 1, 6: 1, 7: 2, 8: 2, 9: 2, 10: 3, 11: 3, 12: 3}.get(day.month, 4)
 
 

@@ -61,6 +61,7 @@ class IpoStore:
 
     # ---------------------------------------------------------------- lookup
     def get(self, ipo_id: str) -> DemoIpo:
+        """The showcase IPO with this id (404 ``ipo_not_found`` otherwise)."""
         ipo = self._ipos.get(ipo_id)
         if ipo is None:
             raise ApiError(
@@ -78,6 +79,7 @@ class IpoStore:
     def list_ipos(
         self, q: str | None, sector: str | None, year: int | None, sort: str
     ) -> list[IpoSummary]:
+        """Library rows filtered by text, sector and year, newest or largest first."""
         rows = [self._summary(i) for i in self._ipos.values()]
         if q:
             needle = q.casefold()
@@ -109,6 +111,7 @@ class IpoStore:
 
     # ---------------------------------------------------------------- detail
     def detail(self, ipo_id: str) -> IpoDetail:
+        """Page counts, page size and the sections of both documents."""
         ipo = self.get(ipo_id)
         sections: list[SectionInfo] = []
         docs: tuple[DocType, ...] = ("rhp", "prospectus")
@@ -142,6 +145,7 @@ class IpoStore:
 
     # ----------------------------------------------------------------- pages
     def page_path(self, ipo_id: str, n: int, doc: DocType) -> Path:
+        """The rendered page file (404 ``page_out_of_range`` for a bad page)."""
         ipo = self.get(ipo_id)
         total = (ipo.rhp if doc == "rhp" else ipo.prospectus).pages
         path = doc_outputs(self.processed_dir, ipo_id, doc).pages_dir / f"{n}.webp"
@@ -160,6 +164,7 @@ class IpoStore:
         return _thumbnail(str(path), width) if width else path.read_bytes()
 
     def words(self, ipo_id: str, n: int, doc: DocType) -> PageWords:
+        """The words and boxes of one page from the parsed document."""
         self.page_path(ipo_id, n, doc)  # validates the id and the page number
         parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, doc).parsed))
         if parsed is None or not 1 <= n <= len(parsed.pages):
@@ -174,6 +179,7 @@ class IpoStore:
 
     # ----------------------------------------------------------------- xray
     def xray(self, ipo_id: str) -> XRayResponse:
+        """The built X-Ray in API shape, with boxes, sentences and companions."""
         self.get(ipo_id)
         xray = self._xray(ipo_id)
         if xray is None:
@@ -264,6 +270,7 @@ class IpoStore:
 
     # --------------------------------------------------- suggested questions
     def suggested(self, ipo_id: str) -> list[SuggestedQuestion]:
+        """Question chips; a chip whose number is missing is skipped."""
         self.get(ipo_id)
         fresh = _money_inr(self._xray(ipo_id), "fresh_issue_size")
         out: list[SuggestedQuestion] = []

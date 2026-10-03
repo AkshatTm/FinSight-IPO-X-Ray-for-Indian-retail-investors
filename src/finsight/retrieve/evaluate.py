@@ -32,6 +32,8 @@ KS = (1, 5)
 
 
 class Question(BaseModel):
+    """One retrieval test question with its gold answer and evidence page."""
+
     ipo_id: str
     question: str
     language: Literal["en", "hi", "hinglish"]
@@ -41,6 +43,7 @@ class Question(BaseModel):
 
 
 def load_questions(path: Path) -> list[Question]:
+    """Read a question set (JSON Lines)."""
     if not path.exists():
         raise FileNotFoundError(
             f"{path} not found: Akshat writes the question sets (05 section 8, roadmap P3.1)"
@@ -77,6 +80,7 @@ def is_hit(hit: Hit, q: Question) -> bool:
 
 
 def reciprocal_rank(hits: list[Hit], q: Question) -> float:
+    """1 / rank of the first hit on the evidence page, else 0."""
     for h in hits:
         if is_hit(h, q):
             return 1.0 / h.rank
@@ -262,6 +266,7 @@ def evaluate(
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI: retrieval recall and MRR by method on the dev or test questions."""
     parser = argparse.ArgumentParser(prog="finsight.retrieve.evaluate")
     parser.add_argument(
         "--dense", action="store_true", help="add dense + hybrid (bge-m3, ml group)"

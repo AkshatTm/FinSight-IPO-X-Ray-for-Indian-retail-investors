@@ -29,6 +29,7 @@ LAB_EXTRAS = {"weaklabels": {"audit": "weaklabel_audit.json"}}
 
 
 def glossary(lang: Language) -> list[GlossaryEntry]:
+    """Glossary terms from ``configs/glossary.yaml``, falling back to English."""
     rows = yaml.safe_load((project_root() / "configs" / "glossary.yaml").read_text("utf-8"))[
         "terms"
     ]
@@ -43,6 +44,7 @@ def glossary(lang: Language) -> list[GlossaryEntry]:
 
 
 def lab(eval_dir: Path, name: str) -> dict[str, Any]:
+    """Read one Model Lab result file (404 ``not_available`` if it was not run)."""
     path = eval_dir / LAB_FILES[name]
     if not path.exists():
         raise ApiError(

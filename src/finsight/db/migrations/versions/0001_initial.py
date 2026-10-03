@@ -16,6 +16,7 @@ TS = sa.DateTime(timezone=True)
 
 
 def upgrade() -> None:
+    """Create users, docs, jobs, job events, uploads, the simplify queue, traces, demo cache."""
     op.create_table(
         "users",
         sa.Column("id", sa.String(64), primary_key=True),
@@ -92,6 +93,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
+    """Drop every table this migration created."""
     for table in (
         "demo_cache",
         "traces",

@@ -15,6 +15,8 @@ BGE_RERANKER = "BAAI/bge-reranker-v2-m3"
 
 
 class Reranker(Protocol):
+    """A cross-encoder that scores query-passage pairs."""
+
     def score(self, query: str, texts: list[str]) -> list[float]:
         """Higher is more relevant; the scale is the model's (bge: a raw logit)."""
         ...
@@ -50,6 +52,7 @@ class CrossEncoderReranker:
         )
 
     def score(self, query: str, texts: list[str]) -> list[float]:
+        """Score the pairs in batches with the PyTorch model."""
         scores: list[float] = []
         with self._torch.no_grad():
             for start in range(0, len(texts), self.batch):
@@ -80,6 +83,7 @@ class OnnxReranker:
         self._inputs = {i.name for i in self._session.get_inputs()}
 
     def score(self, query: str, texts: list[str]) -> list[float]:
+        """Score the pairs in batches with the ONNX model."""
         scores: list[float] = []
         for start in range(0, len(texts), self.batch):
             chunk = texts[start : start + self.batch]

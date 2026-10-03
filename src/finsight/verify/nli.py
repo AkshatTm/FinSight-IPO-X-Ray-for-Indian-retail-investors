@@ -33,6 +33,8 @@ _NOT_FOUND = re.compile(r"could not find|नहीं मिली", re.IGNORECA
 
 @dataclass(frozen=True)
 class ClaimCheck:
+    """The NLI label for one answer sentence against its cited passages."""
+
     sentence: str
     label: Label
     probability: float

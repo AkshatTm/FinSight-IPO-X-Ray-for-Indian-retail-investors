@@ -16,12 +16,16 @@ from finsight.core.schemas import BBox, DocType, Language, ReasonCode, Value, Ve
 
 # ------------------------------------------------------------------------- health
 class ModelStatus(BaseModel):
+    """Whether one model is loaded (or loads lazily on first use)."""
+
     name: str | None = None
     loaded: bool
     lazy: bool | None = None
 
 
 class HealthResponse(BaseModel):
+    """``GET /api/health``: status, profile, demo mode and model states."""
+
     status: Literal["ok", "warming", "degraded"]
     profile: str
     demo_mode: bool
@@ -32,6 +36,8 @@ class HealthResponse(BaseModel):
 
 # ------------------------------------------------------------------------- IPOs
 class IpoSummary(BaseModel):
+    """A showcase IPO in the library list, with its headline sizes."""
+
     id: str
     company: str
     sector: str | None = None
@@ -45,11 +51,15 @@ class IpoSummary(BaseModel):
 
 
 class PageSize(BaseModel):
+    """Page width and height in PDF points."""
+
     width: float
     height: float
 
 
 class SectionInfo(BaseModel):
+    """A section of a document with its PDF and printed start pages."""
+
     id: str
     doc: DocType
     title: str
@@ -59,6 +69,8 @@ class SectionInfo(BaseModel):
 
 
 class IpoDetail(BaseModel):
+    """A showcase IPO's documents: page counts, page size and sections."""
+
     id: str
     company: str
     rhp_pages: int
@@ -69,6 +81,8 @@ class IpoDetail(BaseModel):
 
 # ------------------------------------------------------------------------- X-Ray
 class FieldCheck(BaseModel):
+    """One verifier check on an X-Ray field, as the UI shows it."""
+
     check: str
     status: Verdict
     reason: str
@@ -84,6 +98,8 @@ class Companion(BaseModel):
 
 
 class ApiCandidate(BaseModel):
+    """One extractor's value for a field, as shown in the inspector."""
+
     extractor: str
     doc: DocType
     raw: str
@@ -101,6 +117,8 @@ class SourceSentence(BaseModel):
 
 
 class XRayField(BaseModel):
+    """One fact of the X-Ray with its source, verdict, checks and candidates."""
+
     field_id: str
     label_en: str
     label_hi: str
@@ -130,6 +148,8 @@ class BidClosedInfo(BaseModel):
 
 
 class XRayResponse(BaseModel):
+    """``GET /api/ipos/{id}/xray``: all fields and derived numbers."""
+
     ipo_id: str
     company: str
     built_at: datetime
@@ -140,11 +160,15 @@ class XRayResponse(BaseModel):
 
 # ------------------------------------------------------------------------- pages
 class PageWord(BaseModel):
+    """A word on a page: text ``t`` and box ``b``."""
+
     t: str
     b: BBox
 
 
 class PageWords(BaseModel):
+    """Every word on one page, for highlighting and text selection."""
+
     page: int
     width: float
     height: float
@@ -153,12 +177,16 @@ class PageWords(BaseModel):
 
 # ------------------------------------------------------------------------- chat, voice
 class SuggestedQuestion(BaseModel):
+    """A question chip under the chat box (normal, trick or advice)."""
+
     text: str
     language: Language
     kind: Literal["normal", "trick", "advice"]
 
 
 class ChatRequest(BaseModel):
+    """``POST /api/chat`` body: the IPO, the question and its language."""
+
     ipo_id: str
     question: str
     language: Language = "en"
@@ -167,6 +195,8 @@ class ChatRequest(BaseModel):
 
 
 class VoiceResponse(BaseModel):
+    """``POST /api/voice``: the transcript and the ASR model used."""
+
     transcript: str
     language: str
     asr_model: str
@@ -174,6 +204,8 @@ class VoiceResponse(BaseModel):
 
 
 class GlossaryEntry(BaseModel):
+    """A glossary term with its short definition."""
+
     term: str
     title: str
     body: str
