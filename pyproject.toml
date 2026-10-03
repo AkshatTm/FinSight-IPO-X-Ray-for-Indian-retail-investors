@@ -80,6 +80,12 @@ tables = [
 cloud = [
     "google-cloud-storage>=2.18",
 ]
+# The documentation site (B09): MkDocs Material, API pages from docstrings, docstring coverage.
+docs = [
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.26",
+    "interrogate>=1.7",
+]
 
 [tool.uv]
 default-groups = ["dev", "api", "data", "ml-cpu"]
@@ -101,6 +107,9 @@ typecheck = { cmd = "mypy -p finsight.core -p finsight.normalize -p finsight.ver
 api = { cmd = "uvicorn finsight.api.app:app --reload --port 8000 --timeout-keep-alive 30", help = "FastAPI on :8000" }
 record-demo = { cmd = "python scripts/record_demo.py", help = "Record real chat streams into data/demo_cache (needs Ollama)" }
 gen-openapi = { cmd = "python scripts/gen_openapi.py", help = "Write openapi.json (add --check to verify it is current)" }
+docs-gen = { cmd = "python scripts/docs_gen.py", help = "Write the generated reference pages of the docs site (add --check to verify)" }
+docs = { cmd = "mkdocs serve", help = "Docs site on :8000 (needs `uv sync --group docs`)" }
+docs-build = { cmd = "mkdocs build --strict", help = "Build the docs site into site/ and fail on warnings" }
 
 [tool.poe.tasks.lint]
 help = "ruff check and format check"
@@ -149,3 +158,14 @@ markers = [
     "local: needs data/processed, full PDFs, the corpus or model weights (laptop only); skipped by `poe test`",
     "postgres: needs a Postgres server (CI service job); skipped by `poe test`",
 ]
+
+# Docstring coverage (B09 §7). Warn-only in CI until B4.1 sets the 70 % floor (80 % target).
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = false
+ignore-magic = true
+ignore-private = true
+ignore-semiprivate = true
+ignore-nested-functions = true
+fail-under = 0
+verbose = 0
