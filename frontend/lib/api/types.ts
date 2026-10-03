@@ -1315,6 +1315,11 @@ export interface components {
             groups: components["schemas"]["CategoryCount"][];
             /** Risks */
             risks: components["schemas"]["Risk"][];
+            /**
+             * Queued
+             * @default []
+             */
+            queued: string[];
         };
         /** SectionInfo */
         SectionInfo: {

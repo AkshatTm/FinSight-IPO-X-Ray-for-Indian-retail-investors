@@ -221,6 +221,19 @@ class Database:
             if rows:
                 conn.execute(simplify_queue.insert(), rows)
 
+    def waiting_rids(self, doc_id: str) -> list[str]:
+        """Risks queued or being rewritten now, in queue order (the UI's "Explaining…")."""
+        with self.engine.connect() as conn:
+            rows = conn.execute(
+                sa.select(simplify_queue.c.rid)
+                .where(
+                    simplify_queue.c.doc_id == doc_id,
+                    simplify_queue.c.status.in_(("queued", "running")),
+                )
+                .order_by(simplify_queue.c.priority, simplify_queue.c.enqueued_at)
+            )
+            return [r.rid for r in rows]
+
     def bump(self, doc_id: str, rid: str) -> int:
         """Move a risk to the front (adding it if needed); return its 0-based queue position."""
         with self.engine.begin() as conn:

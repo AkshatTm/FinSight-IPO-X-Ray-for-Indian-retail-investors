@@ -51,6 +51,7 @@ class RisksPage(BaseModel):
     n_total: int  # every risk in the document, before filters
     groups: list[CategoryCount]  # counts per category over all risks (the filter chips)
     risks: list[Risk]
+    queued: list[str] = []  # rids waiting for (or getting) a plain-English rewrite
 
 
 class SimplifyQueued(BaseModel):
@@ -114,7 +115,9 @@ def list_risks(
         r.model_copy(update={"body": r.body[:BODY_PREVIEW]}) if len(r.body) > BODY_PREVIEW else r
         for r in _sorted(picked, sort)
     ]
-    return RisksPage(n_total=len(risks), groups=groups, risks=page)
+    return RisksPage(
+        n_total=len(risks), groups=groups, risks=page, queued=state.db.waiting_rids(doc_id)
+    )
 
 
 def _risk(state: UState, doc_id: str, rid: str) -> Risk:

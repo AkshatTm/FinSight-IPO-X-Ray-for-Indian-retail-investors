@@ -133,6 +133,8 @@ def test_simplify_queues_bumps_and_skips_explained_risks(
     done = client.post(f"/api/docs/{DOC}/risks/r4/simplify").json()
     assert done == {"rid": "r4", "simple_status": "ready", "position": -1}
     assert client.post(f"/api/docs/{DOC}/risks/r9/simplify").status_code == 404
+    assert state.db.take_next(DOC) == "r3"  # running: still "Explaining…" in the list
+    assert client.get(f"/api/docs/{DOC}/risks").json()["queued"] == ["r3", "r1", "r2"]
 
 
 def test_simplify_is_rate_limited_per_ip(client: TestClient) -> None:
