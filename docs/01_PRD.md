@@ -1,5 +1,7 @@
 # 01 — Product Requirements Document (PRD)
 
+> **Big Phase 2:** new features (upload any offer document, red flags, plain-English risk report, risk level, comparisons) are specified in `docs/phase2/B01_PRD.md`, which wins where the two disagree.
+
 **Product:** FinSight — IPO X-Ray for Indian retail investors
 **Owner:** Akshat Tomar · **Build:** solo + Claude Code · **Deadline:** Sun 1 Nov 2026 (CSE472 submission: report + implementation + GitHub + live demo/viva)
 **Status:** Approved for build · Version 3.0 (29 Sep 2026)

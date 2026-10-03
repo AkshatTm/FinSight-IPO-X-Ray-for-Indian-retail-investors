@@ -1,5 +1,7 @@
 # EXECUTION PLAN — how each sub-phase gets built
 
+> **Big Phase 2:** the Phase 2 equivalent of this file is `docs/phase2/B_EXECUTION_PLAN.md`.
+
 **Scope:** files, tests, planned commits, owner and model for every sub-phase in `07_ROADMAP.md`. Dates, gates, checkboxes and the cut order stay in `07_ROADMAP.md`, which wins on any conflict. Field lists and payloads stay in `01`/`02`/`06`.
 **Status:** proposed, awaiting Akshat's approval (PR `docs/execution-plan`). Written 30 Sep 2026.
 

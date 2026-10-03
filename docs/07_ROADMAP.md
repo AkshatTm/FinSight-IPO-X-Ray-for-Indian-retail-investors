@@ -1,5 +1,7 @@
 # 07 — Roadmap: Phases, Sub-phases, Gates
 
+> **Big Phase 2:** Phase 1 sub-phases below are closed history. Current work: `docs/phase2/B07_ROADMAP.md` (sub-phases B0.1 …, gates BG0–BG3) with details in `docs/phase2/B_EXECUTION_PLAN.md`.
+
 **Today:** Tue 29 Sep 2026 · **Feature freeze:** Mon 26 Oct · **Submission:** Sun 1 Nov 2026
 
 How to use this file
