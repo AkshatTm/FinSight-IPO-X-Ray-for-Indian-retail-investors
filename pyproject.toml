@@ -78,7 +78,7 @@ explicit = true
 torch = { index = "pytorch-cu128" }
 
 [tool.poe.tasks]
-test = { cmd = "pytest -m 'not slow'", help = "Fast tests (no real models)" }
+test = { cmd = "pytest -m 'not slow and not local and not postgres'", help = "Fast tests (no real models, no full documents, no Postgres); what CI and cloud sessions run" }
 test-all = { cmd = "pytest", help = "All tests including slow (real models)" }
 fmt = { sequence = [{ cmd = "ruff check --fix ." }, { cmd = "ruff format ." }], help = "Auto-fix and format" }
 typecheck = { cmd = "mypy -p finsight.core -p finsight.normalize -p finsight.verify", help = "mypy on the correctness-critical packages" }
@@ -130,4 +130,6 @@ testpaths = ["tests"]
 addopts = "-ra --strict-markers"
 markers = [
     "slow: uses real models or large data; skipped by `poe test`, run by `poe test-all`",
+    "local: needs data/processed, full PDFs, the corpus or model weights (laptop only); skipped by `poe test`",
+    "postgres: needs a Postgres server (CI service job); skipped by `poe test`",
 ]
