@@ -7,22 +7,30 @@ ADR-026). The PDFs themselves live in ``data/raw/`` and are never committed.
 
 from __future__ import annotations
 
+import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 
 from finsight.core.config import project_root
+from finsight.core.ids import make_doc_id
 
 
 class DocFile(BaseModel):
-    doc_id: str  # "doc_" + the first 16 hex characters of sha256 (B-ADR-14)
     file: Path
     pages: int
     sha256: str
     dated: str  # the "Dated" line on the cover page, e.g. "October 29, 2025"
+    doc_id: str = ""  # "doc_" + the first 16 hex characters of sha256 (B-ADR-14)
+
+    @model_validator(mode="after")
+    def _derive_doc_id(self) -> DocFile:
+        if not self.doc_id and re.fullmatch(r"[0-9a-fA-F]{64}", self.sha256):
+            self.doc_id = make_doc_id(self.sha256)  # test fixtures may carry a dummy hash
+        return self
 
 
 class DemoIpo(BaseModel):
