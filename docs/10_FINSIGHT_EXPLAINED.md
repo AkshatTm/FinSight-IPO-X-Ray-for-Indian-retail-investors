@@ -565,6 +565,17 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** No Phase 2 result exists yet, so every new Lab section is hidden until the local runs write `eval_results/b/`. The section components are tested on synthetic payloads only. The file shapes in B06 §5 are a contract that the local eval scripts must follow.
 **Likely viva questions.** (1) *Why show the risk-level check even when it is weak?* (Hiding a weak result would overstate the level; the spec makes the section mandatory.) (2) *Who writes the verdict sentence?* (Code, from ρ and its interval, with fixed cut-offs; nobody types it.) (3) *What happens when an experiment was not run?* (The API answers 404 and the Lab leaves the section out, so no placeholder numbers appear.)
 
+### C36. Red flags: 13 rule checks on the disclosed numbers (built in B1.4a)
+**What it does.**
+- `finsight.redflags.evaluate(inputs)` always returns 13 checks (RF01–RF13 from B01 §5): profit, operating cash, debt, who gets the IPO money, what insiders paid, founders' stake, vague use of money, court cases, related-party dealings, customer dependence, price vs listed peers, auditor's remarks, pledged shares.
+- Each check is OK, Watch, Concern, Not available or Not applicable, with one plain sentence from B05 §5.4, the numbers it used and the pages behind them. Watch is worth 1 point and Concern 2 for the risk level.
+- Thresholds, titles and rule texts live in `configs/redflags.yaml`, whose `version` is stored in every `redflags.json`. The reference page is generated from it.
+- Two input paths share the same rules: `inputs_from_summary` (the pipeline: `summary.json` plus the X-Ray's price, fresh issue and OFS) and `inputs_from_gold` (gold v3 rows). `scripts/redflag_status_gold.py` computes the status gold from **verified** gold v3 rows only.
+- `core.schemas.FinancialSummary` / `SummaryValue` define `summary.json` ahead of the B1.3 summary extractor.
+
+**Limits.** Tested on synthetic numbers only: gold v3 is not filled yet and the summary extractor (B1.3a) waits for the fixture pack, so the `redflags` stage is not wired into the upload stages and E15 has not run. Thresholds are B01's first definitions, not tuned. Four sentences B05 doesn't give are drafts awaiting approval.
+**Likely viva questions.** (1) *Why rules and not a model?* (Each status must be explainable from two numbers and a page; a rule can be read, tested at its edges and versioned.) (2) *Why compute the status gold with the same code?* (The gold numbers are verified by hand; the status is then a deterministic function of them, so E15 measures the extraction, not a second labeller.) (3) *What stops a missing number from looking clean?* (`None` means not found, never zero; the check says "Not available" and the risk level divides by the checks that could run.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

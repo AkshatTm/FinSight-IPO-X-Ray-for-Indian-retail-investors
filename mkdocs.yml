@@ -77,6 +77,7 @@ nav:
   - How-to guides:
       - Add a showcase IPO: howto/add_showcase_ipo.md
       - Add an X-Ray field: howto/add_xray_field.md
+      - Add a red-flag check: howto/add_redflag_check.md
       - Retrain the risk classifier: howto/retrain_classifier.md
       - Retrain the simplifier: howto/retrain_simplifier.md
       - Record the demo cache: howto/record_demo_cache.md
@@ -87,6 +88,7 @@ nav:
       - Python packages: reference/python.md
       - Configuration and environment variables: reference/config.md
       - Data formats: reference/data_formats.md
+      - Red-flag checks: reference/redflags.md
       - Risk level: reference/risklevel.md
       - Compare reference: reference/compare.md
       - Commands: reference/cli.md

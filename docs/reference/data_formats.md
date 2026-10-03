@@ -45,6 +45,40 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `redflags_summary` | `list[dict[str, Any]] \| None` | — |
 | `offer_line_params` | `dict[str, Any] \| None` | — |
 
+## Financial summary (`FinancialSummary`, `summary.json`)
+
+| Field | Type | Default |
+| --- | --- | --- |
+| `doc_id` | `str` | required |
+| `currency_unit` | `str` | `""` |
+| `revenue` | `list[SummaryValue]` | `[]` |
+| `profit_after_tax` | `list[SummaryValue]` | `[]` |
+| `operating_cash_flow` | `list[SummaryValue]` | `[]` |
+| `total_borrowings` | `SummaryValue \| None` | — |
+| `net_worth` | `SummaryValue \| None` | — |
+| `waca` | `list[SummaryValue]` | `[]` |
+| `litigation` | `dict[str, SummaryValue]` | `{}` |
+| `rpt_total` | `SummaryValue \| None` | — |
+| `promoter_holding_post` | `SummaryValue \| None` | — |
+| `promoter_identifiable` | `bool` | true |
+| `pledged_pct` | `SummaryValue \| None` | — |
+| `customer_top1_pct` | `SummaryValue \| None` | — |
+| `customer_top10_pct` | `SummaryValue \| None` | — |
+| `general_purposes_pct` | `SummaryValue \| None` | — |
+| `peers` | `list[Peer]` | `[]` |
+| `auditor_remarks` | `list[SummaryValue]` | `[]` |
+| `is_financial_company` | `bool` | false |
+
+## One summary value (`SummaryValue`)
+
+| Field | Type | Default |
+| --- | --- | --- |
+| `key` | `str` | required |
+| `value` | `Union[Money \| Count \| Percent \| Placeholder \| Range, str, NoneType]` | — |
+| `period` | `str \| None` | — |
+| `evidence` | `PageEvidence \| None` | — |
+| `status` | `Literal['found', 'placeholder', 'not_found']` | `not_found` |
+
 ## Red flag (`RedFlag`, inside `redflags.json`)
 
 | Field | Type | Default |
