@@ -17,7 +17,14 @@ from pydantic import BaseModel
 from finsight.api.errors import ApiError, ErrorResponse
 from finsight.api.routes_docs import _doc
 from finsight.api.uploads_state import UState
-from finsight.core.schemas import Compare, Risk, RiskCategory, RiskLevel, SimpleStatus
+from finsight.core.schemas import (
+    Compare,
+    RedFlags,
+    Risk,
+    RiskCategory,
+    RiskLevel,
+    SimpleStatus,
+)
 from finsight.jobs import load_simplified
 from finsight.risklevel import RISKLEVEL_FILE
 from finsight.risklevel import load_config as risklevel_config
@@ -179,3 +186,13 @@ def get_compare(doc_id: DocId, state: UState) -> Compare:
     if not state.storage.exists(key):
         raise ApiError(404, "not_available", "The comparison for this report isn't ready yet.")
     return Compare.model_validate(get_json(state.storage, key))
+
+
+@router.get("/docs/{doc_id}/redflags", tags=["risks"])
+def get_redflags(doc_id: DocId, state: UState) -> RedFlags:
+    """The 13 red-flag checks with their numbers and evidence (B01 §5, B05 §5.4)."""
+    _doc(state, doc_id)
+    key = doc_key(doc_id, "redflags.json")
+    if not state.storage.exists(key):
+        raise ApiError(404, "not_available", "The red flags for this report aren't ready yet.")
+    return RedFlags.model_validate(get_json(state.storage, key))

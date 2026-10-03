@@ -1947,6 +1947,61 @@
           }
         }
       }
+    },
+    "/api/docs/{doc_id}/redflags": {
+      "get": {
+        "tags": [
+          "risks"
+        ],
+        "summary": "Get Redflags",
+        "description": "The 13 red-flag checks with their numbers and evidence (B01 §5, B05 §5.4).",
+        "operationId": "get_redflags_api_docs__doc_id__redflags_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RedFlags"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3574,6 +3629,90 @@
         ],
         "title": "Range",
         "type": "object"
+      },
+      "RedFlag": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "watch",
+              "concern",
+              "not_available",
+              "not_applicable"
+            ],
+            "title": "Status"
+          },
+          "sentence": {
+            "type": "string",
+            "title": "Sentence"
+          },
+          "numbers_used": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Numbers Used"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/PageEvidence"
+            },
+            "type": "array",
+            "title": "Evidence"
+          },
+          "rule": {
+            "type": "string",
+            "title": "Rule",
+            "default": ""
+          },
+          "points": {
+            "type": "integer",
+            "title": "Points",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "status",
+          "sentence"
+        ],
+        "title": "RedFlag",
+        "description": "One of the 13 red-flag checks (B01 §5, B02 §5); ``points`` 2 concern, 1 watch, else 0."
+      },
+      "RedFlags": {
+        "properties": {
+          "flags": {
+            "items": {
+              "$ref": "#/components/schemas/RedFlag"
+            },
+            "type": "array",
+            "title": "Flags"
+          },
+          "financial_company": {
+            "type": "boolean",
+            "title": "Financial Company",
+            "default": false
+          },
+          "thresholds_version": {
+            "type": "string",
+            "title": "Thresholds Version",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "RedFlags",
+        "description": "``redflags.json`` (B06 §3 ``/redflags``)."
       },
       "ReportOverview": {
         "properties": {

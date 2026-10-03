@@ -44,8 +44,12 @@ def assemble(
     redflags = _read(storage, doc.doc_id, "redflags.json")
     risks = _read(storage, doc.doc_id, "risks.json")
     top = None
-    if isinstance(risks, dict) and isinstance(risks.get("risks"), list):
-        ranked = sorted(risks["risks"], key=lambda r: -float(r.get("importance", 0.0)))
+    # risks.json is a list of Risk (B2.2a); the early {"risks": [...]} shape is still read.
+    rows = risks.get("risks") if isinstance(risks, dict) else risks
+    if isinstance(rows, list):
+        ranked = sorted(
+            rows, key=lambda r: (-float(r.get("importance") or 0.0), int(r.get("order") or 0))
+        )
         top = ranked[:TOP_RISKS]
     flags = None
     if isinstance(redflags, dict) and isinstance(redflags.get("flags"), list):
