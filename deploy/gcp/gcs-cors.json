@@ -1,0 +1,8 @@
+[
+  {
+    "origin": ["https://${VERCEL_HOST}", "http://localhost:3000"],
+    "method": ["PUT", "GET", "HEAD"],
+    "responseHeader": ["Content-Type", "Content-Length", "ETag"],
+    "maxAgeSeconds": 3600
+  }
+]
