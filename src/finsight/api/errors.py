@@ -29,6 +29,7 @@ ErrorCode = Literal[
     "upload_not_started",
     "risk_not_found",
     "worker_unavailable",
+    "forbidden",
 ]
 
 

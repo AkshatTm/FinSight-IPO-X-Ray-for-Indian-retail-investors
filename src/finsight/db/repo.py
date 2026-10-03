@@ -36,6 +36,11 @@ def _aware(value: datetime | None) -> datetime | None:
     return value
 
 
+def _utc(value: datetime) -> datetime:
+    """``_aware`` for a column that is never null."""
+    return value if value.tzinfo is not None else value.replace(tzinfo=UTC)
+
+
 @dataclass(frozen=True)
 class StoredEvent:
     """One row of ``job_events``: what the SSE stream sends, in ``seq`` order."""
@@ -137,7 +142,28 @@ class Database:
         with self.engine.connect() as conn:
             return int(conn.execute(query).scalar_one())
 
+    def upload_times(self, since: datetime) -> list[datetime]:
+        """When each upload since ``since`` was accepted (admin cost page)."""
+        query = sa.select(uploads.c.ts).where(uploads.c.ts >= since).order_by(uploads.c.ts)
+        with self.engine.connect() as conn:
+            stamps: list[datetime] = list(conn.execute(query).scalars())
+        return [_utc(ts) for ts in stamps]
+
     # ------------------------------------------------------------------ jobs
+    def jobs_since(
+        self, since: datetime, status: str | None = None, limit: int | None = None
+    ) -> list[tuple[Job, datetime]]:
+        """Jobs created since ``since``, newest first, with their creation time (admin pages)."""
+        query = sa.select(jobs).where(jobs.c.created_at >= since)
+        if status is not None:
+            query = query.where(jobs.c.status == status)
+        query = query.order_by(jobs.c.created_at.desc(), jobs.c.job_id.desc())
+        if limit is not None:
+            query = query.limit(limit)
+        with self.engine.connect() as conn:
+            rows = conn.execute(query).mappings().all()
+        return [(self._job(row), _utc(row["created_at"])) for row in rows]
+
     def create_job(self, doc_id: str, now: datetime | None = None) -> Job:
         """Create a queued job for a document and return it."""
         job = Job(job_id=new_trace_id(), doc_id=doc_id, stage="received", status="queued")
