@@ -283,6 +283,46 @@ RiskCategory = Literal[
     "market_macro",
 ]
 SimpleStatus = Literal["pending", "ready", "rejected", "failed"]
+Seriousness = Literal["high", "medium", "low"]
+
+
+class Hedging(BaseModel):
+    """B02 §7.2: hedge words counted, and whether the risk states a past fact with a number."""
+
+    hedge_count: int = 0
+    hard_fact: bool = False
+    flag: bool = False  # hedge_count >= 3 and hard_fact: "written cautiously, but it happened"
+    fact_sentence: str | None = None
+
+
+class NearestExample(BaseModel):
+    company: str
+    year: int
+    title: str
+    similarity: float
+
+
+class Risk(BaseModel):
+    """One risk factor of a document (B02 §5); features are ``None`` until their stage runs."""
+
+    rid: str
+    order: int
+    title: str
+    body: str
+    page_start: int
+    page_end: int
+    group: str | None = None  # "Internal risks", "External risks", "Risks relating to the Offer"
+    category: RiskCategory | None = None
+    category_conf: float | None = None
+    novelty: float | None = None  # share of past IPOs with a similar risk (0-1); low = unusual
+    nearest_examples: list[NearestExample] = Field(default_factory=list)
+    hedging: Hedging = Field(default_factory=Hedging)
+    numbers: list[Amount] = Field(default_factory=list)
+    seriousness: Seriousness | None = None
+    importance: float | None = None
+    simple: str | None = None
+    simple_status: SimpleStatus = "pending"
+    simple_checks: list[CheckResult] = Field(default_factory=list)
 
 
 # --------------------------------------------------------------------------- uploads (Phase 2)

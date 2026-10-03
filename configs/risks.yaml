@@ -1,0 +1,9 @@
+# Risk features (B02 §7). tau is a placeholder until the B2.2b spot-check picks it (E22, ADR).
+novelty:
+  tau: 0.80               # cosine similarity at which a past risk counts as "the same risk"
+  years: [2018, 2023]     # reference population: the 2018-2023 part of the bank (B-ADR-11)
+  nearest: 3              # similar past risks shown on a card (distinct companies)
+  unusual_below: 0.10     # "Unusual: in x% of past IPOs" (B05 §6)
+  common_above: 0.60      # "Common: in x% of past IPOs"
+hedging:
+  flag_min_hedges: 3      # hedge_count >= 3 and a hard fact -> "written cautiously" note
