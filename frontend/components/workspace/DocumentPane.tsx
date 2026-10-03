@@ -6,8 +6,9 @@ import { useUi } from "@/lib/store";
 import { useT } from "@/lib/useT";
 import { DocToolbar } from "./DocToolbar";
 import { PageViewer, pageUrl, type Zoom } from "./PageViewer";
+import type { DocKind } from "@/lib/doc";
 
-function Thumbnails({ ipoId, doc, page, total, onPage }: { ipoId: string; doc: "rhp" | "prospectus"; page: number; total: number; onPage: (n: number) => void }) {
+function Thumbnails({ ipoId, doc, page, total, onPage }: { ipoId: string; doc: DocKind; page: number; total: number; onPage: (n: number) => void }) {
   const first = Math.max(1, Math.min(page - 4, total - 9));
   const pages = Array.from({ length: Math.min(10, total) }, (_, i) => first + i);
   return (

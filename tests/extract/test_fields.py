@@ -49,6 +49,6 @@ def test_load_rejects_duplicates_and_unknown_docs(tmp_path: Path) -> None:
     bad.write_text("fields:\n" + entry + entry, encoding="utf-8")
     with pytest.raises(ValueError, match="duplicate"):
         load_fields(bad)
-    bad.write_text("fields:\n" + entry.replace("doc: rhp", "doc: drhp"), encoding="utf-8")
+    bad.write_text("fields:\n" + entry.replace("doc: rhp", "doc: annual_report"), encoding="utf-8")
     with pytest.raises(ValueError, match="doc"):
         load_fields(bad)

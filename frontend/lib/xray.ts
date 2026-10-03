@@ -8,7 +8,7 @@ export type XValue = NonNullable<XField["value"]>;
 export interface Resolved {
   /** The value to show: the RHP value, or the Prospectus value when the RHP leaves it blank. */
   value: XValue | null;
-  doc: "rhp" | "prospectus";
+  doc: XField["doc"];
   page: number;
   /** True when the RHP has `[●]` and the value comes from the final prospectus. */
   filledInProspectus: boolean;

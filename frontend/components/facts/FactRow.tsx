@@ -11,13 +11,14 @@ import { useUi } from "@/lib/store";
 import { useT } from "@/lib/useT";
 import { needsPerShare, resolveField, scalarText, sentenceAround, type XField } from "@/lib/xray";
 import { MarkIcon, VerdictMark, type MarkState } from "./VerdictMark";
+import { DOC_SHORT_KEY, type DocKind } from "@/lib/doc";
 
 type Box = [number, number, number, number];
 
-const docName = (doc: "rhp" | "prospectus", t: ReturnType<typeof useT>["t"]) =>
-  t(doc === "rhp" ? "doc.rhpShort" : "doc.prospectusShort");
+const docName = (doc: DocKind, t: ReturnType<typeof useT>["t"]) =>
+  t(DOC_SHORT_KEY[doc]);
 
-function Sentence({ ipoId, bbox, doc, page, exact }: { ipoId: string; bbox: Box | null; doc: "rhp" | "prospectus"; page: number; exact?: { text: string; hit: [number, number] } | null }) {
+function Sentence({ ipoId, bbox, doc, page, exact }: { ipoId: string; bbox: Box | null; doc: DocKind; page: number; exact?: { text: string; hit: [number, number] } | null }) {
   // The API sends the exact line (X-Rays built after boxes were stored); without it the line is rebuilt from the page words.
   const { data } = useWords(ipoId, doc, page, !!bbox && !exact);
   if (exact) {
@@ -44,7 +45,7 @@ function Sentence({ ipoId, bbox, doc, page, exact }: { ipoId: string; bbox: Box 
   );
 }
 
-function Popover({ ipoId, f, doc, page, bbox, lang }: { ipoId: string; f: XField; doc: "rhp" | "prospectus"; page: number; bbox: Box | null; lang: Lang }) {
+function Popover({ ipoId, f, doc, page, bbox, lang }: { ipoId: string; f: XField; doc: DocKind; page: number; bbox: Box | null; lang: Lang }) {
   const { t } = useT();
   const model = f.extractor.startsWith("qa_");
   return (

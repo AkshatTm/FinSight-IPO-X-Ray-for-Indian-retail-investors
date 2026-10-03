@@ -295,6 +295,7 @@
             "schema": {
               "enum": [
                 "rhp",
+                "drhp",
                 "prospectus"
               ],
               "type": "string",
@@ -393,6 +394,7 @@
             "schema": {
               "enum": [
                 "rhp",
+                "drhp",
                 "prospectus"
               ],
               "type": "string",
@@ -1051,6 +1053,7 @@
             "type": "string",
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc"
@@ -1149,6 +1152,7 @@
             "type": "string",
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc",
@@ -1385,6 +1389,7 @@
             "type": "string",
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc"
@@ -2106,6 +2111,7 @@
             "type": "string",
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc"
@@ -2413,6 +2419,7 @@
             "type": "string",
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc"
@@ -2661,6 +2668,7 @@
           "doc": {
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc",
@@ -2721,6 +2729,7 @@
           "doc": {
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc",
@@ -2918,6 +2927,7 @@
           "doc": {
             "enum": [
               "rhp",
+              "drhp",
               "prospectus"
             ],
             "title": "Doc",

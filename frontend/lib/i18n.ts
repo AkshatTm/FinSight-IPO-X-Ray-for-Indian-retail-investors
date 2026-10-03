@@ -332,6 +332,7 @@ export const STRINGS = d({
   "doc.prospectus": { en: "Final prospectus", hi: "फ़ाइनल प्रॉस्पेक्टस" },
   "doc.rhpShort": { en: "RHP", hi: "आरएचपी" },
   "doc.prospectusShort": { en: "Prospectus", hi: "प्रॉस्पेक्टस" },
+  "doc.drhpShort": { en: "DRHP", hi: "डीआरएचपी" },
   "doc.rhpTip": {
     en: "Published before the price was set. Some amounts are blank ([●]).",
     hi: "कीमत तय होने से पहले जारी। कुछ रकम खाली ([●]) हैं।",

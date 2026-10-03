@@ -322,7 +322,7 @@ export interface components {
              * Doc
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Raw */
             raw: string;
             /** Value */
@@ -349,7 +349,7 @@ export interface components {
              * @default prospectus
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Page */
             page: number;
         };
@@ -427,7 +427,7 @@ export interface components {
              * Doc
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Page */
             page: number;
             /** Value */
@@ -680,7 +680,7 @@ export interface components {
              * Doc
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Title */
             title: string;
             /** Start Page */
@@ -790,7 +790,7 @@ export interface components {
              * Doc
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Page */
             page: number;
             /** Printed Page */
@@ -879,7 +879,7 @@ export interface components {
              * Doc
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Page */
             page: number;
         };
@@ -902,7 +902,7 @@ export interface components {
              * Doc
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Page Start */
             page_start: number;
             /** Page End */
@@ -978,7 +978,7 @@ export interface components {
              * Doc
              * @enum {string}
              */
-            doc: "rhp" | "prospectus";
+            doc: "rhp" | "drhp" | "prospectus";
             /** Page */
             page: number;
             /** Char Span */
@@ -1226,7 +1226,7 @@ export interface operations {
         parameters: {
             query?: {
                 /** @description Which document: the RHP or the final Prospectus. */
-                doc?: "rhp" | "prospectus";
+                doc?: "rhp" | "drhp" | "prospectus";
                 /** @description Width in pixels (thumbnail) */
                 w?: number | null;
             };
@@ -1272,7 +1272,7 @@ export interface operations {
         parameters: {
             query?: {
                 /** @description Which document: the RHP or the final Prospectus. */
-                doc?: "rhp" | "prospectus";
+                doc?: "rhp" | "drhp" | "prospectus";
             };
             header?: never;
             path: {
