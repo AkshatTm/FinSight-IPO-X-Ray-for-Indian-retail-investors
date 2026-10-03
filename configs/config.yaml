@@ -30,3 +30,30 @@ profiles:
     voice: { asr: "off" }
     verify: { nli: false }
     demo_mode: true
+
+  cloud:
+    # B-ADR-04: Google Cloud Run on CPU (API service + worker job), Supabase Auth + Postgres,
+    # GCS storage, Vercel site. Secrets come from env (see .env.example), never from here.
+    llm: { backend: llama-cpp, model: "Qwen3.5-2B-Q4_K_M.gguf", num_ctx: 2048 }
+    retrieve: { dense: false, rerank: false }
+    voice: { asr: "off" }
+    verify: { nli: false }
+    demo_mode: true
+    storage: { backend: gcs }
+    db: { backend: postgres }
+    auth: { mode: supabase }
+    simplify: { backend: llama-cpp, model: "simplifier-q4_k_m.gguf", auto_top_n: 15 }
+    jobs: { runner: cloud_run, gpu_job: false }
+
+  cloud_gpu:
+    # Optional upgrade: simplify + index run in a Cloud Run L4 job with vLLM (B02 §10.3).
+    llm: { backend: llama-cpp, model: "Qwen3.5-2B-Q4_K_M.gguf", num_ctx: 2048 }
+    retrieve: { dense: false, rerank: false }
+    voice: { asr: "off" }
+    verify: { nli: false }
+    demo_mode: true
+    storage: { backend: gcs }
+    db: { backend: postgres }
+    auth: { mode: supabase }
+    simplify: { backend: vllm, model: "simplifier-awq", auto_top_n: 15 }
+    jobs: { runner: cloud_run, gpu_job: true }

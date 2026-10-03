@@ -1,7 +1,8 @@
 """Profile-based settings (02_ARCHITECTURE.md section 8).
 
 ``configs/config.yaml`` holds shared ``paths`` and one block per profile
-(``dev_light`` default, ``full``, ``deploy_cpu``). Environment variables win over
+(``dev_light`` default, ``full``, ``deploy_cpu``; Phase 2 adds ``cloud`` for Google Cloud Run
+on CPU and ``cloud_gpu`` for the optional L4 GPU job, B-ADR-04). Environment variables win over
 the YAML: ``FINSIGHT_PROFILE`` picks the profile, ``FINSIGHT_LLM__MODEL=...`` overrides
 a nested value, ``DEMO_MODE=1`` turns demo mode on. Code reads paths from here and
 uses ``pathlib`` only.
@@ -77,6 +78,104 @@ class GuardConfig(BaseModel):
     threshold: float = 0.5  # probability of "advice" at or above which the classifier blocks
 
 
+class UploadsConfig(BaseModel):
+    """Upload limits (B01 B-FR-01, B02 §11-12). ``UPLOADS_ENABLED=false`` is the kill switch."""
+
+    enabled: bool = True
+    max_mb: int = 50  # Supabase Free Storage caps files at 50 MB; the UI copy reads this value
+    max_pages: int = 1500
+    per_user_per_day: int = 3
+    global_per_day: int = 10
+    retention_days: int = 30
+
+
+class StorageConfig(BaseModel):
+    """Where document artefacts live: the local ``data/`` tree or a GCS bucket (B02 §9)."""
+
+    backend: Literal["local", "gcs"] = "local"
+    local_dir: Path = Path("data/docs")
+    bucket: str | None = None  # env FINSIGHT_STORAGE__BUCKET in the cloud profiles
+    signed_url_ttl_s: int = 900
+
+
+class DbConfig(BaseModel):
+    """SQLite locally, Supabase Postgres via the pooler in the cloud (B02 §9)."""
+
+    backend: Literal["sqlite", "postgres"] = "sqlite"
+    sqlite_path: Path = Path("data/finsight.db")
+    url: str | None = None  # env FINSIGHT_DB__URL only; never in YAML or git
+
+
+class AuthConfig(BaseModel):
+    """``off`` = one local user (laptop); ``supabase`` = verify Supabase JWTs (B06 §1)."""
+
+    mode: Literal["off", "supabase"] = "off"
+    supabase_url: str | None = None  # env FINSIGHT_AUTH__SUPABASE_URL
+    jwt_secret: str | None = None  # env FINSIGHT_AUTH__JWT_SECRET (HS256 fallback only)
+    audience: str = "authenticated"
+    admin_emails: list[str] = Field(default_factory=list)
+
+
+class SimplifyConfig(BaseModel):
+    """Plain-English rewrites (B02 §8): top N automatic, the rest on click."""
+
+    backend: Literal["ollama", "llama-cpp", "vllm"] = "ollama"
+    model: str = "qwen3.5:2b"
+    auto_top_n: int = 15
+    vllm_url: str | None = None  # optional GPU path only
+
+
+class JobsConfig(BaseModel):
+    """``inline`` = in-process worker (laptop, tests); ``cloud_run`` = Cloud Run Jobs (B02 §10)."""
+
+    runner: Literal["inline", "cloud_run"] = "inline"
+    gpu_job: bool = False  # cloud_gpu: simplify + index run in the L4 job
+    poll_interval_s: float = 1.0
+
+
+# Environment variables a deployment may need. Names only: values never live in the repo.
+# ``.env.example`` must list exactly these (tests/core/test_config_profiles.py).
+ENV_KEYS: tuple[str, ...] = (
+    "FINSIGHT_PROFILE",
+    "UPLOADS_ENABLED",
+    "FINSIGHT_DB__URL",
+    "FINSIGHT_STORAGE__BUCKET",
+    "FINSIGHT_AUTH__SUPABASE_URL",
+    "FINSIGHT_AUTH__JWT_SECRET",
+    "FINSIGHT_AUTH__ADMIN_EMAILS",
+    "FINSIGHT_SIMPLIFY__VLLM_URL",
+    "GCP_PROJECT",
+    "GCP_REGION",
+    "NEXT_PUBLIC_API_URL",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+)
+
+# What each profile cannot run without (``scripts/check_env.py`` reports the missing names).
+REQUIRED_ENV: dict[str, tuple[str, ...]] = {
+    "cloud": (
+        "FINSIGHT_DB__URL",
+        "FINSIGHT_STORAGE__BUCKET",
+        "FINSIGHT_AUTH__SUPABASE_URL",
+        "GCP_PROJECT",
+        "GCP_REGION",
+    ),
+    "cloud_gpu": (
+        "FINSIGHT_DB__URL",
+        "FINSIGHT_STORAGE__BUCKET",
+        "FINSIGHT_AUTH__SUPABASE_URL",
+        "GCP_PROJECT",
+        "GCP_REGION",
+    ),
+}
+
+
+def missing_env(profile: str, environ: dict[str, str] | None = None) -> list[str]:
+    """Names of required environment variables that are unset or empty for ``profile``."""
+    env = os.environ if environ is None else environ
+    return [name for name in REQUIRED_ENV.get(profile, ()) if not env.get(name)]
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_prefix="FINSIGHT_", env_nested_delimiter="__", extra="ignore"
@@ -90,6 +189,12 @@ class Settings(BaseSettings):
     voice: VoiceConfig = Field(default_factory=VoiceConfig)
     verify: VerifyConfig = Field(default_factory=VerifyConfig)
     guard: GuardConfig = Field(default_factory=GuardConfig)
+    uploads: UploadsConfig = Field(default_factory=UploadsConfig)
+    storage: StorageConfig = Field(default_factory=StorageConfig)
+    db: DbConfig = Field(default_factory=DbConfig)
+    auth: AuthConfig = Field(default_factory=AuthConfig)
+    simplify: SimplifyConfig = Field(default_factory=SimplifyConfig)
+    jobs: JobsConfig = Field(default_factory=JobsConfig)
     demo_mode: bool = Field(default=False, validation_alias=AliasChoices("DEMO_MODE", "demo_mode"))
 
     @classmethod
@@ -132,6 +237,9 @@ def load_settings(profile: str | None = None, config_path: Path | None = None) -
     paths = {key: str((root / value).resolve()) for key, value in raw.get("paths", {}).items()}
     settings = Settings(root=root, paths=paths, **profiles[chosen])
     settings.profile = chosen  # the argument wins over FINSIGHT_PROFILE picked up from the env
+    kill = os.environ.get("UPLOADS_ENABLED")
+    if kill is not None:  # the kill switch has a short name so it is easy to flip in a console
+        settings.uploads.enabled = kill.strip().lower() not in {"0", "false", "no", "off"}
     return settings
 
 
