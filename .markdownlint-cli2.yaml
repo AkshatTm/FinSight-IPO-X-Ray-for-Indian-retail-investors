@@ -1,0 +1,7 @@
+# Markdown lint for the docs-site sources only (B09 §9); the numbered planning docs are left as is.
+config:
+  default: true
+  MD013: false        # long lines: prose is wrapped by the editor, not by hand
+  MD033: false        # inline HTML: the Redoc page needs a container and a script
+  MD041: false        # generated pages start with a provenance comment
+  MD046: false        # admonitions indent their body

@@ -1,0 +1,102 @@
+# FinSight docs site (B09 §2). Build: `uv sync --group docs` then `uv run poe docs-build`.
+# Reference pages under docs/reference/ and docs/adr/ are generated (`uv run poe docs-gen`).
+site_name: FinSight
+site_description: IPO X-Ray for Indian retail investors
+repo_url: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors
+edit_uri: edit/main/docs/
+docs_dir: docs
+strict: false
+
+# Session working files (prompts, logs, to-do lists) stay on GitHub only.
+exclude_docs: |
+  templates/
+  screenshots/
+  gates/
+  07_ROADMAP.md
+  11_CLAUDE_CODE_PROMPTS.md
+  AKSHAT_TODO.md
+  EXECUTION_PLAN.md
+  MORNING_REPORT.md
+  PROGRESS_PHASE1.md
+  phase2/B10_PROMPTS.md
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle: { icon: material/brightness-7, name: Dark mode }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle: { icon: material/brightness-4, name: Light mode }
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - toc: { permalink: true }
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: false
+            show_root_heading: true
+            heading_level: 3
+
+hooks:
+  - scripts/mkdocs_hooks.py
+
+validation:
+  links:
+    # The planning docs link to code files outside docs/; those links work on GitHub.
+    not_found: info
+    unrecognized_links: info
+
+nav:
+  - Home: index.md
+  - Reference:
+      - API: reference/api.md
+      - Python packages: reference/python.md
+      - Configuration and environment variables: reference/config.md
+      - Risk level: reference/risklevel.md
+      - Compare reference: reference/compare.md
+      - Commands: reference/cli.md
+      - API contract (B06): phase2/B06_API_CONTRACT.md
+  - Explanation:
+      - Architecture (Phase 2): phase2/B02_ARCHITECTURE.md
+      - Architecture (Phase 1): 02_ARCHITECTURE.md
+      - Models and training: phase2/B03_MODELS_AND_TRAINING.md
+      - Data and evaluation: phase2/B04_DATA_AND_EVALUATION.md
+      - UI spec: phase2/B05_UI_SPEC.md
+      - Design decisions (ADR index): adr/index.md
+      - FinSight explained: 10_FINSIGHT_EXPLAINED.md
+  - Operations:
+      - Deploy runbook: runbooks/DEPLOY_RUNBOOK.md
+      - Rollback runbook: runbooks/ROLLBACK.md
+      - "Incident: costs spiking / GPU stuck": runbooks/COST_INCIDENT.md
+      - Hosting setup: phase2/HOSTING_SETUP_STEPS.md
+      - Hosting comparison: phase2/HOSTING_COMPARISON.md
+  - Datasheets:
+      - Teacher outputs: phase2/datasheets/teacher_outputs.md
+  - Project:
+      - Requirements (Phase 2): phase2/B01_PRD.md
+      - Roadmap: phase2/B07_ROADMAP.md
+      - Documentation standards: phase2/B09_DOCUMENTATION_STANDARDS.md
+      - Git workflow: 08_GIT_WORKFLOW.md
