@@ -12,6 +12,11 @@ a keyword and regex rule set, one rule per kind of request, with no model call:
 - ``gmp``         grey-market-premium questions (its meaning may be explained, its use may not)
 - ``personal``    "I have ₹50,000, where do I put it": asks for a personal decision
 
+Risk-level questions ("is this IPO risky?", "how risky is it?", "explain the risk level") are
+facts since B2.6a: FinSight answers them with the computed risk level and its reasons. "Is it
+safe?", "is it a good IPO?" and "should I apply?" are still refused (the level is then shown as
+facts next to the refusal, B05 §7).
+
 Questions that merely sound evaluative ("is there pending litigation", "what are the risks",
 "minimum shares to apply for", "what does GMP mean") are facts and are not blocked. A
 how-to question ("how do I apply") is procedural and passes unless another rule fires.
@@ -189,7 +194,7 @@ RULES: list[tuple[str, str]] = [
     ("rating", r"\bred flags?\b|\bgreen flags?\b"),
     (
         "rating",
-        r"\bis (?:it|this(?: ipo| company)?|the ipo|the company|the issue) (?:a )?(?:good|bad|safe|risky|great|fine|decent|a (?:buy|sell))\b",
+        r"\bis (?:it|this(?: ipo| company)?|the ipo|the company|the issue) (?:a )?(?:good|bad|safe|great|fine|decent|a (?:buy|sell))\b",
     ),
     ("rating", r"\b(?:good|great|bad|poor) (?:ipo|company|issue|investment)\b.{0,15}\?"),
     ("rating", r"\bis the risk worth\b|\bworth the risk\b"),
@@ -197,7 +202,7 @@ RULES: list[tuple[str, str]] = [
     ("rating", r"\b(?:overpriced|underpriced|mehnga|mehenga|mahanga|sasta|sasti)\b"),
     (
         "rating",
-        r"\b(?:accha|achha|acha|achchha|badhiya|safe|sahi|theek|thik|risky) (?:hai|rahega|ipo|company) (?:kya|ya nahi)\b|\bworth hai\b|\brating\b.{0,15}\b(?:do|bata|kya)\b",
+        r"\b(?:accha|achha|acha|achchha|badhiya|safe|sahi|theek|thik) (?:hai|rahega|ipo|company) (?:kya|ya nahi)\b|\bworth hai\b|\brating\b.{0,15}\b(?:do|bata|kya)\b",
     ),
     # ---- rating / opinion -------------------------------------------------------- Hindi
     ("rating", r"(?:10|दस|5|पांच) में से|नंबर दोगे|नंबर दो|रेटिंग|रेट करो|रेट कर"),
