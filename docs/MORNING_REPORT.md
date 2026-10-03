@@ -51,6 +51,12 @@
   - Training is the local part B2.5b; its prompt is in AKSHAT_TODO.
   - I chose Qwen3-4B-Instruct over Qwen3.5-4B as the default, because Qwen3.5-4B is a multimodal model with a new attention type, which is riskier to fine-tune on a T4. Qwen3.5-4B stays in the bake-off.
 
+- **B2.2a (#144): what makes a risk unusual, and the risks API.**
+  - Each risk is compared with past IPOs from 2018–2023, leaving out the company's own earlier filings, to say how common it is ("found in 4% of past IPOs").
+  - Hedging words are counted. When a cautiously worded risk actually describes something that already happened, it gets a note.
+  - The API now lists risks: most important first, by category, unusual only, or by search. A click on "explain in plain English" goes to the front of the queue.
+  - The similarity cut-off (0.80) is a placeholder until your 60-pair check in B2.2b.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
