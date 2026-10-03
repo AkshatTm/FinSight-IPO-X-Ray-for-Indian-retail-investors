@@ -515,6 +515,17 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** The past-IPO reference numbers are **placeholders** (`configs/compare.yaml`, `provisional: true`) until the local corpus run. The peer list is the company's own choice of peers, so it can be flattering; the tab says where it came from. The table reader has been tested on synthetic tables; real tables from the fixture pack come next.
 **Likely viva questions.** (1) *Why not pick peers yourself?* (SEBI's format makes the issuer name them; choosing our own would be an opinion. We show theirs, with the source.) (2) *Why is P/E blank in an RHP?* (The price band is set after filing; the Prospectus has the final price.) (3) *Does "higher than 70% of past IPOs" mean expensive?* (It means higher than most; it is a fact about the distribution, not a judgement or advice.)
 
+### C32. The report page: risk level, red flags and risks (built in B3.1)
+**What it does.**
+- **Header.** Company, document type, the offer line ("Fresh issue ₹X crore + OFS ₹Y crore at ₹P") and a Share button that copies the link. A companion link appears when the RHP and Prospectus of the same IPO are both in FinSight.
+- **Tabs.** Overview, Red flags, Risks and Compare. The tab is kept in the URL hash, so a shared link opens the same tab.
+- **Risk level card.** Low / medium / high with up to three reasons, each a link to the red flag or risk behind it. The disclaimer is fixed text, always visible and never behind a click. "How is this worked out?" opens the B05 §6.3 explanation. When `behind_click` is on, the level shows only after the reader asks for it.
+- **Red flags.** Concern first, then watch, then fine, then "not applicable". Each flag has its one-line sentence and page numbers. Filters are All / Concerns / Watch.
+- **Risks.** Sort by importance or document order, search (250 ms after typing stops), "Unusual only" and category chips. Each card shows the plain-English version when it is ready. "Explain this" queues it at the front of the line. While anything is queued, the list refreshes every 5 seconds; the API's `queued` list says what is still waiting.
+
+**Limits.** Built on **made-up mock data** (company "Sample Ltd"), not real documents, until the B0.4 fixture pack exists. "Show in document" and the Ask/Facts/Document tabs for uploaded documents come later. The report is English only; the Hindi UI shows B05's one-line note.
+**Likely viva questions.** (1) *Why is the disclaimer not collapsible?* (A risk level without its disclaimer could read like a rating or advice; B-ADR-13 keeps it on screen.) (2) *Why poll instead of streaming rewrites?* (The rewrites are slow and rare; a 5-second poll that stops when the queue is empty is simpler and costs nothing when idle.) (3) *Why keep the tab in the URL?* (So a shared link opens what the sender was looking at.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

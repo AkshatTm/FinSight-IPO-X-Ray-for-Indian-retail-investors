@@ -77,6 +77,12 @@
   - The tab works on made-up mock data. The past-IPO numbers are placeholders until a laptop run computes them; the prompt is in AKSHAT_TODO.
   - It also fixed a hidden API bug: two different "Evidence" shapes had the same name, so the API description mixed them up. A test now catches this.
 
+- **B3.1 (#151): the report page.**
+  - Opening an uploaded document now shows its report: the company, the offer line, and four tabs (Overview, Red flags, Risks, Compare).
+  - The risk-level card shows low / medium / high with up to three reasons you can click. Its disclaimer is always on screen; "How is this worked out?" opens the explanation from the UI spec.
+  - Red flags are listed concerns first. Risks can be sorted, searched and filtered, and "Explain this" asks for a plain-English version, which appears on its own a few seconds later.
+  - Everything runs on **made-up sample data** for now. Once the fixture pack exists, a short laptop session checks it against real documents and swaps in real samples; the prompt is in AKSHAT_TODO. A few new UI lines need your OK (AKSHAT_TODO, "New copy to review").
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
