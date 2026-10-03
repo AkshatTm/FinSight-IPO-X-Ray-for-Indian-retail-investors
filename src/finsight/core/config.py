@@ -123,6 +123,9 @@ class SimplifyConfig(BaseModel):
 
     backend: Literal["ollama", "llama-cpp", "vllm"] = "ollama"
     model: str = "qwen3.5:2b"
+    # The base instruct model with the same prompt, used (and flagged) when the student is
+    # unavailable; a GGUF file name for llama-cpp, a tag for Ollama.
+    fallback_model: str | None = None
     auto_top_n: int = 15
     vllm_url: str | None = None  # optional GPU path only
 

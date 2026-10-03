@@ -53,7 +53,11 @@ profiles:
     storage: { backend: gcs }
     db: { backend: postgres }
     auth: { mode: supabase }
-    simplify: { backend: llama-cpp, model: "simplifier-q4_k_m.gguf", auto_top_n: 15 }
+    simplify:
+      backend: llama-cpp
+      model: "simplifier-q4_k_m.gguf"
+      fallback_model: "qwen3-4b-instruct-2507-q4_k_m.gguf"
+      auto_top_n: 15
     jobs: { runner: cloud_run, gpu_job: false }
 
   cloud_gpu:
