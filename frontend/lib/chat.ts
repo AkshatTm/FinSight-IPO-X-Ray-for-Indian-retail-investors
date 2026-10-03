@@ -2,6 +2,7 @@ import type { Schemas } from "@/lib/api/client";
 import { formatMoney, type Lang } from "@/lib/format";
 import { t as translate, type StringKey } from "@/lib/i18n";
 import type { ChatEvent } from "@/lib/sse";
+import type { DocKind } from "@/lib/doc";
 
 type S = Schemas;
 export type Verdict = S["VerdictEvent"];
@@ -135,8 +136,9 @@ export function factorText(a: number, b: number): string {
   return r.toLocaleString("en-IN");
 }
 
-const DOC_NAME: Record<"rhp" | "prospectus", Record<Lang, string>> = {
+const DOC_NAME: Record<DocKind, Record<Lang, string>> = {
   rhp: { en: "RHP", hi: "आरएचपी" },
+  drhp: { en: "DRHP", hi: "डीआरएचपी" },
   prospectus: { en: "Prospectus", hi: "प्रॉस्पेक्टस" },
 };
 

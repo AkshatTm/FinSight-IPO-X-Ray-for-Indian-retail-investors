@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Highlight } from "@/lib/store";
 import { useT } from "@/lib/useT";
+import type { DocKind } from "@/lib/doc";
 
 export type Zoom = "fit" | "100" | "150";
 
@@ -42,7 +43,7 @@ export function HighlightBox({ h, pageW, pageH }: { h: Highlight; pageW: number;
 
 interface Props {
   ipoId: string;
-  doc: "rhp" | "prospectus";
+  doc: DocKind;
   page: number;
   total: number;
   pageSize: { width: number; height: number };

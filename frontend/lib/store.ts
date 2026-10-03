@@ -3,13 +3,14 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { Lang, Unit } from "@/lib/format";
+import type { DocKind } from "@/lib/doc";
 
 export type Theme = "light" | "dark";
 
 /** The one highlight mechanism: set it here, the document viewer reacts. */
 export interface Highlight {
   ipoId: string;
-  doc: "rhp" | "prospectus";
+  doc: DocKind;
   page: number;
   /** [x0, y0, x1, y1] in page points; omit to only jump to the page. */
   bbox?: [number, number, number, number] | null;
@@ -22,7 +23,7 @@ export interface Highlight {
 /** Which page of which document the viewer shows. Reset when the IPO changes. */
 export interface DocView {
   ipoId: string;
-  doc: "rhp" | "prospectus";
+  doc: DocKind;
   page: number;
 }
 

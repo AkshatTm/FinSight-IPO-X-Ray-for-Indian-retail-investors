@@ -6,8 +6,9 @@ import type { Schemas } from "@/lib/api/client";
 import { STRINGS, type StringKey } from "@/lib/i18n";
 import { useT } from "@/lib/useT";
 import type { Zoom } from "./PageViewer";
+import type { DocKind } from "@/lib/doc";
 
-type Doc = "rhp" | "prospectus";
+type Doc = DocKind;
 
 export function DocSwitch({ doc, onChange, hasProspectus }: { doc: Doc; onChange: (d: Doc) => void; hasProspectus: boolean }) {
   const { t } = useT();
