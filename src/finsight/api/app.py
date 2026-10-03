@@ -17,6 +17,7 @@ from finsight.api.errors import ApiError, ErrorBody, ErrorResponse
 from finsight.api.events import EVENT_MODELS, JOB_EVENT_MODELS
 from finsight.api.routes import router
 from finsight.api.routes_docs import router as docs_router
+from finsight.api.routes_risks import router as risks_router
 from finsight.api.routes_uploads import router as uploads_router
 from finsight.core.logging import get_logger
 
@@ -90,6 +91,7 @@ def create_app() -> FastAPI:
     app.include_router(router)
     app.include_router(uploads_router)
     app.include_router(docs_router)
+    app.include_router(risks_router)
     _install_error_handlers(app)
 
     def openapi() -> dict[str, Any]:

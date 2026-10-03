@@ -1581,6 +1581,262 @@
           }
         }
       }
+    },
+    "/api/docs/{doc_id}/risks": {
+      "get": {
+        "tags": [
+          "risks"
+        ],
+        "summary": "List Risks",
+        "operationId": "list_risks_api_docs__doc_id__risks_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "importance",
+                "order",
+                "category"
+              ],
+              "type": "string",
+              "default": "importance",
+              "title": "Sort"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "financial",
+                    "debt_liquidity",
+                    "customers_suppliers",
+                    "competition",
+                    "legal_litigation",
+                    "regulatory",
+                    "promoters_governance",
+                    "operations",
+                    "technology_data",
+                    "market_macro"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "unusual_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Unusual Only"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RisksPage"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/docs/{doc_id}/risks/{rid}": {
+      "get": {
+        "tags": [
+          "risks"
+        ],
+        "summary": "Get Risk",
+        "description": "The full risk, with its nearest past examples.",
+        "operationId": "get_risk_api_docs__doc_id__risks__rid__get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "title": "Rid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Risk"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/docs/{doc_id}/risks/{rid}/simplify": {
+      "post": {
+        "tags": [
+          "risks"
+        ],
+        "summary": "Simplify Risk",
+        "description": "Queue a risk for a plain-English rewrite, or move it to the front of the queue.",
+        "operationId": "simplify_risk_api_docs__doc_id__risks__rid__simplify_post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "title": "Rid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimplifyQueued"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1732,6 +1988,43 @@
           "audio"
         ],
         "title": "Body_voice_api_voice_post"
+      },
+      "CategoryCount": {
+        "properties": {
+          "category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "financial",
+                  "debt_liquidity",
+                  "customers_suppliers",
+                  "competition",
+                  "legal_litigation",
+                  "regulatory",
+                  "promoters_governance",
+                  "operations",
+                  "technology_data",
+                  "market_macro"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "count"
+        ],
+        "title": "CategoryCount"
       },
       "ChatRequest": {
         "properties": {
@@ -2248,7 +2541,8 @@
               "hash_mismatch",
               "too_large",
               "doc_not_found",
-              "upload_not_started"
+              "upload_not_started",
+              "risk_not_found"
             ],
             "title": "Code"
           },
@@ -2423,6 +2717,39 @@
           "version"
         ],
         "title": "HealthResponse"
+      },
+      "Hedging": {
+        "properties": {
+          "hedge_count": {
+            "type": "integer",
+            "title": "Hedge Count",
+            "default": 0
+          },
+          "hard_fact": {
+            "type": "boolean",
+            "title": "Hard Fact",
+            "default": false
+          },
+          "flag": {
+            "type": "boolean",
+            "title": "Flag",
+            "default": false
+          },
+          "fact_sentence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fact Sentence"
+          }
+        },
+        "type": "object",
+        "title": "Hedging",
+        "description": "B02 §7.2: hedge words counted, and whether the risk states a past fact with a number."
       },
       "IpoDetail": {
         "properties": {
@@ -2730,6 +3057,34 @@
         ],
         "title": "MyUpload"
       },
+      "NearestExample": {
+        "properties": {
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "similarity": {
+            "type": "number",
+            "title": "Similarity"
+          }
+        },
+        "type": "object",
+        "required": [
+          "company",
+          "year",
+          "title",
+          "similarity"
+        ],
+        "title": "NearestExample"
+      },
       "PageSize": {
         "properties": {
           "width": {
@@ -2982,6 +3337,229 @@
         "title": "ReportOverview",
         "description": "``GET /api/docs/{doc_id}/report``."
       },
+      "Risk": {
+        "properties": {
+          "rid": {
+            "type": "string",
+            "title": "Rid"
+          },
+          "order": {
+            "type": "integer",
+            "title": "Order"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "body": {
+            "type": "string",
+            "title": "Body"
+          },
+          "page_start": {
+            "type": "integer",
+            "title": "Page Start"
+          },
+          "page_end": {
+            "type": "integer",
+            "title": "Page End"
+          },
+          "group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "financial",
+                  "debt_liquidity",
+                  "customers_suppliers",
+                  "competition",
+                  "legal_litigation",
+                  "regulatory",
+                  "promoters_governance",
+                  "operations",
+                  "technology_data",
+                  "market_macro"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "category_conf": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Conf"
+          },
+          "novelty": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Novelty"
+          },
+          "nearest_examples": {
+            "items": {
+              "$ref": "#/components/schemas/NearestExample"
+            },
+            "type": "array",
+            "title": "Nearest Examples"
+          },
+          "hedging": {
+            "$ref": "#/components/schemas/Hedging"
+          },
+          "numbers": {
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Money"
+                },
+                {
+                  "$ref": "#/components/schemas/Count"
+                },
+                {
+                  "$ref": "#/components/schemas/Percent"
+                },
+                {
+                  "$ref": "#/components/schemas/Placeholder"
+                },
+                {
+                  "$ref": "#/components/schemas/Range"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "kind",
+                "mapping": {
+                  "count": "#/components/schemas/Count",
+                  "money": "#/components/schemas/Money",
+                  "percent": "#/components/schemas/Percent",
+                  "placeholder": "#/components/schemas/Placeholder",
+                  "range": "#/components/schemas/Range"
+                }
+              }
+            },
+            "type": "array",
+            "title": "Numbers"
+          },
+          "seriousness": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seriousness"
+          },
+          "importance": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Importance"
+          },
+          "simple": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Simple"
+          },
+          "simple_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "ready",
+              "rejected",
+              "failed"
+            ],
+            "title": "Simple Status",
+            "default": "pending"
+          },
+          "simple_checks": {
+            "items": {
+              "$ref": "#/components/schemas/CheckResult"
+            },
+            "type": "array",
+            "title": "Simple Checks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rid",
+          "order",
+          "title",
+          "body",
+          "page_start",
+          "page_end"
+        ],
+        "title": "Risk",
+        "description": "One risk factor of a document (B02 §5); features are ``None`` until their stage runs."
+      },
+      "RisksPage": {
+        "properties": {
+          "n_total": {
+            "type": "integer",
+            "title": "N Total"
+          },
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryCount"
+            },
+            "type": "array",
+            "title": "Groups"
+          },
+          "risks": {
+            "items": {
+              "$ref": "#/components/schemas/Risk"
+            },
+            "type": "array",
+            "title": "Risks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "n_total",
+          "groups",
+          "risks"
+        ],
+        "title": "RisksPage"
+      },
       "SectionInfo": {
         "properties": {
           "id": {
@@ -3030,6 +3608,35 @@
           "end_page"
         ],
         "title": "SectionInfo"
+      },
+      "SimplifyQueued": {
+        "properties": {
+          "rid": {
+            "type": "string",
+            "title": "Rid"
+          },
+          "simple_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "ready",
+              "rejected",
+              "failed"
+            ],
+            "title": "Simple Status"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rid",
+          "simple_status",
+          "position"
+        ],
+        "title": "SimplifyQueued"
       },
       "SourceSentence": {
         "properties": {

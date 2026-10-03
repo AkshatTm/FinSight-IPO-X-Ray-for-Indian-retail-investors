@@ -16,6 +16,7 @@ from finsight.jobs.runner import (
     StageRejected,
     run_job,
 )
+from finsight.jobs.simplify_worker import SIMPLIFIED, auto_enqueue, load_simplified, run_queue
 from finsight.reports import write_report
 from finsight.storage import Storage
 
@@ -35,6 +36,7 @@ def process_document(
 __all__ = [
     "IST",
     "READY_PARTS",
+    "SIMPLIFIED",
     "SOURCE",
     "CloudRunLauncher",
     "InlineLauncher",
@@ -44,10 +46,13 @@ __all__ = [
     "Stage",
     "StageRejected",
     "UploadBlocked",
+    "auto_enqueue",
     "check_upload_allowed",
     "day_window",
+    "load_simplified",
     "process_document",
     "run_job",
+    "run_queue",
     "sweep",
     "upload_stages",
 ]

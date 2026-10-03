@@ -27,6 +27,7 @@ ErrorCode = Literal[
     "too_large",
     "doc_not_found",
     "upload_not_started",
+    "risk_not_found",
 ]
 
 
