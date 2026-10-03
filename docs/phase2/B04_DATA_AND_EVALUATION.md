@@ -4,7 +4,7 @@
 
 - **Dev IPOs (3):** hexaware-technologies-2025, ather-energy-2025, urban-company-2025.
 - **Test IPOs (7):** the other showcase IPOs.
-- **Corpus (389, 2009–2023):** training data for the classifier and simplifier, the risk bank, and the reference population for percentiles and risk-level thresholds. Never contains showcase IPOs (exclusion test stays).
+- **Corpus (389, 2009–2023):** training data for the classifier and simplifier and the risk bank. The **reference population** for percentiles, novelty and risk-level thresholds is its **2018–2023 part** (~200 IPOs; exact `corpus_n` stored in `configs/risklevel.yaml`), because the ICDR summary formats the red flags need exist only from then. Never contains showcase IPOs (exclusion test stays).
 - **Unseen upload set (5):** 5 recent RHPs not in any set, downloaded by Akshat in week 3, used only for the robustness/latency test (E23) and a demo of "any PDF".
 
 ## 2. New gold data
@@ -14,12 +14,13 @@
 | **gold v3** (`data/gold/gold_v3_summary.jsonl`) | Values for red-flag inputs on all 10 IPOs: revenue, PAT and operating cash flow (last 3 fiscals), total borrowings, net worth, WACA per selling shareholder group, litigation counts/amounts (company, promoters, directors; criminal yes/no), RPT total, promoter + group holding post-issue, pledged %, top-1/top-10 customer %, peer P/E list, auditor remarks | ~25 values × 10 IPOs ≈ 250 | Claude (chat) pre-fills from the PDFs with page + quote; Akshat verifies (as gold v1) | B1.3–B1.4 (by Fri 9 Oct) |
 | **red-flag status gold** | Status per check per IPO, computed by hand from gold v3 using the documented thresholds | 13 × 10 = 130 | Computed by script from gold v3, spot-checked by Akshat | B1.4 |
 | **segmentation gold** | Risk boundaries (title start pages) for the Risk Factors of 3 dev + 2 test IPOs | ~400 risks | Claude (chat) pre-fills; Akshat spot-checks 50 | B2.1 |
+| **E13b corpus boundaries** | Risk starts in 5 of the 20 corpus excerpts of the fixture pack | ~150 risks | Claude (chat) pre-fills; Akshat checks | B2.1b (Sat 10 Oct) |
 | **category gold-150** | 15 risks × 10 IPOs with one category each | 150 | Claude (chat) pre-fills; Akshat verifies | B2.4 |
 | **simplification gold-50** | 50 risks (5 per IPO) for human rating of rewrites from 3 systems | 50 × 3 | Akshat rates (blind to system); Claude (chat) may draft notes | B2.5 |
 | **novelty spot-check** | 60 (risk, nearest past risk) pairs at several τ | 60 | Akshat + Claude (chat) | B2.2 |
-| **teacher quality-100** | 100 teacher outputs rated | 100 | as above | B2.3 |
+| **teacher quality-100** | 100 outputs of the 500-item teacher pilot, rated | 100 | as above | B2.3b (Sun 11 Oct) |
 
-All AI-assisted sets carry `label_source` and are disclosed in the report.
+All AI-assisted sets carry `label_source` and a count of values Akshat changed, and are disclosed in the report and the Model Lab. Because the teacher, the gold pre-fill and the "teacher zero-shot" rung are all LLM-assisted, results are described as agreement with **Akshat-verified** labels.
 
 ## 3. Experiments (continue Phase 1 numbering)
 
@@ -33,10 +34,12 @@ All AI-assisted sets carry `label_source` and are disclosed in the report.
 | E18 | Are rewrites faithful? | Human rating on gold-50 for zero-shot base, QLoRA student, teacher (blind, shuffled) | % "same meaning: yes / partly / no" | `b/simplify_human.json` |
 | E19 | Are rewrites easier to read? | FKGL and Flesch Reading Ease, original vs rewrite | Mean grade-level drop | `b/readability.json` |
 | E20 | Do rewrites keep numbers and certainty? | Verifier + certainty check over all rewrites of the 10 IPOs | % rejected; reasons | `b/simplify_checks.json` |
-| E21 | Does the risk level relate to real outcomes? | Compute points/levels for corpus IPOs; compare with listing-day return and later return (if present) and with broker "avoid" share from the dataset Excel | Spearman ρ (points vs outcome), Kruskal–Wallis across levels, mean outcome per level, bootstrap 95 % CIs | `b/risklevel_validation.json` |
+| E21 | Does the risk level relate to real outcomes? | Compute normalised scores/levels for the 2018–2023 corpus IPOs; compare with listing-day return and later return (if present) and with broker "avoid" share from the dataset Excel, read only by `evaluate/outcomes.py` (B-ADR-03) | Spearman ρ (points vs outcome), Kruskal–Wallis across levels, mean outcome per level, bootstrap 95 % CIs | `b/risklevel_validation.json` |
 | E22 | Is "unusual" meaningful? | Spot-check 60 pairs at τ ∈ {0.75, 0.80, 0.85}; precision of "similar" | Precision@τ | `b/novelty.json` |
-| E23 | Speed and robustness on unseen PDFs | 5 unseen + 3 showcase uploads on the cloud | Stage timings p50/p95; stages failed | `b/latency_cloud.json` |
-| E24 | Cost | GPU seconds × price per upload | ₹ per upload (mean, max) | `b/cost.json` |
+| E23 | Speed and robustness on unseen PDFs | 5 unseen + 3 showcase uploads on the CPU host (and the GPU path if ever deployed) | Stage timings p50/p95; seconds per rewrite; stages failed | `b/latency_cloud.json` |
+| E24 | Cost | CPU (or GPU) seconds × price per upload; share of the free grant used | ₹ per upload (mean, max) | `b/cost.json` |
+| E8r | Does the guard still behave after allowing risk-level questions? | Re-run E8 on both guard sets + new risk-level probes | Blocked / false blocks | `guard_b.json` |
+| E7c | Chat answers on the deployed `cloud` profile (BM25, Q4) | E7 script against the cloud profile | as E7 | `b/e7_cloud.json` |
 
 ### E21 rules (important)
 - Outcome data is used **only to evaluate** the already-defined points system. The thresholds come from points percentiles, **not** from outcomes.

@@ -47,17 +47,18 @@ Nav: **Analyse a document** (primary button) · IPOs · How it works · Model La
 - Its risk level describes what the document discloses. It is not a recommendation.
 Paragraph (unchanged SEBI text).
 
-**"Built in the open" stats:** add "risks explained" (count across showcase) and "past IPOs used for comparison" (389) — hidden if missing.
+**"Built in the open" stats:** add "risks explained" (count across showcase) and "past IPOs used for comparison" (`corpus_n` from `configs/risklevel.yaml`, never hard-coded) — hidden if missing.
 
 ## 3. Upload page `/upload`
 
 **Title:** Analyse an IPO document
 **Sub:** Upload a Red Herring Prospectus, a draft (DRHP), or a final prospectus. FinSight reads it and builds a report in a few minutes.
 
-**Drop zone:** "Drag a PDF here, or **choose a file**" · helper: "Up to 60 MB. Text PDFs only (not scans)."
+**Drop zone:** "Drag a PDF here, or **choose a file**" · helper: "Up to {max_mb} MB. Text PDFs only (not scans)." (`max_mb` from config; 50 on the Supabase Free plan)
 **Where to find one (collapsible):** "Offer documents are public. You can find them on the SEBI website under Filings → Public Issues, or on the NSE and BSE IPO pages."
 **Signed-out state:** drop zone visible but the button reads **Sign in with Google to upload**; line: "We ask you to sign in only to prevent misuse. We don't use your Google data for anything else."
 **Limits line:** "You can analyse 3 documents a day."
+**Uploads switched off** (`UPLOADS_ENABLED=false`): drop zone disabled; line: "Uploads are paused right now. You can still explore the sample reports." `[copy: Akshat to approve]`
 **Consent line under the button (small):** "By uploading, you confirm this is a public offer document. Reports for public documents may be visible to anyone with the link."
 **Duplicate:** if the SHA-256 already exists → immediately open the existing report with toast "This document was already analysed. Here's its report."
 
@@ -66,7 +67,8 @@ Paragraph (unchanged SEBI text).
 |---|---|
 | scanned | This PDF looks like a scan, so there's no text to read. Try the text version from the SEBI or exchange website. |
 | password | This PDF is password-protected. Please upload an unlocked copy. |
-| too_large | This file is larger than 60 MB. |
+| too_large | This file is larger than {max_mb} MB. |
+| hash_mismatch | The upload didn't finish correctly. Please try again. `[copy: Akshat to approve]` |
 | too_many_pages | This document has more than 1,500 pages, which is more than FinSight can handle. |
 | not_offer_document | This doesn't look like an IPO offer document. FinSight works with RHPs, DRHPs and prospectuses. |
 | quota | You've reached today's limit of 3 documents. Try again tomorrow. |
@@ -90,6 +92,7 @@ Vertical stage list (each: icon, label, state, time):
 
 As soon as `facts` is done, a button appears: **See what's ready** (opens the report; remaining sections show skeletons with "Still working…").
 Cold-start note (when the first simplification takes > 20 s): "Warming up the language model. The first one takes a little longer."
+On the CPU host only the 15 most important risks are explained automatically; the `simplify` row's done text reads "{done} of {total} explained" with total = 15, and the Risks tab explains any other risk when it is opened.
 Failure of a stage: that row shows "Couldn't finish this step" + **Details** (plain reason) — the rest continues.
 DRHP banner (after detection): "This is a draft (DRHP). Many amounts are still blank until the final prospectus, so some checks will say Not available."
 
@@ -108,7 +111,8 @@ Order:
 1. **Risk level card**
    - Title: **Risk level: {Low | Medium | High}**
    - Bar: Low · Medium · High with the active step marked.
-   - Line: "More disclosed risk than {p}% of {n} past Indian IPOs." (percentile from B02 §7.4)
+   - Line: "More disclosed risk than {p}% of {n} past Indian IPOs." (percentile from B02 §7.4; `n` = `corpus_n`, the 2018–2023 reference set)
+   - If `risk_level.behind_click` is on: the card shows **Show the risk level** first; the disclaimer is visible before and after the click.
    - **Why:** up to 6 reasons, each "{label} · +{points}" linking to the red flag or risk.
    - **Disclaimer (always, cannot be hidden):** "This level summarises the risks this document discloses, compared with past Indian IPOs. It is not a recommendation to apply, buy or avoid, and it does not predict how the shares will perform."
    - Link: "How the risk level works" → modal (§6.3).
@@ -143,12 +147,14 @@ Filter chips: All · Concern · Watch · OK · Not available.
 | RF12 | Auditor's remarks | OK: "No remarks from the auditor in the summary." · Watch: "The auditor drew attention to: {short}." · Concern: "The auditor gave a qualified opinion: {short}." |
 | RF13 | Pledged promoter shares | OK: "No promoter shares are pledged." · Watch/Concern: "{pct}% of promoter shares are pledged as security for loans." |
 
+**Missing templates:** any status without a sentence above (e.g. RF02 NA, RF04 NA for a DRHP, RF06/RF09/RF12/RF13 NA) uses B-FR-02's default: "FinSight couldn't find this in the document." These gaps are listed in `docs/AKSHAT_TODO.md` for copy approval.
+
 ### 5.5 Risks tab (the core)
 **Title:** Every risk, in plain English · **Sub:** The company lists {n} risks. Here they are in simple words, with the most important first.
 **Controls:** Sort: **Most important first** (default) · Order in document · By category. Category filter chips (10, with counts). Search box "Search risks". Toggle: **Show only unusual risks** (novelty < 10%).
 **Risk card:**
 - Top line: category chip · seriousness ("High / Medium / Low seriousness") · unusualness badge: "Unusual: in {x}% of past IPOs" when < 10%, "Common: in {x}% of past IPOs" when > 60%, otherwise "In {x}% of past IPOs".
-- **Plain English:** the rewrite (≤ 60 words). If pending: skeleton + "Explaining…" (click → prioritised). If rejected: "A simple version isn't available for this one, so here is the original." + original shown.
+- **Plain English:** the rewrite (≤ 60 words). If pending: skeleton + "Explaining…" (click → prioritised). If not queued (outside the top 15 on the CPU host): button **Explain in plain English** (click → queued at the front). If rejected: "A simple version isn't available for this one, so here is the original." + original shown.
 - **Their wording** (collapsed): the original title in bold + body (scrollable, max 12 lines) + page chip.
 - Notes (only when true):
   - Hedging flag: "Written cautiously, but this describes something that has already happened."
@@ -183,7 +189,8 @@ Title: My uploads · table: Company · Type · Uploaded · Status (Processing / 
 "FinSight adds up points from the red flags and the most serious unusual risks:
 - Each Concern adds 2 points and each Watch adds 1.
 - Each risk that is highly serious and appears in fewer than 10% of past IPOs adds 1 point (up to 4).
-Then it compares the total with {n} past Indian IPOs. The lowest third is Low, the middle third is Medium, and the top third is High.
+Checks that can't be worked out for this document are left out, so the total is compared as a share of the points that were possible.
+Then it compares that share with {n} past Indian IPOs (2018–2023). The lowest third is Low, the middle third is Medium, and the top third is High.
 This tells you how much risk the document discloses compared with other IPOs. It does not tell you whether the shares will do well, and it is not advice."
 Link: "See how well this matches past outcomes" → Model Lab §7.
 
@@ -205,12 +212,12 @@ Link: "See how well this matches past outcomes" → Model Lab §7.
 7. **Speed and cost** (E23–E24).
 
 ## 8. How it works / About updates
-- How it works: add row 3 "Analysing an uploaded document": Upload → Check it's an offer document → Read and find sections → Red-flag checks → Find every risk → Compare each risk with 389 past IPOs → Rewrite in plain English and check the numbers → Risk level.
-- About → Known limits: add "The risk level compares disclosures with past IPOs. It is not a prediction or a recommendation." and "Plain-English rewrites can miss nuance; the original is always one click away."
+- How it works: add row 3 "Analysing an uploaded document": Upload → Check it's an offer document → Read and find sections → Red-flag checks → Find every risk → Compare each risk with {n} past IPOs → Rewrite in plain English and check the numbers → Risk level.
+- About → Known limits: add "The risk level compares disclosures with past IPOs. It is not a prediction or a recommendation.", "Plain-English rewrites can miss nuance; the original is always one click away." and "'Unusual' means rare among IPOs from 2018 to 2023, so very recent kinds of risk can look more unusual than they are." `[copy: Akshat to approve]`
 
 ## 9. Acceptance (add to 12 §19)
 - [ ] Risk-level disclaimer present on every view of the level, not dismissible.
-- [ ] No forbidden words (B01 §6) anywhere in UI copy or rendered rewrites (automated test over i18n + a sample of rewrites).
+- [ ] No forbidden **phrases** (B01 §6, `configs/forbidden_phrases.yaml`) anywhere in UI copy or rendered rewrites (automated test over i18n + a sample of rewrites; allow-listed lines such as the disclaimer pass).
 - [ ] Status colours are not verdict colours.
 - [ ] Every red flag and risk links to a page.
 - [ ] Progressive loading works: report usable after `facts` with skeletons elsewhere.
