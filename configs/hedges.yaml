@@ -1,0 +1,35 @@
+# Hedge words and phrases counted in a risk factor (B02 §7.2).
+# lm_uncertainty: a small subset of the Loughran-McDonald uncertainty category (single words,
+#   as in their master dictionary; used for counting only, not redistributed as a list).
+# own: phrases common in Indian offer documents, matched as whole phrases.
+lm_uncertainty:
+  - may
+  - might
+  - could
+  - possible
+  - possibly
+  - uncertain
+  - uncertainty
+  - uncertainties
+  - depend
+  - depends
+  - dependent
+  - approximately
+  - risk
+  - risks
+  - believe
+  - probable
+  - unpredictable
+  - fluctuate
+  - fluctuations
+own:
+  - cannot assure
+  - can not assure
+  - there can be no assurance
+  - there is no assurance
+  - no assurance
+  - adversely affect
+  - adverse effect
+  - materially
+  - in the event
+  - if any
