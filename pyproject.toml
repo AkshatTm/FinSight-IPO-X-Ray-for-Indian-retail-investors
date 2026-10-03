@@ -41,6 +41,10 @@ api = [
     "python-multipart>=0.0.32",
     "bm25s>=0.3.11",
     "numpy>=2.4.6",
+    "sqlalchemy>=2.0",
+    "alembic>=1.13",
+    "psycopg[binary]>=3.2",
+    "pyjwt[crypto]>=2.9",
 ]
 # Offline pipeline, Kaggle and the laptop GPU. Never installed in CI or the deploy image.
 ml = [
@@ -63,6 +67,10 @@ data = [
 ]
 tables = [
     "docling>=2.131.0",
+]
+# Google Cloud clients for the cloud profiles (GCS signed URLs); tests use a fake client.
+cloud = [
+    "google-cloud-storage>=2.18",
 ]
 
 [tool.uv]

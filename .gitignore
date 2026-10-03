@@ -56,4 +56,6 @@ data/gold/~$*
 
 # chat traces (P3.6)
 data/traces.sqlite
+data/store/
+data/finsight.db*
 # data/demo_cache/ is committed on purpose: recorded real chat streams for demo mode (run 2)

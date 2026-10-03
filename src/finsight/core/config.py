@@ -95,7 +95,7 @@ class StorageConfig(BaseModel):
     """Where document artefacts live: the local ``data/`` tree or a GCS bucket (B02 §9)."""
 
     backend: Literal["local", "gcs"] = "local"
-    local_dir: Path = Path("data/docs")
+    local_dir: Path = Path("data/store")  # keys are docs/<doc_id>/..., bank/...
     bucket: str | None = None  # env FINSIGHT_STORAGE__BUCKET in the cloud profiles
     signed_url_ttl_s: int = 900
 
