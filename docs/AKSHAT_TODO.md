@@ -1,4 +1,38 @@
-# Akshat's to-do (collected during the overnight frontend run)
+# Akshat's to-do
+
+## Needs a LOCAL session (Big Phase 2)
+
+Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `git pull` first). Tick the box when the PR is merged.
+
+- [ ] **B0.1 workspace bug (#121)** — Sun 4 Oct, Sonnet.
+  ```text
+  Resume FinSight Big Phase 2 LOCALLY. First `git pull` (cloud sessions merge PRs on GitHub). Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md and the "needs a LOCAL session" list in docs/AKSHAT_TODO.md. Do part B0.1 (#121) only. Run the tests (including @pytest.mark.local ones relevant to this part) and report in one line. Do the model check (both directions). Keep the session short and specific: real documents / corpus / models / Kaggle launches / evaluation / deploy steps, one heavy job at a time, Ollama only if needed. Never deploy or spend cloud credits without my explicit "go" in chat. End with the PR merged, the AKSHAT_TODO item ticked, PROGRESS.md updated, and the /clear message (B07 §0). Bug details: <describe the click and the error here, or "unknown: reproduce by opening all 10 workspaces on the real API">.
+  ```
+- [ ] **B0.4 fixture pack (#123)** — Sun 4 Oct, Sonnet. Blocks cloud B1.3a, B1.4, B2.1a.
+  ```text
+  Resume FinSight Big Phase 2 LOCALLY. First `git pull` (cloud sessions merge PRs on GitHub). Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md and the "needs a LOCAL session" list in docs/AKSHAT_TODO.md. Do part B0.4 (#123) only. Run the tests (including @pytest.mark.local ones relevant to this part) and report in one line. Do the model check (both directions). Keep the session short and specific: real documents / corpus / models / Kaggle launches / evaluation / deploy steps, one heavy job at a time, Ollama only if needed. Never deploy or spend cloud credits without my explicit "go" in chat. End with the PR merged, the AKSHAT_TODO item ticked, PROGRESS.md updated, and the /clear message (B07 §0).
+  ```
+- Later local parts (B1.1b, B1.3b, B1.4 E15, B2.1b, B2.3b …) are added here by the cloud session that unblocks them, each with its prompt.
+
+## Phase 2 hand-work (dated; full calendar in docs/phase2/B_EXECUTION_PLAN.md §4, checklist in #124)
+- Sat 3 Oct: approve the B0.2 PR; say whether Colab Pro is bought (the plan is Kaggle-first either way).
+- Sun 4: claim the $100 cloud credit (deadline Wed 7 Oct, 23:59 PT); describe the B0.1 bug if you can.
+- Mon 5: follow `docs/phase2/HOSTING_SETUP_STEPS.md` (after B0.3), pick Azure vs HF; check Kaggle GPU quota.
+- Wed 7: 5 unseen RHPs → `data/raw/unseen/`.
+- Thu 8 – Fri 9: gold v3 pre-fill (Claude chat) from `data/gold/gold_v3_template.jsonl` + verify.
+- Accept or change B-ADR-01..15 in `docs/09_DECISIONS.md`.
+
+## Copy to approve (Phase 2)
+- B05 lines marked `[copy: Akshat to approve]`: uploads-paused line, `hash_mismatch` rejection, About "unusual means rare among 2018–2023 IPOs".
+- Red-flag sentence templates missing in B05 §5.4 (RF02 NA, RF04 NA for a DRHP, RF06/RF09/RF12/RF13 NA) use the default "FinSight couldn't find this in the document."; confirm or write specific ones.
+
+## Phase 1 leftovers (after BG1 unless they block)
+- Review ADR-022 (now the fallback), ADR-053, ADR-054; hand-check the E7 samples; Hindi strings; ASR references (details in the sections below).
+
+---
+
+# Phase 1 to-do (collected during the overnight frontend run)
+
 
 ## Needs your decision
 - (none yet)
