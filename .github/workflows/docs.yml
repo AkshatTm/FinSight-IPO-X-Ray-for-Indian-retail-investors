@@ -1,0 +1,43 @@
+name: docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# B09 §9, B4.1 groundwork. Generated pages and openapi.json must be current (hard checks; the
+# same freshness check also runs in pytest). The site build, Markdown lint and docstring
+# coverage are warn-only until B4.1 proper. Publishing to GitHub Pages is added after Akshat's go.
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          python-version: "3.11"
+          enable-cache: true
+      - run: uv sync --locked --group docs
+      - name: Generated reference pages are current
+        run: uv run poe docs-gen --check
+      - name: openapi.json is current
+        run: uv run poe gen-openapi --check
+      - name: Build the site (strict, warn-only)
+        continue-on-error: true
+        run: uv run poe docs-build
+      - name: Docstring coverage (warn-only, B4.1 target 80 %)
+        continue-on-error: true
+        run: uv run interrogate src/finsight --fail-under 70
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+      - name: Markdown lint on the site sources (warn-only)
+        continue-on-error: true
+        run: npx -y markdownlint-cli2@0.23.3 docs/index.md "docs/reference/*.md" "docs/adr/*.md"
