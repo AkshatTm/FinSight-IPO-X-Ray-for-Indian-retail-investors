@@ -167,11 +167,16 @@ def test_cost_estimate_arithmetic() -> None:
     assert estimate_cost(-1, cfg)["wall_s"] == 0.0
 
 
-def test_real_upload_stages_are_critical() -> None:
-    assert [(s.name, s.critical) for s in upload_stages()] == [
+def test_real_upload_stages_follow_the_b02_graph() -> None:
+    stages = upload_stages()
+    assert [(s.name, s.critical) for s in stages] == [
         ("validated", True),
         ("detected", True),
+        ("parsed", True),
+        ("sections", False),
+        ("risks_split", False),
     ]
+    assert all(s.requires == GRAPH[s.name][0] for s in stages)
 
 
 def _slow(seconds: float):  # type: ignore[no-untyped-def]

@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import hashlib
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
-from make_fixture_pdf import build_offer_pdf
+from make_fixture_pdf import RISK_TITLES, build_offer_pdf, build_rhp_with_risks
 
 from finsight.core.config import UploadsConfig, load_settings
 from finsight.core.ids import make_doc_id
@@ -23,7 +24,7 @@ from finsight.jobs import (
     run_job,
     sweep,
 )
-from finsight.storage import LocalStorage, doc_key, put_json
+from finsight.storage import LocalStorage, doc_key, get_json, put_json
 
 T0 = datetime(2026, 10, 3, 6, 0, tzinfo=UTC)  # 11:30 IST
 
@@ -186,6 +187,59 @@ def test_upload_pipeline_validates_and_detects(
     )
     if doc_type:
         assert doc.pages == 5
+
+
+def test_upload_pipeline_parses_finds_sections_and_splits_risks(
+    db: Database, storage: LocalStorage, tmp_path: Path
+) -> None:
+    pdf = build_rhp_with_risks(tmp_path / "rhp.pdf").read_bytes()
+    doc_id = make_doc_id(hashlib.sha256(pdf).hexdigest())
+    db.insert_doc(DocRecord(doc_id=doc_id, sha256=hashlib.sha256(pdf).hexdigest(), created_at=T0))
+    storage.put_bytes(doc_key(doc_id, "source.pdf"), pdf)
+    job = db.create_job(doc_id)
+    result = process_document(db, storage, load_settings("dev_light"), doc_id, job.job_id)
+    assert (result.status, result.failed_stages) == ("ready", [])
+    parsed = get_json(storage, doc_key(doc_id, "parsed.json"))
+    assert (parsed["ipo_id"], parsed["n_pages"]) == (doc_id, 5)
+    sections = get_json(storage, doc_key(doc_id, "sections.json"))
+    assert [s["id"] for s in sections] == ["cover", "risk_factors", "introduction"]
+    risks = get_json(storage, doc_key(doc_id, "risks.json"))
+    assert [r["title"] for r in risks] == RISK_TITLES
+    ends = {
+        e.data["stage"]: e.data["detail"]
+        for e in db.events_after(job.job_id)
+        if e.event == "stage" and e.data["status"] == "end"
+    }
+    assert ends["risks_split"] == {"n_risks": 3}
+    assert ends["parsed"] == {"pages_done": 5, "pages_total": 5}
+
+    # A retry finds every output cached and does no work (scratch is empty in a new job).
+    again = db.create_job(doc_id)
+    assert process_document(
+        db, storage, load_settings("dev_light"), doc_id, again.job_id
+    ).status == ("ready")
+    cached = [
+        e.data["stage"]
+        for e in db.events_after(again.job_id)
+        if e.data.get("detail") == {"cached": True}
+    ]
+    assert cached == ["parsed", "sections", "risks_split"]
+
+
+def test_risks_split_reads_stored_outputs_when_earlier_stages_were_cached(
+    db: Database, storage: LocalStorage, tmp_path: Path
+) -> None:
+    pdf = build_rhp_with_risks(tmp_path / "rhp.pdf").read_bytes()
+    sha = hashlib.sha256(pdf).hexdigest()
+    doc_id = make_doc_id(sha)
+    db.insert_doc(DocRecord(doc_id=doc_id, sha256=sha, created_at=T0))
+    storage.put_bytes(doc_key(doc_id, "source.pdf"), pdf)
+    settings = load_settings("dev_light")
+    process_document(db, storage, settings, doc_id, db.create_job(doc_id).job_id)
+    storage.delete_prefix(doc_key(doc_id, "risks.json"))
+    result = process_document(db, storage, settings, doc_id, db.create_job(doc_id).job_id)
+    assert result.status == "ready"
+    assert len(get_json(storage, doc_key(doc_id, "risks.json"))) == 3
 
 
 # ---------------------------------------------------------------- quotas and kill switch
