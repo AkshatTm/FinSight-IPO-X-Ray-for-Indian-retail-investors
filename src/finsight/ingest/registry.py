@@ -18,6 +18,7 @@ from finsight.core.config import project_root
 
 
 class DocFile(BaseModel):
+    doc_id: str  # "doc_" + the first 16 hex characters of sha256 (B-ADR-14)
     file: Path
     pages: int
     sha256: str
@@ -30,6 +31,16 @@ class DemoIpo(BaseModel):
     split: Literal["dev", "test"]
     rhp: DocFile
     prospectus: DocFile
+
+    @property
+    def primary_doc_id(self) -> str:
+        """The showcase report's primary document is the RHP (B02 §3.2)."""
+        return self.rhp.doc_id
+
+    @property
+    def companion_doc_id(self) -> str:
+        """The final Prospectus supplies prices for price-dependent checks."""
+        return self.prospectus.doc_id
 
 
 @lru_cache(maxsize=4)

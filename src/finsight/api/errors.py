@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel
@@ -17,6 +18,15 @@ ErrorCode = Literal[
     "rate_limited",
     "validation_error",
     "internal_error",
+    # Phase 2 (B06 §1-2)
+    "unauthorized",
+    "quota_exceeded",
+    "global_quota_exceeded",
+    "uploads_disabled",
+    "hash_mismatch",
+    "too_large",
+    "doc_not_found",
+    "upload_not_started",
 ]
 
 
@@ -25,6 +35,9 @@ class ErrorBody(BaseModel):
     message: str
     hint: str | None = None
     trace_id: str | None = None
+    # quota errors only (B06 §1)
+    limit: int | None = None
+    resets_at: datetime | None = None
 
 
 class ErrorResponse(BaseModel):
@@ -41,10 +54,19 @@ class ApiError(Exception):
         message: str,
         hint: str | None = None,
         trace_id: str | None = None,
+        limit: int | None = None,
+        resets_at: datetime | None = None,
     ) -> None:
         super().__init__(message)
         self.status_code = status_code
-        self.body = ErrorBody(code=code, message=message, hint=hint, trace_id=trace_id)
+        self.body = ErrorBody(
+            code=code,
+            message=message,
+            hint=hint,
+            trace_id=trace_id,
+            limit=limit,
+            resets_at=resets_at,
+        )
 
 
 def not_implemented(what: str) -> ApiError:

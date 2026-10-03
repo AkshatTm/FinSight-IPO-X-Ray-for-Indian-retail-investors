@@ -57,3 +57,12 @@ def test_local_pdfs_match_the_recorded_checksums() -> None:
             if not doc.file.exists():
                 pytest.skip("demo PDFs are not on this machine")
             assert hashlib.sha256(doc.file.read_bytes()).hexdigest() == doc.sha256, doc.file.name
+
+
+def test_showcase_doc_ids_follow_the_sha256() -> None:
+    from finsight.core.ids import make_doc_id
+
+    for ipo in list_demo_ipos():
+        for doc in (ipo.rhp, ipo.prospectus):
+            assert doc.doc_id == make_doc_id(doc.sha256)
+        assert ipo.primary_doc_id != ipo.companion_doc_id

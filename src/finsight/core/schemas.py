@@ -273,7 +273,7 @@ class Trace(BaseModel):
 RejectionCode = Literal[
     "scanned", "password", "too_large", "too_many_pages", "not_offer_document", "hash_mismatch"
 ]
-DocStatus = Literal["processing", "ready", "partial", "failed"]
+DocStatus = Literal["uploading", "processing", "ready", "partial", "failed"]
 
 
 class Evidence(BaseModel):

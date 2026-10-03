@@ -9,7 +9,7 @@ from finsight.api.events import EVENT_MODELS
 
 ROOT = Path(__file__).resolve().parents[2]
 
-# Every endpoint in 06_API_CONTRACT.md (method, path).
+# Every endpoint in 06_API_CONTRACT.md and docs/phase2/B06_API_CONTRACT.md (method, path).
 ROUTES = [
     ("GET", "/api/health"),
     ("GET", "/api/ipos"),
@@ -29,6 +29,14 @@ ROUTES = [
     ("GET", "/api/lab/retrieval"),
     ("GET", "/api/lab/asr"),
     ("GET", "/api/glossary"),
+    # Phase 2: B06 §2-3 (B1.2)
+    ("POST", "/api/uploads/init"),
+    ("POST", "/api/uploads/{doc_id}/file"),
+    ("POST", "/api/uploads/{doc_id}/complete"),
+    ("GET", "/api/docs/{doc_id}"),
+    ("GET", "/api/docs/{doc_id}/events"),
+    ("GET", "/api/docs/{doc_id}/report"),
+    ("GET", "/api/me/uploads"),
 ]
 
 
