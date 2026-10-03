@@ -7,3 +7,24 @@ novelty:
   common_above: 0.60      # "Common: in x% of past IPOs"
 hedging:
   flag_min_hedges: 3      # hedge_count >= 3 and a hard fact -> "written cautiously" note
+seriousness:
+  # B02 §7.3: category base + 1 hard fact + 1 material number - 1 boilerplate (novelty > 0.8)
+  base:
+    financial: 2
+    debt_liquidity: 2
+    legal_litigation: 2
+    promoters_governance: 2
+    customers_suppliers: 1
+    regulatory: 1
+    operations: 1
+    technology_data: 1
+    competition: 0
+    market_macro: 0
+  unknown_category: 1
+  material_percent: 10        # a stated percentage >= 10 counts as material
+  material_share: 0.10        # an amount >= 10% of revenue or net worth (when known)
+  boilerplate_novelty: 0.80
+  high_at: 3                  # score >= 3 -> high, == 2 -> medium, <= 1 -> low
+  medium_at: 2
+  weights: { high: 3, medium: 2, low: 1 }   # importance = weight x (1 - novelty)
+  unknown_novelty: 0.5
