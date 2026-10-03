@@ -10,6 +10,9 @@ Base path `/api`. Conventions from `06_API_CONTRACT.md` apply (snake_case, money
 
 ## 2. Uploads and jobs
 
+### `GET /api/uploads/limits`
+`{enabled, max_mb, max_pages, per_user_per_day}` from `uploads.*` (public). The upload page reads it for the helper line, the limits line and the paused state (B05 §3).
+
 ### `POST /api/uploads/init`
 Body: `{filename, size_bytes, sha256}` →
 - If `sha256` already processed: `{status: "exists", doc_id}`.

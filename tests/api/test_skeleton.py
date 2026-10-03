@@ -30,6 +30,7 @@ ROUTES = [
     ("GET", "/api/lab/asr"),
     ("GET", "/api/glossary"),
     # Phase 2: B06 §2-3 (B1.2)
+    ("GET", "/api/uploads/limits"),
     ("POST", "/api/uploads/init"),
     ("POST", "/api/uploads/{doc_id}/file"),
     ("POST", "/api/uploads/{doc_id}/complete"),
