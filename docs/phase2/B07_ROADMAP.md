@@ -68,6 +68,8 @@
   Local/GCS storage, SQLite/Postgres (pooler), jobs + events + replay, simplification priority queue, quotas + kill switch + retention, local worker; tested with fixtures; Postgres in a CI service job.
 - [ ] **B1.3a ★ Summary + financial extraction (fixtures)** · ☁️ C · **O** · `feat/b1.3-summary-extraction`
   `summary` package developed and tested on the fixture pack (dev IPOs only for tuning).
+  - [x] Pipeline groundwork (#166): `parsed`, `sections` and `risks_split` stages in `upload_stages` (parse limited to 10 min), tested end to end on a synthetic RHP.
+  - [ ] Left: the `summary` extractors + `financials` stage on the fixture pack, then `redflags` in `upload_stages`.
 - [ ] **B1.3b Run on full documents + E14** · 💻 L · **S** · `eval/b1.3b-summary-eval`
   Run on all 20 full documents; fix gaps; E14 vs gold v3. 👤+Claude chat: gold v3 pre-fill and verification by Fri 9 Oct.
 - [ ] **B1.4 Red flags** · ☁️ C · **S** · `feat/b1.4-redflags`
@@ -85,7 +87,8 @@
 - [ ] **B2.1a ★ Risk segmentation (fixtures)** · ☁️ C · **O** · `feat/b2.1-risk-segmentation`
   Segmentation for PDF pages (bold/numbered) and corpus text, tested on the fixture pack.
   - [x] Code half (#164): `risks.segment` (PDF + corpus rules), `pipeline/risks_stage.py` (`risks_split` → `risks.json`, addresses withheld), per-stage timeout in the job runner; synthetic bold / numbered / mixed tests.
-  - [ ] Left: golden tests on real fixture pages of 3 dev IPOs (needs B0.4), wiring into `upload_stages` with parse/sections (B1.3a).
+  - [x] `risks_split` runs in `upload_stages` (#166).
+  - [ ] Left: golden tests on real fixture pages of 3 dev IPOs (needs B0.4).
 - [ ] **B2.1b Risk bank + E13** · 💻 L · **S** · `data/b2.1b-risk-bank`
   Segment the full corpus, embed with bge-m3 (GPU, Ollama stopped, or Kaggle), build `risk_bank.parquet`; E13/E13b; export the teacher input set (5,000 risks) as a private Kaggle dataset. 👤+Claude chat: segmentation spot-check + E13b boundaries.
 - [x] **B2.2a Unusualness, hedging, numbers (code)** · ☁️ C · **S** · `feat/b2.2-risk-features`

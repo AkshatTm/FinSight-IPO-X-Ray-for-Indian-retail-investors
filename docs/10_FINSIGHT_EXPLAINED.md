@@ -590,6 +590,16 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** Tested on synthetic pages and text only. The golden tests on real pages of 3 dev IPOs, E13 and E13b wait for the fixture pack (B0.4) and the B2.1b labels. The stage joins the upload pipeline when parse and sections do (B1.3a). A timed-out stage's thread can't be killed in Python; it keeps running until the worker exits.
 **Likely viva questions.** (1) *Why bold + left margin and not a model?* (RHPs follow the ICDR layout, where every risk is a bold run-in title; a rule is explainable and fast, and E13 measures it.) (2) *How do you stop bold table headers from becoming risks?* (Words inside detected table boxes never start a risk; a test shows the header would split a risk without the boxes.) (3) *Why does numbering have to follow on in corpus text?* (Bodies contain their own numbered lists; only the next expected number can start a new risk.)
 
+### C38. The upload job reads the document (pipeline groundwork for B1.3a)
+**What it does.** After `validated` and `detected`, the upload job now runs three more B02 stages:
+- `parsed`: the Phase 1 parser writes `parsed.json`. It is critical and limited to 10 minutes.
+- `sections`: `sections.json` from the table of contents and headings.
+- `risks_split`: finds the tables in Risk Factors with the PyMuPDF backend, so their bold headers are ignored, then splits the risks into `risks.json`.
+
+Stages pass results through `ctx.scratch`. On a retry the cached ones are skipped, and later stages read their stored files instead. The processing screen already had these stage names.
+**Limits.** Tested on a five-page synthetic RHP. Real timings come from the B1.2 local check. Tables are looked for on the first 40 pages of Risk Factors only (`MAX_SECTION_PAGES`). `parsed.json` holds every word box, so it is large for a 600-page document.
+**Likely viva questions.** (1) *Why is parsing critical but sections not?* (Without text nothing else can run; without sections some parts still can, and the report shows what is missing.) (2) *What happens when a worker dies half-way?* (The retry skips every stage whose file exists and reads those files back.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
