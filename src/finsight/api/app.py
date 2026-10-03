@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from fastapi import FastAPI, Request
@@ -19,7 +20,7 @@ from finsight.api.routes import router
 from finsight.api.routes_docs import router as docs_router
 from finsight.api.routes_risks import router as risks_router
 from finsight.api.routes_uploads import router as uploads_router
-from finsight.core.logging import get_logger
+from finsight.core.logging import configure_logging, get_logger
 
 logger = get_logger("finsight.api")
 
@@ -110,4 +111,6 @@ def create_app() -> FastAPI:
     return app
 
 
+if os.environ.get("K_SERVICE"):  # set by Cloud Run: JSON logs for Cloud Logging
+    configure_logging()
 app = create_app()

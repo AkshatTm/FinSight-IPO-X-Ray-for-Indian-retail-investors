@@ -14,6 +14,7 @@ import sys
 from typing import Any
 
 from finsight.core.config import Settings, get_settings
+from finsight.core.logging import configure_logging
 from finsight.db import Database, make_database
 from finsight.jobs import auto_enqueue, process_document, run_queue, sweep
 from finsight.storage import Storage, doc_key, get_json, make_storage
@@ -45,6 +46,7 @@ def simplify_document(
 
 def main(argv: list[str]) -> int:
     """Worker entry point: ``run``, ``simplify`` or ``sweep`` (ids from args or env)."""
+    configure_logging()  # one JSON line per record: Cloud Logging reads the fields
     settings = get_settings()
     db, storage = make_database(settings), make_storage(settings)
     if argv[:1] == ["run"]:

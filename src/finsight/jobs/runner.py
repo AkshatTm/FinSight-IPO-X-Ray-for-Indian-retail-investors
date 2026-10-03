@@ -119,7 +119,12 @@ def run_job(ctx: JobContext, stages: Sequence[Stage]) -> JobResult:
             )
             continue
         except Exception as err:  # a stage failure must not kill the job
-            logger.exception("stage %s failed for %s", stage.name, ctx.doc_id)
+            logger.exception(
+                "stage %s failed for %s",
+                stage.name,
+                ctx.doc_id,
+                extra={"doc_id": ctx.doc_id, "job_id": ctx.job_id, "stage": stage.name},
+            )
             failed.append(stage.name)
             fatal = stage.critical
             ctx.emit(
