@@ -16,6 +16,7 @@ from finsight.jobs.runner import (
     StageRejected,
     run_job,
 )
+from finsight.reports import write_report
 from finsight.storage import Storage
 
 
@@ -24,7 +25,11 @@ def process_document(
 ) -> JobResult:
     """Run the upload pipeline for one document (the worker's entry point)."""
     ctx = JobContext(doc_id=doc_id, job_id=job_id, db=db, storage=storage, settings=settings)
-    return run_job(ctx, upload_stages())
+    result = run_job(ctx, upload_stages())
+    doc = db.get_doc(doc_id)
+    if doc is not None and result.rejection is None:
+        write_report(storage, doc, doc.companion_of)
+    return result
 
 
 __all__ = [
