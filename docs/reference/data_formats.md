@@ -10,15 +10,15 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | --- | --- | --- |
 | `doc_id` | `str` | required |
 | `sha256` | `str` | required |
-| `doc_type` | `Optional` | — |
+| `doc_type` | `Optional[Literal['rhp', 'drhp', 'prospectus']]` | — |
 | `company` | `str \| None` | — |
 | `pages` | `int \| None` | — |
 | `uploaded_by` | `str \| None` | — |
 | `is_showcase` | `bool` | false |
 | `companion_of` | `str \| None` | — |
 | `created_at` | `datetime` | required |
-| `status` | `Literal` | `processing` |
-| `rejection` | `Optional` | — |
+| `status` | `Literal['uploading', 'processing', 'ready', 'partial', 'failed']` | `processing` |
+| `rejection` | `Optional[Literal['scanned', 'password', 'too_large', 'too_many_pages', 'not_offer_document', 'hash_mismatch']]` | — |
 
 ## Job (`Job`)
 
@@ -27,11 +27,11 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `job_id` | `str` | required |
 | `doc_id` | `str` | required |
 | `stage` | `str` | required |
-| `status` | `Literal` | required |
-| `progress` | `dict` | `{}` |
+| `status` | `Literal['queued', 'running', 'done', 'failed']` | required |
+| `progress` | `dict[str, Any]` | `{}` |
 | `error` | `str \| None` | — |
-| `started_at` | `datetime.datetime \| None` | — |
-| `finished_at` | `datetime.datetime \| None` | — |
+| `started_at` | `datetime \| None` | — |
+| `finished_at` | `datetime \| None` | — |
 
 ## Report overview (`ReportOverview`, `GET /api/docs/{doc_id}/report`)
 
@@ -51,10 +51,10 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | --- | --- | --- |
 | `id` | `str` | required |
 | `title` | `str` | required |
-| `status` | `Literal` | required |
+| `status` | `Literal['ok', 'watch', 'concern', 'not_available', 'not_applicable']` | required |
 | `sentence` | `str` | required |
-| `numbers_used` | `dict` | `{}` |
-| `evidence` | `ForwardRef('list[PageEvidence]')` | `[]` |
+| `numbers_used` | `dict[str, str]` | `{}` |
+| `evidence` | `list[PageEvidence]` | `[]` |
 | `rule` | `str` | `""` |
 | `points` | `int` | `0` |
 
@@ -62,7 +62,7 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 
 | Field | Type | Default |
 | --- | --- | --- |
-| `flags` | `list` | `[]` |
+| `flags` | `list[RedFlag]` | `[]` |
 | `financial_company` | `bool` | false |
 | `thresholds_version` | `str` | `""` |
 
@@ -77,30 +77,30 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `page_start` | `int` | required |
 | `page_end` | `int` | required |
 | `group` | `str \| None` | — |
-| `category` | `Optional` | — |
+| `category` | `Optional[Literal['financial', 'debt_liquidity', 'customers_suppliers', 'competition', 'legal_litigation', 'regulatory', 'promoters_governance', 'operations', 'technology_data', 'market_macro']]` | — |
 | `category_conf` | `float \| None` | — |
 | `novelty` | `float \| None` | — |
-| `nearest_examples` | `list` | `[]` |
+| `nearest_examples` | `list[NearestExample]` | `[]` |
 | `hedging` | `Hedging` | `hedge_count=0 hard_fact=False flag=False fact_sentence=None` |
-| `numbers` | `list` | `[]` |
-| `seriousness` | `Optional` | — |
+| `numbers` | `list[Money \| Count \| Percent \| Placeholder \| Range]` | `[]` |
+| `seriousness` | `Optional[Literal['high', 'medium', 'low']]` | — |
 | `importance` | `float \| None` | — |
 | `simple` | `str \| None` | — |
-| `simple_status` | `Literal` | `pending` |
-| `simple_checks` | `list` | `[]` |
+| `simple_status` | `Literal['pending', 'ready', 'rejected', 'failed']` | `pending` |
+| `simple_checks` | `list[CheckResult]` | `[]` |
 
 ## Risk level (`RiskLevel`, `risklevel.json`)
 
 | Field | Type | Default |
 | --- | --- | --- |
-| `level` | `Literal` | required |
+| `level` | `Literal['low', 'medium', 'high']` | required |
 | `points` | `int` | required |
 | `max_points` | `int` | required |
 | `score` | `float` | required |
 | `percentile` | `float` | required |
 | `checks_available` | `int` | required |
-| `reasons` | `list` | required |
-| `thresholds` | `dict` | required |
+| `reasons` | `list[RiskLevelReason]` | required |
+| `thresholds` | `dict[str, float]` | required |
 | `corpus_n` | `int` | required |
 | `provisional` | `bool` | required |
 | `behind_click` | `bool` | required |
@@ -110,7 +110,7 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 
 | Field | Type | Default |
 | --- | --- | --- |
-| `source` | `Literal` | required |
+| `source` | `Literal['redflag', 'risk']` | required |
 | `id` | `str` | required |
 | `label` | `str` | required |
 | `points` | `int` | required |
@@ -120,9 +120,9 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 
 | Field | Type | Default |
 | --- | --- | --- |
-| `peers` | `list` | `[]` |
-| `peer_median_pe` | `Optional` | — |
-| `percentiles` | `list` | `[]` |
+| `peers` | `list[Peer]` | `[]` |
+| `peer_median_pe` | `Optional[Annotated[Decimal, PlainSerializer(func=<class 'str'>, return_type=<class 'str'>, when_used='json'), WithJsonSchema(json_schema={'type': 'string', 'examples': ['8000000000.00']}, mode=None)]]` | — |
+| `percentiles` | `list[ComparePercentile]` | `[]` |
 | `provisional` | `bool` | true |
 
 ## Peer row (`Peer`)
@@ -130,12 +130,12 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | Field | Type | Default |
 | --- | --- | --- |
 | `name` | `str` | required |
-| `pe` | `Optional` | — |
-| `eps` | `Optional` | — |
-| `ronw` | `Optional` | — |
-| `nav` | `Optional` | — |
+| `pe` | `Optional[Annotated[Decimal, PlainSerializer(func=<class 'str'>, return_type=<class 'str'>, when_used='json'), WithJsonSchema(json_schema={'type': 'string', 'examples': ['8000000000.00']}, mode=None)]]` | — |
+| `eps` | `Optional[Annotated[Decimal, PlainSerializer(func=<class 'str'>, return_type=<class 'str'>, when_used='json'), WithJsonSchema(json_schema={'type': 'string', 'examples': ['8000000000.00']}, mode=None)]]` | — |
+| `ronw` | `Optional[Annotated[Decimal, PlainSerializer(func=<class 'str'>, return_type=<class 'str'>, when_used='json'), WithJsonSchema(json_schema={'type': 'string', 'examples': ['8000000000.00']}, mode=None)]]` | — |
+| `nav` | `Optional[Annotated[Decimal, PlainSerializer(func=<class 'str'>, return_type=<class 'str'>, when_used='json'), WithJsonSchema(json_schema={'type': 'string', 'examples': ['8000000000.00']}, mode=None)]]` | — |
 | `is_issuer` | `bool` | false |
-| `evidence` | `ForwardRef('PageEvidence \| None')` | — |
+| `evidence` | `PageEvidence \| None` | — |
 
 ## Fact sheet (`XRay`, Phase 1)
 
@@ -144,9 +144,9 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `ipo_id` | `str` | required |
 | `company` | `str` | required |
 | `built_at` | `datetime` | required |
-| `fields` | `list` | required |
-| `derived` | `dict` | required |
-| `bid_closed` | `finsight.core.schemas.BidClosed \| None` | — |
+| `fields` | `list[FieldResult]` | required |
+| `derived` | `dict[str, str]` | required |
+| `bid_closed` | `BidClosed \| None` | — |
 | `boxes_located` | `bool` | false |
 
 ## One fact (`FieldResult`)
@@ -154,12 +154,12 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | Field | Type | Default |
 | --- | --- | --- |
 | `field_id` | `str` | required |
-| `chosen` | `finsight.core.schemas.Candidate \| None` | required |
-| `candidates` | `list` | required |
-| `verdict` | `Literal` | required |
-| `reason_code` | `Literal` | required |
+| `chosen` | `Candidate \| None` | required |
+| `candidates` | `list[Candidate]` | required |
+| `verdict` | `Literal['verified', 'unverifiable', 'contradicted']` | required |
+| `reason_code` | `Literal['verified', 'scale_mismatch', 'wrong_value', 'wrong_metric', 'not_found', 'placeholder', 'section_not_found', 'extractors_disagree', 'not_in_document']` | required |
 | `reason` | `str` | required |
-| `checks` | `list` | required |
+| `checks` | `list[CheckResult]` | required |
 
 ## Gold and review files (`data/gold/`)
 
