@@ -648,6 +648,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/costs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Admin Costs
+         * @description Per-day uploads, CPU (and GPU) seconds, estimated cost and free-grant share.
+         */
+        get: operations["admin_costs_api_admin_costs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Admin Jobs
+         * @description Recent jobs with this status (failed by default), newest first.
+         */
+        get: operations["admin_jobs_api_admin_jobs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -832,6 +872,63 @@ export interface components {
             corpus_n: number;
         };
         /**
+         * CostDay
+         * @description One IST day of ``/api/admin/costs``.
+         */
+        CostDay: {
+            /** Date */
+            date: string;
+            /** Uploads */
+            uploads: number;
+            /** Jobs */
+            jobs: number;
+            /** Failed */
+            failed: number;
+            /** Vcpu S */
+            vcpu_s: number;
+            /** Gib S */
+            gib_s: number;
+            /** Gpu S */
+            gpu_s: number;
+            /** Usd */
+            usd: number;
+        };
+        /**
+         * CostSummary
+         * @description ``GET /api/admin/costs``: estimates from job wall-clock time; billing is the truth.
+         */
+        CostSummary: {
+            /** Days */
+            days: components["schemas"]["CostDay"][];
+            total: components["schemas"]["CostTotal"];
+            /** Usd Incomplete */
+            usd_incomplete: boolean;
+            /** Provisional */
+            provisional: boolean;
+            /** Window Days */
+            window_days: number;
+        };
+        /**
+         * CostTotal
+         * @description Totals over the window, with the share of the monthly free grant used.
+         */
+        CostTotal: {
+            /** Uploads */
+            uploads: number;
+            /** Jobs */
+            jobs: number;
+            /** Vcpu S */
+            vcpu_s: number;
+            /** Gib S */
+            gib_s: number;
+            /** Usd */
+            usd: number;
+            /** Free Vcpu Share */
+            free_vcpu_share: number;
+            /** Free Gib Share */
+            free_gib_share: number;
+        };
+        /**
          * Count
          * @description A whole-number count, such as a number of equity shares.
          */
@@ -914,7 +1011,7 @@ export interface components {
              * Code
              * @enum {string}
              */
-            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started" | "risk_not_found" | "worker_unavailable";
+            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started" | "risk_not_found" | "worker_unavailable" | "forbidden";
             /** Message */
             message: string;
             /** Hint */
@@ -932,6 +1029,20 @@ export interface components {
          */
         ErrorResponse: {
             error: components["schemas"]["ErrorBody"];
+        };
+        /**
+         * FailedJob
+         * @description One row of ``GET /api/admin/jobs``.
+         */
+        FailedJob: {
+            job: components["schemas"]["Job"];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Company */
+            company?: string | null;
         };
         /**
          * FieldCheck
@@ -1049,6 +1160,33 @@ export interface components {
              * @enum {string}
              */
             xray_status: "ready" | "building" | "missing";
+        };
+        /**
+         * Job
+         * @description One processing run of a document (B02 §5).
+         */
+        Job: {
+            /** Job Id */
+            job_id: string;
+            /** Doc Id */
+            doc_id: string;
+            /** Stage */
+            stage: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "done" | "failed";
+            /** Progress */
+            progress?: {
+                [key: string]: unknown;
+            };
+            /** Error */
+            error?: string | null;
+            /** Started At */
+            started_at?: string | null;
+            /** Finished At */
+            finished_at?: string | null;
         };
         /**
          * ListValue
@@ -3375,6 +3513,92 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RedFlags"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    admin_costs_api_admin_costs_get: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CostSummary"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    admin_jobs_api_admin_jobs_get: {
+        parameters: {
+            query?: {
+                status?: "failed" | "done" | "running" | "queued";
+                days?: number;
+                limit?: number;
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FailedJob"][];
                 };
             };
             /** @description Client Error */
