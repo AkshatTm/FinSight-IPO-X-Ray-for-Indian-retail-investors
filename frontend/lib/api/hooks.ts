@@ -39,6 +39,19 @@ export const useTrace = (traceId: string | undefined, enabled: boolean) =>
   });
 
 /** Model Lab payloads are free-form JSON (spec 8); callers read what they need defensively. */
+export type LabBName =
+  | "segmentation" | "summary" | "redflags" | "classifier" | "seriousness" | "simplify"
+  | "readability" | "novelty" | "risklevel" | "latency" | "cost";
+
+/** Phase 2 Lab results (`/api/lab/b/{name}`, B06 §5); a 404 means "not run", and the section hides. */
+export const useLabB = (name: LabBName) =>
+  useQuery({
+    queryKey: ["lab-b", name],
+    queryFn: () => apiGet<Record<string, unknown>>(`/api/lab/b/${name}`),
+    retry: false,
+    staleTime: Infinity,
+  });
+
 export const useLab = (name: "ladder" | "fields" | "verifier" | "weaklabels" | "frontier" | "retrieval" | "asr") =>
   useQuery({
     queryKey: ["lab", name],

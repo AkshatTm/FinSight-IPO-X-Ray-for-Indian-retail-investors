@@ -3,17 +3,8 @@
 import type { StringKey } from "@/lib/i18n";
 import { verifierStats, weakStats } from "@/lib/lab";
 import { useT } from "@/lib/useT";
-import { LabFrame, Note } from "./LabFrame";
+import { LabFrame, Note, Stat } from "./LabFrame";
 
-function Stat({ value, label, sub }: { value: string; label: string; sub?: string }) {
-  return (
-    <div>
-      <dd className="text-4xl font-semibold tabular-nums tracking-tight">{value}</dd>
-      <dt className="mt-2 text-muted">{label}</dt>
-      {sub && <p className="mt-1 text-sm text-muted">{sub}</p>}
-    </div>
-  );
-}
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
 
