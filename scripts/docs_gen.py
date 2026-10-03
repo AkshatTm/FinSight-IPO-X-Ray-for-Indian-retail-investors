@@ -372,6 +372,16 @@ def _registry_block() -> str:
     return "".join(rows)
 
 
+def _phase2_block() -> str:
+    rows = ["| ID | Question | Result files |\n| --- | --- | --- |\n"]
+    for e in experiments():
+        number = int(re.sub(r"\D", "", e["id"]))
+        if number >= 13 or e["id"] in ("E8r", "E7c"):
+            status = ", ".join(f"`{f}`" for f in e["found"]) if e["found"] else "not run yet"
+            rows.append(f"| {e['id']} | {_esc(e['question'])} | {status} |\n")
+    return "".join(rows)
+
+
 def _results_block() -> str:
     sys.path.insert(0, str(ROOT / "scripts"))
     from readme_results import render
@@ -604,6 +614,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/datasheets/corpus.md": {"stats": _corpus_block},
     "docs/datasheets/weak_labels.md": {"stats": _weaklabel_block},
     "docs/datasheets/gold_sets.md": {"stats": _gold_block},
+    "report/07_results.md": {"phase2": _phase2_block},
 }
 
 

@@ -110,4 +110,44 @@ First 20 answerable dev questions, one at a time, RTX 2050 (4 GB), Ollama reside
 answer spends 17 s in retrieval and 14 s in generation: with embedder, reranker and the 2B model all wanting
 the 4 GB GPU, retrieval is far slower than the 0.7 s measured with no LLM loaded (`memory.json`); the cause was
 not investigated (likely memory pressure and model swapping). The first question after start-up took 46 s. The
-deployed CPU Space will be slower still and is not measured. Whole-system RAM in use peaked at 15 GB of 16 GB.
+Cloud Run CPU deployment is not measured yet (E23). Whole-system RAM in use peaked at 15 GB of 16 GB.
+
+## 7.9 Phase 2 experiments (E13–E24)
+
+> The table is generated from `eval_results/` by `scripts/docs_gen.py` (`uv run poe docs-gen`); a row shows a
+> file only when it exists, and no Phase 2 number is written here by hand. Results are filled in by the local
+> sessions that run each experiment (B04 §3); the paragraphs that interpret them are written after.
+
+<!-- generated:phase2 start -->
+
+| ID | Question | Result files |
+| --- | --- | --- |
+| E13 | Are risks split correctly? | not run yet |
+| E14 | Are red-flag inputs extracted correctly? | not run yet |
+| E15 | Do red-flag statuses agree with hand-computed ones? | not run yet |
+| E16 | How good is the category classifier? | not run yet |
+| E17 | Does the seriousness rule make sense? | not run yet |
+| E18 | Are rewrites faithful? | not run yet |
+| E19 | Are rewrites easier to read? | not run yet |
+| E20 | Do rewrites keep numbers and certainty? | not run yet |
+| E21 | Does the risk level relate to real outcomes? | not run yet |
+| E22 | Is "unusual" meaningful? | not run yet |
+| E23 | Speed and robustness on unseen PDFs | not run yet |
+| E24 | Cost | not run yet |
+| E8r | Does the guard still behave after allowing risk-level questions? | not run yet |
+| E7c | Chat answers on the deployed `cloud` profile (BM25, Q4) | not run yet |
+
+<!-- generated:phase2 end -->
+
+What each experiment must report, when it runs (B04 §3):
+
+- **E13–E15** (segmentation, red-flag inputs, red-flag statuses): measured on the test IPOs, dev used for
+  tuning only; NVM and status accuracy with intervals.
+- **E16** (category classifier): the ladder TF-IDF + LR → DeBERTa base (3 seeds) → large (1 seed) → teacher
+  zero-shot on gold-150; macro-F1 with per-class F1. Model chosen on dev only.
+- **E17–E20** (seriousness rule, rewrites): Spearman ρ against the teacher's ratings; blind human ratings of
+  "same meaning" for base, student and teacher on gold-50; readability drop; the share of rewrites rejected
+  by each check.
+- **E21** (risk level against outcomes): a correlation check only, reported with bootstrap intervals; it is
+  not a forecast and is not shown as one.
+- **E22–E24** (novelty threshold, cloud speed, cost per upload).
