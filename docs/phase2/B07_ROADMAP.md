@@ -110,8 +110,8 @@
 
 ### B3 — Product and hosting (Mon 19 – Sat 24 Oct) → BG3
 
-- [ ] **B3.1 Report UI: Overview + Risks** · ☁️ C · **S** · `feat/b3.1-report-ui`
-  On mocks built from fixture `report.json`. 💻 follow-up (short): check against the real local API.
+- [x] **B3.1 Report UI: Overview + Risks** · ☁️ C · **S** · `feat/b3.1-report-ui`
+  On mocks built from fixture `report.json`. 💻 follow-up (short): check against the real local API. *(Built on synthetic mocks overnight; refresh mocks from the fixture pack after B0.4.)*
 - [x] **B3.2 Compare** · ☁️ C · **S** · `feat/b3.2-compare` · *(cuttable)*
   Peer table parser, issuer P/E, past-IPO percentiles (provisional), `/compare`, Compare tab on mocks. 💻 follow-up B3.2b: real reference quantiles + check on fixture tables.
 - [x] **B3.3a ★ Infra as code (Google Cloud Run)** · ☁️ C · **O** · `feat/b3.3-hosting` · *pulled forward to Mon 12 Oct for B2.7*

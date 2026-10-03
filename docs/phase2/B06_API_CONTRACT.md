@@ -53,7 +53,7 @@ Assembled overview: `{doc, facts_summary, risk_level, top_risks: [Risk (5)], red
 `{flags: [RedFlag], financial_company: bool, thresholds_version}`.
 
 ### `GET /api/docs/{doc_id}/risks?sort=importance|order|category&category=&q=&unusual_only=`
-`{n_total, groups: [...], risks: [Risk]}`. `body` truncated to 1,200 chars; full body via the single endpoint.
+`{n_total, groups: [...], risks: [Risk], queued: [rid]}`. `queued` lists the risks waiting in or being processed by the simplification queue, front first, so the UI can show "Explaining…" and poll until it is empty. `body` truncated to 1,200 chars; full body via the single endpoint.
 
 ### `GET /api/docs/{doc_id}/risks/{rid}`
 Full `Risk` + `nearest_examples`.
