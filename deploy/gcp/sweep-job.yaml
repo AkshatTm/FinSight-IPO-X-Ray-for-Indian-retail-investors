@@ -1,0 +1,31 @@
+# Cloud Run job: delete uploaded documents older than uploads.retention_days (30). Run daily by
+# Cloud Scheduler (DEPLOY_RUNBOOK.md step 7). Same image as the worker.
+# Fill the ${...} names with envsubst, then: gcloud run jobs replace <rendered>.yaml
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: finsight-sweep
+  labels:
+    cloud.googleapis.com/location: ${GCP_REGION}
+spec:
+  template:
+    spec:
+      taskCount: 1
+      template:
+        spec:
+          serviceAccountName: finsight-worker@${GCP_PROJECT}.iam.gserviceaccount.com
+          maxRetries: 1
+          timeoutSeconds: 600
+          containers:
+            - image: ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT}/finsight/worker:${IMAGE_TAG}
+              args: ["sweep"]
+              resources:
+                limits:
+                  cpu: "1"
+                  memory: 1Gi
+              env:
+                - { name: FINSIGHT_PROFILE, value: cloud }
+                - { name: FINSIGHT_STORAGE__BUCKET, value: "${FINSIGHT_BUCKET}" }
+                - name: FINSIGHT_DB__URL
+                  valueFrom:
+                    secretKeyRef: { name: finsight-db-url, key: latest }

@@ -1,0 +1,61 @@
+# Cloud Run service: the FinSight API (B3.3a). NOT deployed until Akshat says "go" (B3.3b).
+# Fill the ${...} names with envsubst, then: gcloud run services replace <rendered>.yaml
+# (docs/runbooks/DEPLOY_RUNBOOK.md). Secrets come from Secret Manager, never from this file.
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: finsight-api
+  labels:
+    cloud.googleapis.com/location: ${GCP_REGION}
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2   # needed for the GCS volume mounts
+        run.googleapis.com/startup-cpu-boost: "true"
+        autoscaling.knative.dev/minScale: "0"             # scale to zero: no idle cost
+        autoscaling.knative.dev/maxScale: "2"             # cost ceiling (COST_INCIDENT.md)
+    spec:
+      serviceAccountName: finsight-api@${GCP_PROJECT}.iam.gserviceaccount.com
+      containerConcurrency: 20
+      timeoutSeconds: 900          # SSE streams end by themselves well before this
+      containers:
+        - image: ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT}/finsight/api:${IMAGE_TAG}
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "2"
+              memory: 4Gi          # B_EXECUTION_PLAN row 8: chat model + BM25 in memory
+          env:
+            - { name: FINSIGHT_PROFILE, value: cloud }
+            - { name: FINSIGHT_ROOT, value: /app/bundle }
+            - { name: FINSIGHT_STORAGE__BUCKET, value: "${FINSIGHT_BUCKET}" }
+            - { name: FINSIGHT_AUTH__SUPABASE_URL, value: "${SUPABASE_URL}" }
+            - { name: GCP_PROJECT, value: "${GCP_PROJECT}" }
+            - { name: GCP_REGION, value: "${GCP_REGION}" }
+            - { name: UPLOADS_ENABLED, value: "true" }  # the kill switch: set "false" to stop uploads
+            - name: FINSIGHT_DB__URL
+              valueFrom:
+                secretKeyRef: { name: finsight-db-url, key: latest }
+            - name: FINSIGHT_AUTH__ADMIN_EMAILS
+              valueFrom:
+                secretKeyRef: { name: finsight-admin-emails, key: latest }
+          volumeMounts:
+            - { name: bundle, mountPath: /app/bundle }
+            - { name: models, mountPath: /models }
+          startupProbe:
+            httpGet: { path: /api/health, port: 8080 }
+            periodSeconds: 5
+            failureThreshold: 24
+      volumes:
+        - name: bundle
+          csi:
+            driver: gcsfuse.run.googleapis.com
+            readOnly: true
+            volumeAttributes: { bucketName: "${FINSIGHT_BUCKET}", mountOptions: "only-dir=bundle" }
+        - name: models
+          csi:
+            driver: gcsfuse.run.googleapis.com
+            readOnly: true
+            volumeAttributes: { bucketName: "${FINSIGHT_BUCKET}", mountOptions: "only-dir=models" }
