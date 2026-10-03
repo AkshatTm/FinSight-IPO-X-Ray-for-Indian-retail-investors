@@ -432,6 +432,19 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** No teacher outputs exist yet; the pilot (500) runs in B2.3b. The certainty check is word-based, so it can miss a reworded hedge ("there is a chance").
 **Likely viva questions.** (1) *Why a teacher and a student instead of the big model in production?* (The 14B model needs a GPU; the 3–4B student runs on the CPU host.) (2) *Why filter numbers by value, not by string?* ("₹1,234.56 crore" may be rounded to "₹1,235 crore" but not changed.) (3) *How do you stop the notebook drifting from the tested code?* (It is generated from the module, and a test compares them.)
 
+### C26. Risk-category classifier (built in B2.4a)
+**What it does.** Puts each risk factor in one of the 10 categories, so the report can group them.
+- **Rungs.** Three models on one ladder:
+  1. TF-IDF + logistic regression, trained on the laptop CPU in seconds;
+  2. DeBERTa-v3-base, fine-tuned on Kaggle with 3 seeds;
+  3. DeBERTa-v3-large, 1 seed, and the first thing to cut.
+- **Data.** Training data is the teacher's labels (C25), split 90/10 **by company**, so the dev score is never inflated by a company's boilerplate appearing on both sides.
+- **Choosing a model.** By dev macro-F1, the average F1 over categories, so rare categories count as much as common ones. The loss is class-weighted for the same reason. Gold-150 (Akshat's labels) is only for the final report.
+- **Serving.** The chosen model is exported to ONNX with int8 weights and runs on the CPU worker with `onnxruntime` and `tokenizers`: no torch in the image. The export script checks that ONNX and PyTorch agree on dev.
+
+**Limits.** No model is trained yet (B2.4b). Labels are AI-made, so the scores measure agreement with the teacher on dev and with Akshat on gold.
+**Likely viva questions.** (1) *Why split by company?* (Risk text repeats within one issuer; a random split leaks it.) (2) *Why macro-F1 rather than accuracy?* (A model that always says "regulatory" can look accurate.) (3) *Why is a TF-IDF baseline required?* (The fine-tuned model must beat it on dev, or it isn't worth the cost.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
