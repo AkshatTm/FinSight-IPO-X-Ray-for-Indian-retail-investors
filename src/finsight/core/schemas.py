@@ -15,7 +15,9 @@ from typing import Annotated, Literal
 from pydantic import BaseModel, Field, PlainSerializer, WithJsonSchema
 
 BBox = tuple[float, float, float, float]  # x0, y0, x1, y1 in PDF points
-DocType = Literal["rhp", "prospectus"]
+DocType = Literal["rhp", "drhp", "prospectus"]
+# Detection result only; "unknown" is never stored (B02 §5).
+DetectedType = Literal["rhp", "drhp", "prospectus", "unknown"]
 Verdict = Literal["verified", "unverifiable", "contradicted"]
 Language = Literal["en", "hi"]
 
@@ -265,3 +267,34 @@ class Trace(BaseModel):
     prompt: str
     checks: list[CheckResult]
     timings_ms: dict[str, int]
+
+
+# --------------------------------------------------------------------------- uploads (Phase 2)
+RejectionCode = Literal[
+    "scanned", "password", "too_large", "too_many_pages", "not_offer_document", "hash_mismatch"
+]
+DocStatus = Literal["processing", "ready", "partial", "failed"]
+
+
+class Evidence(BaseModel):
+    """Where a value or risk came from: a page, optionally a box and the sentence."""
+
+    doc_id: str
+    page: int = Field(ge=1)
+    bbox: BBox | None = None
+    sentence: str | None = None
+
+
+class DocRecord(BaseModel):
+    """One uploaded or showcase document, keyed by ``doc_id`` (B02 §5)."""
+
+    doc_id: str
+    sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    doc_type: DocType
+    company: str | None = None
+    pages: int = Field(ge=1)
+    uploaded_by: str | None = None
+    is_showcase: bool = False
+    companion_of: str | None = None
+    created_at: datetime
+    status: DocStatus = "processing"

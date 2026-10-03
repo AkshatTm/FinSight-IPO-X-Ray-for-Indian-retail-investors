@@ -2,7 +2,13 @@ import time
 
 import pytest
 
-from finsight.core.ids import make_ipo_id, new_trace_id, parse_passage_id, passage_id
+from finsight.core.ids import (
+    make_doc_id,
+    make_ipo_id,
+    new_trace_id,
+    parse_passage_id,
+    passage_id,
+)
 
 
 def test_trace_ids_are_26_char_ulids_sortable_by_time() -> None:
@@ -38,7 +44,7 @@ def test_prospectus_passage_ids_do_not_collide_with_rhp() -> None:
     assert passage_id("acme-2025", "prospectus", 12, 3) != passage_id("acme-2025", "rhp", 12, 3)
 
 
-@pytest.mark.parametrize("doc_type", ["rhp", "prospectus"])
+@pytest.mark.parametrize("doc_type", ["rhp", "drhp", "prospectus"])
 def test_passage_id_round_trip(doc_type: str) -> None:
     pid = passage_id("acme-2025", doc_type, 67, 0)  # type: ignore[arg-type]
     assert parse_passage_id(pid) == ("acme-2025", doc_type, 67, 0)
@@ -48,3 +54,24 @@ def test_passage_id_round_trip(doc_type: str) -> None:
 def test_parse_passage_id_rejects_garbage(bad: str) -> None:
     with pytest.raises(ValueError, match="passage id"):
         parse_passage_id(bad)
+
+
+@pytest.mark.parametrize("doc_type", ["unknown", "drhp_v2", ""])
+def test_passage_id_rejects_unknown_doc_types(doc_type: str) -> None:
+    with pytest.raises(ValueError, match="doc_type"):
+        passage_id("acme-2025", doc_type, 1, 0)  # type: ignore[arg-type]
+
+
+def test_drhp_passage_ids_do_not_collide() -> None:
+    assert passage_id("acme-2025", "drhp", 12, 3) == "acme-2025:drhp:p12:c3"
+
+
+def test_doc_id_is_stable_for_the_same_bytes() -> None:
+    digest = "AB" * 32
+    assert make_doc_id(digest) == make_doc_id(digest.lower()) == "doc_abababababababab"
+
+
+@pytest.mark.parametrize("bad", ["", "xyz", "a" * 63, "g" * 64])
+def test_doc_id_rejects_non_hex(bad: str) -> None:
+    with pytest.raises(ValueError, match="sha256"):
+        make_doc_id(bad)
