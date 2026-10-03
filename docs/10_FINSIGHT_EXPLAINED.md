@@ -370,6 +370,19 @@ If a company's passages appear in both training and test, scores look better tha
 **Limits (stated in ADR-022).** The deployed model is a quantised file whose answers were not re-measured, retrieval there is BM25 only, voice is off.
 **Likely viva questions.** (1) *Why no GPU and no torch in the deployed image?* (2) *What would you measure before claiming the deployed system is as good as the laptop one?*
 
+### C22. Upload checks: is this an offer document, and which one? (built in B1.1a)
+**What it does.** `ingest.upload.validate_pdf` checks an uploaded file in a fixed order and stops at the first problem:
+1. Size: at most `uploads.max_mb` (50 MB).
+2. It opens as a PDF.
+3. It is not password-protected.
+4. It has at most `uploads.max_pages` (1,500) pages.
+5. It is not a scan: the median sampled page needs at least `scanned_min_median_chars` (100) characters of text.
+6. It is an offer document.
+
+The answer is either a type (RHP, DRHP or Prospectus) or one of the rejection codes in B06 §2; the UI turns the code into the B05 sentence. `detect_type` reads the first three pages. It takes the largest-font short line that starts with "Draft Red Herring Prospectus", "Red Herring Prospectus" or "Prospectus" (longest phrase first), so a final Prospectus that mentions "the Red Herring Prospectus dated …" is still a Prospectus. It also needs two offer markers (Equity Shares, Book Running Lead Manager, SEBI, …), so a news page that mentions a DRHP is not an offer document. The same bytes always give the same `doc_id` (`doc_` + 16 hex characters of the SHA-256), which is how uploads are deduplicated.
+**Limits.** Tested on synthetic PDFs only. B1.1b runs it on the 20 showcase PDFs and 5 unseen RHPs and fixes what breaks.
+**Likely viva questions.** (1) *Why median text density instead of "any page without text"?* (Real RHPs contain image-only pages, such as charts and maps.) (2) *Why the largest-font title rather than counting phrases?* (A Prospectus cover mentions its RHP.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

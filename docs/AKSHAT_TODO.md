@@ -12,7 +12,11 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
   ```text
   Resume FinSight Big Phase 2 LOCALLY. First `git pull` (cloud sessions merge PRs on GitHub). Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md and the "needs a LOCAL session" list in docs/AKSHAT_TODO.md. Do part B0.4 (#123) only. Run the tests (including @pytest.mark.local ones relevant to this part) and report in one line. Do the model check (both directions). Keep the session short and specific: real documents / corpus / models / Kaggle launches / evaluation / deploy steps, one heavy job at a time, Ollama only if needed. Never deploy or spend cloud credits without my explicit "go" in chat. End with the PR merged, the AKSHAT_TODO item ticked, PROGRESS.md updated, and the /clear message (B07 §0).
   ```
-- Later local parts (B1.1b, B1.3b, B1.4 E15, B2.1b, B2.3b …) are added here by the cloud session that unblocks them, each with its prompt.
+- [ ] **B1.1b harden upload checks on real PDFs (#126)** — after B1.1a merged; needs the 20 showcase PDFs + 5 unseen RHPs in `data/raw/unseen/` (Wed 7 Oct). Sonnet.
+  ```text
+  Resume FinSight Big Phase 2 LOCALLY. First `git pull` (cloud sessions merge PRs on GitHub). Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md and the "needs a LOCAL session" list in docs/AKSHAT_TODO.md. Do part B1.1b (#126) only: run `finsight.ingest.validate_pdf` on the 20 showcase PDFs and the 5 unseen RHPs (type, code, pages, seconds each; print a table, never PDF text beyond 40 lines), fix detection or thresholds that fail with a regression test each (synthetic or fixture-pack based), and record the timings. Run the tests (including @pytest.mark.local ones relevant to this part) and report in one line. Do the model check (both directions). Never deploy or spend cloud credits without my explicit "go" in chat. End with the PR merged, the AKSHAT_TODO item ticked, PROGRESS.md updated, and the /clear message (B07 §0).
+  ```
+- Later local parts ( B1.3b, B1.4 E15, B2.1b, B2.3b …) are added here by the cloud session that unblocks them, each with its prompt.
 
 ## Phase 2 hand-work (dated; full calendar in docs/phase2/B_EXECUTION_PLAN.md §4, checklist in #124)
 - Sat 3 Oct: approve the B0.2 PR; say whether Colab Pro is bought (the plan is Kaggle-first either way).
@@ -23,6 +27,7 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - Accept or change B-ADR-01..15 in `docs/09_DECISIONS.md`.
 
 ## Copy to approve (Phase 2)
+- Hindi short label "डीआरएचपी" for DRHP (`doc.drhpShort` in `frontend/lib/i18n.ts`, B1.1a builder draft).
 - B05 lines marked `[copy: Akshat to approve]`: uploads-paused line, `hash_mismatch` rejection, About "unusual means rare among 2018–2023 IPOs".
 - Red-flag sentence templates missing in B05 §5.4 (RF02 NA, RF04 NA for a DRHP, RF06/RF09/RF12/RF13 NA) use the default "FinSight couldn't find this in the document."; confirm or write specific ones.
 
