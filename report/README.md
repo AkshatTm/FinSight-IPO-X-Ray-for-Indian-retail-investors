@@ -15,6 +15,9 @@
 | `08_error_analysis.md` | 8 Error analysis (ten real failures) |
 | `11_reproducibility.md` | 11 Reproducibility statement |
 
+Phase 2 is drafted as §4.4 (data), §6.7 (method), §7.9 (results, generated status table) and §8.2
+(error analysis, to be written from real failures).
+
 ## Disclosures that must appear in the final report
 
 1. **AI-assisted gold labels.** Gold v1 (80 ladder values and the wider 110-value set) was
@@ -38,3 +41,16 @@
    (0 of 10 reviewed by Akshat).
 6. **Small samples.** Seven test IPOs, 56 test values, 18 held-out guard questions: every
    interval is wide. Report paired differences and intervals, not point scores.
+
+### Phase 2 disclosures (add to the final report)
+
+7. **Teacher labels are AI-made.** Category, seriousness and rewrite labels for corpus risks come from an
+   open-weight teacher model and are filtered by rules; they train models but are never used as ground truth.
+8. **Phase 2 gold is AI-pre-filled where Claude chat helped**, then verified by Akshat; the number of values
+   he changed is recorded per file. Until a file is verified, results on it are not reported.
+9. **Provisional thresholds.** Risk-level thresholds and compare percentiles are placeholders until the
+   corpus run; anything shown before then is labelled provisional.
+10. **Outcome data (proposed B-ADR-03)** may be used only to check the risk level (E21), never to train or
+    tune, and the result is a correlation, not a prediction.
+11. **The report page was built on synthetic mock data** until the fixture pack and the real pipeline
+    replace it (B3.1b); screenshots in the final report must come from real documents.

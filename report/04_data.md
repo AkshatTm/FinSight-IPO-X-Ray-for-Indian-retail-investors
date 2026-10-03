@@ -42,3 +42,30 @@ non-commercial share-alike terms and are not published; the repository holds cod
 truncated sample excerpts only. RHPs and Prospectuses are public regulatory filings (SEBI, stock
 exchanges); the PDFs are not redistributed. Base models keep their own licences
 (`docs/04_TECH_STACK_AND_RESOURCES.md` §4; `NOTICE`).
+
+## 4.4 Phase 2 data (uploads and risk factors)
+
+> Sources: `docs/phase2/B04_DATA_AND_EVALUATION.md`, B-ADR-03, B-ADR-11, the datasheets in `docs/datasheets/`
+> and `docs/phase2/datasheets/teacher_outputs.md`. **Status:** the code that builds each set is written and
+> tested on synthetic inputs; the sets themselves are built in local sessions. No count below is final until
+> its file exists.
+
+- **Risk bank.** Risk factors segmented from the corpus, with company, year, title, body and a bge-m3
+  embedding of the title and first two sentences (`risks.bank`). Novelty is computed only against the
+  **2018–2023** part, so that newer disclosure styles are not called "unusual" just for being new, and the
+  issuer's own past documents are excluded (B02 §7.1).
+- **Teacher outputs.** About 5,000 corpus risks labelled by an open-weight teacher (`Qwen/Qwen3-14B-AWQ`
+  on vLLM, Kaggle) with a category (10 classes), a seriousness rating (1–5), a hard-fact flag and a
+  plain-English rewrite. Eight deterministic filters drop bad rows and log why. Every row carries
+  `label_source = teacher:<model>:<prompt_version>`. These labels train the category classifier and the
+  simplifier student; they are **never** used as evaluation ground truth.
+- **Phase 2 gold.** All drawn from the ten showcase IPOs (never from training data):
+  red-flag inputs (gold v3: 270 rows, 27 per IPO; the template is committed and not yet filled),
+  risk segmentation boundaries, 150 risks with categories (gold-150) and 50 risks for rating rewrites
+  (gold-50). Claude chat may pre-fill them; Akshat verifies; `label_source` and the number of values he
+  changed are recorded.
+- **Outcome data.** The corpus Excel has listing-day returns and broker opinions. Under the proposed
+  B-ADR-03 they may be read by one evaluation script only (E21), to check that the risk level behaves
+  sensibly; they are never used to train or tune anything and never shown in the product.
+- **Uploads.** Documents users upload are processed for their report only, deleted after 30 days, and
+  never added to any training set (`PRIVACY.md`).

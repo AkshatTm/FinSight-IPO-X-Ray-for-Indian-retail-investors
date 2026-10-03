@@ -62,3 +62,61 @@ swappable through the config and was evaluated against the rules (§7.6).
 
 Hindi speech is transcribed with faster-whisper `large-v3-turbo` (int8; `small` is the fast fallback,
 ADR-021). The user sees and can correct the transcript before the question is answered.
+
+## 6.7 Phase 2: from an uploaded document to a report
+
+> Sources: `docs/phase2/B02_ARCHITECTURE.md` §3–8, `docs/phase2/B03_MODELS_AND_TRAINING.md`, B-ADR-04,
+> B-ADR-11, B-ADR-13. Parts marked *(planned)* are designed and specified but not built yet.
+
+**Pipeline.** An upload is checked (text-layer PDF, at most 50 MB and 1,500 pages, not password-protected,
+duplicate by SHA-256), its type is detected from the first pages (RHP, DRHP or Prospectus), and a job runs
+the stages in order: parse, sections, facts, financials, red flags, risk segmentation, risk features, risk
+level, simplification, index, compare. Each stage writes its own file and an event; the browser follows the
+events over server-sent events and can resume after a dropped connection. A failed stage marks its part of
+the report ⚠️ and the others still finish.
+
+**Red flags** *(planned, B1.4)*. Thirteen transparent checks (RF01–RF13 in B01: losses, operating cash flow,
+debt, offer-for-sale share, the price sellers paid, promoter stake, vague use of money, court cases,
+related-party dealings, customer concentration, price against peers, auditor remarks, pledged shares), each
+OK, Watch or Concern from fixed thresholds, or Not available when an input is missing. A missing input is
+never treated as a clean record.
+
+**Risk segmentation** *(planned, B2.1)*. Inside the Risk Factors section, a new risk starts at a bold heading
+at the left margin followed by normal text (from the PDF's font information); corpus texts without fonts
+use numbered headings and sentence shape.
+
+**Risk features.**
+- *Category*: a DeBERTa-v3 classifier fine-tuned on the teacher's labels (base, 3 seeds; large, 1 seed),
+  gated against a TF-IDF + logistic-regression baseline, served as ONNX int8 on CPU.
+- *Novelty*: the share of distinct past companies (2018–2023) with a risk above cosine similarity τ
+  (0.80, a placeholder until the spot check of E22); low novelty = unusual. Up to three similar past risks
+  are shown.
+- *Hedging*: hedge words counted with a lexicon; a risk that hedges heavily but states a past fact with a
+  number gets the note "written cautiously, but it describes something that has already happened".
+- *Seriousness*: a rule, not a model: the category's base weight, +1 for a hard fact, +1 for a material
+  number, −1 for boilerplate. Importance for sorting = seriousness weight × (1 − novelty). The teacher's
+  seriousness ratings are used only to check this rule (E17).
+
+**Plain-English rewrites.** A teacher (Qwen3-14B-AWQ) writes rewrites for corpus risks; filtered pairs train
+a QLoRA student (Qwen3-4B-Instruct-2507, LoRA r = 16) exported as GGUF Q4 for CPU (and run with vLLM on the
+optional GPU job). Every rewrite of a user's document passes four checks before it is shown: every number
+matches a number in the original, no forbidden phrase, at most 70 words, and no change in certainty (a
+"may" must not become definite). A rewrite that fails is not shown; the original is. The top 15 risks by
+importance are rewritten automatically and the rest when the reader asks.
+
+**Risk level.** Points: Concern = 2, Watch = 1 per red flag, plus 1 per rare serious risk (high seriousness
+and novelty below 0.10, at most 4). The score is the points divided by the most points the available checks
+could give, so documents with fewer disclosures are not scored as safer (B-ADR-11). Low, medium and high are
+thirds of the scores of past IPOs (2018–2023); the thresholds are placeholders until that run. The level is
+always shown with its reasons, the percentile and a fixed disclaimer, and it is described as a summary of
+disclosed risk, never as a rating or advice (B-ADR-13).
+
+**Compare.** Peers come from the document's own Basis for Offer Price table (P/E, EPS, RoNW, NAV per share),
+with the issuer's P/E computed from the offer price when the RHP leaves it blank. Four numbers (issue size,
+offer-for-sale share, the price gap to what sellers paid, P/E) are placed among past IPOs as percentiles. No
+judgement is attached.
+
+**Serving.** The API runs on Cloud Run CPU (no PyTorch, BM25 chat); the pipeline runs as a Cloud Run job;
+an optional L4 GPU job does rewrites and dense indexing when billing allows; Supabase provides sign-in and
+Postgres; files live in Cloud Storage with signed URLs. The definitions are code in `deploy/gcp/`; nothing
+is deployed yet (B-ADR-04).

@@ -52,3 +52,11 @@ of 86 numbers, 59 ✅ (0.69), 22 ⚠️, 5 ❌. Of the unanswerable questions (9
 abstained or said "not found" for 3 and 4, so **most unanswerable questions still get a fluent answer**.
 The first E7 run had 6 errors, all Hinglish questions: a harness bug (language passed to the prompt),
 fixed and rerun; the numbers above are from the corrected run.
+
+## 8.2 Phase 2 (to be written from real failures)
+
+No Phase 2 failure is described yet, because no Phase 2 experiment has run on real documents. When
+E13–E20 run, pick ten failures from their result files the same way as above (file path, what happened,
+why), with at least: a mis-split risk (E13), a red flag marked Not available because an input was missing
+(E14/E15), a rewrite rejected by each of the four checks (E20), and an "unusual" risk that a reader would
+call common (E22). Do not use synthetic or mock examples.
