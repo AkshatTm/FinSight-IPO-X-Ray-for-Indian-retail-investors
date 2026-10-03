@@ -1892,6 +1892,61 @@
           }
         }
       }
+    },
+    "/api/docs/{doc_id}/compare": {
+      "get": {
+        "tags": [
+          "risks"
+        ],
+        "summary": "Get Compare",
+        "description": "Listed peers from the document and percentiles among past IPOs (B05 §5.6).",
+        "operationId": "get_compare_api_docs__doc_id__compare_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Compare"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2373,6 +2428,80 @@
         "title": "Companion",
         "description": "The same field read from the other document (RHP ``[●]`` beside the Prospectus value)."
       },
+      "Compare": {
+        "properties": {
+          "peers": {
+            "items": {
+              "$ref": "#/components/schemas/Peer"
+            },
+            "type": "array",
+            "title": "Peers"
+          },
+          "peer_median_pe": {
+            "anyOf": [
+              {
+                "type": "string",
+                "examples": [
+                  "8000000000.00"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Peer Median Pe"
+          },
+          "percentiles": {
+            "items": {
+              "$ref": "#/components/schemas/ComparePercentile"
+            },
+            "type": "array",
+            "title": "Percentiles"
+          },
+          "provisional": {
+            "type": "boolean",
+            "title": "Provisional",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "Compare",
+        "description": "``compare.json`` (B02 §3.1 stage 14, B06 ``/compare``)."
+      },
+      "ComparePercentile": {
+        "properties": {
+          "metric": {
+            "type": "string",
+            "enum": [
+              "issue_size_inr",
+              "ofs_share",
+              "insider_price_gap",
+              "pe"
+            ],
+            "title": "Metric"
+          },
+          "value": {
+            "type": "number",
+            "title": "Value"
+          },
+          "percentile": {
+            "type": "number",
+            "title": "Percentile"
+          },
+          "corpus_n": {
+            "type": "integer",
+            "title": "Corpus N"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metric",
+          "value",
+          "percentile",
+          "corpus_n"
+        ],
+        "title": "ComparePercentile"
+      },
       "Count": {
         "properties": {
           "kind": {
@@ -2670,6 +2799,115 @@
           "error"
         ],
         "title": "ErrorResponse"
+      },
+      "Evidence": {
+        "properties": {
+          "passage_id": {
+            "title": "Passage Id",
+            "type": "string"
+          },
+          "doc": {
+            "enum": [
+              "rhp",
+              "drhp",
+              "prospectus"
+            ],
+            "title": "Doc",
+            "type": "string"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "char_span": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Char Span",
+            "type": "array"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bbox"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Value"
+          }
+        },
+        "required": [
+          "passage_id",
+          "doc",
+          "page",
+          "char_span"
+        ],
+        "title": "Evidence",
+        "type": "object"
       },
       "FieldCheck": {
         "properties": {
@@ -3223,6 +3461,91 @@
           "words"
         ],
         "title": "PageWords"
+      },
+      "Peer": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "pe": {
+            "anyOf": [
+              {
+                "type": "string",
+                "examples": [
+                  "8000000000.00"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pe"
+          },
+          "eps": {
+            "anyOf": [
+              {
+                "type": "string",
+                "examples": [
+                  "8000000000.00"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eps"
+          },
+          "ronw": {
+            "anyOf": [
+              {
+                "type": "string",
+                "examples": [
+                  "8000000000.00"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ronw"
+          },
+          "nav": {
+            "anyOf": [
+              {
+                "type": "string",
+                "examples": [
+                  "8000000000.00"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nav"
+          },
+          "is_issuer": {
+            "type": "boolean",
+            "title": "Is Issuer",
+            "default": false
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Evidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "Peer",
+        "description": "One row of the Basis for Offer Price peer table (B05 §5.6). ``None`` = not stated."
       },
       "Percent": {
         "properties": {
@@ -4775,115 +5098,6 @@
           "citations"
         ],
         "title": "AnswerEvent",
-        "type": "object"
-      },
-      "Evidence": {
-        "properties": {
-          "passage_id": {
-            "title": "Passage Id",
-            "type": "string"
-          },
-          "doc": {
-            "enum": [
-              "rhp",
-              "drhp",
-              "prospectus"
-            ],
-            "title": "Doc",
-            "type": "string"
-          },
-          "page": {
-            "title": "Page",
-            "type": "integer"
-          },
-          "char_span": {
-            "maxItems": 2,
-            "minItems": 2,
-            "prefixItems": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "integer"
-              }
-            ],
-            "title": "Char Span",
-            "type": "array"
-          },
-          "bbox": {
-            "anyOf": [
-              {
-                "maxItems": 4,
-                "minItems": 4,
-                "prefixItems": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ],
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Bbox"
-          },
-          "value": {
-            "anyOf": [
-              {
-                "discriminator": {
-                  "mapping": {
-                    "count": "#/components/schemas/Count",
-                    "money": "#/components/schemas/Money",
-                    "percent": "#/components/schemas/Percent",
-                    "placeholder": "#/components/schemas/Placeholder",
-                    "range": "#/components/schemas/Range"
-                  },
-                  "propertyName": "kind"
-                },
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/Money"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Count"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Percent"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Placeholder"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Range"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Value"
-          }
-        },
-        "required": [
-          "passage_id",
-          "doc",
-          "page",
-          "char_span"
-        ],
-        "title": "Evidence",
         "type": "object"
       },
       "VerdictEvent": {

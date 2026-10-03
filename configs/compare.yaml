@@ -1,0 +1,13 @@
+# Compare tab (B05 §5.6, B3.2). PROVISIONAL: the reference quantiles below are placeholders made
+# up for development, not measured. The local follow-up (B3.2b in docs/AKSHAT_TODO.md) computes
+# them over the 2018-2023 corpus with scripts/compare_reference.py, fills computed_on and corpus_n
+# and sets provisional: false. The UI shows corpus_n from here, never a typed number.
+provisional: true
+computed_on: null
+corpus_n: 0
+# Values at percentiles 0, 10, ..., 100 among past IPOs, per metric.
+reference_quantiles:
+  issue_size_inr: [1.0e+8, 6.0e+8, 1.2e+9, 2.0e+9, 3.0e+9, 4.5e+9, 6.0e+9, 8.5e+9, 1.2e+10, 2.0e+10, 1.5e+11]
+  ofs_share: [0.0, 0.0, 0.10, 0.25, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
+  insider_price_gap: [1.0, 1.2, 1.5, 2.0, 3.0, 4.0, 6.0, 9.0, 15.0, 30.0, 200.0]
+  pe: [5.0, 15.0, 20.0, 25.0, 30.0, 35.0, 42.0, 50.0, 62.0, 85.0, 300.0]

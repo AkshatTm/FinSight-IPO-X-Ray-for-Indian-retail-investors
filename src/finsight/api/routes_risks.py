@@ -17,7 +17,7 @@ from pydantic import BaseModel
 from finsight.api.errors import ApiError, ErrorResponse
 from finsight.api.routes_docs import _doc
 from finsight.api.uploads_state import UState
-from finsight.core.schemas import Risk, RiskCategory, RiskLevel, SimpleStatus
+from finsight.core.schemas import Compare, Risk, RiskCategory, RiskLevel, SimpleStatus
 from finsight.jobs import load_simplified
 from finsight.risklevel import RISKLEVEL_FILE
 from finsight.risklevel import load_config as risklevel_config
@@ -169,3 +169,13 @@ def get_risk_level(doc_id: DocId, state: UState) -> RiskLevel:
         raise ApiError(404, "not_available", "The risk level for this report isn't ready yet.")
     level = RiskLevel.model_validate(get_json(state.storage, key))
     return level.model_copy(update={"behind_click": bool(risklevel_config()["behind_click"])})
+
+
+@router.get("/docs/{doc_id}/compare", tags=["risks"])
+def get_compare(doc_id: DocId, state: UState) -> Compare:
+    """Listed peers from the document and percentiles among past IPOs (B05 §5.6)."""
+    _doc(state, doc_id)
+    key = doc_key(doc_id, "compare.json")
+    if not state.storage.exists(key):
+        raise ApiError(404, "not_available", "The comparison for this report isn't ready yet.")
+    return Compare.model_validate(get_json(state.storage, key))
