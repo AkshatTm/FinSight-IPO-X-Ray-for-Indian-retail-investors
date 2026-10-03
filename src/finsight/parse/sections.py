@@ -45,6 +45,17 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
         ("offer_structure", r"(OFFER|ISSUE) STRUCTURE"),
         ("offer_procedure", r"(OFFER|ISSUE) PROCEDURE"),
         ("management_s_discussion_and_analysis", r"MANAGEMENT S DISCUSSION AND ANALYSIS.*"),
+        (
+            "summary_financial_information",
+            r"SUMMARY (OF )?(RESTATED )?(CONSOLIDATED )?FINANCIAL (INFORMATION|STATEMENTS)",
+        ),
+        (
+            "restated_financial_information",
+            r"(RESTATED |AUDITED )?(CONSOLIDATED )?FINANCIAL (INFORMATION|STATEMENTS)"
+            r"( OF THE COMPANY| AS RESTATED)?",
+        ),
+        ("financial_indebtedness", r"(STATEMENT OF )?FINANCIAL INDEBTEDNESS"),
+        ("outstanding_litigation", r"OUTSTANDING LITIGATION.*"),
     ]
 ]
 
@@ -197,6 +208,9 @@ _FALLBACK_TITLES = {
     "objects_of_the_offer": "OBJECTS OF THE OFFER",
     "general_information": "GENERAL INFORMATION",
     "our_promoters": "OUR PROMOTERS AND PROMOTER GROUP",
+    "restated_financial_information": "RESTATED FINANCIAL INFORMATION",
+    "financial_indebtedness": "FINANCIAL INDEBTEDNESS",
+    "outstanding_litigation": "OUTSTANDING LITIGATION AND MATERIAL DEVELOPMENTS",
 }
 
 
@@ -228,3 +242,41 @@ def find_sections(doc: ParsedDoc) -> list[Section]:
                     method=f.method, confidence=f.confidence)
         )  # fmt: skip
     return sections
+
+
+# ------------------------------------------------------------------------- subsections
+_CASH_FLOW_HEAD = re.compile(r"STATEMENTS? OF CASH FLOWS?|CASH FLOWS? STATEMENTS?")
+_AUDITOR_HEAD = re.compile(r"INDEPENDENT AUDITORS?|EXAMINATION REPORT|AUDITORS? REPORT")
+_QUALIFICATION = re.compile(
+    r"emphasis of matter|qualified opinion|adverse opinion|disclaimer of opinion"
+    r"|material uncertainty|qualification",
+    re.IGNORECASE,
+)
+MAX_AUDITOR_PAGES = 8
+MAX_CASH_FLOW_PAGES = 4
+
+
+def find_subsection_pages(doc: ParsedDoc, sections: list[Section]) -> dict[str, list[int]]:
+    """Pages of the restated cash-flow statement and the auditor's report / qualifications.
+
+    These are parts of ``restated_financial_information``, not sections of their own, so
+    they are found by heading and wording inside that section. Keys: ``cash_flows``,
+    ``auditors_report``; a key is absent when nothing was found.
+    """
+    section = next((s for s in sections if s.id == "restated_financial_information"), None)
+    if section is None:
+        return {}
+    cash: list[int] = []
+    auditor: list[int] = []
+    for n in range(section.start_page, min(section.end_page, doc.n_pages) + 1):
+        page = doc.pages[n - 1]
+        top = " ".join(_top_lines(page))
+        if _CASH_FLOW_HEAD.search(top):
+            cash.append(n)
+        elif _AUDITOR_HEAD.search(top) or _QUALIFICATION.search(page.text):
+            auditor.append(n)
+    found = {
+        "cash_flows": cash[:MAX_CASH_FLOW_PAGES],
+        "auditors_report": auditor[:MAX_AUDITOR_PAGES],
+    }
+    return {key: pages for key, pages in found.items() if pages}
