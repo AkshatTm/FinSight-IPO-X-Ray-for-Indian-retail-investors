@@ -20,28 +20,24 @@ FinSight explains what an offer document says. It never recommends whether to ap
 
 ```mermaid
 flowchart LR
-  B[Browser] --> FE[Next.js app on Vercel]
-  FE -->|REST + SSE /api| API[FastAPI service, Cloud Run CPU]
-  FE -->|signed PUT| GCS[(Cloud Storage: PDFs, pages, outputs)]
-  FE -->|Google sign-in| AUTH[Supabase Auth]
-  API --> PG[(Supabase Postgres via the pooler)]
-  API --> GCS
-  API -->|Run Admin API: run job with DOC_ID, JOB_ID| W[Worker job, Cloud Run CPU]
-  W --> GCS
-  W --> PG
-  W -. profile cloud_gpu .-> G[GPU job, Cloud Run L4: vLLM rewrites + bge-m3 index]
-  G --> GCS
+  B[Browser] --> FE[Next.js app]
+  FE -->|REST + SSE /api| API[FastAPI service on the laptop]
+  FE -->|optional Google sign-in| AUTH[Supabase Auth]
+  API --> DB[(SQLite, or Supabase Postgres via FINSIGHT_DB__URL)]
+  API --> FS[(Local files: data/store)]
+  API -->|in-process thread| W[Worker: every stage]
+  W --> FS
+  W --> DB
+  W --> M[Ollama / llama.cpp models]
 ```
 
 | Container | Code | Profile | Notes |
 | --- | --- | --- | --- |
-| Web app | `frontend/` | — | MSW mocks with `NEXT_PUBLIC_USE_MOCKS=1` |
-| API | `finsight.api` (`deploy/api.Dockerfile`) | `cloud` | No PyTorch; BM25 chat; scales to zero |
-| Worker job | `python -m finsight.jobs run` (`deploy/worker.Dockerfile`) | `cloud` | Every stage; top-15 rewrites with the student GGUF when there is no GPU |
-| GPU job | `deploy/gpu.Dockerfile` | `cloud_gpu` | Optional; rewrites and dense index only |
-| Laptop | same API, in-process worker, SQLite, local files, Ollama | `dev_light`, `full` | See [Run FinSight locally](../tutorials/run_locally.md) |
+| Web app | `frontend/` | any | MSW mocks with `NEXT_PUBLIC_USE_MOCKS=1` |
+| API + worker | `finsight.api`, `finsight.jobs` | `dev_light`, `full` | One process; the upload job runs on a background thread |
+| Worker by hand | `python -m finsight.jobs run \| simplify \| sweep` | any | Same stages without the API |
 
-Nothing is deployed yet: the definitions live in `deploy/gcp/` and wait for Akshat's "go" (see the [deploy runbook](../runbooks/DEPLOY_RUNBOOK.md)).
+B-ADR-16 removed Google Cloud (Cloud Run, Cloud Storage, the GPU job) because the credit ran out. Nothing is hosted: the product runs on the laptop. Supabase sign-in/Postgres and a Vercel front end remain optional and free.
 
 ## Level 3: backend components
 

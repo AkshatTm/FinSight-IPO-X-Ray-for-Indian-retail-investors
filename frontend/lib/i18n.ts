@@ -3,7 +3,6 @@
 // Page-level copy is added here with the step that builds the page.
 // Interpolation: {name}. Numbers stay Western digits in Hindi.
 
-import { ADMIN } from "./content/admin";
 import { LANDING } from "./content/landing";
 import { LAB } from "./content/lab";
 import { PAGES } from "./content/pages";
@@ -21,7 +20,6 @@ export const STRINGS = d({
   ...LAB,
   ...UPLOAD,
   ...REPORT,
-  ...ADMIN,
   // 3.1 navigation
   "nav.home": { en: "FinSight", hi: "FinSight" },
   "nav.ipos": { en: "IPOs", hi: "आईपीओ" },

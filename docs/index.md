@@ -18,7 +18,7 @@ FinSight explains what a document says. It never tells you to apply, buy, sell o
 | Understand how it works | [Architecture](phase2/B02_ARCHITECTURE.md) and [FinSight explained](10_FINSIGHT_EXPLAINED.md) |
 | Look up a setting or command | [Configuration](reference/config.md), [Commands](reference/cli.md) |
 | Call the API | [API reference](reference/api.md) |
-| Deploy or roll back | [Deploy runbook](runbooks/DEPLOY_RUNBOOK.md), [Rollback](runbooks/ROLLBACK.md) |
+| Run it | [Run FinSight locally](tutorials/run_locally.md) |
 | Know why something is the way it is | [Design decisions](adr/index.md) |
 
 !!! note "Work in progress"

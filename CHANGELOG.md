@@ -4,6 +4,14 @@ All notable changes to FinSight. The format follows [Keep a Changelog](https://k
 
 ## [Unreleased] — Phase 2
 
+### Removed
+
+- Google Cloud (Cloud Run, Cloud Storage, GPU job, deploy workflows, `cloud` / `cloud_gpu` profiles, vLLM backend, cost estimates and the `/admin/costs` page) after the credit ran out (B-ADR-16). The product runs locally.
+
+### Fixed
+
+- Upload quotas and the admin job list compared an IST day start as if it were UTC on SQLite, so limits were wrong between 18:30 and 24:00 UTC.
+
 ### Added
 
 - Upload any IPO offer document (RHP, DRHP or Prospectus): validation, document type, duplicate check by SHA-256, daily quotas, kill switch and 30-day retention.

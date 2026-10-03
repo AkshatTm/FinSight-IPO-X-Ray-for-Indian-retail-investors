@@ -43,7 +43,7 @@
 ## How to verify
 
 - `curl -s https://<api-url>/api/health` answers `"status"` other than `"degraded"`.
-- `uv run python scripts/cloud_smoke.py --base-url <api-url> --synthetic` passes.
+- Upload one small PDF and check it reaches `ready`.
 - A database login with the old password fails.
 
 ## Rollback

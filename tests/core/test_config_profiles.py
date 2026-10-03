@@ -1,4 +1,4 @@
-"""Phase 2 profiles, upload limits and the env-key list (B0.3, B-ADR-04)."""
+"""Phase 2 profiles, upload limits and the env-key list (B0.3, B-ADR-16)."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ def _clean_env(monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.delenv(var, raising=False)
 
 
-@pytest.mark.parametrize("profile", ["dev_light", "full", "deploy_cpu", "cloud", "cloud_gpu"])
+@pytest.mark.parametrize("profile", ["dev_light", "full", "deploy_cpu"])
 def test_every_profile_loads(profile: str) -> None:
     s = load_settings(profile)
     assert s.profile == profile
@@ -25,31 +25,15 @@ def test_every_profile_loads(profile: str) -> None:
     assert s.simplify.auto_top_n == 15
 
 
-def test_cloud_profile_uses_gcp_backends() -> None:
-    s = load_settings("cloud")
-    assert s.storage.backend == "gcs"
-    assert s.db.backend == "postgres"
-    assert s.auth.mode == "supabase"
-    assert s.jobs.runner == "cloud_run"
-    assert s.jobs.gpu_job is False
-    assert s.simplify.backend == "llama-cpp"
-    assert s.db.url is None  # secrets never come from the YAML
-
-
-def test_cloud_gpu_profile_uses_the_gpu_job() -> None:
-    s = load_settings("cloud_gpu")
-    assert s.jobs.gpu_job is True
-    assert s.simplify.backend == "vllm"
+def test_google_cloud_profiles_are_gone() -> None:
+    for profile in ("cloud", "cloud_gpu"):
+        with pytest.raises(ValueError, match="Unknown profile"):
+            load_settings(profile)
 
 
 def test_laptop_profiles_stay_local() -> None:
     s = load_settings("dev_light")
-    assert (s.storage.backend, s.db.backend, s.auth.mode, s.jobs.runner) == (
-        "local",
-        "sqlite",
-        "off",
-        "inline",
-    )
+    assert (s.storage.backend, s.db.backend, s.auth.mode) == ("local", "sqlite", "off")
 
 
 @pytest.mark.parametrize(
@@ -57,12 +41,12 @@ def test_laptop_profiles_stay_local() -> None:
 )
 def test_uploads_kill_switch(monkeypatch: pytest.MonkeyPatch, value: str, enabled: bool) -> None:
     monkeypatch.setenv("UPLOADS_ENABLED", value)
-    assert load_settings("cloud").uploads.enabled is enabled
+    assert load_settings("full").uploads.enabled is enabled
 
 
 def test_db_url_comes_from_env(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("FINSIGHT_DB__URL", "postgresql://example")
-    assert load_settings("cloud").db.url == "postgresql://example"
+    assert load_settings("full").db.url == "postgresql://example"
 
 
 def test_env_example_lists_exactly_the_env_keys() -> None:
@@ -79,9 +63,6 @@ def test_required_env_is_a_subset_of_env_keys() -> None:
         assert set(names) <= set(ENV_KEYS)
 
 
-def test_missing_env_reports_names_only() -> None:
-    env = {"FINSIGHT_DB__URL": "x", "GCP_PROJECT": "p"}
-    missing = missing_env("cloud", env)
-    assert "FINSIGHT_DB__URL" not in missing
-    assert "FINSIGHT_STORAGE__BUCKET" in missing
+def test_local_profiles_need_no_env() -> None:
     assert missing_env("dev_light", {}) == []
+    assert missing_env("full", {}) == []

@@ -1,5 +1,7 @@
 # B07 — Roadmap (Big Phase 2)
 
+> **Superseded in part (4 Oct 2026, B-ADR-16):** Google Cloud (Cloud Run, Cloud Storage, GPU job, `deploy/gcp/`, `cloud` and `cloud_gpu` profiles) was removed when the credit ran out. The product runs locally. Read the Cloud Run, GCS, GPU and deploy parts below as history.
+
 **Written:** Sat 3 Oct 2026 (kickoff review) · **Feature freeze:** Sun 25 Oct · **Final tag v2.0.0:** Sat 31 Oct · **Submission:** Sun 1 Nov
 
 **Detail per part** (files, tests, commits, dependencies, dated hand-work): `B_EXECUTION_PLAN.md`. **Hosting is Google Cloud Run** (B-ADR-04): CPU API + CPU worker job + optional L4 GPU job, Supabase, GCS, Vercel; billing enabled later, no deploy before Akshat's "go". **Training is Kaggle-first**; Colab optional.
@@ -16,7 +18,7 @@
   2. **Mid-sub-phase checkpoint:** if the conversation has been auto-compacted, or a sub-phase has gone through 3+ long tool-heavy steps, then commit everything green, push, write a "Resume here" note (exact next step, open files, failing test names) at the top of `PROGRESS.md`, and print
      `🧹 Checkpoint saved — run /clear and paste the Phase 2 resume prompt to continue <ID>.`
   3. In **overnight mode** (B10 Prompt 3) there is nobody to type `/clear`: keep going, rely on auto-compaction, and write the "Resume here" note after every merge.
-- **Cloud sessions (☁️, B11):** one cloud part = one new cloud session (a fresh session replaces `/clear`). The cloud session ends by merging its PR, updating "Resume here", and writing the local follow-up (with the exact prompt) to `docs/AKSHAT_TODO.md` → "needs a LOCAL session".
+- **No cloud sessions (B-ADR-16):** the cloud credit is gone, so every ☁️ part below now runs as a 💻 local session on the laptop (fixtures first, then real data in the same session where it fits).
 - Hand-work for Akshat goes to `docs/AKSHAT_TODO.md` with a date; Claude Code continues with any unblocked sub-phase.
 - Gates: Claude Code runs the gate review (B10 Prompt 5) and stops (except in overnight mode, where it writes `docs/gates/BGx.md` and continues).
 
@@ -24,10 +26,10 @@
 
 | Gate | Date | Must be true | If it fails |
 |---|---|---|---|
-| **BG0** | Mon 5 Oct | Phase 1 IPO-click bug fixed (or proven not to reproduce); Phase 2 docs merged; CLAUDE.md updated; Supabase (Google OAuth) + Vercel accounts + Kaggle GPU ready (GCP project/billing later); B0.4 fixture pack merged | Slip B1 by a day |
+| **BG0** | Mon 5 Oct | Phase 1 IPO-click bug fixed (or proven not to reproduce); Phase 2 docs merged; CLAUDE.md updated; Kaggle GPU ready (Supabase/Vercel optional; no Google Cloud); B0.4 fixture pack merged | Slip B1 by a day |
 | **BG1** | Sun 11 Oct | Locally: upload an unseen RHP → facts + 13 red flags + progressive events; E14/E15 numbers on gold v3; upload UI with Google sign-in | Ship red flags for showcase only; uploads continue in week 2 |
-| **BG2** | Sun 18 Oct | Risk report end-to-end locally (split → features → simplified with checks → risk level with reasons); E13, E16, E18–E22 have real numbers; CPU smoke deploy (B2.7) done if Akshat said "go" | Use zero-shot base model for rewrites; drop large classifier |
-| **BG3** | Sun 25 Oct | **Public URL on Google Cloud Run**: someone else signs in, uploads an RHP, gets a full report (top 15 rewrites automatic, the rest on click); E23/E24; Model Lab updated; **FEATURE FREEZE** | Uploads limited to Akshat; showcase-only public site (ADR-022 fallback) |
+| **BG2** | Sun 18 Oct | Risk report end-to-end locally (split → features → simplified with checks → risk level with reasons); E13, E16, E18–E22 have real numbers; no deploy (B-ADR-16) | Use zero-shot base model for rewrites; drop large classifier |
+| **BG3** | Sun 25 Oct | **Complete local demo**: sign in (optional), upload an RHP on the laptop, get a full report (top 15 rewrites automatic, the rest on click); E23/E24 measured locally; Model Lab updated; **FEATURE FREEZE** | Uploads for Akshat's account only; showcase-only demo |
 
 ## 2. Cut order (cut from the top if behind)
 1. Report "Download summary (PDF)"
@@ -35,7 +37,7 @@
 3. M4 large classifier (keep base)
 4. Student QLoRA → serve the zero-shot base instruct model with the same prompt and checks
 5. Hindi polish for chat/voice
-6. Public uploads → uploads only for Akshat's account; showcase public
+6. Sign-in and multi-user uploads → single local user
 
 **Never cut:** upload pipeline, red flags with pages, risk report with originals and number checks, risk level with reasons + disclaimer, E21 validation (reported whatever it shows), honesty rules.
 
@@ -111,7 +113,7 @@
   Seriousness rule, **normalised** points, threshold computation (2018–2023 reference), `behind_click` flag, guard update; tests.
 - [ ] **B2.6b Corpus thresholds + validation** · 💻 L · **S** · `eval/b2.6b-risklevel-validation`
   Compute normalised scores over the 2018–2023 corpus, write `configs/risklevel.yaml` (with `corpus_n`), E17, **E21** with an honest write-up (outcomes read only by `evaluate/outcomes.py`), E8 re-run.
-- [ ] **B2.7 CPU smoke deploy** · 💻 L + 👤 A · **S** · `chore/b2.7-smoke-deploy`
+- [x] ~~**B2.7 CPU smoke deploy**~~ · dropped (B-ADR-16, no Google Cloud) · `chore/b2.7-smoke-deploy`
   When GCP billing is enabled and **only with Akshat's "go"**: deploy the Cloud Run API + CPU job with Supabase; one small upload end to end; record cold start and stage timings.
 - [ ] **BG2 review** (Sun 18) · 💻 L — stop for Akshat.
 
@@ -121,16 +123,16 @@
   On mocks built from fixture `report.json`. 💻 follow-up (short): check against the real local API. *(Built on synthetic mocks overnight; refresh mocks from the fixture pack after B0.4.)*
 - [x] **B3.2 Compare** · ☁️ C · **S** · `feat/b3.2-compare` · *(cuttable)*
   Peer table parser, issuer P/E, past-IPO percentiles (provisional), `/compare`, Compare tab on mocks. 💻 follow-up B3.2b: real reference quantiles + check on fixture tables.
-- [x] **B3.3a ★ Infra as code (Google Cloud Run)** · ☁️ C · **O** · `feat/b3.3-hosting` · *pulled forward to Mon 12 Oct for B2.7*
+- [x] **B3.3a ★ Infra as code (Google Cloud Run)** · removed again by B-ADR-16 (4 Oct) · ☁️ C · **O** · `feat/b3.3-hosting` · *pulled forward to Mon 12 Oct for B2.7*
   Dockerfiles (API without torch; CPU worker with ONNX + llama.cpp; L4 GPU worker with vLLM), manual GitHub Actions workflow → Artifact Registry, Cloud Run service + job definitions, optional HF single-container variant, Supabase wiring, budget and limits config, `scripts/cloud_smoke.py`, runbooks. **No deploy.**
-- [ ] **B3.3b Deploy** · 💻 L + 👤 A · **O** · `chore/b3.3b-deploy`
+- [x] ~~**B3.3b Deploy**~~ · dropped (B-ADR-16) · `chore/b3.3b-deploy`
   👤 logins, GCP billing and console clicks; 💻 build/push images, upload showcase artefacts + model weights to GCS, deploy, run the smoke test. **Only with Akshat's explicit "go" in chat.**
 - [ ] **B3.4 Cloud evaluation + Model Lab + site copy** · B3.4a ☁️ C (Model Lab sections, landing/How it works/About copy) + B3.4b 💻 L (E23/E24, E7 on the cloud profile) · **S**
   - [x] B3.4a cloud half (#160, overnight run 1): `GET /api/lab/b/{name}` (B06 §5 mapping, merged classifier/simplify payloads, file shapes documented); seven Lab sections (E13–E24) hidden until their files exist, E21 verdict generated from ρ and its interval; landing (B05 §2: hero, What you get, won't-do lines, two stats), How it works row 3 and About limits (B05 §8).
-  - [ ] B3.4b 💻: E23/E24 and E7 on the cloud profile (after the deploy).
+  - [ ] B3.4b 💻: E23/E24 and E7 on the laptop (`full` profile; no deploy).
 - [ ] **B3.5 Hardening** · B3.5a ☁️ C (security review, failure-path tests, admin page) + B3.5b 💻 L (full Playwright sweep on the real API) · **S**
   - [x] B3.5a cloud half (#158, overnight run 1): security review (`docs/security_review.md`) with three fixes (chunked upload body capped, stored size checked before download via `Storage.size()`, `uploads.trusted_proxy_hops` for the per-IP limit); failure-path tests over the B02 stage graph; `progress.cost_estimate` per job (`costs.*` settings, provisional rates); `/api/admin/costs` + `/api/admin/jobs` (admin allow-list, 403 `forbidden`); `/admin/costs` page on mocks.
-  - [ ] B3.5b 💻: Playwright sweep on the real API; set `trusted_proxy_hops` and check the region's rates on the deployed stack.
+  - [ ] B3.5b 💻: Playwright sweep on the real local API (no deploy; `trusted_proxy_hops` stays 0).
 - [ ] **BG3 review + FEATURE FREEZE** (Sun 25) · 💻 L.
 
 ### B4 — Documentation and finish (Sun 25 Oct – Sun 1 Nov)
@@ -146,21 +148,19 @@
 
 | Date | Task | Time |
 |---|---|---|
-| Sun 4 – Wed 7 Oct | **Claim the $100 cloud credit (deadline 7 Oct)**, connect GitHub to Claude Code on the web | 5 min |
-| Sun 4 – Mon 5 Oct | Setup (`HOSTING_SETUP_STEPS.md`: Supabase, Vercel, Kaggle GPU check; Google Cloud later) | 30 min |
+| Sun 4 – Mon 5 Oct | Setup (`HOSTING_SETUP_STEPS.md`: Supabase, Vercel, Kaggle GPU check) | 30 min |
 | by Wed 7 Oct | Download 5 unseen recent RHPs to `data/raw/unseen/` | 20 min |
 | by Fri 9 Oct | Verify gold v3 (pre-filled by Claude chat) | 1.5 h |
 | Sat 10 Oct | Segmentation spot-check (50) + E13b boundaries (5 corpus excerpts) | 40 min |
 | Sun 11 Oct | Rate quality-100 of the teacher pilot (with Claude chat): go/no-go | 30 min |
 | Tue 13 Oct | τ spot-check (60 pairs) | 20 min |
-| Wed 14 Oct | Category gold-150 verification; decide when to enable GCP billing for the smoke deploy | 45 min |
+| Wed 14 Oct | Category gold-150 verification | 45 min |
 | Fri 16 Oct | Rate gold-50 rewrites (blind) | 45 min |
-| Mon 19 – Sat 24 Oct | Deploy steps needing your login; test uploads; phone check | 1–2 h |
+| Mon 19 – Sat 24 Oct | Test uploads; phone check on the local network | 1 h |
 | Leftover Phase 1 items | ASR references, Hindi strings, E7 sample (with Claude chat) | 1 h total |
 | Sun 25 Oct – Sat 31 Oct | Report, slides, video, viva | most evenings |
 
 ## 5. Daily rhythm
 - Morning: `git pull`; read `PROGRESS.md` and `docs/AKSHAT_TODO.md` ("needs a LOCAL session" items); do the day's hand-work.
-- Day: start ☁️ cloud sessions for the next cloud parts (they run while you do other things); run short 💻 local sessions for the local halves, `/clear` between.
-- Check the cloud credit balance after each cloud session (B11 §5).
+- Day: one local session per part, `/clear` between.
 - Night (optional): overnight prompt for Sonnet-only sub-phases that need no hand-work.

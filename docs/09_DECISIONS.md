@@ -1,6 +1,6 @@
 # 09 — Decision Log (ADRs)
 
-> **Big Phase 2:** B-ADR-01..15 are summarised at the end of this log (full text in `docs/phase2/B08_DECISIONS.md`). ADR-005 is narrowed by B-ADR-03; ADR-022 is superseded as the primary deployment by B-ADR-04.
+> **Big Phase 2:** B-ADR-01..16 are summarised at the end of this log (full text in `docs/phase2/B08_DECISIONS.md`). ADR-005 is narrowed by B-ADR-03; ADR-022 is superseded as the primary deployment by B-ADR-04, itself superseded by B-ADR-16 (local-only).
 
 Each decision: context → decision → consequences. Status: `accepted` (Akshat approved), `proposed` (Claude Code added, awaiting approval), `superseded by ADR-x`. Append new ADRs at the end using the template. These entries double as viva answers to "why did you choose X?".
 
@@ -342,6 +342,8 @@ DeBERTa-v3-base (3 seeds) and -large (1 seed); ONNX int8 for serving; report bot
 ### B-ADR-14 doc_id beside ipo_id; showcase primary doc = RHP with the Prospectus as companion — proposed
 
 ### B-ADR-15 Committed real-section fixture pack (`tests/fixtures/real/`) — proposed
+
+### B-ADR-16 Local-only: Google Cloud removed — accepted (supersedes B-ADR-04; full text in `docs/phase2/B08_DECISIONS.md`)
 
 ---
 

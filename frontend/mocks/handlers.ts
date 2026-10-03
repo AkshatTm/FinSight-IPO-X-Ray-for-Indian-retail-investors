@@ -1,5 +1,4 @@
 import { http, HttpResponse, delay } from "msw";
-import { adminHandlers } from "./admin";
 import { DETAILS, HEALTH, IPOS } from "./fixtures";
 import { LAB_ASR, LAB_LADDER, LAB_RETRIEVAL, LAB_VERIFIER, LAB_WEAKLABELS } from "./lab";
 import { scenario, speed } from "./chat";
@@ -17,7 +16,6 @@ const notFound = () =>
 export const handlers = [
   ...reportHandlers, // before uploads: the sample report's /api/docs/<id> wins
   ...uploadHandlers,
-  ...adminHandlers,
   http.get("/api/health", () => HttpResponse.json(HEALTH)),
   http.get("/api/ipos", async () => {
     await delay(150);

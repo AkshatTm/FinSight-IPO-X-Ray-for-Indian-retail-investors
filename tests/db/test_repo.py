@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime, timedelta, timezone
 
 import pytest
 from sqlalchemy.exc import IntegrityError
@@ -104,3 +104,11 @@ def test_users_upsert(db: Database) -> None:
     db.upsert_user("u1", None)
     db.upsert_user("u1", "a@example.com")
     db.upsert_user("u1", None)
+
+
+def test_a_non_utc_filter_is_compared_as_the_same_instant(db: Database) -> None:
+    """IST midnight is 18:30 UTC the day before; SQLite must not read it as 00:00 UTC."""
+    ist = timezone(timedelta(hours=5, minutes=30))
+    db.record_upload("u1", "doc", ts=datetime(2026, 10, 3, 18, 45, tzinfo=UTC))
+    assert db.count_uploads(datetime(2026, 10, 4, 0, 0, tzinfo=ist), "u1") == 1
+    assert db.count_uploads(datetime(2026, 10, 4, 0, 30, tzinfo=ist), "u1") == 0

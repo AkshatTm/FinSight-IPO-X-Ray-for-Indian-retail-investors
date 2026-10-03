@@ -1,8 +1,8 @@
 """Profile-based settings (02_ARCHITECTURE.md section 8).
 
 ``configs/config.yaml`` holds shared ``paths`` and one block per profile
-(``dev_light`` default, ``full``, ``deploy_cpu``; Phase 2 adds ``cloud`` for Google Cloud Run
-on CPU and ``cloud_gpu`` for the optional L4 GPU job, B-ADR-04). Environment variables win over
+(``dev_light`` default, ``full``, ``deploy_cpu``; B-ADR-16 removed the Google Cloud profiles).
+Environment variables win over
 the YAML: ``FINSIGHT_PROFILE`` picks the profile, ``FINSIGHT_LLM__MODEL=...`` overrides
 a nested value, ``DEMO_MODE=1`` turns demo mode on. Code reads paths from here and
 uses ``pathlib`` only.
@@ -104,23 +104,22 @@ class UploadsConfig(BaseModel):
     per_user_per_day: int = 3
     global_per_day: int = 10
     retention_days: int = 30
-    # Proxies in front of the API that append to X-Forwarded-For (Vercel rewrite, Cloud Run). 0
+    # Proxies in front of the API that append to X-Forwarded-For (a Vercel rewrite). 0
     # keys per-IP limits on the socket peer; set it only after checking the header on the
     # deployed stack (B3.5b), because a client can write anything left of the trusted hops.
     trusted_proxy_hops: int = 0
 
 
 class StorageConfig(BaseModel):
-    """Where document artefacts live: the local ``data/`` tree or a GCS bucket (B02 §9)."""
+    """Where document artefacts live: the local ``data/store`` tree."""
 
-    backend: Literal["local", "gcs"] = "local"
+    backend: Literal["local"] = "local"
     local_dir: Path = Path("data/store")  # keys are docs/<doc_id>/..., bank/...
-    bucket: str | None = None  # env FINSIGHT_STORAGE__BUCKET in the cloud profiles
     signed_url_ttl_s: int = 900
 
 
 class DbConfig(BaseModel):
-    """SQLite locally, Supabase Postgres via the pooler in the cloud (B02 §9)."""
+    """SQLite by default; Supabase Postgres via the pooler when ``FINSIGHT_DB__URL`` is set."""
 
     backend: Literal["sqlite", "postgres"] = "sqlite"
     sqlite_path: Path = Path("data/finsight.db")
@@ -140,50 +139,20 @@ class AuthConfig(BaseModel):
 class SimplifyConfig(BaseModel):
     """Plain-English rewrites (B02 §8): top N automatic, the rest on click."""
 
-    backend: Literal["ollama", "llama-cpp", "vllm"] = "ollama"
+    backend: Literal["ollama", "llama-cpp"] = "ollama"
     model: str = "qwen3.5:2b"
     # The base instruct model with the same prompt, used (and flagged) when the student is
     # unavailable; a GGUF file name for llama-cpp, a tag for Ollama.
     fallback_model: str | None = None
     auto_top_n: int = 15
-    vllm_url: str | None = None  # optional GPU path only
 
 
 class JobsConfig(BaseModel):
-    """``inline`` = in-process worker (laptop, tests); ``cloud_run`` = Cloud Run Jobs (B02 §10)."""
+    """Job runner settings: stages run in-process on a worker thread (B02 §10)."""
 
-    runner: Literal["inline", "cloud_run"] = "inline"
-    gpu_job: bool = False  # cloud_gpu: simplify + index run in the L4 job
-    cpu_job_name: str = "finsight-worker"  # Cloud Run Job names (deploy/gcp/*.yaml)
-    gpu_job_name: str = "finsight-gpu-worker"
     poll_interval_s: float = 1.0
     # B02 §11: a stage that runs longer fails (parse: 10 min). Keyed by stage name.
     stage_timeouts_s: dict[str, float] = Field(default_factory=lambda: {"parsed": 600.0})
-
-
-class CostRates(BaseModel):
-    """Cloud Run job prices in USD per unit. ``gpu_s`` is unset until the L4 rate is checked."""
-
-    vcpu_s: float = 0.000018  # Tier 1 jobs rate (cloud.google.com/run/pricing, Oct 2026)
-    gib_s: float = 0.000002
-    gpu_s: float | None = None
-
-
-class CostConfig(BaseModel):
-    """Per-job cost estimate (B02 §12): resources of the worker jobs, rates and the free grant.
-
-    ``provisional`` stays true until the rates are checked for the deployment region
-    (asia-southeast1 is a Tier 2 region, priced above the Tier 1 defaults here).
-    """
-
-    provisional: bool = True
-    cpu_vcpu: float = 4  # deploy/gcp/worker-job.yaml
-    cpu_memory_gib: float = 8
-    gpu_vcpu: float = 4  # deploy/gcp/gpu-job.yaml
-    gpu_memory_gib: float = 16
-    rates_usd: CostRates = Field(default_factory=CostRates)
-    free_vcpu_s_per_month: float = 240_000
-    free_gib_s_per_month: float = 450_000
 
 
 # Environment variables a deployment may need. Names only: values never live in the repo.
@@ -192,35 +161,17 @@ ENV_KEYS: tuple[str, ...] = (
     "FINSIGHT_PROFILE",
     "UPLOADS_ENABLED",
     "FINSIGHT_DB__URL",
-    "FINSIGHT_STORAGE__BUCKET",
     "FINSIGHT_AUTH__SUPABASE_URL",
     "FINSIGHT_AUTH__JWT_SECRET",
     "FINSIGHT_AUTH__ADMIN_EMAILS",
-    "FINSIGHT_SIMPLIFY__VLLM_URL",
-    "GCP_PROJECT",
-    "GCP_REGION",
     "FINSIGHT_API_ORIGIN",  # frontend build: where Next.js rewrites /api/* (next.config.ts)
     "NEXT_PUBLIC_SUPABASE_URL",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY",
 )
 
 # What each profile cannot run without (``scripts/check_env.py`` reports the missing names).
-REQUIRED_ENV: dict[str, tuple[str, ...]] = {
-    "cloud": (
-        "FINSIGHT_DB__URL",
-        "FINSIGHT_STORAGE__BUCKET",
-        "FINSIGHT_AUTH__SUPABASE_URL",
-        "GCP_PROJECT",
-        "GCP_REGION",
-    ),
-    "cloud_gpu": (
-        "FINSIGHT_DB__URL",
-        "FINSIGHT_STORAGE__BUCKET",
-        "FINSIGHT_AUTH__SUPABASE_URL",
-        "GCP_PROJECT",
-        "GCP_REGION",
-    ),
-}
+# The local profiles need nothing; Supabase auth and Postgres are optional and read from env.
+REQUIRED_ENV: dict[str, tuple[str, ...]] = {}
 
 
 def missing_env(profile: str, environ: dict[str, str] | None = None) -> list[str]:
@@ -250,7 +201,6 @@ class Settings(BaseSettings):
     auth: AuthConfig = Field(default_factory=AuthConfig)
     simplify: SimplifyConfig = Field(default_factory=SimplifyConfig)
     jobs: JobsConfig = Field(default_factory=JobsConfig)
-    costs: CostConfig = Field(default_factory=CostConfig)
     demo_mode: bool = Field(default=False, validation_alias=AliasChoices("DEMO_MODE", "demo_mode"))
 
     @classmethod

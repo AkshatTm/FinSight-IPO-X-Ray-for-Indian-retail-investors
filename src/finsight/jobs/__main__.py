@@ -1,10 +1,11 @@
-"""Worker entry point (Cloud Run Jobs, B3.3a).
+"""Worker entry point for running stages by hand (B-ADR-16: no cloud jobs).
 
-- ``python -m finsight.jobs run [<doc_id> <job_id>]``: every stage of one document. Cloud Run
-  passes the ids as ``DOC_ID`` / ``JOB_ID`` env overrides (``jobs.launcher``).
+- ``python -m finsight.jobs run [<doc_id> <job_id>]``: every stage of one document. The ids
+  may also come from ``DOC_ID`` / ``JOB_ID`` environment variables.
 - ``python -m finsight.jobs simplify [<doc_id>]``: queue the top ``simplify.auto_top_n`` risks by
-  importance, then drain the simplification queue (the L4 GPU job, or the CPU job's fallback).
-- ``python -m finsight.jobs sweep``: delete documents past retention (scheduled job).
+  importance, then drain the simplification queue (on the laptop's CPU).
+- ``python -m finsight.jobs sweep``: delete documents past retention (run by hand or from Task
+  Scheduler).
 """
 
 from __future__ import annotations
@@ -46,7 +47,7 @@ def simplify_document(
 
 def main(argv: list[str]) -> int:
     """Worker entry point: ``run``, ``simplify`` or ``sweep`` (ids from args or env)."""
-    configure_logging()  # one JSON line per record: Cloud Logging reads the fields
+    configure_logging()
     settings = get_settings()
     db, storage = make_database(settings), make_storage(settings)
     if argv[:1] == ["run"]:

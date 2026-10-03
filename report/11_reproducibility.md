@@ -40,8 +40,7 @@ notebooks, parameters and the quality gate against the baseline are in the repos
   reported as provisional.
 - **Fixture pack.** Tests on real document text use `tests/fixtures/real/` (short excerpts of public filings,
   B-ADR-15), so the Phase 2 code can be tested without the PDFs.
-- **Cloud.** The deployment is code (`deploy/gcp/`, rendered by `scripts/render_deploy.py`); the container
-  images are built and smoke-tested in CI. Nothing is deployed at the time of writing.
+- **Hosting.** None: the product runs on the laptop (B-ADR-16, Google Cloud removed).
 
 **Check.** From a clean clone: `uv sync`, `uv run poe test`, then `uv run python -m finsight.evaluate.ladder`
 regenerates `ladder_table.*` from the stored per-row results without a GPU.

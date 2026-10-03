@@ -16,7 +16,6 @@ CALLS_THE_MODEL = re.compile(
 ALLOWED = {
     "src/finsight/generate/llama_cpp_backend.py",
     "src/finsight/generate/llm_backend.py",
-    "src/finsight/generate/vllm_backend.py",
     "src/finsight/generate/respond.py",
     # B2.5a: the risk simplifier is the one other caller. Its input is document text, never a
     # user question, and every output passes its own post-checks (numbers, forbidden phrases,

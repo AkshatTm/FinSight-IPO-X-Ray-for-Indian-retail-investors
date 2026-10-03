@@ -66,6 +66,11 @@ Status meanings as in `09_DECISIONS.md`. Claude Code adds these to `docs/09_DECI
 **Context:** Cloud sessions have only the repo; Phase 1 rules forbid committing data.
 **Decision:** `tests/fixtures/real/` may hold real section text, word boxes and tables from public offer documents and short corpus excerpts (gzip JSON, ≤ 5 MB per file, ≤ 20 MB total), written only by `scripts/export_fixtures.py`, with sources and licences in its README. No PDFs, no weights, no personal data beyond what the public filings print (privacy redaction applies to anything displayed).
 
+### B-ADR-16 Local-only: Google Cloud removed — accepted (4 Oct 2026)
+**Context:** The cloud credit is used up, so nothing can be deployed or hosted on Google Cloud; Claude Code cloud sessions are also unavailable.
+**Decision:** Remove Cloud Run, Cloud Storage, Artifact Registry and the L4 GPU job: `deploy/gcp/`, the API/worker/GPU Dockerfiles, `deploy.yml` and `images.yml`, `GCSStorage`, `CloudRunLauncher`, the vLLM backend, per-job Cloud Run cost estimates and the `/admin/costs` page, and the `cloud` and `cloud_gpu` profiles. The product runs on the laptop (`dev_light` / `full`): the API and the upload job in one process, SQLite, local files, Ollama or llama.cpp. Supabase sign-in/Postgres, Vercel and the paid `deploy_cpu` Space remain as optional config and are not required for any milestone. All parts now run in local sessions; `B11_CLOUD_WORKFLOW.md` no longer applies. Supersedes B-ADR-04.
+**Consequences:** BG3 "public URL" becomes "complete local demo plus recorded walkthrough"; B2.7, B3.3b, B3.4b, B3.5b deploy parts and the runbook checks are dropped; E23/E24 are measured on the laptop.
+
 ### Phase 1 ADRs affected
 - ADR-005 → narrowed by B-ADR-03.
 - ADR-022 (deployment target) → superseded by B-ADR-04 as the primary deployment; kept as the showcase-only fallback (cut 6).

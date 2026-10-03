@@ -76,10 +76,6 @@ data = [
 tables = [
     "docling>=2.131.0",
 ]
-# Google Cloud clients for the cloud profiles (GCS signed URLs); tests use a fake client.
-cloud = [
-    "google-cloud-storage>=2.18",
-]
 # The documentation site (B09): MkDocs Material, API pages from docstrings, docstring coverage.
 docs = [
     "mkdocs-material>=9.5",

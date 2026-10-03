@@ -36,7 +36,6 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 | `uploads.trusted_proxy_hops` | int | `0` | `FINSIGHT_UPLOADS__TRUSTED_PROXY_HOPS` |
 | `storage.backend` | Literal | `local` | `FINSIGHT_STORAGE__BACKEND` |
 | `storage.local_dir` | Path | `data/store` | `FINSIGHT_STORAGE__LOCAL_DIR` |
-| `storage.bucket` | str \| None | — | `FINSIGHT_STORAGE__BUCKET` |
 | `storage.signed_url_ttl_s` | int | `900` | `FINSIGHT_STORAGE__SIGNED_URL_TTL_S` |
 | `db.backend` | Literal | `sqlite` | `FINSIGHT_DB__BACKEND` |
 | `db.sqlite_path` | Path | `data/finsight.db` | `FINSIGHT_DB__SQLITE_PATH` |
@@ -50,23 +49,8 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 | `simplify.model` | str | `qwen3.5:2b` | `FINSIGHT_SIMPLIFY__MODEL` |
 | `simplify.fallback_model` | str \| None | — | `FINSIGHT_SIMPLIFY__FALLBACK_MODEL` |
 | `simplify.auto_top_n` | int | `15` | `FINSIGHT_SIMPLIFY__AUTO_TOP_N` |
-| `simplify.vllm_url` | str \| None | — | `FINSIGHT_SIMPLIFY__VLLM_URL` |
-| `jobs.runner` | Literal | `inline` | `FINSIGHT_JOBS__RUNNER` |
-| `jobs.gpu_job` | bool | false | `FINSIGHT_JOBS__GPU_JOB` |
-| `jobs.cpu_job_name` | str | `finsight-worker` | `FINSIGHT_JOBS__CPU_JOB_NAME` |
-| `jobs.gpu_job_name` | str | `finsight-gpu-worker` | `FINSIGHT_JOBS__GPU_JOB_NAME` |
 | `jobs.poll_interval_s` | float | `1.0` | `FINSIGHT_JOBS__POLL_INTERVAL_S` |
 | `jobs.stage_timeouts_s` | dict | `{'parsed': 600.0}` | `FINSIGHT_JOBS__STAGE_TIMEOUTS_S` |
-| `costs.provisional` | bool | true | `FINSIGHT_COSTS__PROVISIONAL` |
-| `costs.cpu_vcpu` | float | `4` | `FINSIGHT_COSTS__CPU_VCPU` |
-| `costs.cpu_memory_gib` | float | `8` | `FINSIGHT_COSTS__CPU_MEMORY_GIB` |
-| `costs.gpu_vcpu` | float | `4` | `FINSIGHT_COSTS__GPU_VCPU` |
-| `costs.gpu_memory_gib` | float | `16` | `FINSIGHT_COSTS__GPU_MEMORY_GIB` |
-| `costs.rates_usd.vcpu_s` | float | `1.8e-05` | `FINSIGHT_COSTS__RATES_USD__VCPU_S` |
-| `costs.rates_usd.gib_s` | float | `2e-06` | `FINSIGHT_COSTS__RATES_USD__GIB_S` |
-| `costs.rates_usd.gpu_s` | float \| None | — | `FINSIGHT_COSTS__RATES_USD__GPU_S` |
-| `costs.free_vcpu_s_per_month` | float | `240000` | `FINSIGHT_COSTS__FREE_VCPU_S_PER_MONTH` |
-| `costs.free_gib_s_per_month` | float | `450000` | `FINSIGHT_COSTS__FREE_GIB_S_PER_MONTH` |
 | `demo_mode` | bool | false | `DEMO_MODE` |
 
 ## Profiles
@@ -126,49 +110,6 @@ Values each profile sets (everything else keeps the default).
 | `verify.nli` | false |
 | `demo_mode` | true |
 
-### `cloud`
-
-| Key | Value |
-| --- | --- |
-| `llm.backend` | `llama-cpp` |
-| `llm.model` | `Qwen3.5-2B-Q4_K_M.gguf` |
-| `llm.num_ctx` | `2048` |
-| `retrieve.dense` | false |
-| `retrieve.rerank` | false |
-| `voice.asr` | `off` |
-| `verify.nli` | false |
-| `demo_mode` | true |
-| `storage.backend` | `gcs` |
-| `db.backend` | `postgres` |
-| `auth.mode` | `supabase` |
-| `simplify.backend` | `llama-cpp` |
-| `simplify.model` | `simplifier-q4_k_m.gguf` |
-| `simplify.fallback_model` | `qwen3-4b-instruct-2507-q4_k_m.gguf` |
-| `simplify.auto_top_n` | `15` |
-| `jobs.runner` | `cloud_run` |
-| `jobs.gpu_job` | false |
-
-### `cloud_gpu`
-
-| Key | Value |
-| --- | --- |
-| `llm.backend` | `llama-cpp` |
-| `llm.model` | `Qwen3.5-2B-Q4_K_M.gguf` |
-| `llm.num_ctx` | `2048` |
-| `retrieve.dense` | false |
-| `retrieve.rerank` | false |
-| `voice.asr` | `off` |
-| `verify.nli` | false |
-| `demo_mode` | true |
-| `storage.backend` | `gcs` |
-| `db.backend` | `postgres` |
-| `auth.mode` | `supabase` |
-| `simplify.backend` | `vllm` |
-| `simplify.model` | `simplifier-awq` |
-| `simplify.auto_top_n` | `15` |
-| `jobs.runner` | `cloud_run` |
-| `jobs.gpu_job` | true |
-
 ## Environment variables a deployment may set
 
 Names only: values never live in the repository (`.env.example` lists the same names).
@@ -177,14 +118,10 @@ Names only: values never live in the repository (`.env.example` lists the same n
 | --- | --- |
 | `FINSIGHT_PROFILE` | — |
 | `UPLOADS_ENABLED` | — |
-| `FINSIGHT_DB__URL` | `cloud`, `cloud_gpu` |
-| `FINSIGHT_STORAGE__BUCKET` | `cloud`, `cloud_gpu` |
-| `FINSIGHT_AUTH__SUPABASE_URL` | `cloud`, `cloud_gpu` |
+| `FINSIGHT_DB__URL` | — |
+| `FINSIGHT_AUTH__SUPABASE_URL` | — |
 | `FINSIGHT_AUTH__JWT_SECRET` | — |
 | `FINSIGHT_AUTH__ADMIN_EMAILS` | — |
-| `FINSIGHT_SIMPLIFY__VLLM_URL` | — |
-| `GCP_PROJECT` | `cloud`, `cloud_gpu` |
-| `GCP_REGION` | `cloud`, `cloud_gpu` |
 | `FINSIGHT_API_ORIGIN` | — |
 | `NEXT_PUBLIC_SUPABASE_URL` | — |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | — |

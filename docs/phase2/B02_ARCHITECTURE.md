@@ -1,5 +1,7 @@
 # B02 — Architecture (Big Phase 2)
 
+> **Superseded in part (4 Oct 2026, B-ADR-16):** Google Cloud (Cloud Run, Cloud Storage, GPU job, `deploy/gcp/`, `cloud` and `cloud_gpu` profiles) was removed when the credit ran out. The product runs locally. Read the Cloud Run, GCS, GPU and deploy parts below as history.
+
 ## 1. Principles (additions to Phase 1 §1)
 
 1. **Same code locally and in the cloud.** Storage, database, queue and LLM sit behind adapters chosen by profile (`dev_light`, `full`, `cloud` = Cloud Run on CPU, `cloud_gpu` = with the L4 GPU job; `deploy_cpu` stays as the showcase-only fallback of ADR-022). No `if cloud:` branches in business logic.

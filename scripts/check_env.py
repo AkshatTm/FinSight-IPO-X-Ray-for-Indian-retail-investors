@@ -1,6 +1,6 @@
 """Report which environment variables a profile still needs. Prints names only, never values.
 
-uv run python scripts/check_env.py cloud
+uv run python scripts/check_env.py full
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ from finsight.core.config import REQUIRED_ENV, missing_env
 
 
 def main(argv: list[str]) -> int:
-    profile = argv[1] if len(argv) > 1 else "cloud"
+    profile = argv[1] if len(argv) > 1 else "dev_light"
     if profile not in REQUIRED_ENV:
         print(f"{profile}: no required environment variables")
         return 0

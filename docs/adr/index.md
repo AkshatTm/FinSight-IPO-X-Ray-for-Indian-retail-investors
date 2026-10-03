@@ -77,6 +77,7 @@ Full text: [09_DECISIONS.md](../09_DECISIONS.md).
 | B-ADR-13 | Forbidden phrases, not forbidden words | proposed |
 | B-ADR-14 | doc_id beside ipo_id; showcase primary doc = RHP with the Prospectus as companion | proposed |
 | B-ADR-15 | Committed real-section fixture pack (`tests/fixtures/real/`) | proposed |
+| B-ADR-16 | Local-only: Google Cloud removed | accepted (supersedes B-ADR-04; full text in `docs/phase2/B08_DECISIONS.md`) |
 | ADR-052 | addendum 2 (F7, 3 Oct) | lab routes, ACCEPTED with ADR-052 |
 
 ## Phase 2
@@ -100,3 +101,4 @@ Full text: [B08_DECISIONS.md](../phase2/B08_DECISIONS.md).
 | B-ADR-13 | Forbidden phrases, not forbidden words | proposed (3 Oct 2026) |
 | B-ADR-14 | doc_id beside ipo_id; showcase primary doc = RHP | proposed (3 Oct 2026) |
 | B-ADR-15 | Committed real-section fixture pack | proposed (3 Oct 2026) |
+| B-ADR-16 | Local-only: Google Cloud removed | accepted (4 Oct 2026) |

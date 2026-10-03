@@ -1,5 +1,7 @@
 # Hosting setup steps (B0.3)
 
+> **Superseded in part (4 Oct 2026, B-ADR-16):** Google Cloud (Cloud Run, Cloud Storage, GPU job, `deploy/gcp/`, `cloud` and `cloud_gpu` profiles) was removed when the credit ran out. The product runs locally. Read the Cloud Run, GCS, GPU and deploy parts below as history.
+
 These are Akshat's hand steps, in order. The design is in B02 §10 and B-ADR-04 (Google Cloud Run + GCS, Supabase Auth + Postgres, Vercel).
 
 **Rules:**
@@ -57,7 +59,7 @@ Nothing in Part B is done by Claude, and nothing is done before your explicit "g
 8. **GPU quota:**
    - IAM & Admin → Quotas → "Total Nvidia L4 GPU allocation without zonal redundancy, per project per region" for **Cloud Run jobs** in `asia-southeast1`.
    - Request 1 if it is 0. Without it, use profile `cloud` (CPU only).
-9. **Deploy:** follow `docs/runbooks/DEPLOY_RUNBOOK.md` (B3.3a, B3.3b), then run `scripts/cloud_smoke.py`.
+9. **Deploy:** follow the removed deploy runbook (B3.3a, B3.3b), then run `scripts/cloud_smoke.py`.
 
 ## Fallback (paid, optional)
 Hugging Face Docker Space (`deploy_cpu`, ADR-022). This needs HF PRO (about $9/month), because free accounts can no longer create Docker Spaces. Use it only if GCP is not set up by the showcase date.

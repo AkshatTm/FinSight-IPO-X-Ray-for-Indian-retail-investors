@@ -435,7 +435,7 @@ export interface paths {
         put?: never;
         /**
          * Upload File
-         * @description Local profiles only: the raw PDF bytes (the cloud profiles PUT to a signed GCS URL).
+         * @description Local profiles only: the raw PDF bytes (the client never talks to storage directly).
          */
         post: operations["upload_file_api_uploads__doc_id__file_post"];
         delete?: never;
@@ -668,26 +668,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/costs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Admin Costs
-         * @description Per-day uploads, CPU (and GPU) seconds, estimated cost and free-grant share.
-         */
-        get: operations["admin_costs_api_admin_costs_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/admin/jobs": {
         parameters: {
             query?: never;
@@ -890,63 +870,6 @@ export interface components {
             percentile: number;
             /** Corpus N */
             corpus_n: number;
-        };
-        /**
-         * CostDay
-         * @description One IST day of ``/api/admin/costs``.
-         */
-        CostDay: {
-            /** Date */
-            date: string;
-            /** Uploads */
-            uploads: number;
-            /** Jobs */
-            jobs: number;
-            /** Failed */
-            failed: number;
-            /** Vcpu S */
-            vcpu_s: number;
-            /** Gib S */
-            gib_s: number;
-            /** Gpu S */
-            gpu_s: number;
-            /** Usd */
-            usd: number;
-        };
-        /**
-         * CostSummary
-         * @description ``GET /api/admin/costs``: estimates from job wall-clock time; billing is the truth.
-         */
-        CostSummary: {
-            /** Days */
-            days: components["schemas"]["CostDay"][];
-            total: components["schemas"]["CostTotal"];
-            /** Usd Incomplete */
-            usd_incomplete: boolean;
-            /** Provisional */
-            provisional: boolean;
-            /** Window Days */
-            window_days: number;
-        };
-        /**
-         * CostTotal
-         * @description Totals over the window, with the share of the monthly free grant used.
-         */
-        CostTotal: {
-            /** Uploads */
-            uploads: number;
-            /** Jobs */
-            jobs: number;
-            /** Vcpu S */
-            vcpu_s: number;
-            /** Gib S */
-            gib_s: number;
-            /** Usd */
-            usd: number;
-            /** Free Vcpu Share */
-            free_vcpu_share: number;
-            /** Free Gib Share */
-            free_gib_share: number;
         };
         /**
          * Count
@@ -3575,48 +3498,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RedFlags"];
-                };
-            };
-            /** @description Client Error */
-            "4XX": {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Server Error */
-            "5XX": {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    admin_costs_api_admin_costs_get: {
-        parameters: {
-            query?: {
-                days?: number;
-            };
-            header?: {
-                authorization?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CostSummary"];
                 };
             };
             /** @description Client Error */

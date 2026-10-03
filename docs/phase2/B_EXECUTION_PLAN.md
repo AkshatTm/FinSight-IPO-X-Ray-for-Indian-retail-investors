@@ -1,5 +1,7 @@
 # B_EXECUTION_PLAN — how each Phase 2 part gets built
 
+> **Superseded in part (4 Oct 2026, B-ADR-16):** Google Cloud (Cloud Run, Cloud Storage, GPU job, `deploy/gcp/`, `cloud` and `cloud_gpu` profiles) was removed when the credit ran out. The product runs locally. Read the Cloud Run, GCS, GPU and deploy parts below as history.
+
 **Scope:** for every sub-phase/part in `B07_ROADMAP.md`: location, issue, branch, model, files, tests that prove it is done, planned commits, dependencies and Akshat's hand-work. `B07` wins on dates, gates and the cut order; `B11` on where work runs; `B06` on payloads; `B02` on module boundaries.
 **Status:** proposed in PR `docs/b0.2-phase2-docs` (B0.K kickoff review + B0.2). Written Sat 3 Oct 2026, after Akshat's answers to the STEP 2 review.
 
