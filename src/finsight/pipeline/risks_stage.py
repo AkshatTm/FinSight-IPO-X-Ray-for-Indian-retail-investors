@@ -1,27 +1,22 @@
-"""The ``risks_split`` stage (B02 §3.1 step 9): Risk Factors pages → ``risks.json`` (raw risks).
+"""Risk Factors pages → raw risks, for the ``risks_split`` upload stage (B02 §3.1 step 9).
 
-The upload worker runs it after ``sections``. Residential addresses of individuals in a risk's
-title or body are replaced with ``[withheld for privacy]`` (B02 §11, the same rule as the
-search index). It reads the parsed document, the sections and the
-tables that earlier stages handed over in ``ctx.scratch``; it joins ``upload_stages`` when the
-parse and sections stages do (B1.3a).
+``jobs.upload_stages`` runs it after ``sections`` and writes ``risks.json``. Residential
+addresses of individuals in a risk's title or body are replaced with ``[withheld for privacy]``
+(B02 §11, the same rule as the search index).
 """
 
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import Any
 
 from pydantic import TypeAdapter
 
 from finsight.core.schemas import BBox, ParsedDoc, Risk, Section, Table
-from finsight.jobs import JobContext
 from finsight.retrieve import redact_prose
 from finsight.risks import segment_pages, to_risks
-from finsight.storage import put_json
 
 RISKS_FILE = "risks.json"
-_RISKS = TypeAdapter(list[Risk])
+RISKS = TypeAdapter(list[Risk])
 
 
 def table_boxes(tables: Sequence[Table]) -> dict[int, list[BBox]]:
@@ -56,12 +51,3 @@ def split_risks(
         )
         for r in risks
     ]
-
-
-def risks_split(ctx: JobContext) -> dict[str, Any]:
-    """Stage function for ``jobs.Stage("risks_split", risks_split, output="risks.json")``."""
-    risks = split_risks(
-        ctx.scratch["parsed"], ctx.scratch["sections"], ctx.scratch.get("tables", [])
-    )
-    put_json(ctx.storage, ctx.key(RISKS_FILE), _RISKS.dump_python(risks, mode="json"))
-    return {"n_risks": len(risks)}

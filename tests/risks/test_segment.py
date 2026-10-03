@@ -290,13 +290,9 @@ def test_to_risks_numbers_in_order() -> None:
     assert risks[1].page_end == 11
 
 
-def test_split_stage_reads_the_risk_factors_section_and_writes_risks_json(tmp_path: Path) -> None:
-    from finsight.core.config import get_settings
+def test_split_risks_reads_the_risk_factors_section_and_its_table_boxes() -> None:
     from finsight.core.schemas import ParsedDoc, Section, Table, TableCell
-    from finsight.db import Database
-    from finsight.jobs import JobContext
-    from finsight.pipeline.risks_stage import risks_split, split_risks, table_boxes
-    from finsight.storage import LocalStorage, get_json
+    from finsight.pipeline import split_risks, table_boxes
 
     pages, boxes = mixed_doc()
     cover = Page(number=1, width=W, height=H, words=[], text="", is_scanned=False)
@@ -314,23 +310,13 @@ def test_split_stage_reads_the_risk_factors_section_and_writes_risks_json(tmp_pa
         Section(id="risk_factors", title="RISK FACTORS", start_page=30, end_page=32,
                 method="toc", confidence=1.0),
     ]  # fmt: skip
-    assert len(split_risks(parsed, sections, tables)) == 2
+    assert [r.rid for r in split_risks(parsed, sections, tables)] == ["r1", "r2"]
     assert split_risks(parsed, []) == []
-
-    storage = LocalStorage(tmp_path)
-    ctx = JobContext(
-        doc_id="doc_0123456789abcdef", job_id="j1", db=Database("sqlite://"), storage=storage,
-        settings=get_settings(),
-        scratch={"parsed": parsed, "sections": sections, "tables": tables},
-    )  # fmt: skip
-    assert risks_split(ctx) == {"n_risks": 2}
-    saved = get_json(storage, ctx.key("risks.json"))
-    assert [r["rid"] for r in saved] == ["r1", "r2"]
 
 
 def test_split_stage_withholds_residential_addresses() -> None:
     from finsight.core.schemas import ParsedDoc, Section
-    from finsight.pipeline.risks_stage import split_risks
+    from finsight.pipeline import split_risks
 
     p = (
         PageBuilder(5)
@@ -357,7 +343,7 @@ def test_short_section_loses_the_running_header_using_the_whole_document(tmp_pat
     from make_fixture_pdf import RISK_TITLES, build_rhp_with_risks
 
     from finsight.parse import find_sections
-    from finsight.pipeline.risks_stage import split_risks
+    from finsight.pipeline import split_risks
 
     parsed = parse_pdf(build_rhp_with_risks(tmp_path / "rhp.pdf"), "acme", "rhp")
     sections = find_sections(parsed)
