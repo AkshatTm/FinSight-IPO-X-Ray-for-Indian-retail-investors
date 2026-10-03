@@ -254,7 +254,16 @@ def glossary_page() -> str:
     return "".join(lines)
 
 
+def _schema_type(annotation: object) -> str:
+    if isinstance(annotation, type):
+        return annotation.__name__
+    text = re.sub(r"\b(?:[a-z_][\w]*\.)+([A-Za-z_]\w*)", r"\1", str(annotation))
+    text = re.sub(r"Annotated\[(.+?), FieldInfo\([^)]*\)\]", r"\1", text)
+    return text.replace("|", "\\|")
+
+
 def _schema_table(model: type[BaseModel]) -> str:
+    model.model_rebuild(force=True)  # resolve forward references the same way in every process
     rows = ["| Field | Type | Default |\n| --- | --- | --- |\n"]
     for name, field in model.model_fields.items():
         default = (
@@ -262,7 +271,7 @@ def _schema_table(model: type[BaseModel]) -> str:
             if field.is_required()
             else _cell(field.get_default(call_default_factory=True))
         )
-        rows.append(f"| `{name}` | `{_type(field.annotation)}` | {default} |\n")
+        rows.append(f"| `{name}` | `{_schema_type(field.annotation)}` | {default} |\n")
     return "".join(rows)
 
 
