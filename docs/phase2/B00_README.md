@@ -21,13 +21,14 @@ All Phase 1 docs (`docs/00`–`12`) stay valid unless a Phase 2 doc says otherwi
 | B08 | `B08_DECISIONS.md` | New ADRs (B-ADR-01 …) and which Phase 1 ADRs change | When something looks odd |
 | B09 | `B09_DOCUMENTATION_STANDARDS.md` | Industry-grade documentation the project must ship with | Throughout; mainly B4 |
 | B10 | `B10_PROMPTS.md` | Kickoff, resume (after `/clear`), overnight, stuck and gate-review prompts; **cloud and local versions** | Akshat, each session |
+| — | `B_EXECUTION_PLAN.md` | Per part: location, issue, branch, model, files, tests, commits, dependencies, dated hand-work; the approved review fixes (§1) | **Every session**, with B07 |
 | B11 | `B11_CLOUD_WORKFLOW.md` | **Where work runs**: cloud sessions vs local sessions vs Akshat, fixture pack, hand-off loop, credit budget | Before starting any session |
 
 ## Precedence
 
 1. A direct instruction from Akshat in the current session (Claude Code points out conflicts first).
 2. Phase 2 docs over Phase 1 docs where they disagree (and the Phase 1 doc gets a one-line note pointing here, in the same PR).
-3. Within Phase 2: `B11` decides where work runs, `B06` wins on payloads, `B02` on module boundaries, `B07` on order and dates, `B01` on scope, `B05` on anything visible on screen, `B04` on metrics.
+3. Within Phase 2: `B11` decides where work runs, `B_EXECUTION_PLAN.md` on files/tests/commits per part, `B06` wins on payloads, `B02` on module boundaries, `B07` on order and dates, `B01` on scope, `B05` on anything visible on screen, `B04` on metrics.
 
 ## What stays from Phase 1 (unchanged)
 
@@ -37,6 +38,6 @@ Parser, section finder, tables, number normaliser, rules + fine-tuned DeBERTa ex
 
 - Any user (signed in with Google) can upload an RHP, DRHP or final Prospectus.
 - New: **red-flag scorecard**, **plain-English risk report** (English only), **risk level (Low / Medium / High) with reasons**, **comparisons**.
-- New models: risk-category classifier (base on Kaggle, large on Colab), teacher → student simplifier (Colab Pro).
-- Public deployment on **Google Cloud Run** (CPU API + L4 GPU worker, scale to zero) + Vercel + Supabase.
+- New models: risk-category classifier (base and large on Kaggle), teacher → student simplifier (Kaggle-first; Colab optional).
+- Public deployment, **CPU-first and cloud-agnostic**: Azure Container Apps for Students or a Hugging Face Docker Space + Supabase (Auth, Postgres, Storage) + Vercel, scaling to zero. Google Cloud Run GPU + vLLM is an optional upgrade (B-ADR-04, revised 3 Oct).
 - Phase 1 ADR-005 ("never use rating labels") is narrowed: outcome data may be used **only to validate** the risk level, never to train a buy/avoid predictor (B-ADR-03).

@@ -4,23 +4,23 @@ Base path `/api`. Conventions from `06_API_CONTRACT.md` apply (snake_case, money
 
 ## 1. Auth
 - Frontend signs in with Supabase Auth (Google provider) and sends `Authorization: Bearer <supabase_jwt>`.
-- The API verifies the JWT (Supabase JWKS), creates/updates `users` on first call.
-- Required for: `POST /uploads`, `GET /me/*`, `POST …/simplify` (prioritise). Everything else is public for showcase and shared reports.
-- New error codes: `unauthorized` (401), `quota_exceeded` (429, body has `limit`, `resets_at`), `global_quota_exceeded` (429).
+- The API verifies the JWT (Supabase JWKS with an HS256 fallback; checks `aud = authenticated` and `iss`), creates/updates `users` on first call.
+- Required for: `POST /uploads/*`, `GET /me/*`. `POST …/simplify` is **auth optional and rate-limited per IP**. Everything else is public for showcase and shared reports.
+- New error codes: `unauthorized` (401), `quota_exceeded` (429, body has `limit`, `resets_at`), `global_quota_exceeded` (429), `uploads_disabled` (503, kill switch), `hash_mismatch` (422).
 
 ## 2. Uploads and jobs
 
 ### `POST /api/uploads/init`
 Body: `{filename, size_bytes, sha256}` →
 - If `sha256` already processed: `{status: "exists", doc_id}`.
-- Else: `{status: "upload", doc_id, upload_url, expires_at}` (signed GCS PUT URL in cloud; local profile returns `/api/uploads/{doc_id}/file`).
-Checks: auth, quota, size ≤ 60 MB.
+- Else: `{status: "upload", doc_id, upload_url, expires_at}` (signed Storage upload URL in the cloud profiles — Supabase Storage or S3; local profile returns `/api/uploads/{doc_id}/file`).
+Checks: auth, `UPLOADS_ENABLED`, quota, size ≤ `uploads.max_mb` (50 on the Supabase Free plan).
 
 ### `PUT {upload_url}` (direct to storage) or `POST /api/uploads/{doc_id}/file` (local)
 Raw PDF bytes.
 
 ### `POST /api/uploads/{doc_id}/complete`
-→ `{doc_id, job_id, status: "queued"}`. Starts validation + the job. Rejections return 422 with `code` ∈ `scanned | password | too_large | too_many_pages | not_offer_document`.
+→ `{doc_id, job_id, status: "queued"}`. **Recomputes SHA-256 on the server** (mismatch → 422 `hash_mismatch`), then starts validation + the job. Rejections return 422 with `code` ∈ `scanned | password | too_large | too_many_pages | not_offer_document | hash_mismatch`.
 
 ### `GET /api/docs/{doc_id}`
 `DocRecord` + `{stages: [{stage, status, started_at, finished_at, detail}], companion_doc_id?}`.
@@ -34,7 +34,9 @@ Events in order (each `data:` is JSON):
 | `ready` | `{part: "facts"|"redflags"|"risk_level"|"risks"|"compare"|"chat"}` — the UI fetches that part |
 | `risk_simplified` | `{rid, simple_status}` |
 | `done` | `{status: "ready"|"partial"|"failed", failed_stages: []}` |
-Reconnects with `Last-Event-ID` replay from `job_events`.
+Reconnects with `Last-Event-ID` replay from `job_events` (the API polls the table about once a second; the Supabase pooler has no LISTEN/NOTIFY).
+
+**Stage → event map (B02 §3.1 and B05 §4 follow this):** every B02 stage id emits `stage` start/end/failed; `parsed` and `simplify` also emit `progress`; `ready` parts: `facts` after `facts`, `redflags` after `redflags`, `risks` after `risks_scored`, `risk_level` after `risk_level`, `compare` after `compare`, `chat` after `index`. B02's per-stage payloads go in `detail`.
 
 ### `GET /api/me/uploads`
 `[{doc_id, company, doc_type, created_at, status}]`.
@@ -54,10 +56,10 @@ Assembled overview: `{doc, facts_summary, risk_level, top_risks: [Risk (5)], red
 Full `Risk` + `nearest_examples`.
 
 ### `POST /api/docs/{doc_id}/risks/{rid}/simplify` (auth optional; rate-limited)
-Moves the risk to the front of the simplification queue. → `{rid, simple_status, position}`.
+Adds the risk to the simplification queue (or moves it to the front). On the CPU host only the top 15 risks are queued automatically; any other risk is queued by this call. → `{rid, simple_status, position}`.
 
 ### `GET /api/docs/{doc_id}/risk-level`
-`RiskLevel`.
+`RiskLevel` (with `score`, `max_points`, `checks_available`, `corpus_n` and `behind_click: bool` from config).
 
 ### `GET /api/docs/{doc_id}/compare`
 `{peers: [{name, pe, eps, ronw, nav, is_issuer, evidence}], percentiles: [{metric, value, percentile, corpus_n}]}`.
@@ -69,10 +71,26 @@ Moves the risk to the front of the simplification queue. → `{rid, simple_statu
 `GET /api/ipos` gains `recent_public: [{doc_id, company, doc_type, risk_level, created_at}]` (last 10 completed uploads, public only).
 
 ## 5. Lab
-`GET /api/lab/b/{segmentation|summary|redflags|classifier|seriousness|simplify|readability|novelty|risklevel|latency|cost}` → files in `eval_results/b/`.
+`GET /api/lab/b/{name}` → files in `eval_results/b/`:
+
+| name | file(s) |
+|---|---|
+| segmentation | `segmentation.json` |
+| summary | `summary_extraction.json` |
+| redflags | `redflags.json` |
+| classifier | `classifier_*.json` (merged list) |
+| seriousness | `seriousness.json` |
+| simplify | `simplify_human.json` + `simplify_checks.json` |
+| readability | `readability.json` |
+| novelty | `novelty.json` |
+| risklevel | `risklevel_validation.json` |
+| latency | `latency_cloud.json` |
+| cost | `cost.json` |
+
+A missing file → 404 `not_available` (Phase 1 rule); the Lab hides that section.
 
 ## 6. Admin (Akshat only, by email allow-list)
-`GET /api/admin/costs` → per-day uploads, GPU seconds, estimated cost; `GET /api/admin/jobs?status=failed`.
+`GET /api/admin/costs` → per-day uploads, CPU (and GPU) seconds, share of the free grant, estimated cost; `GET /api/admin/jobs?status=failed`.
 
 ## 7. Health
-`/api/health` adds `{queue_length, vllm: {reachable, model}, worker_last_job_s, storage, db}`.
+`/api/health` adds `{queue_length, uploads_enabled, llm: {backend, model, loaded}, worker_last_job_s, storage, db}` (`vllm` only on the optional GPU path).

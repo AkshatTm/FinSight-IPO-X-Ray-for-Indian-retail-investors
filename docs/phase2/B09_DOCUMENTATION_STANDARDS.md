@@ -25,7 +25,7 @@ How-to guides
   ├─ Add a new X-Ray field
   ├─ Retrain the risk classifier (Kaggle / Colab)
   ├─ Retrain the simplifier (Colab)
-  ├─ Deploy to Google Cloud (runbook link)
+  ├─ Deploy to the CPU host (Azure Container Apps or HF Space; runbook link)
   └─ Record the demo cache
 Reference
   ├─ API (Redoc from openapi.json)
@@ -74,7 +74,7 @@ Project
 | `docs/runbooks/*.md` | Deploy, rollback, cost incident, rotate secrets, restore DB (template §6) | Step lists with exact commands |
 | `docs/evaluation.md` | All experiments E1–E24: question, method, n, results table, caveats | Generated tables + written caveats |
 | `docs/adr/` | Index of all ADRs (Phase 1 + B) | Generated index |
-| `docs/troubleshooting.md` | Top 15 problems (RAM, Ollama, CUDA, Kaggle, Colab, Cloud Run cold starts, Supabase auth) with fixes | — |
+| `docs/troubleshooting.md` | Top 15 problems (RAM, Ollama, CUDA, Kaggle, Colab, host cold starts and sleep, Supabase auth and project pause) with fixes | — |
 | `docs/glossary.md` | Finance + ML terms | From 12 §14 + ML terms |
 
 ## 4. Model card template
@@ -110,7 +110,7 @@ How to verify · Rollback · Common errors and fixes · Last tested (date, by)
 Mermaid in Markdown (renders on GitHub and MkDocs). Required: C4 context, containers, components (backend), upload sequence, chat sequence, data flow for training (corpus → teacher → filters → student). Keep diagrams next to the text that explains them.
 
 ## 9. CI checks for docs
-`mkdocs build --strict`, `markdownlint-cli2`, `lychee` (links), `interrogate`, `openapi.json` up to date (regenerate + diff), generated tables up to date (`poe docs-gen` + diff).
+`mkdocs build --strict`, `markdownlint-cli2`, `lychee` (links), `interrogate`, `openapi.json` up to date (regenerate + diff), generated tables up to date (`poe docs-gen` + diff). Markdown lint and link checks cover **only the MkDocs sources** (the Phase 1 numbered docs are left as they are); `interrogate` is warn-only until B4.1 sets the 70 % floor.
 
 ## 10. Definition of done for documentation (checked at BG3 and v2.0.0)
 - [ ] Docs site builds and is live on GitHub Pages

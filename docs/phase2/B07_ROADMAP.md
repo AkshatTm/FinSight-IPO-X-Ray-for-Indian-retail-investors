@@ -1,6 +1,8 @@
 # B07 — Roadmap (Big Phase 2)
 
-**Today:** Sun 4 Oct 2026 · **Feature freeze:** Sun 25 Oct · **Final tag v2.0.0:** Sat 31 Oct · **Submission:** Sun 1 Nov
+**Written:** Sat 3 Oct 2026 (kickoff review) · **Feature freeze:** Sun 25 Oct · **Final tag v2.0.0:** Sat 31 Oct · **Submission:** Sun 1 Nov
+
+**Detail per part** (files, tests, commits, dependencies, dated hand-work): `B_EXECUTION_PLAN.md`. **Hosting is CPU-first** (B-ADR-04 revised): Azure Container Apps for Students or an HF Docker Space + Supabase + Vercel; GCP Cloud Run GPU is optional. **Training is Kaggle-first**; Colab optional.
 
 ## 0. How to use this file
 
@@ -22,10 +24,10 @@
 
 | Gate | Date | Must be true | If it fails |
 |---|---|---|---|
-| **BG0** | Mon 5 Oct | Phase 1 IPO-click bug fixed; Phase 2 docs merged; CLAUDE.md updated; GCP project + budget alert + Supabase (Google OAuth) + Colab ready | Slip B1 by a day |
+| **BG0** | Mon 5 Oct | Phase 1 IPO-click bug fixed (or proven not to reproduce); Phase 2 docs merged; CLAUDE.md updated; hosting accounts (Azure for Students or HF, Supabase with Google OAuth, Vercel) + budget alert + Kaggle GPU ready; B0.4 fixture pack merged | Slip B1 by a day |
 | **BG1** | Sun 11 Oct | Locally: upload an unseen RHP → facts + 13 red flags + progressive events; E14/E15 numbers on gold v3; upload UI with Google sign-in | Ship red flags for showcase only; uploads continue in week 2 |
-| **BG2** | Sun 18 Oct | Risk report end-to-end locally (split → features → simplified with checks → risk level with reasons); E13, E16, E18–E22 have real numbers | Use zero-shot base model for rewrites; drop large classifier |
-| **BG3** | Sun 25 Oct | **Public URL**: someone else signs in, uploads an RHP, gets a full report; E23/E24; Model Lab updated; **FEATURE FREEZE** | Uploads limited to Akshat; showcase-only public site |
+| **BG2** | Sun 18 Oct | Risk report end-to-end locally (split → features → simplified with checks → risk level with reasons); E13, E16, E18–E22 have real numbers; CPU smoke deploy (B2.7) done if Akshat said "go" | Use zero-shot base model for rewrites; drop large classifier |
+| **BG3** | Sun 25 Oct | **Public URL on the CPU host**: someone else signs in, uploads an RHP, gets a full report (top 15 rewrites automatic, the rest on click); E23/E24; Model Lab updated; **FEATURE FREEZE** | Uploads limited to Akshat; showcase-only public site (ADR-022 fallback) |
 
 ## 2. Cut order (cut from the top if behind)
 1. Report "Download summary (PDF)"
@@ -45,25 +47,25 @@
 
 - [ ] **B0.0 Claim the cloud credit + push docs** · 👤 A + 💻 L · —
   👤 Claim the $100 credit (by Wed 7 Oct) and connect GitHub to Claude Code on the web. 💻 Commit and push `docs/phase2/` (a quick local session or plain git).
-- [ ] **B0.K Kickoff review** · ☁️ C · **O**
+- [x] **B0.K Kickoff review** · ☁️ C · **O** (Sat 3 Oct)
   B10 Prompt C1: STEP 2 review and questions → (my answers via Claude chat) → STEP 3 `B_EXECUTION_PLAN.md`, part of B0.2.
 - [ ] **B0.1 Fix the IPO workspace bug** · 💻 L · **S** · `fix/b0.1-workspace-error`
   Reproduce with Playwright against the real API; fix; regression test opening all 10 workspaces. Done when: all 10 open with facts and page images.
-- [ ] **B0.2 Phase 2 docs + project rules** · ☁️ C · **S** · `docs/b0.2-phase2-docs`
+- [ ] **B0.2 Phase 2 docs + project rules** · ☁️ C · **O** (done inside the kickoff session) · `docs/b0.2-phase2-docs`
   As before, plus: CLAUDE.md learns the **environment rule** (detect cloud vs local; in cloud, follow the cloud note and B11) and the hand-off loop; issues for B0–B1 with location labels (`cloud`, `local`, `akshat`).
-- [ ] **B0.3 Cloud bootstrap (no deploy)** · ☁️ C · **S** · `chore/b0.3-cloud-bootstrap`
-  `CLOUD_SETUP_STEPS.md`, gcloud scripts, `.env.example`, `cloud` profile. 👤 Follow the steps (~45 min).
+- [ ] **B0.3 Hosting bootstrap (no deploy)** · ☁️ C · **S** · `chore/b0.3-hosting-bootstrap`
+  `HOSTING_SETUP_STEPS.md` (Azure for Students + Supabase + Vercel), `HOSTING_COMPARISON.md` (Azure Container Apps vs HF Docker Space; Akshat picks), `.env.example`, `cloud` + `cloud_gpu` profiles, upload limits and kill switch config. 👤 Follow the steps (~45 min).
 - [ ] **B0.4 Fixture pack** · 💻 L · **S** · `test/b0.4-fixture-pack`
   `scripts/export_fixtures.py` → `tests/fixtures/real/` per B11 §3 (≤ 20 MB, no PDFs or weights). Done when: merged and the size is reported.
 
 ### B1 — Upload and red flags (Tue 6 – Sun 11 Oct) → BG1
 
-- [ ] **B1.1a ★ Doc type + validation (fixtures)** · ☁️ C · **O** · `feat/b1.1-ingest-any-pdf`
+- [ ] **B1.1a Doc type + validation (fixtures)** · ☁️ C · **S (high effort)** · `feat/b1.1-ingest-any-pdf`
   `ingest.upload` validation, dedupe, doc-type detection, rejection codes; synthetic PDF fixtures (RHP/DRHP/Prospectus/non-offer/scanned) generated in tests.
 - [ ] **B1.1b Harden on real and unseen PDFs** · 💻 L · **S** · `fix/b1.1b-real-pdfs`
   Run on the 20 showcase PDFs + 5 unseen RHPs (👤 downloads them by Wed 7 Oct); fix what breaks; record timings.
 - [ ] **B1.2 ★ Jobs, storage, database, events** · ☁️ C · **O** · `feat/b1.2-jobs-pipeline`
-  As before (Local/GCS storage, SQLite/Postgres, jobs + events + replay, local worker), all tested with fixtures.
+  Local/S3 (Supabase Storage) storage, SQLite/Postgres (pooler), jobs + events + replay, simplification priority queue, quotas + kill switch + retention, local worker; tested with fixtures; Postgres in a CI service job.
 - [ ] **B1.3a ★ Summary + financial extraction (fixtures)** · ☁️ C · **O** · `feat/b1.3-summary-extraction`
   `summary` package developed and tested on the fixture pack (dev IPOs only for tuning).
 - [ ] **B1.3b Run on full documents + E14** · 💻 L · **S** · `eval/b1.3b-summary-eval`
@@ -76,43 +78,47 @@
 
 ### B2 — Risk intelligence (Mon 12 – Sun 18 Oct) → BG2
 
+**Pulled forward (Q16):** the ☁️ parts B2.1a, B2.3a, B2.4a and B2.5a start in week 1 (Tue 6 – Thu 8) in parallel cloud sessions; B2.1b and the teacher pilot run Sat 10; see the calendar in `B_EXECUTION_PLAN.md` §2.
+
 - [ ] **B2.1a ★ Risk segmentation (fixtures)** · ☁️ C · **O** · `feat/b2.1-risk-segmentation`
   Segmentation for PDF pages (bold/numbered) and corpus text, tested on the fixture pack.
 - [ ] **B2.1b Risk bank + E13** · 💻 L · **S** · `data/b2.1b-risk-bank`
-  Segment the full corpus, embed with bge-m3 (GPU, Ollama stopped, or Kaggle), build `risk_bank.parquet`; E13/E13b; export the teacher input set (5,000 risks) to Google Drive. 👤+Claude chat: segmentation spot-check.
+  Segment the full corpus, embed with bge-m3 (GPU, Ollama stopped, or Kaggle), build `risk_bank.parquet`; E13/E13b; export the teacher input set (5,000 risks) as a private Kaggle dataset. 👤+Claude chat: segmentation spot-check + E13b boundaries.
 - [ ] **B2.2a Unusualness, hedging, numbers (code)** · ☁️ C · **S** · `feat/b2.2-risk-features`
   Logic + API, tested with a tiny fake bank fixture.
 - [ ] **B2.2b Run + τ choice + E22** · 💻 L · **S** · `eval/b2.2b-novelty`
   Run against the real bank; τ spot-check (👤+Claude chat); E22.
 - [ ] **B2.3a ★ Teacher notebook + filters** · ☁️ C · **O** · `feat/b2.3-teacher`
-  Prompt, notebook with checkpoint/resume, filters, quality-100 sheet generator, datasheet, `COLAB_STEPS_teacher.md`; smoke test on the fake fixture set.
-- [ ] **B2.3b Teacher run** · 👤 A (Colab A100) + 💻 L · **S** · `data/b2.3b-teacher-outputs`
-  👤 run the notebook; 💻 download, filter, report drop rates; 👤+Claude chat rate quality-100 (go/no-go).
+  Prompt, **Kaggle** notebook (vLLM + Qwen ~14B AWQ) with checkpoint/resume, filters, forbidden-phrase filter, quality-100 sheet generator, datasheet, optional `COLAB_STEPS_teacher.md`; smoke test on the fake fixture set.
+- [ ] **B2.3b Teacher run** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `data/b2.3b-teacher-outputs`
+  💻 pilot 500 (Sat 10) → filters → 👤+Claude chat rate quality-100 (go/no-go, Sun 11) → 💻 full 5,000 (Mon 12), drop rates.
 - [ ] **B2.4a Classifier code + notebooks** · ☁️ C · **S** · `feat/b2.4-risk-classifier`
-  TF-IDF+LR baseline, base notebook (Kaggle), large notebook (Colab) + `COLAB_STEPS_classifier_large.md`; smoke tests on fixtures.
-- [ ] **B2.4b Train + evaluate** · 💻 L (Kaggle CLI) + 👤 A (Colab) · **S** · `eval/b2.4b-classifier`
-  💻 build train/dev from teacher labels, launch base on Kaggle (3 seeds); 👤 run large on Colab; 💻 E16 on gold-150 (👤+Claude chat labels), pick by dev.
+  TF-IDF+LR baseline, base and large notebooks (Kaggle; Colab optional), ONNX int8 export for the CPU worker; smoke tests on fixtures.
+- [ ] **B2.4b Train + evaluate** · 💻 L (Kaggle CLI) · **S** · `eval/b2.4b-classifier`
+  💻 build train/dev from teacher labels, launch base (3 seeds) and large (1 seed) on Kaggle; 💻 E16 on gold-150 (👤+Claude chat labels), pick by dev.
 - [ ] **B2.5a ★ Student notebook + checks + serving code** · ☁️ C · **O** · `feat/b2.5-simplifier`
-  QLoRA notebook, merge/export, post-checks (verifier, forbidden words, length, certainty), priority queue, Ollama/vLLM client code, `COLAB_STEPS_student.md`; tests with fixtures.
-- [ ] **B2.5b Train + evaluate** · 👤 A (Colab) + 💻 L · **S** · `eval/b2.5b-simplifier`
-  👤 run QLoRA on Colab; 💻 load locally (if it fits) or keep for cloud; E18–E20; 👤 rate gold-50 (blind).
+  Kaggle QLoRA notebook (Qwen ~3–4B, T4 fp16), merge + **GGUF Q4 export**, post-checks (verifier, forbidden phrases, length, certainty), priority queue (top 15 automatic, rest on click), llama.cpp serving (vLLM client optional), optional `COLAB_STEPS_student.md`; tests with fixtures.
+- [ ] **B2.5b Train + evaluate** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `eval/b2.5b-simplifier`
+  💻 run QLoRA on Kaggle, export GGUF, run locally on CPU; E18–E20 + CPU seconds per rewrite; 👤 rate gold-50 (blind).
 - [ ] **B2.6a ★ Seriousness + risk level (code)** · ☁️ C · **O** · `feat/b2.6-risk-level`
-  Seriousness rule, points system, threshold computation from `corpus_stats.json`, guard update; tests.
+  Seriousness rule, **normalised** points, threshold computation (2018–2023 reference), `behind_click` flag, guard update; tests.
 - [ ] **B2.6b Corpus thresholds + validation** · 💻 L · **S** · `eval/b2.6b-risklevel-validation`
-  Compute points over the corpus, write `configs/risklevel.yaml`, E17 and **E21** with an honest write-up.
+  Compute normalised scores over the 2018–2023 corpus, write `configs/risklevel.yaml` (with `corpus_n`), E17, **E21** with an honest write-up (outcomes read only by `evaluate/outcomes.py`), E8 re-run.
+- [ ] **B2.7 CPU smoke deploy** · 💻 L + 👤 A · **S** · `chore/b2.7-smoke-deploy`
+  Wed 14 Oct, **only with Akshat's "go"**: deploy API + worker on the chosen free host with Supabase; one small upload end to end; record cold start and stage timings.
 - [ ] **BG2 review** (Sun 18) · 💻 L — stop for Akshat.
 
-### B3 — Product and cloud (Mon 19 – Sat 24 Oct) → BG3
+### B3 — Product and hosting (Mon 19 – Sat 24 Oct) → BG3
 
 - [ ] **B3.1 Report UI: Overview + Risks** · ☁️ C · **S** · `feat/b3.1-report-ui`
   On mocks built from fixture `report.json`. 💻 follow-up (short): check against the real local API.
 - [ ] **B3.2 Compare** · ☁️ C · **S** · `feat/b3.2-compare` · *(cuttable)*
-- [ ] **B3.3a ★ Infra as code** · ☁️ C · **O** · `feat/b3.3-cloud`
-  Dockerfiles (API without torch, worker, vLLM), GitHub Actions → Artifact Registry → Cloud Run, Supabase/GCS wiring, budget and limits config, `scripts/cloud_smoke.py`, `DEPLOY_RUNBOOK.md`. **No deploy.**
+- [ ] **B3.3a ★ Infra as code (CPU host)** · ☁️ C · **O** · `feat/b3.3-hosting` · *pulled forward to Mon 12 Oct for B2.7*
+  Dockerfiles (API without torch; CPU worker with ONNX + llama.cpp; optional GPU worker documented), GitHub Actions → GHCR, Azure Container Apps app + queue-scaled job, HF single-container variant, Supabase wiring, budget and limits config, `scripts/cloud_smoke.py`, runbooks. **No deploy.**
 - [ ] **B3.3b Deploy** · 💻 L + 👤 A · **O** · `chore/b3.3b-deploy`
-  👤 logins and console clicks; 💻 build/push images, upload showcase artefacts + weights to GCS, deploy, run the smoke test. **Only with Akshat's explicit "go" in chat.**
-- [ ] **B3.4 Cloud evaluation + Model Lab + site copy** · 💻 L (E23/E24) + ☁️ C (Model Lab sections, landing/How it works/About copy) · **S**
-- [ ] **B3.5 Hardening** · ☁️ C (security review, failure-path tests, admin page) + 💻 L (full Playwright sweep on the real API) · **S**
+  👤 logins and console clicks; 💻 build/push images, upload showcase artefacts + GGUF weights to Supabase Storage, deploy, run the smoke test. **Only with Akshat's explicit "go" in chat.**
+- [ ] **B3.4 Cloud evaluation + Model Lab + site copy** · B3.4a ☁️ C (Model Lab sections, landing/How it works/About copy) + B3.4b 💻 L (E23/E24, E7 on the cloud profile) · **S**
+- [ ] **B3.5 Hardening** · B3.5a ☁️ C (security review, failure-path tests, admin page) + B3.5b 💻 L (full Playwright sweep on the real API) · **S**
 - [ ] **BG3 review + FEATURE FREEZE** (Sun 25) · 💻 L.
 
 ### B4 — Documentation and finish (Sun 25 Oct – Sun 1 Nov)
@@ -127,13 +133,14 @@
 | Date | Task | Time |
 |---|---|---|
 | Sun 4 – Wed 7 Oct | **Claim the $100 cloud credit (deadline 7 Oct)**, connect GitHub to Claude Code on the web | 5 min |
-| Sun 4 – Mon 5 Oct | Cloud + Supabase + Colab setup (CLOUD_SETUP_STEPS.md) | 45 min |
+| Sun 4 – Mon 5 Oct | Hosting setup (`HOSTING_SETUP_STEPS.md`: Azure for Students or HF, Supabase, Vercel; Kaggle GPU check); pick the host | 45 min |
 | by Wed 7 Oct | Download 5 unseen recent RHPs to `data/raw/unseen/` | 20 min |
 | by Fri 9 Oct | Verify gold v3 (pre-filled by Claude chat) | 1.5 h |
-| Mon 12 – Tue 13 Oct | Segmentation spot-check (50) | 20 min |
-| Tue 13 – Wed 14 Oct | Run teacher notebook on Colab; rate quality-100 (with Claude chat) | 30 min + waiting |
-| Wed 14 – Thu 15 Oct | Category gold-150 verification; run large classifier on Colab | 45 min + waiting |
-| Thu 15 – Sat 17 Oct | Run student QLoRA on Colab; rate gold-50 rewrites (blind) | 45 min + waiting |
+| Sat 10 Oct | Segmentation spot-check (50) + E13b boundaries (5 corpus excerpts) | 40 min |
+| Sun 11 Oct | Rate quality-100 of the teacher pilot (with Claude chat): go/no-go | 30 min |
+| Tue 13 Oct | τ spot-check (60 pairs) | 20 min |
+| Wed 14 Oct | Category gold-150 verification; "go" + console steps for the CPU smoke deploy | 1 h |
+| Fri 16 Oct | Rate gold-50 rewrites (blind) | 45 min |
 | Mon 19 – Sat 24 Oct | Deploy steps needing your login; test uploads; phone check | 1–2 h |
 | Leftover Phase 1 items | ASR references, Hindi strings, E7 sample (with Claude chat) | 1 h total |
 | Sun 25 Oct – Sat 31 Oct | Report, slides, video, viva | most evenings |
