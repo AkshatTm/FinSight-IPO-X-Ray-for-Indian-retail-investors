@@ -23,7 +23,7 @@ Checks: auth, `UPLOADS_ENABLED` (503 `uploads_disabled`), quota (429 `quota_exce
 Raw PDF bytes.
 
 ### `POST /api/uploads/{doc_id}/complete`
-→ `{doc_id, job_id, status: "queued"}`. **Recomputes SHA-256 on the server** (mismatch → 422 `hash_mismatch`, file deleted) and re-checks the size (422 `too_large`), then queues the job. `409 upload_not_started` if `init` was not called or the file has not arrived. The PDF is validated by the worker, never in the API process (B02 §11): `scanned | password | too_many_pages | not_offer_document` arrive as the `validated` stage failure (`detail.reason`) and as `doc.rejection`, with `doc.status = "failed"`.
+→ `{doc_id, job_id, status: "queued"}`. **Recomputes SHA-256 on the server** (mismatch → 422 `hash_mismatch`, file deleted) and re-checks the size (422 `too_large`), then queues the job. `409 upload_not_started` if `init` was not called or the file has not arrived. `503 worker_unavailable` if the worker job could not be started (Cloud Run launch failed): the job and document are marked failed and a `done` event is written, so the processing screen ends. The PDF is validated by the worker, never in the API process (B02 §11): `scanned | password | too_many_pages | not_offer_document` arrive as the `validated` stage failure (`detail.reason`) and as `doc.rejection`, with `doc.status = "failed"`.
 
 ### `GET /api/docs/{doc_id}`
 `DocRecord` + `{stages: [{stage, status, started_at, finished_at, detail}], companion_doc_id?}`.

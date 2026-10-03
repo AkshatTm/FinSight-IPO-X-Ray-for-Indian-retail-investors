@@ -47,12 +47,13 @@ Nothing in Part B is done by Claude, and nothing is done before your explicit "g
 3. **APIs:** enable `run`, `artifactregistry`, `storage`, `secretmanager`, `iamcredentials` and `cloudbuild` (optional).
 4. **Artifact Registry:** create a Docker repository `finsight` in `asia-southeast1`.
 5. **GCS bucket:** `finsight-docs-<suffix>` in `asia-southeast1`, uniform access, public access prevention on → `FINSIGHT_STORAGE__BUCKET`.
-   - CORS: `deploy/gcp/cors.json` (B3.3a), which allows PUT/GET from the Vercel and localhost origins.
-   - Lifecycle: `deploy/gcp/lifecycle.json` deletes `docs/` objects after 30 days. The showcase prefix is kept.
+   - CORS: `deploy/gcp/gcs-cors.json` (B3.3a), which allows PUT/GET from the Vercel and localhost origins.
+   - Lifecycle: `deploy/gcp/gcs-lifecycle.json` deletes `docs/` objects after 31 days (a backstop to the 30-day sweep job). The `bundle/` and `models/` prefixes are kept.
 6. **Service accounts:**
-   - `finsight-api`: Storage Object Admin on the bucket, Cloud Run Invoker/Developer to start jobs, Secret Manager accessor, and **Service Account Token Creator on itself** (V4 signed URLs need `signBlob`).
+   - `finsight-api`: Storage Object Admin on the bucket, Cloud Run Developer on the two worker jobs only (running a job with env overrides needs it), Secret Manager accessor, and **Service Account Token Creator on itself** (V4 signed URLs need `signBlob`).
+   - `finsight-deployer`: Artifact Registry Writer, used by the manual images workflow through Workload Identity Federation (no keys). Full table: `deploy/gcp/IAM.md`.
    - `finsight-worker`: Storage Object Admin on the bucket, Secret Manager accessor.
-7. **Secrets:** Secret Manager entries `db-url` and `supabase-jwt-secret` (if HS256).
+7. **Secrets:** Secret Manager entries `finsight-db-url` and `finsight-admin-emails` (plus `finsight-jwt-secret` only if the Supabase project still signs with HS256).
 8. **GPU quota:**
    - IAM & Admin → Quotas → "Total Nvidia L4 GPU allocation without zonal redundancy, per project per region" for **Cloud Run jobs** in `asia-southeast1`.
    - Request 1 if it is 0. Without it, use profile `cloud` (CPU only).

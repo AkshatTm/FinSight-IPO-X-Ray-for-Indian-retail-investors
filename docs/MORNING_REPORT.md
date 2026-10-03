@@ -63,6 +63,13 @@
   - The thresholds are **made-up placeholders** marked `provisional` until B2.6b computes them from 2018–2023 IPOs on your laptop.
   - Chat now answers "how risky is this IPO?" with the level and its reasons; "should I apply?" is still refused. One decision for you in AKSHAT_TODO ("red flags" questions).
 
+- **B3.3a (#148): everything needed to put FinSight on Google Cloud, written as files. Nothing is deployed.**
+  - Three container images: the website's API (small, no PyTorch), a worker that processes each uploaded document, and an optional GPU worker for the plain-English rewrites.
+  - Cloud Run settings for each one. The API scales to zero when idle and to at most 2 copies, the GPU job is optional, and old uploads are deleted after 30 days. Secrets are never in the files.
+  - After an upload, the API now really starts the worker on Cloud Run. If that fails, the reader sees an error instead of waiting forever.
+  - Every PR now builds the two CPU images and runs a full smoke test (upload → processing → report) against the API container. Pushing images to Google is a button you press by hand, later.
+  - Three runbooks: deploy, rollback and cost incident. The smoke deploy (B2.7) waits for your "go" and has its prompt in AKSHAT_TODO.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
