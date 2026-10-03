@@ -82,8 +82,10 @@ class UploadsConfig(BaseModel):
     """Upload limits (B01 B-FR-01, B02 §11-12). ``UPLOADS_ENABLED=false`` is the kill switch."""
 
     enabled: bool = True
-    max_mb: int = 50  # Supabase Free Storage caps files at 50 MB; the UI copy reads this value
+    max_mb: int = 50  # Akshat's limit (B01 B-FR-01); the UI copy reads this value
     max_pages: int = 1500
+    # A PDF whose median page has fewer extractable characters than this is treated as a scan.
+    scanned_min_median_chars: int = 100
     per_user_per_day: int = 3
     global_per_day: int = 10
     retention_days: int = 30
@@ -221,6 +223,9 @@ def project_root() -> Path:
     return Path.cwd().resolve()
 
 
+SHARED_BLOCKS = ("uploads",)
+
+
 def load_settings(profile: str | None = None, config_path: Path | None = None) -> Settings:
     """Load ``config.yaml`` and build the settings for one profile (env overrides apply)."""
     root = project_root()
@@ -235,7 +240,11 @@ def load_settings(profile: str | None = None, config_path: Path | None = None) -
         raise ValueError(f"Unknown profile {chosen!r}. Available: {sorted(profiles)}")
 
     paths = {key: str((root / value).resolve()) for key, value in raw.get("paths", {}).items()}
-    settings = Settings(root=root, paths=paths, **profiles[chosen])
+    chosen_values = dict(profiles[chosen])
+    for key in SHARED_BLOCKS:  # top-level blocks apply to every profile; a profile may override
+        if key in raw:
+            chosen_values[key] = {**raw[key], **chosen_values.get(key, {})}
+    settings = Settings(root=root, paths=paths, **chosen_values)
     settings.profile = chosen  # the argument wins over FINSIGHT_PROFILE picked up from the env
     kill = os.environ.get("UPLOADS_ENABLED")
     if kill is not None:  # the kill switch has a short name so it is easy to flip in a console

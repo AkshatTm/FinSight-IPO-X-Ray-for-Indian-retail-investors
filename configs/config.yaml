@@ -6,6 +6,17 @@ paths:
   models_dir: models
   eval_dir: eval_results
 
+# Upload limits for every profile (B01 B-FR-01; a profile may override). UPLOADS_ENABLED=false
+# in the environment is the kill switch.
+uploads:
+  enabled: true
+  max_mb: 50
+  max_pages: 1500
+  per_user_per_day: 3
+  global_per_day: 10
+  retention_days: 30
+  scanned_min_median_chars: 100
+
 profiles:
   dev_light:
     llm: { backend: ollama, model: "qwen3.5:0.8b", num_ctx: 2048 }
