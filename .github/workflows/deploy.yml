@@ -56,8 +56,10 @@ jobs:
         run: |
           docker build -f deploy/api.Dockerfile -t finsight-api:ci .
           docker build -f deploy/worker.Dockerfile -t finsight-worker:ci .
-      - name: worker imports
+      - name: API and worker imports (catches wheels built for the wrong libc)
         run: |
+          docker run --rm --entrypoint /app/.venv/bin/python finsight-api:ci -c \
+            "import llama_cpp, pymupdf; import finsight.api.app"
           docker run --rm --entrypoint /app/.venv/bin/python finsight-worker:ci -c \
             "import onnxruntime, sklearn, pyarrow, pymupdf, llama_cpp; import finsight.jobs.__main__"
       - name: start the API container (local profile)
