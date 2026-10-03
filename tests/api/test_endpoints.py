@@ -378,3 +378,33 @@ def test_voice_rejects_empty_and_oversized_audio(client: TestClient, app_state: 
     big = client.post("/api/voice", files={"audio": ("a.webm", b"x" * 4_000_001)})
     assert big.status_code == 413
     assert big.json()["error"]["code"] == "audio_too_long"
+
+
+def test_phase2_lab_follows_the_b06_mapping(client: TestClient, app_state: AppState) -> None:
+    from typing import get_args
+
+    from finsight.api import content
+    from finsight.api.routes import LabBName
+
+    assert set(get_args(LabBName)) == set(content.LAB_B_FILES)
+    for name in content.LAB_B_FILES:  # nothing run yet: every section 404s and the Lab hides it
+        missing = client.get(f"/api/lab/b/{name}")
+        assert (missing.status_code, missing.json()["error"]["code"]) == (404, "not_available")
+    assert client.get("/api/lab/b/nonsense").status_code == 422
+
+    b = app_state.settings.paths.eval_dir / "b"
+    b.mkdir(parents=True)
+    (b / "segmentation.json").write_text('{"f1": 0.9}', encoding="utf-8")
+    assert client.get("/api/lab/b/segmentation").json() == {"f1": 0.9}
+    (b / "classifier_tfidf.json").write_text('{"model": "tfidf-logreg"}', encoding="utf-8")
+    (b / "classifier_deberta_base.json").write_text('{"model": "base"}', encoding="utf-8")
+    assert client.get("/api/lab/b/classifier").json() == {
+        "systems": [
+            {"file": "classifier_deberta_base", "model": "base"},
+            {"file": "classifier_tfidf", "model": "tfidf-logreg"},
+        ]
+    }
+    (b / "simplify_checks.json").write_text('{"n": 120}', encoding="utf-8")
+    assert client.get("/api/lab/b/simplify").json() == {"checks": {"n": 120}}
+    (b / "simplify_human.json").write_text('{"n": 50}', encoding="utf-8")
+    assert client.get("/api/lab/b/simplify").json() == {"human": {"n": 50}, "checks": {"n": 120}}

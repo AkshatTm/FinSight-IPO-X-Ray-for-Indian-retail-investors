@@ -25,6 +25,7 @@ ROUTES = [
     ("GET", "/api/lab/fields"),
     ("GET", "/api/lab/verifier"),
     ("GET", "/api/lab/weaklabels"),
+    ("GET", "/api/lab/b/{name}"),  # B3.4a (B06 §5)
     ("GET", "/api/lab/frontier"),
     ("GET", "/api/lab/retrieval"),
     ("GET", "/api/lab/asr"),

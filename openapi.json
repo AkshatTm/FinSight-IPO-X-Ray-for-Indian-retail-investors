@@ -996,6 +996,74 @@
         }
       }
     },
+    "/api/lab/b/{name}": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Lab B",
+        "description": "Model Lab, Phase 2 (E13–E24): one result from ``eval_results/b/`` (B06 §5).",
+        "operationId": "lab_b_api_lab_b__name__get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "segmentation",
+                "summary",
+                "redflags",
+                "classifier",
+                "seriousness",
+                "simplify",
+                "readability",
+                "novelty",
+                "risklevel",
+                "latency",
+                "cost"
+              ],
+              "type": "string",
+              "title": "Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Lab B Api Lab B  Name  Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/glossary": {
       "get": {
         "tags": [
