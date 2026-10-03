@@ -84,7 +84,7 @@
   Segmentation for PDF pages (bold/numbered) and corpus text, tested on the fixture pack.
 - [ ] **B2.1b Risk bank + E13** · 💻 L · **S** · `data/b2.1b-risk-bank`
   Segment the full corpus, embed with bge-m3 (GPU, Ollama stopped, or Kaggle), build `risk_bank.parquet`; E13/E13b; export the teacher input set (5,000 risks) as a private Kaggle dataset. 👤+Claude chat: segmentation spot-check + E13b boundaries.
-- [ ] **B2.2a Unusualness, hedging, numbers (code)** · ☁️ C · **S** · `feat/b2.2-risk-features`
+- [x] **B2.2a Unusualness, hedging, numbers (code)** · ☁️ C · **S** · `feat/b2.2-risk-features`
   Logic + API, tested with a tiny fake bank fixture.
 - [ ] **B2.2b Run + τ choice + E22** · 💻 L · **S** · `eval/b2.2b-novelty`
   Run against the real bank; τ spot-check (👤+Claude chat); E22.

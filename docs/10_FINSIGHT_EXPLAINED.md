@@ -461,6 +461,21 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** No student is trained yet (B2.5b). The checks catch changed numbers, advice and certainty shifts, but not every change of meaning; that is what the human faithfulness rating (E18) measures.
 **Likely viva questions.** (1) *Why distil instead of using the teacher?* (The 14B model needs a GPU; a 4B GGUF runs on the CPU host.) (2) *Why mask the prompt in the loss?* (The model should learn to write the rewrite, not to copy the instructions.) (3) *What happens when a rewrite changes a number?* (It is rejected and the original is shown.)
 
+### C28. Unusual risks, cautious wording and the risks API (built in B2.2a)
+**What it does.**
+- **Novelty.** Each risk is embedded: its title plus the first two sentences, with bge-m3. It is then compared with the **risk bank**: every risk factor of the 2018–2023 corpus IPOs, minus the issuer's own past documents. **Novelty** is the share of past companies that had at least one risk with cosine similarity ≥ τ.
+  - "Found in 4% of past IPOs" marks an unusual risk.
+  - "in 85%" marks boilerplate.
+  - The card shows the three most similar past risks, one per company.
+- **Hedging.** Hedge words and phrases are counted ("may", "there can be no assurance", "adversely affect"). A **hard fact** is a sentence that states something that already happened, with a real number, and has no "may/could". Three or more hedges plus a hard fact earn the note "Written cautiously, but this describes something that has already happened."
+- **Risks API.**
+  - Lists the risks most important first (or in document order, or by category), filters by category, "unusual only" or a search, and shows counts for the filter chips.
+  - Returns one risk in full.
+  - Takes the "Explain in plain English" click, which moves the risk to the front of the queue (C27) and is rate-limited per IP.
+
+**Limits.** τ = 0.80 is a placeholder until the B2.2b spot-check. The real bank and its embeddings come from B2.1b, so tests use a 4.7 KB fake bank with known neighbours. "Unusual" means rare among 2018–2023 IPOs, so new kinds of risk can look more unusual than they are.
+**Likely viva questions.** (1) *Why count companies, not risks?* (One company repeating a risk five times shouldn't make it look common.) (2) *Why exclude the issuer itself?* (Its own earlier DRHP would always match.) (3) *Why only 2018–2023?* (Disclosure styles changed with ICDR; newer documents would look "unusual" only because they are newer.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
