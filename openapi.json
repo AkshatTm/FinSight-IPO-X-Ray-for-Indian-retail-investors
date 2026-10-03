@@ -4134,6 +4134,14 @@
             },
             "type": "array",
             "title": "Risks"
+          },
+          "queued": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Queued",
+            "default": []
           }
         },
         "type": "object",
