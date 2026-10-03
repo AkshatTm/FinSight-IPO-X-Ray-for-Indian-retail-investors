@@ -54,9 +54,11 @@ ml = [
 asr = [
     "faster-whisper>=1.0",
 ]
-# CPU-only classical ML: the TF-IDF + logistic-regression risk-category baseline (B2.4).
+# CPU-only classical ML for the worker: the TF-IDF risk-category baseline (B2.4) and the risk
+# bank (parquet) used for novelty (B2.2).
 ml-cpu = [
     "scikit-learn>=1.5",
+    "pyarrow>=17",
 ]
 # ONNX int8 inference on the CPU worker (risk classifier, B2.4) and the reranker experiment.
 # `tokenizers` reads the exported tokenizer.json without transformers or torch.
