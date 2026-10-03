@@ -40,6 +40,10 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
   ```text
   Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md (B2.2b), docs/phase2/B02_ARCHITECTURE.md §7.1 and docs/AKSHAT_TODO.md. Do part B2.2b only. Run the tests and report in one line. Do the model check (both directions). Steps: (1) write scripts/novelty_pairs.py: for risks of the dev showcase IPOs, embed with bge-m3 (Ollama stopped) and sample 60 (risk, nearest bank risk) pairs, 20 each with similarity near τ = 0.75, 0.80, 0.85, into data/gold/novelty_pairs.csv with blank `same_risk` (yes/no) and label_source; stop and wait for my ratings (Claude chat may pre-fill; count the values I change); (2) after my ratings, compute precision@τ with a script → eval_results/b/novelty.json, choose τ by precision on these pairs, update configs/risks.yaml and record a proposed ADR; (3) run `finsight.risks.add_features` with the real bank on the 10 showcase IPOs and report the novelty distribution. Never deploy or spend cloud credits. End with the PR merged, this item ticked, PROGRESS.md updated, and the /clear message (B07 §0).
   ```
+- [ ] **B2.6b risk-level thresholds + E17/E21 + E8 re-run (#146 follow-up)** — after B1.3a run over the 2018–2023 corpus and B2.4b. Sonnet. Sat 17.
+  ```text
+  Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md (B2.6b), docs/phase2/B02_ARCHITECTURE.md §7.3–7.4, docs/phase2/B04_EVALUATION.md (E8, E17, E21) and docs/AKSHAT_TODO.md. Do part B2.6b only. Run the tests and report in one line. Do the model check (both directions). Steps: (1) write scripts/corpus_points.py: run red flags + risk features + `finsight.risklevel.compute` over every 2018–2023 corpus IPO, write the score distribution and 11 reference quantiles to configs/risklevel.yaml with `computed_on`, `corpus_n` and `provisional: false` (thresholds: bottom third / top third of scores unless the distribution says otherwise; record a proposed ADR); (2) E17 seriousness vs the teacher's 1–5 on dev → eval_results/b/seriousness.json; (3) add src/finsight/evaluate/outcomes.py (the only module allowed to read listing-day outcomes; a test asserts nothing else imports it) and run E21 with an honest write-up in docs/10_FINSIGHT_EXPLAINED.md C29 → eval_results/b/risklevel_validation.json; (4) re-run E8 on both question sets after the risk-level guard change → eval_results/guard_b.json. Never hand-edit results; never deploy or spend cloud credits. End with the PR merged, this item ticked, PROGRESS.md updated, and the /clear message (B07 §0).
+  ```
 - Later local parts ( B1.3b, B1.4 E15, B2.1b, B2.3b …) are added here by the cloud session that unblocks them, each with its prompt.
 
 ## Phase 2 hand-work (dated; full calendar in docs/phase2/B_EXECUTION_PLAN.md §4, checklist in #124)
@@ -66,7 +70,8 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 
 
 ## Needs your decision
-- (none yet)
+- **Questions about "red flags" in chat (B2.6a).** The guard still refuses "does this IPO have red flags?" as a rating question (it was written before the Red Flags tab existed). I left it blocked tonight because unblocking changes the E8 results. Options: (a) allow it and answer with the Red Flags tab's facts, re-checked in the B2.6b E8 re-run; (b) keep it refused with a pointer to the tab. Recommendation: (a).
+- **Risk-level placeholders.** `configs/risklevel.yaml` holds made-up thresholds (`provisional: true`, `corpus_n: 0`) until B2.6b. The UI must show "provisional" while that flag is on.
 
 ## Hindi strings to review (`[HI review]` in docs/12_FRONTEND_SPEC.md, plus builder-drafted)
 - Every `[HI review]` string in docs/12_FRONTEND_SPEC.md is used verbatim in frontend/lib/i18n.ts (nav, footer, library). Landing, Lab and About Hindi get added with their steps.

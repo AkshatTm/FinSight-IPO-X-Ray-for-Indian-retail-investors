@@ -57,6 +57,12 @@
   - The API now lists risks: most important first, by category, unusual only, or by search. A click on "explain in plain English" goes to the front of the queue.
   - The similarity cut-off (0.80) is a placeholder until your 60-pair check in B2.2b.
 
+- **B2.6a (#146): seriousness and the overall risk level.**
+  - Each risk gets high / medium / low seriousness from simple rules (category, a hard fact, a big number, boilerplate), and an importance used to order the list.
+  - The document gets a low / medium / high **risk level** from red-flag points and rare serious risks, divided by the checks that could actually run, so missing data never looks like a clean record. Every point links to its reason.
+  - The thresholds are **made-up placeholders** marked `provisional` until B2.6b computes them from 2018–2023 IPOs on your laptop.
+  - Chat now answers "how risky is this IPO?" with the level and its reasons; "should I apply?" is still refused. One decision for you in AKSHAT_TODO ("red flags" questions).
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
