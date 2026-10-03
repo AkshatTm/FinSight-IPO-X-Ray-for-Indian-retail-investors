@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { GlassSurface } from "@/components/glass/GlassSurface";
 import type { StringKey } from "@/lib/i18n";
 import { useT } from "@/lib/useT";
+import { AuthMenu } from "./AuthMenu";
 import { HealthDot } from "./HealthDot";
 import { LangToggle, ThemeToggle } from "./Toggles";
 
@@ -61,14 +62,15 @@ export function NavBar() {
           <Wordmark />
           <div className="hidden items-center md:flex">{LINKS.map(link)}</div>
           <div className="flex items-center gap-1">
-            {path === "/" && (
+            {path !== "/upload" && (
               <Link
-                href="/ipos"
+                href="/upload"
                 className="btn hidden h-11 items-center rounded-[6px] bg-stamp px-4 text-sm font-medium text-bg md:inline-flex"
               >
-                {t("nav.try")}
+                {t("nav.analyse")}
               </Link>
             )}
+            <AuthMenu />
             <LangToggle />
             <span className="hidden md:inline-flex">
               <ThemeToggle />
@@ -91,9 +93,9 @@ export function NavBar() {
           {LINKS.map(link)}
           <div className="flex items-center justify-between border-t border-rule pt-2">
             <ThemeToggle />
-            {path === "/" && (
-              <Link href="/ipos" className="btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-4 text-sm font-medium text-bg">
-                {t("nav.try")}
+            {path !== "/upload" && (
+              <Link href="/upload" className="btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-4 text-sm font-medium text-bg">
+                {t("nav.analyse")}
               </Link>
             )}
           </div>
