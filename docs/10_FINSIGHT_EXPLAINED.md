@@ -526,6 +526,21 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** Built on **made-up mock data** (company "Sample Ltd"), not real documents, until the B0.4 fixture pack exists. "Show in document" and the Ask/Facts/Document tabs for uploaded documents come later. The report is English only; the Hindi UI shows B05's one-line note.
 **Likely viva questions.** (1) *Why is the disclaimer not collapsible?* (A risk level without its disclaimer could read like a rating or advice; B-ADR-13 keeps it on screen.) (2) *Why poll instead of streaming rewrites?* (The rewrites are slow and rare; a 5-second poll that stops when the queue is empty is simpler and costs nothing when idle.) (3) *Why keep the tab in the URL?* (So a shared link opens what the sender was looking at.)
 
+### C33. The documentation site (B4.1)
+**What it does.**
+- **Site.** `mkdocs.yml` builds a MkDocs Material site from `docs/` (`uv sync --group docs`, then `uv run poe docs` to preview or `uv run poe docs-build` to build). It follows the Diátaxis split: tutorials, how-to guides, reference and explanation, plus models and data, operations and project pages. Session working files (prompts, to-do lists, logs) are left out. The root files (CHANGELOG, CONTRIBUTING, SECURITY, PRIVACY) join the site through a build hook, so each exists once.
+- **Generated pages.** `scripts/docs_gen.py` (`uv run poe docs-gen`) writes whole pages from their sources:
+  - configuration and environment variables, from the pydantic settings and `configs/config.yaml`;
+  - data formats, from the pydantic schemas and the files in `data/gold/`;
+  - risk level and compare reference values, with a "Provisional" warning while they are placeholders;
+  - the ADR index, the command list and the glossary.
+- **Generated blocks.** Pages with prose around numbers (the evaluation page, the three model cards, the datasheets) keep their text by hand, and only the text between `<!-- generated:NAME start -->` and `<!-- generated:NAME end -->` is rewritten from `eval_results/` and `data/gold/`. The evaluation page reads the E1–E24 plan tables and shows, for each experiment, the result files that exist or "not run yet".
+- **API and code.** The API page renders `openapi.json` with Redoc; the packages page renders docstrings with mkdocstrings. Docstring coverage went from 52 % to 84 %.
+- **CI.** `docs.yml` fails on a stale generated page, a stale `openapi.json`, any build warning, docstring coverage below 70 % or a Markdown lint error; 80 % coverage is a warning.
+
+**Limits.** Not published yet: GitHub Pages waits for Akshat's go. The risk classifier and simplifier get model cards only after they are trained (B2.4b, B2.5b). The runbooks have not been run end to end yet.
+**Likely viva questions.** (1) *What does "docs as code" mean here?* (Docs change in the same PR as the code, and generated pages fail CI when they drift from their source.) (2) *How do you stop a typed number from going stale?* (No number is typed: model cards and the evaluation page quote `eval_results/` through generated blocks, and a test fails if a block differs from what the generator writes.) (3) *Why markers instead of generating the whole model card?* (The limitations and ethics sections need human judgement; only the numbers must be mechanical.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
