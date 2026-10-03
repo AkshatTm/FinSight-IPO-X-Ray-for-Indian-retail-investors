@@ -114,3 +114,22 @@ def test_money_is_a_string_in_the_schema(spec: dict) -> None:  # type: ignore[ty
 def test_committed_openapi_json_is_current() -> None:
     committed = json.loads((ROOT / "openapi.json").read_text(encoding="utf-8"))
     assert committed == create_app().openapi(), "run `uv run poe gen-openapi` and commit the result"
+
+
+def test_no_two_response_models_share_a_name() -> None:
+    """FastAPI keys OpenAPI schemas by class name: two models with one name silently become one
+    (B3.2 found ``Peer.evidence`` pointing at the chat ``Evidence``)."""
+    import inspect
+
+    from pydantic import BaseModel
+
+    import finsight.api.events
+    import finsight.api.models
+    import finsight.core.schemas
+
+    seen: dict[str, str] = {}
+    for module in (finsight.core.schemas, finsight.api.models, finsight.api.events):
+        for name, obj in inspect.getmembers(module, inspect.isclass):
+            if issubclass(obj, BaseModel) and obj.__module__ == module.__name__:
+                assert name not in seen, f"{name} in {module.__name__} and {seen[name]}"
+                seen[name] = module.__name__

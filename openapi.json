@@ -2800,115 +2800,6 @@
         ],
         "title": "ErrorResponse"
       },
-      "Evidence": {
-        "properties": {
-          "passage_id": {
-            "title": "Passage Id",
-            "type": "string"
-          },
-          "doc": {
-            "enum": [
-              "rhp",
-              "drhp",
-              "prospectus"
-            ],
-            "title": "Doc",
-            "type": "string"
-          },
-          "page": {
-            "title": "Page",
-            "type": "integer"
-          },
-          "char_span": {
-            "maxItems": 2,
-            "minItems": 2,
-            "prefixItems": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "integer"
-              }
-            ],
-            "title": "Char Span",
-            "type": "array"
-          },
-          "bbox": {
-            "anyOf": [
-              {
-                "maxItems": 4,
-                "minItems": 4,
-                "prefixItems": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ],
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Bbox"
-          },
-          "value": {
-            "anyOf": [
-              {
-                "discriminator": {
-                  "mapping": {
-                    "count": "#/components/schemas/Count",
-                    "money": "#/components/schemas/Money",
-                    "percent": "#/components/schemas/Percent",
-                    "placeholder": "#/components/schemas/Placeholder",
-                    "range": "#/components/schemas/Range"
-                  },
-                  "propertyName": "kind"
-                },
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/Money"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Count"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Percent"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Placeholder"
-                  },
-                  {
-                    "$ref": "#/components/schemas/Range"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Value"
-          }
-        },
-        "required": [
-          "passage_id",
-          "doc",
-          "page",
-          "char_span"
-        ],
-        "title": "Evidence",
-        "type": "object"
-      },
       "FieldCheck": {
         "properties": {
           "check": {
@@ -3379,6 +3270,64 @@
         ],
         "title": "NearestExample"
       },
+      "PageEvidence": {
+        "properties": {
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Page"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array",
+                "maxItems": 4,
+                "minItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bbox"
+          },
+          "sentence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sentence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc_id",
+          "page"
+        ],
+        "title": "PageEvidence",
+        "description": "Where a value or risk came from: a page, optionally a box and the sentence."
+      },
       "PageSize": {
         "properties": {
           "width": {
@@ -3532,7 +3481,7 @@
           "evidence": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/Evidence"
+                "$ref": "#/components/schemas/PageEvidence"
               },
               {
                 "type": "null"
@@ -5098,6 +5047,115 @@
           "citations"
         ],
         "title": "AnswerEvent",
+        "type": "object"
+      },
+      "Evidence": {
+        "properties": {
+          "passage_id": {
+            "title": "Passage Id",
+            "type": "string"
+          },
+          "doc": {
+            "enum": [
+              "rhp",
+              "drhp",
+              "prospectus"
+            ],
+            "title": "Doc",
+            "type": "string"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "char_span": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Char Span",
+            "type": "array"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bbox"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "count": "#/components/schemas/Count",
+                    "money": "#/components/schemas/Money",
+                    "percent": "#/components/schemas/Percent",
+                    "placeholder": "#/components/schemas/Placeholder",
+                    "range": "#/components/schemas/Range"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Money"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Count"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Percent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Placeholder"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Range"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Value"
+          }
+        },
+        "required": [
+          "passage_id",
+          "doc",
+          "page",
+          "char_span"
+        ],
+        "title": "Evidence",
         "type": "object"
       },
       "VerdictEvent": {

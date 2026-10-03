@@ -296,7 +296,7 @@ class RedFlag(BaseModel):
     status: Status3
     sentence: str
     numbers_used: dict[str, str] = Field(default_factory=dict)
-    evidence: list[Evidence] = Field(default_factory=list)
+    evidence: list[PageEvidence] = Field(default_factory=list)
     rule: str = ""
     points: int = 0
 
@@ -378,7 +378,7 @@ class Peer(BaseModel):
     ronw: DecimalStr | None = None  # return on net worth, %
     nav: DecimalStr | None = None  # net asset value (book value) per share, ₹
     is_issuer: bool = False
-    evidence: Evidence | None = None
+    evidence: PageEvidence | None = None
 
 
 class ComparePercentile(BaseModel):
@@ -404,7 +404,7 @@ RejectionCode = Literal[
 DocStatus = Literal["uploading", "processing", "ready", "partial", "failed"]
 
 
-class Evidence(BaseModel):
+class PageEvidence(BaseModel):
     """Where a value or risk came from: a page, optionally a box and the sentence."""
 
     doc_id: str
