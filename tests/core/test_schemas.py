@@ -155,3 +155,40 @@ def test_check_result_and_claim_round_trip() -> None:
                   amounts=[CRORE_800], cited=[1])  # fmt: skip
     assert CheckResult.model_validate_json(check.model_dump_json()) == check
     assert Claim.model_validate_json(claim.model_dump_json()) == claim
+
+
+def test_doc_record_and_evidence_round_trip() -> None:
+    from datetime import UTC, datetime
+
+    from finsight.core.schemas import DocRecord, Evidence
+
+    rec = DocRecord(
+        doc_id="doc_0123456789abcdef",
+        sha256="0" * 64,
+        doc_type="drhp",
+        pages=420,
+        created_at=datetime(2026, 10, 3, tzinfo=UTC),
+    )
+    assert DocRecord.model_validate_json(rec.model_dump_json()) == rec
+    assert rec.status == "processing"
+    assert not rec.is_showcase
+    ev = Evidence(doc_id=rec.doc_id, page=12, bbox=(1.0, 2.0, 3.0, 4.0), sentence="x")
+    assert Evidence.model_validate(ev.model_dump()) == ev
+
+
+def test_doc_record_never_stores_unknown_type() -> None:
+    from datetime import UTC, datetime
+
+    import pytest
+    from pydantic import ValidationError
+
+    from finsight.core.schemas import DocRecord
+
+    with pytest.raises(ValidationError):
+        DocRecord(
+            doc_id="d",
+            sha256="0" * 64,
+            doc_type="unknown",  # type: ignore[arg-type]
+            pages=1,
+            created_at=datetime(2026, 10, 3, tzinfo=UTC),
+        )
