@@ -60,7 +60,7 @@
 
 ### B1 — Upload and red flags (Tue 6 – Sun 11 Oct) → BG1
 
-- [ ] **B1.1a Doc type + validation (fixtures)** · ☁️ C · **S (high effort)** · `feat/b1.1-ingest-any-pdf`
+- [x] **B1.1a Doc type + validation (fixtures)** · ☁️ C · **S (high effort)** · `feat/b1.1-ingest-any-pdf`
   `ingest.upload` validation, dedupe, doc-type detection, rejection codes; synthetic PDF fixtures (RHP/DRHP/Prospectus/non-offer/scanned) generated in tests.
 - [ ] **B1.1b Harden on real and unseen PDFs** · 💻 L · **S** · `fix/b1.1b-real-pdfs`
   Run on the 20 showcase PDFs + 5 unseen RHPs (👤 downloads them by Wed 7 Oct); fix what breaks; record timings.
