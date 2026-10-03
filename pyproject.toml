@@ -54,10 +54,16 @@ ml = [
 asr = [
     "faster-whisper>=1.0",
 ]
-# Reranker int8 experiment (scripts/rerank_experiment.py); not needed to run the app.
+# CPU-only classical ML: the TF-IDF + logistic-regression risk-category baseline (B2.4).
+ml-cpu = [
+    "scikit-learn>=1.5",
+]
+# ONNX int8 inference on the CPU worker (risk classifier, B2.4) and the reranker experiment.
+# `tokenizers` reads the exported tokenizer.json without transformers or torch.
 onnx = [
     "onnx>=1.16",
     "onnxruntime>=1.18",
+    "tokenizers>=0.20",
 ]
 data = [
     "openpyxl>=3.1",
@@ -74,7 +80,7 @@ cloud = [
 ]
 
 [tool.uv]
-default-groups = ["dev", "api", "data"]
+default-groups = ["dev", "api", "data", "ml-cpu"]
 
 # CUDA 12.8 wheels for the RTX 2050 (Ampere). Only resolved when the `ml` group is requested.
 [[tool.uv.index]]
