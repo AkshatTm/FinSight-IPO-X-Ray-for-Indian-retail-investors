@@ -49,7 +49,7 @@ def split_risks(
     if section is None:
         return []
     pages = [p for p in parsed.pages if section.start_page <= p.number <= section.end_page]
-    risks = to_risks(segment_pages(pages, table_boxes(tables)))
+    risks = to_risks(segment_pages(pages, table_boxes(tables), parsed.pages))
     return [
         r.model_copy(
             update={"title": redact_prose(r.title, [])[0], "body": redact_prose(r.body, [])[0]}

@@ -351,3 +351,22 @@ def test_split_stage_withholds_residential_addresses() -> None:
     (risk,) = split_risks(parsed, [section])
     assert "Lake Road" not in risk.body
     assert "[withheld for privacy]" in risk.body
+
+
+def test_short_section_loses_the_running_header_using_the_whole_document(tmp_path: Path) -> None:
+    from make_fixture_pdf import RISK_TITLES, build_rhp_with_risks
+
+    from finsight.parse import find_sections
+    from finsight.pipeline.risks_stage import split_risks
+
+    parsed = parse_pdf(build_rhp_with_risks(tmp_path / "rhp.pdf"), "acme", "rhp")
+    sections = find_sections(parsed)
+    risks = split_risks(parsed, sections)
+    assert [x.title for x in risks] == RISK_TITLES
+    assert [x.group for x in risks] == ["Internal Risks", "Internal Risks", "External Risks"]
+    # Two section pages are too few to spot the header alone; the whole document is not.
+    assert risks[1].body == (
+        "As of 30 June 2025, 12% of promoter shares were pledged to secure loans taken by the "
+        "Company."
+    )
+    assert (risks[1].page_start, risks[1].page_end) == (3, 4)
