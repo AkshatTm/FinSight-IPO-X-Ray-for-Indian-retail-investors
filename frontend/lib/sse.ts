@@ -20,12 +20,15 @@ const KNOWN = new Set(["stage", "guard", "retrieval", "abstain", "token", "answe
 export interface RawSse {
   event: string;
   data: string;
+  /** The `id:` field (job events carry their `seq` here for Last-Event-ID replay). */
+  id?: string;
 }
 
 /** Incremental Server-Sent Events parser: feed it chunks, get complete messages back. */
 export class SseParser {
   private buf = "";
   private event = "";
+  private id: string | undefined;
   private data: string[] = [];
 
   push(chunk: string): RawSse[] {
@@ -40,8 +43,13 @@ export class SseParser {
       const line = this.buf.slice(0, nl);
       this.buf = this.buf.slice(nl + eol);
       if (line === "") {
-        if (this.data.length) out.push({ event: this.event || "message", data: this.data.join("\n") });
+        if (this.data.length) {
+          const msg: RawSse = { event: this.event || "message", data: this.data.join("\n") };
+          if (this.id !== undefined) msg.id = this.id;
+          out.push(msg);
+        }
         this.event = "";
+        this.id = undefined;
         this.data = [];
       } else if (line.startsWith(":")) {
         /* comment / keep-alive */
@@ -51,6 +59,7 @@ export class SseParser {
         let value = i === -1 ? "" : line.slice(i + 1);
         if (value.startsWith(" ")) value = value.slice(1);
         if (field === "event") this.event = value;
+        else if (field === "id") this.id = value;
         else if (field === "data") this.data.push(value);
       }
     }
