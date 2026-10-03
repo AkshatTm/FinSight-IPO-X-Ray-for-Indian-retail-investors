@@ -20,6 +20,10 @@ Generated from the docstrings by mkdocstrings. Each package's `__init__` docstri
     options:
       members: false
 
+::: finsight.redflags
+    options:
+      members: false
+
 ::: finsight.risklevel
 
 ::: finsight.compare

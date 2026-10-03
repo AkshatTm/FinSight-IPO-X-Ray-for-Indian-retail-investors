@@ -108,8 +108,15 @@
   - The landing page now leads with uploading ("Analyse an IPO document", "Explore a sample report"), adds the "What you get" blocks and the new "won't do" lines, and can show two new stats once they have real values. How it works has the eight-step upload row; About has the three new known limits. The English is the UI spec's; the Hindi is mine and waits for your OK.
   - One thing to decide: About still says "Covers 10 IPOs, not every IPO", which is no longer true for uploads (AKSHAT_TODO, "Needs your decision").
 
+- **B1.4a (#162): the 13 red-flag checks, cloud half.**
+  - The rules behind the Red flags tab now exist: profit, cash, debt, who gets the money, what insiders paid, founders' stake, vague use of money, court cases, related parties, customers, price vs peers, auditor, pledged shares. Each gives OK / Watch / Concern / Not available / Not applicable, with the B05 sentence, the numbers and the pages.
+  - Thresholds are in `configs/redflags.yaml` (B01's first values, versioned). The docs site has a generated page listing them and a how-to.
+  - Tested on made-up numbers only. They can't run on real reports yet: the step that reads the financial numbers (B1.3a) needs the fixture pack, and gold v3 isn't filled.
+  - A script turns your **verified** gold v3 rows into the red-flag status gold, using the same rules. It refuses unverified rows.
+  - Copy to OK: four sentences B05 doesn't have, and the 13 "How this check works" texts (AKSHAT_TODO).
+
 ### Blocked, and why
-- **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
+- **B1.3a, the rest of B1.4, B2.1a (real-text tests)** need the B0.4 fixture pack, which can only be made on your laptop.
 
 ### Your morning to-do, in order
 1. Local session: **B0.4 fixture pack**. The L1 prompt is in `docs/AKSHAT_TODO.md`. It unblocks three cloud parts.

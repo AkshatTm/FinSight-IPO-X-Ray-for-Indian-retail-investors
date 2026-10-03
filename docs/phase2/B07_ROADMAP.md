@@ -72,6 +72,8 @@
   Run on all 20 full documents; fix gaps; E14 vs gold v3. 👤+Claude chat: gold v3 pre-fill and verification by Fri 9 Oct.
 - [ ] **B1.4 Red flags** · ☁️ C · **S** · `feat/b1.4-redflags`
   Rules + `configs/redflags.yaml` + API; tests with gold v3 values (committed) and fixture summaries. 💻 follow-up (short): E15 on the full pipeline output.
+  - [x] Cloud half B1.4a (#162): rules engine, `configs/redflags.yaml`, `summary.json` schema, status-gold script, generated reference + how-to; tested on synthetic inputs.
+  - [ ] Left: tests with real gold v3 values, wiring after B1.3a, E15 (💻).
 - [x] **B1.5 Upload + processing UI + Google sign-in** · ☁️ C · **S** · `feat/b1.5-upload-ui`
   Frontend on mocks (Supabase Auth via env placeholders). 💻 follow-up (short): try with the real local API + Supabase project.
 - [ ] **BG1 review** (Sun 11) · 💻 L — stop for Akshat.
@@ -130,7 +132,7 @@
 
 - [x] **B4.1 Industry-grade documentation** · ☁️ C · **S** — B09 in full (B10 Prompt 6 with the cloud note). 💻 follow-up: test the runbooks once.
   - [x] Cloud half (#153, overnight run 1): MkDocs Material site with full nav; generated pages (`poe docs-gen`: config + env vars, data formats, risk level, compare, ADR index, commands, glossary) and generated blocks in the evaluation page (E1–E24 registry and results), model cards (QA extractor, BiLSTM-CRF, MuRIL guard) and datasheets (corpus, weak labels, gold sets); C4 + sequence diagrams; tutorials, six how-tos, troubleshooting (15), runbooks (rotate secrets, restore DB, monitoring); CHANGELOG, CONTRIBUTING, SECURITY, PRIVACY, CODE_OF_CONDUCT; README for Phase 2; frontend README; docstrings 52 % → 84 %; docs CI hard on freshness, OpenAPI, strict build, 70 % docstrings and Markdown lint.
-  - [ ] Left: model cards for the risk classifier and simplifier (they come with B2.4b / B2.5b); "Add a red-flag check" how-to (with B1.4); GitHub Pages publish (needs Akshat's go); runbooks tested once (💻 follow-up).
+  - [ ] Left: model cards for the risk classifier and simplifier (they come with B2.4b / B2.5b); GitHub Pages publish (needs Akshat's go); runbooks tested once (💻 follow-up).
 - [x] **B4.2 Report drafts update** · ☁️ C · **S** — #156: §4.4 Phase 2 data, §6.7 Phase 2 method, §7.9 generated E13–E24 status table (`poe docs-gen`), §8.2 and §11 notes, Phase 2 disclosures 7–11 in `report/README.md`. The Phase 2 results paragraphs are written after the local runs fill `eval_results/b/`.
 - [ ] **B4.3 [AKSHAT]** report, slides, video, viva · 👤 A
 - [ ] **Tag v2.0.0** (Sat 31 Oct) · 💻 L; **submit** Sun 1 Nov.

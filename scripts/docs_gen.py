@@ -1,7 +1,7 @@
 """Generate the reference pages of the docs site from their sources (B09 §1.3, §9).
 
 Nothing on these pages is typed by hand: the configuration reference comes from the pydantic
-settings and ``configs/config.yaml``, the risk-level and compare pages from their YAML files,
+settings and ``configs/config.yaml``, the risk-level, red-flag and compare pages from their YAML files,
 the ADR index from the two decision logs, the command list from the poe tasks, the glossary
 from ``configs/glossary*.yaml`` and the data formats from the pydantic schemas and ``data/gold``.
 
@@ -165,6 +165,27 @@ def risklevel_page() -> str:
     return "".join(lines)
 
 
+def redflags_page() -> str:
+    """The 13 red-flag checks, their rule texts and thresholds from ``redflags.yaml``."""
+    cfg = _yaml("redflags.yaml")
+    lines = [
+        HEADER.format(source="configs/redflags.yaml"),
+        "# Red-flag checks\n\n",
+        "The 13 checks behind the Red flags tab (B01 §5). Each one is OK, Watch, Concern, "
+        "Not available or Not applicable, with one plain sentence and the pages it used. "
+        "The checks describe the document; they never say what to do about it.\n\n",
+        f"Thresholds version: `{cfg['version']}` (stored in every `redflags.json`). "
+        f'Missing data: "{cfg["default_missing"]}"\n\n',
+        "| Check | Title | How this check works | Thresholds |\n| --- | --- | --- | --- |\n",
+    ]
+    for rf_id, spec in cfg["checks"].items():
+        limits = ", ".join(f"`{k}` = {v}" for k, v in spec.items() if k not in {"title", "rule"})
+        lines.append(
+            f"| {rf_id} | {_esc(spec['title'])} | {_esc(spec['rule'])} | {limits or '—'} |\n"
+        )
+    return "".join(lines)
+
+
 def compare_page() -> str:
     """The past-IPO reference quantiles from ``compare.yaml``."""
     cfg = _yaml("compare.yaml")
@@ -302,6 +323,8 @@ def data_formats_page() -> str:
         ("Document record (`DocRecord`)", schemas.DocRecord),
         ("Job (`Job`)", schemas.Job),
         ("Report overview (`ReportOverview`, `GET /api/docs/{doc_id}/report`)", ReportOverview),
+        ("Financial summary (`FinancialSummary`, `summary.json`)", schemas.FinancialSummary),
+        ("One summary value (`SummaryValue`)", schemas.SummaryValue),
         ("Red flag (`RedFlag`, inside `redflags.json`)", schemas.RedFlag),
         ("Red flags file (`RedFlags`)", schemas.RedFlags),
         ("Risk (`Risk`, one row of `risks.json`)", schemas.Risk),
@@ -642,6 +665,7 @@ PAGES: dict[str, Callable[[], str]] = {
     "docs/reference/config.md": config_page,
     "docs/reference/risklevel.md": risklevel_page,
     "docs/reference/compare.md": compare_page,
+    "docs/reference/redflags.md": redflags_page,
     "docs/reference/cli.md": cli_page,
     "docs/adr/index.md": adr_page,
     "docs/glossary.md": glossary_page,
