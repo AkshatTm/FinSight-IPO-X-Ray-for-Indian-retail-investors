@@ -168,7 +168,7 @@ class Database:
         for _ in range(5):  # a concurrent writer took the same seq: read again and retry
             try:
                 with self.engine.begin() as conn:
-                    last = conn.execute(
+                    last: int | None = conn.execute(
                         sa.select(sa.func.max(job_events.c.seq)).where(
                             job_events.c.job_id == job_id
                         )
@@ -224,7 +224,7 @@ class Database:
     def bump(self, doc_id: str, rid: str) -> int:
         """Move a risk to the front (adding it if needed); return its 0-based queue position."""
         with self.engine.begin() as conn:
-            lowest = conn.execute(
+            lowest: float | None = conn.execute(
                 sa.select(sa.func.min(simplify_queue.c.priority)).where(
                     simplify_queue.c.doc_id == doc_id, simplify_queue.c.status == "queued"
                 )
