@@ -20,6 +20,10 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
   ```text
   Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md and docs/AKSHAT_TODO.md. Do only the B1.2 local check: with FINSIGHT_PROFILE=dev_light start `uv run poe api`, then upload one showcase RHP through the API (POST /api/uploads/init → POST the file → /complete, using the real sha256 from configs/demo_ipos.yaml), follow GET /api/docs/<doc_id>/events until `done`, and confirm doc_type/pages match demo_ipos.yaml. Report timings in one line; fix anything that breaks with a regression test. Never deploy. End with any PR merged, this item ticked and PROGRESS.md updated.
   ```
+- [ ] **B1.5 local check: real sign-in and upload (~15 min)** — after B1.5 merged and HOSTING_SETUP_STEPS part A (Supabase Google provider) is done. Sonnet.
+  ```text
+  Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md and docs/AKSHAT_TODO.md. Do only the B1.5 local check: put NEXT_PUBLIC_SUPABASE_URL/ANON_KEY in frontend/.env.local and FINSIGHT_AUTH__* in .env (never print them), run the API with auth.mode supabase (FINSIGHT_AUTH__MODE=supabase) and `pnpm dev`, sign in with Google, upload one showcase RHP and follow the processing screen to the end; then sign out and check /me/uploads asks to sign in. Fix anything that breaks with a test. Never deploy. End with any PR merged, this item ticked and PROGRESS.md updated.
+  ```
 - Later local parts ( B1.3b, B1.4 E15, B2.1b, B2.3b …) are added here by the cloud session that unblocks them, each with its prompt.
 
 ## Phase 2 hand-work (dated; full calendar in docs/phase2/B_EXECUTION_PLAN.md §4, checklist in #124)
@@ -31,6 +35,8 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - Accept or change B-ADR-01..15 in `docs/09_DECISIONS.md`.
 
 ## Copy to approve (Phase 2)
+- Hindi drafts for every upload, processing and My uploads string (`frontend/lib/content/upload.ts`; B05 gives English only).
+- Processing "Details" lines (not in B05): "Something went wrong in this step. The rest of the report is not affected." and "This step needs an earlier step that didn't finish." (`proc.reason.*`).
 - Hindi short label "डीआरएचपी" for DRHP (`doc.drhpShort` in `frontend/lib/i18n.ts`, B1.1a builder draft).
 - B05 lines marked `[copy: Akshat to approve]`: uploads-paused line, `hash_mismatch` rejection, About "unusual means rare among 2018–2023 IPOs".
 - Red-flag sentence templates missing in B05 §5.4 (RF02 NA, RF04 NA for a DRHP, RF06/RF09/RF12/RF13 NA) use the default "FinSight couldn't find this in the document."; confirm or write specific ones.

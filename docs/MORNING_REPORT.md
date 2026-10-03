@@ -23,6 +23,12 @@
   - Google sign-in tokens are checked on the server.
   - CI now also tests against a real Postgres.
 
+- **B1.5 (#131): the upload screens, running on mock data.**
+  - You can sign in with Google (once Supabase is set up), drop a PDF, and watch every processing step.
+  - My uploads lists your documents. Every rejection message from B05 is shown.
+  - The Hindi strings are my drafts, for you to review.
+  - The finished report page itself comes in B3.1.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
