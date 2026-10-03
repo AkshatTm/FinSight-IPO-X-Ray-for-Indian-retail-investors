@@ -128,11 +128,21 @@ def _edge(line: Line, page: Page) -> bool:
 
 
 def body_lines(
-    pages: Sequence[Page], table_boxes: Mapping[int, Sequence[BBox]] | None = None
+    pages: Sequence[Page],
+    table_boxes: Mapping[int, Sequence[BBox]] | None = None,
+    context: Sequence[Page] | None = None,
 ) -> list[Line]:
-    """The section's lines without running headers / footers, page numbers and table words."""
+    """The section's lines without running headers / footers, page numbers and table words.
+
+    Headers are lines that repeat at the page edges of ``context`` (the whole document when
+    given), so a section of one or two pages still loses them."""
     by_page = [(p, page_lines(p)) for p in pages]
-    repeated = boilerplate_keys([ln.text for ln in lines if _edge(ln, p)] for p, lines in by_page)
+    edges = (
+        [[ln.text for ln in page_lines(p) if _edge(ln, p)] for p in context]
+        if context
+        else [[ln.text for ln in lines if _edge(ln, p)] for p, lines in by_page]
+    )
+    repeated = boilerplate_keys(edges)
     out: list[Line] = []
     for page, lines in by_page:
         boxes = (table_boxes or {}).get(page.number, ())
@@ -218,10 +228,13 @@ def _check(words: list[str], used: int, rest: int) -> tuple[list[str], int, int]
 
 
 def segment_pages(
-    pages: Sequence[Page], table_boxes: Mapping[int, Sequence[BBox]] | None = None
+    pages: Sequence[Page],
+    table_boxes: Mapping[int, Sequence[BBox]] | None = None,
+    context: Sequence[Page] | None = None,
 ) -> list[RiskSpan]:
-    """Split the pages of a Risk Factors section into risks (fonts available)."""
-    lines = body_lines(pages, table_boxes)
+    """Split the pages of a Risk Factors section into risks (fonts available). ``context`` is the
+    whole document, used to recognise running headers and footers."""
+    lines = body_lines(pages, table_boxes, context)
     margins = _left_margin(lines)
     spans: list[RiskSpan] = []
     current: _Open | None = None
