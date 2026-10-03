@@ -445,6 +445,22 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** No model is trained yet (B2.4b). Labels are AI-made, so the scores measure agreement with the teacher on dev and with Akshat on gold.
 **Likely viva questions.** (1) *Why split by company?* (Risk text repeats within one issuer; a random split leaks it.) (2) *Why macro-F1 rather than accuracy?* (A model that always says "regulatory" can look accurate.) (3) *Why is a TF-IDF baseline required?* (The fine-tuned model must beat it on dev, or it isn't worth the cost.)
 
+### C27. Plain-English rewrites: student model, post-checks and the queue (built in B2.5a)
+**What it does.**
+- **The student.** A small model, Qwen3-4B, fine-tuned with QLoRA on a Kaggle T4. It learns from the filtered teacher pairs (C25), using the exact prompt it is served with. The loss counts only the answer tokens.
+- **Serving.** The trained model is merged and exported to a 4-bit GGUF file, so the CPU worker runs it with llama.cpp (about 15 s per risk). On the optional GPU path, a vLLM server answers instead, with the same contract.
+- **Post-checks.** Every rewrite passes four checks, in this order, before anyone sees it:
+  1. its numbers match the original;
+  2. no forbidden phrase;
+  3. at most 70 words;
+  4. the same certainty.
+
+  A failing rewrite is `rejected` and the reader sees the original with a note. If the student file is missing, the base model answers with the same prompt, and the trace says so (`fallback: true`).
+- **Queue.** Only the 15 most important risks are rewritten automatically. A click on any other risk moves it to the front. Each result is saved and announced (`risk_simplified`) at once, so the report fills in while the queue drains. A failed rewrite is tried again on the next run.
+
+**Limits.** No student is trained yet (B2.5b). The checks catch changed numbers, advice and certainty shifts, but not every change of meaning; that is what the human faithfulness rating (E18) measures.
+**Likely viva questions.** (1) *Why distil instead of using the teacher?* (The 14B model needs a GPU; a 4B GGUF runs on the CPU host.) (2) *Why mask the prompt in the loss?* (The model should learn to write the rewrite, not to copy the instructions.) (3) *What happens when a rewrite changes a number?* (It is rejected and the original is shown.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

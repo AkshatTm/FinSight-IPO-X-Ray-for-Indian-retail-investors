@@ -96,7 +96,7 @@
   TF-IDF+LR baseline, base and large notebooks (Kaggle; Colab optional), ONNX int8 export for the CPU worker; smoke tests on fixtures.
 - [ ] **B2.4b Train + evaluate** · 💻 L (Kaggle CLI) · **S** · `eval/b2.4b-classifier`
   💻 build train/dev from teacher labels, launch base (3 seeds) and large (1 seed) on Kaggle; 💻 E16 on gold-150 (👤+Claude chat labels), pick by dev.
-- [ ] **B2.5a ★ Student notebook + checks + serving code** · ☁️ C · **O** · `feat/b2.5-simplifier`
+- [x] **B2.5a ★ Student notebook + checks + serving code** · ☁️ C · **O** · `feat/b2.5-simplifier`
   Kaggle QLoRA notebook (Qwen ~3–4B, T4 fp16), merge + **GGUF Q4 export**, post-checks (verifier, forbidden phrases, length, certainty), priority queue (top 15 automatic, rest on click), llama.cpp serving (vLLM client optional), optional `COLAB_STEPS_student.md`; tests with fixtures.
 - [ ] **B2.5b Train + evaluate** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `eval/b2.5b-simplifier`
   💻 run QLoRA on Kaggle, export GGUF, run locally on CPU; E18–E20 + CPU seconds per rewrite; 👤 rate gold-50 (blind).
