@@ -212,7 +212,7 @@ Google Cloud is the host because it offers GPUs on Cloud Run. **Billing is not e
 
 | Component | Service | Settings |
 |---|---|---|
-| Frontend | Vercel (Hobby) | `NEXT_PUBLIC_API_URL`, Supabase URL + anon key |
+| Frontend | Vercel (Hobby) | `FINSIGHT_API_ORIGIN` (Next.js rewrites `/api/*` to the API), Supabase URL + anon key |
 | API | Cloud Run **service** (CPU) | 2 vCPU / 4 GiB, min 0, max 2, concurrency 40; no torch; BM25 retrieval; chat = qwen3.5:2b Q4 via llama.cpp (ADR-022 measured this model) + demo cache for showcase |
 | Worker (CPU) | Cloud Run **Job**, started by the API (`run.jobs.run` with a `DOC_ID` override) | 4 vCPU / 8 GiB, timeout 30 min, parallel 1; validate → parse → sections → facts → financials → red flags → split → score → risk level → compare (ONNX int8 models); without the GPU job it also rewrites the top 15 risks with the student GGUF Q4 via llama.cpp and builds the BM25 index |
 | Worker (GPU, profile `cloud_gpu`) | Cloud Run **Job** with 1× NVIDIA L4 (zonal redundancy off) | 4 vCPU / 16 GiB (L4 minimum), timeout 30 min, parallel 1; **simplify + index only**: vLLM offline with the student (AWQ 4-bit, weights from a GCS volume mount) + bge-m3 for dense chat indexes; started by the CPU job after `risk_level` |

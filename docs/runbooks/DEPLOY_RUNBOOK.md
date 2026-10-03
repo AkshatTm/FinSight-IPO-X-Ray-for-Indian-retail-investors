@@ -38,7 +38,7 @@ gcloud config set project "$GCP_PROJECT"
    ```
 7. **Retention schedule:** Cloud Scheduler job, daily 03:10 IST, HTTP POST to the Run Admin API
    `…/jobs/finsight-sweep:run` with OAuth as `finsight-worker@`.
-8. **Vercel:** set `NEXT_PUBLIC_API_URL` to the service URL; redeploy the site.
+8. **Vercel:** set `FINSIGHT_API_ORIGIN` to the service URL (no trailing slash; Next.js rewrites `/api/*` to it); redeploy the site.
 9. **Smoke test:** `FINSIGHT_SMOKE_TOKEN=<a Supabase access token> uv run python
    scripts/cloud_smoke.py --base-url <service URL> --pdf <a small offer document> --out
    eval_results/b/smoke_deploy.json`. Record cold start and stage timings (B2.7).

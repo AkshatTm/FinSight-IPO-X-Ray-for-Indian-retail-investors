@@ -168,7 +168,7 @@ ENV_KEYS: tuple[str, ...] = (
     "FINSIGHT_SIMPLIFY__VLLM_URL",
     "GCP_PROJECT",
     "GCP_REGION",
-    "NEXT_PUBLIC_API_URL",
+    "FINSIGHT_API_ORIGIN",  # frontend build: where Next.js rewrites /api/* (next.config.ts)
     "NEXT_PUBLIC_SUPABASE_URL",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY",
 )

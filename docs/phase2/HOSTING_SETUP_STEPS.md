@@ -25,7 +25,7 @@ These are Akshat's hand steps, in order. The design is in B02 §10 and B-ADR-04 
 ### A2. Vercel
 1. Import the GitHub repo and set the root directory to `frontend/`.
 2. Set the environment variables:
-   - `NEXT_PUBLIC_API_URL`: leave empty until the API exists; the site then runs on mocks with `NEXT_PUBLIC_USE_MOCKS=1`.
+   - `FINSIGHT_API_ORIGIN`: leave empty until the API exists; the site then runs on mocks with `NEXT_PUBLIC_USE_MOCKS=1`.
    - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 3. Add the Vercel URL to the Supabase redirect list (A1.3).
 

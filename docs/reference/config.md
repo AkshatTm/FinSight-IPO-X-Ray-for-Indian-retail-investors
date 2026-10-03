@@ -173,6 +173,6 @@ Names only: values never live in the repository (`.env.example` lists the same n
 | `FINSIGHT_SIMPLIFY__VLLM_URL` | — |
 | `GCP_PROJECT` | `cloud`, `cloud_gpu` |
 | `GCP_REGION` | `cloud`, `cloud_gpu` |
-| `NEXT_PUBLIC_API_URL` | — |
+| `FINSIGHT_API_ORIGIN` | — |
 | `NEXT_PUBLIC_SUPABASE_URL` | — |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | — |
