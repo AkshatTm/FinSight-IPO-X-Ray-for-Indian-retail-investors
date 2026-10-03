@@ -2597,7 +2597,8 @@
               "too_large",
               "doc_not_found",
               "upload_not_started",
-              "risk_not_found"
+              "risk_not_found",
+              "worker_unavailable"
             ],
             "title": "Code"
           },

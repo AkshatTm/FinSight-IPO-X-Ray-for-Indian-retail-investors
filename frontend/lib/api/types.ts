@@ -753,7 +753,7 @@ export interface components {
              * Code
              * @enum {string}
              */
-            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started" | "risk_not_found";
+            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started" | "risk_not_found" | "worker_unavailable";
             /** Message */
             message: string;
             /** Hint */
