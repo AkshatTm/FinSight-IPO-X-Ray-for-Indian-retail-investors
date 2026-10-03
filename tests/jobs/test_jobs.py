@@ -112,6 +112,26 @@ def test_one_failing_stage_gives_partial_and_keeps_earlier_outputs(
     assert failed[1]["detail"] == {"skipped_because": ["redflags"]}
 
 
+def test_stage_failure_is_logged_as_json_with_the_ids(db: Database, storage: LocalStorage) -> None:
+    import io
+    import json
+    import logging
+
+    from finsight.core.logging import configure_logging
+
+    out = io.StringIO()
+    configure_logging(stream=out)
+    try:
+        ctx = _ctx(db, storage)
+        run_job(ctx, [Stage("redflags", _boom)])
+    finally:
+        logging.getLogger("finsight").handlers.clear()
+    line = json.loads(out.getvalue().splitlines()[0])
+    assert (line["doc_id"], line["job_id"], line["stage"]) == ("doc_a", ctx.job_id, "redflags")
+    assert line["level"] == "ERROR"
+    assert "model crashed" in line["exc"]
+
+
 def test_critical_failure_fails_the_job(db: Database, storage: LocalStorage) -> None:
     ctx = _ctx(db, storage)
     result = run_job(ctx, [Stage("parsed", _boom, critical=True), _write("facts")])
