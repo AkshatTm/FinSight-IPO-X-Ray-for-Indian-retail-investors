@@ -1,5 +1,7 @@
 # 09 — Decision Log (ADRs)
 
+> **Big Phase 2:** B-ADR-01..15 are summarised at the end of this log (full text in `docs/phase2/B08_DECISIONS.md`). ADR-005 is narrowed by B-ADR-03; ADR-022 is superseded as the primary deployment by B-ADR-04.
+
 Each decision: context → decision → consequences. Status: `accepted` (Akshat approved), `proposed` (Claude Code added, awaiting approval), `superseded by ADR-x`. Append new ADRs at the end using the template. These entries double as viva answers to "why did you choose X?".
 
 ---
@@ -18,6 +20,7 @@ Each decision: context → decision → consequences. Status: `accepted` (Akshat
 
 ### ADR-005 Never use rating labels; never advise — accepted
 **Context:** the IPO dataset includes Apply/Avoid ratings; SEBI requires registration for advice. **Decision:** ignore rating labels entirely; advice guard refuses. **Consequences:** clean ethics section; no "prediction" feature.
+**Phase 2 note:** narrowed by B-ADR-03 (proposed): outcome data may be used **only to validate** the risk level (E21), through `evaluate/outcomes.py`, never to train or tune anything.
 
 ### ADR-006 Timeline: single deadline 1 Nov, no 12 Oct demo — accepted (29 Sep 2026)
 **Context:** the v2 plan was built around a 12 Oct presentation; that presentation is no longer required. **Decision:** one timeline to Sun 1 Nov with freeze on Mon 26 Oct; depth items (gold v2, BiLSTM-CRF, frontier comparison) move into the main plan. **Consequences:** stronger evaluation; gates G0–G5 in `07_ROADMAP.md`.
@@ -293,6 +296,52 @@ Paired per-IPO differences (same resampled IPOs): fine-tuned minus pretrained +0
 **Context:** the public demo has no GPU. ADR-049 measured BM25 recall@5 0.61 on dev and int8 ONNX reranking at 26 s per 20-passage pool on CPU, too slow to ship. Scripted questions are covered by the recorded demo cache.
 **Decision:** (1) API in a Docker Space on the free CPU tier (`Dockerfile`, `deploy/space/`), profile `deploy_cpu`, demo mode on. (2) Retrieval is BM25 only: the image sets `FINSIGHT_RETRIEVE__RERANK=false` (the YAML keeps `rerank: true`, which needs torch). (3) LLM through llama-cpp-python (`generate/llama_cpp_backend.py`, same contract as the Ollama backend; `get_llm` picks it from `llm.backend`) with `Qwen3.5-2B-Q4_K_M.gguf` from the Hub, the 4-bit file of the model measured on the laptop. (4) Data comes from `scripts/bundle_artifacts.py` (X-Rays, parsed text, sections, BM25 chunks, page images, demo cache, eval results; no PDFs, no dense index). (5) Website on Vercel; `/api/*` is rewritten to the Space, so no CORS rule.
 **Consequences:** the deployed model's answer quality is **not measured** (quantised file, BM25 only, no reranker): run E7 against it before quoting a number for the deployed system. Live answers on a shared CPU take tens of seconds and may hit the Vercel proxy time limit; the fix, if needed, is a CORS rule and a direct browser call (D7). Voice is off. Nothing was deployed or tested in a container in this run unless `docs/MORNING_REPORT.md` says so.
+**Phase 2 note (3 Oct 2026):** superseded **as the primary deployment** by B-ADR-04 (CPU-first: Azure Container Apps for Students or an HF Docker Space, plus Supabase and Vercel). Kept as the showcase-only fallback (B07 cut 6, profile `deploy_cpu`). Free HF accounts can no longer create Docker CPU Spaces; this fallback needs HF PRO.
+
+---
+
+## Big Phase 2 decisions (B-ADRs)
+
+Full text in `docs/phase2/B08_DECISIONS.md`; listed here so the log stays one index. All **proposed (3 Oct 2026; Akshat marks them accepted)**.
+
+### B-ADR-01 Reframe: from fact lookup to risk understanding — proposed
+Phase 2 adds upload-any-document, red flags, a plain-English risk report, a risk level and comparisons; Phase 1 stays.
+
+### B-ADR-02 Risk level (Low/Medium/High) with reasons — proposed
+Transparent, corpus-relative, fixed disclaimer, never buy/apply/avoid wording; thresholds from past IPOs, not from outcomes; can be hidden behind a click.
+
+### B-ADR-03 Outcome data used only for validation (narrows ADR-005) — proposed
+Listing outcomes and broker opinions only for E21, read only by `evaluate/outcomes.py`.
+
+### B-ADR-04 Hosting: CPU-first and cloud-agnostic; GCP GPU optional — proposed (revised 3 Oct)
+Azure Container Apps for Students (or an HF Docker Space) + Supabase (Auth, Postgres, Storage) + Vercel; student GGUF Q4 on CPU, top 15 rewrites automatic; GCP Cloud Run L4 + vLLM optional. Supersedes ADR-022 as primary.
+
+### B-ADR-05 Google login for uploads; public read for reports — proposed
+3/user/day, 10/day global, kill switch, server-side SHA-256 dedupe, 30-day retention.
+
+### B-ADR-06 Open-weight models only (re-affirmed) — proposed
+No hosted LLM APIs in the product. Claude (chat) may pre-fill gold labels, always disclosed and verified by Akshat (Phase 1 practice).
+
+### B-ADR-07 Teacher → student distillation for simplification — proposed
+Qwen AWQ teacher (~14B on Kaggle; ~32B if Colab) → Qwen ~3–4B QLoRA student served as GGUF Q4 on CPU.
+
+### B-ADR-08 Classifier: base and large on Kaggle, pick by dev — proposed
+DeBERTa-v3-base (3 seeds) and -large (1 seed); ONNX int8 for serving; report both on gold-150.
+
+### B-ADR-09 Course framing update — proposed
+"Making Indian IPO risk disclosures understandable".
+
+### B-ADR-10 Risk report English only — proposed
+
+### B-ADR-11 Risk level: normalised points over a 2018–2023 reference population — proposed
+
+### B-ADR-12 Kaggle-first training (Colab optional) — proposed
+
+### B-ADR-13 Forbidden phrases, not forbidden words — proposed
+
+### B-ADR-14 doc_id beside ipo_id; showcase primary doc = RHP with the Prospectus as companion — proposed
+
+### B-ADR-15 Committed real-section fixture pack (`tests/fixtures/real/`) — proposed
 
 ---
 
