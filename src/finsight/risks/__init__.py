@@ -18,6 +18,7 @@ from finsight.risks.filters import FilterReport, Kept, TeacherItem, check_one, f
 from finsight.risks.hedging import hedge_count, hedging
 from finsight.risks.novelty import NoveltyResult, embed_text, novelty, unusualness_label
 from finsight.risks.numbers import risk_numbers
+from finsight.risks.seriousness import ranked_rids, score_risks
 from finsight.risks.simplify import Rewrite, Simplifier, make_simplifier, post_check
 from finsight.risks.teacher import (
     CATEGORIES,
@@ -61,8 +62,10 @@ __all__ = [
     "parse_output",
     "post_check",
     "predict",
+    "ranked_rids",
     "risk_numbers",
     "risks_config",
+    "score_risks",
     "scores",
     "split_by_company",
     "unmatched_numbers",

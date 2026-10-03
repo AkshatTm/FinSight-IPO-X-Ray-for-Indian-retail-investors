@@ -4,7 +4,13 @@ from __future__ import annotations
 
 from finsight.core.config import Settings
 from finsight.db import Database
-from finsight.jobs.launcher import CloudRunLauncher, InlineLauncher, Launcher
+from finsight.jobs.launcher import (
+    CloudRunLauncher,
+    InlineLauncher,
+    Launcher,
+    LaunchError,
+    cloud_run_launcher,
+)
 from finsight.jobs.pipeline import SOURCE, upload_stages
 from finsight.jobs.quotas import IST, UploadBlocked, check_upload_allowed, day_window
 from finsight.jobs.retention import sweep
@@ -42,12 +48,14 @@ __all__ = [
     "InlineLauncher",
     "JobContext",
     "JobResult",
+    "LaunchError",
     "Launcher",
     "Stage",
     "StageRejected",
     "UploadBlocked",
     "auto_enqueue",
     "check_upload_allowed",
+    "cloud_run_launcher",
     "day_window",
     "load_simplified",
     "process_document",

@@ -210,3 +210,25 @@ def test_limits_follow_the_config(client: TestClient, state: UploadState) -> Non
     }
     state.settings.uploads.enabled = False
     assert client.get("/api/uploads/limits").json()["enabled"] is False
+
+
+def test_worker_launch_failure_is_a_503_and_a_failed_job(
+    client: TestClient, state: UploadState, tmp_path: Path
+) -> None:
+    from finsight.jobs import LaunchError
+
+    class Down:
+        def launch(self, doc_id: str, job_id: str) -> None:
+            raise LaunchError("Cloud Run returned 403")
+
+    state.launcher = Down()
+    data = _pdf(tmp_path)
+    started = _init(client, data)
+    client.post(started["upload_url"], content=data, headers={"Content-Type": "application/pdf"})
+    done = client.post(f"/api/uploads/{started['doc_id']}/complete")
+    assert done.status_code == 503
+    assert done.json()["error"]["code"] == "worker_unavailable"
+    assert "403" not in done.text  # internal detail stays in the job row
+    detail = client.get(f"/api/docs/{started['doc_id']}").json()
+    assert detail["doc"]["status"] == "failed"
+    assert _events(client, started["doc_id"])[-1][1] == "done"

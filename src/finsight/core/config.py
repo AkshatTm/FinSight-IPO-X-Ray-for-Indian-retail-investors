@@ -135,6 +135,8 @@ class JobsConfig(BaseModel):
 
     runner: Literal["inline", "cloud_run"] = "inline"
     gpu_job: bool = False  # cloud_gpu: simplify + index run in the L4 job
+    cpu_job_name: str = "finsight-worker"  # Cloud Run Job names (deploy/gcp/*.yaml)
+    gpu_job_name: str = "finsight-gpu-worker"
     poll_interval_s: float = 1.0
 
 

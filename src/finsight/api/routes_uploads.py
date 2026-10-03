@@ -19,7 +19,7 @@ from finsight.api.uploads_state import CurrentUser, UState
 from finsight.core.ids import make_doc_id
 from finsight.core.schemas import DocRecord
 from finsight.db import utcnow
-from finsight.jobs import SOURCE, UploadBlocked, check_upload_allowed
+from finsight.jobs import SOURCE, LaunchError, UploadBlocked, check_upload_allowed
 from finsight.storage import doc_key
 
 router = APIRouter(
@@ -181,5 +181,17 @@ def complete_upload(doc_id: DocId, state: UState, user: CurrentUser) -> UploadCo
     state.db.update_doc(doc_id, status="processing")
     job = state.db.create_job(doc_id)
     state.db.append_event(job.job_id, "stage", {"stage": "received", "status": "end"})
-    state.launcher.launch(doc_id, job.job_id)
+    try:
+        state.launcher.launch(doc_id, job.job_id)
+    except LaunchError as err:
+        # The file is stored and the job recorded: an operator can start it again by hand
+        # (docs/runbooks/DEPLOY_RUNBOOK.md); the reader sees a failed job, not a hang.
+        state.db.update_job(
+            job.job_id, status="failed", finished_at=utcnow(), error=f"launch: {err}"[:500]
+        )
+        state.db.update_doc(doc_id, status="failed")
+        state.db.append_event(job.job_id, "done", {"status": "failed", "failed_stages": []})
+        raise ApiError(
+            503, "worker_unavailable", "We couldn't start processing. Please try again later."
+        ) from err
     return UploadComplete(doc_id=doc_id, job_id=job.job_id, status="queued")

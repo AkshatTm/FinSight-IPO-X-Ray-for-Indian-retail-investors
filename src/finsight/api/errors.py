@@ -28,6 +28,7 @@ ErrorCode = Literal[
     "doc_not_found",
     "upload_not_started",
     "risk_not_found",
+    "worker_unavailable",
 ]
 
 
