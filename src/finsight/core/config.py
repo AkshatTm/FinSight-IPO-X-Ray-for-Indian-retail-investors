@@ -104,6 +104,10 @@ class UploadsConfig(BaseModel):
     per_user_per_day: int = 3
     global_per_day: int = 10
     retention_days: int = 30
+    # Proxies in front of the API that append to X-Forwarded-For (Vercel rewrite, Cloud Run). 0
+    # keys per-IP limits on the socket peer; set it only after checking the header on the
+    # deployed stack (B3.5b), because a client can write anything left of the trusted hops.
+    trusted_proxy_hops: int = 0
 
 
 class StorageConfig(BaseModel):
@@ -153,6 +157,31 @@ class JobsConfig(BaseModel):
     cpu_job_name: str = "finsight-worker"  # Cloud Run Job names (deploy/gcp/*.yaml)
     gpu_job_name: str = "finsight-gpu-worker"
     poll_interval_s: float = 1.0
+
+
+class CostRates(BaseModel):
+    """Cloud Run job prices in USD per unit. ``gpu_s`` is unset until the L4 rate is checked."""
+
+    vcpu_s: float = 0.000018  # Tier 1 jobs rate (cloud.google.com/run/pricing, Oct 2026)
+    gib_s: float = 0.000002
+    gpu_s: float | None = None
+
+
+class CostConfig(BaseModel):
+    """Per-job cost estimate (B02 §12): resources of the worker jobs, rates and the free grant.
+
+    ``provisional`` stays true until the rates are checked for the deployment region
+    (asia-southeast1 is a Tier 2 region, priced above the Tier 1 defaults here).
+    """
+
+    provisional: bool = True
+    cpu_vcpu: float = 4  # deploy/gcp/worker-job.yaml
+    cpu_memory_gib: float = 8
+    gpu_vcpu: float = 4  # deploy/gcp/gpu-job.yaml
+    gpu_memory_gib: float = 16
+    rates_usd: CostRates = Field(default_factory=CostRates)
+    free_vcpu_s_per_month: float = 240_000
+    free_gib_s_per_month: float = 450_000
 
 
 # Environment variables a deployment may need. Names only: values never live in the repo.
@@ -219,6 +248,7 @@ class Settings(BaseSettings):
     auth: AuthConfig = Field(default_factory=AuthConfig)
     simplify: SimplifyConfig = Field(default_factory=SimplifyConfig)
     jobs: JobsConfig = Field(default_factory=JobsConfig)
+    costs: CostConfig = Field(default_factory=CostConfig)
     demo_mode: bool = Field(default=False, validation_alias=AliasChoices("DEMO_MODE", "demo_mode"))
 
     @classmethod

@@ -33,6 +33,7 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 | `uploads.per_user_per_day` | int | `3` | `FINSIGHT_UPLOADS__PER_USER_PER_DAY` |
 | `uploads.global_per_day` | int | `10` | `FINSIGHT_UPLOADS__GLOBAL_PER_DAY` |
 | `uploads.retention_days` | int | `30` | `FINSIGHT_UPLOADS__RETENTION_DAYS` |
+| `uploads.trusted_proxy_hops` | int | `0` | `FINSIGHT_UPLOADS__TRUSTED_PROXY_HOPS` |
 | `storage.backend` | Literal | `local` | `FINSIGHT_STORAGE__BACKEND` |
 | `storage.local_dir` | Path | `data/store` | `FINSIGHT_STORAGE__LOCAL_DIR` |
 | `storage.bucket` | str \| None | — | `FINSIGHT_STORAGE__BUCKET` |
@@ -55,6 +56,16 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 | `jobs.cpu_job_name` | str | `finsight-worker` | `FINSIGHT_JOBS__CPU_JOB_NAME` |
 | `jobs.gpu_job_name` | str | `finsight-gpu-worker` | `FINSIGHT_JOBS__GPU_JOB_NAME` |
 | `jobs.poll_interval_s` | float | `1.0` | `FINSIGHT_JOBS__POLL_INTERVAL_S` |
+| `costs.provisional` | bool | true | `FINSIGHT_COSTS__PROVISIONAL` |
+| `costs.cpu_vcpu` | float | `4` | `FINSIGHT_COSTS__CPU_VCPU` |
+| `costs.cpu_memory_gib` | float | `8` | `FINSIGHT_COSTS__CPU_MEMORY_GIB` |
+| `costs.gpu_vcpu` | float | `4` | `FINSIGHT_COSTS__GPU_VCPU` |
+| `costs.gpu_memory_gib` | float | `16` | `FINSIGHT_COSTS__GPU_MEMORY_GIB` |
+| `costs.rates_usd.vcpu_s` | float | `1.8e-05` | `FINSIGHT_COSTS__RATES_USD__VCPU_S` |
+| `costs.rates_usd.gib_s` | float | `2e-06` | `FINSIGHT_COSTS__RATES_USD__GIB_S` |
+| `costs.rates_usd.gpu_s` | float \| None | — | `FINSIGHT_COSTS__RATES_USD__GPU_S` |
+| `costs.free_vcpu_s_per_month` | float | `240000` | `FINSIGHT_COSTS__FREE_VCPU_S_PER_MONTH` |
+| `costs.free_gib_s_per_month` | float | `450000` | `FINSIGHT_COSTS__FREE_GIB_S_PER_MONTH` |
 | `demo_mode` | bool | false | `DEMO_MODE` |
 
 ## Profiles

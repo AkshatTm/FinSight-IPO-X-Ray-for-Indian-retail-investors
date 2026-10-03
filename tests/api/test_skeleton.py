@@ -48,6 +48,9 @@ ROUTES = [
     ("GET", "/api/docs/{doc_id}/compare"),
     # B3.1
     ("GET", "/api/docs/{doc_id}/redflags"),
+    # B3.5a (B06 §6)
+    ("GET", "/api/admin/costs"),
+    ("GET", "/api/admin/jobs"),
 ]
 
 

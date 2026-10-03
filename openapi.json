@@ -2024,6 +2024,182 @@
           }
         }
       }
+    },
+    "/api/admin/costs": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Admin Costs",
+        "description": "Per-day uploads, CPU (and GPU) seconds, estimated cost and free-grant share.",
+        "operationId": "admin_costs_api_admin_costs_get",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 92,
+              "minimum": 1,
+              "default": 31,
+              "title": "Days"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostSummary"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/jobs": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Admin Jobs",
+        "description": "Recent jobs with this status (failed by default), newest first.",
+        "operationId": "admin_jobs_api_admin_jobs_get",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "failed",
+                "done",
+                "running",
+                "queued"
+              ],
+              "type": "string",
+              "default": "failed",
+              "title": "Status"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 92,
+              "minimum": 1,
+              "default": 31,
+              "title": "Days"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FailedJob"
+                  },
+                  "title": "Response Admin Jobs Api Admin Jobs Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2584,6 +2760,135 @@
         "title": "ComparePercentile",
         "description": "Where one metric of this IPO falls among past IPOs (0-100)."
       },
+      "CostDay": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "title": "Date"
+          },
+          "uploads": {
+            "type": "integer",
+            "title": "Uploads"
+          },
+          "jobs": {
+            "type": "integer",
+            "title": "Jobs"
+          },
+          "failed": {
+            "type": "integer",
+            "title": "Failed"
+          },
+          "vcpu_s": {
+            "type": "number",
+            "title": "Vcpu S"
+          },
+          "gib_s": {
+            "type": "number",
+            "title": "Gib S"
+          },
+          "gpu_s": {
+            "type": "number",
+            "title": "Gpu S"
+          },
+          "usd": {
+            "type": "number",
+            "title": "Usd"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "uploads",
+          "jobs",
+          "failed",
+          "vcpu_s",
+          "gib_s",
+          "gpu_s",
+          "usd"
+        ],
+        "title": "CostDay",
+        "description": "One IST day of ``/api/admin/costs``."
+      },
+      "CostSummary": {
+        "properties": {
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/CostDay"
+            },
+            "type": "array",
+            "title": "Days"
+          },
+          "total": {
+            "$ref": "#/components/schemas/CostTotal"
+          },
+          "usd_incomplete": {
+            "type": "boolean",
+            "title": "Usd Incomplete"
+          },
+          "provisional": {
+            "type": "boolean",
+            "title": "Provisional"
+          },
+          "window_days": {
+            "type": "integer",
+            "title": "Window Days"
+          }
+        },
+        "type": "object",
+        "required": [
+          "days",
+          "total",
+          "usd_incomplete",
+          "provisional",
+          "window_days"
+        ],
+        "title": "CostSummary",
+        "description": "``GET /api/admin/costs``: estimates from job wall-clock time; billing is the truth."
+      },
+      "CostTotal": {
+        "properties": {
+          "uploads": {
+            "type": "integer",
+            "title": "Uploads"
+          },
+          "jobs": {
+            "type": "integer",
+            "title": "Jobs"
+          },
+          "vcpu_s": {
+            "type": "number",
+            "title": "Vcpu S"
+          },
+          "gib_s": {
+            "type": "number",
+            "title": "Gib S"
+          },
+          "usd": {
+            "type": "number",
+            "title": "Usd"
+          },
+          "free_vcpu_share": {
+            "type": "number",
+            "title": "Free Vcpu Share"
+          },
+          "free_gib_share": {
+            "type": "number",
+            "title": "Free Gib Share"
+          }
+        },
+        "type": "object",
+        "required": [
+          "uploads",
+          "jobs",
+          "vcpu_s",
+          "gib_s",
+          "usd",
+          "free_vcpu_share",
+          "free_gib_share"
+        ],
+        "title": "CostTotal",
+        "description": "Totals over the window, with the share of the monthly free grant used."
+      },
       "Count": {
         "description": "A whole-number count, such as a number of equity shares.",
         "properties": {
@@ -2811,7 +3116,8 @@
               "doc_not_found",
               "upload_not_started",
               "risk_not_found",
-              "worker_unavailable"
+              "worker_unavailable",
+              "forbidden"
             ],
             "title": "Code"
           },
@@ -2885,6 +3191,36 @@
         ],
         "title": "ErrorResponse",
         "description": "Every API error: ``{\"error\": ErrorBody}`` (B06 §1)."
+      },
+      "FailedJob": {
+        "properties": {
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job",
+          "created_at"
+        ],
+        "title": "FailedJob",
+        "description": "One row of ``GET /api/admin/jobs``."
       },
       "FieldCheck": {
         "properties": {
@@ -3161,6 +3497,81 @@
         ],
         "title": "IpoSummary",
         "description": "A showcase IPO in the library list, with its headline sizes."
+      },
+      "Job": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "done",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "progress": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Progress"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "doc_id",
+          "stage",
+          "status"
+        ],
+        "title": "Job",
+        "description": "One processing run of a document (B02 §5)."
       },
       "ListValue": {
         "properties": {
