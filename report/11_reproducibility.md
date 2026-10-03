@@ -29,5 +29,19 @@ notebooks, parameters and the quality gate against the baseline are in the repos
 - **The recorded demo answers** (`data/demo_cache/`) are real outputs of the `full` profile,
   never edited; they are the answers the public demo replays.
 
+**Phase 2 additions.**
+- **Generated, not edited.** Kaggle notebooks are generated from the code they run
+  (`scripts/make_*_notebook.py`) and a test fails if a committed notebook drifts. The docs pages and the
+  §7.9 table are generated from `eval_results/` (`uv run poe docs-gen --check` in CI).
+- **Teacher labels** carry `label_source = teacher:<model>:<prompt_version>`; the teacher run appends its raw
+  answers to a checkpoint file in batches, and a rerun resumes from it instead of starting again.
+- **Provisional values.** `configs/risklevel.yaml` and `configs/compare.yaml` hold placeholder thresholds and
+  reference quantiles (`provisional: true`) until the corpus runs; any number computed with them must be
+  reported as provisional.
+- **Fixture pack.** Tests on real document text use `tests/fixtures/real/` (short excerpts of public filings,
+  B-ADR-15), so the Phase 2 code can be tested without the PDFs.
+- **Cloud.** The deployment is code (`deploy/gcp/`, rendered by `scripts/render_deploy.py`); the container
+  images are built and smoke-tested in CI. Nothing is deployed at the time of writing.
+
 **Check.** From a clean clone: `uv sync`, `uv run poe test`, then `uv run python -m finsight.evaluate.ladder`
 regenerates `ladder_table.*` from the stored per-row results without a GPU.
