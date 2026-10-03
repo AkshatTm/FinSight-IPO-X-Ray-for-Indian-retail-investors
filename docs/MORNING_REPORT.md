@@ -43,6 +43,14 @@
   - The winner is picked by dev macro-F1 and exported to a small int8 ONNX file, so the cloud worker runs it without PyTorch.
   - Training is the local part B2.4b; its prompt is in AKSHAT_TODO.
 
+- **B2.5a (#135): the plain-English rewriter, ready to train.**
+  - A small model (Qwen3-4B) will learn from the teacher's rewrites on Kaggle, then become a 4-bit file that runs on an ordinary CPU (about 15 seconds per risk).
+  - Every rewrite must keep the original's numbers and certainty, contain no advice phrase, and stay under 70 words. Otherwise the reader sees the original.
+  - The 15 most important risks are rewritten automatically; a click moves any other risk to the front.
+  - There is an optional GPU path (vLLM) for when Google Cloud billing exists.
+  - Training is the local part B2.5b; its prompt is in AKSHAT_TODO.
+  - I chose Qwen3-4B-Instruct over Qwen3.5-4B as the default, because Qwen3.5-4B is a multimodal model with a new attention type, which is riskier to fine-tune on a T4. Qwen3.5-4B stays in the bake-off.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
