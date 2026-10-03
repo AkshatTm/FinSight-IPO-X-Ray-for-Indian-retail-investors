@@ -7,6 +7,7 @@ runtime service account signs through IAM ``signBlob``, so it needs Token Creato
 
 from __future__ import annotations
 
+import importlib
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
@@ -18,7 +19,8 @@ class GCSStorage:
 
     def __init__(self, bucket: str, client: Any | None = None) -> None:
         if client is None:  # pragma: no cover - needs the cloud group and credentials
-            from google.cloud import storage as gcs  # type: ignore[import-not-found,import-untyped,unused-ignore]
+            # imported by name: the package is optional and untyped (no mypy stubs)
+            gcs: Any = importlib.import_module("google.cloud.storage")
 
             client = gcs.Client()
         self.client = client
