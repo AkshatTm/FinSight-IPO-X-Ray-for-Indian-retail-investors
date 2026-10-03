@@ -14,15 +14,21 @@ from fastapi.responses import JSONResponse
 
 from finsight import __version__
 from finsight.api.errors import ApiError, ErrorBody, ErrorResponse
-from finsight.api.events import EVENT_MODELS
+from finsight.api.events import EVENT_MODELS, JOB_EVENT_MODELS
 from finsight.api.routes import router
+from finsight.api.routes_docs import router as docs_router
+from finsight.api.routes_uploads import router as uploads_router
 from finsight.core.logging import get_logger
 
 logger = get_logger("finsight.api")
 
 
 def _envelope(status_code: int, body: ErrorBody) -> JSONResponse:
-    return JSONResponse(status_code=status_code, content=ErrorResponse(error=body).model_dump())
+    content = ErrorResponse(error=body).model_dump(mode="json")
+    for key in ("limit", "resets_at"):  # quota-only fields; Phase 1 envelopes stay unchanged
+        if content["error"][key] is None:
+            del content["error"][key]
+    return JSONResponse(status_code=status_code, content=content)
 
 
 def _install_error_handlers(app: FastAPI) -> None:
@@ -53,20 +59,25 @@ def _install_error_handlers(app: FastAPI) -> None:
 
 
 def _with_sse_events(schema: dict[str, Any]) -> dict[str, Any]:
-    """Register each SSE event model as an OpenAPI component and map it on /api/chat.
+    """Register each SSE event model as an OpenAPI component and map it on its stream.
 
     OpenAPI cannot describe the payloads of a streaming response, so without this the
     frontend would get no generated type for any event.
     """
     components = schema.setdefault("components", {}).setdefault("schemas", {})
-    refs: dict[str, dict[str, str]] = {}
-    for event, model in EVENT_MODELS.items():
-        model_schema = model.model_json_schema(ref_template="#/components/schemas/{model}")
-        components.update(model_schema.pop("$defs", {}))
-        components[model.__name__] = model_schema
-        refs[event] = {"$ref": f"#/components/schemas/{model.__name__}"}
-    ok_response = schema["paths"]["/api/chat"]["post"]["responses"]["200"]
-    ok_response["content"]["text/event-stream"]["x-sse-events"] = refs
+    streams = (
+        ("/api/chat", "post", EVENT_MODELS),
+        ("/api/docs/{doc_id}/events", "get", JOB_EVENT_MODELS),
+    )
+    for path, method, models in streams:
+        refs: dict[str, dict[str, str]] = {}
+        for event, model in models.items():
+            model_schema = model.model_json_schema(ref_template="#/components/schemas/{model}")
+            components.update(model_schema.pop("$defs", {}))
+            components[model.__name__] = model_schema
+            refs[event] = {"$ref": f"#/components/schemas/{model.__name__}"}
+        ok_response = schema["paths"][path][method]["responses"]["200"]
+        ok_response["content"]["text/event-stream"]["x-sse-events"] = refs
     return schema
 
 
@@ -77,6 +88,8 @@ def create_app() -> FastAPI:
         description="IPO X-Ray and verified chat. Contract: docs/06_API_CONTRACT.md.",
     )
     app.include_router(router)
+    app.include_router(uploads_router)
+    app.include_router(docs_router)
     _install_error_handlers(app)
 
     def openapi() -> dict[str, Any]:

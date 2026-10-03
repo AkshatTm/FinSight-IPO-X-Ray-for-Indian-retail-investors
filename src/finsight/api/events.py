@@ -121,3 +121,40 @@ EVENT_MODELS: dict[str, type[BaseModel]] = {
     "final": FinalEvent,
     "error": ErrorEvent,
 }
+
+
+# ------------------------------------------------------------------ document job events (B06 §2)
+class JobStageEvent(BaseModel):
+    stage: str
+    status: Literal["start", "end", "failed"]
+    detail: dict[str, object] | None = None
+
+
+class JobProgressEvent(BaseModel):
+    stage: str
+    done: int
+    total: int
+
+
+class JobReadyEvent(BaseModel):
+    part: Literal["facts", "redflags", "risk_level", "risks", "compare", "chat"]
+
+
+class RiskSimplifiedEvent(BaseModel):
+    rid: str
+    simple_status: Literal["pending", "ready", "rejected", "failed"]
+
+
+class JobDoneEvent(BaseModel):
+    status: Literal["ready", "partial", "failed"]
+    failed_stages: list[str]
+
+
+# SSE ``event:`` name -> payload model for ``GET /api/docs/{doc_id}/events``.
+JOB_EVENT_MODELS: dict[str, type[BaseModel]] = {
+    "stage": JobStageEvent,
+    "progress": JobProgressEvent,
+    "ready": JobReadyEvent,
+    "risk_simplified": RiskSimplifiedEvent,
+    "done": JobDoneEvent,
+}
