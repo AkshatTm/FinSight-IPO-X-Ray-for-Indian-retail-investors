@@ -1837,6 +1837,61 @@
           }
         }
       }
+    },
+    "/api/docs/{doc_id}/risk-level": {
+      "get": {
+        "tags": [
+          "risks"
+        ],
+        "summary": "Get Risk Level",
+        "description": "The level with its reasons (B02 §7.4). ``behind_click`` follows the current config, so the\nteacher's \"hide it\" switch works without recomputing reports.",
+        "operationId": "get_risk_level_api_docs__doc_id__risk_level_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskLevel"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3530,6 +3585,123 @@
         ],
         "title": "Risk",
         "description": "One risk factor of a document (B02 §5); features are ``None`` until their stage runs."
+      },
+      "RiskLevel": {
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Level"
+          },
+          "points": {
+            "type": "integer",
+            "title": "Points"
+          },
+          "max_points": {
+            "type": "integer",
+            "title": "Max Points"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "percentile": {
+            "type": "number",
+            "title": "Percentile"
+          },
+          "checks_available": {
+            "type": "integer",
+            "title": "Checks Available"
+          },
+          "reasons": {
+            "items": {
+              "$ref": "#/components/schemas/RiskLevelReason"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "thresholds": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Thresholds"
+          },
+          "corpus_n": {
+            "type": "integer",
+            "title": "Corpus N"
+          },
+          "provisional": {
+            "type": "boolean",
+            "title": "Provisional"
+          },
+          "behind_click": {
+            "type": "boolean",
+            "title": "Behind Click"
+          },
+          "disclaimer_key": {
+            "type": "string",
+            "title": "Disclaimer Key",
+            "default": "risklevel.disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "level",
+          "points",
+          "max_points",
+          "score",
+          "percentile",
+          "checks_available",
+          "reasons",
+          "thresholds",
+          "corpus_n",
+          "provisional",
+          "behind_click"
+        ],
+        "title": "RiskLevel",
+        "description": "B02 §7.4: points over the checks available, placed among past IPOs (2018-2023)."
+      },
+      "RiskLevelReason": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "redflag",
+              "risk"
+            ],
+            "title": "Source"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "points": {
+            "type": "integer",
+            "title": "Points"
+          },
+          "link": {
+            "type": "string",
+            "title": "Link"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "id",
+          "label",
+          "points",
+          "link"
+        ],
+        "title": "RiskLevelReason"
       },
       "RisksPage": {
         "properties": {

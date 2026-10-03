@@ -150,3 +150,20 @@ def test_rate_limit_window_slides() -> None:
     assert not limit.allow("ip", 59.0)
     assert limit.allow("ip", 60.5)
     assert limit.allow("other", 59.0)
+
+
+def test_risk_level_endpoint_follows_the_behind_click_switch(
+    client: TestClient, state: UploadState, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from finsight.risklevel import build, load_config
+
+    assert client.get(f"/api/docs/{DOC}/risk-level").json()["error"]["code"] == "not_available"
+    build(state.storage, DOC)
+    body = client.get(f"/api/docs/{DOC}/risk-level").json()
+    assert body["level"] in ("low", "medium", "high")
+    assert body["provisional"] is True
+    assert body["disclaimer_key"] == "risklevel.disclaimer"
+    assert body["behind_click"] is False
+    hidden = {**load_config(), "behind_click": True}
+    monkeypatch.setattr(routes_risks, "risklevel_config", lambda: hidden)
+    assert client.get(f"/api/docs/{DOC}/risk-level").json()["behind_click"] is True
