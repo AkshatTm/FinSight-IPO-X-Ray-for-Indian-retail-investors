@@ -310,6 +310,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/uploads/limits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Upload Limits */
+        get: operations["upload_limits_api_uploads_limits_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/uploads/init": {
         parameters: {
             query?: never;
@@ -1054,6 +1071,20 @@ export interface components {
             upload_method?: ("PUT" | "POST") | null;
             /** Expires At */
             expires_at?: string | null;
+        };
+        /**
+         * UploadLimits
+         * @description What the upload page shows before anyone uploads (B05 §3).
+         */
+        UploadLimits: {
+            /** Enabled */
+            enabled: boolean;
+            /** Max Mb */
+            max_mb: number;
+            /** Max Pages */
+            max_pages: number;
+            /** Per User Per Day */
+            per_user_per_day: number;
         };
         /** VoiceResponse */
         VoiceResponse: {
@@ -2120,6 +2151,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["GlossaryEntry"][];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    upload_limits_api_uploads_limits_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadLimits"];
                 };
             };
             /** @description Client Error */

@@ -57,6 +57,26 @@ class UploadComplete(BaseModel):
     status: Literal["queued"]
 
 
+class UploadLimits(BaseModel):
+    """What the upload page shows before anyone uploads (B05 §3)."""
+
+    enabled: bool
+    max_mb: int
+    max_pages: int
+    per_user_per_day: int
+
+
+@router.get("/limits")
+def upload_limits(state: UState) -> UploadLimits:
+    cfg = state.settings.uploads
+    return UploadLimits(
+        enabled=cfg.enabled,
+        max_mb=cfg.max_mb,
+        max_pages=cfg.max_pages,
+        per_user_per_day=cfg.per_user_per_day,
+    )
+
+
 def _too_large(state: UState, size: int) -> None:
     limit = state.settings.uploads.max_mb
     if size > limit * 1024 * 1024:

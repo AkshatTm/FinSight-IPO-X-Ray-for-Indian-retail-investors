@@ -199,3 +199,14 @@ def test_job_events_are_in_the_openapi_document(client: TestClient) -> None:
         "risk_simplified",
         "done",
     }
+
+
+def test_limits_follow_the_config(client: TestClient, state: UploadState) -> None:
+    assert client.get("/api/uploads/limits").json() == {
+        "enabled": True,
+        "max_mb": 50,
+        "max_pages": 1500,
+        "per_user_per_day": 3,
+    }
+    state.settings.uploads.enabled = False
+    assert client.get("/api/uploads/limits").json()["enabled"] is False
