@@ -48,6 +48,10 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
   ```text
   Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md (B2.7), docs/runbooks/DEPLOY_RUNBOOK.md, deploy/gcp/README.md and docs/AKSHAT_TODO.md. Do part B2.7 only, and only because I said "go" in this chat. Run the tests and report in one line. Do the model check (both directions). Steps: (1) check `uv run python scripts/check_env.py --profile cloud` (names only, never print values); (2) follow DEPLOY_RUNBOOK steps 2–6 for the CPU path only (no GPU job): I run every gcloud command that creates or changes a paid resource myself after you show it; (3) run scripts/cloud_smoke.py with one small offer document and write eval_results/b/smoke_deploy.json (cold start, stage timings); (4) scale to zero and confirm no instance is running. Never print secrets. End with the PR merged, B2.7 ticked, PROGRESS.md updated, and the /clear message (B07 §0).
   ```
+- [ ] **B3.2b compare reference + real peer tables (#150 follow-up)** — after B0.4 and B1.3a over the corpus. Sonnet. ~1 session.
+  ```text
+  Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md, docs/phase2/B_EXECUTION_PLAN.md (B3.2), docs/phase2/B05_UI_SPEC.md §5.6 and docs/AKSHAT_TODO.md. Do part B3.2b only. Run the tests and report in one line. Do the model check (both directions). Steps: (1) write scripts/compare_reference.py: over the 2018–2023 corpus IPOs compute issue size, OFS share, insider price gap and P/E (from the facts and red-flag numbers), write 11 quantiles per metric with computed_on, corpus_n and provisional: false into configs/compare.yaml (never hand-type numbers); (2) run `finsight.compare.peers_from_table` on the Basis for Offer Price tables of the 10 showcase IPOs and the fixture pack; fix the parser for any header it misses and add those tables as tests (`tests/fixtures/real/`, via scripts/export_fixtures.py only); (3) wire the `compare` stage into the worker pipeline once B1.4 facts exist; (4) refresh frontend/mocks/report.ts from a fixture report. Never deploy or spend cloud credits. End with the PR merged, this item ticked, PROGRESS.md updated, and the /clear message (B07 §0).
+  ```
 - Later local parts ( B1.3b, B1.4 E15, B2.1b, B2.3b …) are added here by the cloud session that unblocks them, each with its prompt.
 
 ## Phase 2 hand-work (dated; full calendar in docs/phase2/B_EXECUTION_PLAN.md §4, checklist in #124)
@@ -81,6 +85,7 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - Every `[HI review]` string in docs/12_FRONTEND_SPEC.md is used verbatim in frontend/lib/i18n.ts (nav, footer, library). Landing, Lab and About Hindi get added with their steps.
 
 ## New copy to review (strings the spec did not provide)
+- Compare tab (B3.2, `frontend/lib/content/report.ts`): issuer chip "This IPO"; "Provisional: the past-IPO figures are placeholders until they are computed from 2018–2023 IPOs."; the English twin of B05's Hindi note, "This risk report is in English only for now." (only the Hindi line is shown).
 - API `worker_unavailable` (B3.3a, 503 when Cloud Run cannot start the worker): "We couldn't start processing. Please try again later." The upload page shows its generic error for this code.
 - Library: HI for the buttons/links the spec gave only in English: "Clear search" -> "खोज हटाएँ"; "Open Ather Energy" -> "Ather Energy खोलें"; filter group and sort labels (sr-only) "Sort" -> "क्रम".
 - Keyboard shortcuts dialog (spec 17 asks for it, gives no copy): `keys.*` in frontend/lib/i18n.ts, EN and HI both drafted by the builder.

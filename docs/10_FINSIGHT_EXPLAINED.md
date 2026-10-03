@@ -501,6 +501,20 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** Nothing is deployed; there is no GCP billing yet. The GPU image is linted but never built in CI (too large). The API does not start the GPU job by itself yet. The Cloud Run YAML follows the documented schema, but only a real `gcloud run … replace` in B3.3b proves it.
 **Likely viva questions.** (1) *Why a job per document instead of a background thread in the API?* (Cloud Run may stop CPU after the response; a job has its own CPU, memory and timeout, and costs nothing when idle.) (2) *Why no torch in the API image?* (Size and cold start: the hosted chat uses BM25 and a GGUF model.) (3) *How do you stop a runaway bill?* (Scale-to-zero, max instances, a ₹2,000 budget alert, an upload kill switch and the cost-incident runbook.)
 
+### C31. Compare: listed peers and past IPOs (built in B3.2)
+**What it does.**
+- **Peers.** Most offer documents have a peer table in "Basis for Offer Price". It lists the issuer and the listed companies it chose to compare itself with: P/E, EPS, return on net worth and book value per share. FinSight reads that table as follows:
+  - it finds the columns by their headings, preferring basic EPS over diluted;
+  - it skips headings such as "Listed peers";
+  - it flags the issuer's own row;
+  - it keeps each row's page and box, so the source can be shown.
+  An RHP usually leaves the issuer's P/E blank (`[●]`). It is then worked out as offer price ÷ EPS, and left out for a loss-making company, where P/E means nothing.
+- **Past IPOs.** Four numbers are placed among 2018–2023 IPOs: issue size, OFS share, insider price gap and P/E. Each is shown as "Higher than p% of past IPOs".
+- **UI.** The Compare tab shows the issuer first, a source chip and percentile bars. When there is nothing to show, it uses the B05 empty states.
+
+**Limits.** The past-IPO reference numbers are **placeholders** (`configs/compare.yaml`, `provisional: true`) until the local corpus run. The peer list is the company's own choice of peers, so it can be flattering; the tab says where it came from. The table reader has been tested on synthetic tables; real tables from the fixture pack come next.
+**Likely viva questions.** (1) *Why not pick peers yourself?* (SEBI's format makes the issuer name them; choosing our own would be an opinion. We show theirs, with the source.) (2) *Why is P/E blank in an RHP?* (The price band is set after filing; the Prospectus has the final price.) (3) *Does "higher than 70% of past IPOs" mean expensive?* (It means higher than most; it is a fact about the distribution, not a judgement or advice.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

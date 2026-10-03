@@ -70,6 +70,13 @@
   - Every PR now builds the two CPU images and runs a full smoke test (upload → processing → report) against the API container. Pushing images to Google is a button you press by hand, later.
   - Three runbooks: deploy, rollback and cost incident. The smoke deploy (B2.7) waits for your "go" and has its prompt in AKSHAT_TODO.
 
+- **B3.2 (#150): the Compare tab.**
+  - FinSight reads the peer table that every offer document has in "Basis for Offer Price": P/E, EPS, return on net worth and book value of the listed companies the issuer compares itself with.
+  - If the RHP leaves the issuer's P/E blank, it is worked out from the price.
+  - Issue size, OFS share, insider price gap and P/E are placed among past IPOs ("Higher than 65% of past IPOs").
+  - The tab works on made-up mock data. The past-IPO numbers are placeholders until a laptop run computes them; the prompt is in AKSHAT_TODO.
+  - It also fixed a hidden API bug: two different "Evidence" shapes had the same name, so the API description mixed them up. A test now catches this.
+
 ### Blocked, and why
 - **B1.3a, B1.4, B2.1a** need the B0.4 fixture pack, which can only be made on your laptop.
 
