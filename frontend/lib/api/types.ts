@@ -464,6 +464,63 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/docs/{doc_id}/risks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Risks */
+        get: operations["list_risks_api_docs__doc_id__risks_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/docs/{doc_id}/risks/{rid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Risk
+         * @description The full risk, with its nearest past examples.
+         */
+        get: operations["get_risk_api_docs__doc_id__risks__rid__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/docs/{doc_id}/risks/{rid}/simplify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Simplify Risk
+         * @description Queue a risk for a plain-English rewrite, or move it to the front of the queue.
+         */
+        post: operations["simplify_risk_api_docs__doc_id__risks__rid__simplify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -519,6 +576,13 @@ export interface components {
              * @default hi
              */
             language: string;
+        };
+        /** CategoryCount */
+        CategoryCount: {
+            /** Category */
+            category: ("financial" | "debt_liquidity" | "customers_suppliers" | "competition" | "legal_litigation" | "regulatory" | "promoters_governance" | "operations" | "technology_data" | "market_macro") | null;
+            /** Count */
+            count: number;
         };
         /** ChatRequest */
         ChatRequest: {
@@ -668,7 +732,7 @@ export interface components {
              * Code
              * @enum {string}
              */
-            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started";
+            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started" | "risk_not_found";
             /** Message */
             message: string;
             /** Hint */
@@ -724,6 +788,29 @@ export interface components {
             version: string;
             /** Git Sha */
             git_sha?: string | null;
+        };
+        /**
+         * Hedging
+         * @description B02 §7.2: hedge words counted, and whether the risk states a past fact with a number.
+         */
+        Hedging: {
+            /**
+             * Hedge Count
+             * @default 0
+             */
+            hedge_count: number;
+            /**
+             * Hard Fact
+             * @default false
+             */
+            hard_fact: boolean;
+            /**
+             * Flag
+             * @default false
+             */
+            flag: boolean;
+            /** Fact Sentence */
+            fact_sentence?: string | null;
         };
         /** IpoDetail */
         IpoDetail: {
@@ -821,6 +908,17 @@ export interface components {
             created_at: string;
             /** Status */
             status: string;
+        };
+        /** NearestExample */
+        NearestExample: {
+            /** Company */
+            company: string;
+            /** Year */
+            year: number;
+            /** Title */
+            title: string;
+            /** Similarity */
+            similarity: number;
         };
         /** PageSize */
         PageSize: {
@@ -926,6 +1024,60 @@ export interface components {
                 [key: string]: unknown;
             } | null;
         };
+        /**
+         * Risk
+         * @description One risk factor of a document (B02 §5); features are ``None`` until their stage runs.
+         */
+        Risk: {
+            /** Rid */
+            rid: string;
+            /** Order */
+            order: number;
+            /** Title */
+            title: string;
+            /** Body */
+            body: string;
+            /** Page Start */
+            page_start: number;
+            /** Page End */
+            page_end: number;
+            /** Group */
+            group?: string | null;
+            /** Category */
+            category?: ("financial" | "debt_liquidity" | "customers_suppliers" | "competition" | "legal_litigation" | "regulatory" | "promoters_governance" | "operations" | "technology_data" | "market_macro") | null;
+            /** Category Conf */
+            category_conf?: number | null;
+            /** Novelty */
+            novelty?: number | null;
+            /** Nearest Examples */
+            nearest_examples?: components["schemas"]["NearestExample"][];
+            hedging?: components["schemas"]["Hedging"];
+            /** Numbers */
+            numbers?: (components["schemas"]["Money"] | components["schemas"]["Count"] | components["schemas"]["Percent"] | components["schemas"]["Placeholder"] | components["schemas"]["Range"])[];
+            /** Seriousness */
+            seriousness?: ("high" | "medium" | "low") | null;
+            /** Importance */
+            importance?: number | null;
+            /** Simple */
+            simple?: string | null;
+            /**
+             * Simple Status
+             * @default pending
+             * @enum {string}
+             */
+            simple_status: "pending" | "ready" | "rejected" | "failed";
+            /** Simple Checks */
+            simple_checks?: components["schemas"]["CheckResult"][];
+        };
+        /** RisksPage */
+        RisksPage: {
+            /** N Total */
+            n_total: number;
+            /** Groups */
+            groups: components["schemas"]["CategoryCount"][];
+            /** Risks */
+            risks: components["schemas"]["Risk"][];
+        };
         /** SectionInfo */
         SectionInfo: {
             /** Id */
@@ -943,6 +1095,18 @@ export interface components {
             printed_start_page?: string | null;
             /** End Page */
             end_page: number;
+        };
+        /** SimplifyQueued */
+        SimplifyQueued: {
+            /** Rid */
+            rid: string;
+            /**
+             * Simple Status
+             * @enum {string}
+             */
+            simple_status: "pending" | "ready" | "rejected" | "failed";
+            /** Position */
+            position: number;
         };
         /**
          * SourceSentence
@@ -2487,6 +2651,133 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ReportOverview"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_risks_api_docs__doc_id__risks_get: {
+        parameters: {
+            query?: {
+                sort?: "importance" | "order" | "category";
+                category?: ("financial" | "debt_liquidity" | "customers_suppliers" | "competition" | "legal_litigation" | "regulatory" | "promoters_governance" | "operations" | "technology_data" | "market_macro") | null;
+                q?: string | null;
+                unusual_only?: boolean;
+            };
+            header?: never;
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RisksPage"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_risk_api_docs__doc_id__risks__rid__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: string;
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Risk"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    simplify_risk_api_docs__doc_id__risks__rid__simplify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: string;
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SimplifyQueued"];
                 };
             };
             /** @description Client Error */

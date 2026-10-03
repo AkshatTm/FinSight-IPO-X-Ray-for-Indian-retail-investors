@@ -38,6 +38,10 @@ ROUTES = [
     ("GET", "/api/docs/{doc_id}/events"),
     ("GET", "/api/docs/{doc_id}/report"),
     ("GET", "/api/me/uploads"),
+    # B2.2a (B06 §3)
+    ("GET", "/api/docs/{doc_id}/risks"),
+    ("GET", "/api/docs/{doc_id}/risks/{rid}"),
+    ("POST", "/api/docs/{doc_id}/risks/{rid}/simplify"),
 ]
 
 
