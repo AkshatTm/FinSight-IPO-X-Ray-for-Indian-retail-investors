@@ -21,7 +21,8 @@ describe("i18n dictionary", () => {
         expect(text, k).not.toMatch(/!/);
         expect(text, k).not.toMatch(/\p{Extended_Pictographic}/u);
       }
-      for (const w of BANNED) expect(v.en.toLowerCase(), `${k}: ${w}`).not.toContain(w);
+      // Whole words: the marketing verb "unlock" is banned, B05's "an unlocked copy" (a PDF) is not.
+      for (const w of BANNED) expect(v.en.toLowerCase(), `${k}: ${w}`).not.toMatch(new RegExp(`\\b${w}\\b`));
     }
   });
   it("keeps Hindi numerals Western (no Devanagari digits)", () => {
