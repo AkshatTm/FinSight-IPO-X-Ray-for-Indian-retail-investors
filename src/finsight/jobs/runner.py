@@ -2,11 +2,14 @@
 
 Stages are idempotent: a stage whose output file already exists is not run again (a retried job
 continues where it stopped). A failing stage marks the report ``partial`` and skips the stages
-that need it; a failing *critical* stage (validation, parsing) fails the whole job.
+that need it; a failing *critical* stage (validation, parsing) fails the whole job. A stage that
+runs past its timeout (``Stage.timeout_s`` or ``jobs.stage_timeouts_s``) fails the same way; its
+thread is abandoned and ends with the worker process.
 """
 
 from __future__ import annotations
 
+import threading
 import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
@@ -73,6 +76,34 @@ class Stage:
     output: str | None = None
     requires: tuple[str, ...] = ()
     critical: bool = False
+    timeout_s: float | None = None  # overrides jobs.stage_timeouts_s[name]
+
+
+class StageTimeout(Exception):
+    """A stage ran longer than its timeout."""
+
+
+def _call(stage: Stage, ctx: JobContext, timeout_s: float | None) -> dict[str, Any] | None:
+    """Run the stage, in a daemon thread when it has a timeout."""
+    if timeout_s is None:
+        return stage.fn(ctx)
+    box: dict[str, Any] = {}
+
+    def target() -> None:
+        try:
+            box["result"] = stage.fn(ctx)
+        except BaseException as err:  # re-raised in the runner's thread
+            box["error"] = err
+
+    thread = threading.Thread(target=target, name=f"stage-{stage.name}", daemon=True)
+    thread.start()
+    thread.join(timeout_s)
+    if thread.is_alive():
+        raise StageTimeout(f"{stage.name} ran longer than {timeout_s:g} s")
+    if "error" in box:
+        raise box["error"]
+    result: dict[str, Any] | None = box.get("result")
+    return result
 
 
 @dataclass(frozen=True)
@@ -112,7 +143,8 @@ def run_job(ctx: JobContext, stages: Sequence[Stage]) -> JobResult:
         ctx.emit("stage", {"stage": stage.name, "status": "start"})
         start = time.perf_counter()
         try:
-            detail = stage.fn(ctx) or {}
+            timeout = stage.timeout_s or ctx.settings.jobs.stage_timeouts_s.get(stage.name)
+            detail = _call(stage, ctx, timeout) or {}
         except StageRejected as err:
             rejection, fatal = err.code, True
             failed.append(stage.name)

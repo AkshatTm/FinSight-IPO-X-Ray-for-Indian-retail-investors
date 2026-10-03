@@ -157,6 +157,8 @@ class JobsConfig(BaseModel):
     cpu_job_name: str = "finsight-worker"  # Cloud Run Job names (deploy/gcp/*.yaml)
     gpu_job_name: str = "finsight-gpu-worker"
     poll_interval_s: float = 1.0
+    # B02 §11: a stage that runs longer fails (parse: 10 min). Keyed by stage name.
+    stage_timeouts_s: dict[str, float] = Field(default_factory=lambda: {"parsed": 600.0})
 
 
 class CostRates(BaseModel):

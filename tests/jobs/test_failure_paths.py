@@ -6,6 +6,7 @@ with the B02 dependencies, so the runner's failure rules are pinned before those
 
 from __future__ import annotations
 
+import threading
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -171,3 +172,56 @@ def test_real_upload_stages_are_critical() -> None:
         ("validated", True),
         ("detected", True),
     ]
+
+
+def _slow(seconds: float):  # type: ignore[no-untyped-def]
+    def fn(ctx: JobContext) -> dict[str, object]:
+        threading.Event().wait(seconds)
+        return {"finished": True}
+
+    return fn
+
+
+def test_a_stage_past_its_timeout_fails_and_only_its_dependents_are_skipped(
+    db: Database, storage: LocalStorage
+) -> None:
+    ctx = _ctx(db, storage)
+    stages = [
+        Stage("risks_split", _slow(5), timeout_s=0.05),
+        Stage("risks_scored", _slow(0), requires=("risks_split",)),
+        Stage("compare", _slow(0)),
+    ]
+    result = run_job(ctx, stages)
+    assert (result.status, result.failed_stages) == ("partial", ["risks_split", "risks_scored"])
+    failed = [e.data for e in db.events_after(ctx.job_id) if e.data.get("status") == "failed"]
+    assert failed[0] == {
+        "stage": "risks_split",
+        "status": "failed",
+        "detail": {"error": "StageTimeout"},
+    }
+
+
+def test_a_critical_stage_timeout_from_settings_fails_the_job(
+    db: Database, storage: LocalStorage
+) -> None:
+    ctx = _ctx(db, storage)
+    assert ctx.settings.jobs.stage_timeouts_s["parsed"] == 600  # B02 §11: parse ≤ 10 min
+    ctx.settings.jobs.stage_timeouts_s["parsed"] = 0.05
+    result = run_job(ctx, [Stage("parsed", _slow(5), critical=True), Stage("index", _slow(0))])
+    assert (result.status, result.failed_stages) == ("failed", ["parsed"])
+
+
+def test_a_stage_within_its_timeout_runs_normally_and_errors_still_surface(
+    db: Database, storage: LocalStorage
+) -> None:
+    ctx = _ctx(db, storage)
+
+    def bad(ctx: JobContext) -> dict[str, object]:
+        raise StageRejected("password", "encrypted")
+
+    result = run_job(
+        ctx, [Stage("facts", _slow(0), timeout_s=5), Stage("validated", bad, timeout_s=5)]
+    )
+    assert (result.status, result.rejection) == ("failed", "password")
+    ends = [e.data for e in db.events_after(ctx.job_id) if e.data.get("status") == "end"]
+    assert ends == [{"stage": "facts", "status": "end", "detail": {"finished": True}}]
