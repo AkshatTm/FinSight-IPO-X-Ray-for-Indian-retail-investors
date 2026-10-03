@@ -25,7 +25,7 @@ One JSON text per IPO (`data/processed/corpus/<ipo_id>.json`, gitignored), pages
 
 - **Source:** `sohomghosh/Indian_IPO_datasets` on Hugging Face (Ghosh, Maji, Vardhan, Naskar 2024): a pagewise text zip of mainboard IPO documents and an Excel sheet of IPO details.
 - **Build:** `uv run python -m finsight.ingest.corpus build` keeps RHP- and Prospectus-derived texts (judged from the cover, not the file name), drops draft (DRHP), unreadable and too-short texts, and tags sections with the Phase 1 section detector.
-- **Excel columns:** only allow-listed columns are read. Outcome, listing-day and broker columns are never read by the corpus build; only `evaluate/outcomes.py` may read them, for E21 (B-ADR-03).
+- **Excel columns:** only allow-listed columns are read. Outcome, listing-day and broker columns are never read when building the corpus or training. The proposed B-ADR-03 would let one evaluation script (`evaluate/outcomes.py`, E21) read them to check the risk level, never to train or tune anything.
 
 ## Preprocessing and exclusions
 

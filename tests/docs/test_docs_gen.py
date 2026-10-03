@@ -81,10 +81,19 @@ def test_mkdocs_nav_points_at_files_that_exist() -> None:
             return [p for value in node.values() for p in pages(value)]
         return []
 
+    root_pages = {"changelog.md": "CHANGELOG.md", "contributing.md": "CONTRIBUTING.md"}
+    root_pages |= {"security.md": "SECURITY.md", "privacy.md": "PRIVACY.md"}
     nav = pages(cfg["nav"])
     assert nav
-    missing = [p for p in nav if not (ROOT / "docs" / p).exists()]
+    missing = [
+        p
+        for p in nav
+        if not (ROOT / "docs" / p).exists() and not (ROOT / root_pages.get(p, "-")).exists()
+    ]
     assert missing == []
+    hooks = (ROOT / "scripts" / "mkdocs_hooks.py").read_text(encoding="utf-8")
+    for page, source in root_pages.items():
+        assert f'"{page}": "{source}"' in hooks
 
 
 def test_glossary_has_every_term_with_its_hindi() -> None:

@@ -13,8 +13,9 @@ permissions:
   contents: read
 
 # B09 §9. Hard checks: generated pages and openapi.json are current (the page check also runs
-# in pytest), the strict site build, and the 70 % docstring floor. Warn-only: the 80 % docstring
-# target and Markdown lint. Publishing to GitHub Pages is added after Akshat's go.
+# in pytest), the strict site build, the 70 % docstring floor and Markdown lint on the site
+# sources. Warn-only: the 80 % docstring target. Publishing to GitHub Pages is added after
+# Akshat's go.
 jobs:
   site:
     runs-on: ubuntu-latest
@@ -39,6 +40,10 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
-      - name: Markdown lint on the site sources (warn-only)
-        continue-on-error: true
-        run: npx -y markdownlint-cli2@0.23.3 docs/index.md "docs/reference/*.md" "docs/adr/*.md"
+      - name: Markdown lint on the site sources
+        run: >-
+          npx -y markdownlint-cli2@0.23.3 docs/index.md docs/glossary.md docs/evaluation.md
+          docs/troubleshooting.md "docs/reference/*.md" "docs/adr/*.md" "docs/architecture/*.md"
+          "docs/tutorials/*.md" "docs/howto/*.md" "docs/model_cards/*.md" "docs/datasheets/*.md"
+          "docs/runbooks/*.md" CHANGELOG.md CONTRIBUTING.md SECURITY.md PRIVACY.md
+          CODE_OF_CONDUCT.md frontend/README.md
