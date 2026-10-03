@@ -73,6 +73,10 @@ export const handlers = [
   http.get("/api/lab/weaklabels", () => HttpResponse.json(LAB_WEAKLABELS)),
   http.get("/api/lab/retrieval", () => HttpResponse.json(LAB_RETRIEVAL)),
   http.get("/api/lab/asr", () => HttpResponse.json(LAB_ASR)),
+  // Phase 2 Lab: nothing has been run yet (eval_results/b/ is empty), so every section hides.
+  http.get("/api/lab/b/:name", () =>
+    HttpResponse.json({ error: { code: "not_available", message: "No results yet." } }, { status: 404 }),
+  ),
   http.get("/api/lab/:name", () =>
     HttpResponse.json({ error: { code: "not_available", message: "No results yet." } }, { status: 404 }),
   ),

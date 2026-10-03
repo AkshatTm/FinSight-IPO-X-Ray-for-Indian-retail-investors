@@ -152,6 +152,105 @@ export const LAB = {
     hi: "हमने जितने छोटे ओपन मॉडल आज़माए, सभी हिंदी में अंग्रेज़ी जितने सहज नहीं हैं। आंकड़ों की जाँच फिर भी लागू होती है।",
   },
 
+  // Phase 2 sections: docs/phase2/B05_UI_SPEC.md §7. Headings, the quoted "What this shows" lines
+  // and the rewrite honesty line are verbatim; every other line (and all Hindi) is a builder draft
+  // listed in docs/AKSHAT_TODO.md.
+  "labb.seg.h": { en: "Splitting risks", hi: "जोखिमों को अलग करना" },
+  "labb.seg.shows": { en: "How often FinSight separates the risks correctly.", hi: "FinSight कितनी बार जोखिमों को सही तरह अलग करता है।" },
+  "labb.seg.f1": { en: "risk boundaries found correctly (F1)", hi: "सही पहचानी गई जोखिम सीमाएँ (F1)" },
+  "labb.seg.pr": { en: "precision {p}%, recall {r}%", hi: "प्रिसिज़न {p}%, रिकॉल {r}%" },
+  "labb.seg.docs": { en: "documents checked by hand", hi: "हाथ से जाँचे गए दस्तावेज़" },
+  "labb.seg.corpus": { en: "on older IPOs without font information", hi: "फ़ॉन्ट जानकारी के बिना पुराने आईपीओ पर" },
+
+  "labb.chk.h": { en: "Reading the financial checks", hi: "वित्तीय जाँचें पढ़ना" },
+  "labb.chk.shows": {
+    en: "How often the numbers behind the red flags are read correctly, and how often the status matches one worked out by hand.",
+    hi: "चेतावनी संकेतों के पीछे के आंकड़े कितनी बार सही पढ़े जाते हैं, और स्थिति कितनी बार हाथ से निकाली गई स्थिति से मेल खाती है।",
+  },
+  "labb.chk.nvm": { en: "numbers read correctly ({n} values)", hi: "सही पढ़े गए आंकड़े ({n} मान)" },
+  "labb.chk.acc": { en: "statuses that match the hand-worked one ({n} checks)", hi: "हाथ से निकाली स्थिति से मेल खाती स्थितियाँ ({n} जाँचें)" },
+  "labb.chk.col.gold": { en: "Worked out by hand", hi: "हाथ से निकाली गई" },
+  "labb.chk.col.pred": { en: "FinSight", hi: "FinSight" },
+
+  "labb.clf.h": { en: "Sorting risks into categories", hi: "जोखिमों को श्रेणियों में बाँटना" },
+  "labb.clf.shows": {
+    en: "Four ways of putting each risk in one of ten categories, from a word-count baseline to the large model that made the training labels, scored on risks labelled by hand.",
+    hi: "हर जोखिम को दस श्रेणियों में से एक में रखने के चार तरीके, शब्द-गिनती वाले आधार से लेकर उस बड़े मॉडल तक जिसने ट्रेनिंग लेबल बनाए, हाथ से लेबल किए जोखिमों पर जाँचे गए।",
+  },
+  "labb.clf.col.model": { en: "Model", hi: "मॉडल" },
+  "labb.clf.col.f1": { en: "Macro-F1", hi: "मैक्रो-F1" },
+  "labb.clf.col.n": { en: "Risks", hi: "जोखिम" },
+  "labb.clf.seeds": { en: "± {std} over {k} runs", hi: "{k} रन में ± {std}" },
+  "labb.clf.note": {
+    en: "The training labels were made by a larger open model, not by people. Only the test set was labelled by hand.",
+    hi: "ट्रेनिंग लेबल लोगों ने नहीं, एक बड़े ओपन मॉडल ने बनाए। केवल टेस्ट सेट हाथ से लेबल किया गया।",
+  },
+
+  "labb.rw.h": { en: "Plain-English rewrites", hi: "आसान अंग्रेज़ी में दोबारा लिखना" },
+  "labb.rw.shows": {
+    en: "Whether the rewrites keep the meaning, how much easier they are to read, and how many the checks reject.",
+    hi: "क्या दोबारा लिखे वाक्य मतलब बनाए रखते हैं, वे पढ़ने में कितने आसान हैं, और जाँचें कितनों को रोकती हैं।",
+  },
+  "labb.rw.col.system": { en: "Rewritten by", hi: "किसने लिखा" },
+  "labb.rw.col.yes": { en: "Same meaning", hi: "वही मतलब" },
+  "labb.rw.col.partly": { en: "Partly", hi: "कुछ हद तक" },
+  "labb.rw.col.no": { en: "No", hi: "नहीं" },
+  "labb.rw.grade": { en: "school grades easier to read", hi: "स्कूल कक्षा जितना आसान" },
+  "labb.rw.gradeSub": { en: "grade level {a} → {b}", hi: "कक्षा स्तर {a} → {b}" },
+  "labb.rw.rejected": { en: "of {n} rewrites rejected by the checks", hi: "{n} में से जाँचों ने रोके" },
+  "labb.rw.reason.numbers": { en: "a number changed or added", hi: "कोई आंकड़ा बदला या जोड़ा गया" },
+  "labb.rw.reason.phrases": { en: "advice-like wording", hi: "सलाह जैसे शब्द" },
+  "labb.rw.reason.length": { en: "too long", hi: "बहुत लंबा" },
+  "labb.rw.reason.certainty": { en: "more certain than the original", hi: "मूल से ज़्यादा निश्चित" },
+  "labb.rw.honest": {
+    en: "The rewrites are checked for numbers and certainty, not for every shade of meaning.",
+    hi: "दोबारा लिखे वाक्यों में आंकड़े और निश्चितता जाँची जाती है, मतलब की हर बारीकी नहीं।",
+  },
+
+  "labb.nov.h": { en: "Unusualness", hi: "असामान्यता" },
+  "labb.nov.shows": {
+    en: "When FinSight says a past IPO had a similar risk, how often a person agrees, at each similarity cut-off.",
+    hi: "जब FinSight कहता है कि किसी पिछले आईपीओ में मिलता-जुलता जोखिम था, तो हर समानता सीमा पर कितनी बार एक व्यक्ति सहमत होता है।",
+  },
+  "labb.nov.col.tau": { en: "Similarity cut-off", hi: "समानता सीमा" },
+  "labb.nov.col.p": { en: "Really similar", hi: "सच में मिलते-जुलते" },
+  "labb.nov.col.n": { en: "Pairs checked", hi: "जाँचे गए जोड़े" },
+  "labb.nov.chosen": { en: "used", hi: "इस्तेमाल" },
+
+  "labb.rl.h": { en: "Does the risk level match what happened?", hi: "क्या जोखिम स्तर असल नतीजों से मेल खाता है?" },
+  "labb.rl.shows": {
+    en: "The risk level worked out for past IPOs, set against what their shares did afterwards. This is a check of the level, not a forecast.",
+    hi: "पिछले आईपीओ के लिए निकाला गया जोखिम स्तर, उनके शेयरों के बाद के हाल के साथ। यह स्तर की जाँच है, भविष्यवाणी नहीं।",
+  },
+  "labb.rl.verdict.none": { en: "There is no clear relationship between the risk level and the {outcome}.", hi: "जोखिम स्तर और {outcome} के बीच कोई साफ़ संबंध नहीं है।" },
+  "labb.rl.verdict.weak": { en: "There is a weak relationship between the risk level and the {outcome}.", hi: "जोखिम स्तर और {outcome} के बीच कमज़ोर संबंध है।" },
+  "labb.rl.verdict.moderate": { en: "There is a moderate relationship between the risk level and the {outcome}.", hi: "जोखिम स्तर और {outcome} के बीच मध्यम संबंध है।" },
+  "labb.rl.rho": { en: "Spearman ρ {rho} (95% range {lo} to {hi}), {n} IPOs.", hi: "स्पीयरमैन ρ {rho} (95% दायरा {lo} से {hi}), {n} आईपीओ।" },
+  "labb.rl.outcome.listing_day_return": { en: "listing-day return", hi: "लिस्टिंग के दिन का रिटर्न" },
+  "labb.rl.outcome.later_return": { en: "later return", hi: "बाद का रिटर्न" },
+  "labb.rl.col.level": { en: "Risk level", hi: "जोखिम स्तर" },
+  "labb.rl.col.n": { en: "IPOs", hi: "आईपीओ" },
+  "labb.rl.col.median": { en: "Median return", hi: "मध्य रिटर्न" },
+  "labb.rl.col.range": { en: "Middle half", hi: "बीच का आधा" },
+  "labb.rl.note": {
+    en: "Past returns are used only to check the level. FinSight does not predict prices.",
+    hi: "पिछले रिटर्न केवल स्तर की जाँच के लिए हैं। FinSight कीमतों का अनुमान नहीं लगाता।",
+  },
+
+  "labb.sc.h": { en: "Speed and cost", hi: "गति और लागत" },
+  "labb.sc.shows": {
+    en: "How long each step takes on the hosted service, and what one upload costs.",
+    hi: "होस्ट की गई सेवा पर हर चरण में कितना समय लगता है, और एक अपलोड की लागत कितनी है।",
+  },
+  "labb.sc.col.stage": { en: "Step", hi: "चरण" },
+  "labb.sc.col.p50": { en: "Typical (s)", hi: "आम तौर पर (सेकंड)" },
+  "labb.sc.col.p95": { en: "Slow case (s)", hi: "धीमे मामले में (सेकंड)" },
+  "labb.sc.docs": { en: "Measured on {n} uploads.", hi: "{n} अपलोड पर मापा गया।" },
+  "labb.sc.perPage": { en: "seconds per page", hi: "सेकंड प्रति पन्ना" },
+  "labb.sc.cost": { en: "per upload on average", hi: "प्रति अपलोड औसतन" },
+  "labb.sc.costMax": { en: "at most {max}", hi: "अधिकतम {max}" },
+  "labb.sc.free": { en: "of the monthly free allowance used", hi: "मासिक मुफ़्त सीमा का उपयोग" },
+
   // 8.8 footer
   "lab.foot": {
     en: "Every number on this page is generated by scripts in the repository from the files in eval_results/.",

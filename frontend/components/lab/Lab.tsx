@@ -1,9 +1,11 @@
 "use client";
 
-import { useLab } from "@/lib/api/hooks";
+import { useLab, useLabB } from "@/lib/api/hooks";
 import { useT } from "@/lib/useT";
 import { LabExtractor } from "./LabExtractor";
 import { LabFrame } from "./LabFrame";
+import { LabChecks, LabClassifier, LabNovelty, LabSegmentation } from "./LabPhase2";
+import { LabRewrites, LabRiskLevelCheck, LabSpeedCost } from "./LabPhase2More";
 import { LabHindi, LabRetrieval } from "./LabRetrieval";
 import { LabVerifier, LabWeak } from "./LabVerifier";
 
@@ -41,6 +43,7 @@ export function Lab() {
             </LabFrame>
           )}
           <LabHindi asr={asr.data} retrieval={retrieval.data} />
+          <LabPhase2 />
         </>
       )}
       <p className="mt-16 max-w-2xl border-t border-rule pt-6 text-muted">
@@ -50,5 +53,32 @@ export function Lab() {
         </a>
       </p>
     </div>
+  );
+}
+
+/** Phase 2 sections (B05 §7, E13–E24), in the spec's order; each hides when its file is missing. */
+function LabPhase2() {
+  const b = {
+    segmentation: useLabB("segmentation").data,
+    summary: useLabB("summary").data,
+    redflags: useLabB("redflags").data,
+    classifier: useLabB("classifier").data,
+    simplify: useLabB("simplify").data,
+    readability: useLabB("readability").data,
+    novelty: useLabB("novelty").data,
+    risklevel: useLabB("risklevel").data,
+    latency: useLabB("latency").data,
+    cost: useLabB("cost").data,
+  };
+  return (
+    <>
+      <LabSegmentation data={b.segmentation} />
+      <LabChecks summary={b.summary} redflags={b.redflags} />
+      <LabClassifier data={b.classifier} />
+      <LabRewrites simplify={b.simplify} readability={b.readability} />
+      <LabNovelty data={b.novelty} />
+      <LabRiskLevelCheck data={b.risklevel} />
+      <LabSpeedCost latency={b.latency} cost={b.cost} />
+    </>
   );
 }
