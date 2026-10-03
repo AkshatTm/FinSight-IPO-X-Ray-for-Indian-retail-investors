@@ -56,6 +56,7 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 | `jobs.cpu_job_name` | str | `finsight-worker` | `FINSIGHT_JOBS__CPU_JOB_NAME` |
 | `jobs.gpu_job_name` | str | `finsight-gpu-worker` | `FINSIGHT_JOBS__GPU_JOB_NAME` |
 | `jobs.poll_interval_s` | float | `1.0` | `FINSIGHT_JOBS__POLL_INTERVAL_S` |
+| `jobs.stage_timeouts_s` | dict | `{'parsed': 600.0}` | `FINSIGHT_JOBS__STAGE_TIMEOUTS_S` |
 | `costs.provisional` | bool | true | `FINSIGHT_COSTS__PROVISIONAL` |
 | `costs.cpu_vcpu` | float | `4` | `FINSIGHT_COSTS__CPU_VCPU` |
 | `costs.cpu_memory_gib` | float | `8` | `FINSIGHT_COSTS__CPU_MEMORY_GIB` |

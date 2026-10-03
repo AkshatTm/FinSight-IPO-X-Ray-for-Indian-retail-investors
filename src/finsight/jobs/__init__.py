@@ -22,6 +22,7 @@ from finsight.jobs.runner import (
     JobResult,
     Stage,
     StageRejected,
+    StageTimeout,
     run_job,
 )
 from finsight.jobs.simplify_worker import SIMPLIFIED, auto_enqueue, load_simplified, run_queue
@@ -54,6 +55,7 @@ __all__ = [
     "Launcher",
     "Stage",
     "StageRejected",
+    "StageTimeout",
     "UploadBlocked",
     "auto_enqueue",
     "check_upload_allowed",
