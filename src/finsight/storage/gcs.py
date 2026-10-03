@@ -41,6 +41,13 @@ class GCSStorage:
         data: bytes = blob.download_as_bytes()
         return data
 
+    def size(self, key: str) -> int:
+        """The blob's size from its metadata (no download); ``KeyError`` if it does not exist."""
+        blob = self.bucket.get_blob(check_key(key))
+        if blob is None:
+            raise KeyError(key)
+        return int(blob.size)
+
     def exists(self, key: str) -> bool:
         """Whether the blob exists."""
         return bool(self.bucket.blob(check_key(key)).exists())

@@ -161,8 +161,14 @@ async def upload_file(
     declared = request.headers.get("content-length", "")
     if declared.isdigit() and int(declared) > limit:
         _too_large(state, int(declared))
-    data = await request.body()
-    _too_large(state, len(data))
+    # Read in chunks and stop at the limit: a chunked body has no Content-Length to check first.
+    chunks: list[bytes] = []
+    received = 0
+    async for chunk in request.stream():
+        received += len(chunk)
+        _too_large(state, received)
+        chunks.append(chunk)
+    data = b"".join(chunks)
     state.storage.put_bytes(doc_key(doc_id, SOURCE), data, "application/pdf")
     return {"doc_id": doc_id, "status": "stored"}
 
@@ -174,17 +180,18 @@ def complete_upload(doc_id: DocId, state: UState, user: CurrentUser) -> UploadCo
     key = doc_key(doc_id, SOURCE)
     if not state.storage.exists(key):
         raise ApiError(409, "upload_not_started", "The file has not arrived yet. Please try again.")
+    # A signed PUT does not cap the size, so check the stored size before reading the file.
+    try:
+        _too_large(state, state.storage.size(key))
+    except ApiError:
+        state.storage.delete_prefix(f"docs/{doc_id}/")
+        raise
     data = state.storage.get_bytes(key)
     if hashlib.sha256(data).hexdigest() != doc.sha256:
         state.storage.delete_prefix(f"docs/{doc_id}/")
         raise ApiError(
             422, "hash_mismatch", "The upload didn't finish correctly. Please try again."
         )
-    try:
-        _too_large(state, len(data))
-    except ApiError:
-        state.storage.delete_prefix(f"docs/{doc_id}/")
-        raise
     state.db.update_doc(doc_id, status="processing")
     job = state.db.create_job(doc_id)
     state.db.append_event(job.job_id, "stage", {"stage": "received", "status": "end"})

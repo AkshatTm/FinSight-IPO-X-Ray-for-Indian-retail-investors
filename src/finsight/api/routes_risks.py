@@ -164,10 +164,20 @@ class _RateLimit:
 simplify_limit = _RateLimit(SIMPLIFY_PER_MINUTE)
 
 
+def client_ip(request: Request, trusted_hops: int) -> str:
+    """The caller's IP for per-IP limits. With ``trusted_hops`` proxies in front, take the entry
+    those proxies added to ``X-Forwarded-For`` (counted from the right); never trust the rest."""
+    peer = request.client.host if request.client else "unknown"
+    if trusted_hops <= 0:
+        return peer
+    hops = [h.strip() for h in request.headers.get("x-forwarded-for", "").split(",") if h.strip()]
+    return hops[-trusted_hops] if len(hops) >= trusted_hops else peer
+
+
 @router.post("/docs/{doc_id}/risks/{rid}/simplify", tags=["risks"])
 def simplify_risk(doc_id: DocId, rid: Rid, state: UState, request: Request) -> SimplifyQueued:
     """Queue a risk for a plain-English rewrite, or move it to the front of the queue."""
-    ip = request.client.host if request.client else "unknown"
+    ip = client_ip(request, state.settings.uploads.trusted_proxy_hops)
     if not simplify_limit.allow(ip):
         raise ApiError(429, "rate_limited", "Too many requests. Please wait a minute.")
     risk = _risk(state, doc_id, rid)

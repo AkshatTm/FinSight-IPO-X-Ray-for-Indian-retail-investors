@@ -11,8 +11,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CALLS_THE_MODEL = re.compile(
-    r"\.(?:stream|generate)\(|OllamaBackend\(|:11434"
-)  # 11434 = the Ollama port
+    r"(?<!request)\.(?:stream|generate)\(|OllamaBackend\(|:11434"
+)  # 11434 = the Ollama port; ``request.stream()`` is Starlette reading an HTTP body
 ALLOWED = {
     "src/finsight/generate/llama_cpp_backend.py",
     "src/finsight/generate/llm_backend.py",
