@@ -34,6 +34,8 @@ Status = Literal["answered", "refused", "rejected", "error"]
 
 @dataclass
 class Response:
+    """One reply: answered, refused or not found, with the reason and raw text."""
+
     status: Status
     text: str  # what the reader sees: the answer, a refusal, or the "not found" sentence
     reason: str | None = None  # why it is not "answered": a guard reason or a rejection code
@@ -59,6 +61,7 @@ def respond(
     temperature: float = 0.2,
     on_piece: Callable[[str], None] | None = None,
 ) -> Response:
+    """Guard the question, retrieve, generate and clean one answer."""
     started = time.perf_counter()
     guard = check_question(question)
     if guard.blocked:

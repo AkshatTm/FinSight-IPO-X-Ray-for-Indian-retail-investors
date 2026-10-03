@@ -24,7 +24,10 @@ TIMEOUT_S = 10.0
 
 
 class Launcher(Protocol):
-    def launch(self, doc_id: str, job_id: str) -> None: ...
+    """Starts the worker for an uploaded document."""
+
+    def launch(self, doc_id: str, job_id: str) -> None:
+        """Start processing ``doc_id`` as job ``job_id``; raise ``LaunchError`` on failure."""
 
 
 class LaunchError(RuntimeError):
@@ -39,6 +42,7 @@ class InlineLauncher:
         self.sync = sync
 
     def launch(self, doc_id: str, job_id: str) -> None:
+        """Run the work now (``sync``) or on a background thread."""
         if self.sync:
             self.work(doc_id, job_id)
             return
@@ -60,6 +64,7 @@ def metadata_token() -> str:
 
 
 def post_json(url: str, body: dict[str, Any], token: str) -> dict[str, Any]:
+    """POST JSON with a bearer token; any HTTP or network error is a ``LaunchError``."""
     data = json.dumps(body).encode("utf-8")
     req = urllib.request.Request(
         url,
@@ -100,9 +105,11 @@ class CloudRunLauncher:
 
     @property
     def url(self) -> str:
+        """The Run Admin API v2 ``jobs/{job}:run`` endpoint."""
         return f"{RUN_API}/projects/{self.project}/locations/{self.region}/jobs/{self.job}:run"
 
     def launch(self, doc_id: str, job_id: str) -> None:
+        """Run the Cloud Run job with ``DOC_ID`` and ``JOB_ID`` overrides."""
         if not self.project:
             raise LaunchError("GCP_PROJECT is not set")
         self.post(self.url, run_job_request(doc_id, job_id), self.token())

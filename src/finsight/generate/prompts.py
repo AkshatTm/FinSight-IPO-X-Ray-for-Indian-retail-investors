@@ -64,6 +64,8 @@ _LABELS = {
 
 @dataclass(frozen=True)
 class Prompt:
+    """The prompt text and the passages it includes, numbered ``[1]`` to ``[n]``."""
+
     text: str
     passages: list[Passage]  # the passages actually included; ``[n]`` is ``passages[n - 1]``
     dropped: int  # retrieved passages left out to fit the budget
@@ -100,6 +102,7 @@ def build_prompt(
     language: Language = "en",
     budget_chars: int = DEFAULT_BUDGET_CHARS,
 ) -> Prompt:
+    """Fit the best passages into the character budget and build the prompt."""
     rules = (_RULES_EN if language == "en" else _RULES_HI).format(
         open=OPEN, close=CLOSE, words=MAX_WORDS, not_found=NOT_FOUND[language]
     )
@@ -139,4 +142,5 @@ def cited_indices(answer: str, n_passages: int) -> list[int]:
 
 
 def is_not_found(answer: str, language: Language = "en") -> bool:
+    """Whether the model answered with the "not found" sentence."""
     return NOT_FOUND[language].rstrip("।.") in answer

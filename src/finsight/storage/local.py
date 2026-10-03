@@ -17,11 +17,13 @@ class LocalStorage:
         root.mkdir(parents=True, exist_ok=True)
 
     def path(self, key: str) -> Path:
+        """The file that holds ``key`` (after checking the key)."""
         return self.root / check_key(key)
 
     def put_bytes(
         self, key: str, data: bytes, content_type: str = "application/octet-stream"
     ) -> None:
+        """Write atomically through a temporary file."""
         target = self.path(key)
         target.parent.mkdir(parents=True, exist_ok=True)
         tmp = target.with_name(target.name + ".tmp")
@@ -29,15 +31,18 @@ class LocalStorage:
         tmp.replace(target)  # readers never see a half-written file
 
     def get_bytes(self, key: str) -> bytes:
+        """Read the file; ``KeyError`` if it does not exist."""
         try:
             return self.path(key).read_bytes()
         except FileNotFoundError:
             raise KeyError(key) from None
 
     def exists(self, key: str) -> bool:
+        """Whether the file exists."""
         return self.path(key).is_file()
 
     def list(self, prefix: str) -> list[str]:
+        """Every file under ``prefix`` as a sorted list of keys."""
         base = self.root / prefix if prefix else self.root
         if not base.exists():
             return []
@@ -45,6 +50,7 @@ class LocalStorage:
         return sorted(p.relative_to(self.root).as_posix() for p in files)
 
     def delete_prefix(self, prefix: str) -> int:
+        """Remove the folder or file under ``prefix``; return the files removed."""
         check_key(prefix.rstrip("/"))
         keys = self.list(prefix)
         target = self.root / prefix
@@ -55,6 +61,7 @@ class LocalStorage:
         return len(keys)
 
     def signed_upload_url(self, key: str, content_type: str, ttl_s: int) -> SignedUrl:
+        """The API's own upload route (there is no signed URL on disk)."""
         doc_id = check_key(key).split("/")[1]
         return SignedUrl(
             url=f"/api/uploads/{doc_id}/file",

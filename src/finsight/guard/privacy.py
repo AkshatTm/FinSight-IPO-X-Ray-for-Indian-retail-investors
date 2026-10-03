@@ -64,6 +64,8 @@ _BUSINESS = re.compile(
 
 @dataclass(frozen=True)
 class PrivacyCheck:
+    """Result of the private-data rules on one question."""
+
     blocked: bool
     reason: Reason | None = None
     category: str | None = None
@@ -123,6 +125,8 @@ _OUTPUT_RULES: list[tuple[str, re.Pattern[str]]] = [
 
 @dataclass(frozen=True)
 class OutputCheck:
+    """Result of checking an answer for private data before it is shown."""
+
     blocked: bool
     category: str | None = None
     matched: str | None = None

@@ -16,6 +16,8 @@ from finsight.guard.privacy import OutputCheck, PrivacyCheck, check_output, chec
 
 @dataclass(frozen=True)
 class GuardResult:
+    """Whether a question is blocked, why, and the text that matched."""
+
     blocked: bool
     reason: Literal["advice_intent", "privacy"] | None = None
     category: str | None = None

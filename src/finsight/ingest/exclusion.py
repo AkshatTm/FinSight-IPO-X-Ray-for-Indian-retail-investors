@@ -20,6 +20,7 @@ SIMILARITY = 0.9  # SequenceMatcher ratio on names with the spaces removed
 
 
 def matches(corpus_name: str, excluded_name: str) -> bool:
+    """Whether two company names refer to the same company (demo IPOs are excluded)."""
     a, b = normalize_company(corpus_name), normalize_company(excluded_name)
     if not a or not b:
         return False

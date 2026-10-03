@@ -19,6 +19,8 @@ LOCAL_USER_ID = "local-dev"
 
 @dataclass(frozen=True)
 class User:
+    """The signed-in user: Supabase user id, email and admin flag."""
+
     id: str
     email: str | None = None
     is_admin: bool = False

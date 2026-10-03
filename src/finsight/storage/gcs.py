@@ -30,9 +30,11 @@ class GCSStorage:
     def put_bytes(
         self, key: str, data: bytes, content_type: str = "application/octet-stream"
     ) -> None:
+        """Upload the bytes to the blob with its content type."""
         self.bucket.blob(check_key(key)).upload_from_string(data, content_type=content_type)
 
     def get_bytes(self, key: str) -> bytes:
+        """Download the blob; ``KeyError`` if it does not exist."""
         blob = self.bucket.blob(check_key(key))
         if not blob.exists():
             raise KeyError(key)
@@ -40,12 +42,15 @@ class GCSStorage:
         return data
 
     def exists(self, key: str) -> bool:
+        """Whether the blob exists."""
         return bool(self.bucket.blob(check_key(key)).exists())
 
     def list(self, prefix: str) -> list[str]:
+        """Every blob name under ``prefix``, sorted."""
         return sorted(blob.name for blob in self.client.list_blobs(self.bucket_name, prefix=prefix))
 
     def delete_prefix(self, prefix: str) -> int:
+        """Delete every blob under ``prefix``; return how many."""
         check_key(prefix.rstrip("/"))
         names = self.list(prefix)
         for name in names:
@@ -53,6 +58,7 @@ class GCSStorage:
         return len(names)
 
     def signed_upload_url(self, key: str, content_type: str, ttl_s: int) -> SignedUrl:
+        """A V4 signed PUT URL valid for ``ttl_s`` seconds."""
         expires = timedelta(seconds=ttl_s)
         url = self.bucket.blob(check_key(key)).generate_signed_url(
             version="v4", expiration=expires, method="PUT", content_type=content_type

@@ -57,6 +57,7 @@ class UploadCheck:
 
     @property
     def ok(self) -> bool:
+        """True when the file passed every check."""
         return self.code is None
 
 

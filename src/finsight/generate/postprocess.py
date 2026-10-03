@@ -57,6 +57,8 @@ MAX_REPEATS = 3  # a unit may appear this many times in a row; the next one is a
 
 @dataclass(frozen=True)
 class Cleaned:
+    """A cleaned answer and, if unusable, why (empty, dump, opinion, ...)."""
+
     text: str
     # None when the answer is usable; else "empty", "citation_only", "dump", "unit_converted",
     # "opinion"
@@ -91,10 +93,12 @@ def converted_units(answer: str, passages: Sequence[Passage]) -> list[str]:
 
 
 def has_opinion(answer: str) -> bool:
+    """Whether the answer gives an opinion (citations ignored)."""
     return _OPINION.search(_CITE.sub(" ", answer)) is not None
 
 
 def content_words(text: str) -> list[str]:
+    """The words of a text with ``[n]`` citations removed."""
     return _WORD.findall(_CITE.sub(" ", text))
 
 
@@ -120,6 +124,7 @@ def _shingles(words: list[str]) -> set[tuple[str, ...]]:
 
 
 def is_dump(answer: str, passages: Sequence[Passage]) -> bool:
+    """Whether the answer mostly copies the passages instead of answering."""
     words = [w.casefold() for w in content_words(answer)]
     if len(words) < DUMP_MIN_WORDS:
         return False
@@ -134,6 +139,7 @@ def is_dump(answer: str, passages: Sequence[Passage]) -> bool:
 
 
 def clean_answer(text: str, passages: Sequence[Passage], language: Language = "en") -> Cleaned:
+    """Trim loops and reject empty, copied, unit-converted or opinion answers."""
     trimmed_text, trimmed = trim_loops(text)
     if not trimmed_text.strip():
         return Cleaned(NOT_FOUND[language], "empty")
@@ -158,6 +164,7 @@ class LoopDetector:
         self._text = ""
 
     def feed(self, piece: str) -> bool:
+        """Add streamed text; True once the tail repeats too often."""
         self._text += piece
         tail = self._text[-self.window * self.repeats * 2 :]
         for size in range(3, self.window + 1):

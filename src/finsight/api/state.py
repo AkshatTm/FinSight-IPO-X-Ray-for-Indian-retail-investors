@@ -56,6 +56,7 @@ class ModelManager:
     state: AppState
 
     def health(self) -> HealthResponse:
+        """Status for ``/api/health``: ok, warming (LLM loading) or degraded."""
         s = self.settings
         llm = _ollama_loaded(s.llm.model)
         built = self.state._chat is not None
@@ -87,6 +88,8 @@ class ModelManager:
 
 @dataclass
 class AppState:
+    """Process-wide state for the Phase 1 routes; models are built on first use."""
+
     settings: Settings
     store: IpoStore
     traces: TraceStore
@@ -100,6 +103,7 @@ class AppState:
         self.models = ModelManager(self.settings, self)
 
     def chat(self) -> ChatOrchestrator:
+        """The chat orchestrator, built once on first use."""
         with self._lock:
             if self._chat is None:
                 self._chat = ChatOrchestrator.from_settings(self.settings.profile)
@@ -123,6 +127,7 @@ class AppState:
 
 @lru_cache(maxsize=1)
 def get_state() -> AppState:
+    """The cached app state (a FastAPI dependency)."""
     from finsight.extract import load_fields
 
     settings = get_settings()

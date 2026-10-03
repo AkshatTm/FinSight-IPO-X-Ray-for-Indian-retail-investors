@@ -24,12 +24,15 @@ BGE_M3 = "BAAI/bge-m3"
 
 
 class Embedder(Protocol):
+    """Turns texts into normalised vectors for dense search."""
+
     def embed(self, texts: list[str]) -> Vectors:
         """One L2-normalised float32 row per text."""
         ...
 
 
 def normalise(vectors: npt.NDArray[Any]) -> Vectors:
+    """Scale each row to unit length, as float32."""
     norms = np.linalg.norm(vectors, axis=1, keepdims=True)
     return (vectors / np.maximum(norms, 1e-12)).astype(np.float32)
 
@@ -51,6 +54,7 @@ class BgeM3Embedder:
         self._model = AutoModel.from_pretrained(model, dtype=dtype).to(self.device).eval()
 
     def embed(self, texts: list[str]) -> Vectors:
+        """Embed in batches of similar length; one unit vector per text."""
         order = sorted(range(len(texts)), key=lambda i: len(texts[i]))  # similar lengths per batch
         out = np.zeros((len(texts), self._model.config.hidden_size), dtype=np.float32)
         with self._torch.no_grad():
@@ -73,6 +77,7 @@ class DenseIndex:
 
     @classmethod
     def build(cls, texts: list[str], embedder: Embedder, batch: int = 256) -> DenseIndex:
+        """Embed every passage text in batches."""
         if not texts:
             return cls(np.zeros((0, 1), dtype=np.float32))
         parts = [embedder.embed(texts[i : i + batch]) for i in range(0, len(texts), batch)]
@@ -87,12 +92,15 @@ class DenseIndex:
         return [(int(i), float(scores[i])) for i in top]
 
     def save(self, path: Path) -> None:
+        """Save the vectors as float16 (half the disk; cosine order unchanged)."""
         np.save(path, self.vectors.astype(np.float16))  # half the disk; cosine order is unchanged
 
     @classmethod
     def load(cls, path: Path) -> DenseIndex:
+        """Load saved vectors as float32."""
         return cls(np.load(path).astype(np.float32))
 
 
 def write_meta(path: Path, model: str, n: int) -> None:
+    """Record which model built the index and how many vectors it has."""
     path.write_text(json.dumps({"model": model, "n": n}) + "\n", encoding="utf-8")

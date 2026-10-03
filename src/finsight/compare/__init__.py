@@ -57,6 +57,7 @@ _ISSUER_WORDS = ("our company", "the company", "the issuer")
 
 
 def load_config(path: Path | None = None) -> dict[str, Any]:
+    """The compare settings and reference quantiles (``configs/compare.yaml``)."""
     path = path or project_root() / "configs" / "compare.yaml"
     return dict(yaml.safe_load(path.read_text(encoding="utf-8")))
 

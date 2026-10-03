@@ -35,6 +35,8 @@ def _urllib_opener(url: str, body: dict[str, Any] | None, timeout: float) -> Ite
 
 @register("llm", "vllm")
 class VllmBackend:
+    """A model behind vLLM's OpenAI-compatible server (the optional GPU path)."""
+
     name = "vllm"
 
     def __init__(
@@ -44,6 +46,7 @@ class VllmBackend:
         self._open = opener or _urllib_opener
 
     def request_body(self, prompt: str, max_tokens: int, temperature: float) -> dict[str, Any]:
+        """The chat-completions request body (streaming, thinking off)."""
         return {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
@@ -62,6 +65,7 @@ class VllmBackend:
         temperature: float = 0.2,
         language: Literal["en", "hi"] = "en",
     ) -> Iterator[str]:
+        """Yield the reply piece by piece from the server-sent stream."""
         body = self.request_body(prompt, max_tokens, temperature)
         for raw in self._open(f"{self.base_url}/v1/chat/completions", body, self.timeout):
             line = raw.decode("utf-8", "replace").strip()
@@ -80,6 +84,7 @@ class VllmBackend:
                 yield delta["content"]
 
     def generate(self, prompt: str, **kwargs: Any) -> str:
+        """The full reply as one string."""
         return "".join(self.stream(prompt, **kwargs))
 
     def is_available(self) -> bool:

@@ -27,6 +27,8 @@ MAX_STREAM_S = 30 * 60  # a job's timeout; the client reconnects with Last-Event
 
 
 class StageState(BaseModel):
+    """One pipeline stage of an uploaded document, rebuilt from its events."""
+
     stage: str
     status: Literal["running", "done", "failed"]
     started_at: datetime | None = None
@@ -35,6 +37,8 @@ class StageState(BaseModel):
 
 
 class DocDetail(BaseModel):
+    """``GET /api/docs/{doc_id}``: the document, its latest job and stages."""
+
     doc: DocRecord
     job_id: str | None = None
     stages: list[StageState]
@@ -42,6 +46,8 @@ class DocDetail(BaseModel):
 
 
 class MyUpload(BaseModel):
+    """One row of ``/api/me/uploads``."""
+
     doc_id: str
     company: str | None
     doc_type: DocType | None
@@ -63,6 +69,7 @@ def _doc(state: UState, doc_id: str) -> DocRecord:
 
 @router.get("/docs/{doc_id}", tags=["docs"])
 def get_doc(doc_id: DocId, state: UState) -> DocDetail:
+    """An uploaded document with the state of each stage of its latest job."""
     doc = _doc(state, doc_id)
     job = state.db.latest_job(doc_id)
     stages: dict[str, StageState] = {}
@@ -119,6 +126,7 @@ def doc_events(
     interval = state.settings.jobs.poll_interval_s
 
     async def stream() -> AsyncIterator[str]:
+        """Poll the event table and send new events until ``done`` or disconnect."""
         nonlocal after
         waited = 0.0
         while waited < MAX_STREAM_S:
@@ -141,6 +149,7 @@ def doc_events(
 
 @router.get("/me/uploads", tags=["docs"])
 def my_uploads(state: UState, user: CurrentUser) -> list[MyUpload]:
+    """The signed-in user's uploads, newest first."""
     return [
         MyUpload(
             doc_id=d.doc_id,

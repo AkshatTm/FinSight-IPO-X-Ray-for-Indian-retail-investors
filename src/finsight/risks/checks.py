@@ -16,6 +16,7 @@ _WORD = re.compile(r"\S+")
 
 
 def word_count(text: str) -> int:
+    """The number of words in ``text``."""
     return len(_WORD.findall(text))
 
 

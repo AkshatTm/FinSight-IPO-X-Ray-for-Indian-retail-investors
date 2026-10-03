@@ -40,6 +40,7 @@ def material_number(risk: Risk, cfg: dict[str, Any], reference_inr: Decimal | No
 def seriousness_score(
     risk: Risk, cfg: dict[str, Any] | None = None, reference_inr: Decimal | None = None
 ) -> int:
+    """Category base plus hard fact plus material number, minus boilerplate."""
     c = _cfg(cfg)
     score = int(
         c["base"].get(risk.category, c["unknown_category"])
@@ -54,6 +55,7 @@ def seriousness_score(
 
 
 def seriousness(score: int, cfg: dict[str, Any] | None = None) -> Seriousness:
+    """High, medium or low from the score and the configured cut-offs."""
     c = _cfg(cfg)
     if score >= int(c["high_at"]):
         return "high"
@@ -65,6 +67,7 @@ def seriousness(score: int, cfg: dict[str, Any] | None = None) -> Seriousness:
 def importance(
     level: Seriousness, novelty: float | None, cfg: dict[str, Any] | None = None
 ) -> float:
+    """Ordering weight: seriousness weight times rarity (1 - novelty)."""
     c = _cfg(cfg)
     rarity = 1.0 - (novelty if novelty is not None else float(c["unknown_novelty"]))
     return round(float(c["weights"][level]) * rarity, 4)

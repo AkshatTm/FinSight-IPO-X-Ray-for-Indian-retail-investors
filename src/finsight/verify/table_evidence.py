@@ -36,6 +36,8 @@ _OWN_UNIT = re.compile(
 
 @dataclass(frozen=True)
 class TableAmount:
+    """An amount from a table cell with its row metrics and header unit."""
+
     span: AmountSpan
     metrics: tuple[str, ...]
     unit: str | None  # the header unit, when the cell itself printed none

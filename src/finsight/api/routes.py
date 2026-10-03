@@ -48,6 +48,7 @@ MAX_AUDIO_S = 20.5  # the client stops at 20 s; the half second absorbs encoder 
 
 @router.get("/health", tags=["system"])
 def health(state: State) -> HealthResponse:
+    """Service status, profile, demo mode and which models are loaded."""
     return state.models.health()
 
 
@@ -59,16 +60,19 @@ def list_ipos(
     year: int | None = None,
     sort: Literal["listing_date", "issue_size"] = "listing_date",
 ) -> list[IpoSummary]:
+    """The showcase IPO library, filtered and sorted."""
     return state.store.list_ipos(q, sector, year, sort)
 
 
 @router.get("/ipos/{id}", tags=["ipos"])
 def get_ipo(id: str, state: State) -> IpoDetail:
+    """One showcase IPO's documents and sections."""
     return state.store.detail(id)
 
 
 @router.get("/ipos/{id}/xray", tags=["ipos"])
 def get_xray(id: str, state: State) -> XRayResponse:
+    """The X-Ray fact sheet of one showcase IPO."""
     return state.store.xray(id)
 
 
@@ -89,6 +93,7 @@ def get_page_image(
         int | None, Query(ge=40, le=1200, description="Width in pixels (thumbnail)")
     ] = None,
 ) -> Response:
+    """A rendered page as WebP (``w`` for a thumbnail); cached for a year."""
     return Response(
         state.store.page_bytes(id, n, doc, w),
         media_type="image/webp",
@@ -98,11 +103,13 @@ def get_page_image(
 
 @router.get("/ipos/{id}/pages/{n}/words", tags=["ipos"])
 def get_page_words(id: str, n: int, state: State, doc: Doc = "rhp") -> PageWords:
+    """The words and boxes of one page."""
     return state.store.words(id, n, doc)
 
 
 @router.get("/ipos/{id}/suggested-questions", tags=["ipos"])
 def suggested_questions(id: str, state: State) -> list[SuggestedQuestion]:
+    """The question chips for one IPO."""
     return state.store.suggested(id)
 
 
@@ -128,6 +135,7 @@ def _error_stream(code: Literal["internal_error"], message: str) -> Iterator[Eve
     },
 )
 def chat(body: ChatRequest, state: State) -> Response:
+    """Answer a question as server-sent events, replaying the demo cache in demo mode."""
     state.store.get(body.ipo_id)  # unknown ids are a normal 404, not a stream
     question = body.question.strip()
     if not question or len(question) > MAX_QUESTION:
@@ -154,6 +162,7 @@ def voice(
     audio: Annotated[UploadFile, File(description="webm/opus or wav, at most 20 s.")],
     language: Annotated[str, Form()] = "hi",
 ) -> VoiceResponse:
+    """Transcribe a short spoken question (at most 20 s)."""
     asr = state.asr()
     if asr is None:
         raise ApiError(
@@ -195,6 +204,7 @@ def voice(
 
 @router.get("/traces/{trace_id}", tags=["chat"])
 def get_trace(trace_id: str, state: State) -> Trace:
+    """The full trace of one chat answer."""
     trace = state.traces.get(trace_id)
     if trace is None:
         raise ApiError(404, "not_available", f"No trace '{trace_id}'.")
@@ -203,39 +213,47 @@ def get_trace(trace_id: str, state: State) -> Trace:
 
 @router.get("/lab/ladder", tags=["lab"])
 def lab_ladder(state: State) -> LabPayload:
+    """Model Lab: the extractor ladder results."""
     return content.lab(state.settings.paths.eval_dir, "ladder")
 
 
 @router.get("/lab/fields", tags=["lab"])
 def lab_fields(state: State) -> LabPayload:
+    """Model Lab: per-field X-Ray accuracy."""
     return content.lab(state.settings.paths.eval_dir, "fields")
 
 
 @router.get("/lab/verifier", tags=["lab"])
 def lab_verifier(state: State) -> LabPayload:
+    """Model Lab: the number verifier's seeded-error results."""
     return content.lab(state.settings.paths.eval_dir, "verifier")
 
 
 @router.get("/lab/weaklabels", tags=["lab"])
 def lab_weaklabels(state: State) -> LabPayload:
+    """Model Lab: weak-label statistics and the audit precision."""
     return content.lab(state.settings.paths.eval_dir, "weaklabels")
 
 
 @router.get("/lab/frontier", tags=["lab"])
 def lab_frontier(state: State) -> LabPayload:
+    """Model Lab: FinSight against frontier chatbots on the same questions (E9)."""
     return content.lab(state.settings.paths.eval_dir, "frontier")
 
 
 @router.get("/lab/retrieval", tags=["lab"])
 def lab_retrieval(state: State) -> LabPayload:
+    """Model Lab: retrieval recall by method."""
     return content.lab(state.settings.paths.eval_dir, "retrieval")
 
 
 @router.get("/lab/asr", tags=["lab"])
 def lab_asr(state: State) -> LabPayload:
+    """Model Lab: speech recognition results."""
     return content.lab(state.settings.paths.eval_dir, "asr")
 
 
 @router.get("/glossary", tags=["content"])
 def glossary(lang: Language = "en") -> list[GlossaryEntry]:
+    """Glossary terms in the chosen language (English where Hindi is missing)."""
     return content.glossary(lang)

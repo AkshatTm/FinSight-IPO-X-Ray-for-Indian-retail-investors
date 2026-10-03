@@ -44,6 +44,7 @@ def simplify_document(
 
 
 def main(argv: list[str]) -> int:
+    """Worker entry point: ``run``, ``simplify`` or ``sweep`` (ids from args or env)."""
     settings = get_settings()
     db, storage = make_database(settings), make_storage(settings)
     if argv[:1] == ["run"]:

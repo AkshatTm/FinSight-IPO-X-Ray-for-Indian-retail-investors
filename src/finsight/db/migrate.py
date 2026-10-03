@@ -13,6 +13,7 @@ MIGRATIONS = Path(__file__).resolve().parent / "migrations"
 
 
 def alembic_config(url: str) -> Config:
+    """An Alembic config pointing at the bundled migrations and ``url``."""
     config = Config()
     config.set_main_option("script_location", str(MIGRATIONS))
     config.set_main_option("sqlalchemy.url", normalise_url(url).replace("%", "%%"))
@@ -20,6 +21,7 @@ def alembic_config(url: str) -> Config:
 
 
 def upgrade(url: str, revision: str = "head") -> None:
+    """Migrate the database at ``url`` to ``revision`` (default: the latest)."""
     command.upgrade(alembic_config(url), revision)
 
 

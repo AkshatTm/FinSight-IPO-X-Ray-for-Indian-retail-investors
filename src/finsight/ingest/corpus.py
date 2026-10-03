@@ -40,11 +40,15 @@ DocKind = Literal["rhp", "prospectus"]
 
 
 class CorpusPage(BaseModel):
+    """One page of text from a corpus document."""
+
     number: int  # 1-indexed
     text: str
 
 
 class CorpusDoc(BaseModel):
+    """One older IPO document from the weak-label corpus, as page texts."""
+
     ipo_id: str
     mapping_key: str
     company: str
@@ -59,11 +63,14 @@ class CorpusDoc(BaseModel):
 
 @dataclass
 class BuildReport:
+    """How many corpus documents were written, skipped (by reason) or excluded."""
+
     written: int = 0
     skipped: dict[str, int] = field(default_factory=dict)
     excluded: dict[str, str] = field(default_factory=dict)  # ipo_id -> matching excluded name
 
     def skip(self, reason: str) -> None:
+        """Count one skipped document under ``reason``."""
         self.skipped[reason] = self.skipped.get(reason, 0) + 1
 
 
@@ -103,6 +110,7 @@ def _parsed(ipo_id: str, kind: DocKind, source: str, pages: list[tuple[int, str]
 
 
 def load_corpus_doc(path: Path) -> CorpusDoc:
+    """Read one corpus JSON file."""
     return CorpusDoc.model_validate_json(path.read_text(encoding="utf-8"))
 
 
@@ -188,6 +196,7 @@ def corpus_stats(docs: list[CorpusDoc], report: BuildReport) -> dict[str, object
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI: ``build`` the corpus from ``data/raw/ipo_dataset``."""
     parser = argparse.ArgumentParser(description="Build the training corpus (P1.5)")
     parser.add_argument("command", choices=["build"])
     parser.parse_args(argv)

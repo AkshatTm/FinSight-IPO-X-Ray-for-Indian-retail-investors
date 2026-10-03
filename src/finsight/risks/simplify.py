@@ -85,11 +85,14 @@ def post_check(original: str, rewrite: str) -> tuple[str, str] | None:
 class TextLLM(Protocol):
     """The ``generate`` part of the LLM backends (Ollama, llama.cpp, vLLM)."""
 
-    def generate(self, prompt: str, **kwargs: Any) -> str: ...
+    def generate(self, prompt: str, **kwargs: Any) -> str:
+        """The model's full reply to ``prompt``."""
 
 
 @dataclass(frozen=True)
 class Rewrite:
+    """The result of one rewrite: status, text, reason, model and fallback flag."""
+
     status: SimpleStatus  # ready | rejected | failed
     simple: str | None  # only when ready
     reason: str = ""  # a CHECKS entry, or "unavailable"/"error" when failed
@@ -99,6 +102,7 @@ class Rewrite:
     seconds: float = 0.0
 
     def as_dict(self) -> dict[str, Any]:
+        """The fields saved in ``simplified.json``."""
         return {
             "simple": self.simple,
             "simple_status": self.status,
@@ -140,6 +144,7 @@ class Simplifier:
         return raw, self.fallback_model, True
 
     def rewrite(self, title: str, body: str) -> Rewrite:
+        """Ask the model, then run the post-checks; an unavailable model gives ``failed``."""
         from finsight.generate import LLMUnavailable, ReasoningLeak
 
         original = f"{title}\n\n{body}" if title.strip() else body
@@ -218,6 +223,7 @@ def to_chat(row: dict[str, Any]) -> dict[str, Any]:
 
 
 def main(argv: list[str] | None = None) -> None:
+    """CLI: ``split`` the teacher pairs into train and dev for the student."""
     p = argparse.ArgumentParser(prog="python -m finsight.risks.simplify")
     p.add_argument("command", choices=["split"])
     p.add_argument("--pairs", type=Path, default=Path("data/processed/teacher/simplify.jsonl"))

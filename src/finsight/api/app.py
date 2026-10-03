@@ -83,6 +83,7 @@ def _with_sse_events(schema: dict[str, Any]) -> dict[str, Any]:
 
 
 def create_app() -> FastAPI:
+    """Build the FastAPI app: routers, error handlers and the OpenAPI document with SSE events."""
     app = FastAPI(
         title="FinSight API",
         version=__version__,

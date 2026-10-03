@@ -28,6 +28,7 @@ UNAVAILABLE = ("not_available", "not_applicable")
 
 @lru_cache(maxsize=4)
 def load_config(path: Path | None = None) -> dict[str, Any]:
+    """The risk-level settings (``configs/risklevel.yaml``)."""
     cfg: dict[str, Any] = yaml.safe_load(
         (path or project_root() / "configs" / "risklevel.yaml").read_text(encoding="utf-8")
     )
@@ -52,6 +53,7 @@ def percentile(score: float, quantiles: Sequence[float]) -> float:
 
 
 def level_for(score: float, thresholds: dict[str, float]) -> Level:
+    """Low below ``low_below``, high from ``high_from``, else medium."""
     if score < thresholds["low_below"]:
         return "low"
     if score >= thresholds["high_from"]:
@@ -62,6 +64,7 @@ def level_for(score: float, thresholds: dict[str, float]) -> Level:
 def compute(
     redflags: Sequence[RedFlag], risks: Sequence[Risk], cfg: dict[str, Any] | None = None
 ) -> RiskLevel:
+    """Points from red flags and rare serious risks, normalised by available checks."""
     c = cfg if cfg is not None else load_config()
     pts = c["points"]
     reasons: list[RiskLevelReason] = []

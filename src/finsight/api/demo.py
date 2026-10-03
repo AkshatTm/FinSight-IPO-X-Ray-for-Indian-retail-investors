@@ -31,6 +31,8 @@ def question_key(ipo_id: str, question: str, language: str) -> str:
 
 
 class DemoCache:
+    """Recorded real chat streams, one JSON file per IPO, question and language."""
+
     def __init__(self, root: Path) -> None:
         self.root = root
 
@@ -38,6 +40,7 @@ class DemoCache:
         return self.root / ipo_id / f"{question_key(ipo_id, question, language)}.json"
 
     def has(self, ipo_id: str, question: str, language: str) -> bool:
+        """Whether a recording exists for this question."""
         return self._path(ipo_id, question, language).exists()
 
     def record(self, ipo_id: str, question: str, language: str, events: Iterable[Event]) -> Path:
@@ -52,6 +55,7 @@ class DemoCache:
         return path
 
     def replay(self, ipo_id: str, question: str, language: str) -> Iterator[Event]:
+        """Yield the recorded events in their original order."""
         path = self._path(ipo_id, question, language)
         for row in json.loads(path.read_text(encoding="utf-8"))["events"]:
             yield row["event"], EVENT_MODELS[row["event"]].model_validate(row["data"])

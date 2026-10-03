@@ -17,7 +17,8 @@ from finsight.risks.numbers import risk_numbers
 class Embedder(Protocol):
     """bge-m3 (ONNX int8 on the CPU worker, or a GPU encoder); unit length not required."""
 
-    def embed(self, texts: Sequence[str]) -> np.ndarray: ...
+    def embed(self, texts: Sequence[str]) -> np.ndarray:
+        """One unit-length vector per text."""
 
 
 def add_features(

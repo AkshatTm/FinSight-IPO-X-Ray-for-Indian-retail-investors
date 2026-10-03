@@ -27,6 +27,8 @@ def embed_text(title: str, body: str, sentences: int = 2) -> str:
 
 @dataclass(frozen=True)
 class NoveltyResult:
+    """Novelty of one risk and its nearest past examples."""
+
     novelty: float
     nearest: list[NearestExample]
 

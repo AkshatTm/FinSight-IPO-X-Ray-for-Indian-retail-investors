@@ -64,6 +64,7 @@ def split_questions(rows: list[dict[str, str]]) -> dict[str, list[dict[str, str]
 
 
 def write_dataset(csv_path: Path, out: Path, username: str) -> dict[str, int]:
+    """Split the guard questions and write the Kaggle dataset folder."""
     if not _USERNAME.match(username):
         raise ValueError(f"username {username!r} is not a Kaggle username (lowercase, digits, -)")
     parts = split_questions(load_questions(csv_path))
@@ -83,6 +84,7 @@ def write_dataset(csv_path: Path, out: Path, username: str) -> dict[str, int]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI: build the private Kaggle dataset for the guard classifier."""
     parser = argparse.ArgumentParser(prog="finsight.guard.clf_data")
     parser.add_argument("--username", required=True)
     args = parser.parse_args(argv)

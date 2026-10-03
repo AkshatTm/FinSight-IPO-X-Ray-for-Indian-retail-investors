@@ -28,6 +28,8 @@ DENSE_FILE = "dense.npy"
 
 @dataclass(frozen=True)
 class Hit:
+    """One retrieved passage with its score and rank."""
+
     passage: Passage
     score: float  # on the scale of ``SearchResult.method``
     rank: int  # 1-based
@@ -35,6 +37,8 @@ class Hit:
 
 @dataclass(frozen=True)
 class SearchResult:
+    """Ranked hits, the method used and whether to abstain."""
+
     hits: list[Hit]
     method: str  # "bm25", "hybrid" or "hybrid+rerank"
     abstain: bool
@@ -43,6 +47,7 @@ class SearchResult:
 
 
 def index_dir(processed_dir: Path, ipo_id: str) -> Path:
+    """Where an IPO's search index lives."""
     return processed_dir / ipo_id / "index"
 
 
@@ -58,10 +63,12 @@ class IpoIndex:
 
     @classmethod
     def build(cls, passages: list[Passage], embedder: Embedder | None = None) -> IpoIndex:
+        """Build the BM25 index (and the dense one when an embedder is given)."""
         dense = DenseIndex.build([p.text for p in passages], embedder) if embedder else None
         return cls(passages, dense)
 
     def save(self, directory: Path) -> None:
+        """Write the passages (and dense vectors) to ``directory``."""
         directory.mkdir(parents=True, exist_ok=True)
         lines = (p.model_dump_json() for p in self.passages)
         (directory / CHUNKS_FILE).write_text(
@@ -72,6 +79,7 @@ class IpoIndex:
 
     @classmethod
     def load(cls, directory: Path) -> IpoIndex:
+        """Load a saved index; tells you how to build it if it is missing."""
         path = directory / CHUNKS_FILE
         if not path.exists():
             raise FileNotFoundError(
@@ -84,6 +92,8 @@ class IpoIndex:
 
 
 class Retriever:
+    """Searches an IPO's passages with BM25, dense, fusion and reranking."""
+
     def __init__(
         self,
         processed_dir: Path | None = None,
@@ -101,9 +111,11 @@ class Retriever:
         self._indexes: dict[str, IpoIndex] = {}
 
     def add(self, ipo_id: str, index: IpoIndex) -> None:
+        """Use an index already in memory for ``ipo_id``."""
         self._indexes[ipo_id] = index
 
     def index(self, ipo_id: str) -> IpoIndex:
+        """The IPO's index, loaded from disk on first use."""
         if ipo_id not in self._indexes:
             if self.processed_dir is None:
                 raise KeyError(f"no index for {ipo_id!r}")
@@ -111,6 +123,7 @@ class Retriever:
         return self._indexes[ipo_id]
 
     def search(self, question: str, ipo_id: str, top_k: int | None = None) -> SearchResult:
+        """BM25, plus dense, RRF and rerank when on; boosts; abstain on a low score."""
         index = self.index(ipo_id)
         k = top_k or self.top_k
         notes: list[str] = []

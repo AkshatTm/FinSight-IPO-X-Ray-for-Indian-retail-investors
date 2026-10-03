@@ -16,6 +16,8 @@ StageName = Literal["guard", "retrieving", "generating", "verifying", "done"]
 
 
 class StageEvent(BaseModel):
+    """A chat pipeline stage starting or ending, with its time in ms."""
+
     name: StageName
     status: Literal["start", "end"]
     ms: int | None = None
@@ -33,12 +35,16 @@ class FactSummary(BaseModel):
 
 
 class GuardEvent(BaseModel):
+    """The guard's decision; when blocked, the facts shown instead of advice."""
+
     blocked: bool
     reason: str
     facts: list[FactSummary]
 
 
 class RetrievedPassage(BaseModel):
+    """One passage the retriever returned, with its rank in each method."""
+
     n: int
     id: str
     doc: DocType
@@ -53,31 +59,43 @@ class RetrievedPassage(BaseModel):
 
 
 class RetrievalEvent(BaseModel):
+    """The passages kept for the prompt and the ones dropped."""
+
     passages: list[RetrievedPassage]
     dropped: list[RetrievedPassage]
 
 
 class AbstainEvent(BaseModel):
+    """FinSight declines to answer because retrieval found nothing close enough."""
+
     reason: Literal["low_retrieval_score"]
     closest_passage: RetrievedPassage | None = None
 
 
 class TokenEvent(BaseModel):
+    """A piece of streamed answer text."""
+
     text: str
 
 
 class Citation(BaseModel):
+    """A ``[n]`` citation in the answer and its character span."""
+
     n: int
     char_start: int
     char_end: int
 
 
 class AnswerEvent(BaseModel):
+    """The full answer text with its citations, sent once streaming ends."""
+
     text: str
     citations: list[Citation]
 
 
 class Evidence(BaseModel):
+    """Where a checked number was found: passage, page, span and box."""
+
     passage_id: str
     doc: DocType
     page: int
@@ -87,6 +105,8 @@ class Evidence(BaseModel):
 
 
 class VerdictEvent(BaseModel):
+    """The verifier's mark for one number in the answer."""
+
     index: int
     answer_char_span: tuple[int, int]
     answer_value: Amount
@@ -97,6 +117,8 @@ class VerdictEvent(BaseModel):
 
 
 class FinalEvent(BaseModel):
+    """The last chat event: trace id, score, number count and stage timings."""
+
     trace_id: str
     score: float | None
     n_numbers: int
@@ -105,6 +127,8 @@ class FinalEvent(BaseModel):
 
 
 class ErrorEvent(BaseModel):
+    """A chat error the UI can show (model unavailable, warming up, internal)."""
+
     code: Literal["llm_unavailable", "models_warming_up", "internal_error"]
     message: str
 
@@ -125,27 +149,37 @@ EVENT_MODELS: dict[str, type[BaseModel]] = {
 
 # ------------------------------------------------------------------ document job events (B06 §2)
 class JobStageEvent(BaseModel):
+    """A document job stage starting, ending or failing (B06 §2)."""
+
     stage: str
     status: Literal["start", "end", "failed"]
     detail: dict[str, object] | None = None
 
 
 class JobProgressEvent(BaseModel):
+    """Progress inside a long stage: ``done`` of ``total`` items."""
+
     stage: str
     done: int
     total: int
 
 
 class JobReadyEvent(BaseModel):
+    """A report part is ready and the UI can fetch it."""
+
     part: Literal["facts", "redflags", "risk_level", "risks", "compare", "chat"]
 
 
 class RiskSimplifiedEvent(BaseModel):
+    """A risk's plain-English rewrite finished (or was rejected or failed)."""
+
     rid: str
     simple_status: Literal["pending", "ready", "rejected", "failed"]
 
 
 class JobDoneEvent(BaseModel):
+    """The job finished: ready, partial (some stages failed) or failed."""
+
     status: Literal["ready", "partial", "failed"]
     failed_stages: list[str]
 

@@ -33,6 +33,8 @@ ErrorCode = Literal[
 
 
 class ErrorBody(BaseModel):
+    """The error envelope's body: code, message, hint, and quota details if any."""
+
     code: ErrorCode
     message: str
     hint: str | None = None
@@ -43,6 +45,8 @@ class ErrorBody(BaseModel):
 
 
 class ErrorResponse(BaseModel):
+    """Every API error: ``{"error": ErrorBody}`` (B06 §1)."""
+
     error: ErrorBody
 
 

@@ -44,6 +44,8 @@ ReasonCode = Literal[
 
 # --------------------------------------------------------------------------- documents
 class Word(BaseModel):
+    """One word on a PDF page with its box, font size and weight."""
+
     text: str
     bbox: BBox
     font_size: float
@@ -51,6 +53,8 @@ class Word(BaseModel):
 
 
 class Page(BaseModel):
+    """One parsed PDF page: its words, plain text and printed page label."""
+
     number: int  # PDF page, 1-indexed
     printed_page: str | None = None
     width: float
@@ -61,6 +65,8 @@ class Page(BaseModel):
 
 
 class ParsedDoc(BaseModel):
+    """A whole parsed offer document (one IPO, one document type)."""
+
     ipo_id: str
     doc_type: DocType
     source_path: str
@@ -70,6 +76,8 @@ class ParsedDoc(BaseModel):
 
 
 class Section(BaseModel):
+    """A detected section with its page span and how it was found."""
+
     id: str
     title: str
     start_page: int
@@ -79,6 +87,8 @@ class Section(BaseModel):
 
 
 class TableCell(BaseModel):
+    """One cell of an extracted table, with its position and box."""
+
     row: int
     col: int
     text: str
@@ -87,6 +97,8 @@ class TableCell(BaseModel):
 
 
 class Table(BaseModel):
+    """An extracted table: its cells, pages and the scale in its header."""
+
     id: str
     section_id: str
     pages: list[int]
@@ -95,6 +107,8 @@ class Table(BaseModel):
 
 
 class Passage(BaseModel):
+    """A retrievable chunk of text with character-to-box spans for citations."""
+
     id: str  # <ipo_id>:p<page_start>:c<k>
     ipo_id: str
     doc_type: DocType
@@ -108,6 +122,8 @@ class Passage(BaseModel):
 
 # --------------------------------------------------------------------------- values
 class Money(BaseModel):
+    """An amount of money with its raw text and scale word, normalised to rupees where known."""
+
     kind: Literal["money"] = "money"
     value_inr: DecimalStr | None
     currency: Literal["INR", "USD", "OTHER"]
@@ -117,6 +133,8 @@ class Money(BaseModel):
 
 
 class Count(BaseModel):
+    """A whole-number count, such as a number of equity shares."""
+
     kind: Literal["count"] = "count"
     value: int
     raw: str
@@ -124,6 +142,8 @@ class Count(BaseModel):
 
 
 class Percent(BaseModel):
+    """A percentage (or basis points) as a decimal string."""
+
     kind: Literal["percent"] = "percent"
     value: DecimalStr
     raw: str
@@ -138,6 +158,8 @@ class Placeholder(BaseModel):
 
 
 class Range(BaseModel):
+    """A price band or other money range with its low and high ends."""
+
     kind: Literal["range"] = "range"
     low: Money
     high: Money
@@ -145,16 +167,22 @@ class Range(BaseModel):
 
 
 class TextValue(BaseModel):
+    """A field value that is free text."""
+
     kind: Literal["text"] = "text"
     text: str
 
 
 class ListValue(BaseModel):
+    """A field value that is a list of strings."""
+
     kind: Literal["list"] = "list"
     items: list[str]
 
 
 class TableValue(BaseModel):
+    """A field value that is a small table."""
+
     kind: Literal["table"] = "table"
     columns: list[str]
     rows: list[list[str]]
@@ -169,6 +197,8 @@ Value = Annotated[
 
 # --------------------------------------------------------------------------- extraction
 class FieldSpec(BaseModel):
+    """One X-Ray field from ``configs/fields.yaml``: labels, type, sections, extractor."""
+
     id: str
     label_en: str
     label_hi: str
@@ -183,6 +213,8 @@ class FieldSpec(BaseModel):
 
 
 class Candidate(BaseModel):
+    """One extractor's proposed value for a field, with its page, box and score."""
+
     field_id: str
     extractor: str
     doc_type: DocType
@@ -200,6 +232,8 @@ class Candidate(BaseModel):
 
 
 class CheckResult(BaseModel):
+    """The result of one verifier check: verdict, reason and the values compared."""
+
     check: str
     status: Verdict
     reason_code: ReasonCode
@@ -211,6 +245,8 @@ class CheckResult(BaseModel):
 
 
 class FieldResult(BaseModel):
+    """A field's chosen value, all candidates and its verification verdict."""
+
     field_id: str
     chosen: Candidate | None
     candidates: list[Candidate]
@@ -229,6 +265,8 @@ class BidClosed(BaseModel):
 
 
 class XRay(BaseModel):
+    """The fact sheet of one IPO: every field result plus derived numbers."""
+
     ipo_id: str
     company: str
     built_at: datetime
@@ -242,6 +280,8 @@ class XRay(BaseModel):
 
 # --------------------------------------------------------------------------- chat
 class Claim(BaseModel):
+    """One sentence of a chat answer, its amounts and the passages it cites."""
+
     sentence: str
     char_span: tuple[int, int]
     amounts: list[Amount]
@@ -249,6 +289,8 @@ class Claim(BaseModel):
 
 
 class ChatAnswer(BaseModel):
+    """A finished chat answer with its citations and number verdicts."""
+
     trace_id: str
     text: str
     language: Language
@@ -260,6 +302,8 @@ class ChatAnswer(BaseModel):
 
 
 class Trace(BaseModel):
+    """Everything one chat answer went through, for the trace inspector."""
+
     trace_id: str
     question: str
     stages: list[dict[str, object]]
@@ -310,6 +354,8 @@ class RedFlags(BaseModel):
 
 
 class RiskLevelReason(BaseModel):
+    """One reason behind the risk level: a red flag or a risk, with points and anchor."""
+
     source: Literal["redflag", "risk"]
     id: str
     label: str
@@ -344,6 +390,8 @@ class Hedging(BaseModel):
 
 
 class NearestExample(BaseModel):
+    """A similar risk from a past IPO (company, year, title, similarity)."""
+
     company: str
     year: int
     title: str
@@ -390,6 +438,8 @@ class Peer(BaseModel):
 
 
 class ComparePercentile(BaseModel):
+    """Where one metric of this IPO falls among past IPOs (0-100)."""
+
     metric: CompareMetric
     value: float
     percentile: float  # share (0-100) of reference IPOs with a lower value

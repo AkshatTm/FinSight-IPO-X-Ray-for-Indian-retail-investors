@@ -28,6 +28,8 @@ def company_key(name: str) -> str:
 
 @dataclass(frozen=True)
 class RiskBank:
+    """Past IPOs' risk titles with company, year and unit-length embeddings."""
+
     companies: list[str]
     years: np.ndarray  # (n,) int
     titles: list[str]
@@ -37,10 +39,12 @@ class RiskBank:
         return len(self.companies)
 
     def keys(self) -> list[str]:
+        """The normalised company key of every row (to exclude the issuer itself)."""
         return [company_key(c) for c in self.companies]
 
 
 def normalise(vectors: np.ndarray) -> np.ndarray:
+    """Scale each row to unit length (zero rows stay zero)."""
     v = np.asarray(vectors, dtype=np.float32)
     norms = np.linalg.norm(v, axis=1, keepdims=True)
     return v / np.where(norms == 0, 1.0, norms)
@@ -67,6 +71,7 @@ def load_bank(path: Path, years: tuple[int, int] = (2018, 2023)) -> RiskBank:
 
 @lru_cache(maxsize=1)
 def risks_config(path: Path | None = None) -> dict[str, Any]:
+    """The risk settings (``configs/risks.yaml``)."""
     cfg: dict[str, Any] = yaml.safe_load(
         (path or project_root() / "configs" / "risks.yaml").read_text(encoding="utf-8")
     )

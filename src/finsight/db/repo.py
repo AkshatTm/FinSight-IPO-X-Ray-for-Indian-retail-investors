@@ -25,6 +25,7 @@ from finsight.db.tables import (
 
 
 def utcnow() -> datetime:
+    """The current time in UTC (timezone-aware)."""
     return datetime.now(UTC)
 
 
@@ -58,6 +59,7 @@ class Database:
 
     # ------------------------------------------------------------------ users
     def upsert_user(self, user_id: str, email: str | None, now: datetime | None = None) -> None:
+        """Create the user on first sign-in; later calls refresh the email."""
         with self.engine.begin() as conn:
             row = conn.execute(sa.select(users.c.id).where(users.c.id == user_id)).first()
             if row is None:
@@ -69,24 +71,29 @@ class Database:
 
     # ------------------------------------------------------------------ docs
     def insert_doc(self, doc: DocRecord) -> None:
+        """Insert a new document row."""
         with self.engine.begin() as conn:
             conn.execute(docs.insert().values(**doc.model_dump()))
 
     def get_doc(self, doc_id: str) -> DocRecord | None:
+        """The document with this id, or ``None``."""
         with self.engine.connect() as conn:
             row = conn.execute(sa.select(docs).where(docs.c.doc_id == doc_id)).mappings().first()
         return self._doc(row) if row else None
 
     def doc_by_sha(self, sha256: str) -> DocRecord | None:
+        """The document with this file hash, or ``None`` (duplicate uploads)."""
         with self.engine.connect() as conn:
             row = conn.execute(sa.select(docs).where(docs.c.sha256 == sha256)).mappings().first()
         return self._doc(row) if row else None
 
     def update_doc(self, doc_id: str, **values: Any) -> None:
+        """Set columns of one document."""
         with self.engine.begin() as conn:
             conn.execute(docs.update().where(docs.c.doc_id == doc_id).values(**values))
 
     def docs_by_user(self, user_id: str) -> list[DocRecord]:
+        """A user's documents, newest first."""
         query = (
             sa.select(docs).where(docs.c.uploaded_by == user_id).order_by(docs.c.created_at.desc())
         )
@@ -118,10 +125,12 @@ class Database:
 
     # ------------------------------------------------------------------ uploads (quotas)
     def record_upload(self, user_id: str, doc_id: str, ts: datetime | None = None) -> None:
+        """Count one upload towards the user's and the global daily quota."""
         with self.engine.begin() as conn:
             conn.execute(uploads.insert().values(user_id=user_id, doc_id=doc_id, ts=ts or utcnow()))
 
     def count_uploads(self, since: datetime, user_id: str | None = None) -> int:
+        """Uploads since ``since``, for one user or for everyone."""
         query = sa.select(sa.func.count()).select_from(uploads).where(uploads.c.ts >= since)
         if user_id is not None:
             query = query.where(uploads.c.user_id == user_id)
@@ -130,17 +139,20 @@ class Database:
 
     # ------------------------------------------------------------------ jobs
     def create_job(self, doc_id: str, now: datetime | None = None) -> Job:
+        """Create a queued job for a document and return it."""
         job = Job(job_id=new_trace_id(), doc_id=doc_id, stage="received", status="queued")
         with self.engine.begin() as conn:
             conn.execute(jobs.insert().values(**job.model_dump(), created_at=now or utcnow()))
         return job
 
     def get_job(self, job_id: str) -> Job | None:
+        """The job with this id, or ``None``."""
         with self.engine.connect() as conn:
             row = conn.execute(sa.select(jobs).where(jobs.c.job_id == job_id)).mappings().first()
         return self._job(row) if row else None
 
     def latest_job(self, doc_id: str) -> Job | None:
+        """The document's most recent job, or ``None``."""
         query = (
             sa.select(jobs)
             .where(jobs.c.doc_id == doc_id)
@@ -152,6 +164,7 @@ class Database:
         return self._job(row) if row else None
 
     def update_job(self, job_id: str, **values: Any) -> None:
+        """Set columns of one job (status, stage, times)."""
         with self.engine.begin() as conn:
             conn.execute(jobs.update().where(jobs.c.job_id == job_id).values(**values))
 
@@ -185,6 +198,7 @@ class Database:
         raise RuntimeError(f"could not append an event to job {job_id}")
 
     def events_after(self, job_id: str, after_seq: int = 0) -> list[StoredEvent]:
+        """A job's events with ``seq`` above ``after_seq``, in order."""
         query = (
             sa.select(job_events)
             .where(job_events.c.job_id == job_id, job_events.c.seq > after_seq)
@@ -277,6 +291,7 @@ class Database:
             return [row.rid for row in conn.execute(query)]
 
     def queue_position(self, doc_id: str, rid: str) -> int:
+        """A risk's 0-based place in the queue, or -1 if it is not queued."""
         order = self.queue(doc_id)
         return order.index(rid) if rid in order else -1
 
@@ -299,6 +314,7 @@ class Database:
             return str(row.rid)
 
     def finish_item(self, doc_id: str, rid: str, status: str) -> None:
+        """Close a queue item as ``done`` or ``failed``."""
         with self.engine.begin() as conn:
             conn.execute(
                 simplify_queue.update()

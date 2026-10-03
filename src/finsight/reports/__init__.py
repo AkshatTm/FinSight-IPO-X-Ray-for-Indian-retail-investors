@@ -70,6 +70,7 @@ def assemble(
 def write_report(
     storage: Storage, doc: DocRecord, companion_doc_id: str | None = None
 ) -> ReportOverview:
+    """Assemble the report overview and save it as ``report.json``."""
     report = assemble(storage, doc, companion_doc_id)
     put_json(storage, doc_key(doc.doc_id, "report.json"), report.model_dump(mode="json"))
     return report

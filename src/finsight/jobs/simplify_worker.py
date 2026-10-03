@@ -19,13 +19,19 @@ Emit = Callable[[str, dict[str, Any]], int]
 
 
 class RewriteResult(Protocol):
+    """What a simplifier returns: a status and a JSON-ready dict."""
+
     status: str
 
-    def as_dict(self) -> dict[str, Any]: ...
+    def as_dict(self) -> dict[str, Any]:
+        """The fields saved in ``simplified.json``."""
 
 
 class RiskSimplifier(Protocol):
-    def rewrite(self, title: str, body: str) -> RewriteResult: ...
+    """Rewrites one risk in plain English (see ``risks.Simplifier``)."""
+
+    def rewrite(self, title: str, body: str) -> RewriteResult:
+        """Rewrite a risk from its title and body."""
 
 
 def _queue_status(simple_status: str) -> str:
@@ -41,6 +47,7 @@ def auto_enqueue(db: Database, doc_id: str, ranked: Sequence[str], top_n: int) -
 
 
 def load_simplified(storage: Storage, doc_id: str) -> dict[str, dict[str, Any]]:
+    """The saved rewrites of a document by risk id (empty if none yet)."""
     key = doc_key(doc_id, SIMPLIFIED)
     return dict(get_json(storage, key)) if storage.exists(key) else {}
 
