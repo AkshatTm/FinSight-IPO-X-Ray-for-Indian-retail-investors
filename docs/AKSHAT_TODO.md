@@ -18,7 +18,7 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
   ```
 - [ ] **B1.2 local check: one showcase doc end to end (~5 min)** — after B1.2 merged. Sonnet.
   ```text
-  Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md and docs/AKSHAT_TODO.md. Do only the B1.2 local check: with FINSIGHT_PROFILE=dev_light start `uv run poe api`, then upload one showcase RHP through the API (POST /api/uploads/init → POST the file → /complete, using the real sha256 from configs/demo_ipos.yaml), follow GET /api/docs/<doc_id>/events until `done`, and confirm doc_type/pages match demo_ipos.yaml. Report timings in one line; fix anything that breaks with a regression test. Never deploy. End with any PR merged, this item ticked and PROGRESS.md updated.
+  Resume FinSight Big Phase 2 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume here" note in PROGRESS.md and docs/AKSHAT_TODO.md. Do only the B1.2 local check: with FINSIGHT_PROFILE=dev_light start `uv run poe api`, then upload one showcase RHP through the API (POST /api/uploads/init → POST the file → /complete, using the real sha256 from configs/demo_ipos.yaml), follow GET /api/docs/<doc_id>/events until `done`, and confirm doc_type/pages match demo_ipos.yaml, `sections.json` has `risk_factors` and `risks.json` has a plausible number of risks (print the first 5 titles only). Report per-stage timings (`progress.timings_s`) in one line; fix anything that breaks with a regression test. Never deploy. End with any PR merged, this item ticked and PROGRESS.md updated.
   ```
 - [ ] **B1.5 local check: real sign-in and upload (~15 min)** — after B1.5 merged and HOSTING_SETUP_STEPS part A (Supabase Google provider) is done. Sonnet.
   ```text

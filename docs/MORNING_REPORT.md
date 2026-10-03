@@ -122,6 +122,11 @@
   - Two open items from the security review are closed. A step can now have a time limit (reading the PDF: 10 minutes), and the address hiding above.
   - Tested on made-up pages only. The tests on real pages of 3 dev IPOs need the fixture pack (B0.4). The step joins the upload pipeline when B1.3a adds reading and sections.
 
+- **B1.3a groundwork (#166): the upload job now reads the document.**
+  - After the type check, an uploaded PDF is now read page by page (stopped after 10 minutes). Then its sections are found and its Risk Factors are split into single risks, saved as `parsed.json`, `sections.json` and `risks.json`. The processing screen already knew these steps.
+  - Probing this end to end found a real bug: a short Risk Factors section let the page header ("ACME LIMITED") slip into a risk's text. It is fixed in #165 with a test.
+  - The B1.2 local check prompt now also asks for the number of risks found in a real RHP.
+
 ### Blocked, and why
 - **B1.3a, the rest of B1.4, the rest of B2.1a (real-page tests)** need the B0.4 fixture pack, which can only be made on your laptop.
 
