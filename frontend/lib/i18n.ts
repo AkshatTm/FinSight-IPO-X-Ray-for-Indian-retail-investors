@@ -6,6 +6,7 @@
 import { LANDING } from "./content/landing";
 import { LAB } from "./content/lab";
 import { PAGES } from "./content/pages";
+import { UPLOAD } from "./content/upload";
 
 export type Lang = "en" | "hi";
 type Entry = { en: string; hi: string };
@@ -16,6 +17,7 @@ export const STRINGS = d({
   ...LANDING,
   ...PAGES,
   ...LAB,
+  ...UPLOAD,
   // 3.1 navigation
   "nav.home": { en: "FinSight", hi: "FinSight" },
   "nav.ipos": { en: "IPOs", hi: "आईपीओ" },
