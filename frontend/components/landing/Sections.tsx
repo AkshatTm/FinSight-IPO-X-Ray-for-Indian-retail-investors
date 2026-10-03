@@ -106,6 +106,24 @@ export function Steps() {
   );
 }
 
+/** B05 §2: four blocks after "How FinSight works". */
+export function WhatYouGet() {
+  const { t } = useT();
+  const blocks = [1, 2, 3, 4] as const;
+  return (
+    <Section id="get" heading={t("land.get.h")}>
+      <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+        {blocks.map((n) => (
+          <li key={n}>
+            <h3 className="text-lg font-semibold">{t(`land.get.${n}.h` as StringKey)}</h3>
+            <p className="mt-2 text-muted">{t(`land.get.${n}.b` as StringKey)}</p>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  );
+}
+
 export function AskLang() {
   const { t } = useT();
   const audio = useRef<HTMLAudioElement | null>(null);
