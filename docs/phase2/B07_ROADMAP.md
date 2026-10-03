@@ -64,7 +64,7 @@
   `ingest.upload` validation, dedupe, doc-type detection, rejection codes; synthetic PDF fixtures (RHP/DRHP/Prospectus/non-offer/scanned) generated in tests.
 - [ ] **B1.1b Harden on real and unseen PDFs** · 💻 L · **S** · `fix/b1.1b-real-pdfs`
   Run on the 20 showcase PDFs + 5 unseen RHPs (👤 downloads them by Wed 7 Oct); fix what breaks; record timings.
-- [ ] **B1.2 ★ Jobs, storage, database, events** · ☁️ C · **O** · `feat/b1.2-jobs-pipeline`
+- [x] **B1.2 ★ Jobs, storage, database, events** · ☁️ C · **O** · `feat/b1.2-jobs-pipeline`
   Local/GCS storage, SQLite/Postgres (pooler), jobs + events + replay, simplification priority queue, quotas + kill switch + retention, local worker; tested with fixtures; Postgres in a CI service job.
 - [ ] **B1.3a ★ Summary + financial extraction (fixtures)** · ☁️ C · **O** · `feat/b1.3-summary-extraction`
   `summary` package developed and tested on the fixture pack (dev IPOs only for tuning).

@@ -85,10 +85,10 @@ Showcase IPOs keep both RHP and Prospectus (Phase 1 companion mechanism). The sh
 
 | Package | Responsibility | Public API (examples) | Phase |
 |---|---|---|---|
-| `storage` (new) | `Storage` protocol: `LocalStorage`, `GCSStorage` (V4 signed upload/download URLs) | `get_storage().put/get/url()` | B1.2 |
-| `db` (new) | Repository layer (SQLAlchemy 2 Core) over SQLite (local) / Supabase Postgres via the pooler (cloud; prepared statements off); migrations (Alembic) | `docs_repo`, `jobs_repo`, `users_repo` | B1.2 |
-| `jobs` (new) | Job model, stage runner, event emitter, priority queue, retries, idempotency | `submit(doc_id)`, `run_stage()`, `events(doc_id)` | B1.2 |
-| `auth` (new) | Verify Supabase JWT; per-user limits | `current_user()`, `check_quota()` | B1.5 |
+| `storage` (new) | `Storage` protocol: `LocalStorage` (`data/store`), `GCSStorage` (V4 signed upload URLs; client in the optional `cloud` group) | `make_storage()`, `put_bytes/get_bytes/list/delete_prefix/signed_upload_url`, `doc_key()` | B1.2 |
+| `db` (new) | Repository layer (SQLAlchemy 2 Core) over SQLite (local) / Supabase Postgres via the pooler (cloud; prepared statements off); migrations (Alembic, `python -m finsight.db.migrate`) | `make_database()` → `Database` (docs, jobs, events, uploads, simplify queue) | B1.2 |
+| `jobs` (new) | Stage runner (idempotent stages, `requires`, critical stages), B06 events, upload quotas + kill switch, retention sweep, launchers (inline / Cloud Run) | `run_job()`, `process_document()`, `check_upload_allowed()`, `sweep()`; `python -m finsight.jobs run|sweep` | B1.2 |
+| `auth` (new) | Verify Supabase JWT (JWKS + HS256 fallback, `aud`/`iss`); one local user when `auth.mode: off` | `user_from_header()`, `verify_token()`; API dependency `current_user` | B1.2 (frontend sign-in B1.5) |
 | `ingest.upload` (new) | Validation, dedupe, doc-type detection | `validate_pdf()`, `detect_type()` | B1.1 |
 | `parse` (changed) | Robust to unseen layouts; page limit; timeouts | — | B1.1 |
 | `summary` (new) | Extract Summary of Offer Document, restated financials, WACA, litigation, RPT, shareholding, peers | `extract_summary(doc)` | B1.3 |
@@ -96,7 +96,7 @@ Showcase IPOs keep both RHP and Prospectus (Phase 1 companion mechanism). The sh
 | `risks` (new) | `segment`, `bank`, `novelty`, `hedging`, `numbers`, `classify`, `seriousness`, `simplify` | `build_risk_report(doc)` | B2 |
 | `risklevel` (new) | Points system + corpus-relative thresholds | `compute(redflags, risks) -> RiskLevel` | B2.6 |
 | `compare` (new) | Peer table + corpus percentiles | `compare(doc)` | B3.2 |
-| `reports` (new) | Assemble `report.json`; caching | `get_report(doc_id)` | B1.2+ |
+| `reports` (new) | Assemble `report.json` from stage outputs (missing parts `null`); ETag | `assemble()`, `write_report()`, `etag()` | B1.2+ |
 | `generate` (changed) | Student GGUF through the existing `llama_cpp_backend`; optional `VLLMBackend` (OpenAI-compatible) for the GPU path | — | B2.5a |
 | `guard` (changed) | Allow risk-level questions; still refuse buy/apply; forbidden-**phrase** filter (`configs/forbidden_phrases.yaml`) shared by UI copy tests and rewrites | — | B2.3a, B2.6a |
 
