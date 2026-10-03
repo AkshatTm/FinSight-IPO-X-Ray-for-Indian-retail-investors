@@ -1,0 +1,12 @@
+# Risk level (B02 §7.4, B-ADR-11). PROVISIONAL: these numbers are placeholders made up for
+# development, not measured. B2.6b replaces them with the 2018-2023 corpus distribution (date,
+# corpus_n) and sets provisional: false. The UI shows corpus_n from here, never a typed number.
+provisional: true
+computed_on: null
+corpus_n: 0
+points: { concern: 2, watch: 1, risk: 1, max_risk_points: 4 }
+unusual_below: 0.10          # a high-seriousness risk below this novelty adds a point
+thresholds: { low_below: 0.20, high_from: 0.40 }   # bottom third / top third of reference scores
+# Reference scores at percentiles 0, 10, ..., 100 (for "more disclosed risk than p% of past IPOs").
+reference_quantiles: [0.0, 0.08, 0.13, 0.17, 0.20, 0.25, 0.30, 0.35, 0.40, 0.50, 0.80]
+behind_click: false          # B01 §10.2: hide the level behind a click if the teacher asks

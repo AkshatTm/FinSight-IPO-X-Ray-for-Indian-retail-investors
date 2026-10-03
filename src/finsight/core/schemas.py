@@ -284,6 +284,46 @@ RiskCategory = Literal[
 ]
 SimpleStatus = Literal["pending", "ready", "rejected", "failed"]
 Seriousness = Literal["high", "medium", "low"]
+Status3 = Literal["ok", "watch", "concern", "not_available", "not_applicable"]
+Level = Literal["low", "medium", "high"]
+
+
+class RedFlag(BaseModel):
+    """One of the 13 red-flag checks (B01 §5, B02 §5); ``points`` 2 concern, 1 watch, else 0."""
+
+    id: str
+    title: str
+    status: Status3
+    sentence: str
+    numbers_used: dict[str, str] = Field(default_factory=dict)
+    evidence: list[Evidence] = Field(default_factory=list)
+    rule: str = ""
+    points: int = 0
+
+
+class RiskLevelReason(BaseModel):
+    source: Literal["redflag", "risk"]
+    id: str
+    label: str
+    points: int
+    link: str  # "#redflag-RF03" or "#risk-r12": the report anchors (B05 §5.3)
+
+
+class RiskLevel(BaseModel):
+    """B02 §7.4: points over the checks available, placed among past IPOs (2018-2023)."""
+
+    level: Level
+    points: int
+    max_points: int
+    score: float  # points / max_points
+    percentile: float  # share of reference IPOs with a lower score (0-100)
+    checks_available: int
+    reasons: list[RiskLevelReason]
+    thresholds: dict[str, float]
+    corpus_n: int
+    provisional: bool  # thresholds are placeholders until B2.6b
+    behind_click: bool
+    disclaimer_key: str = "risklevel.disclaimer"
 
 
 class Hedging(BaseModel):
