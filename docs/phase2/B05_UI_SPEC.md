@@ -54,7 +54,7 @@ Paragraph (unchanged SEBI text).
 **Title:** Analyse an IPO document
 **Sub:** Upload a Red Herring Prospectus, a draft (DRHP), or a final prospectus. FinSight reads it and builds a report in a few minutes.
 
-**Drop zone:** "Drag a PDF here, or **choose a file**" · helper: "Up to {max_mb} MB. Text PDFs only (not scans)." (`max_mb` from config; 50 on the Supabase Free plan)
+**Drop zone:** "Drag a PDF here, or **choose a file**" · helper: "Up to {max_mb} MB. Text PDFs only (not scans)." (`max_mb` from config; 50)
 **Where to find one (collapsible):** "Offer documents are public. You can find them on the SEBI website under Filings → Public Issues, or on the NSE and BSE IPO pages."
 **Signed-out state:** drop zone visible but the button reads **Sign in with Google to upload**; line: "We ask you to sign in only to prevent misuse. We don't use your Google data for anything else."
 **Limits line:** "You can analyse 3 documents a day."
@@ -92,7 +92,7 @@ Vertical stage list (each: icon, label, state, time):
 
 As soon as `facts` is done, a button appears: **See what's ready** (opens the report; remaining sections show skeletons with "Still working…").
 Cold-start note (when the first simplification takes > 20 s): "Warming up the language model. The first one takes a little longer."
-On the CPU host only the 15 most important risks are explained automatically; the `simplify` row's done text reads "{done} of {total} explained" with total = 15, and the Risks tab explains any other risk when it is opened.
+Only the 15 most important risks are explained automatically; the `simplify` row's done text reads "{done} of {total} explained" with total = 15, and the Risks tab explains any other risk when it is opened.
 Failure of a stage: that row shows "Couldn't finish this step" + **Details** (plain reason) — the rest continues.
 DRHP banner (after detection): "This is a draft (DRHP). Many amounts are still blank until the final prospectus, so some checks will say Not available."
 
@@ -154,7 +154,7 @@ Filter chips: All · Concern · Watch · OK · Not available.
 **Controls:** Sort: **Most important first** (default) · Order in document · By category. Category filter chips (10, with counts). Search box "Search risks". Toggle: **Show only unusual risks** (novelty < 10%).
 **Risk card:**
 - Top line: category chip · seriousness ("High / Medium / Low seriousness") · unusualness badge: "Unusual: in {x}% of past IPOs" when < 10%, "Common: in {x}% of past IPOs" when > 60%, otherwise "In {x}% of past IPOs".
-- **Plain English:** the rewrite (≤ 60 words). If pending: skeleton + "Explaining…" (click → prioritised). If not queued (outside the top 15 on the CPU host): button **Explain in plain English** (click → queued at the front). If rejected: "A simple version isn't available for this one, so here is the original." + original shown.
+- **Plain English:** the rewrite (≤ 60 words). If pending: skeleton + "Explaining…" (click → prioritised). If not queued (outside the top 15): button **Explain in plain English** (click → queued at the front). If rejected: "A simple version isn't available for this one, so here is the original." + original shown.
 - **Their wording** (collapsed): the original title in bold + body (scrollable, max 12 lines) + page chip.
 - Notes (only when true):
   - Hedging flag: "Written cautiously, but this describes something that has already happened."

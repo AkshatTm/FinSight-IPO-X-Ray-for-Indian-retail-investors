@@ -9,10 +9,10 @@
 | Mark | Place | Has | Doesn't have |
 |---|---|---|---|
 | ☁️ **C** | Claude Code **cloud session** (Anthropic VM, fresh clone of the GitHub repo) | The repo: code, docs, tests, `data/samples`, `data/gold`, `tests/fixtures/real/` (fixture pack), `eval_results/` | `data/raw`, `data/processed`, PDFs, `models/`, Ollama, GPU, any credentials |
-| 💻 **L** | Claude Code **local session** on the laptop | Everything: PDFs, corpus, models, Ollama, RTX 2050, Kaggle token, hosting CLIs (`az`, `huggingface-cli`, Supabase/Vercel) | — (but uses the weekly plan limit and laptop RAM) |
-| 👤 **A** | **Akshat** by hand | Browser logins, hosting consoles (Azure / HF / Supabase / Vercel), labelling, rating; Colab only if bought (no CLI) | — |
+| 💻 **L** | Claude Code **local session** on the laptop | Everything: PDFs, corpus, models, Ollama, RTX 2050, Kaggle token, hosting CLIs (`gcloud`, Supabase/Vercel) | — (but uses the weekly plan limit and laptop RAM) |
+| 👤 **A** | **Akshat** by hand | Browser logins, hosting consoles (Google Cloud / Supabase / Vercel), labelling, rating; Colab only if bought (no CLI) | — |
 
-Kaggle does the GPU work (Colab optional; GCP GPU only on the optional path). **No Claude Code session ever trains a model itself.** Hosting is CPU-first (B-ADR-04).
+Kaggle does the training GPU work (Colab optional). Google Cloud Run (CPU, plus an L4 job once billing is on) serves the product (B-ADR-04). **No Claude Code session ever trains a model itself.**
 
 ## 2. What goes where (rules of thumb)
 

@@ -17,7 +17,7 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 ## Phase 2 hand-work (dated; full calendar in docs/phase2/B_EXECUTION_PLAN.md §4, checklist in #124)
 - Sat 3 Oct: approve the B0.2 PR; say whether Colab Pro is bought (the plan is Kaggle-first either way).
 - Sun 4: claim the $100 cloud credit (deadline Wed 7 Oct, 23:59 PT); describe the B0.1 bug if you can.
-- Mon 5: follow `docs/phase2/HOSTING_SETUP_STEPS.md` (after B0.3), pick Azure vs HF; check Kaggle GPU quota.
+- Mon 5: follow `docs/phase2/HOSTING_SETUP_STEPS.md` part A (Supabase, Vercel, Kaggle); part B (Google Cloud billing) later, when you're ready.
 - Wed 7: 5 unseen RHPs → `data/raw/unseen/`.
 - Thu 8 – Fri 9: gold v3 pre-fill (Claude chat) from `data/gold/gold_v3_template.jsonl` + verify.
 - Accept or change B-ADR-01..15 in `docs/09_DECISIONS.md`.

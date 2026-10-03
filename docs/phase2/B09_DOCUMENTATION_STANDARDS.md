@@ -25,7 +25,7 @@ How-to guides
   ├─ Add a new X-Ray field
   ├─ Retrain the risk classifier (Kaggle / Colab)
   ├─ Retrain the simplifier (Colab)
-  ├─ Deploy to the CPU host (Azure Container Apps or HF Space; runbook link)
+  ├─ Deploy to Google Cloud Run (runbook link)
   └─ Record the demo cache
 Reference
   ├─ API (Redoc from openapi.json)
