@@ -398,6 +398,16 @@ The SSE endpoint replays events after `Last-Event-ID` by polling the table about
 **Limits.** Only the `validated` and `detected` stages exist so far. Later parts add theirs. The Cloud Run launcher arrives with B3.3a.
 **Likely viva questions.** (1) *Why recompute the hash on the server?* (2) *Why poll instead of LISTEN/NOTIFY?* (The transaction-mode pooler drops session features.) (3) *What makes a stage idempotent?* (Its output file is the proof it ran.)
 
+### C24. Upload page, processing screen and Google sign-in (built in B1.5)
+**What it does.**
+- **Sign-in.** Through Supabase's Google sign-in. The browser only ever holds the public anon key; the API checks the token (C23).
+- **Upload.** The page hashes the file in the browser (WebCrypto SHA-256) and asks the API whether it was analysed before. If not, it sends the bytes straight to storage: a signed GCS link in the cloud, never through the API, which saves the API's memory. Then it calls `complete`.
+- **Processing screen.** Follows the job's events and turns them into the B05 rows. Each row shows its done text, its time, or "Couldn't finish this step" with details. It shows the DRHP banner as soon as the type is known, and "See what's ready" once the key facts exist. If the connection drops, it reconnects with the last event id, so nothing is missed or repeated.
+- **Mocks.** Every path (rejections, DRHP, a failed stage, duplicate, quota) can be reached from the file name, and Playwright walks them all.
+
+**Limits.** The report view itself is B3.1; until then a finished document shows its header over empty sections. Hindi strings are drafts awaiting review.
+**Likely viva questions.** (1) *Why hash in the browser if the server recomputes it?* (So a duplicate is found before uploading 50 MB, and so the server's check can be strict.) (2) *Why upload straight to storage?* (Large files never pass through the API container.)
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
