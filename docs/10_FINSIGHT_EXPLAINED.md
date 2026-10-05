@@ -697,6 +697,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why spread pairs over bins and not sample at random?* Most pairs are low-similarity; random sampling would leave too few near tau.
 3. *Why only dev IPOs?* Test and bench documents never tune a threshold (C-ADR-02).
 
+### C50. The risk level on the rolling window (built in C2.8, code only)
+**What it does.** `finsight.risklevel.reference` turns the risk level's fixed 2018-2023 reference into the rolling window. Each IPO has a score; for a document dated X the percentile is computed against the scores of the IPOs in the window before X (`compute(..., reference_scores=...)` also takes the sample size from them). The Low/Medium/High cut-offs are the bottom and top third of the scores of `train` and `dev` IPOs only, so a test or bench score never moves a threshold; `scripts/corpus_points.py fit` writes them into `configs/risklevel.yaml` with `provisional: false` and the git sha it used. `finsight.evaluate.outcomes` and `scripts/validate_risklevel.py` ask E21: does the risk-points-only score relate to what happened after listing? It reports a rank correlation with a permutation p-value and says why the variant is weaker (no red flags in the corpus years). A test makes sure nothing outside `finsight.evaluate` can import the outcomes.
+**Limits.** Nothing is fitted yet (needs the trained models and at least 30 scored IPOs); the level describes disclosure and is never advice; correlation with an outcome is not a prediction.
+**Likely viva questions.**
+1. *Why terciles and not a fixed number?* The score has no natural scale; the cut-offs say "among past IPOs, this is in the top third".
+2. *Why keep outcomes away from the fit?* A threshold tuned on outcomes would make E21 circular.
+3. *What if E21 shows nothing?* It is reported as it is; the level is a reading aid, not a forecast.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

@@ -35,6 +35,10 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 ### C2.6 novelty threshold (code merged), ~30–40 min rating
 - [ ] After the C1.4 freeze and the real bank build (`scripts/build_risk_bank.py`): `uv run python scripts/novelty_pairs.py sheet`, rate `data/gold/novelty_pairs.csv` (column `same_risk` = yes / no / unsure; is it the same risk, ignoring company names and numbers?), tell Claude "novelty pairs rated". Claude runs `score`, sets `novelty.tau` in `configs/risks.yaml` from `eval_results/b/novelty.json` and writes the ADR.
 
+### C2.8 risk-level thresholds (code merged), needs C2.4, C3.2, C3.3 outputs
+- [ ] After the trained models are wired into the upload pipeline (C3.3) and every IPO has `<ipo_id>.json` (and `.flags.json`) in `data/processed/risk_bank/scored/`: `uv run python scripts/corpus_points.py scores`, then `... fit` (needs at least 30 train + dev scores); check `configs/risklevel.yaml` is no longer provisional.
+- [ ] For E21 put a measured-outcome column in `data/gold/outcomes.csv` (`ipo_id,listing_gain_pct`; your own source, check it) and run `uv run python scripts/validate_risklevel.py --outcomes data/gold/outcomes.csv` with `scores --points-only` first. The result is reported whatever it shows.
+
 ### Later (prepared by each part when it is reached)
 - C1.1 approve the IPO list (~15 min) · C1.2 manual downloads (list printed by the script) · C1.4 confirm split counts (~5 min).
 - After CG1, start at once (biggest time risk): C4.1 verify gold v4 + answer keys + TOC page ranges (~8.5 h), then C4.3 frontier runs (~9 h).
