@@ -614,6 +614,26 @@ def _gold_block() -> str:
     return "".join(rows)
 
 
+def _teacher_block() -> str:
+    path = ROOT / "eval_results" / "teacher_quality.json"
+    if not path.exists():
+        return "No teacher run has been rated yet; the numbers appear here after C2.3."
+    q = json.loads(path.read_text(encoding="utf-8"))
+    f = q["faithful"]
+    lo, hi = q["faithful_yes_ci95"]
+    drops = q["filter"]["dropped"]
+    verdict = "go" if q["go"] else "no-go"
+    lines = [
+        f"Model `{q['model']}`, prompt `{q['prompt_version']}`. Filter: {q['filter']['kept']} kept of "
+        f"{q['filter']['total']}; dropped " + ", ".join(f"{k} {v}" for k, v in drops.items()) + ".",
+        "",
+        f"Quality sheet ({q['n_rated']} rated by {q['rated_by']}): same meaning yes {f['yes']}, "
+        f"partly {f['partly']}, no {f['no']} ({q['faithful_yes_share']:.1%}, 95% CI {lo:.1%}-{hi:.1%}); "
+        f"category correct {q['category_correct_share']:.1%}. Gate {q['gate']:.0%}: **{verdict}**.",
+    ]
+    return "\n".join(lines) + "\n"
+
+
 def _universe_block() -> str:
     with (ROOT / "configs" / "ipo_universe.csv").open(encoding="utf-8", newline="") as fh:
         rows = list(csv.DictReader(fh))
@@ -655,6 +675,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/datasheets/weak_labels.md": {"stats": _weaklabel_block},
     "docs/datasheets/gold_sets.md": {"stats": _gold_block},
     "docs/datasheets/new_ipos.md": {"universe": _universe_block},
+    "docs/phase2/datasheets/teacher_outputs.md": {"run": _teacher_block},
     "report/07_results.md": {"phase2": _phase2_block},
 }
 

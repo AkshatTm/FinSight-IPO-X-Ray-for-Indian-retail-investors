@@ -2,6 +2,8 @@ import csv
 import json
 from pathlib import Path
 
+import pytest
+
 from finsight.risks.teacher_data import (
     SHEET_COLUMNS,
     filter_file,
@@ -98,3 +100,38 @@ def test_cli_filter_and_sheet(tmp_path: Path) -> None:
     assert (tmp_path / "labels.jsonl").exists()
     with (tmp_path / "quality_sheet.csv").open(encoding="utf-8", newline="") as f:
         assert len(list(csv.DictReader(f))) == 3
+
+
+def _rated(tmp_path: Path, faithful: list[str]) -> None:
+    path = tmp_path / "quality_sheet.csv"
+    with path.open(encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    for row, verdict in zip(rows, faithful, strict=True):
+        row["faithful"], row["category_correct"] = verdict, "yes"
+    with path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+
+
+def test_cli_score_go_and_no_go(tmp_path: Path) -> None:
+    setup(tmp_path)
+    main(["sheet", "--dir", str(tmp_path), "-n", "3"])
+    out = tmp_path / "eval" / "teacher_quality.json"
+    _rated(tmp_path, ["yes", "yes", "partly"])
+    main(["score", "--dir", str(tmp_path), "--out", str(out)])
+    result = json.loads(out.read_text(encoding="utf-8"))
+    assert result["n_rated"] == 3
+    assert result["faithful"] == {"yes": 2, "partly": 1, "no": 0}
+    assert result["go"] is False  # 2/3 is below the 85 % gate
+    assert result["label_source"].startswith("teacher:")
+    _rated(tmp_path, ["yes", "yes", "yes"])
+    main(["score", "--dir", str(tmp_path), "--out", str(out)])
+    assert json.loads(out.read_text(encoding="utf-8"))["go"] is True
+
+
+def test_score_refuses_an_unrated_sheet(tmp_path: Path) -> None:
+    setup(tmp_path)
+    main(["sheet", "--dir", str(tmp_path), "-n", "3"])
+    with pytest.raises(ValueError, match="unrated"):
+        main(["score", "--dir", str(tmp_path), "--out", str(tmp_path / "x.json")])
