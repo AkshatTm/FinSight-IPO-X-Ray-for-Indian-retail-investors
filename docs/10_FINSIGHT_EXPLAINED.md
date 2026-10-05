@@ -640,6 +640,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *How do you know a download is complete?* The byte count must match the server's `Content-Length`, the file must start with `%PDF-`, and it must open with at least one page. A real truncated file was caught this way.
 3. *Why record the hash?* To prove later which exact file every number came from.
 
+### C43. The batch parser (built in C1.3)
+**What it does.** `finsight.pipeline.batch` runs the same stages an uploaded file goes through (check, detect type, parse, find sections, split the Risk Factors into single risks) over every downloaded document, one at a time. After each document it saves the result to a state file, so a stop loses nothing and a rerun skips finished ones. It records the seconds per stage, the peak memory and the size of the output. A document is `parsed` when it has a Risk Factors section and risks were split; it is `excluded` with a reason when it is a draft (DRHP), a scan, rejected by validation, or its cover names an SME platform; otherwise it is `failed` so the cause can be fixed with a regression test. From the cover it also reads the real "Dated" date (replacing SEBI's posting date when the two are within 45 days) and which exchange(s) it lists on. `scripts/batch_parse.py --apply` writes all this into the universe file; `--report` writes `eval_results/c/parse_batch.json`.
+**Limits.** The cover-date and exchange reading are text heuristics on the first six pages. The validation limits are loosened for this run (200 MB, 3000 pages) and the number of documents above the product limit (1500 pages) is reported separately.
+**Likely viva questions.**
+1. *Why one document at a time?* The laptop has 16 GB of RAM shared with Windows; the measured peak is under 1 GB per document, so parallel runs would only fight for memory and the disk.
+2. *Why mark a failure instead of skipping it?* A silent skip would bias the training set toward easy documents; failures are fixed or excluded with a written reason.
+3. *Why the SME check?* SME issues have a different regulator track and shorter documents; mixing them would blur "how a mainboard offer document reads".
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
