@@ -673,6 +673,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why filter before rating?* The filters are exact checks (numbers, forbidden words, certainty); people should only rate what passes them.
 3. *Why one rater?* Time; the datasheet says so, and the sheet carries `label_source`.
 
+### C47. The student simplifier notebook (built in C2.5, code and steps only)
+**What it does.** `notebooks/colab/c2_student.ipynb` fine-tunes a 4B Qwen model with LoRA (rank 16) to rewrite a risk factor in plain English, from the filtered teacher pairs. `PRECISION = "bf16"` trains on an L4 or A100 without quantisation; `"nf4"` is the 4-bit recipe for a T4 smoke run. Checkpoints go to local disk and are copied to Drive at every save, so a disconnect loses at most 200 steps. Afterwards the adapter is merged temporarily to make a GGUF Q4_K_M with llama.cpp, and the merged fp16 weights are deleted. The tokenising helpers come from `scripts/make_student_notebook.py` and are tested on a fake tokenizer.
+**Limits.** Nothing has trained yet; single seed; AI-made training targets.
+**Likely viva questions.**
+1. *Why LoRA and not full fine-tuning?* A few million trainable weights fit one GPU and the adapter is a few MB.
+2. *Why delete the merged weights?* They are large, add nothing over adapter plus base, and the hub rule is adapters and GGUF only.
+3. *Why mask the prompt in the labels?* The loss should only teach the rewrite, not the instructions.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
