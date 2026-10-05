@@ -1,16 +1,16 @@
 # FinSight — Claude Code instructions (always loaded)
 
-FinSight = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sheet + bilingual chat with ✅/⚠️/❌ number verification. **Big Phase 2 (now):** upload any IPO offer document → red flags, plain-English risk report, risk level with reasons, comparisons. Open-weight models only. Feature freeze Sun 25 Oct, deadline Sun 1 Nov 2026.
+FinSight = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sheet + bilingual chat with ✅/⚠️/❌ number verification. Phase 2: upload any IPO offer document → red flags, plain-English risk report, risk level with reasons, comparisons. **Phase 3 (now):** newest-IPO data, trained Phase 2 models, FinSight Bench vs frontier models, then deploy. Gate-driven; course deadline: Sun 1 Nov 2026 (the only date; it lives only here). Open-weight models only.
 
 ## Environment rule
-**Local only (B-ADR-16, 4 Oct 2026).** The Google Cloud credit and Claude Code cloud sessions are gone: nothing is deployed or hosted, and every part runs in a local session on the Windows laptop (see Environment below). Start with `git pull`. Do not add Cloud Run, GCS, GPU-job, Docker-deploy or paid-hosting code; Supabase sign-in/Postgres, Vercel and the HF Space are optional config only. Parts once marked ☁️ (fixtures first) and 💻 (real data) are now done together in one local session.
+**Local only in code (B-ADR-16, 4 Oct 2026).** Every part runs in a local session on the Windows laptop (see Environment below). Start with `git pull`. Do not add Cloud Run, GCS, GPU-job, Docker-deploy or paid-hosting code before C5.1; Supabase sign-in/Postgres, Vercel and the HF Space are optional config only. B-ADR-16's "credit used up" premise is outdated: a Google Cloud free trial is active, used only at C5.1 after a budget alert and Akshat's explicit "go" (C-ADR-10).
 
-## Session protocol (Phase 2)
-1. Read the **"Resume here"** note at the top of `PROGRESS.md`, then `docs/phase2/B07_ROADMAP.md` (current part) and its entry in `docs/phase2/B_EXECUTION_PLAN.md`, then only the B-doc sections that part cites. Index: `docs/phase2/B00_README.md` (Phase 1: `docs/00_README.md`).
+## Session protocol (Phase 3)
+1. Read the **"Resume here"** note at the top of `PROGRESS.md`, then `docs/phase3/C05_ROADMAP.md` (current part) and its entry in `docs/phase3/C_EXECUTION_PLAN.md`, then only the C-doc and B-doc sections that part cites. Index: `docs/phase3/C00_README.md` (Phase 2: `docs/phase2/B00_README.md`, Phase 1: `docs/00_README.md`).
 2. Run the tests (`uv run poe test`) before changing anything; report in one line.
-3. **Model check, both directions, before every part:** Model column in B07 / B_EXECUTION_PLAN (O = Opus, S = Sonnet; ★ and bugs that failed twice on Sonnet = Opus). If it differs from the running model, stop before any work and print exactly: "🔁 MODEL SWITCH: next is <ID> (<title>) — recommended <Opus/Sonnet>. Type /model <opus/sonnet>, then say continue." Otherwise print "✓ Model OK: <ID> on <model>".
-4. **One sub-phase or part per session.** End with `✅ <ID> done — run /clear and paste the Phase 2 resume prompt.`; mid-part checkpoint per B07 §0.
-5. **Loop:** `git pull` → part (fixtures, then real data, Kaggle, eval) → PR merged → next part.
+3. **Model check, both directions, before every part:** Model column in C05 / C_EXECUTION_PLAN (O = Opus, S = Sonnet; ★ and bugs that failed twice on Sonnet = Opus). If it differs from the running model, stop before any work and print exactly: "🔁 MODEL SWITCH: next is <ID> (<title>) — recommended <Opus/Sonnet>. Type /model <opus/sonnet>, then say continue." Otherwise print "✓ Model OK: <ID> on <model>".
+4. **One part per session.** End with `✅ <ID> done — run /clear and paste the Phase 3 resume prompt.` (`docs/phase3/C07_PROMPTS.md` R).
+5. **Loop:** `git pull` → part (fixtures, then real data; Kaggle runs by CLI; Colab runs by Akshat from `COLAB_STEPS_<job>.md`) → PR merged → next part.
 6. Keep the **"Resume here"** block at the top of `PROGRESS.md` current (exact next step, open files, failing tests) after every merge.
 
 ## Hard rules
@@ -24,6 +24,10 @@ FinSight = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sh
 - **Never hand-edit model outputs or eval results.** Fix the pipeline or show ⚠️.
 - **Never add investment advice or predictions;** no buy/sell/apply/avoid instructions (forbidden phrases: `configs/forbidden_phrases.yaml`, B-ADR-13). The risk level always carries its disclaimer.
 - **Honesty:** disclose AI-assisted labels (`label_source`), single-seed runs and test-informed decisions.
+- **Time split (C-ADR-02):** documents in the `test` or `bench` slices (`configs/splits.yaml`) never enter training data, the risk bank, thresholds or prompt tuning. `tests/test_split_leakage.py` checks the committed manifests in `data/manifests/`.
+- **Bench freeze (C-ADR-06):** files listed in `frozen_files` of a `bench/<v>/manifest.yaml` with `frozen: true` are never edited; a new version gets a new folder. Answer files are not frozen inputs.
+- **Colab:** write `docs/phase3/COLAB_STEPS_<job>.md` for every Colab job; Akshat runs it. Notebooks checkpoint to local disk, sync to Google Drive every N steps and resume; weights go to a private HF repo as adapters/GGUF/ONNX, never merged fp16.
+- **No dates:** never add calendar dates or deadlines to plans or PROGRESS.md "next" lines (the header deadline is the one exception). Evaluation records keep timestamps.
 - **Tests are the memory:** every module ships with pytest tests; property tests for `normalize`. Mark tests that need full documents, the corpus or model weights `@pytest.mark.local` (`poe test` and CI skip them).
 - **Stuck rule:** if a part balloons past one session, write `BLOCKED.md` (what failed, what was tried) and stop.
 - **Verify, don't assume:** check current library and hosting docs before using an API you're unsure of; record non-obvious choices as a proposed ADR (Phase 2: `B-ADR-NN` in `docs/09_DECISIONS.md` + `docs/phase2/B08_DECISIONS.md`).
@@ -58,4 +62,4 @@ Phase 1: core · ingest · parse · normalize · extract · weaklabel · retriev
 Phase 2 (new): storage · db · jobs · auth · summary · redflags · risks · risklevel · compare · reports
 
 ## End of every part
-Tick boxes in `docs/phase2/B07_ROADMAP.md`, update `PROGRESS.md` ("Resume here" + ≤ 10 lines), append a Part C section to `docs/10_FINSIGHT_EXPLAINED.md` for any new module, write local follow-ups to `docs/AKSHAT_TODO.md`, include these in the PR.
+Tick boxes in `docs/phase3/C05_ROADMAP.md`, update `PROGRESS.md` ("Resume here" + ≤ 10 lines), append a Part C section to `docs/10_FINSIGHT_EXPLAINED.md` for any new module, write local follow-ups to `docs/AKSHAT_TODO.md`, include these in the PR.
