@@ -99,7 +99,7 @@ torch = { index = "pytorch-cu128" }
 test = { cmd = "pytest -m 'not slow and not local and not postgres'", help = "Fast tests (no real models, no full documents, no Postgres); what CI and cloud sessions run" }
 test-all = { cmd = "pytest", help = "All tests including slow (real models)" }
 fmt = { sequence = [{ cmd = "ruff check --fix ." }, { cmd = "ruff format ." }], help = "Auto-fix and format" }
-typecheck = { cmd = "mypy -p finsight.core -p finsight.normalize -p finsight.verify -p finsight.storage -p finsight.db -p finsight.auth -p finsight.reports -p finsight.jobs -p finsight.risklevel -p finsight.compare -p finsight.redflags", help = "mypy on the correctness-critical packages" }
+typecheck = { cmd = "mypy -p finsight.core -p finsight.normalize -p finsight.verify -p finsight.storage -p finsight.db -p finsight.auth -p finsight.reports -p finsight.jobs -p finsight.risklevel -p finsight.compare -p finsight.redflags -p finsight.splits", help = "mypy on the correctness-critical packages" }
 api = { cmd = "uvicorn finsight.api.app:app --reload --port 8000 --timeout-keep-alive 30", help = "FastAPI on :8000" }
 record-demo = { cmd = "python scripts/record_demo.py", help = "Record real chat streams into data/demo_cache (needs Ollama)" }
 gen-openapi = { cmd = "python scripts/gen_openapi.py", help = "Write openapi.json (add --check to verify it is current)" }
