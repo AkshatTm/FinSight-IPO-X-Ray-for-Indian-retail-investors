@@ -634,6 +634,29 @@ def _teacher_block() -> str:
     return "\n".join(lines) + "\n"
 
 
+def _classifier_block() -> str:
+    path = ROOT / "eval_results" / "b" / "classifier_base.json"
+    if not path.exists():
+        return "The base classifier has not been trained yet; the numbers appear here after C2.4."
+    r = json.loads(path.read_text(encoding="utf-8"))
+    rows = [f"| {s} | {f:.3f} |" for s, f in r["dev_macro_f1_by_seed"].items()]
+    sd = "n/a (one seed)" if r["dev_macro_f1_sd"] is None else f"{r['dev_macro_f1_sd']:.3f}"
+    lines = [
+        f"Base `{r['model']}`; {r['n_train']} training and {r['n_dev']} dev risks (split by company).",
+        "",
+        "| Seed | Dev macro-F1 |",
+        "| --- | --- |",
+        *rows,
+        "",
+        f"Mean {r['dev_macro_f1_mean']:.3f}, spread (sd) {sd}; best seed {r['best_seed']}, "
+        f"chosen on dev. {r['label_source']}.",
+    ]
+    if "tfidf_dev_macro_f1" in r:
+        verdict = "beats" if r["beats_tfidf"] else "does **not** beat"
+        lines += ["", f"The mean {verdict} the TF-IDF baseline ({r['tfidf_dev_macro_f1']:.3f})."]
+    return "\n".join(lines) + "\n"
+
+
 def _universe_block() -> str:
     with (ROOT / "configs" / "ipo_universe.csv").open(encoding="utf-8", newline="") as fh:
         rows = list(csv.DictReader(fh))
@@ -676,6 +699,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/datasheets/gold_sets.md": {"stats": _gold_block},
     "docs/datasheets/new_ipos.md": {"universe": _universe_block},
     "docs/phase2/datasheets/teacher_outputs.md": {"run": _teacher_block},
+    "docs/model_cards/risk_classifier.md": {"results": _classifier_block},
     "report/07_results.md": {"phase2": _phase2_block},
 }
 

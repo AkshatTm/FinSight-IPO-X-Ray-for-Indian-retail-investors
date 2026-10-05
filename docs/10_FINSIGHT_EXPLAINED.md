@@ -681,6 +681,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why delete the merged weights?* They are large, add nothing over adapter plus base, and the hub rule is adapters and GGUF only.
 3. *Why mask the prompt in the labels?* The loss should only teach the rewrite, not the instructions.
 
+### C48. The classifier runs (built in C2.4, code only)
+**What it does.** `finsight.risks.clf_runs` and `scripts/classifier_kaggle.py` wrap the Phase 2 DeBERTa notebook: they write manifests for the classifier's train and dev rows (so the time-split test covers them), upload the private Kaggle dataset, push one kernel per seed (13, 42, 2026) with the official CLI, fetch metrics and weights, and write the E16 summary: dev macro-F1 per seed, mean and spread, the best seed (chosen on dev only) and whether the mean beats the TF-IDF baseline. A smoke run is refused as a result. The model card fills itself from that file.
+**Limits.** Nothing has run: the labels come from the teacher run (C2.3). Labels are AI-made; gold-150 is verified by one person.
+**Likely viva questions.**
+1. *Why pick the seed on dev and not on gold?* Choosing on the report set would make its number optimistic.
+2. *Why split by company?* Risks from one company share phrasing; mixing them across train and dev would inflate dev.
+3. *Why must it beat TF-IDF?* A transformer that does no better than word counts is not worth its cost.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
