@@ -25,6 +25,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 ### C2.3 teacher full run (code and steps merged), ~2–4 h Colab + 30 min rating
 - [ ] After the bake-off pick: `uv run python scripts/export_teacher_input.py`, then `docs/phase3/COLAB_STEPS_teacher_full.md` (A100, ~14–27 units), rate the quality-100 sheet, go/no-go (≥ 85 %).
 
+### C2.5 student (notebook and steps merged), ~1–2 h Colab
+- [ ] After CG2: `uv run python -m finsight.risks.simplify split`, then `docs/phase3/COLAB_STEPS_student.md` (smoke on a T4 with `nf4`, then the real run on an L4/A100); rate the gold-50 sheet for the zero-shot bake-off first.
+
 ### Later (prepared by each part when it is reached)
 - C1.1 approve the IPO list (~15 min) · C1.2 manual downloads (list printed by the script) · C1.4 confirm split counts (~5 min).
 - After CG1, start at once (biggest time risk): C4.1 verify gold v4 + answer keys + TOC page ranges (~8.5 h), then C4.3 frontier runs (~9 h).
