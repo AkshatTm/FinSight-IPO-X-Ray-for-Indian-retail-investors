@@ -22,7 +22,7 @@ from typing import Any, Literal
 import yaml
 
 from finsight.core.config import project_root
-from finsight.risks import company_key
+from finsight.risks import RiskBank, company_key
 from finsight.splits.store import SplitEntry, SplitsFile
 
 RefKind = Literal["eval", "product"]
@@ -99,3 +99,33 @@ def window_summary(sizes: dict[str, int]) -> str:
         return "no dated test IPOs"
     v = sorted(sizes.values())
     return f"eval window n per test IPO: min {v[0]}, median {statistics.median(v):g}, max {v[-1]}"
+
+
+def reference_bank(
+    bank: RiskBank,
+    splits: SplitsFile,
+    as_of: date,
+    years: int | None = None,
+    *,
+    kind: RefKind = "eval",
+    exclude_ipo: str | None = None,
+    exclude_company: str | None = None,
+) -> RiskBank:
+    """The risk bank cut to the reference window of a document dated ``as_of`` (C-ADR-03).
+
+    This is how novelty is wired to the rolling window: ``kind="eval"`` leaves every test and
+    bench IPO out; ``kind="product"`` keeps all collected IPOs. The issuer is left out by id and
+    by company key.
+    """
+    ids = {
+        e.ipo_id
+        for e in ipos_before(
+            splits,
+            as_of,
+            years,
+            kind=kind,
+            exclude_ipo=exclude_ipo,
+            exclude_company=exclude_company,
+        )
+    }
+    return bank.subset(ids)

@@ -648,6 +648,15 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why mark a failure instead of skipping it?* A silent skip would bias the training set toward easy documents; failures are fixed or excluded with a written reason.
 3. *Why the SME check?* SME issues have a different regulator track and shorter documents; mixing them would blur "how a mainboard offer document reads".
 
+### C44. The risk bank on the rolling window (built in C2.1)
+**What it does.** `scripts/build_risk_bank.py` takes every train and dev IPO from the frozen split, splits its Risk Factors into single risks, embeds each risk with bge-m3 and writes the bank (`risk_bank.parquet`). Test IPOs go to a separate file (`risk_eval.parquet`) that only evaluation reads. `finsight.splits.reference_bank` cuts the bank to the IPOs of the four years before a document (and drops the issuer), and that is the set novelty compares against. `scripts/export_teacher_input.py` picks the risks the teacher will rewrite: only train IPOs, 40–600 words, at most 25 per company, 2024+ weighted up, target the smaller of 12,000 and what exists.
+**Fix found on the way.** Corpus pages often print the risk number alone on a line ("12." then the title). The splitter missed those; joining them raised the share of sampled corpus excerpts with at least 10 risks from 8 of 20 to 17 of 20 (a regression test keeps it).
+**Limits.** Segmentation of old documents still fails on a few layouts; E13b (hand-checked boundaries) is pending. The bank only records disclosures.
+**Likely viva questions.**
+1. *Why a separate eval bank?* So that evaluation can prove no test IPO was in the comparison set; the manifests say which IPO is in which file.
+2. *Why cap 25 per company?* A company with 90 risks would otherwise teach the student its own wording.
+3. *Why weight 2024+ up?* Users will upload documents written the way recent ones are.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

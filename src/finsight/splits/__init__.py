@@ -21,6 +21,7 @@ from finsight.splits.manifest import Manifest, file_sha256, read_manifests, writ
 from finsight.splits.reference import (
     in_window,
     ipos_before,
+    reference_bank,
     reference_config,
     window_n,
     window_summary,
@@ -67,6 +68,7 @@ __all__ = [
     "load_splits",
     "load_universe",
     "read_manifests",
+    "reference_bank",
     "reference_config",
     "save_splits",
     "showcase_mismatches",

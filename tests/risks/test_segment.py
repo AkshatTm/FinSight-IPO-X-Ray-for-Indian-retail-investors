@@ -370,3 +370,16 @@ def test_short_section_loses_the_running_header_using_the_whole_document(tmp_pat
         "Company."
     )
     assert (risks[1].page_start, risks[1].page_end) == (3, 4)
+
+
+def test_corpus_number_alone_on_its_line_is_joined_with_the_title() -> None:
+    """Regression (C2.1): corpus pages often print "1." and the title on the next line."""
+    text = (
+        "INTERNAL RISK FACTORS\n1.\nOur business depends on a few key customers for most revenue.\n"
+        "A majority of our revenue is derived from our top customers.\n"
+        "2.\nWe may not be able to renew our licences and approvals on time.\nBody two.\n"
+        "161.\n3. A stray page artefact must not swallow the next numbered risk heading here.\n"
+    )
+    spans = segment_text(text)
+    assert [s.title[:12] for s in spans] == ["Our business", "We may not b", "A stray page"]
+    assert spans[0].body.startswith("A majority")

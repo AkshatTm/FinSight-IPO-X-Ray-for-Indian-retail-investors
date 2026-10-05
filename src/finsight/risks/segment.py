@@ -310,11 +310,35 @@ def first_sentence(text: str) -> tuple[str, str]:
     return text.strip(), ""
 
 
+_BARE_NUMBER = re.compile(r"^\d{1,3}\.$")
+
+
+def _starts_title(line: str) -> bool:
+    """A title line starts with a capital (or quote) and is not itself a numbered line."""
+    return line[:1] in "\"'“(" or (line[:1].isupper() and not _NUMBERED.match(line))
+
+
+def _join_bare_numbers(lines: list[str]) -> list[str]:
+    """Corpus pages often put the risk number alone on a line ("12." then the title): join them."""
+    out: list[str] = []
+    skip = False
+    for i, ln in enumerate(lines):
+        if skip:
+            skip = False
+            continue
+        if _BARE_NUMBER.match(ln) and i + 1 < len(lines) and _starts_title(lines[i + 1]):
+            out.append(f"{ln} {lines[i + 1]}")
+            skip = True
+        else:
+            out.append(ln)
+    return out
+
+
 def _paragraphs(text: str) -> list[str]:
     blocks = re.split(r"\n\s*\n", text.replace("\r\n", "\n"))
     out: list[str] = []
     for block in blocks:
-        lines = [ln.strip() for ln in block.split("\n") if ln.strip()]
+        lines = _join_bare_numbers([ln.strip() for ln in block.split("\n") if ln.strip()])
         # A numbered line inside a wrapped block still starts a new paragraph.
         current: list[str] = []
         for ln in lines:
