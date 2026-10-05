@@ -602,6 +602,20 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 **Limits.** Tested on a five-page synthetic RHP. Real timings come from the B1.2 local check. Tables are looked for on the first 40 pages of Risk Factors only (`MAX_SECTION_PAGES`). `parsed.json` holds every word box, so it is large for a 600-page document.
 **Likely viva questions.** (1) *Why is parsing critical but sections not?* (Without text nothing else can run; without sections some parts still can, and the report shows what is missing.) (2) *What happens when a worker dies half-way?* (The retry skips every stage whose file exists and reads those files back.)
 
+### C39. The time split and the leakage guard (built in C1.4, code only)
+**What it does.** `finsight.splits` puts every IPO into one slice: `train`, `dev` or `test` (C02 §4). The rule is strict: every training document is dated before every test document. The cut is the earliest test document, which is normally the earliest test showcase IPO. Showcase IPOs keep the role they have in `configs/demo_ipos.yaml`. Corpus IPOs (2009–2023) are training data. New documents dated before the cut are training data too. After the cut, the older third go to `dev` and the rest to `test`. Any non-test IPO from the same company as a test IPO (same company key) is excluded. `python -m finsight.splits build` prints the counts. `--freeze` writes `configs/splits.yaml` and the manifests.
+**Manifests.** Every artefact that trains or tunes something gets a committed file `data/manifests/<name>.json` listing the IPO ids it used. `tests/test_split_leakage.py` checks those files in `poe test` without touching any data. Each manifest has a kind:
+- `train`, `fit` or `eval_reference`: may not contain a test IPO, a test company, an excluded IPO or an unknown id.
+- `product_reference`: may contain test IPOs, but may never feed a `train` or `fit` artefact.
+- `eval`: may contain test IPOs.
+
+**Reference window.** `ipos_before(as_of, years)` returns the past IPOs for a document. New documents count by date (the 4 years before it). Corpus IPOs count by close year, and never in their own close year. The `eval` kind uses only train and dev IPOs; the `product` kind uses every collected IPO except the upload itself. `window_n` reports how many IPOs each test IPO is compared against.
+**Limits.** The rules are tested on synthetic inputs only, and the real split is frozen after C1.3. No other package uses the window yet: the risk bank, weak labels, risk level and compare are wired in C2.1, C2.7, C2.8 and C3.4.
+**Likely viva questions.**
+1. *Why not a random split?* Users upload future documents, and a random split would let the models learn from IPOs newer than the ones they are tested on.
+2. *Why match on company as well as id?* A company that files again, or changes its name, would otherwise sneak its own disclosures into training.
+3. *Why two reference windows?* Evaluation must not peek at other test IPOs, while the product can treat every collected IPO as history.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

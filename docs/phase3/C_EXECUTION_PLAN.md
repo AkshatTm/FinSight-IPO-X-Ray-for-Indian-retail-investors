@@ -80,6 +80,7 @@ New packages in Phase 3 (each with an `__init__` docstring stating its job):
 - **Tests:** assignment is deterministic; every train doc dated before every test doc; showcase roles equal `demo_ipos.yaml`; leakage test fails on a planted test id and on a planted company-key match (negative tests); `product_reference` manifests exempt but rejected as threshold inputs; reference window excludes later and same-split test IPOs; corpus rows by close year; property test: no IPO in two slices.
 - **Commits:** `feat(splits): strict time-based assignment`, `feat(splits): artefact manifests + retro manifests`, `test(splits): leakage guard`, `feat(splits): rolling reference window`, `data: freeze splits`.
 - **Hand-work:** Akshat confirms printed slice counts before `data: freeze splits`.
+- **Split in two (C1.4 was done early, code only):** the code PR is merged. The real-data half runs after C1.3 (Sonnet): `uv run python -m finsight.splits build` (dry run, prints counts per slice/source and per year, the train cut, exclusions and the eval window n per test IPO) → Akshat confirms → `uv run python -m finsight.splits build --freeze` (writes `configs/splits.yaml`, the retro manifests in `data/manifests/`, and runs the leakage check) → commit `data: freeze splits` → the three skipped checks in `tests/test_split_leakage.py` start running.
 - **Done when:** frozen; leakage test in `poe test` and green.
 
 ### C1.5 BIR link check (cut)

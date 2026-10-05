@@ -10,8 +10,10 @@ The 389 old corpus IPOs **stay in training** (free data; RHP language changes sl
 
 - **Scope:** every **mainboard** IPO offer document (RHP; the final Prospectus where the RHP is missing) from **2024 to the latest listing available** when C1.1 runs. SME excluded (C-ADR-09).
 - **Universe file:** `configs/ipo_universe.csv` (committed, metadata only):
-  `ipo_id, company, exchange, doc_type, doc_date, listing_date, source_url, sha256, pages, status, split`.
-  `status` ∈ `listed | downloaded | parsed | failed | excluded` with a `reason` column.
+  `ipo_id, company, exchange, doc_type, doc_date, listing_date, source_url, sha256, pages, status, reason`.
+  The contract is code: `finsight.splits.UNIVERSE_COLUMNS` / `UniverseRow` (C1.4), checked by `load_universe`. `ipo_id` has the corpus `ipo_slug` shape (`company-words-YYYY`); `exchange` ∈ `NSE | BSE | both`; `doc_type` ∈ `rhp | prospectus`; dates are ISO (`YYYY-MM-DD`); `sha256` and `pages` stay empty until C1.2/C1.3.
+  `status` ∈ `listed | downloaded | parsed | failed | excluded`; `reason` is required for `failed` and `excluded`. Only `parsed` rows enter the split, and `--freeze` refuses while any row is still `listed` or `downloaded`.
+  There is **no `split` column**: the split lives only in `configs/splits.yaml` (one source of truth, C-ADR-02).
 - **Count first.** C1.1 builds the list and prints the count before anything is downloaded. Akshat approves the list (and can drop companies).
 
 ## 3. Sources and downloader (C1.2, C-ADR-08)
