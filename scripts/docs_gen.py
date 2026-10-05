@@ -614,6 +614,20 @@ def _gold_block() -> str:
     return "".join(rows)
 
 
+def _universe_block() -> str:
+    with (ROOT / "configs" / "ipo_universe.csv").open(encoding="utf-8", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    years = sorted({r["doc_date"][:4] for r in rows})
+    by = Counter((r["doc_date"][:4], r["doc_type"]) for r in rows)
+    status = ", ".join(f"{k} {v}" for k, v in sorted(Counter(r["status"] for r in rows).items()))
+    out = [f"{len(rows)} companies. Status: {status}.\n" + "\n"]
+    out.append("| Year | RHP | Prospectus only | Total |\n| --- | --- | --- | --- |\n")
+    for y in years:
+        rhp, pro = by[(y, "rhp")], by[(y, "prospectus")]
+        out.append(f"| {y} | {rhp} | {pro} | {rhp + pro} |\n")
+    return "".join(out)
+
+
 BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/evaluation.md": {
         "results": _results_block,
@@ -640,6 +654,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/datasheets/corpus.md": {"stats": _corpus_block},
     "docs/datasheets/weak_labels.md": {"stats": _weaklabel_block},
     "docs/datasheets/gold_sets.md": {"stats": _gold_block},
+    "docs/datasheets/new_ipos.md": {"universe": _universe_block},
     "report/07_results.md": {"phase2": _phase2_block},
 }
 

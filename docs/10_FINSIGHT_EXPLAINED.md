@@ -624,6 +624,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why refuse merged weights?* Private HF storage is limited; adapters and quantised files are small and enough to reproduce the model.
 3. *Why log compute units?* The budget is fixed; the log shows what each stage cost and what is left.
 
+### C41. The IPO universe list (built in C1.1)
+**What it does.** `finsight.ingest.universe` reads SEBI's public filings pages (the list of Red Herring Documents and of Final Offer Documents for public issues) and turns them into `configs/ipo_universe.csv`: one row per company, with the offer document's page on sebi.gov.in. It drops addenda and corrigenda, prefers the RHP over the Prospectus, merges spelling variants ("A One Steel" and "A ONE Steels"), and gives the 10 showcase IPOs their old ids. `scripts/build_ipo_universe.py` runs it politely (one request every 3 seconds) and prints the count by year.
+**Limits.** SEBI gives the date of filing, not the exchange or the listing date, so `exchange` is `both` and `listing_date` is empty; dates are SEBI posting dates, a day or two after the cover date (C1.3 fixes this from the PDF). A few small SME-looking companies appear, mostly in the Prospectus-only rows; C1.3 excludes any whose cover names an SME platform. An RHP can belong to an issue that has not opened yet.
+**Likely viva questions.**
+1. *Why SEBI and not a data vendor?* It is the official source, and a vendor's terms may not allow reuse.
+2. *Why one document per company?* Addenda change prices, not the risk text, and a company must not appear twice across the train/test line.
+3. *Why not scrape NSE or BSE?* Their sites block scripts; going around that is not allowed by our rules, so those fields stay empty.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

@@ -16,6 +16,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Rates are already logged (T4 1.07, L4 1.54, A100 6.77 units/h). Only the **vLLM pin** is pending: follow `docs/phase3/COLAB_STEPS_rate_check.md` on the **L4** (`RUN_VLLM = True`), then tell Claude "vLLM pin is back" with the `vllm_pin` value. Until then C2.2/C2.3 notebooks keep `VLLM_PIN` as a parameter.
 - [ ] Check `uv run python scripts/hf_upload.py --check` passes (needs `HF_TOKEN` in `.env`) and `kaggle kernels list --mine` works (CG0).
 
+### C1.1 (merged): IPO list, ~5 min, optional
+- [ ] Skim `docs/datasheets/new_ipos.md` and `configs/ipo_universe.csv` (289 rows: 2024 = 94, 2025 = 98, 2026 = 97). The overnight run pre-approved it; 2026 is above your ~80 estimate (many RHPs filed in September for issues not open yet, plus some SME-looking Prospectus-only rows that C1.3 will flag). Drop rows you dislike by setting `status` to `excluded` with a `reason`.
+
 ### Later (prepared by each part when it is reached)
 - C1.1 approve the IPO list (~15 min) · C1.2 manual downloads (list printed by the script) · C1.4 confirm split counts (~5 min).
 - After CG1, start at once (biggest time risk): C4.1 verify gold v4 + answer keys + TOC page ranges (~8.5 h), then C4.3 frontier runs (~9 h).

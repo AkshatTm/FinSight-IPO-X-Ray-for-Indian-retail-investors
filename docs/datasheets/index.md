@@ -5,6 +5,7 @@ One datasheet per dataset (B09 §5, after "Datasheets for Datasets"). Counts are
 | Dataset | What it is | Datasheet |
 | --- | --- | --- |
 | Training corpus | Text of 389 older Indian IPO offer documents (Ghosh et al.) | [Corpus](corpus.md) |
+| Newest IPOs (draft) | Metadata of mainboard IPO offer documents from 2024 onward (Phase 3) | [Newest IPOs](new_ipos.md) |
 | Weak labels | Automatically made training examples for the extractors | [Weak labels](weak_labels.md) |
 | Gold sets | Hand-checked values, questions and guard examples used for scoring | [Gold sets](gold_sets.md) |
 | Teacher outputs | Labels and rewrites for corpus risk factors, written by an open-weight teacher model | [Teacher outputs](../phase2/datasheets/teacher_outputs.md) |
