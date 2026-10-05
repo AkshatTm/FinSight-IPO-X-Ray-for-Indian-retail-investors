@@ -157,3 +157,22 @@ def test_model_cards_quote_every_seed_from_the_result_files() -> None:
         run = json.loads(path.read_text(encoding="utf-8"))
         assert f"| {run['seed']} |" in card
         assert f"{run['EM']:.3f}" in card
+
+
+def test_teacher_block_reads_the_quality_file(tmp_path: Path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.setattr(docs_gen, "ROOT", tmp_path)
+    assert "No teacher run" in docs_gen._teacher_block()
+    (tmp_path / "eval_results").mkdir()
+    (tmp_path / "eval_results" / "teacher_quality.json").write_text(
+        '{"model": "Qwen/Qwen3-14B-AWQ", "prompt_version": "teacher-v1", "n_rated": 100,'
+        ' "faithful": {"yes": 90, "partly": 7, "no": 3}, "faithful_yes_share": 0.9,'
+        ' "faithful_yes_ci95": [0.83, 0.94], "category_correct_share": 0.88, "gate": 0.85,'
+        ' "go": true, "rated_by": "human:akshat (single annotator)",'
+        ' "filter": {"kept": 11000, "total": 12000, "dropped": {"invalid_json": 5}}}',
+        encoding="utf-8",
+    )
+    block = docs_gen._teacher_block()
+    assert "90.0%" in block
+    assert "**go**" in block
+    assert "kept 11000" not in block  # formatted as "11000 kept of 12000"
+    assert "11000 kept of 12000" in block

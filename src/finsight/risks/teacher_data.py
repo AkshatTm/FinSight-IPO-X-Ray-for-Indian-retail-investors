@@ -4,6 +4,7 @@ quality sheet (B03 §3.3–3.5).
     uv run python -m finsight.risks.teacher_data filter \\
         --risks data/processed/teacher/risks.jsonl --raw data/processed/teacher/raw.jsonl
     uv run python -m finsight.risks.teacher_data sheet   # 100 rows for Akshat to rate
+    uv run python -m finsight.risks.teacher_data score   # rated sheet -> teacher_quality.json
 
 Inputs and outputs live in ``data/processed/teacher/`` (gitignored). The drop report is the
 only file meant for ``eval_results/`` and it is written by this code, never by hand.
@@ -18,6 +19,7 @@ import random
 from pathlib import Path
 from typing import Any
 
+from finsight.risks.bakeoff import wilson
 from finsight.risks.filters import FilterReport, Kept, TeacherItem, filter_outputs
 from finsight.risks.teacher import PROMPT_VERSION
 from finsight.risks.teacher_run import read_jsonl
@@ -143,18 +145,70 @@ def write_sheet(rows: list[dict[str, Any]], path: Path) -> None:
         w.writerows(rows)
 
 
+GATE = 0.85  # go/no-go: share of "same meaning: yes" on the rated sheet (B03 §3.4, C2.3)
+
+
+def quality_result(
+    rated: list[dict[str, str]],
+    meta: dict[str, Any],
+    filter_summary: dict[str, Any],
+    gate: float = GATE,
+) -> dict[str, Any]:
+    """Go/no-go numbers from the rated quality sheet (computed, never typed by hand).
+
+    Raises:
+        ValueError: when a row is unrated or has an unknown value.
+    """
+    faithful: dict[str, int] = {"yes": 0, "partly": 0, "no": 0}
+    cat_yes = 0
+    for row in rated:
+        f, c = row["faithful"].strip().lower(), row["category_correct"].strip().lower()
+        if f not in faithful or c not in ("yes", "no"):
+            raise ValueError(f"{row.get('risk_id')}: unrated or invalid ({f!r}, {c!r})")
+        faithful[f] += 1
+        cat_yes += c == "yes"
+    n = len(rated)
+    share = faithful["yes"] / n if n else 0.0
+    return {
+        "n_rated": n,
+        "faithful": faithful,
+        "faithful_yes_share": round(share, 4),
+        "faithful_yes_ci95": wilson(faithful["yes"], n),
+        "category_correct_share": round(cat_yes / n, 4) if n else None,
+        "gate": gate,
+        "go": share >= gate,
+        "model": meta.get("model"),
+        "prompt_version": meta.get("prompt_version", PROMPT_VERSION),
+        "label_source": label_source(meta),
+        "rated_by": "human:akshat (single annotator)",
+        "filter": filter_summary,
+    }
+
+
 def main(argv: list[str] | None = None) -> None:
     """CLI: ``filter`` the teacher replies or write the quality ``sheet``."""
     p = argparse.ArgumentParser(prog="python -m finsight.risks.teacher_data")
-    p.add_argument("command", choices=["filter", "sheet"])
+    p.add_argument("command", choices=["filter", "sheet", "score"])
     p.add_argument("--dir", type=Path, default=Path("data/processed/teacher"))
     p.add_argument("--risks", type=Path)
     p.add_argument("--raw", type=Path)
     p.add_argument("-n", type=int, default=100)
+    p.add_argument("--out", type=Path, default=Path("eval_results") / "teacher_quality.json")
     args = p.parse_args(argv)
     risks = args.risks or args.dir / "risks.jsonl"
     raw = args.raw or args.dir / "raw.jsonl"
     report, meta = filter_file(risks, raw)
+    if args.command == "score":
+        with (args.dir / "quality_sheet.csv").open(encoding="utf-8-sig", newline="") as f:
+            rated = list(csv.DictReader(f))
+        result = quality_result(rated, meta, report.summary())
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(result, indent=1) + chr(10), encoding="utf-8")
+        print(
+            f"faithful=yes {result['faithful_yes_share']:.1%} of {result['n_rated']}; "
+            f"go={result['go']}"
+        )
+        return
     if args.command == "filter":
         paths = write_outputs(report, meta, risks, args.dir)
         print(json.dumps(report.summary()["dropped"]), "kept", len(report.kept))

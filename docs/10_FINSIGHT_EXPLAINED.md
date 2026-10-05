@@ -665,6 +665,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why fix the rule first?* Otherwise the rule can be bent to favour the result you hoped for.
 3. *Why only risks both teachers kept?* So the two are compared on the same inputs.
 
+### C46. The teacher full run and its quality gate (built in C2.3, code and steps only)
+**What it does.** The same Colab notebook as the bake-off runs the chosen teacher over the exported training risks (up to 12,000, at most 25 per company), one batch of 200 at a time, copying the answer file to Drive after each batch so a disconnect costs minutes. On the laptop `teacher_data filter` drops bad answers by named reason and writes the label and rewrite files; `teacher_data sheet` samples 100 answers for Akshat; `teacher_data score` turns the rated sheet into `eval_results/teacher_quality.json`: the share of "same meaning: yes", a confidence interval and a go/no-go against the 85 % gate. The datasheet's result block is generated from that file.
+**Limits.** The gate is a point estimate on 100 rated answers by one rater; the interval is printed next to it. Nothing has run yet.
+**Likely viva questions.**
+1. *Why a 85 % gate?* A student trained on rewrites that change the meaning more than one time in seven would teach itself the same errors.
+2. *Why filter before rating?* The filters are exact checks (numbers, forbidden words, certainty); people should only rate what passes them.
+3. *Why one rater?* Time; the datasheet says so, and the sheet carries `label_source`.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
