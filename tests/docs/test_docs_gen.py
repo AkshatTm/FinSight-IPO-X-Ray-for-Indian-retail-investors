@@ -176,3 +176,19 @@ def test_teacher_block_reads_the_quality_file(tmp_path: Path, monkeypatch) -> No
     assert "**go**" in block
     assert "kept 11000" not in block  # formatted as "11000 kept of 12000"
     assert "11000 kept of 12000" in block
+
+
+def test_classifier_block_reads_the_summary(tmp_path: Path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.setattr(docs_gen, "ROOT", tmp_path)
+    assert "not been trained" in docs_gen._classifier_block()
+    (tmp_path / "eval_results" / "b").mkdir(parents=True)
+    (tmp_path / "eval_results" / "b" / "classifier_base.json").write_text(
+        '{"model": "deberta", "n_train": 900, "n_dev": 100, "dev_macro_f1_by_seed": {"13": 0.7},'
+        ' "dev_macro_f1_mean": 0.7, "dev_macro_f1_sd": null, "best_seed": 13,'
+        ' "label_source": "teacher (AI labels)", "tfidf_dev_macro_f1": 0.6, "beats_tfidf": true}',
+        encoding="utf-8",
+    )
+    block = docs_gen._classifier_block()
+    assert "| 13 | 0.700 |" in block
+    assert "n/a (one seed)" in block
+    assert "beats the TF-IDF baseline (0.600)" in block

@@ -111,6 +111,7 @@ nav:
       - QA extractor: model_cards/extractor_qa.md
       - BiLSTM-CRF: model_cards/bilstm_crf.md
       - Advice guard (MuRIL): model_cards/guard_muril.md
+      - Risk classifier: model_cards/risk_classifier.md
       - Datasheets: datasheets/index.md
       - Training corpus: datasheets/corpus.md
       - Newest IPOs (draft): datasheets/new_ipos.md
