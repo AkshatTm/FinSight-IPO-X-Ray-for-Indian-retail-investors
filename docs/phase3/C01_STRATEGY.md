@@ -65,3 +65,4 @@ We do not benchmark against competitor sites (terms of use, no stable access); t
 | C-ADR-09 | SME IPOs excluded from Phase 3 (different format and rules); future work. |
 | C-ADR-10 | A Google Cloud free trial is active (this corrects B-ADR-16's "credit used up" premise; the code stays local-only). It is used only at C5.1. No paid resource and no upgrade without a budget alert first and Akshat's explicit "go". |
 | C-ADR-11 | Gold values used to score frontier models are verified by Akshat against the page, never accepted from any model's pre-fill unchecked. Pre-fill mixes FinSight and Claude-chat values with the source hidden, and changes are recorded per field (bias rule, C04 §3). |
+| C-ADR-12 | Kickoff scope: cuts 1–5 of C05 §5 applied now; the critical path and cut line in C05 §6 decide further cuts (accepted at the kickoff review). |

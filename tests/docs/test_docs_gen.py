@@ -43,14 +43,21 @@ def test_provisional_configs_are_flagged_on_their_pages() -> None:
 def test_adr_index_has_every_decision() -> None:
     headings = [
         line
-        for rel in ("docs/09_DECISIONS.md", "docs/phase2/B08_DECISIONS.md")
+        for rel in (
+            "docs/09_DECISIONS.md",
+            "docs/phase2/B08_DECISIONS.md",
+            "docs/phase3/C_DECISIONS.md",
+        )
         for line in (ROOT / rel).read_text(encoding="utf-8").splitlines()
         if docs_gen.ADR_HEADING.match(line)
     ]
     rows = [
-        line for line in docs_gen.adr_page().splitlines() if line.startswith(("| ADR-", "| B-ADR-"))
+        line
+        for line in docs_gen.adr_page().splitlines()
+        if line.startswith(("| ADR-", "| B-ADR-", "| C-ADR-"))
     ]
     assert len(headings) > 80
+    assert "## Phase 3" in docs_gen.adr_page()
     assert len(rows) == len(headings)
 
 
