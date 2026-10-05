@@ -4,13 +4,14 @@
 - **Phase:** Phase 3, gate-driven, local code (C-ADR-01, C-ADR-10). Plan: `docs/phase3/C05_ROADMAP.md` + `docs/phase3/C_EXECUTION_PLAN.md`.
 - **MODE: overnight autonomous run** (user asleep): everything on Sonnet, one PR per part, merged by Claude when green. Order: C0.2 ✓ → C1.1 ✓ → C1.2 (code ✓, fetch RUNNING) → C1.3 (code ✓, batch parse RUNNING) → C1.4 real run → C2.1 … C2.8 (code + notebooks only). Stop rules: money/keys/GCP/deploy, same bug twice (write `BLOCKED.md`, move on), all blocked.
 - **Background jobs (started by Claude, repo root):** `scripts/fetch_offer_docs.py` (log `data/raw/logs/fetch1.log`) and `data/raw/logs/loop.sh` (repeats `scripts/batch_parse.py`; log `data/raw/logs/batch.log`; appends `LOOP_DONE` at the end). `configs/ipo_universe.csv` is rewritten by the fetch: do NOT commit it until both finish; then `batch_parse.py --apply`, `--report`, fix repeated failures (regression tests), `uv run poe docs-gen`, commit "data: fetch + parse status" (closes #175/#176).
-- **Last done:** C2.1-C2.5 merged (code + notebooks + steps); C2.6 novelty tau pair sheet/scoring (`finsight.risks.novelty_tau`, `scripts/novelty_pairs.py`) on branch `eval/c2.6-novelty`. C2.7, C2.8 still to do (code against fixtures).
-- **Next:** C2.8 thresholds against fixtures, C2.7 only if worthwhile; then the C1.2/C1.3 data commit and the C1.4 real run when both background jobs finish.
+- **Last done:** C2.1-C2.6 merged (code + notebooks + steps); C2.8 reference scores, tercile fit, E21 outcomes module (`finsight.risklevel.reference`, `finsight.evaluate.outcomes`, `scripts/corpus_points.py`, `scripts/validate_risklevel.py`) on branch `eval/c2.8-risklevel`. C2.7 (extractor v2) is below the cut line.
+- **Next:** decide C2.7 (only if worthwhile); the C1.2/C1.3 data commit and the C1.4 real run when both background jobs finish; then the real C2.1 bank build.
 - **Pending (Akshat):** vLLM pin test on the L4 (AKSHAT_TODO, C0.2).
 - **Opus-marked parts done on Sonnet (review in the morning):** C2.2 (pick rule in `src/finsight/risks/bakeoff.py`, C-ADR-05).
 - **Open questions:** none.
 
 ## Log
+- C2.8 code: rolling-window reference scores, tercile fit on train+dev, E21 outcomes module with import guard; fit and E21 runs in AKSHAT_TODO
 - C2.6 code: novelty tau rule, blind pair sheet, scoring; rating in AKSHAT_TODO
 - C2.4 code: classifier Kaggle runner, split manifests, E16 summary, model card; real runs in AKSHAT_TODO
 - C2.5 code: student Colab notebook (bf16/nf4 LoRA, GGUF, resume) + steps; real run in AKSHAT_TODO

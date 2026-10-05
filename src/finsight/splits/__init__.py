@@ -19,6 +19,7 @@ from finsight.splits.assign import (
 from finsight.splits.leakage import Violation, check_manifests
 from finsight.splits.manifest import Manifest, file_sha256, read_manifests, write_manifest
 from finsight.splits.reference import (
+    RefKind,
     in_window,
     ipos_before,
     reference_bank,
@@ -51,6 +52,7 @@ __all__ = [
     "FrozenSplitError",
     "IpoRecord",
     "Manifest",
+    "RefKind",
     "SplitEntry",
     "SplitError",
     "SplitResult",

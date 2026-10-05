@@ -62,10 +62,23 @@ def level_for(score: float, thresholds: dict[str, float]) -> Level:
 
 
 def compute(
-    redflags: Sequence[RedFlag], risks: Sequence[Risk], cfg: dict[str, Any] | None = None
+    redflags: Sequence[RedFlag],
+    risks: Sequence[Risk],
+    cfg: dict[str, Any] | None = None,
+    reference_scores: Sequence[float] | None = None,
 ) -> RiskLevel:
-    """Points from red flags and rare serious risks, normalised by available checks."""
+    """Points from red flags and rare serious risks, normalised by available checks.
+
+    ``reference_scores`` are the scores of the IPOs in the rolling reference window for this
+    document's date (``finsight.risklevel.reference.window_scores``). When given, the percentile
+    and ``corpus_n`` come from them instead of the stored deciles.
+    """
     c = cfg if cfg is not None else load_config()
+    quantiles, corpus_n = c["reference_quantiles"], int(c["corpus_n"])
+    if reference_scores:
+        from finsight.risklevel.reference import deciles
+
+        quantiles, corpus_n = deciles(reference_scores), len(reference_scores)
     pts = c["points"]
     reasons: list[RiskLevelReason] = []
     available = [f for f in redflags if f.status not in UNAVAILABLE]
@@ -113,11 +126,11 @@ def compute(
         points=points,
         max_points=max_points,
         score=score,
-        percentile=percentile(score, c["reference_quantiles"]),
+        percentile=percentile(score, quantiles),
         checks_available=len(available),
         reasons=reasons,
         thresholds={k: float(v) for k, v in c["thresholds"].items()},
-        corpus_n=int(c["corpus_n"]),
+        corpus_n=corpus_n,
         provisional=bool(c["provisional"]),
         behind_click=bool(c["behind_click"]),
     )
