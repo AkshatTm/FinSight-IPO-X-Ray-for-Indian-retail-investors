@@ -33,6 +33,7 @@ Each ADR follows the template in `docs/09_DECISIONS.md`. Where a decision came f
 **Context:** the teacher is the ceiling for both the classifier and the simplifier.
 **Decision:** Qwen3-14B-AWQ vs Qwen3-32B-AWQ (both Apache-2.0, run with `enable_thinking=False`), 300 risks each, a blind 100-row sheet rated by Akshat; pick by "meaning: yes" after filters, then drop rate, then speed (F21).
 **Consequences:** if Colab gives no A100, or the bake-off falls below the cut line, Qwen3-14B-AWQ is used directly and that is recorded here.
+**Implementation (C2.2):** `finsight.risks.bakeoff` and `scripts/teacher_bakeoff.py` (`sample`, `sheet`, `score`). The pick rule is code, written before any rating: highest `faithful = yes` share among the rated outputs; if the two shares are within 0.02, the lower drop rate on the 300 risks; if still tied, the faster run. The sheet has 50 risks × 2 teachers (only risks both teachers kept), shuffled, without a model column; the key lives in a separate file. The notebook skips the 32B model below 40 GB of GPU memory (the L4-only fallback). Ratings are human labels (Akshat); teacher outputs are AI labels. This ADR stays *proposed* until Akshat accepts the recorded result.
 
 ## C-ADR-06 FinSight Bench is pre-registered and frozen — proposed
 

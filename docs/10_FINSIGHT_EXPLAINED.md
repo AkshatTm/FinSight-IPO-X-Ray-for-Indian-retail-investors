@@ -657,6 +657,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why cap 25 per company?* A company with 90 risks would otherwise teach the student its own wording.
 3. *Why weight 2024+ up?* Users will upload documents written the way recent ones are.
 
+### C45. The teacher bake-off (built in C2.2, code and notebook only)
+**What it does.** The teacher is the model whose answers train the classifier and the simplifier, so it is chosen by a test. `scripts/teacher_bakeoff.py sample` picks 300 train and dev risks spread over years and companies. A Colab notebook (`notebooks/colab/c2_teacher.ipynb`, generated from the tested code) runs Qwen3-14B-AWQ and Qwen3-32B-AWQ on them with vLLM, appending answers to a file that is copied to Drive after every batch. The laptop filters the answers, then writes a **blind** sheet of 50 risks × 2 teachers, shuffled, with no model name; the key to which row is which model is a separate file. After Akshat rates it, `score` applies a rule that was written first: highest share of "same meaning: yes", then lower drop rate, then speed.
+**Limits.** 50 rated risks per model is a small sample (the result carries a Wilson interval). The real run and the rating are still to do; until then no teacher is chosen. On an L4 the 32B does not fit and the 14B is used directly.
+**Likely viva questions.**
+1. *Why blind?* If the rater knows which model wrote a rewrite, they judge the model, not the text.
+2. *Why fix the rule first?* Otherwise the rule can be bent to favour the result you hoped for.
+3. *Why only risks both teachers kept?* So the two are compared on the same inputs.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
