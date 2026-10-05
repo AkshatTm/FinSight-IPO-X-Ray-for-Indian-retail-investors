@@ -1,9 +1,9 @@
 # C07 — Claude Code prompts (Phase 3)
 
-**Which prompt when**
+## Which prompt when
 
 | Situation | Prompt |
-|---|---|
+| --- | --- |
 | Very first Phase 3 session (review → C0.1) | **K** (Opus) |
 | Any part after `/clear` | **R** (§1) + the part line from §2 |
 | Unattended run (Sonnet parts, no hand-work) | **N** |
@@ -34,7 +34,6 @@ Standing rules: plan before >50-line changes (in the PR description), never add 
 Begin with STEP 1 and STEP 2 now.
 ```
 
-
 ## 1. R — the resume prompt (paste after every `/clear`)
 
 ```text
@@ -44,23 +43,23 @@ Resume FinSight Phase 3 LOCALLY. First `git pull`. Read CLAUDE.md, the "Resume h
 ## 2. Part-specific additions (append to the resume prompt)
 
 | Part | Add |
-|---|---|
-| C0.1 | "Commit docs/phase3/, apply the CLAUDE.md patch in C00 §5, record C-ADR-01…11 as proposed in docs/09_DECISIONS.md and docs/phase3/C_DECISIONS.md, mark absorbed B-parts in B07 as 'moved to Phase 3', create C issues with labels local/colab/kaggle/akshat." |
-| C0.2 | "Build notebooks/colab/_common.py, COLAB_STEPS_template.md, scripts/log_compute.py and the rate-check notebook. Stop for me to run it on T4, L4, A100; then update C03 §4 from the observed rates." |
+| --- | --- |
+| C0.1 | "Commit docs/phase3/ and the review fixes, stop for my critical-path approval, then apply the CLAUDE.md patch in C00 §5, record C-ADR-01…11 as proposed in docs/09_DECISIONS.md and docs/phase3/C_DECISIONS.md, mark absorbed B-parts in B07 as 'moved to Phase 3', create labels colab/kaggle, milestones CG0–CG6 and C issues." |
+| C0.2 | "Build notebooks/colab/_common.py, COLAB_STEPS_template.md, scripts/log_compute.py, scripts/hf_upload.py and the rate-check + vLLM smoke notebook. Stop for me to run it on T4, L4, A100; then update C03 §4 from the observed rates and pin the vLLM version that worked." |
 | C1.1 | "Build configs/ipo_universe.csv for mainboard IPOs from 2024 to the latest listing (official sources only). Print counts by year and doc type. Stop for my approval." |
 | C1.2 | "scripts/fetch_offer_docs.py per C02 §3 with tests on a fake server; then fetch. Print a manual-download list for blocked sources." |
 | C1.3 | "scripts/batch_parse.py per C02 §6; one document at a time, Ollama stopped; fix repeated failures with regression tests; eval_results/c/parse_batch.json." |
-| C1.4 | "Splits, manifests, leakage test and the rolling reference window per C02 §4–5. Print counts and stop for my confirmation before freezing." |
+| C1.4 | "Strict split, manifests (incl. retro), leakage test and the rolling reference window per C02 §4–5, in finsight.splits only (no wiring into other packages). Print counts and stop for my confirmation before freezing." |
 | C2.1 | "Risk bank per C03 §3 C2.1 incl. B2.1a golden tests and E13/E13b; separate eval parquet for test/bench." |
-| C2.2 | "Teacher bake-off per C03 §3: COLAB_STEPS_teacher_bakeoff.md, input export, blind 100-row sheet after I bring outputs back. Verify both checkpoints and licences on the Hub first." |
+| C2.2 | "Teacher bake-off per C03 §3 (Qwen3-14B-AWQ vs Qwen3-32B-AWQ, L4-only fallback): COLAB_STEPS_teacher_bakeoff.md, input export, blind 100-row sheet after I bring outputs back. Verify both checkpoints and licences on the Hub first." |
 | C2.3 | "Full teacher per C03 §3 with the chosen model; COLAB_STEPS_teacher_full.md; filters; quality-100 sheet; stop for my rating; then go/no-go and datasheet." |
-| C2.4 | "Classifier per C03 §3: TF-IDF on laptop, base 3 seeds on Kaggle via CLI, COLAB_STEPS for large 3 seeds; pick by dev; ONNX; E16; model card." |
-| C2.5 | "Student per C03 §3: zero-shot bake-off, COLAB_STEPS for QLoRA 4B (and 8B only if C03 §4 reserve allows), GGUF, E18–E20, gold-50 blind sheet; stop for my ratings." |
+| C2.4 | "Classifier per C03 §3: TF-IDF on laptop, base 3 seeds on Kaggle via CLI (large is cut); base must beat TF-IDF on dev; ONNX; E16; model card." |
+| C2.5 | "Student per C03 §3: zero-shot bake-off, COLAB_STEPS for the 4B (bf16 LoRA on L4/A100; 8B is cut), GGUF, E18–E20, gold-50 blind sheet; stop for my ratings." |
 | C2.7 | "Extractor v2 per C03 §3: weak labels over train incl. 2024+, Kaggle 3 seeds via CLI, ladder row qa_finetuned_v2, keep only if it wins on dev." |
 | C3.1 | "Summary + financial extraction (B1.3 left + B1.3b) per B02/B04 on the new parsed set; E14 on gold v3 once verified." |
-| C4.1 | "Build bench/v1 per C04 §2–5: manifest, frozen prompts, questions, risk lists, answer templates, gold v4 pre-fill sheet. Follow C-ADR-11. Stop for my verification; then freeze." |
+| C4.1 | "Build bench/v1 per C04 §1–5: 6 + 2 documents, manifest with frozen_files and redflags_version, frozen prompts, questions, risk lists, field map, TOC page-range sheet, answer templates, gold v4 pre-fill sheet with the source hidden. Follow C-ADR-11. Stop for my verification; then freeze." |
 | C4.2 | "Produce FinSight answers for bench/v1 by script into answers/finsight/." |
-| C4.4 | "Parse pasted frontier answers, generate blind sheets, stop for my ratings, then bench/score.py → eval_results/c/bench_v1.json with paired bootstrap CIs and McNemar." |
+| C4.4 | "Parse pasted frontier answers, generate normalised blind sheets with 20 % repeats, stop for my ratings, then bench/score.py → eval_results/c/bench_v1.json with document-cluster bootstrap CIs and McNemar." |
 | C4.5 | "Error analysis on bench-dev only (C04 §7); propose fixes; implement with tests; re-run FinSight; bench v2 tables; list any test-informed change." |
 
 ## N — Unattended run (local, Sonnet parts only)
@@ -70,7 +69,7 @@ UNATTENDED MODE (Phase 3, local). These are my instructions; I'm away.
 `git pull`, then read CLAUDE.md, PROGRESS.md ("Resume here"), docs/phase3/C05_ROADMAP.md and C_EXECUTION_PLAN.md. Work through parts marked S whose "Needs" are met and that need no hand-work from me, in roadmap order. Skip O/★ parts, Colab runs, and anything needing my approval, ratings or credentials (list them in docs/AKSHAT_TODO.md). Kaggle CLI runs are allowed (smoke first).
 - No stops for plan approvals: plans go in PR descriptions; gate checklists go in docs/gates/CGx.md.
 - After every merge update PROGRESS.md "Resume here" and docs/MORNING_REPORT.md (new section "Unattended run <n>", no dates).
-- Never: deploy, upgrade Google Cloud, spend credits, start Colab, force-push, rewrite history, delete data/gold, edit frozen bench files, commit secrets/PDFs/weights.
+- Never: deploy, upgrade Google Cloud, spend credits, start Colab, force-push, rewrite history, delete data/gold, edit frozen bench files, commit secrets/PDFs/weights, add dates.
 - Stop a part after 3 identical failures (write BLOCKED.md, move on); pause heavy steps if free RAM stays under 1.5 GB.
 Begin now.
 ```
@@ -99,7 +98,7 @@ Gate review for CG<n>. `git pull`. Check every condition for CG<n> in docs/phase
 3. Runtime → Change runtime type → <GPU>. Connect.
 4. Note compute units shown in Resources: ____ (type it into `UNITS_BEFORE`).
 5. Parameters cell: `SMOKE = True`. Run all. Wait for `SMOKE OK`.
-6. Set `SMOKE = False`, Run all. If Colab disconnects, reconnect and Run all again (it resumes).
-7. When `<JOB> OK` prints: type `UNITS_AFTER`, run the last cell (writes run_summary.json, uploads weights to HF if any, disconnects).
+6. Set `SMOKE = False`, Run all. If Colab disconnects, reconnect and Run all again (it resumes from the last checkpoint synced to Drive).
+7. When `<JOB> OK` prints: type `UNITS_AFTER`, run the last cell (writes run_summary.json, uploads adapters/GGUF/ONNX to the private HF repo if any, disconnects).
 8. Copy `MyDrive/FinSight/<job>/out/` to `<laptop path>` and tell Claude Code "outputs are back".
 ```
