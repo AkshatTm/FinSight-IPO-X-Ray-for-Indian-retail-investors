@@ -344,6 +344,40 @@ DeBERTa-v3-base (3 seeds) and -large (1 seed); ONNX int8 for serving; report bot
 ### B-ADR-15 Committed real-section fixture pack (`tests/fixtures/real/`) — proposed
 
 ### B-ADR-16 Local-only: Google Cloud removed — accepted (supersedes B-ADR-04; full text in `docs/phase2/B08_DECISIONS.md`)
+**Phase 3 note:** its premise "the credit is used up" is corrected by C-ADR-10 (a Google Cloud free trial is active); the local-only rule stands until C5.1.
+
+---
+
+## Big Phase 3 decisions (C-ADRs)
+
+Full text in `docs/phase3/C_DECISIONS.md`; listed here so the log stays one index. All **proposed** (Akshat marks them accepted) except C-ADR-12.
+
+### C-ADR-01 Gate-driven plan, no dates — proposed
+Parts ordered by gates CG0–CG6; the course deadline lives only in the CLAUDE.md header; evaluation records keep timestamps.
+
+### C-ADR-02 Strict time split — proposed
+Every `train` document is dated before every `test` document; showcase roles from `configs/demo_ipos.yaml`; leakage checked on committed manifests by `ipo_id` and company key.
+
+### C-ADR-03 Rolling reference window — proposed
+IPOs before the document, within 4 years (corpus by close year); separate eval and product references; window n reported; E21 risk-points-only.
+
+### C-ADR-04 Colab for heavy jobs, Kaggle for small ones, laptop never trains — proposed
+
+### C-ADR-05 Teacher chosen by a blind bake-off (Qwen3-14B-AWQ vs Qwen3-32B-AWQ) — proposed
+
+### C-ADR-06 FinSight Bench pre-registered and frozen (`frozen_files`, pinned `redflags_version`) — proposed
+
+### C-ADR-07 Frontier systems: Claude Opus (Claude.ai paid plan) and ChatGPT Go, memory and search off — proposed
+
+### C-ADR-08 Offer-document downloader: official sources, polite, never re-hosted — proposed
+
+### C-ADR-09 SME IPOs excluded — proposed
+
+### C-ADR-10 Google Cloud trial used only at C5.1, after a budget alert and Akshat's "go" (corrects B-ADR-16's premise) — proposed
+
+### C-ADR-11 Bias rule: gold verified on the page, mixed hidden-source pre-fill — proposed
+
+### C-ADR-12 Kickoff scope: cuts 1–5, critical path and cut line (C05 §6) — accepted
 
 ---
 

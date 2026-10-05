@@ -207,18 +207,21 @@ def compare_page() -> str:
     return "".join(lines)
 
 
-ADR_HEADING = re.compile(r"^### ((?:B-)?ADR-\d+[a-z]?) (.+?)(?: — (.+))?$")
+ADR_HEADING = re.compile(r"^### ((?:[BC]-)?ADR-\d+[a-z]?) (.+?)(?: — (.+))?$")
 
 
 def adr_page() -> str:
-    """One table row per decision in the Phase 1 and Phase 2 logs."""
+    """One table row per decision in the Phase 1, Phase 2 and Phase 3 logs."""
     lines = [
-        HEADER.format(source="docs/09_DECISIONS.md and docs/phase2/B08_DECISIONS.md"),
+        HEADER.format(
+            source="docs/09_DECISIONS.md, docs/phase2/B08_DECISIONS.md and docs/phase3/C_DECISIONS.md"
+        ),
         "# Design decisions (ADR index)\n\n",
     ]
     for title, rel, link in (
         ("Phase 1", "docs/09_DECISIONS.md", "../09_DECISIONS.md"),
         ("Phase 2", "docs/phase2/B08_DECISIONS.md", "../phase2/B08_DECISIONS.md"),
+        ("Phase 3", "docs/phase3/C_DECISIONS.md", "../phase3/C_DECISIONS.md"),
     ):
         lines.append(f"## {title}\n\nFull text: [{Path(rel).name}]({link}).\n\n")
         lines.append("| ID | Decision | Status |\n| --- | --- | --- |\n")

@@ -40,6 +40,7 @@ From the repo (PROGRESS.md, B07, AKSHAT_TODO, `eval_results/`, `data/`, `models/
 | C06_AKSHAT_CHECKLIST.md | Everything Akshat does: before starting, during, after |
 | C07_PROMPTS.md | Claude Code opening prompts per part + the Colab run template |
 | C08_DEPLOY.md | Final stage: Google Cloud deployment, open decisions |
+| C_DECISIONS.md | Full text of the Phase 3 decisions C-ADR-01…12 |
 
 The Phase 2 B-docs stay the **specs** for the modules they describe (B02 architecture, B03 model details, B04 experiments, B05 UI, B06 API). Phase 3 changes **order, data and scale**, not the module designs, unless a C-doc says so.
 
