@@ -616,6 +616,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why match on company as well as id?* A company that files again, or changes its name, would otherwise sneak its own disclosures into training.
 3. *Why two reference windows?* Evaluation must not peek at other test IPOs, while the product can treat every collected IPO as history.
 
+### C40. Colab helpers, compute log and HF upload (built in C0.2)
+**What it does.** Every Colab job shares `notebooks/colab/_common.py`. `Checkpointer` appends rows to a JSONL on the runtime's fast local disk and copies the folder to Google Drive every N rows; after a disconnect a new runtime restores from Drive and `done_ids()` tells the job which items to skip. `run_summary()` writes `run_summary.json` (GPU, wall time, items, compute units before/after typed by Akshat, library pins). `scripts/log_compute.py` appends those files to `eval_results/c/compute_log.jsonl`, the record of what each GPU hour cost. `scripts/hf_upload.py` pushes adapters, GGUF and ONNX to a private Hugging Face repo and refuses merged full-weight files. `notebooks/colab/c0_rate_check.ipynb` (built by `scripts/make_colab_notebooks.py`) measures a matmul and tests a vLLM version with a small AWQ model on the L4.
+**Limits.** The measured rates (T4 about 1.07, L4 1.54, A100 6.77 units/hour) were read by hand from the Colab panel and logged as manual rows. The vLLM pin is not confirmed until Akshat runs the notebook.
+**Likely viva questions.**
+1. *Why checkpoint to local disk first?* Drive-mounted writes are slow and lag; a disconnect would lose more work.
+2. *Why refuse merged weights?* Private HF storage is limited; adapters and quantised files are small and enough to reproduce the model.
+3. *Why log compute units?* The budget is fixed; the log shows what each stage cost and what is left.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

@@ -167,6 +167,8 @@ ENV_KEYS: tuple[str, ...] = (
     "FINSIGHT_API_ORIGIN",  # frontend build: where Next.js rewrites /api/* (next.config.ts)
     "NEXT_PUBLIC_SUPABASE_URL",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "HF_TOKEN",  # Phase 3: scripts/hf_upload.py (private model repos); never printed
+    "HF_USER",
 )
 
 # What each profile cannot run without (``scripts/check_env.py`` reports the missing names).

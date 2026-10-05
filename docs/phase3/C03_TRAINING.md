@@ -76,21 +76,30 @@ B03 stays the spec for each model. This file changes **where** jobs run, **how b
 
 ## 4. Compute budget (Colab)
 
-The budget is **200 compute units** (Google AI Pro), which expire 90 days after purchase. Plan in **units**, not hours. Colab shows the real hourly rate of each GPU in the Resources panel; **C0.2 replaces the assumed rates below with the observed ones** and re-plans this table.
+The budget is **200 compute units** (Colab Pro / Google AI Pro; 199.97 available at the C0.2 check), which expire 90 days after purchase. Plan in **units**, not hours.
 
-Assumed rates (to be replaced): A100 ≈ 11–13 units/h, L4 ≈ 5 units/h, T4 ≈ 2 units/h. So 200 units ≈ 15 A100 hours.
+**Observed rates (C0.2, read from `nvidia-smi` and the Colab Resources panel; driver 580.82.07, CUDA 13.0):**
 
-| Job | GPU | Assumed hours | Units (approx.) |
+| GPU | Memory | System RAM | Units/hour |
 | --- | --- | --- | --- |
-| Smoke runs (all jobs) + C0.2 rate check / vLLM smoke | T4 (+ a few minutes on L4, A100) | 2–3 | ~10 |
-| Teacher bake-off (2 × 300 risks) | A100 | 1–1.5 | ~20 |
-| Teacher full (≈ min(12k, achievable) risks) | A100 | 2–4 (vLLM throughput probably makes this < 2 h; kept conservative) | ~50 |
-| Student 4B LoRA + merge + GGUF export | L4 / A100 | 2–3 | ~20 |
+| T4 | 15 GB | 12.7 GB | ~1.07 |
+| L4 | 22.5 GB | 53 GB | ~1.54 |
+| A100-SXM4-80GB (High-RAM) | 80 GB | 167 GB (368 GB local scratch) | ~6.77 |
+
+So 200 units ≈ 29 A100 hours, or ≈ 130 L4 hours. The A100 has 80 GB, so Qwen3-32B-AWQ fits with a large KV cache; the L4-only fallback (22.5 GB) stays documented because an A100 is not guaranteed at any given moment. The vLLM `awq_marlin` kernel needs compute capability 8.0+, so the vLLM smoke test runs on the L4 only (no T4). Rates are logged in `eval_results/c/compute_log.jsonl` (`scripts/log_compute.py`); the vLLM pin is still **pending** until Akshat runs `c0_rate_check.ipynb` on the L4 (`COLAB_STEPS_rate_check.md`).
+
+| Job | GPU | Hours (estimate) | Units (estimate) |
+| --- | --- | --- | --- |
+| Smoke runs (all jobs) + C0.2 vLLM smoke | T4 (+ ~0.3 h L4) | 3 | ~4 |
+| Teacher bake-off (2 × 300 risks) | A100 | 1–1.5 | ~7–10 |
+| Teacher full (≈ min(12k, achievable) risks) | A100 | 2–4 (vLLM throughput probably makes this < 2 h; kept conservative) | ~14–27 |
+| Student 4B LoRA + GGUF export | L4 (or A100) | 2–3 | ~3–5 (L4) / ~14–20 (A100) |
 | ~~Classifier large, 3 seeds~~ | cut | — | 0 |
 | ~~Student 8B~~ | cut | — | 0 |
-| **Reserve** (disconnects, a teacher re-run after a quality-100 no-go) | — | — | **≥ 100** |
+| **Planned total** | | | **~30–65** |
+| **Reserve** (disconnects, a teacher re-run after a quality-100 no-go, a second student run) | — | — | **≥ 130** |
 
-Rules: never debug on an A100; stop the runtime as soon as a job ends. The reserve exists because of the cuts; it buys a second teacher pass if needed. Kaggle carries everything that fits a T4 (classifier base, extractor v2).
+Rules: never debug on an A100; stop the runtime as soon as a job ends. The measured rates are about half of what was assumed, so the reserve is large. The cuts in C05 §5 stay as decided (C-ADR-01): they were made for deadline reasons, not only for units, and un-cutting any of them is a separate decision for Akshat. Kaggle carries everything that fits a T4 (classifier base, extractor v2). Units are estimates until each job's `run_summary.json` is logged.
 
 ## 5. Order and parallelism
 

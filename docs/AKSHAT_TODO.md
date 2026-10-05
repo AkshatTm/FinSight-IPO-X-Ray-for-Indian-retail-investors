@@ -12,8 +12,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Frontier apps: Claude.ai paid plan with Opus; ChatGPT Go active. In both, turn **memory/personalisation off** and **web search off**; write the plan names into `bench/README.md` when C4.1 creates it.
 - [ ] Google Cloud: open the console once and note the remaining trial credit (don't create anything).
 
-### C0.2 (after its PR): Colab rate check, ~20–30 min
-- [ ] Follow `docs/phase3/COLAB_STEPS_rate_check.md` (written by C0.2) on T4, then L4, then A100; bring back the three `run_summary.json` files and say "rate check is back".
+### C0.2 (merged): vLLM smoke on the L4, ~15 min
+- [ ] Rates are already logged (T4 1.07, L4 1.54, A100 6.77 units/h). Only the **vLLM pin** is pending: follow `docs/phase3/COLAB_STEPS_rate_check.md` on the **L4** (`RUN_VLLM = True`), then tell Claude "vLLM pin is back" with the `vllm_pin` value. Until then C2.2/C2.3 notebooks keep `VLLM_PIN` as a parameter.
+- [ ] Check `uv run python scripts/hf_upload.py --check` passes (needs `HF_TOKEN` in `.env`) and `kaggle kernels list --mine` works (CG0).
 
 ### Later (prepared by each part when it is reached)
 - C1.1 approve the IPO list (~15 min) · C1.2 manual downloads (list printed by the script) · C1.4 confirm split counts (~5 min).

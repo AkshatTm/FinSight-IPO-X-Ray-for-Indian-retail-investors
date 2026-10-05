@@ -125,3 +125,5 @@ Names only: values never live in the repository (`.env.example` lists the same n
 | `FINSIGHT_API_ORIGIN` | — |
 | `NEXT_PUBLIC_SUPABASE_URL` | — |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | — |
+| `HF_TOKEN` | — |
+| `HF_USER` | — |

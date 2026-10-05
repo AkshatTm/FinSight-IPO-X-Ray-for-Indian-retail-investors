@@ -30,6 +30,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 - [ ] **C0.2 Colab + HF + compute log** · 💻 L + 🟠 G · S · Needs: C0.1, Akshat setup (C06 §1)
   `notebooks/colab/_common.py` (Drive mount, local-disk checkpoints synced to Drive, resume helpers, run_summary), `docs/phase3/COLAB_STEPS_template.md`, `scripts/log_compute.py` → `eval_results/c/compute_log.jsonl`, HF private upload helper. A tiny smoke notebook Akshat runs once on T4, L4 and A100 to **record the real compute-unit rates** and **test the vLLM pin with a small AWQ model** (C03 §2.7); C03 §4 table updated from them.
   *Done when:* observed rates committed; budget table re-planned.
+  *Status:* code merged; rates measured by hand and logged (T4 1.07, L4 1.54, A100 6.77 units/h), C03 §4 re-planned. **Left:** the vLLM pin test on the L4 (`COLAB_STEPS_rate_check.md`, in AKSHAT_TODO).
 
 **CG0:** docs merged · Colab rates known · HF private repo works · Kaggle CLI works on the laptop.
 
