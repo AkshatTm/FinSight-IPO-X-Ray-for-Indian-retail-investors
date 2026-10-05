@@ -36,9 +36,10 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 ### C1 — Newest-IPO data → gate CG1
 
-- [ ] **C1.1 IPO universe list** · 💻 L + 👤 A · S · Needs: CG0
+- [x] **C1.1 IPO universe list** · 💻 L + 👤 A · S · Needs: CG0
   Build `configs/ipo_universe.csv` (C02 §2) for mainboard IPOs 2024 → latest; print the count by year and type. Akshat approves / removes rows.
   *Done when:* list approved and merged.
+  *Status:* merged (overnight run, pre-approved counts): 289 rows from SEBI's public filings (`finsight.ingest.universe`, `scripts/build_ipo_universe.py`); exchange/listing date not available from SEBI (left `both`/empty); SME flagging moves to C1.3.
 - [ ] **C1.2 Downloader + fetch** · 💻 L · S · Needs: C1.1
   `scripts/fetch_offer_docs.py` (C02 §3) with tests on a fake server; run it; `status` filled; manual-download list printed for blocked sources.
   *Done when:* ≥ 90 % of approved rows `downloaded` or explained.
