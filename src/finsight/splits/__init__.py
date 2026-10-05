@@ -16,6 +16,7 @@ from finsight.splits.assign import (
     assign,
     check_strict,
 )
+from finsight.splits.manifest import Manifest, file_sha256, read_manifests, write_manifest
 from finsight.splits.schema import (
     FINAL_STATUSES,
     UNIVERSE_COLUMNS,
@@ -40,6 +41,7 @@ __all__ = [
     "ExcludedEntry",
     "FrozenSplitError",
     "IpoRecord",
+    "Manifest",
     "SplitEntry",
     "SplitError",
     "SplitResult",
@@ -49,9 +51,12 @@ __all__ = [
     "UniverseRow",
     "assign",
     "check_strict",
+    "file_sha256",
     "load_splits",
     "load_universe",
+    "read_manifests",
     "save_splits",
     "showcase_mismatches",
     "to_splits_file",
+    "write_manifest",
 ]
