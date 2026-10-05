@@ -114,6 +114,7 @@ nav:
       - Datasheets: datasheets/index.md
       - Training corpus: datasheets/corpus.md
       - Newest IPOs (draft): datasheets/new_ipos.md
+      - Risk bank (draft): datasheets/risk_bank.md
       - Weak labels: datasheets/weak_labels.md
       - Gold sets: datasheets/gold_sets.md
       - Teacher outputs: phase2/datasheets/teacher_outputs.md

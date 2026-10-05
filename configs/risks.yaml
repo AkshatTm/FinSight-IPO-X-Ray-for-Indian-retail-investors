@@ -1,7 +1,8 @@
 # Risk features (B02 §7). tau is a placeholder until the B2.2b spot-check picks it (E22, ADR).
 novelty:
   tau: 0.80               # cosine similarity at which a past risk counts as "the same risk"
-  years: [2018, 2023]     # reference population: the 2018-2023 part of the bank (B-ADR-11)
+  years: [2018, 2023]     # LEGACY fixed window for banks without ipo_id; C2.1 banks use the rolling
+                          # window instead (configs/reference.yaml, finsight.splits.reference_bank)
   nearest: 3              # similar past risks shown on a card (distinct companies)
   unusual_below: 0.10     # "Unusual: in x% of past IPOs" (B05 §6)
   common_above: 0.60      # "Common: in x% of past IPOs"
@@ -28,3 +29,13 @@ seriousness:
   medium_at: 2
   weights: { high: 3, medium: 2, low: 1 }   # importance = weight x (1 - novelty)
   unknown_novelty: 0.5
+
+# Teacher input export (C2.1, C03 §3 C2.3). Train-slice risks only.
+teacher:
+  n_risks: 12000          # target min(n_risks, achievable)
+  per_company_cap: 25     # so no company dominates the training data
+  min_words: 40           # title + body
+  max_words: 600
+  recent_from_year: 2024  # these risks get extra sampling weight
+  recent_weight: 2.0
+  seed: 2026
