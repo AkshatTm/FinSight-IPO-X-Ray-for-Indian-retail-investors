@@ -6,6 +6,8 @@
 
 **Detail per part** (files, tests, commits, dependencies, dated hand-work): `B_EXECUTION_PLAN.md`. **Hosting is Google Cloud Run** (B-ADR-04): CPU API + CPU worker job + optional L4 GPU job, Supabase, GCS, Vercel; billing enabled later, no deploy before Akshat's "go". **Training is Kaggle-first**; Colab optional.
 
+> **Phase 3 (C0.1):** every open part below is either done or moved to Phase 3 (`docs/phase3/C05_ROADMAP.md`, ids in brackets). This file is now history; Phase 3 tracks progress.
+
 ## 0. How to use this file
 
 - Each sub-phase = one GitHub issue = one branch = one PR (rebase-merge). Branch: `<type>/b<x.y>-<slug>`.
@@ -47,7 +49,7 @@
 
 ### B0 — Setup (Sun 4 – Mon 5 Oct) → BG0
 
-- [ ] **B0.0 Claim the cloud credit + push docs** · 👤 A + 💻 L · —
+- [x] **B0.0 Claim the cloud credit + push docs** · 👤 A + 💻 L · — · obsolete (B-ADR-16; Phase 3 C-ADR-10)
   👤 Claim the $100 credit (by Wed 7 Oct) and connect GitHub to Claude Code on the web. 💻 Commit and push `docs/phase2/` (a quick local session or plain git).
 - [x] **B0.K Kickoff review** · ☁️ C · **O** (Sat 3 Oct)
   B10 Prompt C1: STEP 2 review and questions → (my answers via Claude chat) → STEP 3 `B_EXECUTION_PLAN.md`, part of B0.2.
@@ -64,58 +66,58 @@
 
 - [x] **B1.1a Doc type + validation (fixtures)** · ☁️ C · **S (high effort)** · `feat/b1.1-ingest-any-pdf`
   `ingest.upload` validation, dedupe, doc-type detection, rejection codes; synthetic PDF fixtures (RHP/DRHP/Prospectus/non-offer/scanned) generated in tests.
-- [ ] **B1.1b Harden on real and unseen PDFs** · 💻 L · **S** · `fix/b1.1b-real-pdfs`
+- [x] **B1.1b Harden on real and unseen PDFs** · 💻 L · **S** · `fix/b1.1b-real-pdfs` · **moved to Phase 3 (C1.3)**
   Run on the 20 showcase PDFs + 5 unseen RHPs (👤 downloads them by Wed 7 Oct); fix what breaks; record timings.
 - [x] **B1.2 ★ Jobs, storage, database, events** · ☁️ C · **O** · `feat/b1.2-jobs-pipeline`
   Local/GCS storage, SQLite/Postgres (pooler), jobs + events + replay, simplification priority queue, quotas + kill switch + retention, local worker; tested with fixtures; Postgres in a CI service job.
-- [ ] **B1.3a ★ Summary + financial extraction (fixtures)** · ☁️ C · **O** · `feat/b1.3-summary-extraction`
+- [x] **B1.3a ★ Summary + financial extraction (fixtures)** · ☁️ C · **O** · `feat/b1.3-summary-extraction` · **moved to Phase 3 (C3.1)**
   `summary` package developed and tested on the fixture pack (dev IPOs only for tuning).
   - [x] Pipeline groundwork (#166): `parsed`, `sections` and `risks_split` stages in `upload_stages` (parse limited to 10 min), tested end to end on a synthetic RHP.
   - [ ] Left: the `summary` extractors + `financials` stage on the fixture pack, then `redflags` in `upload_stages`.
-- [ ] **B1.3b Run on full documents + E14** · 💻 L · **S** · `eval/b1.3b-summary-eval`
+- [x] **B1.3b Run on full documents + E14** · 💻 L · **S** · `eval/b1.3b-summary-eval` · **moved to Phase 3 (C3.1)**
   Run on all 20 full documents; fix gaps; E14 vs gold v3. 👤+Claude chat: gold v3 pre-fill and verification by Fri 9 Oct.
-- [ ] **B1.4 Red flags** · ☁️ C · **S** · `feat/b1.4-redflags`
+- [x] **B1.4 Red flags** · ☁️ C · **S** · `feat/b1.4-redflags` · **moved to Phase 3 (C3.2)**
   Rules + `configs/redflags.yaml` + API; tests with gold v3 values (committed) and fixture summaries. 💻 follow-up (short): E15 on the full pipeline output.
   - [x] Cloud half B1.4a (#162): rules engine, `configs/redflags.yaml`, `summary.json` schema, status-gold script, generated reference + how-to; tested on synthetic inputs.
   - [ ] Left: tests with real gold v3 values, wiring after B1.3a, E15 (💻).
 - [x] **B1.5 Upload + processing UI + Google sign-in** · ☁️ C · **S** · `feat/b1.5-upload-ui`
   Frontend on mocks (Supabase Auth via env placeholders). 💻 follow-up (short): try with the real local API + Supabase project.
-- [ ] **BG1 review** (Sun 11) · 💻 L — stop for Akshat.
+- [x] **BG1 review** (Sun 11) · 💻 L — stop for Akshat. · **moved to Phase 3 (CG1–CG4 gates)**
 
 ### B2 — Risk intelligence (Mon 12 – Sun 18 Oct) → BG2
 
 **Pulled forward (Q16):** the ☁️ parts B2.1a, B2.3a, B2.4a and B2.5a start in week 1 (Tue 6 – Thu 8) in parallel cloud sessions; B2.1b and the teacher pilot run Sat 10; see the calendar in `B_EXECUTION_PLAN.md` §2.
 
-- [ ] **B2.1a ★ Risk segmentation (fixtures)** · ☁️ C · **O** · `feat/b2.1-risk-segmentation`
+- [x] **B2.1a ★ Risk segmentation (fixtures)** · ☁️ C · **O** · `feat/b2.1-risk-segmentation` · **moved to Phase 3 (C2.1)**
   Segmentation for PDF pages (bold/numbered) and corpus text, tested on the fixture pack.
   - [x] Code half (#164): `risks.segment` (PDF + corpus rules), `pipeline/risks_stage.py` (`risks_split` → `risks.json`, addresses withheld), per-stage timeout in the job runner; synthetic bold / numbered / mixed tests.
   - [x] `risks_split` runs in `upload_stages` (#166).
   - [ ] Left: golden tests on real fixture pages of 3 dev IPOs (needs B0.4).
-- [ ] **B2.1b Risk bank + E13** · 💻 L · **S** · `data/b2.1b-risk-bank`
+- [x] **B2.1b Risk bank + E13** · 💻 L · **S** · `data/b2.1b-risk-bank` · **moved to Phase 3 (C2.1)**
   Segment the full corpus, embed with bge-m3 (GPU, Ollama stopped, or Kaggle), build `risk_bank.parquet`; E13/E13b; export the teacher input set (5,000 risks) as a private Kaggle dataset. 👤+Claude chat: segmentation spot-check + E13b boundaries.
 - [x] **B2.2a Unusualness, hedging, numbers (code)** · ☁️ C · **S** · `feat/b2.2-risk-features`
   Logic + API, tested with a tiny fake bank fixture.
-- [ ] **B2.2b Run + τ choice + E22** · 💻 L · **S** · `eval/b2.2b-novelty`
+- [x] **B2.2b Run + τ choice + E22** · 💻 L · **S** · `eval/b2.2b-novelty` · **moved to Phase 3 (C2.6)**
   Run against the real bank; τ spot-check (👤+Claude chat); E22.
 - [x] **B2.3a ★ Teacher notebook + filters** · ☁️ C · **O** · `feat/b2.3-teacher`
   Prompt, **Kaggle** notebook (vLLM + Qwen ~14B AWQ) with checkpoint/resume, filters, forbidden-phrase filter, quality-100 sheet generator, datasheet, optional `COLAB_STEPS_teacher.md`; smoke test on the fake fixture set.
-- [ ] **B2.3b Teacher run** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `data/b2.3b-teacher-outputs`
+- [x] **B2.3b Teacher run** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `data/b2.3b-teacher-outputs` · **moved to Phase 3 (C2.3)**
   💻 pilot 500 (Sat 10) → filters → 👤+Claude chat rate quality-100 (go/no-go, Sun 11) → 💻 full 5,000 (Mon 12), drop rates.
 - [x] **B2.4a Classifier code + notebooks** · ☁️ C · **S** · `feat/b2.4-risk-classifier`
   TF-IDF+LR baseline, base and large notebooks (Kaggle; Colab optional), ONNX int8 export for the CPU worker; smoke tests on fixtures.
-- [ ] **B2.4b Train + evaluate** · 💻 L (Kaggle CLI) · **S** · `eval/b2.4b-classifier`
+- [x] **B2.4b Train + evaluate** · 💻 L (Kaggle CLI) · **S** · `eval/b2.4b-classifier` · **moved to Phase 3 (C2.4)**
   💻 build train/dev from teacher labels, launch base (3 seeds) and large (1 seed) on Kaggle; 💻 E16 on gold-150 (👤+Claude chat labels), pick by dev.
 - [x] **B2.5a ★ Student notebook + checks + serving code** · ☁️ C · **O** · `feat/b2.5-simplifier`
   Kaggle QLoRA notebook (Qwen ~3–4B, T4 fp16), merge + **GGUF Q4 export**, post-checks (verifier, forbidden phrases, length, certainty), priority queue (top 15 automatic, rest on click), llama.cpp serving (vLLM client optional), optional `COLAB_STEPS_student.md`; tests with fixtures.
-- [ ] **B2.5b Train + evaluate** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `eval/b2.5b-simplifier`
+- [x] **B2.5b Train + evaluate** · 💻 L (Kaggle CLI) + 👤 A (rating) · **S** · `eval/b2.5b-simplifier` · **moved to Phase 3 (C2.5)**
   💻 run QLoRA on Kaggle, export GGUF, run locally on CPU; E18–E20 + CPU seconds per rewrite; 👤 rate gold-50 (blind).
 - [x] **B2.6a ★ Seriousness + risk level (code)** · ☁️ C · **O** · `feat/b2.6-risk-level`
   Seriousness rule, **normalised** points, threshold computation (2018–2023 reference), `behind_click` flag, guard update; tests.
-- [ ] **B2.6b Corpus thresholds + validation** · 💻 L · **S** · `eval/b2.6b-risklevel-validation`
+- [x] **B2.6b Corpus thresholds + validation** · 💻 L · **S** · `eval/b2.6b-risklevel-validation` · **moved to Phase 3 (C2.8)**
   Compute normalised scores over the 2018–2023 corpus, write `configs/risklevel.yaml` (with `corpus_n`), E17, **E21** with an honest write-up (outcomes read only by `evaluate/outcomes.py`), E8 re-run.
 - [x] ~~**B2.7 CPU smoke deploy**~~ · dropped (B-ADR-16, no Google Cloud) · `chore/b2.7-smoke-deploy`
   When GCP billing is enabled and **only with Akshat's "go"**: deploy the Cloud Run API + CPU job with Supabase; one small upload end to end; record cold start and stage timings.
-- [ ] **BG2 review** (Sun 18) · 💻 L — stop for Akshat.
+- [x] **BG2 review** (Sun 18) · 💻 L — stop for Akshat. · **moved to Phase 3 (CG2–CG3 gates)**
 
 ### B3 — Product and hosting (Mon 19 – Sat 24 Oct) → BG3
 
@@ -127,13 +129,13 @@
   Dockerfiles (API without torch; CPU worker with ONNX + llama.cpp; L4 GPU worker with vLLM), manual GitHub Actions workflow → Artifact Registry, Cloud Run service + job definitions, optional HF single-container variant, Supabase wiring, budget and limits config, `scripts/cloud_smoke.py`, runbooks. **No deploy.**
 - [x] ~~**B3.3b Deploy**~~ · dropped (B-ADR-16) · `chore/b3.3b-deploy`
   👤 logins, GCP billing and console clicks; 💻 build/push images, upload showcase artefacts + model weights to GCS, deploy, run the smoke test. **Only with Akshat's explicit "go" in chat.**
-- [ ] **B3.4 Cloud evaluation + Model Lab + site copy** · B3.4a ☁️ C (Model Lab sections, landing/How it works/About copy) + B3.4b 💻 L (E23/E24, E7 on the cloud profile) · **S**
+- [x] **B3.4 Cloud evaluation + Model Lab + site copy** · B3.4a ☁️ C (Model Lab sections, landing/How it works/About copy) + B3.4b 💻 L (E23/E24, E7 on the cloud profile) · **S** · **moved to Phase 3 (C3.6)**
   - [x] B3.4a cloud half (#160, overnight run 1): `GET /api/lab/b/{name}` (B06 §5 mapping, merged classifier/simplify payloads, file shapes documented); seven Lab sections (E13–E24) hidden until their files exist, E21 verdict generated from ρ and its interval; landing (B05 §2: hero, What you get, won't-do lines, two stats), How it works row 3 and About limits (B05 §8).
   - [ ] B3.4b 💻: E23/E24 and E7 on the laptop (`full` profile; no deploy).
-- [ ] **B3.5 Hardening** · B3.5a ☁️ C (security review, failure-path tests, admin page) + B3.5b 💻 L (full Playwright sweep on the real API) · **S**
+- [x] **B3.5 Hardening** · B3.5a ☁️ C (security review, failure-path tests, admin page) + B3.5b 💻 L (full Playwright sweep on the real API) · **S** · **moved to Phase 3 (C3.8)**
   - [x] B3.5a cloud half (#158, overnight run 1): security review (`docs/security_review.md`) with three fixes (chunked upload body capped, stored size checked before download via `Storage.size()`, `uploads.trusted_proxy_hops` for the per-IP limit); failure-path tests over the B02 stage graph; `progress.cost_estimate` per job (`costs.*` settings, provisional rates); `/api/admin/costs` + `/api/admin/jobs` (admin allow-list, 403 `forbidden`); `/admin/costs` page on mocks.
   - [ ] B3.5b 💻: Playwright sweep on the real local API (no deploy; `trusted_proxy_hops` stays 0).
-- [ ] **BG3 review + FEATURE FREEZE** (Sun 25) · 💻 L.
+- [x] **BG3 review + FEATURE FREEZE** (Sun 25) · 💻 L. · **moved to Phase 3 (CG6)**
 
 ### B4 — Documentation and finish (Sun 25 Oct – Sun 1 Nov)
 
@@ -141,8 +143,8 @@
   - [x] Cloud half (#153, overnight run 1): MkDocs Material site with full nav; generated pages (`poe docs-gen`: config + env vars, data formats, risk level, compare, ADR index, commands, glossary) and generated blocks in the evaluation page (E1–E24 registry and results), model cards (QA extractor, BiLSTM-CRF, MuRIL guard) and datasheets (corpus, weak labels, gold sets); C4 + sequence diagrams; tutorials, six how-tos, troubleshooting (15), runbooks (rotate secrets, restore DB, monitoring); CHANGELOG, CONTRIBUTING, SECURITY, PRIVACY, CODE_OF_CONDUCT; README for Phase 2; frontend README; docstrings 52 % → 84 %; docs CI hard on freshness, OpenAPI, strict build, 70 % docstrings and Markdown lint.
   - [ ] Left: model cards for the risk classifier and simplifier (they come with B2.4b / B2.5b); GitHub Pages publish (needs Akshat's go); runbooks tested once (💻 follow-up).
 - [x] **B4.2 Report drafts update** · ☁️ C · **S** — #156: §4.4 Phase 2 data, §6.7 Phase 2 method, §7.9 generated E13–E24 status table (`poe docs-gen`), §8.2 and §11 notes, Phase 2 disclosures 7–11 in `report/README.md`. The Phase 2 results paragraphs are written after the local runs fill `eval_results/b/`.
-- [ ] **B4.3 [AKSHAT]** report, slides, video, viva · 👤 A
-- [ ] **Tag v2.0.0** (Sat 31 Oct) · 💻 L; **submit** Sun 1 Nov.
+- [x] **B4.3 [AKSHAT]** report, slides, video, viva · 👤 A · **moved to Phase 3 (C5.4)**
+- [x] **Tag v2.0.0** (Sat 31 Oct) · 💻 L; **submit** Sun 1 Nov. · **moved to Phase 3 (C5.3)**
 
 ## 4. Akshat's hand-work calendar
 
