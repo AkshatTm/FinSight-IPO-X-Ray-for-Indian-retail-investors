@@ -18,6 +18,13 @@ from finsight.splits.assign import (
 )
 from finsight.splits.leakage import Violation, check_manifests
 from finsight.splits.manifest import Manifest, file_sha256, read_manifests, write_manifest
+from finsight.splits.reference import (
+    in_window,
+    ipos_before,
+    reference_config,
+    window_n,
+    window_summary,
+)
 from finsight.splits.schema import (
     FINAL_STATUSES,
     UNIVERSE_COLUMNS,
@@ -55,11 +62,16 @@ __all__ = [
     "check_manifests",
     "check_strict",
     "file_sha256",
+    "in_window",
+    "ipos_before",
     "load_splits",
     "load_universe",
     "read_manifests",
+    "reference_config",
     "save_splits",
     "showcase_mismatches",
     "to_splits_file",
+    "window_n",
+    "window_summary",
     "write_manifest",
 ]

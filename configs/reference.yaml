@@ -1,0 +1,4 @@
+# Rolling reference window (C02 §5, C-ADR-03): "past IPOs" for a document are those dated before
+# it within the last window_years. Corpus IPOs (close year only) count when their close year is
+# in the window_years calendar years before the as-of year. Read by finsight.splits.reference.
+window_years: 4
