@@ -33,7 +33,7 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
             r"(?:SUMMARY OF (THE OFFER DOCUMENT|THIS (RED HERRING )?PROSPECTUS)"
             r"|OFFER DOCUMENT SUMMARY)",
         ),
-        ("risk_factors", r"RISK FACTORS"),
+        ("risk_factors", r"RISK FACTORS?"),
         ("the_offer", r"THE (OFFER|ISSUE)"),
         ("general_information", r"GENERAL INFORMATION"),
         ("capital_structure", r"CAPITAL STRUCTURE"),
@@ -68,6 +68,15 @@ HEADING_LINES = 8  # a heading must be within the first lines of the page text
 NEAR = 3  # pages either side of the TOC page to look for the heading
 
 
+_FFFD = chr(0xFFFD)  # glyphs the PDF font could not map (dot leaders and dashes in some RHPs)
+_FFFD_RUN = re.compile(_FFFD + "{4,}")
+
+
+def _clean(text: str) -> str:
+    """Unmapped glyph runs become a dot leader; a single one becomes a dash."""
+    return _FFFD_RUN.sub("....", text).replace(_FFFD, "-")
+
+
 def normalize_title(text: str) -> str:
     text = text.upper().replace("’", "'").replace("‘", "'")
     text = re.sub(r"[^A-Z0-9]+", " ", text)
@@ -97,15 +106,27 @@ def parse_toc_lines(lines: list[str]) -> list[TocEntry]:
     """Title + printed page per TOC line; wrapped titles are joined, part headers skipped."""
     entries: list[TocEntry] = []
     pending: list[str] = []
+    dotted = (
+        False  # the pending title already ran into its dot leader (page number lost or wrapped)
+    )
     for raw in lines:
-        line = " ".join(raw.split())
+        line = " ".join(_clean(raw).split())
         if not line or _TOC_HEAD.match(line):
             continue
         match = _TOC_LINE.match(line)
         if not match:
-            if "...." not in line:
+            if "...." in line:
+                # a leader without a page number (extraction wrapped it): the title before it has
+                # lost its page; text before the dots may still be completed by the next line
+                head = line.split("....", 1)[0].strip(" .")
+                pending, dotted = ([head] if head else []), bool(head)
+            else:
                 pending.append(line)
+                dotted = False
             continue
+        if dotted and match["title"].strip(" ."):
+            pending = []  # a complete entry follows, so the dotted title had no page of its own
+        dotted = False
         title = " ".join([*pending, match["title"]]).strip(" .")
         pending = []
         part = _PART.match(title)
@@ -134,7 +155,7 @@ def printed_to_pdf(doc: ParsedDoc, printed: int) -> int:
 def _top_lines(page: Page) -> list[str]:
     """First lines of the page, normalised, with any "SECTION II -" part prefix removed."""
     lines = []
-    for raw in page.text.splitlines()[:HEADING_LINES]:
+    for raw in (_clean(x) for x in page.text.splitlines()[:HEADING_LINES]):
         part = _PART.match(raw.strip())
         text = raw.strip()[part.end() :] if part else raw
         if text.strip():
@@ -203,6 +224,7 @@ def _locate(doc: ParsedDoc, title: str, toc_page: int | None, after: int) -> _Fo
 
 
 _FALLBACK_TITLES = {
+    "risk_factors": "RISK FACTORS",
     "the_offer": "THE OFFER",
     "capital_structure": "CAPITAL STRUCTURE",
     "objects_of_the_offer": "OBJECTS OF THE OFFER",

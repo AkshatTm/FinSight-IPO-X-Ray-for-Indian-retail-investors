@@ -4,6 +4,7 @@ from finsight.core import registry
 from finsight.core.schemas import Page, ParsedDoc, Word
 from finsight.parse.sections import (
     KEY_SECTIONS,
+    _heading_matches,
     canonical_id,
     find_sections,
     find_toc_pages,
@@ -208,3 +209,64 @@ def test_subsection_pages_found_inside_restated_section() -> None:
     found = find_subsection_pages(doc, [sec])
     assert found == {"cash_flows": [3], "auditors_report": [1, 4]}
     assert find_subsection_pages(doc, []) == {}
+
+
+# ---- C1.3 regressions: real RHPs whose Risk Factors section was missed (batch run) ------------
+BAD = chr(0xFFFD)  # a glyph the PDF font could not map
+
+
+def test_wrapped_leaders_do_not_glue_a_pageless_title_to_the_next_entry() -> None:
+    """Text extraction broke the dot leaders over several lines and lost some page numbers."""
+    lines = [
+        "TABLE OF CONTENTS",
+        "SUMMARY OF THE ISSUE DOCUMENT",
+        "." * 40,
+        "SECTION II: RISK FACTORS " + "." * 60 + " 34",
+        "THE ISSUE",
+        "." * 40,
+        "SUMMARY OF RESTATED FINANCIAL STATEMENTS " + "." * 20 + " 81",
+        "CAPITAL STRUCTURE " + "." * 30,
+        "." * 20 + " 98",
+    ]
+    entries = parse_toc_lines(lines)
+    assert [(e.title, e.printed_page) for e in entries] == [
+        ("RISK FACTORS", 34),
+        ("SUMMARY OF RESTATED FINANCIAL STATEMENTS", 81),
+        ("CAPITAL STRUCTURE", 98),  # a dotted title completed by the leader line that follows
+    ]
+    assert canonical_id(entries[0].title) == "risk_factors"
+
+
+def test_unmapped_glyph_leaders_and_dashes_read_as_dots_and_hyphens() -> None:
+    lines = [
+        "TABLE OF CONTENTS",
+        f"SECTION II {BAD} RISK FACTORS" + BAD * 30 + " 35",
+        "THE OFFER " + BAD * 20 + " 40",
+    ]
+    assert [(e.title, e.printed_page) for e in parse_toc_lines(lines)] == [
+        ("RISK FACTORS", 35),
+        ("THE OFFER", 40),
+    ]
+    page = _page(7, f"SECTION II {BAD} RISK FACTORS" + chr(10) + "If we lose a key customer")
+    assert _heading_matches(page, "RISK FACTORS")
+
+
+def test_singular_risk_factor_title_is_the_risk_factors_section() -> None:
+    assert canonical_id("RISK FACTOR") == "risk_factors"
+    assert canonical_id("Risk Factors") == "risk_factors"
+
+
+def test_risk_factors_found_by_heading_when_the_toc_has_no_usable_entry() -> None:
+    nl = chr(10)
+    pages = [
+        _page(1, "RED HERRING PROSPECTUS"),
+        _page(2, "TABLE OF CONTENTS" + nl + "." * 40),
+        _page(3, "SECTION I: GENERAL" + nl + "DEFINITIONS"),
+        _page(4, f"SECTION II {BAD} RISK FACTORS" + nl + "Internal risks"),
+        _page(5, "more risks"),
+        _page(6, "THE OFFER" + nl + "the table"),
+    ]
+    doc = ParsedDoc(ipo_id="x-2025", doc_type="rhp", source_path="x.pdf", n_pages=6,
+                    pages=pages, sha256="0" * 64)  # fmt: skip
+    rf = next(s for s in find_sections(doc) if s.id == "risk_factors")
+    assert (rf.start_page, rf.end_page) == (4, 5)
