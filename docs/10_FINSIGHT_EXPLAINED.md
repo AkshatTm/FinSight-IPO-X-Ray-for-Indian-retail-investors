@@ -689,6 +689,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why split by company?* Risks from one company share phrasing; mixing them across train and dev would inflate dev.
 3. *Why must it beat TF-IDF?* A transformer that does no better than word counts is not worth its cost.
 
+### C49. The novelty threshold (built in C2.6, code only)
+**What it does.** A risk is "the same" as a past one when their embeddings are at least tau similar; tau was a placeholder (0.80). `scripts/novelty_pairs.py sheet` takes risks of the `dev` IPOs, finds each one's nearest past risk of another company inside that IPO's reference window (never a test or bench IPO), spreads about 100 pairs evenly over similarity from 0.60 up, and writes a sheet without the similarity. After the rating, `score` picks tau by a rule fixed in code before anyone rates: the lowest similarity at which at least 90 % of the rated pairs at or above it are judged the same risk, with at least 10 such pairs. The record in `eval_results/b/novelty.json` shows the chosen tau, its precision with a 95 % interval and the curve over a grid.
+**Limits.** One rater; the rule is cumulative, so it tolerates up to one miss in ten above tau; nothing has been rated yet.
+**Likely viva questions.**
+1. *Why show the pairs without the similarity?* So the rater is not nudged toward the number.
+2. *Why spread pairs over bins and not sample at random?* Most pairs are low-similarity; random sampling would leave too few near tau.
+3. *Why only dev IPOs?* Test and bench documents never tune a threshold (C-ADR-02).
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
