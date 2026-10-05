@@ -56,3 +56,12 @@ def test_wrong_answer_count_is_an_error(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="answers"):
         run_teacher(items(3), lambda chats: ["x"], tmp_path / "raw.jsonl")
     assert not list(read_jsonl(tmp_path / "raw.jsonl"))  # nothing half-written
+
+
+def test_after_batch_runs_once_per_checkpoint(tmp_path: Path) -> None:
+    calls: list[int] = []
+    out = tmp_path / "raw.jsonl"
+    run_teacher(
+        items(250), Fake(), out, every=100, after_batch=lambda: calls.append(len(done_ids(out)))
+    )
+    assert calls == [100, 200, 250]  # the hook sees each batch already on disk

@@ -59,6 +59,7 @@ def run_teacher(
     every: int = 100,
     limit: int | None = None,
     meta: dict[str, Any] | None = None,
+    after_batch: Callable[[], None] | None = None,
 ) -> dict[str, int]:
     """Send each item's ``messages`` to ``generate`` in batches of ``every`` and checkpoint.
 
@@ -69,6 +70,7 @@ def run_teacher(
         every: batch size, and so the checkpoint interval.
         limit: stop after this many new items (pilot and smoke runs).
         meta: copied into every row (model, prompt_version).
+        after_batch: called after every checkpoint write (Colab: copy the file to Drive).
 
     Returns:
         ``{"skipped": already done, "written": new rows}``.
@@ -95,6 +97,8 @@ def run_teacher(
         written += len(batch)
         print(f"checkpoint: {written} new rows in {out_path.name}", flush=True)
         batch.clear()
+        if after_batch is not None:
+            after_batch()
 
     for item in items:
         rid = str(item["risk_id"])

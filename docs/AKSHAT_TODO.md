@@ -19,6 +19,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 ### C1.1 (merged): IPO list, ~5 min, optional
 - [ ] Skim `docs/datasheets/new_ipos.md` and `configs/ipo_universe.csv` (289 rows: 2024 = 94, 2025 = 98, 2026 = 97). The overnight run pre-approved it; 2026 is above your ~80 estimate (many RHPs filed in September for issues not open yet, plus some SME-looking Prospectus-only rows that C1.3 will flag). Drop rows you dislike by setting `status` to `excluded` with a `reason`.
 
+### C2.2 teacher bake-off (code merged; needs the frozen split + the vLLM pin first), ~1 h + 30 min rating
+- [ ] After C1.4 is frozen and the bank is built: `uv run python scripts/teacher_bakeoff.py sample`, then follow `docs/phase3/COLAB_STEPS_teacher_bakeoff.md` (A100, ~7–10 units), then rate the blind sheet. Note: C2.2 is an Opus-marked part that was done on Sonnet overnight — review `src/finsight/risks/bakeoff.py` (the pick rule) and C-ADR-05 before you rely on it.
+
 ### Later (prepared by each part when it is reached)
 - C1.1 approve the IPO list (~15 min) · C1.2 manual downloads (list printed by the script) · C1.4 confirm split counts (~5 min).
 - After CG1, start at once (biggest time risk): C4.1 verify gold v4 + answer keys + TOC page ranges (~8.5 h), then C4.3 frontier runs (~9 h).
