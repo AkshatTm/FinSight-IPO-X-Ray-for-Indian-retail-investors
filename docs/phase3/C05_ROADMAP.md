@@ -24,7 +24,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 ### C0 — Setup → gate CG0
 
-- [ ] **C0.1 Phase 3 docs + rules** · 💻 L · **O** · Needs: Akshat drops `docs/phase3/` in the repo
+- [x] **C0.1 Phase 3 docs + rules** · 💻 L · **O** · Needs: Akshat drops `docs/phase3/` in the repo
   Commit `docs/phase3/` and the kickoff-review fixes, Akshat approves the critical path (§6), apply the CLAUDE.md patch (C00 §5), record C-ADR-01…11 as proposed, mark absorbed B-parts in B07, create labels `colab`/`kaggle`, milestones CG0–CG6 and issues for all C0–C4 parts, reset `PROGRESS.md` "Resume here" for Phase 3.
   *Done when:* merged; issues and milestones exist.
 - [ ] **C0.2 Colab + HF + compute log** · 💻 L + 🟠 G · S · Needs: C0.1, Akshat setup (C06 §1)
@@ -65,7 +65,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 **CG2:** teacher output accepted (≥ 85 % "same meaning: yes" on quality-100) · datasheet updated.
 
-- [ ] **C2.4 Classifier** (was B2.4b) · 💻 L + 🔵 K + 🟠 G + 👤 A · S · Needs: CG2, gold-150
+- [ ] **C2.4 Classifier** (was B2.4b) · 💻 L + 🔵 K + 👤 A · S · Needs: CG2, gold-150
   TF-IDF; base 3 seeds (Kaggle); ~~large 3 seeds (Colab)~~ **(cut)**; base must beat TF-IDF on dev; ONNX int8; E16; model card.
 - [ ] **C2.5 Student simplifier** (was B2.5b) · 💻 L + 🟠 G + 👤 A · S · Needs: CG2, gold-50 sheet
   Zero-shot bake-off; 4B bf16 LoRA on Colab; ~~8B~~ **(cut)**; GGUF; E18–E20 + CPU seconds; model card.
