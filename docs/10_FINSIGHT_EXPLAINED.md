@@ -632,6 +632,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why one document per company?* Addenda change prices, not the risk text, and a company must not appear twice across the train/test line.
 3. *Why not scrape NSE or BSE?* Their sites block scripts; going around that is not allowed by our rules, so those fields stay empty.
 
+### C42. The offer-document downloader (built in C1.2)
+**What it does.** `finsight.ingest.fetch` takes each `listed` row of the universe file, opens its filing page on sebi.gov.in, finds the PDF link(s) in the page and downloads them to `data/raw/offer_docs/<ipo_id>.pdf`. It waits at least 4 seconds between requests, says who it is in the User-Agent, retries a failed request 2 times (client errors) or 3 times with a growing pause (server errors), and refuses any file that is not a complete PDF (a short download or a block page is thrown away). It records the sha256 and the page count in the CSV after every document, so a stop loses nothing, and it stops when less than 15 GB of disk is free. A filing split into several PDFs is merged in order and the part hashes are kept in a small side file. Documents it cannot get become `failed` with the reason `manual:` and are printed as a list for hand download; `--adopt` accepts a PDF dropped into the folder.
+**Limits.** It copies the 10 showcase RHPs from `data/raw/rhp/` instead of downloading again. It does not get around a block: if a source refuses scripts, that document goes on the manual list.
+**Likely viva questions.**
+1. *Why a 4-second gap?* SEBI is a public regulator's site; the run takes about two hours instead of minutes, and nobody is harmed by it.
+2. *How do you know a download is complete?* The byte count must match the server's `Content-Length`, the file must start with `%PDF-`, and it must open with at least one page. A real truncated file was caught this way.
+3. *Why record the hash?* To prove later which exact file every number came from.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
