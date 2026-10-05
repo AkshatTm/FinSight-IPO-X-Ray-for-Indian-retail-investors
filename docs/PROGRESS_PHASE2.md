@@ -1,4 +1,4 @@
-# PROGRESS (newest first; "Resume here" on top; ≤ 10 log lines; Phase 1 log: docs/PROGRESS_PHASE1.md)
+# PROGRESS — Phase 2 archive (moved from PROGRESS.md at the start of Phase 3, unchanged below)
 
 ## Resume here
 - **Phase:** Big Phase 2, local-only (B-ADR-16). Plan: `docs/phase2/B07_ROADMAP.md` + `docs/phase2/B_EXECUTION_PLAN.md`.

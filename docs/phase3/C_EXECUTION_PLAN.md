@@ -128,7 +128,7 @@ New packages in Phase 3 (each with an `__init__` docstring stating its job):
 
 ### C2.4 Classifier (was B2.4b)
 
-- **Branch:** `eval/c2.4-classifier` · **Model:** S · 💻 L + 🔵 K + 🟠 G + 👤 A
+- **Branch:** `eval/c2.4-classifier` · **Model:** S · 💻 L + 🔵 K + 👤 A
 - **Files:** split from teacher labels (`finsight.risks.classify split`, by company, manifest); TF-IDF baseline; base notebook on Kaggle (3 seeds, CLI); ~~large on Colab~~ (cut); `scripts/export_onnx_classifier.py`; `eval_results/b/classifier_*.json` (E16); model card `risk_classifier.md`.
 - **Hand-work:** verify gold-150 (pre-filled; drawn from dev/test showcase + new test IPOs).
 - **Done when:** chosen model exported to ONNX; ONNX vs PyTorch dev check passes; E16 written.

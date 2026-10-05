@@ -18,7 +18,10 @@ exclude_docs: |
   EXECUTION_PLAN.md
   MORNING_REPORT.md
   PROGRESS_PHASE1.md
+  PROGRESS_PHASE2.md
   phase2/B10_PROMPTS.md
+  phase3/C06_AKSHAT_CHECKLIST.md
+  phase3/C07_PROMPTS.md
 
 theme:
   name: material
@@ -117,9 +120,19 @@ nav:
       - Rotate secrets: runbooks/ROTATE_SECRETS.md
       - Restore the database: runbooks/RESTORE_DB.md
       - Hosting setup: phase2/HOSTING_SETUP_STEPS.md
+  - Phase 3:
+      - Overview: phase3/C00_README.md
+      - Strategy: phase3/C01_STRATEGY.md
+      - Data and time split: phase3/C02_DATA.md
+      - Training and compute: phase3/C03_TRAINING.md
+      - FinSight Bench: phase3/C04_BENCHMARK.md
+      - Roadmap: phase3/C05_ROADMAP.md
+      - Execution plan: phase3/C_EXECUTION_PLAN.md
+      - Deployment: phase3/C08_DEPLOY.md
+      - Decisions (C-ADRs): phase3/C_DECISIONS.md
   - Project:
       - Requirements (Phase 2): phase2/B01_PRD.md
-      - Roadmap: phase2/B07_ROADMAP.md
+      - Roadmap (Phase 2, history): phase2/B07_ROADMAP.md
       - Changelog: changelog.md
       - Contributing: contributing.md
       - Security policy: security.md
