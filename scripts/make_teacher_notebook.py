@@ -137,15 +137,18 @@ def prompt_cell() -> str:
 
 
 def build() -> dict[str, Any]:
+    cells = [
+        _cell("markdown", MD),
+        _cell("code", PARAMS, ["parameters"]),
+        _cell("code", SETUP),
+        _cell("code", RUN_SOURCE.read_text(encoding="utf-8"), ["teacher-run"]),
+        _cell("code", "import json\n\n" + prompt_cell(), ["teacher-prompt"]),
+        _cell("code", BODY),
+    ]
+    for n, c in enumerate(cells):
+        c["id"] = str(n)  # nbformat 5 cell ids, the form nbstripout writes
     return {
-        "cells": [
-            _cell("markdown", MD),
-            _cell("code", PARAMS, ["parameters"]),
-            _cell("code", SETUP),
-            _cell("code", RUN_SOURCE.read_text(encoding="utf-8"), ["teacher-run"]),
-            _cell("code", "import json\n\n" + prompt_cell(), ["teacher-prompt"]),
-            _cell("code", BODY),
-        ],
+        "cells": cells,
         "metadata": {
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
             "language_info": {"name": "python"},
