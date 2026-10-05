@@ -16,6 +16,7 @@ from finsight.splits.assign import (
     assign,
     check_strict,
 )
+from finsight.splits.leakage import Violation, check_manifests
 from finsight.splits.manifest import Manifest, file_sha256, read_manifests, write_manifest
 from finsight.splits.schema import (
     FINAL_STATUSES,
@@ -49,7 +50,9 @@ __all__ = [
     "SplitsFile",
     "UniverseError",
     "UniverseRow",
+    "Violation",
     "assign",
+    "check_manifests",
     "check_strict",
     "file_sha256",
     "load_splits",
