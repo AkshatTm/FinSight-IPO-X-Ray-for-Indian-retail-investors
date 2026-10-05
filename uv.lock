@@ -752,6 +752,7 @@ data = [
     { name = "openpyxl" },
     { name = "pdfplumber" },
     { name = "pillow" },
+    { name = "psutil" },
     { name = "pymupdf" },
 ]
 dev = [
@@ -814,6 +815,7 @@ data = [
     { name = "openpyxl", specifier = ">=3.1" },
     { name = "pdfplumber", specifier = ">=0.11.10" },
     { name = "pillow", specifier = ">=12.3.0" },
+    { name = "psutil", specifier = ">=5.9" },
     { name = "pymupdf", specifier = ">=1.28.2" },
 ]
 dev = [
