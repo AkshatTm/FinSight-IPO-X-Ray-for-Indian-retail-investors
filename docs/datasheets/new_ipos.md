@@ -10,7 +10,7 @@ The corpus ends in 2023, but offer documents change and users will upload new on
 
 <!-- generated:universe start -->
 
-289 companies. Status: listed 289.
+289 companies. Status: excluded 14, parsed 275.
 
 | Year | RHP | Prospectus only | Total |
 | --- | --- | --- | --- |

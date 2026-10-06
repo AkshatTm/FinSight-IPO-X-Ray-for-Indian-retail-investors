@@ -270,3 +270,11 @@ def test_risk_factors_found_by_heading_when_the_toc_has_no_usable_entry() -> Non
                     pages=pages, sha256="0" * 64)  # fmt: skip
     rf = next(s for s in find_sections(doc) if s.id == "risk_factors")
     assert (rf.start_page, rf.end_page) == (4, 5)
+
+
+def test_part_header_with_unmapped_glyphs_around_the_numeral() -> None:
+    lines = [
+        "TABLE OF CONTENTS",
+        f"SECTION {BAD} II {BAD} RISK FACTORS " + "." * 40 + " 29",
+    ]
+    assert [(e.title, e.printed_page) for e in parse_toc_lines(lines)] == [("RISK FACTORS", 29)]
