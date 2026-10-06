@@ -1,0 +1,2632 @@
+{
+ "written_utc": "2026-10-06T00:40:16+00:00",
+ "n_documents": 289,
+ "status": {
+  "parsed": 275,
+  "excluded": 14
+ },
+ "excluded_reasons": {
+  "SME issue (cover names an SME platform; C-ADR-09)": 12,
+  "risk factors are not numbered (segmenter needs numbered headings); not supported yet": 2
+ },
+ "failed_reasons": {},
+ "wall_seconds": {
+  "median": 18.4,
+  "max": 40.3,
+  "total": 5435.0
+ },
+ "stage_seconds_total": {
+  "validated": 66.1,
+  "detected": 1.0,
+  "parsed": 2859.5,
+  "sections": 11.8,
+  "risks_split": 2483.3
+ },
+ "peak_rss_mb_max": 1431.0,
+ "output_bytes_total": 11239246987,
+ "pages_median": 521,
+ "over_product_page_limit": [],
+ "documents": {
+  "medi-assist-healthcare-services-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 452,
+   "n_risks": 69,
+   "wall_s": 17.1,
+   "peak_rss_mb": 384.7,
+   "output_bytes": 36546088
+  },
+  "jyoti-cnc-automation-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 511,
+   "n_risks": 81,
+   "wall_s": 17.5,
+   "peak_rss_mb": 403.2,
+   "output_bytes": 32486864
+  },
+  "nova-agritech-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 462,
+   "n_risks": 88,
+   "wall_s": 17.0,
+   "peak_rss_mb": 510.1,
+   "output_bytes": 33824494
+  },
+  "epack-durable-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 506,
+   "n_risks": 86,
+   "wall_s": 21.3,
+   "peak_rss_mb": 721.7,
+   "output_bytes": 35691565
+  },
+  "bls-e-services-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 511,
+   "n_risks": 93,
+   "wall_s": 15.6,
+   "peak_rss_mb": 571.1,
+   "output_bytes": 34689095
+  },
+  "rashi-peripherals-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 522,
+   "n_risks": 84,
+   "wall_s": 22.5,
+   "peak_rss_mb": 600.4,
+   "output_bytes": 37868020
+  },
+  "jana-small-finance-bank-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 603,
+   "n_risks": 87,
+   "wall_s": 28.0,
+   "peak_rss_mb": 722.0,
+   "output_bytes": 46621099
+  },
+  "apeejay-surrendra-park-hotels-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 564,
+   "n_risks": 83,
+   "wall_s": 23.0,
+   "peak_rss_mb": 697.4,
+   "output_bytes": 42503802
+  },
+  "capital-small-finance-bank-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 484,
+   "n_risks": 90,
+   "wall_s": 25.8,
+   "peak_rss_mb": 745.3,
+   "output_bytes": 35783423
+  },
+  "entero-healthcare-solutions-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 573,
+   "n_risks": 64,
+   "wall_s": 20.2,
+   "peak_rss_mb": 749.0,
+   "output_bytes": 39712627
+  },
+  "juniper-hotels-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 757,
+   "n_risks": 82,
+   "wall_s": 24.9,
+   "peak_rss_mb": 784.1,
+   "output_bytes": 51463310
+  },
+  "gpt-healthcare-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 506,
+   "n_risks": 65,
+   "wall_s": 19.4,
+   "peak_rss_mb": 828.2,
+   "output_bytes": 38767579
+  },
+  "exicom-tele-systems-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 492,
+   "n_risks": 64,
+   "wall_s": 20.0,
+   "peak_rss_mb": 424.7,
+   "output_bytes": 37308375
+  },
+  "platinum-industries-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 492,
+   "n_risks": 82,
+   "wall_s": 15.6,
+   "peak_rss_mb": 579.6,
+   "output_bytes": 29618213
+  },
+  "mukka-proteins-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 554,
+   "n_risks": 86,
+   "wall_s": 19.2,
+   "peak_rss_mb": 562.4,
+   "output_bytes": 39188303
+  },
+  "r-k-swamy-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 503,
+   "n_risks": 63,
+   "wall_s": 16.4,
+   "peak_rss_mb": 680.8,
+   "output_bytes": 36657852
+  },
+  "gopal-snacks-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 504,
+   "n_risks": 79,
+   "wall_s": 18.1,
+   "peak_rss_mb": 655.7,
+   "output_bytes": 35443305
+  },
+  "j-g-chemicals-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 433,
+   "n_risks": 80,
+   "wall_s": 14.4,
+   "peak_rss_mb": 612.6,
+   "output_bytes": 32433605
+  },
+  "krystal-integrated-services-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 447,
+   "n_risks": 74,
+   "wall_s": 18.0,
+   "peak_rss_mb": 746.7,
+   "output_bytes": 32697801
+  },
+  "popular-vehicles-and-services-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 458,
+   "n_risks": 77,
+   "wall_s": 18.9,
+   "peak_rss_mb": 619.4,
+   "output_bytes": 36698113
+  },
+  "srm-contractors-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 424,
+   "n_risks": 79,
+   "wall_s": 15.3,
+   "peak_rss_mb": 657.2,
+   "output_bytes": 30078416
+  },
+  "bharti-hexacom-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 536,
+   "n_risks": 73,
+   "wall_s": 18.4,
+   "peak_rss_mb": 858.3,
+   "output_bytes": 36325850
+  },
+  "jnk-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 464,
+   "n_risks": 88,
+   "wall_s": 17.5,
+   "peak_rss_mb": 868.3,
+   "output_bytes": 33832612
+  },
+  "vodafone-idea-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 776,
+   "n_risks": 55,
+   "wall_s": 21.8,
+   "peak_rss_mb": 700.0,
+   "output_bytes": 59416699
+  },
+  "aadhar-housing-finance-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 455,
+   "n_risks": 61,
+   "wall_s": 21.3,
+   "peak_rss_mb": 906.4,
+   "output_bytes": 38607319
+  },
+  "indegene-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 417,
+   "n_risks": 79,
+   "wall_s": 16.2,
+   "peak_rss_mb": 949.0,
+   "output_bytes": 34903363
+  },
+  "tbo-tek-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 478,
+   "n_risks": 86,
+   "wall_s": 24.9,
+   "peak_rss_mb": 1011.3,
+   "output_bytes": 39223464
+  },
+  "go-digit-general-insurance-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 708,
+   "n_risks": 98,
+   "wall_s": 24.9,
+   "peak_rss_mb": 1024.2,
+   "output_bytes": 50274132
+  },
+  "awfis-space-solutions-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 506,
+   "n_risks": 72,
+   "wall_s": 18.8,
+   "peak_rss_mb": 988.0,
+   "output_bytes": 37856658
+  },
+  "go-digit-insurance-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 708,
+   "n_risks": 99,
+   "wall_s": 25.6,
+   "peak_rss_mb": 652.8,
+   "output_bytes": 50060207
+  },
+  "kronox-lab-sciences-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 400,
+   "n_risks": 59,
+   "wall_s": 13.3,
+   "peak_rss_mb": 675.9,
+   "output_bytes": 26941460
+  },
+  "dee-development-engineers-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 508,
+   "n_risks": 92,
+   "wall_s": 23.0,
+   "peak_rss_mb": 802.6,
+   "output_bytes": 40467333
+  },
+  "stanley-lifestyles-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 468,
+   "n_risks": 82,
+   "wall_s": 20.9,
+   "peak_rss_mb": 684.3,
+   "output_bytes": 34894017
+  },
+  "akme-fintrade-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 484,
+   "n_risks": 59,
+   "wall_s": 21.5,
+   "peak_rss_mb": 643.9,
+   "output_bytes": 32924190
+  },
+  "le-travenues-technology-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 554,
+   "n_risks": 92,
+   "wall_s": 23.6,
+   "peak_rss_mb": 739.0,
+   "output_bytes": 41014342
+  },
+  "vraj-iron-and-steel-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 441,
+   "n_risks": 65,
+   "wall_s": 16.9,
+   "peak_rss_mb": 731.0,
+   "output_bytes": 29528893
+  },
+  "emcure-pharmaceuticals-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 546,
+   "n_risks": 91,
+   "wall_s": 20.5,
+   "peak_rss_mb": 751.6,
+   "output_bytes": 43112040
+  },
+  "bansal-wire-industries-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 487,
+   "n_risks": 60,
+   "wall_s": 15.3,
+   "peak_rss_mb": 398.3,
+   "output_bytes": 31065763
+  },
+  "sanstar-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 510,
+   "n_risks": 85,
+   "wall_s": 16.3,
+   "peak_rss_mb": 716.1,
+   "output_bytes": 34818983
+  },
+  "akums-drugs-and-pharmaceuticals-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 549,
+   "n_risks": 85,
+   "wall_s": 27.8,
+   "peak_rss_mb": 729.9,
+   "output_bytes": 44666130
+  },
+  "ola-electric-mobility-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 461,
+   "n_risks": 103,
+   "wall_s": 22.5,
+   "peak_rss_mb": 755.1,
+   "output_bytes": 37356821
+  },
+  "ceigall-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 473,
+   "n_risks": 72,
+   "wall_s": 21.5,
+   "peak_rss_mb": 731.4,
+   "output_bytes": 34875767
+  },
+  "unicommerce-esolutions-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 382,
+   "n_risks": 76,
+   "wall_s": 22.9,
+   "peak_rss_mb": 808.3,
+   "output_bytes": 32137537
+  },
+  "saraswati-saree-depot-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 398,
+   "n_risks": 75,
+   "wall_s": 12.7,
+   "peak_rss_mb": 692.8,
+   "output_bytes": 23483268
+  },
+  "brainbees-solutions-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 682,
+   "n_risks": 74,
+   "wall_s": 22.2,
+   "peak_rss_mb": 810.4,
+   "output_bytes": 50378548
+  },
+  "interarch-building-products-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 535,
+   "n_risks": 80,
+   "wall_s": 18.2,
+   "peak_rss_mb": 890.5,
+   "output_bytes": 39539283
+  },
+  "ecos-india-mobility-and-hospitality-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 364,
+   "n_risks": 74,
+   "wall_s": 14.8,
+   "peak_rss_mb": 496.0,
+   "output_bytes": 28606863
+  },
+  "pyramid-technoplast-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 368,
+   "n_risks": 69,
+   "wall_s": 12.4,
+   "peak_rss_mb": 899.9,
+   "output_bytes": 23140338
+  },
+  "orient-technologies-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 479,
+   "n_risks": 78,
+   "wall_s": 14.3,
+   "peak_rss_mb": 938.6,
+   "output_bytes": 30692088
+  },
+  "premier-energies-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 558,
+   "n_risks": 100,
+   "wall_s": 21.1,
+   "peak_rss_mb": 606.3,
+   "output_bytes": 42841602
+  },
+  "baazar-style-retail-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 535,
+   "n_risks": 73,
+   "wall_s": 20.6,
+   "peak_rss_mb": 667.8,
+   "output_bytes": 36875146
+  },
+  "gala-precision-engineering-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 523,
+   "n_risks": 76,
+   "wall_s": 17.5,
+   "peak_rss_mb": 763.1,
+   "output_bytes": 32812943
+  },
+  "bajaj-housing-finance-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 547,
+   "n_risks": 74,
+   "wall_s": 27.8,
+   "peak_rss_mb": 626.4,
+   "output_bytes": 44796131
+  },
+  "shree-tirupati-balajee-agro-trading-company-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 479,
+   "n_risks": 91,
+   "wall_s": 20.1,
+   "peak_rss_mb": 724.1,
+   "output_bytes": 32942829
+  },
+  "kross-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 435,
+   "n_risks": 82,
+   "wall_s": 18.4,
+   "peak_rss_mb": 719.0,
+   "output_bytes": 31278060
+  },
+  "tolins-tyres-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 548,
+   "n_risks": 96,
+   "wall_s": 19.6,
+   "peak_rss_mb": 675.2,
+   "output_bytes": 36658083
+  },
+  "western-carriers-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 424,
+   "n_risks": 64,
+   "wall_s": 17.0,
+   "peak_rss_mb": 725.5,
+   "output_bytes": 31787214
+  },
+  "p-n-gadgil-jewellers-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 412,
+   "n_risks": 73,
+   "wall_s": 17.6,
+   "peak_rss_mb": 724.4,
+   "output_bytes": 33125169
+  },
+  "krn-heat-exchanger-and-refrigeration-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 468,
+   "n_risks": 82,
+   "wall_s": 15.7,
+   "peak_rss_mb": 673.1,
+   "output_bytes": 29335130
+  },
+  "manba-finance-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 468,
+   "n_risks": 73,
+   "wall_s": 21.5,
+   "peak_rss_mb": 729.7,
+   "output_bytes": 33436556
+  },
+  "arkade-developers-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 498,
+   "n_risks": 78,
+   "wall_s": 16.9,
+   "peak_rss_mb": 736.3,
+   "output_bytes": 33900007
+  },
+  "diffusion-engineers-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 529,
+   "n_risks": 78,
+   "wall_s": 15.6,
+   "peak_rss_mb": 757.7,
+   "output_bytes": 32090703
+  },
+  "garuda-construction-and-engineering-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 407,
+   "n_risks": 78,
+   "wall_s": 14.0,
+   "peak_rss_mb": 736.5,
+   "output_bytes": 27533423
+  },
+  "hyundai-motor-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 476,
+   "n_risks": 93,
+   "wall_s": 20.4,
+   "peak_rss_mb": 772.2,
+   "output_bytes": 40000506
+  },
+  "waaree-energies-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 626,
+   "n_risks": 92,
+   "wall_s": 20.5,
+   "peak_rss_mb": 704.7,
+   "output_bytes": 45945833
+  },
+  "deepak-builders-and-engineers-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 464,
+   "n_risks": 80,
+   "wall_s": 15.1,
+   "peak_rss_mb": 512.2,
+   "output_bytes": 34494067
+  },
+  "godavari-biorefineries-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 484,
+   "n_risks": 76,
+   "wall_s": 18.4,
+   "peak_rss_mb": 836.6,
+   "output_bytes": 35237822
+  },
+  "afcons-infrastructure-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 764,
+   "n_risks": 90,
+   "wall_s": 22.1,
+   "peak_rss_mb": 987.4,
+   "output_bytes": 55088239
+  },
+  "swiggy-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 541,
+   "n_risks": 84,
+   "wall_s": 19.6,
+   "peak_rss_mb": 1095.3,
+   "output_bytes": 43629822
+  },
+  "acme-solar-holdings-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 722,
+   "n_risks": 86,
+   "wall_s": 24.7,
+   "peak_rss_mb": 1108.4,
+   "output_bytes": 53209262
+  },
+  "sagility-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 494,
+   "n_risks": 66,
+   "wall_s": 17.9,
+   "peak_rss_mb": 954.7,
+   "output_bytes": 35631811
+  },
+  "niva-bupa-health-insurance-company-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 538,
+   "n_risks": 78,
+   "wall_s": 25.8,
+   "peak_rss_mb": 1093.2,
+   "output_bytes": 44416342
+  },
+  "zinka-logistics-solutions-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 473,
+   "n_risks": 73,
+   "wall_s": 19.4,
+   "peak_rss_mb": 899.5,
+   "output_bytes": 38079991
+  },
+  "ntpc-green-energy-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 643,
+   "n_risks": 96,
+   "wall_s": 21.7,
+   "peak_rss_mb": 920.0,
+   "output_bytes": 45864550
+  },
+  "enviro-infra-engineers-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 531,
+   "n_risks": 82,
+   "wall_s": 25.5,
+   "peak_rss_mb": 984.7,
+   "output_bytes": 36440074
+  },
+  "suraksha-diagnostic-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 477,
+   "n_risks": 70,
+   "wall_s": 17.5,
+   "peak_rss_mb": 388.1,
+   "output_bytes": 36805673
+  },
+  "vishal-mega-mart-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 380,
+   "n_risks": 60,
+   "wall_s": 17.1,
+   "peak_rss_mb": 590.7,
+   "output_bytes": 31728471
+  },
+  "inventurus-knowledge-solutions-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 601,
+   "n_risks": 88,
+   "wall_s": 22.9,
+   "peak_rss_mb": 650.4,
+   "output_bytes": 48312234
+  },
+  "sai-life-sciences-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 445,
+   "n_risks": 76,
+   "wall_s": 22.4,
+   "peak_rss_mb": 717.8,
+   "output_bytes": 37389117
+  },
+  "international-gemmological-institute-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 613,
+   "n_risks": 65,
+   "wall_s": 22.7,
+   "peak_rss_mb": 790.8,
+   "output_bytes": 47918700
+  },
+  "transrail-lighting-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 473,
+   "n_risks": 71,
+   "wall_s": 18.2,
+   "peak_rss_mb": 753.0,
+   "output_bytes": 39376099
+  },
+  "mamata-machinery-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 477,
+   "n_risks": 67,
+   "wall_s": 14.0,
+   "peak_rss_mb": 701.6,
+   "output_bytes": 32121862
+  },
+  "ventive-hospitality-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 736,
+   "n_risks": 9,
+   "wall_s": 21.1,
+   "peak_rss_mb": 756.8,
+   "output_bytes": 59885707
+  },
+  "concord-enviro-systems-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 611,
+   "n_risks": 80,
+   "wall_s": 24.1,
+   "peak_rss_mb": 936.7,
+   "output_bytes": 46810659
+  },
+  "one-mobikwik-systems-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 524,
+   "n_risks": 74,
+   "wall_s": 17.6,
+   "peak_rss_mb": 904.8,
+   "output_bytes": 38452931
+  },
+  "sanathan-textiles-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 564,
+   "n_risks": 49,
+   "wall_s": 25.0,
+   "peak_rss_mb": 974.5,
+   "output_bytes": 36703197
+  },
+  "senores-pharmaceuticals-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 535,
+   "n_risks": 94,
+   "wall_s": 20.6,
+   "peak_rss_mb": 1029.5,
+   "output_bytes": 39647750
+  },
+  "carraro-india-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 505,
+   "n_risks": 74,
+   "wall_s": 18.6,
+   "peak_rss_mb": 1047.0,
+   "output_bytes": 39703944
+  },
+  "unimech-aerospace-and-manufacturing-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 456,
+   "n_risks": 96,
+   "wall_s": 22.1,
+   "peak_rss_mb": 947.7,
+   "output_bytes": 37220398
+  },
+  "dam-capital-advisors-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 405,
+   "n_risks": 57,
+   "wall_s": 14.8,
+   "peak_rss_mb": 903.2,
+   "output_bytes": 27278784
+  },
+  "indo-farm-equipment-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 466,
+   "n_risks": 83,
+   "wall_s": 15.0,
+   "peak_rss_mb": 920.2,
+   "output_bytes": 29546530
+  },
+  "quadrant-future-tek-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 515,
+   "n_risks": 71,
+   "wall_s": 14.5,
+   "peak_rss_mb": 578.5,
+   "output_bytes": 32903290
+  },
+  "standard-glass-lining-technology-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 593,
+   "n_risks": 88,
+   "wall_s": 19.1,
+   "peak_rss_mb": 989.5,
+   "output_bytes": 40479540
+  },
+  "laxmi-dental-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 610,
+   "n_risks": 114,
+   "wall_s": 21.0,
+   "peak_rss_mb": 938.7,
+   "output_bytes": 42112773
+  },
+  "stallion-india-fluorochemicals-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 384,
+   "n_risks": 77,
+   "wall_s": 12.3,
+   "peak_rss_mb": 554.7,
+   "output_bytes": 26092650
+  },
+  "denta-water-and-infra-solutions-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 423,
+   "n_risks": 81,
+   "wall_s": 15.0,
+   "peak_rss_mb": 896.7,
+   "output_bytes": 31028105
+  },
+  "dr-agarwal-s-healthcare-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 532,
+   "n_risks": 73,
+   "wall_s": 29.7,
+   "peak_rss_mb": 887.0,
+   "output_bytes": 44155440
+  },
+  "ajax-engineering-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 403,
+   "n_risks": 68,
+   "wall_s": 18.9,
+   "peak_rss_mb": 882.0,
+   "output_bytes": 33740829
+  },
+  "hexaware-technologies-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 644,
+   "n_risks": 73,
+   "wall_s": 19.6,
+   "peak_rss_mb": 964.1,
+   "output_bytes": 43506310
+  },
+  "quality-power-electrical-equipments-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 435,
+   "n_risks": 66,
+   "wall_s": 15.2,
+   "peak_rss_mb": 920.3,
+   "output_bytes": 31918592
+  },
+  "ather-energy-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 586,
+   "n_risks": 97,
+   "wall_s": 20.2,
+   "peak_rss_mb": 946.1,
+   "output_bytes": 43775119
+  },
+  "belrise-industries-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 593,
+   "n_risks": 72,
+   "wall_s": 26.9,
+   "peak_rss_mb": 882.8,
+   "output_bytes": 41343496
+  },
+  "aegis-vopak-terminals-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 568,
+   "n_risks": 69,
+   "wall_s": 18.8,
+   "peak_rss_mb": 589.7,
+   "output_bytes": 39618729
+  },
+  "borana-weaves-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 417,
+   "n_risks": 69,
+   "wall_s": 17.5,
+   "peak_rss_mb": 851.4,
+   "output_bytes": 30765567
+  },
+  "prostarm-info-systems-2025": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 540,
+   "n_risks": null,
+   "wall_s": 15.0,
+   "peak_rss_mb": 840.4,
+   "output_bytes": 36063619
+  },
+  "schloss-bangalore-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 610,
+   "n_risks": 100,
+   "wall_s": 22.3,
+   "peak_rss_mb": 874.6,
+   "output_bytes": 49017616
+  },
+  "scoda-tubes-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 430,
+   "n_risks": 92,
+   "wall_s": 16.5,
+   "peak_rss_mb": 865.1,
+   "output_bytes": 31117334
+  },
+  "oswal-pumps-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 582,
+   "n_risks": 81,
+   "wall_s": 21.7,
+   "peak_rss_mb": 605.8,
+   "output_bytes": 40008397
+  },
+  "arisinfra-solutions-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 673,
+   "n_risks": 86,
+   "wall_s": 21.2,
+   "peak_rss_mb": 676.2,
+   "output_bytes": 44853590
+  },
+  "globe-civil-projects-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 604,
+   "n_risks": 94,
+   "wall_s": 20.4,
+   "peak_rss_mb": 747.5,
+   "output_bytes": 41028933
+  },
+  "ellenbarrie-industrial-gases-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 417,
+   "n_risks": 90,
+   "wall_s": 18.5,
+   "peak_rss_mb": 743.2,
+   "output_bytes": 33746599
+  },
+  "kalpataru-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 765,
+   "n_risks": 77,
+   "wall_s": 26.8,
+   "peak_rss_mb": 712.2,
+   "output_bytes": 55522038
+  },
+  "hdb-financial-services-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 758,
+   "n_risks": 85,
+   "wall_s": 29.0,
+   "peak_rss_mb": 967.3,
+   "output_bytes": 53918044
+  },
+  "sambhv-steel-tubes-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 602,
+   "n_risks": 85,
+   "wall_s": 20.8,
+   "peak_rss_mb": 917.9,
+   "output_bytes": 40432783
+  },
+  "travel-food-services-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 541,
+   "n_risks": 93,
+   "wall_s": 18.7,
+   "peak_rss_mb": 872.0,
+   "output_bytes": 40491162
+  },
+  "smartworks-coworking-spaces-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 583,
+   "n_risks": 77,
+   "wall_s": 20.9,
+   "peak_rss_mb": 932.0,
+   "output_bytes": 43777438
+  },
+  "anthem-biosciences-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 523,
+   "n_risks": 83,
+   "wall_s": 21.0,
+   "peak_rss_mb": 929.4,
+   "output_bytes": 41710438
+  },
+  "crizac-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 486,
+   "n_risks": 74,
+   "wall_s": 15.6,
+   "peak_rss_mb": 867.0,
+   "output_bytes": 31479180
+  },
+  "shanti-gold-international-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 393,
+   "n_risks": 86,
+   "wall_s": 14.9,
+   "peak_rss_mb": 787.3,
+   "output_bytes": 28582659
+  },
+  "gng-electronics-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 407,
+   "n_risks": 79,
+   "wall_s": 18.4,
+   "peak_rss_mb": 897.4,
+   "output_bytes": 29679360
+  },
+  "laxmi-india-finance-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 527,
+   "n_risks": 74,
+   "wall_s": 20.3,
+   "peak_rss_mb": 902.4,
+   "output_bytes": 40038290
+  },
+  "aditya-infotech-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 545,
+   "n_risks": 99,
+   "wall_s": 21.3,
+   "peak_rss_mb": 882.8,
+   "output_bytes": 41639450
+  },
+  "brigade-hotel-ventures-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 437,
+   "n_risks": 80,
+   "wall_s": 19.8,
+   "peak_rss_mb": 791.8,
+   "output_bytes": 36597784
+  },
+  "highway-infrastructure-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 537,
+   "n_risks": 81,
+   "wall_s": 17.0,
+   "peak_rss_mb": 837.7,
+   "output_bytes": 34461788
+  },
+  "indiqube-spaces-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 607,
+   "n_risks": 80,
+   "wall_s": 20.5,
+   "peak_rss_mb": 901.9,
+   "output_bytes": 42376129
+  },
+  "m-b-engineering-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 499,
+   "n_risks": 82,
+   "wall_s": 19.7,
+   "peak_rss_mb": 850.9,
+   "output_bytes": 37116588
+  },
+  "national-securities-depository-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 480,
+   "n_risks": 79,
+   "wall_s": 18.8,
+   "peak_rss_mb": 873.3,
+   "output_bytes": 36273995
+  },
+  "all-time-plastics-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 560,
+   "n_risks": 68,
+   "wall_s": 19.8,
+   "peak_rss_mb": 836.6,
+   "output_bytes": 39777562
+  },
+  "jsw-cement-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 774,
+   "n_risks": 81,
+   "wall_s": 24.5,
+   "peak_rss_mb": 861.0,
+   "output_bytes": 55383787
+  },
+  "bluestone-jewellery-and-lifestyle-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 532,
+   "n_risks": 94,
+   "wall_s": 20.4,
+   "peak_rss_mb": 952.9,
+   "output_bytes": 38882845
+  },
+  "shreeji-shipping-global-limited-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 473,
+   "n_risks": 73,
+   "wall_s": 17.9,
+   "peak_rss_mb": 989.9,
+   "output_bytes": 33325575
+  },
+  "regaal-resources-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 573,
+   "n_risks": 60,
+   "wall_s": 21.6,
+   "peak_rss_mb": 1028.8,
+   "output_bytes": 36501802
+  },
+  "patel-retail-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 659,
+   "n_risks": 18,
+   "wall_s": 14.8,
+   "peak_rss_mb": 810.2,
+   "output_bytes": 39945466
+  },
+  "gem-aromatics-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 492,
+   "n_risks": 85,
+   "wall_s": 21.9,
+   "peak_rss_mb": 918.3,
+   "output_bytes": 34690827
+  },
+  "vikram-solar-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 599,
+   "n_risks": 94,
+   "wall_s": 24.7,
+   "peak_rss_mb": 983.6,
+   "output_bytes": 44280517
+  },
+  "vikran-engineering-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 519,
+   "n_risks": 82,
+   "wall_s": 23.9,
+   "peak_rss_mb": 986.1,
+   "output_bytes": 38528695
+  },
+  "anlon-healthcare-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 409,
+   "n_risks": 89,
+   "wall_s": 12.4,
+   "peak_rss_mb": 333.3,
+   "output_bytes": 27282670
+  },
+  "shringar-house-of-mangalsutra-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 437,
+   "n_risks": 81,
+   "wall_s": 14.0,
+   "peak_rss_mb": 485.6,
+   "output_bytes": 30694791
+  },
+  "dev-accelerator-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 473,
+   "n_risks": 74,
+   "wall_s": 15.7,
+   "peak_rss_mb": 543.4,
+   "output_bytes": 32474060
+  },
+  "euro-pratik-sales-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 490,
+   "n_risks": 65,
+   "wall_s": 17.2,
+   "peak_rss_mb": 550.4,
+   "output_bytes": 36243202
+  },
+  "urban-company-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 577,
+   "n_risks": 74,
+   "wall_s": 19.5,
+   "peak_rss_mb": 608.6,
+   "output_bytes": 43404528
+  },
+  "vigor-plast-india-2025": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 358,
+   "n_risks": null,
+   "wall_s": 14.1,
+   "peak_rss_mb": 709.4,
+   "output_bytes": 27227657
+  },
+  "vms-tmt-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 473,
+   "n_risks": 84,
+   "wall_s": 15.8,
+   "peak_rss_mb": 654.0,
+   "output_bytes": 34319944
+  },
+  "ivalue-infosolutions-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 525,
+   "n_risks": 62,
+   "wall_s": 14.8,
+   "peak_rss_mb": 663.7,
+   "output_bytes": 36584329
+  },
+  "ganesh-consumer-products-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 588,
+   "n_risks": 60,
+   "wall_s": 16.8,
+   "peak_rss_mb": 676.5,
+   "output_bytes": 40170319
+  },
+  "gk-energy-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 465,
+   "n_risks": 71,
+   "wall_s": 16.4,
+   "peak_rss_mb": 729.7,
+   "output_bytes": 34113035
+  },
+  "jinkushal-industries-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 471,
+   "n_risks": 83,
+   "wall_s": 13.8,
+   "peak_rss_mb": 752.8,
+   "output_bytes": 32155094
+  },
+  "saatvik-green-energy-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 618,
+   "n_risks": 71,
+   "wall_s": 18.3,
+   "peak_rss_mb": 737.3,
+   "output_bytes": 42802324
+  },
+  "seshaasai-technologies-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 562,
+   "n_risks": 78,
+   "wall_s": 18.2,
+   "peak_rss_mb": 702.1,
+   "output_bytes": 43515296
+  },
+  "advance-agrolife-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 488,
+   "n_risks": 87,
+   "wall_s": 14.5,
+   "peak_rss_mb": 746.4,
+   "output_bytes": 33562773
+  },
+  "bmw-ventures-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 487,
+   "n_risks": 86,
+   "wall_s": 15.6,
+   "peak_rss_mb": 761.9,
+   "output_bytes": 29907214
+  },
+  "jain-resource-recycling-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 559,
+   "n_risks": 89,
+   "wall_s": 19.0,
+   "peak_rss_mb": 779.2,
+   "output_bytes": 40312811
+  },
+  "jaro-institute-of-technology-management-and-research-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 511,
+   "n_risks": 74,
+   "wall_s": 15.4,
+   "peak_rss_mb": 751.6,
+   "output_bytes": 35922371
+  },
+  "gurunanak-agriculture-india-2025": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 311,
+   "n_risks": null,
+   "wall_s": 14.2,
+   "peak_rss_mb": 728.8,
+   "output_bytes": 22298149
+  },
+  "om-freight-forwarders-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 478,
+   "n_risks": 99,
+   "wall_s": 16.4,
+   "peak_rss_mb": 728.0,
+   "output_bytes": 31772091
+  },
+  "pace-digitek-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 599,
+   "n_risks": 74,
+   "wall_s": 17.4,
+   "peak_rss_mb": 757.2,
+   "output_bytes": 38647513
+  },
+  "trualt-bioenergy-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 678,
+   "n_risks": 84,
+   "wall_s": 21.4,
+   "peak_rss_mb": 778.8,
+   "output_bytes": 49865345
+  },
+  "airfloa-rail-technology-2025": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 386,
+   "n_risks": null,
+   "wall_s": 10.9,
+   "peak_rss_mb": 813.6,
+   "output_bytes": 27219614
+  },
+  "taurian-mps-2025": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 419,
+   "n_risks": null,
+   "wall_s": 8.4,
+   "peak_rss_mb": 823.0,
+   "output_bytes": 29200014
+  },
+  "fabtech-technologies-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 521,
+   "n_risks": 97,
+   "wall_s": 16.9,
+   "peak_rss_mb": 824.1,
+   "output_bytes": 40478324
+  },
+  "glottis-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 477,
+   "n_risks": 73,
+   "wall_s": 16.5,
+   "peak_rss_mb": 875.5,
+   "output_bytes": 36721168
+  },
+  "tata-capital-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 836,
+   "n_risks": 91,
+   "wall_s": 27.7,
+   "peak_rss_mb": 932.8,
+   "output_bytes": 70182139
+  },
+  "wework-india-management-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 632,
+   "n_risks": 85,
+   "wall_s": 20.8,
+   "peak_rss_mb": 1137.9,
+   "output_bytes": 49037616
+  },
+  "lg-electronics-india-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 502,
+   "n_risks": 93,
+   "wall_s": 20.3,
+   "peak_rss_mb": 1049.6,
+   "output_bytes": 41328156
+  },
+  "rubicon-research-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 626,
+   "n_risks": 90,
+   "wall_s": 17.9,
+   "peak_rss_mb": 1041.0,
+   "output_bytes": 48070260
+  },
+  "solarworld-energy-solutions-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 495,
+   "n_risks": 74,
+   "wall_s": 17.9,
+   "peak_rss_mb": 1049.2,
+   "output_bytes": 38078319
+  },
+  "canara-robeco-asset-management-company-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 639,
+   "n_risks": 68,
+   "wall_s": 18.8,
+   "peak_rss_mb": 1041.1,
+   "output_bytes": 44231944
+  },
+  "midwest-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 553,
+   "n_risks": 74,
+   "wall_s": 17.9,
+   "peak_rss_mb": 1022.2,
+   "output_bytes": 40545173
+  },
+  "orkla-india-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 535,
+   "n_risks": 83,
+   "wall_s": 18.1,
+   "peak_rss_mb": 434.4,
+   "output_bytes": 43059827
+  },
+  "groww-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 568,
+   "n_risks": 74,
+   "wall_s": 18.5,
+   "peak_rss_mb": 674.4,
+   "output_bytes": 41860939
+  },
+  "lenskart-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 1083,
+   "n_risks": 87,
+   "wall_s": 31.1,
+   "peak_rss_mb": 762.1,
+   "output_bytes": 82430397
+  },
+  "pine-labs-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 642,
+   "n_risks": 88,
+   "wall_s": 23.4,
+   "peak_rss_mb": 1050.4,
+   "output_bytes": 54499146
+  },
+  "emmvee-photovoltaic-power-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 511,
+   "n_risks": 86,
+   "wall_s": 20.1,
+   "peak_rss_mb": 1009.5,
+   "output_bytes": 42005742
+  },
+  "physicswallah-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 669,
+   "n_risks": 84,
+   "wall_s": 20.1,
+   "peak_rss_mb": 1093.8,
+   "output_bytes": 51229281
+  },
+  "fujiyama-power-systems-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 577,
+   "n_risks": 85,
+   "wall_s": 15.6,
+   "peak_rss_mb": 913.9,
+   "output_bytes": 37766398
+  },
+  "excelsoft-technologies-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 485,
+   "n_risks": 88,
+   "wall_s": 22.5,
+   "peak_rss_mb": 913.3,
+   "output_bytes": 33766938
+  },
+  "capillary-technologies-india-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 637,
+   "n_risks": 96,
+   "wall_s": 29.4,
+   "peak_rss_mb": 1067.6,
+   "output_bytes": 49016364
+  },
+  "studds-accessories-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 569,
+   "n_risks": 75,
+   "wall_s": 18.7,
+   "peak_rss_mb": 966.2,
+   "output_bytes": 37417283
+  },
+  "sudeep-pharma-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 552,
+   "n_risks": 79,
+   "wall_s": 20.8,
+   "peak_rss_mb": 998.5,
+   "output_bytes": 42357694
+  },
+  "aequs-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 704,
+   "n_risks": 78,
+   "wall_s": 21.6,
+   "peak_rss_mb": 959.2,
+   "output_bytes": 52349949
+  },
+  "meesho-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 689,
+   "n_risks": 70,
+   "wall_s": 17.5,
+   "peak_rss_mb": 1059.0,
+   "output_bytes": 43456118
+  },
+  "vidya-wires-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 477,
+   "n_risks": 75,
+   "wall_s": 14.0,
+   "peak_rss_mb": 853.2,
+   "output_bytes": 30621723
+  },
+  "corona-remedies-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 545,
+   "n_risks": 81,
+   "wall_s": 18.2,
+   "peak_rss_mb": 924.3,
+   "output_bytes": 41411560
+  },
+  "nephrocare-health-services-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 648,
+   "n_risks": 92,
+   "wall_s": 20.1,
+   "peak_rss_mb": 904.9,
+   "output_bytes": 47116618
+  },
+  "wakefit-innovations-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 482,
+   "n_risks": 69,
+   "wall_s": 17.5,
+   "peak_rss_mb": 943.3,
+   "output_bytes": 37453777
+  },
+  "park-medi-world-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 581,
+   "n_risks": 77,
+   "wall_s": 22.7,
+   "peak_rss_mb": 969.2,
+   "output_bytes": 47801840
+  },
+  "icici-prudential-asset-management-company-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 493,
+   "n_risks": 67,
+   "wall_s": 16.5,
+   "peak_rss_mb": 941.5,
+   "output_bytes": 38977098
+  },
+  "ksh-international-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 483,
+   "n_risks": 70,
+   "wall_s": 17.1,
+   "peak_rss_mb": 794.9,
+   "output_bytes": 36398414
+  },
+  "amagi-media-labs-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 517,
+   "n_risks": 75,
+   "wall_s": 20.2,
+   "peak_rss_mb": 941.1,
+   "output_bytes": 41839229
+  },
+  "bharat-coking-coal-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 598,
+   "n_risks": 85,
+   "wall_s": 19.6,
+   "peak_rss_mb": 817.4,
+   "output_bytes": 42853816
+  },
+  "shadowfax-technologies-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 422,
+   "n_risks": 70,
+   "wall_s": 18.2,
+   "peak_rss_mb": 872.6,
+   "output_bytes": 36022573
+  },
+  "fractal-analytics-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 652,
+   "n_risks": 77,
+   "wall_s": 21.5,
+   "peak_rss_mb": 1022.7,
+   "output_bytes": 49391786
+  },
+  "aye-finance-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 614,
+   "n_risks": 83,
+   "wall_s": 18.6,
+   "peak_rss_mb": 769.1,
+   "output_bytes": 45167335
+  },
+  "pngs-reva-diamond-jewellery-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 476,
+   "n_risks": 70,
+   "wall_s": 13.8,
+   "peak_rss_mb": 861.4,
+   "output_bytes": 32638284
+  },
+  "shree-ram-twistex-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 426,
+   "n_risks": 73,
+   "wall_s": 12.6,
+   "peak_rss_mb": 759.7,
+   "output_bytes": 27820709
+  },
+  "clean-max-enviro-energy-solutions-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 994,
+   "n_risks": 86,
+   "wall_s": 40.3,
+   "peak_rss_mb": 1042.9,
+   "output_bytes": 96025927
+  },
+  "omnitech-engineering-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 570,
+   "n_risks": 82,
+   "wall_s": 16.8,
+   "peak_rss_mb": 1263.9,
+   "output_bytes": 35917777
+  },
+  "sedemac-mechatronics-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 582,
+   "n_risks": 87,
+   "wall_s": 20.6,
+   "peak_rss_mb": 1431.0,
+   "output_bytes": 41405051
+  },
+  "rajputana-stainless-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 542,
+   "n_risks": 93,
+   "wall_s": 14.4,
+   "peak_rss_mb": 1210.8,
+   "output_bytes": 34567715
+  },
+  "innovision-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 488,
+   "n_risks": 82,
+   "wall_s": 16.1,
+   "peak_rss_mb": 432.8,
+   "output_bytes": 33206861
+  },
+  "gsp-crop-science-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 569,
+   "n_risks": 102,
+   "wall_s": 20.3,
+   "peak_rss_mb": 607.0,
+   "output_bytes": 45883779
+  },
+  "central-mine-planning-design-institute-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 556,
+   "n_risks": 72,
+   "wall_s": 18.1,
+   "peak_rss_mb": 745.0,
+   "output_bytes": 38312997
+  },
+  "powerica-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 508,
+   "n_risks": 98,
+   "wall_s": 22.6,
+   "peak_rss_mb": 820.8,
+   "output_bytes": 44132506
+  },
+  "sai-parenteral-s-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 510,
+   "n_risks": 91,
+   "wall_s": 16.2,
+   "peak_rss_mb": 701.3,
+   "output_bytes": 35398718
+  },
+  "amir-chand-jagdish-kumar-exports-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 539,
+   "n_risks": 82,
+   "wall_s": 16.2,
+   "peak_rss_mb": 662.6,
+   "output_bytes": 37631910
+  },
+  "om-power-transmission-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 530,
+   "n_risks": 80,
+   "wall_s": 18.2,
+   "peak_rss_mb": 674.5,
+   "output_bytes": 39160798
+  },
+  "onemi-technology-solutions-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 464,
+   "n_risks": 81,
+   "wall_s": 20.9,
+   "peak_rss_mb": 814.4,
+   "output_bytes": 38574967
+  },
+  "aureate-tradde-2026": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 336,
+   "n_risks": null,
+   "wall_s": 10.3,
+   "peak_rss_mb": 805.9,
+   "output_bytes": 22609313
+  },
+  "vegorama-punjabi-angithi-2026": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 378,
+   "n_risks": null,
+   "wall_s": 11.9,
+   "peak_rss_mb": 846.4,
+   "output_bytes": 26958892
+  },
+  "hexagon-nutrition-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 689,
+   "n_risks": 96,
+   "wall_s": 16.5,
+   "peak_rss_mb": 740.2,
+   "output_bytes": 44957141
+  },
+  "advit-jewels-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 467,
+   "n_risks": 81,
+   "wall_s": 25.6,
+   "peak_rss_mb": 735.9,
+   "output_bytes": 30761034
+  },
+  "turtlemint-fintech-solutions-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 708,
+   "n_risks": 88,
+   "wall_s": 24.1,
+   "peak_rss_mb": 750.3,
+   "output_bytes": 56380133
+  },
+  "csm-technologies-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 508,
+   "n_risks": 88,
+   "wall_s": 17.9,
+   "peak_rss_mb": 880.9,
+   "output_bytes": 37827581
+  },
+  "aastha-spintex-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 412,
+   "n_risks": 97,
+   "wall_s": 14.0,
+   "peak_rss_mb": 893.9,
+   "output_bytes": 28729004
+  },
+  "waterways-leisure-tourism-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 424,
+   "n_risks": 78,
+   "wall_s": 16.5,
+   "peak_rss_mb": 922.6,
+   "output_bytes": 29555329
+  },
+  "knack-packaging-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 531,
+   "n_risks": 80,
+   "wall_s": 15.2,
+   "peak_rss_mb": 883.6,
+   "output_bytes": 33162422
+  },
+  "kusumgar-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 493,
+   "n_risks": 68,
+   "wall_s": 18.3,
+   "peak_rss_mb": 956.1,
+   "output_bytes": 36905701
+  },
+  "sbi-funds-management-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 568,
+   "n_risks": 79,
+   "wall_s": 20.6,
+   "peak_rss_mb": 943.7,
+   "output_bytes": 45774325
+  },
+  "alpine-texworld-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 492,
+   "n_risks": 75,
+   "wall_s": 14.2,
+   "peak_rss_mb": 871.3,
+   "output_bytes": 34564345
+  },
+  "laser-power-and-infra-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 535,
+   "n_risks": 66,
+   "wall_s": 17.9,
+   "peak_rss_mb": 881.0,
+   "output_bytes": 40122561
+  },
+  "caliber-mining-and-logistics-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 707,
+   "n_risks": 82,
+   "wall_s": 19.7,
+   "peak_rss_mb": 979.4,
+   "output_bytes": 45705148
+  },
+  "indo-mim-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 495,
+   "n_risks": 81,
+   "wall_s": 18.3,
+   "peak_rss_mb": 865.1,
+   "output_bytes": 40618296
+  },
+  "lohia-corp-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 533,
+   "n_risks": 86,
+   "wall_s": 20.5,
+   "peak_rss_mb": 862.5,
+   "output_bytes": 41748957
+  },
+  "xtranet-technologies-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 559,
+   "n_risks": 71,
+   "wall_s": 15.9,
+   "peak_rss_mb": 883.7,
+   "output_bytes": 36011266
+  },
+  "manipal-health-enterprises-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 717,
+   "n_risks": 89,
+   "wall_s": 24.6,
+   "peak_rss_mb": 877.4,
+   "output_bytes": 59323228
+  },
+  "mv-electrosystems-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 512,
+   "n_risks": 74,
+   "wall_s": 14.8,
+   "peak_rss_mb": 964.0,
+   "output_bytes": 36015710
+  },
+  "ardee-industries-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 476,
+   "n_risks": 70,
+   "wall_s": 15.9,
+   "peak_rss_mb": 947.4,
+   "output_bytes": 34777052
+  },
+  "juniper-green-energy-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 771,
+   "n_risks": 97,
+   "wall_s": 22.0,
+   "peak_rss_mb": 1025.7,
+   "output_bytes": 56697803
+  },
+  "propshop-events-and-exhibitions-2026": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 443,
+   "n_risks": null,
+   "wall_s": 12.0,
+   "peak_rss_mb": 992.0,
+   "output_bytes": 28972456
+  },
+  "technocraft-ventures-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 632,
+   "n_risks": 79,
+   "wall_s": 14.9,
+   "peak_rss_mb": 1026.7,
+   "output_bytes": 36427435
+  },
+  "h-r-hygiene-products-2026": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 354,
+   "n_risks": null,
+   "wall_s": 10.2,
+   "peak_rss_mb": 967.8,
+   "output_bytes": 23849880
+  },
+  "leap-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 474,
+   "n_risks": 71,
+   "wall_s": 17.9,
+   "peak_rss_mb": 900.9,
+   "output_bytes": 41161954
+  },
+  "dhoot-transmission-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 592,
+   "n_risks": 87,
+   "wall_s": 20.5,
+   "peak_rss_mb": 954.5,
+   "output_bytes": 45912096
+  },
+  "milky-mist-dairy-food-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 544,
+   "n_risks": 72,
+   "wall_s": 18.8,
+   "peak_rss_mb": 928.7,
+   "output_bytes": 40125136
+  },
+  "molbio-diagnostics-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 575,
+   "n_risks": 66,
+   "wall_s": 19.4,
+   "peak_rss_mb": 1059.1,
+   "output_bytes": 43250143
+  },
+  "shiprocket-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 516,
+   "n_risks": 82,
+   "wall_s": 21.4,
+   "peak_rss_mb": 1152.3,
+   "output_bytes": 43705339
+  },
+  "lalithaa-jewellery-mart-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 519,
+   "n_risks": 74,
+   "wall_s": 15.8,
+   "peak_rss_mb": 421.8,
+   "output_bytes": 36603874
+  },
+  "skyways-air-services-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 644,
+   "n_risks": 73,
+   "wall_s": 15.7,
+   "peak_rss_mb": 558.7,
+   "output_bytes": 39101377
+  },
+  "sunshine-pictures-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 472,
+   "n_risks": 76,
+   "wall_s": 12.2,
+   "peak_rss_mb": 605.7,
+   "output_bytes": 31196939
+  },
+  "augmont-enterprises-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 549,
+   "n_risks": 87,
+   "wall_s": 18.6,
+   "peak_rss_mb": 662.6,
+   "output_bytes": 40067974
+  },
+  "gaja-alternative-asset-management-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 504,
+   "n_risks": 81,
+   "wall_s": 16.8,
+   "peak_rss_mb": 719.4,
+   "output_bytes": 36673903
+  },
+  "hy-tech-engineers-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 416,
+   "n_risks": 73,
+   "wall_s": 16.5,
+   "peak_rss_mb": 684.3,
+   "output_bytes": 32874307
+  },
+  "annu-projects-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 462,
+   "n_risks": 81,
+   "wall_s": 16.7,
+   "peak_rss_mb": 704.8,
+   "output_bytes": 32906549
+  },
+  "symbiotec-pharmalab-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 551,
+   "n_risks": 96,
+   "wall_s": 19.5,
+   "peak_rss_mb": 768.2,
+   "output_bytes": 44151179
+  },
+  "rays-of-belief-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 501,
+   "n_risks": 72,
+   "wall_s": 15.8,
+   "peak_rss_mb": 675.5,
+   "output_bytes": 35040884
+  },
+  "lumino-industries-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 535,
+   "n_risks": 74,
+   "wall_s": 20.2,
+   "peak_rss_mb": 767.4,
+   "output_bytes": 40576389
+  },
+  "priority-jewels-2026": {
+   "status": "excluded",
+   "reason": "risk factors are not numbered (segmenter needs numbered headings); not supported yet",
+   "pages": 387,
+   "n_risks": 0,
+   "wall_s": 17.1,
+   "peak_rss_mb": 748.4,
+   "output_bytes": 29008083
+  },
+  "purple-style-labs-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 448,
+   "n_risks": 70,
+   "wall_s": 17.0,
+   "peak_rss_mb": 808.0,
+   "output_bytes": 35323447
+  },
+  "speciality-medicines-2026": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 405,
+   "n_risks": null,
+   "wall_s": 13.8,
+   "peak_rss_mb": 833.5,
+   "output_bytes": 29889064
+  },
+  "deepa-jewellers-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 433,
+   "n_risks": 76,
+   "wall_s": 16.0,
+   "peak_rss_mb": 830.6,
+   "output_bytes": 32227117
+  },
+  "esds-software-solution-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 555,
+   "n_risks": 55,
+   "wall_s": 17.3,
+   "peak_rss_mb": 774.6,
+   "output_bytes": 36622682
+  },
+  "veegaland-developers-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 534,
+   "n_risks": 72,
+   "wall_s": 14.0,
+   "peak_rss_mb": 757.4,
+   "output_bytes": 36425491
+  },
+  "pranav-constructions-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 479,
+   "n_risks": 78,
+   "wall_s": 17.3,
+   "peak_rss_mb": 742.0,
+   "output_bytes": 36240177
+  },
+  "asset-reconstruction-company-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 573,
+   "n_risks": 66,
+   "wall_s": 21.2,
+   "peak_rss_mb": 808.1,
+   "output_bytes": 46866152
+  },
+  "glass-wall-systems-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 571,
+   "n_risks": 94,
+   "wall_s": 18.2,
+   "peak_rss_mb": 769.1,
+   "output_bytes": 41687359
+  },
+  "kanohar-electricals-2026": {
+   "status": "excluded",
+   "reason": "risk factors are not numbered (segmenter needs numbered headings); not supported yet",
+   "pages": 508,
+   "n_risks": 0,
+   "wall_s": 18.8,
+   "peak_rss_mb": 756.7,
+   "output_bytes": 36667835
+  },
+  "karamtara-engineering-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 529,
+   "n_risks": 81,
+   "wall_s": 22.5,
+   "peak_rss_mb": 914.3,
+   "output_bytes": 41711465
+  },
+  "prasol-chemicals-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 590,
+   "n_risks": 85,
+   "wall_s": 17.1,
+   "peak_rss_mb": 830.6,
+   "output_bytes": 38849435
+  },
+  "vinod-texworld-2026": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 469,
+   "n_risks": null,
+   "wall_s": 24.2,
+   "peak_rss_mb": 804.8,
+   "output_bytes": 27718395
+  },
+  "lcc-projects-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 486,
+   "n_risks": 86,
+   "wall_s": 17.8,
+   "peak_rss_mb": 396.7,
+   "output_bytes": 37897146
+  },
+  "manipal-payment-and-identity-solutions-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 555,
+   "n_risks": 83,
+   "wall_s": 20.4,
+   "peak_rss_mb": 651.0,
+   "output_bytes": 44239769
+  },
+  "rentomojo-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 436,
+   "n_risks": 89,
+   "wall_s": 17.7,
+   "peak_rss_mb": 705.1,
+   "output_bytes": 35274604
+  },
+  "steamhouse-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 661,
+   "n_risks": 93,
+   "wall_s": 18.7,
+   "peak_rss_mb": 860.1,
+   "output_bytes": 42460356
+  },
+  "manika-plastech-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 503,
+   "n_risks": 79,
+   "wall_s": 18.0,
+   "peak_rss_mb": 746.9,
+   "output_bytes": 38463638
+  },
+  "jindal-supreme-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 400,
+   "n_risks": 20,
+   "wall_s": 14.0,
+   "peak_rss_mb": 816.0,
+   "output_bytes": 26116170
+  },
+  "tempsens-instruments-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 616,
+   "n_risks": 87,
+   "wall_s": 19.8,
+   "peak_rss_mb": 838.6,
+   "output_bytes": 44361889
+  },
+  "sonaselection-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 613,
+   "n_risks": 72,
+   "wall_s": 18.5,
+   "peak_rss_mb": 421.5,
+   "output_bytes": 33342571
+  },
+  "ss-retail-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 646,
+   "n_risks": 68,
+   "wall_s": 19.4,
+   "peak_rss_mb": 791.2,
+   "output_bytes": 44854273
+  },
+  "hero-motors-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 582,
+   "n_risks": 87,
+   "wall_s": 20.6,
+   "peak_rss_mb": 782.3,
+   "output_bytes": 47513110
+  },
+  "national-stock-exchange-of-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 668,
+   "n_risks": 77,
+   "wall_s": 27.0,
+   "peak_rss_mb": 860.9,
+   "output_bytes": 58776888
+  },
+  "varmora-granito-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 591,
+   "n_risks": 81,
+   "wall_s": 21.4,
+   "peak_rss_mb": 1034.5,
+   "output_bytes": 48355405
+  },
+  "swastika-infra-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 460,
+   "n_risks": 72,
+   "wall_s": 12.9,
+   "peak_rss_mb": 1072.1,
+   "output_bytes": 32794750
+  },
+  "acevector-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 575,
+   "n_risks": 82,
+   "wall_s": 22.6,
+   "peak_rss_mb": 1185.3,
+   "output_bytes": 48987114
+  },
+  "adroit-industries-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 600,
+   "n_risks": 84,
+   "wall_s": 15.4,
+   "peak_rss_mb": 947.3,
+   "output_bytes": 39785644
+  },
+  "german-green-steel-and-power-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 601,
+   "n_risks": 88,
+   "wall_s": 16.5,
+   "peak_rss_mb": 942.3,
+   "output_bytes": 40163083
+  },
+  "moneyview-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 537,
+   "n_risks": 82,
+   "wall_s": 17.4,
+   "peak_rss_mb": 949.0,
+   "output_bytes": 40580726
+  },
+  "orient-cables-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 491,
+   "n_risks": 87,
+   "wall_s": 18.4,
+   "peak_rss_mb": 925.3,
+   "output_bytes": 38350623
+  },
+  "a-one-steel-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 807,
+   "n_risks": 105,
+   "wall_s": 16.9,
+   "peak_rss_mb": 506.8,
+   "output_bytes": 52705210
+  },
+  "amtech-esters-2026": {
+   "status": "excluded",
+   "reason": "SME issue (cover names an SME platform; C-ADR-09)",
+   "pages": 349,
+   "n_risks": null,
+   "wall_s": 8.7,
+   "peak_rss_mb": 703.4,
+   "output_bytes": 24158600
+  },
+  "shah-investor-s-home-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 715,
+   "n_risks": 67,
+   "wall_s": 18.1,
+   "peak_rss_mb": 718.0,
+   "output_bytes": 43427823
+  },
+  "srit-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 540,
+   "n_risks": 79,
+   "wall_s": 16.9,
+   "peak_rss_mb": 676.6,
+   "output_bytes": 39926637
+  },
+  "runwal-enterprises-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 611,
+   "n_risks": 71,
+   "wall_s": 21.7,
+   "peak_rss_mb": 780.2,
+   "output_bytes": 50294976
+  },
+  "nityas-gems-and-jewellery-india-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 537,
+   "n_risks": 74,
+   "wall_s": 13.6,
+   "peak_rss_mb": 775.2,
+   "output_bytes": 33467531
+  },
+  "vibhor-steel-tubes-2024": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 468,
+   "n_risks": 75,
+   "wall_s": 12.2,
+   "peak_rss_mb": 323.5,
+   "output_bytes": 27416762
+  },
+  "indogulf-cropsciences-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 486,
+   "n_risks": 82,
+   "wall_s": 18.9,
+   "peak_rss_mb": 449.7,
+   "output_bytes": 33714994
+  },
+  "mangal-electrical-industries-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 466,
+   "n_risks": 78,
+   "wall_s": 14.6,
+   "peak_rss_mb": 570.4,
+   "output_bytes": 32076973
+  },
+  "canara-hsbc-life-insurance-company-2025": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 687,
+   "n_risks": 81,
+   "wall_s": 21.1,
+   "peak_rss_mb": 667.4,
+   "output_bytes": 45397480
+  },
+  "behari-lal-engineering-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 597,
+   "n_risks": 86,
+   "wall_s": 16.9,
+   "peak_rss_mb": 762.8,
+   "output_bytes": 37506496
+  },
+  "armee-infotech-2026": {
+   "status": "parsed",
+   "reason": "",
+   "pages": 464,
+   "n_risks": 94,
+   "wall_s": 19.5,
+   "peak_rss_mb": 715.0,
+   "output_bytes": 35207884
+  }
+ }
+}

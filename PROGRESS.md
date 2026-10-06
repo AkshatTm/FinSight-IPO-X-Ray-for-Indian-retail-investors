@@ -11,6 +11,7 @@
 - **Open questions:** none.
 
 ## Log
+- C1.2/C1.3 done: 289 docs fetched, 275 parsed, 14 excluded (12 SME, 2 unnumbered risks); section-header dash fix
 - C1.3 fix: Risk Factors missed by 6 batch docs (wrapped TOC leaders, unmapped glyphs, singular title, heading fallback); regression tests; all 6 now parse
 - C2.8 code: rolling-window reference scores, tercile fit on train+dev, E21 outcomes module with import guard; fit and E21 runs in AKSHAT_TODO
 - C2.6 code: novelty tau rule, blind pair sheet, scoring; rating in AKSHAT_TODO

@@ -61,7 +61,7 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
 
 _TOC_HEAD = re.compile(r"^(TABLE OF CONTENTS|CONTENTS)$", re.MULTILINE | re.IGNORECASE)
 _TOC_LINE = re.compile(r"^(?P<title>.*?)\s*\.{4,}\s*(?P<page>\d{1,4})\s*$")
-_PART = re.compile(r"^SECTION\s+[IVXLC]+\s*[:\-–]?\s*", re.IGNORECASE)
+_PART = re.compile(r"^SECTION\s*[-–]?\s*[IVXLC]+\s*[:\-–]?\s*", re.IGNORECASE)
 # Part headers that are also a section in their own right ("SECTION II: RISK FACTORS").
 _PART_SECTIONS = {"risk_factors"}
 HEADING_LINES = 8  # a heading must be within the first lines of the page text

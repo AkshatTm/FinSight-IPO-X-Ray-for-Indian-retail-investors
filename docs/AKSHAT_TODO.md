@@ -22,6 +22,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 ### C2.2 teacher bake-off (code merged; needs the frozen split + the vLLM pin first), ~1 h + 30 min rating
 - [ ] After C1.4 is frozen and the bank is built: `uv run python scripts/teacher_bakeoff.py sample`, then follow `docs/phase3/COLAB_STEPS_teacher_bakeoff.md` (A100, ~7–10 units), then rate the blind sheet. Note: C2.2 is an Opus-marked part that was done on Sonnet overnight — review `src/finsight/risks/bakeoff.py` (the pick rule) and C-ADR-05 before you rely on it.
 
+### C1.2 / C1.3 data results (skim, ~10 min)
+- [ ] Fetch finished: 289 universe rows, all PDFs downloaded (no manual downloads needed; 6 network errors succeeded on retry). Parsed 275; excluded 14: 12 SME covers (C-ADR-09) and 2 whose risk factors are unnumbered (`priority-jewels-2026`, `kanohar-electricals-2026`; the segmenter needs numbered headings). Skim `configs/ipo_universe.csv` (2026 has more rows than expected: SEBI lists filings, not completed IPOs) and `eval_results/c/parse_batch.json`. `patel-retail-2025` yielded only 18 risks: worth a look.
+
 ### C2.3 teacher full run (code and steps merged), ~2–4 h Colab + 30 min rating
 - [ ] After the bake-off pick: `uv run python scripts/export_teacher_input.py`, then `docs/phase3/COLAB_STEPS_teacher_full.md` (A100, ~14–27 units), rate the quality-100 sheet, go/no-go (≥ 85 %).
 
