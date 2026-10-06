@@ -4,13 +4,14 @@
 - **Phase:** Phase 3, gate-driven, local code (C-ADR-01, C-ADR-10). Plan: `docs/phase3/C05_ROADMAP.md` + `docs/phase3/C_EXECUTION_PLAN.md`.
 - **MODE: overnight autonomous run** (user asleep): everything on Sonnet, one PR per part, merged by Claude when green. Order: C0.2 ✓ → C1.1 ✓ → C1.2 (code ✓, fetch RUNNING) → C1.3 (code ✓, batch parse RUNNING) → C1.4 real run → C2.1 … C2.8 (code + notebooks only). Stop rules: money/keys/GCP/deploy, same bug twice (write `BLOCKED.md`, move on), all blocked.
 - **Background jobs (started by Claude, repo root):** `scripts/fetch_offer_docs.py` (log `data/raw/logs/fetch1.log`) and `data/raw/logs/loop.sh` (repeats `scripts/batch_parse.py`; log `data/raw/logs/batch.log`; appends `LOOP_DONE` at the end). `configs/ipo_universe.csv` is rewritten by the fetch: do NOT commit it until both finish; then `batch_parse.py --apply`, `--report`, fix repeated failures (regression tests), `uv run poe docs-gen`, commit "data: fetch + parse status" (closes #175/#176).
-- **Last done:** C2.1-C2.6 merged (code + notebooks + steps); C2.8 reference scores, tercile fit, E21 outcomes module (`finsight.risklevel.reference`, `finsight.evaluate.outcomes`, `scripts/corpus_points.py`, `scripts/validate_risklevel.py`) on branch `eval/c2.8-risklevel`. C2.7 (extractor v2) is below the cut line.
-- **Next:** decide C2.7 (only if worthwhile); the C1.2/C1.3 data commit and the C1.4 real run when both background jobs finish; then the real C2.1 bank build.
+- **Last done:** C0.2-C2.6, C2.8 code merged; C1.2/C1.3 data merged (275 parsed, 14 excluded); C1.4 dry run only (NOT frozen: bench is empty until C4.1, so the pre-confirmed check failed). C2.7 skipped (below the cut line).
+- **Next:** Akshat confirms the split (`python -m finsight.splits build --freeze`); then real C2.1 bank build + teacher input export, bake-off, teacher run (Colab), classifier, student.
 - **Pending (Akshat):** vLLM pin test on the L4 (AKSHAT_TODO, C0.2).
 - **Opus-marked parts done on Sonnet (review in the morning):** C2.2 (pick rule in `src/finsight/risks/bakeoff.py`, C-ADR-05).
 - **Open questions:** none.
 
 ## Log
+- C1.4 dry run: split not frozen (bench empty by design until C4.1); counts in AKSHAT_TODO
 - C1.2/C1.3 done: 289 docs fetched, 275 parsed, 14 excluded (12 SME, 2 unnumbered risks); section-header dash fix
 - C1.3 fix: Risk Factors missed by 6 batch docs (wrapped TOC leaders, unmapped glyphs, singular title, heading fallback); regression tests; all 6 now parse
 - C2.8 code: rolling-window reference scores, tercile fit on train+dev, E21 outcomes module with import guard; fit and E21 runs in AKSHAT_TODO
