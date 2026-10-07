@@ -1,0 +1,10 @@
+{
+  "artefact": "guard_muril_v1",
+  "kind": "train",
+  "ipo_ids": [],
+  "inputs": [],
+  "sha256": "d2bed10abc25418bd740a13e2d6e2a8a02fcb98737334a55a06b71e62700c3c7",
+  "written_by": "finsight.guard.clf_data (Phase 1; retro manifest by finsight.splits)",
+  "note": "MuRIL advice guard (P5.4): trained on questions (data/gold/advice_guard_set.csv), no offer documents",
+  "n_ipos": 0
+}

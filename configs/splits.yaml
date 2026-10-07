@@ -1,0 +1,4705 @@
+# Phase 3 time split (C02 §4, C-ADR-02). Written by `python -m finsight.splits build`;
+# never edit by hand. Once frozen, it changes only by a new C-ADR.
+version: 1
+frozen: true
+rule: strict
+train_cut: '2025-06-19'
+rules:
+  dev_share: 0.3333333333333333
+  train_share: 0.7
+  demo_newest: 3.0
+changed_by_adr: []
+counts:
+  dev/new: 52
+  dev/showcase: 3
+  test/new: 103
+  test/showcase: 7
+  train/corpus: 389
+  train/new: 110
+  excluded: 14
+ipos:
+- ipo_id: a-one-steel-2026
+  company: A One Steel Limited
+  company_key: a one steel
+  source: new
+  slice: test
+  doc_date: '2026-09-11'
+  close_year: null
+- ipo_id: a2z-maintenance-engineering-services-2010
+  company: A2Z Maintenance & Engineering Services Ltd
+  company_key: a2z maintenance engineering services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: aadhar-housing-finance-2024
+  company: Aadhar Housing Finance Limited
+  company_key: aadhar housing finance
+  source: new
+  slice: train
+  doc_date: '2024-04-30'
+  close_year: null
+- ipo_id: aanjaneya-lifecare-2011
+  company: Aanjaneya Lifecare Ltd
+  company_key: aanjaneya lifecare
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: aastha-spintex-2026
+  company: Aastha Spintex Limited
+  company_key: aastha spintex
+  source: new
+  slice: test
+  doc_date: '2026-06-18'
+  close_year: null
+- ipo_id: aavas-financiers-2018
+  company: Aavas Financiers Limited
+  company_key: aavas financiers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: abans-holdings-2022
+  company: Abans Holdings Limited
+  company_key: abans holdings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: acevector-2026
+  company: Acevector Limited
+  company_key: acevector
+  source: new
+  slice: test
+  doc_date: '2026-09-21'
+  close_year: null
+- ipo_id: acme-solar-holdings-2024
+  company: Acme Solar Holdings Limited
+  company_key: acme solar holdings
+  source: new
+  slice: train
+  doc_date: '2024-10-29'
+  close_year: null
+- ipo_id: acropetal-technologies-2011
+  company: Acropetal Technologies Ltd
+  company_key: acropetal technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: adani-power-2009
+  company: Adani Power Limited
+  company_key: adani power
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: adani-wilmar-2022
+  company: Adani Wilmar Limited
+  company_key: adani wilmar
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: aditya-birla-sun-life-amc-2021
+  company: Aditya Birla Sun Life AMC Ltd
+  company_key: aditya birla sun life amc
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: aditya-infotech-2025
+  company: Aditya Infotech Limited
+  company_key: aditya infotech
+  source: new
+  slice: dev
+  doc_date: '2025-07-23'
+  close_year: null
+- ipo_id: adlabs-entertainment-2015
+  company: Adlabs Entertainment Ltd
+  company_key: adlabs entertainment
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: adroit-industries-2026
+  company: Adroit Industries Limited
+  company_key: adroit industries
+  source: new
+  slice: test
+  doc_date: '2026-09-17'
+  close_year: null
+- ipo_id: advance-agrolife-2025
+  company: Advance Agrolife Limited
+  company_key: advance agrolife
+  source: new
+  slice: dev
+  doc_date: '2025-09-18'
+  close_year: null
+- ipo_id: advanced-enzyme-technologies-2016
+  company: Advanced Enzyme Technologies Ltd
+  company_key: advanced enzyme technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: advit-jewels-2026
+  company: Advit Jewels Limited
+  company_key: advit jewels
+  source: new
+  slice: test
+  doc_date: '2026-06-09'
+  close_year: null
+- ipo_id: aegis-vopak-terminals-2025
+  company: AEGIS VOPAK TERMINALS LIMITED
+  company_key: aegis vopak terminals
+  source: new
+  slice: train
+  doc_date: '2025-05-20'
+  close_year: null
+- ipo_id: aequs-2025
+  company: Aequs Limited
+  company_key: aequs
+  source: new
+  slice: test
+  doc_date: '2025-11-26'
+  close_year: null
+- ipo_id: aeroflex-industries-2023
+  company: Aeroflex Industries Limited
+  company_key: aeroflex industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: aether-industries-2022
+  company: Aether Industries Limited
+  company_key: aether industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: afcons-infrastructure-2024
+  company: Afcons Infrastructure Limited
+  company_key: afcons infrastructure
+  source: new
+  slice: train
+  doc_date: '2024-10-18'
+  close_year: null
+- ipo_id: affle-india-2019
+  company: Affle (India) Limited
+  company_key: affle
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: ags-transact-technologies-2022
+  company: AGS Transact Technologies Ltd
+  company_key: ags transact technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: ajax-engineering-2025
+  company: Ajax Engineering Ltd
+  company_key: ajax engineering
+  source: new
+  slice: train
+  doc_date: '2025-02-04'
+  close_year: null
+- ipo_id: akme-fintrade-india-2024
+  company: Akme Fintrade India Limited
+  company_key: akme fintrade
+  source: new
+  slice: train
+  doc_date: '2024-06-11'
+  close_year: null
+- ipo_id: akums-drugs-and-pharmaceuticals-2024
+  company: Akums Drugs and Pharmaceuticals Limited
+  company_key: akums drugs and pharmaceuticals
+  source: new
+  slice: train
+  doc_date: '2024-07-24'
+  close_year: null
+- ipo_id: alkem-laboratories-2015
+  company: Alkem Laboratories Limited
+  company_key: alkem laboratories
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: all-time-plastics-2025
+  company: All Time Plastics Limited
+  company_key: all time plastics
+  source: new
+  slice: dev
+  doc_date: '2025-08-01'
+  close_year: null
+- ipo_id: alpine-texworld-2026
+  company: ALPINE TEXWORLD LIMITED
+  company_key: alpine texworld
+  source: new
+  slice: test
+  doc_date: '2026-07-08'
+  close_year: null
+- ipo_id: amagi-media-labs-2026
+  company: Amagi Media Labs Limited
+  company_key: amagi media labs
+  source: new
+  slice: test
+  doc_date: '2026-01-07'
+  close_year: null
+- ipo_id: amber-enterprises-india-2018
+  company: Amber Enterprises India Limited
+  company_key: amber enterprises
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: ami-organics-2021
+  company: Ami Organics Limited
+  company_key: ami organics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: amir-chand-jagdish-kumar-exports-2026
+  company: Amir Chand Jagdish Kumar Exports Limited
+  company_key: amir chand jagdish kumar exports
+  source: new
+  slice: test
+  doc_date: '2026-03-28'
+  close_year: null
+- ipo_id: anand-rathi-wealth-2021
+  company: Anand Rathi Wealth Limited
+  company_key: anand rathi wealth
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: angel-one-2020
+  company: Angel One Ltd
+  company_key: angel one
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: anlon-healthcare-2025
+  company: Anlon Healthcare Limited
+  company_key: anlon healthcare
+  source: new
+  slice: dev
+  doc_date: '2025-08-20'
+  close_year: null
+- ipo_id: annu-projects-2026
+  company: Annu Projects Ltd.
+  company_key: annu projects
+  source: new
+  slice: test
+  doc_date: '2026-08-18'
+  close_year: null
+- ipo_id: anthem-biosciences-2025
+  company: Anthem Biosciences Limited
+  company_key: anthem biosciences
+  source: new
+  slice: dev
+  doc_date: '2025-07-08'
+  close_year: null
+- ipo_id: antony-waste-handling-cell-2020
+  company: Antony Waste Handling Cell Limited
+  company_key: antony waste handling cell
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: anupam-rasayan-india-2021
+  company: Anupam Rasayan India Limited
+  company_key: anupam rasayan
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: apeejay-surrendra-park-hotels-2024
+  company: Apeejay Surrendra Park Hotels Limited
+  company_key: apeejay surrendra park hotels
+  source: new
+  slice: train
+  doc_date: '2024-01-29'
+  close_year: null
+- ipo_id: apex-frozen-foods-2017
+  company: Apex Frozen Foods Ltd
+  company_key: apex frozen foods
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: aptus-value-housing-finance-india-2021
+  company: Aptus Value Housing Finance India Ltd
+  company_key: aptus value housing finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: aqua-logistics-2010
+  company: Aqua Logistics Ltd
+  company_key: aqua logistics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: archean-chemical-industries-2022
+  company: Archean Chemical Industries Limited
+  company_key: archean chemical industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: ardee-industries-2026
+  company: Ardee Industries Limited
+  company_key: ardee industries
+  source: new
+  slice: test
+  doc_date: '2026-07-27'
+  close_year: null
+- ipo_id: arisinfra-solutions-2025
+  company: Arisinfra Solutions Limited
+  company_key: arisinfra solutions
+  source: new
+  slice: train
+  doc_date: '2025-06-11'
+  close_year: null
+- ipo_id: arkade-developers-2024
+  company: Arkade Developers Limited
+  company_key: arkade developers
+  source: new
+  slice: train
+  doc_date: '2024-09-20'
+  close_year: null
+- ipo_id: armee-infotech-2026
+  company: ArMee Infotech Limited
+  company_key: armee infotech
+  source: new
+  slice: test
+  doc_date: '2026-09-16'
+  close_year: null
+- ipo_id: arss-infrastructure-projects-2010
+  company: ARSS Infrastructure Projects Ltd
+  company_key: arss infrastructure projects
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: ashoka-buildcon-2010
+  company: Ashoka Buildcon Ltd
+  company_key: ashoka buildcon
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: ask-automotive-2023
+  company: ASK Automotive Limited
+  company_key: ask automotive
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: asset-reconstruction-company-india-2026
+  company: ASSET RECONSTRUCTION COMPANY (INDIA) Limited
+  company_key: asset reconstruction company
+  source: new
+  slice: test
+  doc_date: '2026-09-01'
+  close_year: null
+- ipo_id: astec-lifesciences-2009
+  company: Astec LifeSciences Limited
+  company_key: astec lifesciences
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: aster-dm-healthcare-2018
+  company: Aster DM Healthcare Ltd
+  company_key: aster dm healthcare
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: aster-silicates-2010
+  company: Aster Silicates Ltd
+  company_key: aster silicates
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: astron-paper-board-mill-2017
+  company: Astron Paper & Board Mill Ltd
+  company_key: astron paper board mill
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: ather-energy-2025
+  company: Ather Energy Limited
+  company_key: ather energy
+  source: showcase
+  slice: dev
+  doc_date: '2025-04-22'
+  close_year: null
+- ipo_id: au-financiers-india-2017
+  company: Au Financiers (India) Limited
+  company_key: au financiers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: augmont-enterprises-2026
+  company: AUGMONT ENTERPRISES LIMITED
+  company_key: augmont enterprises
+  source: new
+  slice: test
+  doc_date: '2026-08-17'
+  close_year: null
+- ipo_id: avalon-technologies-2023
+  company: Avalon Technologies Limited
+  company_key: avalon technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: avenue-supermarts-2017
+  company: Avenue Supermarts Limited
+  company_key: avenue supermarts
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: awfis-space-solutions-2024
+  company: Awfis Space Solutions Limited
+  company_key: awfis space solutions
+  source: new
+  slice: train
+  doc_date: '2024-05-14'
+  close_year: null
+- ipo_id: aye-finance-2026
+  company: Aye Finance Limited
+  company_key: aye finance
+  source: new
+  slice: test
+  doc_date: '2026-02-03'
+  close_year: null
+- ipo_id: azad-engineering-2023
+  company: Azad Engineering Limited
+  company_key: azad engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: baazar-style-retail-2024
+  company: Baazar Style Retail Limited
+  company_key: baazar style retail
+  source: new
+  slice: train
+  doc_date: '2024-08-23'
+  close_year: null
+- ipo_id: bajaj-corp-2010
+  company: Bajaj Corp Limited
+  company_key: bajaj corp
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: bajaj-housing-finance-2024
+  company: Bajaj Housing Finance Limited
+  company_key: bajaj housing finance
+  source: new
+  slice: train
+  doc_date: '2024-08-30'
+  close_year: null
+- ipo_id: bandhan-bank-2018
+  company: Bandhan Bank Limited
+  company_key: bandhan bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: bansal-wire-industries-2024
+  company: Bansal Wire Industries Limited
+  company_key: bansal wire industries
+  source: new
+  slice: train
+  doc_date: '2024-06-27'
+  close_year: null
+- ipo_id: barbeque-nation-hospitality-2021
+  company: Barbeque Nation Hospitality Limited
+  company_key: barbeque nation hospitality
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: bedmutha-industries-2010
+  company: Bedmutha Industries Ltd
+  company_key: bedmutha industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: behari-lal-engineering-2026
+  company: Behari Lal Engineering Limited
+  company_key: behari lal engineering
+  source: new
+  slice: test
+  doc_date: '2026-08-06'
+  close_year: null
+- ipo_id: belrise-industries-2025
+  company: Belrise Industries Limited
+  company_key: belrise industries
+  source: new
+  slice: train
+  doc_date: '2025-05-15'
+  close_year: null
+- ipo_id: bharat-coking-coal-2026
+  company: Bharat Coking Coal Limited
+  company_key: bharat coking coal
+  source: new
+  slice: test
+  doc_date: '2026-01-02'
+  close_year: null
+- ipo_id: bharat-dynamics-2018
+  company: Bharat Dynamics Ltd
+  company_key: bharat dynamics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: bharat-road-network-2017
+  company: Bharat Road Network Limited
+  company_key: bharat road network
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: bharat-wire-ropes-2016
+  company: Bharat Wire Ropes Ltd
+  company_key: bharat wire ropes
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: bharatiya-global-infomedia-2011
+  company: Bharatiya Global Infomedia Ltd
+  company_key: bharatiya global infomedia
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: bharti-hexacom-2024
+  company: Bharti Hexacom Limited
+  company_key: bharti hexacom
+  source: new
+  slice: train
+  doc_date: '2024-03-22'
+  close_year: null
+- ipo_id: bharti-infratel-2012
+  company: Bharti Infratel Limited
+  company_key: bharti infratel
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: bikaji-foods-international-2022
+  company: Bikaji Foods International Limited
+  company_key: bikaji foods international
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: bls-e-services-2024
+  company: BLS E-Services Limited
+  company_key: bls e services
+  source: new
+  slice: train
+  doc_date: '2024-01-23'
+  close_year: null
+- ipo_id: blue-jet-healthcare-2023
+  company: Blue Jet Healthcare Limited
+  company_key: blue jet healthcare
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: bluestone-jewellery-and-lifestyle-2025
+  company: Bluestone Jewellery and Lifestyle Limited
+  company_key: bluestone jewellery and lifestyle
+  source: new
+  slice: dev
+  doc_date: '2025-08-04'
+  close_year: null
+- ipo_id: bmw-ventures-2025
+  company: BMW Ventures Limited
+  company_key: bmw ventures
+  source: new
+  slice: dev
+  doc_date: '2025-09-18'
+  close_year: null
+- ipo_id: borana-weaves-2025
+  company: Borana Weaves Limited
+  company_key: borana weaves
+  source: new
+  slice: train
+  doc_date: '2025-05-14'
+  close_year: null
+- ipo_id: brainbees-solutions-2024
+  company: Brainbees Solutions Limited
+  company_key: brainbees solutions
+  source: new
+  slice: train
+  doc_date: '2024-07-30'
+  close_year: null
+- ipo_id: brigade-hotel-ventures-2025
+  company: Brigade Hotel Ventures Limited
+  company_key: brigade hotel ventures
+  source: new
+  slice: dev
+  doc_date: '2025-07-18'
+  close_year: null
+- ipo_id: brooks-laboratories-2011
+  company: Brooks Laboratories Ltd
+  company_key: brooks laboratories
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: bse-2017
+  company: BSE Limited
+  company_key: bse
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: c-e-info-systems-2021
+  company: C.E. Info systems limited
+  company_key: c e info systems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: c-mahendra-exports-2011
+  company: C Mahendra Exports Ltd
+  company_key: c mahendra exports
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: caliber-mining-and-logistics-2026
+  company: CALIBER MINING AND LOGISTICS LIMITED
+  company_key: caliber mining and logistics
+  source: new
+  slice: test
+  doc_date: '2026-07-13'
+  close_year: null
+- ipo_id: campus-activewear-2022
+  company: Campus Activewear Limited
+  company_key: campus activewear
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: canara-hsbc-life-insurance-company-2025
+  company: Canara HSBC Life Insurance Company Limited
+  company_key: canara hsbc life insurance company
+  source: new
+  slice: dev
+  doc_date: '2025-10-04'
+  close_year: null
+- ipo_id: canara-robeco-asset-management-company-2025
+  company: Canara Robeco Asset Management Company Limited
+  company_key: canara robeco asset management company
+  source: new
+  slice: dev
+  doc_date: '2025-10-03'
+  close_year: null
+- ipo_id: cantabil-retail-india-2010
+  company: Cantabil Retail India Ltd
+  company_key: cantabil retail
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: capacit-e-infraprojects-2017
+  company: Capacit'e Infraprojects Limited
+  company_key: capacit e infraprojects
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: capillary-technologies-india-2025
+  company: Capillary Technologies India Limited
+  company_key: capillary technologies
+  source: new
+  slice: test
+  doc_date: '2025-11-07'
+  close_year: null
+- ipo_id: capital-small-finance-bank-2024
+  company: Capital Small Finance Bank Limited
+  company_key: capital small finance bank
+  source: new
+  slice: train
+  doc_date: '2024-02-01'
+  close_year: null
+- ipo_id: career-point-infosystems-2010
+  company: Career Point Infosystems Ltd
+  company_key: career point infosystems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: carraro-india-2024
+  company: Carraro India Limited
+  company_key: carraro
+  source: new
+  slice: train
+  doc_date: '2024-12-16'
+  close_year: null
+- ipo_id: cartrade-tech-2021
+  company: CarTrade Tech Limited
+  company_key: cartrade tech
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: ceigall-india-2024
+  company: Ceigall India Limited
+  company_key: ceigall
+  source: new
+  slice: train
+  doc_date: '2024-07-26'
+  close_year: null
+- ipo_id: cello-world-2023
+  company: Cello World Limited
+  company_key: cello world
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: central-mine-planning-design-institute-2026
+  company: Central Mine Planning & Design Institute Limited
+  company_key: central mine planning design institute
+  source: new
+  slice: test
+  doc_date: '2026-03-12'
+  close_year: null
+- ipo_id: chalet-hotels-2019
+  company: Chalet Hotels Limited
+  company_key: chalet hotels
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: chemcon-speciality-chemicals-2020
+  company: Chemcon Speciality Chemicals Limited
+  company_key: chemcon speciality chemicals
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: chemplast-sanmar-2021
+  company: Chemplast Sanmar Limited
+  company_key: chemplast sanmar
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: cl-educate-2017
+  company: CL Educate Ltd
+  company_key: cl educate
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: clean-max-enviro-energy-solutions-2026
+  company: Clean Max Enviro Energy Solutions Limited
+  company_key: clean max enviro energy solutions
+  source: new
+  slice: test
+  doc_date: '2026-02-16'
+  close_year: null
+- ipo_id: clean-science-and-technology-2021
+  company: Clean Science and Technology Ltd
+  company_key: clean science and technology
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: cms-info-systems-2021
+  company: CMS Info Systems Limited
+  company_key: cms info systems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: coal-india-2010
+  company: Coal India Limited
+  company_key: coal
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: cochin-shipyard-2017
+  company: Cochin Shipyard Ltd
+  company_key: cochin shipyard
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: coffee-day-enterprises-2015
+  company: Coffee Day Enterprises Ltd
+  company_key: coffee day enterprises
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: commercial-engineers-body-builders-co-2010
+  company: Commercial Engineers & Body Builders Co Ltd
+  company_key: commercial engineers body builders co
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: concord-biotech-2023
+  company: Concord Biotech Limited
+  company_key: concord biotech
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: concord-enviro-systems-2024
+  company: Concord Enviro Systems Limited
+  company_key: concord enviro systems
+  source: new
+  slice: train
+  doc_date: '2024-12-14'
+  close_year: null
+- ipo_id: corona-remedies-2025
+  company: CORONA Remedies Limited
+  company_key: corona remedies
+  source: new
+  slice: test
+  doc_date: '2025-12-02'
+  close_year: null
+- ipo_id: cox-and-kings-india-2009
+  company: Cox and Kings (India) Limited
+  company_key: cox and kings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: craftsman-automation-2021
+  company: Craftsman Automation Limited
+  company_key: craftsman automation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: credit-analysis-research-2012
+  company: Credit Analysis & Research Ltd
+  company_key: credit analysis research
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: credo-brands-marketing-2023
+  company: Credo Brands Marketing Limited
+  company_key: credo brands marketing
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: crizac-2025
+  company: Crizac Limited
+  company_key: crizac
+  source: new
+  slice: dev
+  doc_date: '2025-06-25'
+  close_year: null
+- ipo_id: csb-bank-2019
+  company: CSB Bank Limited
+  company_key: csb bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: csm-technologies-2026
+  company: CSM Technologies Limited
+  company_key: csm technologies
+  source: new
+  slice: test
+  doc_date: '2026-06-17'
+  close_year: null
+- ipo_id: cyient-dlm-2023
+  company: Cyient DLM Limited
+  company_key: cyient dlm
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: d-b-realty-2010
+  company: D B Realty Limited
+  company_key: d b realty
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: dam-capital-advisors-2024
+  company: DAM Capital Advisors Limited
+  company_key: dam capital advisors
+  source: new
+  slice: train
+  doc_date: '2024-12-14'
+  close_year: null
+- ipo_id: data-patterns-india-2021
+  company: Data Patterns (India) Limited
+  company_key: data patterns
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: dee-development-engineers-2024
+  company: DEE Development Engineers Limited
+  company_key: dee development engineers
+  source: new
+  slice: train
+  doc_date: '2024-06-11'
+  close_year: null
+- ipo_id: deepa-jewellers-2026
+  company: Deepa Jewellers Limited
+  company_key: deepa jewellers
+  source: new
+  slice: test
+  doc_date: '2026-08-25'
+  close_year: null
+- ipo_id: deepak-builders-and-engineers-india-2024
+  company: Deepak Builders and Engineers India Limited
+  company_key: deepak builders and engineers
+  source: new
+  slice: train
+  doc_date: '2024-10-12'
+  close_year: null
+- ipo_id: delhivery-2022
+  company: Delhivery Limited
+  company_key: delhivery
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: denta-water-and-infra-solutions-2025
+  company: Denta Water and Infra Solutions Limited
+  company_key: denta water and infra solutions
+  source: new
+  slice: train
+  doc_date: '2025-01-16'
+  close_year: null
+- ipo_id: dev-accelerator-2025
+  company: Dev Accelerator Limited
+  company_key: dev accelerator
+  source: new
+  slice: dev
+  doc_date: '2025-09-02'
+  close_year: null
+- ipo_id: devyani-international-2021
+  company: Devyani International Limited
+  company_key: devyani international
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: dharmaj-crop-guard-2022
+  company: Dharmaj Crop Guard Limited
+  company_key: dharmaj crop guard
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: dhoot-transmission-2026
+  company: Dhoot Transmission Limited
+  company_key: dhoot transmission
+  source: new
+  slice: test
+  doc_date: '2026-08-03'
+  close_year: null
+- ipo_id: diffusion-engineers-2024
+  company: Diffusion Engineers Limited
+  company_key: diffusion engineers
+  source: new
+  slice: train
+  doc_date: '2024-09-20'
+  close_year: null
+- ipo_id: dilip-buildcon-2016
+  company: Dilip Buildcon Ltd
+  company_key: dilip buildcon
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: divgi-torqtransfer-systems-2023
+  company: Divgi TorqTransfer Systems Limited
+  company_key: divgi torqtransfer systems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: dixon-technologies-india-2017
+  company: Dixon Technologies (India) Limited
+  company_key: dixon technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: dodla-dairy-2021
+  company: Dodla Dairy Limited
+  company_key: dodla dairy
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: doms-industries-2023
+  company: DOMS Industries Limited
+  company_key: doms industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: dr-agarwal-s-healthcare-2025
+  company: Dr. Agarwal's Healthcare Limited
+  company_key: dr agarwal s healthcare
+  source: new
+  slice: train
+  doc_date: '2025-01-23'
+  close_year: null
+- ipo_id: dr-lal-pathlabs-2015
+  company: Dr. Lal PathLabs Limited
+  company_key: dr lal pathlabs
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: dreamfolks-services-2022
+  company: Dreamfolks Services Limited
+  company_key: dreamfolks services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: easy-trip-planners-2021
+  company: Easy Trip Planners Limited
+  company_key: easy trip planners
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: ecos-india-mobility-and-hospitality-2024
+  company: Ecos India Mobility and Hospitality Limited
+  company_key: ecos mobility and hospitality
+  source: new
+  slice: train
+  doc_date: '2024-08-20'
+  close_year: null
+- ipo_id: edserv-softsystems-2009
+  company: Edserv Softsystems Limited
+  company_key: edserv softsystems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: electronics-mart-india-2022
+  company: Electronics Mart India Limited
+  company_key: electronics mart
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: electrosteel-integrated-2010
+  company: Electrosteel Integrated Ltd
+  company_key: electrosteel integrated
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: elin-electronics-2022
+  company: Elin Electronics Limited
+  company_key: elin electronics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: ellenbarrie-industrial-gases-2025
+  company: Ellenbarrie Industrial Gases Limited
+  company_key: ellenbarrie industrial gases
+  source: new
+  slice: train
+  doc_date: '2025-06-18'
+  close_year: null
+- ipo_id: emcure-pharmaceuticals-2024
+  company: Emcure Pharmaceuticals Limited
+  company_key: emcure pharmaceuticals
+  source: new
+  slice: train
+  doc_date: '2024-06-26'
+  close_year: null
+- ipo_id: emmbi-polyarns-2010
+  company: Emmbi Polyarns Limited
+  company_key: emmbi polyarns
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: emmvee-photovoltaic-power-2025
+  company: Emmvee Photovoltaic Power Limited
+  company_key: emmvee photovoltaic power
+  source: new
+  slice: test
+  doc_date: '2025-11-05'
+  close_year: null
+- ipo_id: ems-2023
+  company: EMS Limited
+  company_key: ems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: emudhra-2022
+  company: eMudhra Limited
+  company_key: emudhra
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: endurance-technologies-2016
+  company: Endurance Technologies Ltd
+  company_key: endurance technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: entero-healthcare-solutions-2024
+  company: Entero Healthcare Solutions Limited
+  company_key: entero healthcare solutions
+  source: new
+  slice: train
+  doc_date: '2024-02-05'
+  close_year: null
+- ipo_id: enviro-infra-engineers-2024
+  company: Enviro Infra Engineers Limited
+  company_key: enviro infra engineers
+  source: new
+  slice: train
+  doc_date: '2024-11-16'
+  close_year: null
+- ipo_id: epack-durable-2024
+  company: EPACK Durable Limited
+  company_key: epack durable
+  source: new
+  slice: train
+  doc_date: '2024-01-12'
+  close_year: null
+- ipo_id: equitas-holdings-2016
+  company: Equitas Holdings Limited
+  company_key: equitas holdings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: equitas-small-finance-bank-2020
+  company: Equitas Small Finance Bank Ltd
+  company_key: equitas small finance bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: eris-lifesciences-2017
+  company: Eris Lifesciences Limited
+  company_key: eris lifesciences
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: eros-international-media-2010
+  company: Eros International Media Ltd
+  company_key: eros international media
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: esaf-small-finance-bank-2023
+  company: ESAF Small Finance Bank Limited
+  company_key: esaf small finance bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: esds-software-solution-2026
+  company: ESDS Software Solution Limited
+  company_key: esds software solution
+  source: new
+  slice: test
+  doc_date: '2026-08-24'
+  close_year: null
+- ipo_id: ethos-2022
+  company: Ethos Limited
+  company_key: ethos
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: euro-multivision-2009
+  company: Euro Multivision Limited
+  company_key: euro multivision
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: euro-pratik-sales-2025
+  company: Euro Pratik Sales Limited
+  company_key: euro pratik sales
+  source: new
+  slice: dev
+  doc_date: '2025-09-05'
+  close_year: null
+- ipo_id: excel-infoways-2009
+  company: Excel Infoways Limited
+  company_key: excel infoways
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: excelsoft-technologies-2025
+  company: Excelsoft Technologies Limited
+  company_key: excelsoft technologies
+  source: new
+  slice: test
+  doc_date: '2025-11-11'
+  close_year: null
+- ipo_id: exicom-tele-systems-2024
+  company: Exicom Tele-Systems Limited
+  company_key: exicom tele systems
+  source: new
+  slice: train
+  doc_date: '2024-02-20'
+  close_year: null
+- ipo_id: exxaro-tiles-2021
+  company: Exxaro Tiles Limited
+  company_key: exxaro tiles
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: fabtech-technologies-2025
+  company: Fabtech Technologies Limited
+  company_key: fabtech technologies
+  source: new
+  slice: dev
+  doc_date: '2025-09-22'
+  close_year: null
+- ipo_id: fedbank-financial-services-2023
+  company: Fedbank Financial Services Limited
+  company_key: fedbank financial services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: fine-organic-industries-2018
+  company: Fine Organic Industries Limited
+  company_key: fine organic industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: fino-payments-bank-2021
+  company: Fino Payments Bank Limited
+  company_key: fino payments bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: five-star-business-finance-2022
+  company: Five Star Business Finance Ltd
+  company_key: five star business finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: flair-writing-industries-2023
+  company: Flair Writing Industries Limited
+  company_key: flair writing industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: flexituff-international-2011
+  company: Flexituff International Ltd
+  company_key: flexituff international
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: fractal-analytics-2026
+  company: Fractal Analytics LTD
+  company_key: fractal analytics
+  source: new
+  slice: test
+  doc_date: '2026-02-02'
+  close_year: null
+- ipo_id: fsn-e-commerce-ventures-2021
+  company: FSN E-Commerce Ventures Limited
+  company_key: fsn e commerce ventures
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: fujiyama-power-systems-2025
+  company: Fujiyama Power Systems Limited
+  company_key: fujiyama power systems
+  source: new
+  slice: test
+  doc_date: '2025-11-07'
+  close_year: null
+- ipo_id: fusion-micro-finance-2022
+  company: Fusion Micro Finance Limited
+  company_key: fusion micro finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: future-supply-chain-solutions-2017
+  company: Future Supply Chain Solutions Ltd
+  company_key: future supply chain solutions
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: g-n-a-axles-2016
+  company: G N A Axles Ltd
+  company_key: g n a axles
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: g-r-infraprojects-2021
+  company: G R Infraprojects Limited
+  company_key: g r infraprojects
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: gaja-alternative-asset-management-2026
+  company: Gaja Alternative Asset Management Limited
+  company_key: gaja alternative asset management
+  source: new
+  slice: test
+  doc_date: '2026-08-12'
+  close_year: null
+- ipo_id: gala-precision-engineering-2024
+  company: Gala Precision Engineering Ltd
+  company_key: gala precision engineering
+  source: new
+  slice: train
+  doc_date: '2024-08-23'
+  close_year: null
+- ipo_id: galaxy-surfactants-2018
+  company: Galaxy Surfactants Limited
+  company_key: galaxy surfactants
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: gandhar-oil-refinery-india-2023
+  company: Gandhar Oil Refinery (India) Limited
+  company_key: gandhar oil refinery
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: ganesh-consumer-products-2025
+  company: Ganesh Consumer Products Limited
+  company_key: ganesh consumer products
+  source: new
+  slice: dev
+  doc_date: '2025-09-16'
+  close_year: null
+- ipo_id: garden-reach-shipbuilders-engineers-2018
+  company: Garden Reach Shipbuilders & Engineers Limited
+  company_key: garden reach shipbuilders engineers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: garuda-construction-and-engineering-2024
+  company: Garuda Construction and Engineering Limited
+  company_key: garuda construction and engineering
+  source: new
+  slice: train
+  doc_date: '2024-09-28'
+  close_year: null
+- ipo_id: gem-aromatics-2025
+  company: Gem Aromatics Limited
+  company_key: gem aromatics
+  source: new
+  slice: dev
+  doc_date: '2025-08-12'
+  close_year: null
+- ipo_id: general-insurance-corporation-of-india-2017
+  company: General Insurance Corporation of India
+  company_key: general insurance corporation of
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: german-green-steel-and-power-2026
+  company: German Green Steel and Power Ltd.
+  company_key: german green steel and power
+  source: new
+  slice: test
+  doc_date: '2026-09-21'
+  close_year: null
+- ipo_id: gk-energy-2025
+  company: GK Energy Limited
+  company_key: gk energy
+  source: new
+  slice: dev
+  doc_date: '2025-09-15'
+  close_year: null
+- ipo_id: gland-pharma-2020
+  company: Gland Pharma Limited
+  company_key: gland pharma
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: glass-wall-systems-india-2026
+  company: GLASS WALL SYSTEMS (INDIA) LIMITED
+  company_key: glass wall systems
+  source: new
+  slice: test
+  doc_date: '2026-09-01'
+  close_year: null
+- ipo_id: glenmark-life-sciences-2021
+  company: Glenmark Life Sciences Limited
+  company_key: glenmark life sciences
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: global-health-2022
+  company: Global Health Limited
+  company_key: global health
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: global-surfaces-2023
+  company: Global Surfaces Limited
+  company_key: global surfaces
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: globe-civil-projects-2025
+  company: Globe Civil Projects Limited
+  company_key: globe civil projects
+  source: new
+  slice: train
+  doc_date: '2025-06-14'
+  close_year: null
+- ipo_id: globus-spirits-2009
+  company: Globus Spirits Limited
+  company_key: globus spirits
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: glottis-2025
+  company: Glottis Limited
+  company_key: glottis
+  source: new
+  slice: dev
+  doc_date: '2025-09-22'
+  close_year: null
+- ipo_id: gng-electronics-2025
+  company: GNG Electronics Limited
+  company_key: gng electronics
+  source: new
+  slice: dev
+  doc_date: '2025-07-17'
+  close_year: null
+- ipo_id: go-digit-general-insurance-2024
+  company: Go Digit General Insurance Limited
+  company_key: go digit general insurance
+  source: new
+  slice: train
+  doc_date: '2024-05-08'
+  close_year: null
+- ipo_id: go-digit-insurance-2024
+  company: Go Digit Insurance Limited
+  company_key: go digit insurance
+  source: new
+  slice: train
+  doc_date: '2024-05-17'
+  close_year: null
+- ipo_id: go-fashion-india-2021
+  company: Go Fashion (India) Limited
+  company_key: go fashion
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: godavari-biorefineries-2024
+  company: Godavari Biorefineries Limited
+  company_key: godavari biorefineries
+  source: new
+  slice: train
+  doc_date: '2024-10-17'
+  close_year: null
+- ipo_id: godrej-agrovet-2017
+  company: Godrej Agrovet Limited
+  company_key: godrej agrovet
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: godrej-properties-2009
+  company: Godrej Properties Limited
+  company_key: godrej properties
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: goenka-diamond-jewels-2010
+  company: Goenka Diamond & Jewels Ltd
+  company_key: goenka diamond jewels
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: gopal-snacks-2024
+  company: Gopal Snacks Limited
+  company_key: gopal snacks
+  source: new
+  slice: train
+  doc_date: '2024-02-28'
+  close_year: null
+- ipo_id: gpt-healthcare-2024
+  company: GPT Healthcare Limited
+  company_key: gpt healthcare
+  source: new
+  slice: train
+  doc_date: '2024-02-15'
+  close_year: null
+- ipo_id: gravita-india-2010
+  company: Gravita India Ltd
+  company_key: gravita
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: groww-2025
+  company: Billionbrains Garage Ventures Limited
+  company_key: billionbrains garage ventures
+  source: showcase
+  slice: test
+  doc_date: '2025-10-29'
+  close_year: null
+- ipo_id: gsp-crop-science-2026
+  company: GSP Crop Science Limited
+  company_key: gsp crop science
+  source: new
+  slice: test
+  doc_date: '2026-03-10'
+  close_year: null
+- ipo_id: gtpl-hathway-2017
+  company: GTPL Hathway Limited
+  company_key: gtpl hathway
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: gujarat-pipavav-port-ltd-gppl-2010
+  company: Gujarat Pipavav Port Ltd (GPPL)
+  company_key: gujarat pipavav port gppl
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: h-g-infra-engineering-2018
+  company: H.G. Infra Engineering Ltd
+  company_key: h g infra engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: happiest-minds-technologies-2020
+  company: Happiest Minds Technologies Ltd
+  company_key: happiest minds technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: happy-forgings-2023
+  company: Happy Forgings Limited
+  company_key: happy forgings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: hariom-pipe-industries-2022
+  company: Hariom Pipe Industries Limited
+  company_key: hariom pipe industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: harsha-engineers-international-2022
+  company: Harsha Engineers International Ltd
+  company_key: harsha engineers international
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: hathway-cable-datacom-2010
+  company: Hathway Cable & Datacom Ltd
+  company_key: hathway cable datacom
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: hdb-financial-services-2025
+  company: HDB Financial Services Limited
+  company_key: hdb financial services
+  source: showcase
+  slice: test
+  doc_date: '2025-06-19'
+  close_year: null
+- ipo_id: hdfc-asset-management-company-2018
+  company: HDFC Asset Management Company Limited
+  company_key: hdfc asset management company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: hdfc-standard-life-insurance-company-2017
+  company: HDFC Standard Life Insurance Company Ltd
+  company_key: hdfc standard life insurance company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: healthcare-global-enterprises-2016
+  company: Healthcare Global Enterprises Ltd
+  company_key: healthcare global enterprises
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: heranba-industries-2021
+  company: Heranba Industries Limited
+  company_key: heranba industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: hero-motors-2026
+  company: HERO MOTORS LIMITED
+  company_key: hero motors
+  source: new
+  slice: test
+  doc_date: '2026-09-09'
+  close_year: null
+- ipo_id: hexagon-nutrition-2026
+  company: Hexagon Nutrition Limited
+  company_key: hexagon nutrition
+  source: new
+  slice: test
+  doc_date: '2026-05-25'
+  close_year: null
+- ipo_id: hexaware-technologies-2025
+  company: Hexaware Technologies Limited
+  company_key: hexaware technologies
+  source: showcase
+  slice: dev
+  doc_date: '2025-02-05'
+  close_year: null
+- ipo_id: highway-infrastructure-2025
+  company: Highway Infrastructure Limited
+  company_key: highway infrastructure
+  source: new
+  slice: dev
+  doc_date: '2025-07-24'
+  close_year: null
+- ipo_id: hindustan-aeronautics-2018
+  company: Hindustan Aeronautics Limited
+  company_key: hindustan aeronautics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: hindustan-media-ventures-2010
+  company: Hindustan Media Ventures Ltd
+  company_key: hindustan media ventures
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: hma-agro-industries-2023
+  company: HMA Agro Industries Limited
+  company_key: hma agro industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: home-first-finance-company-india-2021
+  company: Home First Finance Company India Ltd.
+  company_key: home first finance company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: honasa-consumer-2023
+  company: Honasa Consumer Limited
+  company_key: honasa consumer
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: housing-and-urban-development-corporation-2017
+  company: Housing and Urban Development Corporation Ltd
+  company_key: housing and urban development corporation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: hp-adhesives-2021
+  company: HP Adhesives Limited
+  company_key: hp adhesives
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: hpl-electric-power-2016
+  company: HPL Electric & Power Ltd
+  company_key: hpl electric power
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: hy-tech-engineers-2026
+  company: HY-TECH ENGINEERS LIMITED
+  company_key: hy tech engineers
+  source: new
+  slice: test
+  doc_date: '2026-08-17'
+  close_year: null
+- ipo_id: hyundai-motor-india-2024
+  company: Hyundai Motor India Limited
+  company_key: hyundai motor
+  source: new
+  slice: train
+  doc_date: '2024-10-08'
+  close_year: null
+- ipo_id: icici-lombard-general-insurance-company-2017
+  company: ICICI Lombard General Insurance Company Ltd
+  company_key: icici lombard general insurance company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: icici-prudential-asset-management-company-2025
+  company: ICICI Prudential Asset Management Company Limited
+  company_key: icici prudential asset management company
+  source: new
+  slice: test
+  doc_date: '2025-12-05'
+  close_year: null
+- ipo_id: icici-prudential-life-insurance-company-2016
+  company: ICICI Prudential Life Insurance Company Ltd
+  company_key: icici prudential life insurance company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: icici-securities-2018
+  company: ICICI Securities Ltd
+  company_key: icici securities
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: ideaforge-technology-2023
+  company: ideaForge Technology Limited
+  company_key: ideaforge technology
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: ikio-lighting-2023
+  company: IKIO Lighting Limited
+  company_key: ikio lighting
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: indegene-2024
+  company: Indegene Limited
+  company_key: indegene
+  source: new
+  slice: train
+  doc_date: '2024-04-26'
+  close_year: null
+- ipo_id: india-pesticides-2021
+  company: India Pesticides Limited
+  company_key: pesticides
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: india-shelter-finance-corporation-2023
+  company: India Shelter Finance Corporation Limited
+  company_key: shelter finance corporation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: indiabulls-power-2009
+  company: Indiabulls Power Limited
+  company_key: indiabulls power
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: indiamart-intermesh-2019
+  company: IndiaMART InterMESH Limited
+  company_key: indiamart intermesh
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: indian-energy-exchange-2017
+  company: Indian Energy Exchange Ltd
+  company_key: indian energy exchange
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: indian-railway-finance-corporation-2021
+  company: Indian Railway Finance Corporation Limited
+  company_key: indian railway finance corporation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: indian-renewable-energy-development-agency-2023
+  company: Indian Renewable Energy Development Agency Ltd
+  company_key: indian renewable energy development agency
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: indigo-paints-2021
+  company: Indigo Paints Limited
+  company_key: indigo paints
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: indiqube-spaces-2025
+  company: Indiqube Spaces Limited
+  company_key: indiqube spaces
+  source: new
+  slice: dev
+  doc_date: '2025-07-17'
+  close_year: null
+- ipo_id: indo-farm-equipment-2024
+  company: Indo Farm Equipment Limited
+  company_key: indo farm equipment
+  source: new
+  slice: train
+  doc_date: '2024-12-20'
+  close_year: null
+- ipo_id: indo-mim-2026
+  company: Indo-MIM Limited
+  company_key: indo mim
+  source: new
+  slice: test
+  doc_date: '2026-07-17'
+  close_year: null
+- ipo_id: indo-thai-securities-2011
+  company: Indo Thai Securities Limited
+  company_key: indo thai securities
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: indogulf-cropsciences-2025
+  company: INDOGULF CROPSCIENCES LIMITED
+  company_key: indogulf cropsciences
+  source: new
+  slice: dev
+  doc_date: '2025-06-21'
+  close_year: null
+- ipo_id: indosolar-2010
+  company: Indosolar Ltd
+  company_key: indosolar
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: indostar-capital-finance-2018
+  company: IndoStar Capital Finance Limited
+  company_key: indostar capital finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: infibeam-incorporation-2016
+  company: Infibeam Incorporation Ltd
+  company_key: infibeam incorporation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: infinite-computer-solutions-india-2010
+  company: Infinite Computer Solutions India Ltd
+  company_key: infinite computer solutions
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: innova-captab-2023
+  company: Innova Captab Limited
+  company_key: innova captab
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: innovision-2026
+  company: Innovision Limited
+  company_key: innovision
+  source: new
+  slice: test
+  doc_date: '2026-03-02'
+  close_year: null
+- ipo_id: inox-green-energy-services-2022
+  company: Inox Green Energy Services Limited
+  company_key: inox green energy services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: inox-india-2023
+  company: Inox India Limited
+  company_key: inox
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: inox-wind-2015
+  company: Inox Wind Limited
+  company_key: inox wind
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: interarch-building-products-2024
+  company: Interarch Building Products Limited
+  company_key: interarch building products
+  source: new
+  slice: train
+  doc_date: '2024-08-12'
+  close_year: null
+- ipo_id: interglobe-aviation-2015
+  company: InterGlobe Aviation Ltd
+  company_key: interglobe aviation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: international-gemmological-institute-india-2024
+  company: International Gemmological Institute (India) Limited
+  company_key: international gemmological institute
+  source: new
+  slice: train
+  doc_date: '2024-12-06'
+  close_year: null
+- ipo_id: inventure-growth-securities-2011
+  company: Inventure Growth & Securities Ltd
+  company_key: inventure growth securities
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: inventurus-knowledge-solutions-2024
+  company: Inventurus Knowledge Solutions Limited
+  company_key: inventurus knowledge solutions
+  source: new
+  slice: train
+  doc_date: '2024-12-05'
+  close_year: null
+- ipo_id: ircon-international-2018
+  company: IRCON International Limited
+  company_key: ircon international
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: irctc-2019
+  company: IRCTC Limited
+  company_key: irctc
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: irm-energy-2023
+  company: IRM Energy Limited
+  company_key: irm energy
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: ivalue-infosolutions-2025
+  company: Ivalue Infosolutions Limited
+  company_key: ivalue infosolutions
+  source: new
+  slice: dev
+  doc_date: '2025-09-13'
+  close_year: null
+- ipo_id: j-g-chemicals-2024
+  company: J.G.Chemicals Limited
+  company_key: j g chemicals
+  source: new
+  slice: train
+  doc_date: '2024-02-27'
+  close_year: null
+- ipo_id: jain-resource-recycling-2025
+  company: Jain Resource Recycling Limited
+  company_key: jain resource recycling
+  source: new
+  slice: dev
+  doc_date: '2025-09-18'
+  close_year: null
+- ipo_id: jana-small-finance-bank-2024
+  company: Jana Small Finance Bank Limited
+  company_key: jana small finance bank
+  source: new
+  slice: train
+  doc_date: '2024-02-01'
+  close_year: null
+- ipo_id: jaro-institute-of-technology-management-and-research-2025
+  company: Jaro Institute of Technology Management and Research Limited
+  company_key: jaro institute of technology management and research
+  source: new
+  slice: dev
+  doc_date: '2025-09-17'
+  close_year: null
+- ipo_id: jaypee-infratech-2010
+  company: Jaypee Infratech Ltd
+  company_key: jaypee infratech
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: jindal-cotex-2009
+  company: Jindal Cotex Limited
+  company_key: jindal cotex
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: jindal-supreme-india-2026
+  company: Jindal Supreme (India) Limited
+  company_key: jindal supreme
+  source: new
+  slice: test
+  doc_date: '2026-09-07'
+  close_year: null
+- ipo_id: jinkushal-industries-2025
+  company: Jinkushal Industries Limited
+  company_key: jinkushal industries
+  source: new
+  slice: dev
+  doc_date: '2025-09-15'
+  close_year: null
+- ipo_id: jnk-india-2024
+  company: JNK India Limited
+  company_key: jnk
+  source: new
+  slice: train
+  doc_date: '2024-04-15'
+  close_year: null
+- ipo_id: jsw-cement-2025
+  company: JSW Cement Limited
+  company_key: jsw cement
+  source: new
+  slice: dev
+  doc_date: '2025-08-01'
+  close_year: null
+- ipo_id: jsw-energy-2009
+  company: JSW Energy Limited
+  company_key: jsw energy
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: jsw-infrastructure-2023
+  company: JSW Infrastructure Limited
+  company_key: jsw infrastructure
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: jubilant-foodworks-2010
+  company: Jubilant Foodworks Ltd
+  company_key: jubilant foodworks
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: juniper-green-energy-2026
+  company: Juniper Green Energy Limited
+  company_key: juniper green energy
+  source: new
+  slice: test
+  doc_date: '2026-07-23'
+  close_year: null
+- ipo_id: juniper-hotels-2024
+  company: Juniper Hotels Limited
+  company_key: juniper hotels
+  source: new
+  slice: train
+  doc_date: '2024-02-13'
+  close_year: null
+- ipo_id: jupiter-life-line-hospitals-2023
+  company: Jupiter Life Line Hospitals Limited
+  company_key: jupiter life line hospitals
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: just-dial-2013
+  company: Just Dial Ltd
+  company_key: just dial
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2013
+- ipo_id: jyoti-cnc-automation-2024
+  company: Jyoti CNC Automation Limited
+  company_key: jyoti cnc automation
+  source: new
+  slice: train
+  doc_date: '2024-01-02'
+  close_year: null
+- ipo_id: kalpataru-2025
+  company: Kalpataru Limited
+  company_key: kalpataru
+  source: new
+  slice: train
+  doc_date: '2025-06-18'
+  close_year: null
+- ipo_id: kalyan-jewellers-india-2021
+  company: Kalyan Jewellers India Limited
+  company_key: kalyan jewellers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: karamtara-engineering-2026
+  company: Karamtara Engineering Limited
+  company_key: karamtara engineering
+  source: new
+  slice: test
+  doc_date: '2026-09-03'
+  close_year: null
+- ipo_id: karda-construction-2018
+  company: Karda Construction Ltd
+  company_key: karda construction
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: kaynes-technology-india-2022
+  company: Kaynes Technology India Ltd
+  company_key: kaynes technology
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: keystone-realtors-2022
+  company: Keystone Realtors Limited
+  company_key: keystone realtors
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: kfin-technologies-2022
+  company: KFin Technologies Limited
+  company_key: kfin technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: khadim-india-2017
+  company: Khadim India Limited
+  company_key: khadim
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: knack-packaging-2026
+  company: KNACK PACKAGING LIMITED
+  company_key: knack packaging
+  source: new
+  slice: test
+  doc_date: '2026-06-23'
+  close_year: null
+- ipo_id: krishna-institute-of-medical-sciences-2021
+  company: Krishna Institute of Medical Sciences Limited
+  company_key: krishna institute of medical sciences
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: krn-heat-exchanger-and-refrigeration-2024
+  company: KRN Heat Exchanger and Refrigeration Limited
+  company_key: krn heat exchanger and refrigeration
+  source: new
+  slice: train
+  doc_date: '2024-09-13'
+  close_year: null
+- ipo_id: kronox-lab-sciences-2024
+  company: Kronox Lab Sciences Limited
+  company_key: kronox lab sciences
+  source: new
+  slice: train
+  doc_date: '2024-05-28'
+  close_year: null
+- ipo_id: kross-2024
+  company: Kross Limited
+  company_key: kross
+  source: new
+  slice: train
+  doc_date: '2024-09-02'
+  close_year: null
+- ipo_id: krsnaa-diagnostics-2021
+  company: Krsnaa Diagnostics Limited
+  company_key: krsnaa diagnostics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: krystal-integrated-services-2024
+  company: Krystal Integrated Services Limited
+  company_key: krystal integrated services
+  source: new
+  slice: train
+  doc_date: '2024-03-04'
+  close_year: null
+- ipo_id: ksh-international-2025
+  company: KSH INTERNATIONAL LIMITED
+  company_key: ksh international
+  source: new
+  slice: test
+  doc_date: '2025-12-10'
+  close_year: null
+- ipo_id: kusumgar-2026
+  company: KUSUMGAR LIMITED
+  company_key: kusumgar
+  source: new
+  slice: test
+  doc_date: '2026-07-01'
+  close_year: null
+- ipo_id: l-t-finance-holdings-2011
+  company: L&T Finance Holdings Limited
+  company_key: l t finance holdings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: l-t-infotech-2016
+  company: L&T Infotech Ltd
+  company_key: l t infotech
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: l-t-technology-services-2016
+  company: L&T Technology Services Ltd
+  company_key: l t technology services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: lalithaa-jewellery-mart-2026
+  company: Lalithaa Jewellery Mart Limited
+  company_key: lalithaa jewellery mart
+  source: new
+  slice: test
+  doc_date: '2026-08-09'
+  close_year: null
+- ipo_id: landmark-cars-2022
+  company: Landmark Cars Limited
+  company_key: landmark cars
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: laser-power-and-infra-2026
+  company: Laser Power and Infra Limited
+  company_key: laser power and infra
+  source: new
+  slice: test
+  doc_date: '2026-07-03'
+  close_year: null
+- ipo_id: latent-view-analytics-2021
+  company: Latent View Analytics Limited
+  company_key: latent view analytics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: laurus-labs-2016
+  company: Laurus Labs Ltd
+  company_key: laurus labs
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: laxmi-dental-2025
+  company: Laxmi Dental Limited
+  company_key: laxmi dental
+  source: new
+  slice: train
+  doc_date: '2025-01-07'
+  close_year: null
+- ipo_id: laxmi-india-finance-2025
+  company: Laxmi India Finance Limited
+  company_key: laxmi finance
+  source: new
+  slice: dev
+  doc_date: '2025-07-21'
+  close_year: null
+- ipo_id: laxmi-organic-industries-2021
+  company: Laxmi Organic Industries Limited
+  company_key: laxmi organic industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: lcc-projects-2026
+  company: LCC PROJECTS LIMITED
+  company_key: lcc projects
+  source: new
+  slice: test
+  doc_date: '2026-09-03'
+  close_year: null
+- ipo_id: le-travenues-technology-2024
+  company: Le Travenues Technology Limited
+  company_key: le travenues technology
+  source: new
+  slice: train
+  doc_date: '2024-06-12'
+  close_year: null
+- ipo_id: leap-india-2026
+  company: LEAP India Limited
+  company_key: leap
+  source: new
+  slice: test
+  doc_date: '2026-08-01'
+  close_year: null
+- ipo_id: lemon-tree-hotels-2018
+  company: Lemon Tree Hotels Limited
+  company_key: lemon tree hotels
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: lenskart-2025
+  company: Lenskart Solutions Limited
+  company_key: lenskart solutions
+  source: showcase
+  slice: test
+  doc_date: '2025-10-25'
+  close_year: null
+- ipo_id: lg-electronics-india-2025
+  company: LG Electronics India Limited
+  company_key: lg electronics
+  source: showcase
+  slice: test
+  doc_date: '2025-09-30'
+  close_year: null
+- ipo_id: life-insurance-corporation-of-india-lic-2022
+  company: Life Insurance Corporation of India (LIC)
+  company_key: life insurance corporation of lic
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: likhitha-infrastructure-2020
+  company: Likhitha Infrastructure Ltd
+  company_key: likhitha infrastructure
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: lohia-corp-2026
+  company: Lohia Corp Limited
+  company_key: lohia corp
+  source: new
+  slice: test
+  doc_date: '2026-07-17'
+  close_year: null
+- ipo_id: lovable-lingeries-2011
+  company: Lovable Lingeries Ltd
+  company_key: lovable lingeries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: lumino-industries-2026
+  company: LUMINO INDUSTRIES LIMITED
+  company_key: lumino industries
+  source: new
+  slice: test
+  doc_date: '2026-08-20'
+  close_year: null
+- ipo_id: m-and-b-switchgears-2011
+  company: M and B Switchgears Ltd
+  company_key: m and b switchgears
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: m-b-engineering-2025
+  company: M&B Engineering Limited
+  company_key: m b engineering
+  source: new
+  slice: dev
+  doc_date: '2025-07-24'
+  close_year: null
+- ipo_id: macrotech-developers-2021
+  company: Macrotech Developers Limited
+  company_key: macrotech developers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: mahanagar-gas-2016
+  company: Mahanagar Gas Limited
+  company_key: mahanagar gas
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: mahindra-holidays-and-resorts-india-2009
+  company: Mahindra Holidays and Resorts India Ltd
+  company_key: mahindra holidays and resorts
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: mahindra-logistics-2017
+  company: Mahindra Logistics Limited
+  company_key: mahindra logistics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: mamata-machinery-2024
+  company: Mamata Machinery Limited
+  company_key: mamata machinery
+  source: new
+  slice: train
+  doc_date: '2024-12-12'
+  close_year: null
+- ipo_id: man-infraconstruction-2010
+  company: Man Infraconstruction Ltd
+  company_key: man infraconstruction
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: manba-finance-2024
+  company: Manba Finance Limited
+  company_key: manba finance
+  source: new
+  slice: train
+  doc_date: '2024-09-16'
+  close_year: null
+- ipo_id: mandhana-industries-2010
+  company: Mandhana Industries Limited
+  company_key: mandhana industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: mangal-electrical-industries-2025
+  company: Mangal Electrical Industries Limited
+  company_key: mangal electrical industries
+  source: new
+  slice: dev
+  doc_date: '2025-08-13'
+  close_year: null
+- ipo_id: manika-plastech-2026
+  company: Manika Plastech Limited
+  company_key: manika plastech
+  source: new
+  slice: test
+  doc_date: '2026-09-04'
+  close_year: null
+- ipo_id: manipal-health-enterprises-2026
+  company: Manipal Health Enterprises Limited
+  company_key: manipal health enterprises
+  source: new
+  slice: test
+  doc_date: '2026-07-23'
+  close_year: null
+- ipo_id: manipal-payment-and-identity-solutions-2026
+  company: Manipal Payment and Identity Solutions Limited
+  company_key: manipal payment and identity solutions
+  source: new
+  slice: test
+  doc_date: '2026-09-03'
+  close_year: null
+- ipo_id: mankind-pharma-2023
+  company: Mankind Pharma Limited
+  company_key: mankind pharma
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: mas-financial-services-2017
+  company: MAS Financial Services Ltd
+  company_key: mas financial services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: matrimony-com-2017
+  company: Matrimony.com Limited
+  company_key: matrimony com
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: mazagon-dock-shipbuilders-2020
+  company: Mazagon Dock Shipbuilders Limited
+  company_key: mazagon dock shipbuilders
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: medi-assist-healthcare-services-2024
+  company: Medi Assist Healthcare Services Limited
+  company_key: medi assist healthcare services
+  source: new
+  slice: train
+  doc_date: '2024-01-09'
+  close_year: null
+- ipo_id: medplus-health-services-2021
+  company: Medplus Health Services Limited
+  company_key: medplus health services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: meesho-2025
+  company: Meesho Limited
+  company_key: meesho
+  source: showcase
+  slice: test
+  doc_date: '2025-11-27'
+  close_year: null
+- ipo_id: mep-infrastructure-developers-2015
+  company: MEP Infrastructure Developers Ltd
+  company_key: mep infrastructure developers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: metro-brands-2021
+  company: Metro Brands Limited
+  company_key: metro brands
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: metropolis-healthcare-2019
+  company: Metropolis Healthcare Limited
+  company_key: metropolis healthcare
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: microsec-financial-services-2010
+  company: Microsec Financial Services Ltd
+  company_key: microsec financial services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: midwest-2025
+  company: Midwest Limited
+  company_key: midwest
+  source: new
+  slice: dev
+  doc_date: '2025-10-09'
+  close_year: null
+- ipo_id: milky-mist-dairy-food-2026
+  company: Milky Mist Dairy Food Limited
+  company_key: milky mist dairy food
+  source: new
+  slice: test
+  doc_date: '2026-08-04'
+  close_year: null
+- ipo_id: mishra-dhatu-nigam-2018
+  company: Mishra Dhatu Nigam Limited
+  company_key: mishra dhatu nigam
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: moil-2010
+  company: MOIL Limited
+  company_key: moil
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: molbio-diagnostics-2026
+  company: Molbio Diagnostics Limited
+  company_key: molbio diagnostics
+  source: new
+  slice: test
+  doc_date: '2026-08-03'
+  close_year: null
+- ipo_id: moneyview-2026
+  company: Moneyview Limited
+  company_key: moneyview
+  source: new
+  slice: test
+  doc_date: '2026-09-20'
+  close_year: null
+- ipo_id: monte-carlo-fashions-2014
+  company: Monte Carlo Fashions Limited
+  company_key: monte carlo fashions
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2014
+- ipo_id: motisons-jewellers-2023
+  company: Motisons Jewellers Limited
+  company_key: motisons jewellers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: mrs-bectors-food-specialities-2020
+  company: Mrs. Bectors Food Specialities Limited
+  company_key: mrs bectors food specialities
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: mstc-2019
+  company: MSTC Limited
+  company_key: mstc
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: mt-educare-2012
+  company: MT Educare Limited
+  company_key: mt educare
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: mtar-technologies-2021
+  company: MTAR Technologies Limited
+  company_key: mtar technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: mukka-proteins-2024
+  company: Mukka Proteins Limited
+  company_key: mukka proteins
+  source: new
+  slice: train
+  doc_date: '2024-02-24'
+  close_year: null
+- ipo_id: music-broadcast-2017
+  company: Music Broadcast Ltd
+  company_key: music broadcast
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: muthoot-finance-2011
+  company: Muthoot Finance Ltd
+  company_key: muthoot finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: muthoot-microfin-2023
+  company: Muthoot Microfin Limited
+  company_key: muthoot microfin
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: mv-electrosystems-2026
+  company: MV Electrosystems Limited
+  company_key: mv electrosystems
+  source: new
+  slice: test
+  doc_date: '2026-07-23'
+  close_year: null
+- ipo_id: narayana-hrudayalaya-2015
+  company: Narayana Hrudayalaya Ltd
+  company_key: narayana hrudayalaya
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: national-buildings-construction-corporation-2012
+  company: National Buildings Construction Corporation Ltd
+  company_key: national buildings construction corporation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: national-securities-depository-2025
+  company: National Securities Depository Limited
+  company_key: national securities depository
+  source: new
+  slice: dev
+  doc_date: '2025-07-23'
+  close_year: null
+- ipo_id: national-stock-exchange-of-india-2026
+  company: NATIONAL STOCK EXCHANGE OF INDIA LIMITED
+  company_key: national stock exchange of
+  source: new
+  slice: test
+  doc_date: '2026-09-10'
+  close_year: null
+- ipo_id: navkar-corporation-2015
+  company: Navkar Corporation Limited
+  company_key: navkar corporation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: nazara-technologies-2021
+  company: Nazara Technologies Limited
+  company_key: nazara technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: neogen-chemicals-2019
+  company: Neogen Chemicals Limited
+  company_key: neogen chemicals
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: nephrocare-health-services-2025
+  company: Nephrocare Health Services Limited
+  company_key: nephrocare health services
+  source: new
+  slice: test
+  doc_date: '2025-12-02'
+  close_year: null
+- ipo_id: netweb-technologies-india-2023
+  company: Netweb Technologies India Limited
+  company_key: netweb technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: newgen-software-technologies-2018
+  company: Newgen Software Technologies Limited
+  company_key: newgen software technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: nhpc-2009
+  company: NHPC Limited
+  company_key: nhpc
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: nitesh-estates-2010
+  company: Nitesh Estates Limited
+  company_key: nitesh estates
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: nityas-gems-and-jewellery-india-2026
+  company: Nityas Gems and Jewellery India Limited
+  company_key: nityas gems and jewellery
+  source: new
+  slice: test
+  doc_date: '2026-09-24'
+  close_year: null
+- ipo_id: niva-bupa-health-insurance-company-2024
+  company: Niva Bupa Health Insurance Company Limited
+  company_key: niva bupa health insurance company
+  source: new
+  slice: train
+  doc_date: '2024-10-31'
+  close_year: null
+- ipo_id: nova-agritech-2024
+  company: Nova Agritech Limited
+  company_key: nova agritech
+  source: new
+  slice: train
+  doc_date: '2024-01-12'
+  close_year: null
+- ipo_id: ntpc-green-energy-2024
+  company: NTPC Green Energy Limited
+  company_key: ntpc green energy
+  source: new
+  slice: train
+  doc_date: '2024-11-12'
+  close_year: null
+- ipo_id: nuvoco-vistas-corporation-2021
+  company: Nuvoco Vistas Corporation Ltd
+  company_key: nuvoco vistas corporation
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: oberoi-realty-2010
+  company: Oberoi Realty Ltd
+  company_key: oberoi realty
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: oil-india-2009
+  company: Oil India Limited
+  company_key: oil
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: ola-electric-mobility-2024
+  company: Ola Electric Mobility Limited
+  company_key: ola electric mobility
+  source: new
+  slice: train
+  doc_date: '2024-07-26'
+  close_year: null
+- ipo_id: om-freight-forwarders-2025
+  company: Om Freight Forwarders Limited
+  company_key: om freight forwarders
+  source: new
+  slice: dev
+  doc_date: '2025-09-22'
+  close_year: null
+- ipo_id: om-power-transmission-2026
+  company: Om Power Transmission Limited
+  company_key: om power transmission
+  source: new
+  slice: test
+  doc_date: '2026-04-04'
+  close_year: null
+- ipo_id: omkar-speciality-chemicals-2011
+  company: Omkar Speciality Chemicals Ltd
+  company_key: omkar speciality chemicals
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: omnitech-engineering-2026
+  company: Omnitech Engineering Limited
+  company_key: omnitech engineering
+  source: new
+  slice: test
+  doc_date: '2026-02-18'
+  close_year: null
+- ipo_id: one-97-communications-2021
+  company: One 97 Communications Limited
+  company_key: one 97 communications
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: one-mobikwik-systems-2024
+  company: ONE MOBIKWIK SYSTEMS LIMITED
+  company_key: one mobikwik systems
+  source: new
+  slice: train
+  doc_date: '2024-12-14'
+  close_year: null
+- ipo_id: onelife-capital-advisors-2011
+  company: Onelife Capital Advisors Ltd
+  company_key: onelife capital advisors
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: onemi-technology-solutions-2026
+  company: OnEMI Technology Solutions Limited
+  company_key: onemi technology solutions
+  source: new
+  slice: test
+  doc_date: '2026-04-25'
+  close_year: null
+- ipo_id: orient-cables-india-2026
+  company: Orient Cables (India) Limited
+  company_key: orient cables
+  source: new
+  slice: test
+  doc_date: '2026-09-21'
+  close_year: null
+- ipo_id: orient-green-power-company-2010
+  company: Orient Green Power Company Ltd
+  company_key: orient green power company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: orient-technologies-2024
+  company: Orient Technologies Limited
+  company_key: orient technologies
+  source: new
+  slice: train
+  doc_date: '2024-08-09'
+  close_year: null
+- ipo_id: orkla-india-2025
+  company: Orkla India Limited
+  company_key: orkla
+  source: new
+  slice: dev
+  doc_date: '2025-10-23'
+  close_year: null
+- ipo_id: ortel-communications-2015
+  company: Ortel Communications Ltd
+  company_key: ortel communications
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: oswal-pumps-2025
+  company: Oswal Pumps Limited
+  company_key: oswal pumps
+  source: new
+  slice: train
+  doc_date: '2025-06-07'
+  close_year: null
+- ipo_id: p-n-gadgil-jewellers-2024
+  company: P N Gadgil Jewellers Limited
+  company_key: p n gadgil jewellers
+  source: new
+  slice: train
+  doc_date: '2024-09-04'
+  close_year: null
+- ipo_id: pace-digitek-2025
+  company: Pace Digitek Limited
+  company_key: pace digitek
+  source: new
+  slice: dev
+  doc_date: '2025-09-22'
+  close_year: null
+- ipo_id: paradeep-phosphates-2022
+  company: Paradeep Phosphates Limited
+  company_key: paradeep phosphates
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: parag-milk-foods-2016
+  company: Parag Milk Foods Ltd
+  company_key: parag milk foods
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: paramount-printpackaging-2011
+  company: Paramount Printpackaging Ltd
+  company_key: paramount printpackaging
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: paras-defence-and-space-technologies-2021
+  company: Paras Defence And Space Technologies Limited
+  company_key: paras defence and space technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: park-medi-world-2025
+  company: PARK MEDI WORLD LIMITED
+  company_key: park medi world
+  source: new
+  slice: test
+  doc_date: '2025-12-04'
+  close_year: null
+- ipo_id: patel-retail-2025
+  company: Patel Retail Limited
+  company_key: patel retail
+  source: new
+  slice: dev
+  doc_date: '2025-08-07'
+  close_year: null
+- ipo_id: pb-fintech-2021
+  company: PB Fintech Limited
+  company_key: pb fintech
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: pc-jeweller-2012
+  company: PC Jeweller Ltd
+  company_key: pc jeweller
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: pennar-engineered-building-systems-2015
+  company: Pennar Engineered Building Systems Ltd
+  company_key: pennar engineered building systems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: persistent-systems-2010
+  company: Persistent Systems Limited
+  company_key: persistent systems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: pg-electroplast-2011
+  company: PG Electroplast Limited
+  company_key: pg electroplast
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: physicswallah-2025
+  company: PhysicsWallah Limited
+  company_key: physicswallah
+  source: showcase
+  slice: test
+  doc_date: '2025-11-04'
+  close_year: null
+- ipo_id: pine-labs-2025
+  company: Pine Labs Ltd
+  company_key: pine labs
+  source: new
+  slice: test
+  doc_date: '2025-10-31'
+  close_year: null
+- ipo_id: pipavav-shipyard-2009
+  company: Pipavav Shipyard Limited
+  company_key: pipavav shipyard
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: platinum-industries-2024
+  company: Platinum Industries Limited
+  company_key: platinum industries
+  source: new
+  slice: train
+  doc_date: '2024-02-20'
+  close_year: null
+- ipo_id: plaza-wires-2023
+  company: Plaza Wires Limited
+  company_key: plaza wires
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: pnb-housing-finance-2016
+  company: PNB Housing Finance Ltd
+  company_key: pnb housing finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: pnc-infratech-2015
+  company: PNC Infratech Limited
+  company_key: pnc infratech
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: pngs-reva-diamond-jewellery-2026
+  company: PNGS Reva Diamond Jewellery Limited
+  company_key: pngs reva diamond jewellery
+  source: new
+  slice: test
+  doc_date: '2026-02-10'
+  close_year: null
+- ipo_id: polycab-india-2019
+  company: Polycab India Limited
+  company_key: polycab
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: popular-vehicles-and-services-2024
+  company: Popular Vehicles and Services Ltd
+  company_key: popular vehicles and services
+  source: new
+  slice: train
+  doc_date: '2024-03-04'
+  close_year: null
+- ipo_id: power-mech-projects-2015
+  company: Power Mech Projects Ltd
+  company_key: power mech projects
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: powerica-2026
+  company: Powerica Limited
+  company_key: powerica
+  source: new
+  slice: test
+  doc_date: '2026-03-17'
+  close_year: null
+- ipo_id: prabhat-dairy-2015
+  company: Prabhat Dairy Limited
+  company_key: prabhat dairy
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: pradip-overseas-2010
+  company: Pradip Overseas Limited
+  company_key: pradip overseas
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: prakash-constrowell-2011
+  company: Prakash Constrowell Ltd
+  company_key: prakash constrowell
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: prakash-steelage-2010
+  company: Prakash Steelage Ltd
+  company_key: prakash steelage
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: pranav-constructions-2026
+  company: PRANAV CONSTRUCTIONS LIMITED
+  company_key: pranav constructions
+  source: new
+  slice: test
+  doc_date: '2026-08-31'
+  close_year: null
+- ipo_id: prasol-chemicals-2026
+  company: PRASOL CHEMICALS LIMITED
+  company_key: prasol chemicals
+  source: new
+  slice: test
+  doc_date: '2026-09-02'
+  close_year: null
+- ipo_id: prataap-snacks-2017
+  company: Prataap Snacks Limited
+  company_key: prataap snacks
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: precision-camshafts-2016
+  company: Precision Camshafts Ltd
+  company_key: precision camshafts
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: premier-energies-2024
+  company: Premier Energies Limited
+  company_key: premier energies
+  source: new
+  slice: train
+  doc_date: '2024-08-20'
+  close_year: null
+- ipo_id: prince-pipes-and-fittings-2019
+  company: Prince Pipes and Fittings Ltd
+  company_key: prince pipes and fittings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: prudent-corporate-advisory-services-2022
+  company: Prudent Corporate Advisory Services Limited
+  company_key: prudent corporate advisory services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: psp-projects-2017
+  company: PSP Projects Ltd
+  company_key: psp projects
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: ptc-india-financial-services-2011
+  company: PTC India Financial Services Ltd
+  company_key: ptc financial services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: punjab-sind-bank-2010
+  company: Punjab & Sind Bank
+  company_key: punjab sind bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: purple-style-labs-2026
+  company: Purple Style Labs Limited
+  company_key: purple style labs
+  source: new
+  slice: test
+  doc_date: '2026-08-24'
+  close_year: null
+- ipo_id: pyramid-technoplast-2023
+  company: Pyramid Technoplast Limited
+  company_key: pyramid technoplast
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: pyramid-technoplast-2024
+  company: Pyramid Technoplast Limited
+  company_key: pyramid technoplast
+  source: new
+  slice: train
+  doc_date: '2024-08-23'
+  close_year: null
+- ipo_id: quadrant-future-tek-2024
+  company: Quadrant Future Tek Limited
+  company_key: quadrant future tek
+  source: new
+  slice: train
+  doc_date: '2024-12-27'
+  close_year: null
+- ipo_id: quality-power-electrical-equipments-2025
+  company: Quality Power Electrical Equipments Limited
+  company_key: quality power electrical equipments
+  source: new
+  slice: train
+  doc_date: '2025-02-06'
+  close_year: null
+- ipo_id: quess-corp-2016
+  company: Quess Corp Ltd
+  company_key: quess corp
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: quick-heal-technologies-2016
+  company: Quick Heal Technologies Ltd
+  company_key: quick heal technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: r-k-swamy-2024
+  company: R K Swamy Limited
+  company_key: r k swamy
+  source: new
+  slice: train
+  doc_date: '2024-02-26'
+  close_year: null
+- ipo_id: radiant-cash-management-services-2022
+  company: Radiant Cash Management Services Limited
+  company_key: radiant cash management services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: rail-vikas-nigam-2019
+  company: Rail Vikas Nigam Limited
+  company_key: rail vikas nigam
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: railtel-corporation-of-india-2021
+  company: RailTel Corporation of India Limited
+  company_key: railtel corporation of
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: rainbow-children-s-medicare-2022
+  company: Rainbow Children's Medicare Limited
+  company_key: rainbow children s medicare
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: raj-oil-mills-2009
+  company: Raj Oil Mills Limited
+  company_key: raj oil mills
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: rajputana-stainless-2026
+  company: Rajputana Stainless Limited
+  company_key: rajputana stainless
+  source: new
+  slice: test
+  doc_date: '2026-02-27'
+  close_year: null
+- ipo_id: ramky-infrastructure-2010
+  company: Ramky Infrastructure Ltd
+  company_key: ramky infrastructure
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: rashi-peripherals-2024
+  company: Rashi Peripherals Limited
+  company_key: rashi peripherals
+  source: new
+  slice: train
+  doc_date: '2024-01-29'
+  close_year: null
+- ipo_id: rategain-travel-technologies-2021
+  company: Rategain Travel Technologies Limited
+  company_key: rategain travel technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: ratnaveer-precision-engineering-2023
+  company: Ratnaveer Precision Engineering Limited
+  company_key: ratnaveer precision engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: ravi-kumar-distilleries-2010
+  company: Ravi Kumar Distilleries Ltd
+  company_key: ravi kumar distilleries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: rays-of-belief-2026
+  company: Rays of Belief Limited
+  company_key: rays of belief
+  source: new
+  slice: test
+  doc_date: '2026-08-20'
+  close_year: null
+- ipo_id: rbl-bank-2016
+  company: RBL Bank Ltd
+  company_key: rbl bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: rbz-jewellers-2023
+  company: RBZ Jewellers Limited
+  company_key: rbz jewellers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: regaal-resources-2025
+  company: Regaal Resources Limited
+  company_key: regaal resources
+  source: new
+  slice: dev
+  doc_date: '2025-08-06'
+  close_year: null
+- ipo_id: reliance-nippon-life-asset-management-2017
+  company: Reliance Nippon Life Asset Management Ltd
+  company_key: reliance nippon life asset management
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: rentomojo-2026
+  company: Rentomojo Limited
+  company_key: rentomojo
+  source: new
+  slice: test
+  doc_date: '2026-09-03'
+  close_year: null
+- ipo_id: repco-home-finance-2013
+  company: Repco Home Finance Ltd
+  company_key: repco home finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2013
+- ipo_id: rishabh-instruments-2023
+  company: Rishabh Instruments Limited
+  company_key: rishabh instruments
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: rites-2018
+  company: RITES Limited
+  company_key: rites
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: rolex-rings-2021
+  company: Rolex Rings Limited
+  company_key: rolex rings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: route-mobile-2020
+  company: Route Mobile Ltd
+  company_key: route mobile
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: rpp-infra-projects-2010
+  company: RPP Infra Projects Ltd
+  company_key: rpp infra projects
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: rubicon-research-2025
+  company: Rubicon Research Limited
+  company_key: rubicon research
+  source: new
+  slice: dev
+  doc_date: '2025-10-01'
+  close_year: null
+- ipo_id: runwal-enterprises-2026
+  company: Runwal Enterprises Limited
+  company_key: runwal enterprises
+  source: new
+  slice: test
+  doc_date: '2026-09-21'
+  close_year: null
+- ipo_id: rushil-decor-2011
+  company: Rushil Decor Ltd
+  company_key: rushil decor
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: s-chand-and-company-2017
+  company: S Chand and Company Ltd
+  company_key: s chand and company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: s-h-kelkar-company-2015
+  company: S H Kelkar & Company Ltd
+  company_key: s h kelkar company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: s-j-s-enterprises-2021
+  company: S.J.S. Enterprises Limited
+  company_key: s j s enterprises
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: saatvik-green-energy-2025
+  company: Saatvik Green Energy Limited
+  company_key: saatvik green energy
+  source: new
+  slice: dev
+  doc_date: '2025-09-15'
+  close_year: null
+- ipo_id: sadbhav-infrastructure-project-2015
+  company: Sadbhav Infrastructure Project Limited
+  company_key: sadbhav infrastructure project
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: sagility-india-2024
+  company: Sagility India Limited
+  company_key: sagility
+  source: new
+  slice: train
+  doc_date: '2024-10-29'
+  close_year: null
+- ipo_id: sah-polymers-2023
+  company: Sah Polymers Limited
+  company_key: sah polymers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: sai-life-sciences-2024
+  company: Sai Life Sciences Limited
+  company_key: sai life sciences
+  source: new
+  slice: train
+  doc_date: '2024-12-05'
+  close_year: null
+- ipo_id: sai-parenteral-s-2026
+  company: Sai Parenteral’s Limited
+  company_key: sai parenteral s
+  source: new
+  slice: test
+  doc_date: '2026-03-16'
+  close_year: null
+- ipo_id: sai-silks-kalamandir-2023
+  company: Sai Silks (Kalamandir) Limited
+  company_key: sai silks kalamandir
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: salasar-techno-engineering-2017
+  company: Salasar Techno Engineering Ltd
+  company_key: salasar techno engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: sambhv-steel-tubes-2025
+  company: Sambhv Steel Tubes Limited
+  company_key: sambhv steel tubes
+  source: new
+  slice: dev
+  doc_date: '2025-06-19'
+  close_year: null
+- ipo_id: sanathan-textiles-2024
+  company: Sanathan Textiles Limited
+  company_key: sanathan textiles
+  source: new
+  slice: train
+  doc_date: '2024-12-13'
+  close_year: null
+- ipo_id: sandhar-technologies-2018
+  company: Sandhar Technologies Limited
+  company_key: sandhar technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: sanghvi-forging-engineering-2011
+  company: Sanghvi Forging & Engineering Ltd
+  company_key: sanghvi forging engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: sansera-engineering-2021
+  company: Sansera Engineering Limited
+  company_key: sansera engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: sanstar-2024
+  company: Sanstar Limited
+  company_key: sanstar
+  source: new
+  slice: train
+  doc_date: '2024-07-12'
+  close_year: null
+- ipo_id: sapphire-foods-india-2021
+  company: Sapphire Foods India Limited
+  company_key: sapphire foods
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: saraswati-saree-depot-2024
+  company: Saraswati Saree Depot Limited
+  company_key: saraswati saree depot
+  source: new
+  slice: train
+  doc_date: '2024-08-06'
+  close_year: null
+- ipo_id: sbfc-finance-2023
+  company: SBFC Finance Limited
+  company_key: sbfc finance
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: sbi-cards-and-payment-services-2020
+  company: SBI Cards and Payment Services Ltd
+  company_key: sbi cards and payment services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: sbi-funds-management-2026
+  company: SBI FUNDS MANAGEMENT LIMITED
+  company_key: sbi funds management
+  source: new
+  slice: test
+  doc_date: '2026-07-08'
+  close_year: null
+- ipo_id: sbi-life-insurance-company-2017
+  company: SBI Life Insurance Company Ltd
+  company_key: sbi life insurance company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: schloss-bangalore-2025
+  company: Schloss Bangalore Limited
+  company_key: schloss bangalore
+  source: new
+  slice: train
+  doc_date: '2025-05-20'
+  close_year: null
+- ipo_id: scoda-tubes-2025
+  company: Scoda Tubes Limited
+  company_key: scoda tubes
+  source: new
+  slice: train
+  doc_date: '2025-05-22'
+  close_year: null
+- ipo_id: security-and-intelligence-services-india-2017
+  company: Security and Intelligence Services (India) Ltd
+  company_key: security and intelligence services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: sedemac-mechatronics-2026
+  company: SEDEMAC MECHATRONICS LIMITED
+  company_key: sedemac mechatronics
+  source: new
+  slice: test
+  doc_date: '2026-02-25'
+  close_year: null
+- ipo_id: senco-gold-2023
+  company: Senco Gold Limited
+  company_key: senco gold
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: senores-pharmaceuticals-2024
+  company: Senores Pharmaceuticals Limited
+  company_key: senores pharmaceuticals
+  source: new
+  slice: train
+  doc_date: '2024-12-15'
+  close_year: null
+- ipo_id: seshaasai-technologies-2025
+  company: Seshaasai Technologies Limited
+  company_key: seshaasai technologies
+  source: new
+  slice: dev
+  doc_date: '2025-09-16'
+  close_year: null
+- ipo_id: shadowfax-technologies-2026
+  company: Shadowfax Technologies Limited
+  company_key: shadowfax technologies
+  source: new
+  slice: test
+  doc_date: '2026-01-13'
+  close_year: null
+- ipo_id: shah-investor-s-home-2026
+  company: Shah Investor's Home Limited
+  company_key: shah investor s home
+  source: new
+  slice: test
+  doc_date: '2026-09-22'
+  close_year: null
+- ipo_id: shalby-2017
+  company: Shalby Limited
+  company_key: shalby
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: shankara-building-products-2017
+  company: Shankara Building Products Ltd
+  company_key: shankara building products
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: shanti-gold-international-2025
+  company: Shanti Gold International Limited
+  company_key: shanti gold international
+  source: new
+  slice: dev
+  doc_date: '2025-07-17'
+  close_year: null
+- ipo_id: sharda-cropchem-2014
+  company: Sharda Cropchem Ltd
+  company_key: sharda cropchem
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2014
+- ipo_id: sheela-foam-2016
+  company: Sheela Foam Ltd
+  company_key: sheela foam
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: shemaroo-entertainment-2014
+  company: Shemaroo Entertainment Ltd
+  company_key: shemaroo entertainment
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2014
+- ipo_id: shilpi-cable-technologies-2011
+  company: Shilpi Cable Technologies Ltd
+  company_key: shilpi cable technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: shiprocket-2026
+  company: SHIPROCKET LIMITED
+  company_key: shiprocket
+  source: new
+  slice: test
+  doc_date: '2026-08-05'
+  close_year: null
+- ipo_id: shree-ganesh-jewellery-house-2010
+  company: Shree Ganesh Jewellery House Ltd
+  company_key: shree ganesh jewellery house
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: shree-pushkar-chemicals-and-fertilisers-2015
+  company: Shree Pushkar Chemicals and Fertilisers Ltd
+  company_key: shree pushkar chemicals and fertilisers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: shree-ram-twistex-2026
+  company: Shree Ram Twistex Limited
+  company_key: shree ram twistex
+  source: new
+  slice: test
+  doc_date: '2026-02-12'
+  close_year: null
+- ipo_id: shree-tirupati-balajee-agro-trading-company-2024
+  company: Shree Tirupati Balajee Agro Trading Company Limited
+  company_key: shree tirupati balajee agro trading company
+  source: new
+  slice: train
+  doc_date: '2024-08-31'
+  close_year: null
+- ipo_id: shreeji-shipping-global-limited-2025
+  company: Shreeji Shipping Global Limited Limited
+  company_key: shreeji shipping global
+  source: new
+  slice: dev
+  doc_date: '2025-08-05'
+  close_year: null
+- ipo_id: shringar-house-of-mangalsutra-2025
+  company: Shringar House of Mangalsutra Limited
+  company_key: shringar house of mangalsutra
+  source: new
+  slice: dev
+  doc_date: '2025-09-01'
+  close_year: null
+- ipo_id: shriram-properties-2021
+  company: Shriram Properties Limited
+  company_key: shriram properties
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: shyam-metalics-and-energy-2021
+  company: Shyam Metalics and Energy Limited
+  company_key: shyam metalics and energy
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: sigachi-industries-2021
+  company: Sigachi Industries Limited
+  company_key: sigachi industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: signatureglobal-india-2023
+  company: Signatureglobal (India) Limited
+  company_key: signatureglobal
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: sjvn-ltd-satluj-jal-vidyut-nigam-ltd-2010
+  company: SJVN Ltd (Satluj Jal Vidyut Nigam Ltd)
+  company_key: sjvn satluj jal vidyut nigam
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: skyways-air-services-2026
+  company: Skyways Air Services limited
+  company_key: skyways air services
+  source: new
+  slice: test
+  doc_date: '2026-08-11'
+  close_year: null
+- ipo_id: smartworks-coworking-spaces-2025
+  company: Smartworks Coworking Spaces Limited
+  company_key: smartworks coworking spaces
+  source: new
+  slice: dev
+  doc_date: '2025-07-04'
+  close_year: null
+- ipo_id: snowman-logistics-2014
+  company: Snowman Logistics Ltd
+  company_key: snowman logistics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2014
+- ipo_id: solarworld-energy-solutions-2025
+  company: Solarworld Energy Solutions Limited
+  company_key: solarworld energy solutions
+  source: new
+  slice: dev
+  doc_date: '2025-09-17'
+  close_year: null
+- ipo_id: sona-blw-precision-forgings-2021
+  company: Sona BLW Precision Forgings Limited
+  company_key: sona blw precision forgings
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: sonaselection-india-2026
+  company: SONASELECTION INDIA LIMITED
+  company_key: sonaselection
+  source: new
+  slice: test
+  doc_date: '2026-09-07'
+  close_year: null
+- ipo_id: spandana-sphoorty-financial-2019
+  company: Spandana Sphoorty Financial Ltd
+  company_key: spandana sphoorty financial
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: speciality-restaurants-2012
+  company: Speciality Restaurants Ltd
+  company_key: speciality restaurants
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: srit-india-2026
+  company: SRIT India Limited
+  company_key: srit
+  source: new
+  slice: test
+  doc_date: '2026-09-22'
+  close_year: null
+- ipo_id: srm-contractors-2024
+  company: SRM Contractors Limited
+  company_key: srm contractors
+  source: new
+  slice: train
+  doc_date: '2024-03-16'
+  close_year: null
+- ipo_id: ss-retail-2026
+  company: SS RETAIL LIMITED
+  company_key: ss retail
+  source: new
+  slice: test
+  doc_date: '2026-09-08'
+  close_year: null
+- ipo_id: stallion-india-fluorochemicals-2025
+  company: Stallion India Fluorochemicals Limited
+  company_key: stallion fluorochemicals
+  source: new
+  slice: train
+  doc_date: '2025-01-11'
+  close_year: null
+- ipo_id: standard-glass-lining-technology-2024
+  company: Standard Glass Lining Technology Limited
+  company_key: standard glass lining technology
+  source: new
+  slice: train
+  doc_date: '2024-12-30'
+  close_year: null
+- ipo_id: stanley-lifestyles-2024
+  company: Stanley Lifestyles Limited
+  company_key: stanley lifestyles
+  source: new
+  slice: train
+  doc_date: '2024-06-13'
+  close_year: null
+- ipo_id: star-health-and-allied-insurance-company-2021
+  company: Star Health and Allied Insurance Company Ltd
+  company_key: star health and allied insurance company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: steamhouse-india-2026
+  company: Steamhouse India Limited
+  company_key: steamhouse
+  source: new
+  slice: test
+  doc_date: '2026-09-03'
+  close_year: null
+- ipo_id: sterling-and-wilson-solar-2019
+  company: Sterling and Wilson Solar Ltd
+  company_key: sterling and wilson solar
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: stove-kraft-2021
+  company: Stove Kraft Limited
+  company_key: stove kraft
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: studds-accessories-2025
+  company: Studds Accessories Limited
+  company_key: studds accessories
+  source: new
+  slice: test
+  doc_date: '2025-11-03'
+  close_year: null
+- ipo_id: sudar-garments-2011
+  company: Sudar Garments Ltd
+  company_key: sudar garments
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: sudeep-pharma-2025
+  company: Sudeep Pharma Limited
+  company_key: sudeep pharma
+  source: new
+  slice: test
+  doc_date: '2025-11-17'
+  close_year: null
+- ipo_id: sunshine-pictures-2026
+  company: Sunshine Pictures Limited
+  company_key: sunshine pictures
+  source: new
+  slice: test
+  doc_date: '2026-08-10'
+  close_year: null
+- ipo_id: supriya-lifescience-2021
+  company: Supriya Lifescience Limited
+  company_key: supriya lifescience
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: suraj-estate-developers-2023
+  company: Suraj Estate Developers Limited
+  company_key: suraj estate developers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: suraksha-diagnostic-2024
+  company: Suraksha Diagnostic Limited
+  company_key: suraksha diagnostic
+  source: new
+  slice: train
+  doc_date: '2024-11-25'
+  close_year: null
+- ipo_id: suryoday-small-finance-bank-2021
+  company: Suryoday Small Finance Bank Ltd
+  company_key: suryoday small finance bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: swastika-infra-2026
+  company: Swastika Infra Ltd.
+  company_key: swastika infra
+  source: new
+  slice: test
+  doc_date: '2026-09-17'
+  close_year: null
+- ipo_id: swiggy-2024
+  company: Swiggy Limited
+  company_key: swiggy
+  source: new
+  slice: train
+  doc_date: '2024-10-28'
+  close_year: null
+- ipo_id: symbiotec-pharmalab-2026
+  company: SYMBIOTEC PHARMALAB LIMITED
+  company_key: symbiotec pharmalab
+  source: new
+  slice: test
+  doc_date: '2026-08-18'
+  close_year: null
+- ipo_id: syncom-healthcare-2010
+  company: Syncom Healthcare Limited
+  company_key: syncom healthcare
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: syngene-international-2015
+  company: Syngene International Ltd
+  company_key: syngene international
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: syrma-sgs-technology-2022
+  company: Syrma SGS Technology Ltd
+  company_key: syrma sgs technology
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: taksheel-solutions-2011
+  company: Taksheel Solutions Ltd
+  company_key: taksheel solutions
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: talwalkars-better-value-fitness-2010
+  company: Talwalkars Better value Fitness Ltd
+  company_key: talwalkars better value fitness
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: tamilnad-mercantile-bank-2022
+  company: Tamilnad Mercantile Bank Limited
+  company_key: tamilnad mercantile bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: tara-jewels-2012
+  company: Tara Jewels Limited
+  company_key: tara jewels
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: tarapur-transformers-2010
+  company: Tarapur Transformers Limited
+  company_key: tarapur transformers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: tarsons-products-2021
+  company: Tarsons Products Limited
+  company_key: tarsons products
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: tata-capital-2025
+  company: Tata Capital Limited
+  company_key: tata capital
+  source: showcase
+  slice: test
+  doc_date: '2025-09-26'
+  close_year: null
+- ipo_id: tata-technologies-2023
+  company: Tata Technologies Limited
+  company_key: tata technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: tatva-chintan-pharma-chem-2021
+  company: Tatva Chintan Pharma Chem Ltd
+  company_key: tatva chintan pharma chem
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: tbo-tek-2024
+  company: TBO Tek Limited
+  company_key: tbo tek
+  source: new
+  slice: train
+  doc_date: '2024-04-28'
+  close_year: null
+- ipo_id: tcns-clothing-co-2018
+  company: TCNS Clothing Co. Limited
+  company_key: tcns clothing co
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: td-power-systems-2011
+  company: TD Power Systems Ltd
+  company_key: td power systems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: technocraft-ventures-2026
+  company: Technocraft Ventures Limited
+  company_key: technocraft ventures
+  source: new
+  slice: test
+  doc_date: '2026-07-30'
+  close_year: null
+- ipo_id: technofab-engineering-2010
+  company: Technofab Engineering Ltd
+  company_key: technofab engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: tecpro-systems-2010
+  company: Tecpro Systems Ltd
+  company_key: tecpro systems
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: tega-industries-2021
+  company: Tega Industries Limited
+  company_key: tega industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: tejas-networks-2017
+  company: Tejas Networks Limited
+  company_key: tejas networks
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: tempsens-instruments-india-2026
+  company: Tempsens Instruments (India) Limited
+  company_key: tempsens instruments
+  source: new
+  slice: test
+  doc_date: '2026-08-14'
+  close_year: null
+- ipo_id: texmo-pipes-products-2010
+  company: Texmo Pipes & Products Ltd
+  company_key: texmo pipes products
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: the-new-india-assurance-company-2017
+  company: The New India Assurance Company Limited
+  company_key: new assurance company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2017
+- ipo_id: thinksoft-global-services-2009
+  company: Thinksoft Global Services Ltd
+  company_key: thinksoft global services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2009
+- ipo_id: thyrocare-technologies-2016
+  company: Thyrocare Technologies Ltd
+  company_key: thyrocare technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: timbor-home-2011
+  company: Timbor Home Limited
+  company_key: timbor home
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: tolins-tyres-2024
+  company: Tolins Tyres Limited
+  company_key: tolins tyres
+  source: new
+  slice: train
+  doc_date: '2024-08-28'
+  close_year: null
+- ipo_id: tracxn-technologies-2022
+  company: Tracxn Technologies Limited
+  company_key: tracxn technologies
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: transrail-lighting-2024
+  company: Transrail Lighting Limited
+  company_key: transrail lighting
+  source: new
+  slice: train
+  doc_date: '2024-12-10'
+  close_year: null
+- ipo_id: travel-food-services-2025
+  company: Travel Food Services Limited
+  company_key: travel food services
+  source: new
+  slice: dev
+  doc_date: '2025-07-01'
+  close_year: null
+- ipo_id: tree-house-education-accessories-2011
+  company: Tree House Education & Accessories Ltd
+  company_key: tree house education accessories
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: tribhovandas-bhimji-zaveri-2012
+  company: Tribhovandas Bhimji Zaveri Ltd
+  company_key: tribhovandas bhimji zaveri
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: trualt-bioenergy-2025
+  company: TruAlt Bioenergy Limited
+  company_key: trualt bioenergy
+  source: new
+  slice: dev
+  doc_date: '2025-09-19'
+  close_year: null
+- ipo_id: turtlemint-fintech-solutions-2026
+  company: Turtlemint Fintech Solutions Limited
+  company_key: turtlemint fintech solutions
+  source: new
+  slice: test
+  doc_date: '2026-06-15'
+  close_year: null
+- ipo_id: tvs-supply-chain-solutions-2023
+  company: TVS Supply Chain Solutions Limited
+  company_key: tvs supply chain solutions
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: udayshivakumar-infra-2023
+  company: Udayshivakumar Infra Limited
+  company_key: udayshivakumar infra
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: ufo-moviez-2015
+  company: UFO Moviez Ltd
+  company_key: ufo moviez
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: ujjivan-financial-services-2016
+  company: Ujjivan Financial Services Ltd
+  company_key: ujjivan financial services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: ujjivan-small-finance-bank-2019
+  company: Ujjivan Small Finance Bank Ltd
+  company_key: ujjivan small finance bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: uma-exports-2022
+  company: Uma Exports Limited
+  company_key: uma exports
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: unicommerce-esolutions-2024
+  company: Unicommerce eSolutions Limited
+  company_key: unicommerce esolutions
+  source: new
+  slice: train
+  doc_date: '2024-07-30'
+  close_year: null
+- ipo_id: unimech-aerospace-and-manufacturing-2024
+  company: Unimech Aerospace and Manufacturing Limited
+  company_key: unimech aerospace and manufacturing
+  source: new
+  slice: train
+  doc_date: '2024-12-16'
+  close_year: null
+- ipo_id: uniparts-india-2022
+  company: Uniparts India Limited
+  company_key: uniparts
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: united-bank-of-india-2010
+  company: United Bank of India
+  company_key: united bank of
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: updater-services-2023
+  company: Updater Services Limited
+  company_key: updater services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: urban-company-2025
+  company: Urban Company Limited
+  company_key: urban company
+  source: showcase
+  slice: dev
+  doc_date: '2025-09-02'
+  close_year: null
+- ipo_id: uti-asset-management-company-2020
+  company: UTI Asset Management Company Ltd
+  company_key: uti asset management company
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2020
+- ipo_id: utkarsh-small-finance-bank-2023
+  company: Utkarsh Small Finance Bank Limited
+  company_key: utkarsh small finance bank
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: v-mart-retail-2013
+  company: V-Mart Retail Ltd
+  company_key: v mart retail
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2013
+- ipo_id: valiant-laboratories-2023
+  company: Valiant Laboratories Limited
+  company_key: valiant laboratories
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: varmora-granito-2026
+  company: Varmora Granito Limited
+  company_key: varmora granito
+  source: new
+  slice: test
+  doc_date: '2026-09-16'
+  close_year: null
+- ipo_id: varroc-engineering-2018
+  company: Varroc Engineering Limited
+  company_key: varroc engineering
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2018
+- ipo_id: varun-beverages-2016
+  company: Varun Beverages Ltd
+  company_key: varun beverages
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2016
+- ipo_id: vascon-engineers-2010
+  company: Vascon Engineers Limited
+  company_key: vascon engineers
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2010
+- ipo_id: vaswani-industries-2011
+  company: Vaswani Industries Ltd
+  company_key: vaswani industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2011
+- ipo_id: vedant-fashions-2022
+  company: Vedant Fashions Limited
+  company_key: vedant fashions
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: veegaland-developers-2026
+  company: Veegaland Developers Ltd.
+  company_key: veegaland developers
+  source: new
+  slice: test
+  doc_date: '2026-08-31'
+  close_year: null
+- ipo_id: ventive-hospitality-2024
+  company: Ventive Hospitality Limited
+  company_key: ventive hospitality
+  source: new
+  slice: train
+  doc_date: '2024-12-14'
+  close_year: null
+- ipo_id: venus-pipes-tubes-2022
+  company: Venus Pipes & Tubes Limited
+  company_key: venus pipes tubes
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: veranda-learning-solutions-2022
+  company: Veranda Learning Solutions Limited
+  company_key: veranda learning solutions
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2022
+- ipo_id: vibhor-steel-tubes-2024
+  company: Vibhor Steel Tubes Limited
+  company_key: vibhor steel tubes
+  source: new
+  slice: train
+  doc_date: '2024-02-05'
+  close_year: null
+- ipo_id: vidya-wires-2025
+  company: Vidya Wires Limited
+  company_key: vidya wires
+  source: new
+  slice: test
+  doc_date: '2025-11-27'
+  close_year: null
+- ipo_id: vijaya-diagnostic-centre-2021
+  company: Vijaya Diagnostic Centre Limited
+  company_key: vijaya diagnostic centre
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: vikram-solar-2025
+  company: Vikram Solar Limited
+  company_key: vikram solar
+  source: new
+  slice: dev
+  doc_date: '2025-08-12'
+  close_year: null
+- ipo_id: vikran-engineering-2025
+  company: Vikran Engineering Limited
+  company_key: vikran engineering
+  source: new
+  slice: dev
+  doc_date: '2025-08-18'
+  close_year: null
+- ipo_id: vishal-mega-mart-2024
+  company: Vishal Mega Mart
+  company_key: vishal mega mart
+  source: new
+  slice: train
+  doc_date: '2024-12-04'
+  close_year: null
+- ipo_id: vishnu-prakash-r-punglia-2023
+  company: Vishnu Prakash R Punglia Limited
+  company_key: vishnu prakash r punglia
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: vishwaraj-sugar-industries-2019
+  company: Vishwaraj Sugar Industries Ltd
+  company_key: vishwaraj sugar industries
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2019
+- ipo_id: vks-projects-2012
+  company: VKS Projects Ltd
+  company_key: vks projects
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2012
+- ipo_id: vms-tmt-2025
+  company: VMS TMT Limited
+  company_key: vms tmt
+  source: new
+  slice: dev
+  doc_date: '2025-09-10'
+  close_year: null
+- ipo_id: vodafone-idea-2024
+  company: Vodafone Idea Limited
+  company_key: vodafone idea
+  source: new
+  slice: train
+  doc_date: '2024-04-08'
+  close_year: null
+- ipo_id: vraj-iron-and-steel-2024
+  company: Vraj Iron and Steel Limited
+  company_key: vraj iron and steel
+  source: new
+  slice: train
+  doc_date: '2024-06-18'
+  close_year: null
+- ipo_id: vrl-logistics-2015
+  company: VRL Logistics Ltd
+  company_key: vrl logistics
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2015
+- ipo_id: waaree-energies-2024
+  company: Waaree Energies Limited
+  company_key: waaree energies
+  source: new
+  slice: train
+  doc_date: '2024-10-14'
+  close_year: null
+- ipo_id: wakefit-innovations-2025
+  company: Wakefit Innovations Limited
+  company_key: wakefit innovations
+  source: new
+  slice: test
+  doc_date: '2025-11-29'
+  close_year: null
+- ipo_id: waterways-leisure-tourism-2026
+  company: Waterways Leisure Tourism Limited
+  company_key: waterways leisure tourism
+  source: new
+  slice: test
+  doc_date: '2026-06-17'
+  close_year: null
+- ipo_id: western-carriers-india-2024
+  company: Western Carriers (India) Limited
+  company_key: western carriers
+  source: new
+  slice: train
+  doc_date: '2024-09-07'
+  close_year: null
+- ipo_id: wework-india-management-2025
+  company: WeWork India Management Limited
+  company_key: wework management
+  source: new
+  slice: dev
+  doc_date: '2025-09-27'
+  close_year: null
+- ipo_id: windlas-biotech-2021
+  company: Windlas Biotech Limited
+  company_key: windlas biotech
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2021
+- ipo_id: wonderla-holidays-2014
+  company: Wonderla Holidays Ltd
+  company_key: wonderla holidays
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2014
+- ipo_id: xtranet-technologies-2026
+  company: Xtranet Technologies Limited
+  company_key: xtranet technologies
+  source: new
+  slice: test
+  doc_date: '2026-07-16'
+  close_year: null
+- ipo_id: yatharth-hospital-and-trauma-care-services-2023
+  company: Yatharth Hospital and Trauma Care Services Limited
+  company_key: yatharth hospital and trauma care services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: yatra-online-2023
+  company: Yatra Online Limited
+  company_key: yatra online
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: zaggle-prepaid-ocean-services-2023
+  company: Zaggle Prepaid Ocean Services Limited
+  company_key: zaggle prepaid ocean services
+  source: corpus
+  slice: train
+  doc_date: null
+  close_year: 2023
+- ipo_id: zinka-logistics-solutions-2024
+  company: Zinka Logistics Solutions Limited
+  company_key: zinka logistics solutions
+  source: new
+  slice: train
+  doc_date: '2024-11-07'
+  close_year: null
+excluded:
+- ipo_id: airfloa-rail-technology-2025
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: amtech-esters-2026
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: aureate-tradde-2026
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: gurunanak-agriculture-india-2025
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: h-r-hygiene-products-2026
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: kanohar-electricals-2026
+  reason: 'excluded: risk factors are not numbered (segmenter needs numbered headings);
+    not supported yet'
+- ipo_id: priority-jewels-2026
+  reason: 'excluded: risk factors are not numbered (segmenter needs numbered headings);
+    not supported yet'
+- ipo_id: propshop-events-and-exhibitions-2026
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: prostarm-info-systems-2025
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: speciality-medicines-2026
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: taurian-mps-2025
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: vegorama-punjabi-angithi-2026
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: vigor-plast-india-2025
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+- ipo_id: vinod-texworld-2026
+  reason: 'excluded: SME issue (cover names an SME platform; C-ADR-09)'
+demo:
+- nityas-gems-and-jewellery-india-2026
+- srit-india-2026
+- shah-investor-s-home-2026
+bench: []
+bench_dev: []
