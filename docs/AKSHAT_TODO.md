@@ -24,7 +24,7 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 
 ### C1.4 split: frozen
 - [x] Counts confirmed and frozen (train 499, dev 55, test 110, 14 excluded; bench empty until C4.1). Next: real C2.1 (`scripts/build_risk_bank.py`, `scripts/export_teacher_input.py`).
-- [ ] C2.1: if free RAM is under ~4 GB when you start (last check: 5.6 GB free), the bge-m3 embedding step should run on Kaggle, not on the laptop. Close other apps first or ask Claude to use the Kaggle route.
+- [x] ~~C2.1: if free RAM is under ~4 GB when you start (last check: 5.6 GB free), the bge-m3 embedding step should run on Kaggle, not on the laptop. Close other apps first or ask Claude to use the Kaggle route.
 
 ### C1.2 / C1.3 data results (skim, ~10 min)
 - [ ] Fetch finished: 289 universe rows, all PDFs downloaded (no manual downloads needed; 6 network errors succeeded on retry). Parsed 275; excluded 14: 12 SME covers (C-ADR-09) and 2 whose risk factors are unnumbered (`priority-jewels-2026`, `kanohar-electricals-2026`; the segmenter needs numbered headings). Skim `configs/ipo_universe.csv` (2026 has more rows than expected: SEBI lists filings, not completed IPOs) and `eval_results/c/parse_batch.json`. `patel-retail-2025` yielded only 18 risks: worth a look.
@@ -228,3 +228,5 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - **Deploy** (P6): follow `docs/DEPLOY_STEPS.md`. I did not create accounts or upload anything, and I did **not** build the Docker image (Docker Desktop was off and free RAM was about 3 GB). Build it once locally before the Space.
 - **Vercel rewrite and slow live answers**: a long CPU answer may be cut by the proxy limit; the fix is a CORS rule and a direct call (see DEPLOY_STEPS).
 - **Report**: every file in `report/` is a draft to rewrite in your voice; sections 1, 2, 9, 10 are not drafted. Check each `[verify]` citation. README "What I learned" is yours.
+
+- [ ] C2.1 segmentation spot-check (50 risks, ~40 min) + E13b boundaries; also look at the 20 documents with < 10 risks (see `docs/datasheets/risk_bank.md`). Decide whether 8,889 teacher inputs (target 12k) is enough or the per-company cap should rise.
