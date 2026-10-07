@@ -46,9 +46,9 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 - [ ] **C1.3 Batch parse + hardening** (was B1.1b) · 💻 L · S · Needs: C1.2
   `scripts/batch_parse.py` through `validated → parsed → sections → risks_split`; fix repeated failures with regression tests; `eval_results/c/parse_batch.json`.
   *Done when:* failures are fixed or listed with reasons; timings recorded.
-- [ ] **C1.4 ★ Time split + leakage guard + rolling window** · 💻 L + 👤 A · **O** · Needs: C1.3
+- [x] **C1.4 ★ Time split + leakage guard + rolling window** · 💻 L + 👤 A · **O** · Needs: C1.3
   One package: `finsight.splits`. Strict split → `configs/splits.yaml` (C02 §4; showcase roles from `demo_ipos.yaml`), the manifest format + retro manifests for Phase 1 artefacts in `data/manifests/`, `tests/test_split_leakage.py`, `configs/reference.yaml` + the `reference` API (eval and product windows, corpus by close year; C02 §5). **No wiring into other packages here:** C2.1 wires the bank + novelty, C2.7 weak labels, C2.8 risk level, C3.4 compare. Akshat confirms the counts before freezing.
-  *Status:* code merged (C1.4 code-only PR: `finsight.splits`, CLI `python -m finsight.splits build [--freeze]`, `tests/test_split_leakage.py`). **Left:** the real-data run after C1.3 (dry run → Akshat confirms counts → `--freeze`), Sonnet is fine for it.
+  *Status:* code merged (C1.4 code-only PR: `finsight.splits`, CLI `python -m finsight.splits build [--freeze]`, `tests/test_split_leakage.py`). Real-data run done on Sonnet: Akshat confirmed the counts, `--freeze` written (`configs/splits.yaml`, 4 manifests in `data/manifests/`), leakage tests run and pass. `bench` is empty until C4.1 sets it.
   *Done when:* split frozen; leakage test green in `poe test`.
 - [ ] **C1.5 BIR link check** · 💻 L · S · **(cut)** · Needs: CG0
   Count live links → `eval_results/c/bir_links.json`; Akshat decides on backfill.
