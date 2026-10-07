@@ -43,7 +43,7 @@ The registry is read from the two plan tables. "Not run yet" means no result fil
 | E10 | Latency + memory | `latency.json` |
 | E11 | BiLSTM-CRF rung (P1) | `bilstm_metrics-13.json`, `bilstm_metrics-2026.json`, `bilstm_metrics-42.json` |
 | E12 | ASR | `asr.json` |
-| E13 | Are risks split correctly? | not run yet |
+| E13 | Are risks split correctly? | `b/segmentation.json` |
 | E14 | Are red-flag inputs extracted correctly? | not run yet |
 | E15 | Do red-flag statuses agree with hand-computed ones? | not run yet |
 | E16 | How good is the category classifier? | not run yet |

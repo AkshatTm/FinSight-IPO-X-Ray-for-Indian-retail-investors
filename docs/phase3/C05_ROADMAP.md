@@ -57,7 +57,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 ### C2 — Training → gates CG2, CG3
 
-- [ ] **C2.1 Risk bank + E13** (was B2.1a-left + B2.1b) · 💻 L (+ 🔵 K if slow) · S · Needs: CG1, Akshat's segmentation spot-check
+- [x] **C2.1 Risk bank + E13** (was B2.1a-left + B2.1b) · 💻 L (+ 🔵 K if slow) · S · Needs: CG1, Akshat's segmentation spot-check
   Golden tests on fixture pages; segment `train`+`dev`; bge-m3 bank with `ipo_id`/`doc_date`/`split` + manifest; separate eval parquet for test/bench; wire `risks.bank`/`novelty` to the `splits.reference` window; E13/E13b; teacher input export (cap 25 per company, target min(12k, achievable)) + manifest.
 - [ ] **C2.2 ★ Teacher bake-off** · 💻 L + 🟠 G + 👤 A · **O** · Needs: C2.1
   `COLAB_STEPS_teacher_bakeoff.md`; Qwen3-14B-AWQ vs Qwen3-32B-AWQ (L4-only fallback in C03); 300 risks × 2 teachers; filters; blind sheet (100 rows); Akshat rates; ADR → `eval_results/c/teacher_bakeoff.json`. Below the cut line (§6): if cut, 14B is used directly and logged as an ADR.

@@ -1,4 +1,4 @@
-# Datasheet: risk bank — draft
+# Datasheet: risk bank
 
 ## Motivation
 
@@ -17,6 +17,12 @@ Segmentation counts and the automatic checks (E13) are in `eval_results/b/segmen
 ## How novelty reads the bank
 
 Novelty of a risk = the share of distinct past companies, inside the **rolling 4-year window** before the document (`configs/reference.yaml`, `finsight.splits.reference_bank`), with a similar risk. Evaluation windows contain train and dev IPOs only; the product window contains every collected IPO. The issuer itself is always left out.
+
+## Real build
+
+29,677 risk rows from 440 train + dev IPOs (`risks_by_year` in `eval_results/b/segmentation.json`); 8,819 eval rows from 110 test IPOs. 114 split IPOs have no document (mostly 2009–2013 filings and a few later ones) and are skipped. 20 documents segmented into fewer than 10 risks (for example angel-one-2020, devyani-international-2021, inox-india-2023); they stay in the bank as they are and are listed for the spot-check.
+
+Teacher input (`data/processed/teacher/risks.jsonl`, gitignored; manifest `data/manifests/teacher_input.json`): 25,330 candidates from train IPOs, **8,889 achievable** under the 25-per-company cap, below the 12,000 target. Dropped: 13,099 over the company cap, 3,189 too long, 117 too short, 36 duplicate titles. Only 400 rows are from 2025, so the 2024+ weighting is thin.
 
 ## Known limits
 

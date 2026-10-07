@@ -122,7 +122,7 @@ Cloud Run CPU deployment is not measured yet (E23). Whole-system RAM in use peak
 
 | ID | Question | Result files |
 | --- | --- | --- |
-| E13 | Are risks split correctly? | not run yet |
+| E13 | Are risks split correctly? | `b/segmentation.json` |
 | E14 | Are red-flag inputs extracted correctly? | not run yet |
 | E15 | Do red-flag statuses agree with hand-computed ones? | not run yet |
 | E16 | How good is the category classifier? | not run yet |
