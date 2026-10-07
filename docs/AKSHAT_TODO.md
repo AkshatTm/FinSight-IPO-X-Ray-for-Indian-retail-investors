@@ -22,8 +22,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 ### C2.2 teacher bake-off (code merged; needs the frozen split + the vLLM pin first), ~1 h + 30 min rating
 - [ ] After C1.4 is frozen and the bank is built: `uv run python scripts/teacher_bakeoff.py sample`, then follow `docs/phase3/COLAB_STEPS_teacher_bakeoff.md` (A100, ~7–10 units), then rate the blind sheet. Note: C2.2 is an Opus-marked part that was done on Sonnet overnight — review `src/finsight/risks/bakeoff.py` (the pick rule) and C-ADR-05 before you rely on it.
 
-### C1.4 confirm the split, then freeze (~5 min) — NOT frozen overnight
-- [ ] The overnight run did a dry run only. Reason: the pre-confirmed checks require `bench` non-empty, but `bench` is a subset of `test` that C4.1 sets (C02 §4), so it is empty by design at this point. Everything else held: train cut 2025-06-19 (earliest test document); train 499 (110 new + 389 corpus), dev 55, test 110 (103 new + 7 showcase), all test dates after the cut, 14 excluded; eval window 256-317 IPOs per test IPO; demo IPOs nityas-gems-and-jewellery-india-2026, srit-india-2026, shah-investor-s-home-2026. If you agree, run `uv run python -m finsight.splits build --freeze`, commit `data: freeze splits`, then the real C2.1 (`scripts/build_risk_bank.py`, `scripts/export_teacher_input.py`).
+### C1.4 split: frozen
+- [x] Counts confirmed and frozen (train 499, dev 55, test 110, 14 excluded; bench empty until C4.1). Next: real C2.1 (`scripts/build_risk_bank.py`, `scripts/export_teacher_input.py`).
+- [ ] C2.1: if free RAM is under ~4 GB when you start (last check: 5.6 GB free), the bge-m3 embedding step should run on Kaggle, not on the laptop. Close other apps first or ask Claude to use the Kaggle route.
 
 ### C1.2 / C1.3 data results (skim, ~10 min)
 - [ ] Fetch finished: 289 universe rows, all PDFs downloaded (no manual downloads needed; 6 network errors succeeded on retry). Parsed 275; excluded 14: 12 SME covers (C-ADR-09) and 2 whose risk factors are unnumbered (`priority-jewels-2026`, `kanohar-electricals-2026`; the segmenter needs numbered headings). Skim `configs/ipo_universe.csv` (2026 has more rows than expected: SEBI lists filings, not completed IPOs) and `eval_results/c/parse_batch.json`. `patel-retail-2025` yielded only 18 risks: worth a look.
@@ -46,7 +47,7 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] For E21 put a measured-outcome column in `data/gold/outcomes.csv` (`ipo_id,listing_gain_pct`; your own source, check it) and run `uv run python scripts/validate_risklevel.py --outcomes data/gold/outcomes.csv` with `scores --points-only` first. The result is reported whatever it shows.
 
 ### Later (prepared by each part when it is reached)
-- C1.1 approve the IPO list (~15 min) · C1.2 manual downloads (list printed by the script) · C1.4 confirm split counts (~5 min).
+- C1.1 approve the IPO list (~15 min) · C1.2 manual downloads (list printed by the script).
 - After CG1, start at once (biggest time risk): C4.1 verify gold v4 + answer keys + TOC page ranges (~8.5 h), then C4.3 frontier runs (~9 h).
 - gold v3 verification (~1.5 h) for C3.1/C3.2; segmentation spot-check (~40 min) for C2.1.
 
