@@ -72,3 +72,9 @@ Each ADR follows the template in `docs/09_DECISIONS.md`. Where a decision came f
 **Context:** the course deadline (CLAUDE.md header) leaves about 19 build days for about 30 parts, ~31 h of Akshat's hand-work and ~15 A100 hours (F2).
 **Decision:** cuts 1–5 of C05 §5 are applied now: 8B student, BIR backfill (C1.5), large classifier, Compare-window rework (C3.4), bench Task E. The bench is 6 documents + 2 bench-dev. The critical path and the ranked cut line in C05 §6 decide any further cut. Approved by Akshat at the kickoff review.
 **Consequences:** the large classifier and 8B student are not reported; the Compare tab keeps provisional, labelled data; consistency is stated as a property of a deterministic pipeline, not measured against frontier apps.
+
+## C-ADR-13 Colab jobs exchange files through a private HF dataset repo — proposed
+
+**Context:** Drive copying made every Colab run a manual relay and lost progress when a runtime died overnight.
+**Decision:** inputs, per-batch checkpoints and outputs of Colab jobs live in the private dataset repo `AkshatTm/finsight-gpu-jobs` (`<job>/in/`, `<job>/out/`), moved by `scripts/gpu_jobs.py push|status|pull`; `HF_TOKEN` is a Colab secret. Notebooks resume from the repo, release the GPU when they end or crash, and take a preset plus the GPU's own quantisation kernel. Drive mode stays as a fallback. The repo is private because the corpus terms are non-commercial.
+**Consequences:** a fresh runtime can resume with no manual copying; an HF token is needed in Colab; each batch is one repo commit.

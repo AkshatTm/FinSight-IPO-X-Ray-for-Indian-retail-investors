@@ -50,16 +50,40 @@ def notebook(cells: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+JOBS_REPO = "AkshatTm/finsight-gpu-jobs"  # private HF dataset repo (scripts/gpu_jobs.py)
+
+# Cell 1 of every notebook: where inputs and checkpoints live. Defaults to the private HF repo
+# (a fresh runtime resumes from it); "drive" is the fallback and needs _common.py on Drive.
 COMMON_CELL = """
-# Shared helpers: copy notebooks/colab/_common.py to MyDrive/FinSight/_common.py once (COLAB_STEPS).
-import sys, time
-sys.path.insert(0, "/content/drive/MyDrive/FinSight")
-from google.colab import drive
-drive.mount("/content/drive")
-from _common import mount_drive, Checkpointer, run_summary, gpu_info, unassign_runtime
+# Shared helpers. IO "hf": _common.py comes from the job repo (pushed by scripts/gpu_jobs.py);
+# IO "drive": copy notebooks/colab/_common.py to MyDrive/FinSight/ once. Secrets are never printed.
+import os, sys, time
 STARTED = time.time()
-JOB_DIR = mount_drive("rate_check")
+if IO == "hf":
+    from huggingface_hub import hf_hub_download
+    from google.colab import userdata
+    _tok = userdata.get("HF_TOKEN")   # Colab secret: enable "Notebook access" for HF_TOKEN
+    hf_hub_download(JOBS_REPO, "_common.py", repo_type="dataset", token=_tok,
+                    local_dir="/content/_boot", force_download=True)
+    sys.path.insert(0, "/content/_boot")
+else:
+    from google.colab import drive
+    drive.mount("/content/drive")
+    sys.path.insert(0, "/content/drive/MyDrive/FinSight")
+from _common import (JobIO, Checkpointer, DirBackend, run_summary, gpu_info, gpu_config,
+                     hf_secret, unassign_runtime)
 print(gpu_info())
+"""
+
+RATE_PRESETS = """
+PRESETS = {
+    # GPU speed + vLLM pin test (the vLLM test runs when the GPU is sm80+: L4, A100, H100)
+    "rate_check": {"job": "rate_check", "run_vllm": True, "matmul_seconds": 120,
+                   "model": "Qwen/Qwen3-4B-AWQ"},
+    # speed only, any GPU including a T4
+    "rate_only": {"job": "rate_check", "run_vllm": False, "matmul_seconds": 120,
+                  "model": "Qwen/Qwen3-4B-AWQ"},
+}
 """
 
 
@@ -67,25 +91,37 @@ def rate_check() -> dict[str, Any]:
     """C0.2 smoke notebook: GPU info, matmul timing, vLLM pin test with a small AWQ model."""
     md = """# C0.2 — Colab rate check + vLLM smoke (FinSight)
 
-Run once per GPU. **T4 and A100: rate check only** (set `RUN_VLLM = False`). **L4: also the vLLM
-test** (`RUN_VLLM = True`): `awq_marlin` needs compute capability 8.0+, so it cannot run on a T4.
-Read the compute units in the Colab Resources panel before and after the run and type them in the
-parameter cell. Keep the run about 10 minutes. Steps: `docs/phase3/COLAB_STEPS_rate_check.md`.
+Pick `PRESET`, then **Run all**. `rate_check` also runs the vLLM pin test (needs sm80+: L4,
+A100, H100; a T4 skips it). The kernel and memory settings come from the detected GPU. Inputs and
+outputs go through the private HF repo (`IO = "hf"`). `UNITS_BEFORE` from the Resources panel;
+`UNITS_AFTER` may stay empty (give it to `scripts/gpu_jobs.py pull`). The runtime disconnects
+itself at the end (`UNASSIGN`). Steps: `docs/phase3/COLAB_STEPS_rate_check.md`.
 """
-    params = """
-# ---- parameters (edit, then Run all) ------------------------------------------------------
-UNITS_BEFORE = None      # compute units shown in the Resources panel before the run
-UNITS_AFTER = None       # ... and after the run (type it before running the last cell)
-RUN_VLLM = False         # True on the L4 only
-MODEL = "Qwen/Qwen3-4B-AWQ"   # small AWQ model for the smoke test
+    params = (
+        """
+# ---- parameters: pick a preset, then Run all ------------------------------------------------
+PRESET = "rate_check"          # rate_check | rate_only
+IO = "hf"                      # "hf" (private job repo, default) | "drive" (fallback)
+JOBS_REPO = "AkshatTm/finsight-gpu-jobs"
+UNITS_BEFORE = None            # compute units in the Resources panel before the run
+UNITS_AFTER = None             # optional; gpu_jobs.py pull --units-after fills it in later
+UNASSIGN = True                # disconnect the runtime when the job ends
 # candidate vLLM pins, tried in order; the first that imports and generates becomes THE pin
 VLLM_CANDIDATES = ["vllm==0.11.0", "vllm==0.10.2", "vllm"]
-MATMUL_SECONDS = 120
-UNASSIGN = False         # True disconnects the runtime when the last cell ends
 """
+        + RATE_PRESETS
+        + """
+_P = PRESETS[PRESET]
+JOB, RUN_VLLM, MATMUL_SECONDS, MODEL = _P["job"], _P["run_vllm"], _P["matmul_seconds"], _P["model"]
+"""
+    )
     matmul = """
 import torch
 assert torch.cuda.is_available(), "Runtime > Change runtime type > pick a GPU"
+CFG = gpu_config(torch.cuda.get_device_name(0),
+                 torch.cuda.get_device_properties(0).total_memory / 1024**3,
+                 torch.cuda.get_device_capability())
+print("GPU config:", CFG)
 n, t0, iters = 4096, time.time(), 0
 a = torch.randn(n, n, device="cuda", dtype=torch.float16); b = torch.randn(n, n, device="cuda", dtype=torch.float16)
 while time.time() - t0 < MATMUL_SECONDS:
@@ -95,7 +131,8 @@ while time.time() - t0 < MATMUL_SECONDS:
 tflops = round(2 * n**3 * iters / (time.time() - t0) / 1e12, 2)
 cap = torch.cuda.get_device_capability()
 print({"fp16_tflops": tflops, "capability": cap, "torch": torch.__version__})
-EXTRA = {"fp16_tflops": tflops, "capability": list(cap), "torch": torch.__version__}
+EXTRA = {"fp16_tflops": tflops, "capability": list(cap), "torch": torch.__version__, "gpu_config": CFG,
+         "preset": PRESET}
 """
     vllm = '''
 import subprocess, json
@@ -106,7 +143,7 @@ if RUN_VLLM and cap[0] >= 8:
         subprocess.run([sys.executable, "-m", "pip", "install", "-q", pin], check=False)
         test = f"""
 from vllm import LLM, SamplingParams
-llm = LLM('{MODEL}', quantization='awq_marlin', max_model_len=2048, gpu_memory_utilization=0.85)
+llm = LLM('{MODEL}', quantization='{CFG["quant"]}', max_model_len=2048, gpu_memory_utilization={CFG["gpu_mem"]})
 out = llm.generate(['Explain an IPO in one sentence.'], SamplingParams(max_tokens=40))
 print('GEN_OK', out[0].outputs[0].text)
 """
@@ -116,16 +153,21 @@ print('GEN_OK', out[0].outputs[0].text)
             PIN_OK = pin
             break
     ver = subprocess.run([sys.executable, "-m", "pip", "show", "vllm"], capture_output=True, text=True).stdout
-    EXTRA.update(vllm_pin=PIN_OK, vllm_pip_show=ver[:300], model=MODEL, quantization="awq_marlin")
+    EXTRA.update(vllm_pin=PIN_OK, vllm_pip_show=ver[:300], model=MODEL, quantization=CFG["quant"])
 else:
     print("vLLM test skipped (RUN_VLLM False or GPU below sm80)")
 '''
     summary = """
-s = run_summary(JOB_DIR, "rate_check", started=STARTED, units_before=UNITS_BEFORE,
-                units_after=UNITS_AFTER, items_done=0, pins={"vllm": str(PIN_OK)}, extra=EXTRA)
-print(json.dumps(s, indent=1))
-print("Copy run_summary.json from Drive to eval_results/c/ and run scripts/log_compute.py on it.")
-unassign_runtime(UNASSIGN)
+try:
+    JOBIO = JobIO(JOB, IO, hf_repo=JOBS_REPO, token=hf_secret())
+    ck = JOBIO.checkpointer(every=1)
+    s = run_summary(ck.local, "rate_check", started=STARTED, units_before=UNITS_BEFORE,
+                    units_after=UNITS_AFTER, items_done=0, pins={"vllm": str(PIN_OK)}, extra=EXTRA)
+    ck.sync()
+    print(json.dumps(s, indent=1))
+    print("RATE CHECK DONE. vllm_pin =", PIN_OK)
+finally:
+    unassign_runtime(UNASSIGN)
 """
     return notebook(
         [
@@ -139,123 +181,179 @@ unassign_runtime(UNASSIGN)
     )
 
 
-TEACHER_PARAMS = """
-# ---- parameters (edit, then Run all) ------------------------------------------------------
-JOB = "teacher_bakeoff"            # Drive folder MyDrive/FinSight/<JOB>/ ; "teacher_full" for the real run
-INPUT_FILE = "bakeoff_risks.jsonl" # in that folder: risk_id, title, body (risks.jsonl for the full run)
-MODELS = ["Qwen/Qwen3-14B-AWQ", "Qwen/Qwen3-32B-AWQ"]   # full run: only the chosen model
-SMOKE = True                       # True: 20 risks per model, then stop (run on a T4/L4 first)
-EVERY = 100                        # checkpoint interval (risks per vLLM batch); 200 for the full run
-MAX_MODEL_LEN = 4096
-MAX_TOKENS = 400
-VLLM_PIN = "vllm==0.11.0"          # REPLACE with the pin recorded by the L4 rate check (COLAB_STEPS_rate_check)
-QUANT = "awq_marlin"               # awq_marlin needs sm80+ (L4/A100); a T4 needs "awq"
-GPU_MEM = 0.90
-MIN_GB_FOR_32B = 40                # the 32B model is skipped on a smaller GPU (L4-only fallback, C03 section 3)
-UNITS_BEFORE = None                # compute units in the Resources panel before the run
-UNITS_AFTER = None                 # ... and after (type it, then re-run the last cell)
-UNASSIGN = False                   # True disconnects the runtime at the end
+TEACHER_PRESETS = """
+# candidate teachers (C2.2); the full run uses only the chosen one
+BASELINE = "Qwen/Qwen3-32B-AWQ"
+PRESETS = {
+    # 20 risks per model, then stop: must print TEACHER OK. Models too big for the GPU are skipped.
+    "bakeoff_smoke": {"job": "bakeoff", "input": "bakeoff_risks.jsonl", "models": [SMALL, BASELINE],
+                      "smoke": True, "every": 20, "max_tokens": 300},
+    "bakeoff": {"job": "bakeoff", "input": "bakeoff_risks.jsonl", "models": [SMALL, BASELINE],
+                "smoke": False, "every": 50, "max_tokens": 300},
+    "teacher_smoke": {"job": "teacher_full", "input": "risks.jsonl", "models": [BASELINE],
+                      "smoke": True, "every": 20, "max_tokens": 300},
+    "teacher_full": {"job": "teacher_full", "input": "risks.jsonl", "models": [BASELINE],
+                     "smoke": False, "every": 200, "max_tokens": 300},
+}
 """
+
+TEACHER_PARAMS = (
+    """
+# ---- parameters: pick a preset, then Run all ------------------------------------------------
+PRESET = "bakeoff_smoke"   # bakeoff_smoke | bakeoff | teacher_smoke | teacher_full
+IO = "hf"                  # "hf" (private job repo, default) | "drive" (fallback)
+JOBS_REPO = "AkshatTm/finsight-gpu-jobs"
+UNITS_BEFORE = None        # compute units in the Resources panel before the run
+UNITS_AFTER = None         # optional; gpu_jobs.py pull --units-after fills it in later
+UNASSIGN = True            # disconnect the runtime when the job ends (also if it crashes)
+VLLM_PIN = "vllm==0.11.0"  # REPLACE with the pin recorded by the L4 rate check (COLAB_STEPS_rate_check)
+MODELS_OVERRIDE = None     # e.g. ["org/model-AWQ"]; None = the preset's models
+QUANT_OVERRIDE = None      # None = chosen from the detected GPU (awq on T4, awq_marlin on sm80+)
+MAX_MODEL_LEN = 4096
+SMALL = "Qwen/Qwen3-14B-AWQ"
+"""
+    + TEACHER_PRESETS
+    + """
+_P = PRESETS[PRESET]
+JOB, INPUT_FILE, SMOKE, EVERY, MAX_TOKENS = _P["job"], _P["input"], _P["smoke"], _P["every"], _P["max_tokens"]
+MODELS = MODELS_OVERRIDE or _P["models"]
+"""
+)
 
 TEACHER_INSTALL = """
 import subprocess, sys
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", VLLM_PIN], check=True)
 """
 
-TEACHER_BODY = """
-import gc, json, os, time
+# The body is a function so the whole run sits in try/finally: the GPU is released even on a crash.
+TEACHER_MAIN = """
+import gc, json, os, re, time
 from pathlib import Path
 import torch
 from vllm import LLM, SamplingParams
 
-JOB_DIR = mount_drive(JOB)
-LIMIT = 20 if SMOKE else None
-gpu_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
-risks = list(read_jsonl(JOB_DIR / INPUT_FILE))
-items = [{"risk_id": r["risk_id"], "messages": messages(r.get("title") or "", r["body"])} for r in risks]
-print(len(items), "risks; GPU", gpu_info(), f"{gpu_gb:.0f} GB")
-ck = Checkpointer(local_dir="/content/ck", drive_dir=JOB_DIR / "out", every=1)
-PINS = {"vllm": VLLM_PIN, "torch": torch.__version__}
-for model in MODELS:
-    slug = model.split("/")[-1].lower()
-    if "32b" in slug and gpu_gb < MIN_GB_FOR_32B:
-        print("skipping", model, "- GPU too small; use the 14B model directly (C-ADR-05 fallback)")
-        continue
-    out_path = ck.path(f"raw_{slug}.jsonl")
-    llm = LLM(model=model, quantization=QUANT, dtype="float16", max_model_len=MAX_MODEL_LEN,
-              gpu_memory_utilization=GPU_MEM, enforce_eager=False, seed=2026)
-    try:  # vLLM <= 0.10
-        from vllm.sampling_params import GuidedDecodingParams
-        params = SamplingParams(temperature=0.2, top_p=0.9, max_tokens=MAX_TOKENS,
-                                guided_decoding=GuidedDecodingParams(json=OUTPUT_SCHEMA))
-    except ImportError:  # newer releases renamed it
-        from vllm.sampling_params import StructuredOutputsParams
-        params = SamplingParams(temperature=0.2, top_p=0.9, max_tokens=MAX_TOKENS,
-                                structured_outputs=StructuredOutputsParams(json=OUTPUT_SCHEMA))
 
-    def generate(chats):
-        outs = llm.chat(chats, params, use_tqdm=False, chat_template_kwargs={"enable_thinking": False})
-        return [o.outputs[0].text for o in outs]
+def model_fits(model, gpu_gb, gpu_mem):
+    # AWQ 4-bit weights ~0.6 GiB per billion parameters, plus ~4 GiB for CUDA and KV cache
+    m = re.search(r"(\\d+(?:\\.\\d+)?)b", model.split("/")[-1].lower())
+    return True if m is None else gpu_gb * gpu_mem >= 0.6 * float(m.group(1)) + 4
 
-    t0 = time.time()
-    stats = run_teacher(items, generate, out_path, every=EVERY, limit=LIMIT,
-                        meta={"model": model, "prompt_version": PROMPT_VERSION}, after_batch=ck.sync)
-    seconds = round(time.time() - t0)
+
+def main():
+    LIMIT = 20 if SMOKE else None
+    gpu_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
+    CFG = gpu_config(torch.cuda.get_device_name(0), gpu_gb, torch.cuda.get_device_capability())
+    quant = QUANT_OVERRIDE or CFG["quant"]
+    print(f"PRESET {PRESET} | GPU {CFG['tier']} {CFG['mem_gb']} GiB | quant {quant} | models {MODELS}", flush=True)
+    jobio = JobIO(JOB, IO, hf_repo=JOBS_REPO, token=hf_secret())
+    ck = jobio.checkpointer(every=1)  # every batch is synced to the HF repo / Drive
+    risks = list(read_jsonl(jobio.fetch_input(INPUT_FILE)))
+    items = [{"risk_id": r["risk_id"], "messages": messages(r.get("title") or "", r["body"])} for r in risks]
+    total = min(len(items), LIMIT) if LIMIT else len(items)
+    print(len(items), "risks;", "will write", total, "per model", flush=True)
+    pins = {"vllm": VLLM_PIN, "torch": torch.__version__}
+    written = 0
+    for model in MODELS:
+        slug = model.split("/")[-1].lower()
+        if not model_fits(model, gpu_gb, CFG["gpu_mem"]):
+            print("skipping", model, f"- does not fit {gpu_gb:.0f} GiB (use a larger GPU or the smaller model)", flush=True)
+            continue
+        out_path = ck.path(f"raw_{slug}.jsonl")
+        llm = LLM(model=model, quantization=quant, dtype="float16", max_model_len=MAX_MODEL_LEN,
+                  gpu_memory_utilization=CFG["gpu_mem"], enforce_eager=False, seed=2026)
+        try:  # vLLM <= 0.10
+            from vllm.sampling_params import GuidedDecodingParams
+            params = SamplingParams(temperature=0.2, top_p=0.9, max_tokens=MAX_TOKENS,
+                                    guided_decoding=GuidedDecodingParams(json=OUTPUT_SCHEMA))
+        except ImportError:  # newer releases renamed it
+            from vllm.sampling_params import StructuredOutputsParams
+            params = SamplingParams(temperature=0.2, top_p=0.9, max_tokens=MAX_TOKENS,
+                                    structured_outputs=StructuredOutputsParams(json=OUTPUT_SCHEMA))
+
+        def generate(chats):
+            # thinking mode off (Qwen3-style templates; other templates ignore the flag)
+            outs = llm.chat(chats, params, use_tqdm=False, chat_template_kwargs={"enable_thinking": False})
+            return [o.outputs[0].text for o in outs]
+
+        t0, base = time.time(), len(done_ids(out_path))
+
+        def after_batch():
+            ck.sync()
+            done = len(done_ids(out_path))
+            rate = (done - base) / max(time.time() - t0, 1e-9)
+            eta = (total - done) / rate / 60 if rate > 0 else float("nan")
+            print(f"PROGRESS {slug}: {done}/{total} ({done / max(total, 1):.0%}) | {rate:.2f} risk/s | ETA {eta:.1f} min", flush=True)
+
+        stats = run_teacher(items, generate, out_path, every=EVERY, limit=LIMIT,
+                            meta={"model": model, "prompt_version": PROMPT_VERSION}, after_batch=after_batch)
+        written += stats["written"]
+        summary = {**stats, "model": model, "prompt_version": PROMPT_VERSION, "seconds": round(time.time() - t0),
+                   "smoke": SMOKE, "gpu": gpu_info(), "gpu_config": CFG, "pins": pins, "max_tokens": MAX_TOKENS}
+        ck.path(f"run_summary_{slug}.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
+        ck.sync()
+        print("TEACHER OK", json.dumps(summary), flush=True)
+        del llm
+        gc.collect()
+        torch.cuda.empty_cache()
+    s = run_summary(ck.local, JOB, started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
+                    items_done=len(items), pins=pins,
+                    extra={"models": MODELS, "smoke": SMOKE, "preset": PRESET, "gpu_config": CFG})
     ck.sync()
-    summary = {**stats, "model": model, "prompt_version": PROMPT_VERSION, "seconds": seconds,
-               "smoke": SMOKE, "gpu": gpu_info(), "pins": PINS}
-    ck.path(f"run_summary_{slug}.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
-    ck.sync()
-    print("TEACHER OK", json.dumps(summary))
-    del llm
-    gc.collect()
-    torch.cuda.empty_cache()
-"""
+    print(json.dumps(s, indent=1))
+    print(f"TEACHER DONE: {written} rows written, {round(time.time() - STARTED) // 60} min. Pull with: python scripts/gpu_jobs.py pull {JOB}", flush=True)
 
-TEACHER_END = """
-s = run_summary(JOB_DIR, JOB, started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
-                items_done=len(items), pins=PINS, extra={"models": MODELS, "smoke": SMOKE})
-print(json.dumps(s, indent=1))
-print("Copy raw_*.jsonl, run_summary_*.json (folder out/) and run_summary.json back (COLAB_STEPS).")
-unassign_runtime(UNASSIGN)
+
+try:
+    main()
+except BaseException as exc:  # the GPU must not idle overnight after a crash
+    print("TEACHER FAILED:", type(exc).__name__, str(exc)[:300], flush=True)
+    raise
+finally:
+    unassign_runtime(UNASSIGN)
 """
 
 
 def teacher() -> dict[str, Any]:
-    """C2.2 / C2.3: the teacher notebook (bake-off with two models, or the full run with one)."""
+    """C2.2 / C2.3: the teacher notebook (bake-off with several models, or the full run with one)."""
     sys.path.insert(0, str(ROOT / "src"))
     sys.path.insert(0, str(ROOT / "scripts"))
     import make_teacher_notebook as legacy
 
     md = """# C2.2 / C2.3 - Teacher labels and plain-English rewrites (FinSight, Colab)
 
-Runs Qwen3 AWQ teachers with **vLLM** over a risks file (`risk_id`, `title`, `body`). Inference
-only. One JSON answer per risk: `category`, `seriousness_1to5`, `hard_fact`, `simple`
-(<= 60 words), `numbers_copied`. Thinking mode is off. The prompt and the loop are copied from
-`finsight.risks` by `scripts/make_colab_notebooks.py`, so they are the tested ones.
+Runs AWQ teachers with **vLLM** over a risks file (`risk_id`, `title`, `body`). Inference only.
+One JSON answer per risk: `category`, `seriousness_1to5`, `hard_fact`, `simple` (<= 60 words),
+`numbers_copied`. Thinking mode is off, `max_tokens` is capped. The prompt and the loop are copied
+from `finsight.risks` by `scripts/make_colab_notebooks.py`, so they are the tested ones.
 
-- **Bake-off (C2.2):** `JOB = "teacher_bakeoff"`, both models, A100 (the 32B model needs ~40 GB).
-- **Full run (C2.3):** `JOB = "teacher_full"`, one model, `EVERY = 200`.
-- **Smoke first** (`SMOKE = True`, 20 risks) on a T4 or L4 with the small model; then `SMOKE = False`.
-- Answers are appended to local disk and copied to Drive after every batch; a disconnect resumes.
+**Pick `PRESET`, Run all.** Presets: `bakeoff_smoke` (20 risks per model), `bakeoff` (300 risks,
+all candidates), `teacher_smoke`, `teacher_full` (12k, the chosen model). The quantisation kernel
+and memory fraction come from the detected GPU (T4, L4, A100-40GB, A100-80GB, H100); a model that
+does not fit the GPU is skipped.
+
+- Inputs come from the private HF repo (`gpu_jobs.py push <job>`); every batch is uploaded back, so a
+  rerun resumes from there. Progress lines show `PROGRESS ... ETA`; the end prints `TEACHER DONE`.
+- The runtime disconnects itself at the end, also after a crash (`UNASSIGN`).
 - Filters run on the laptop, not here. Teacher outputs are AI labels (`label_source`).
 """
+    body = "import json\n\n" + legacy.prompt_cell()
     cells = [
         cell("markdown", md),
         cell("code", TEACHER_PARAMS, ["parameters"]),
         cell("code", TEACHER_INSTALL),
-        cell("code", COMMON_CELL.replace('JOB_DIR = mount_drive("rate_check")\n', "")),
+        cell("code", COMMON_CELL),
         cell("code", legacy.RUN_SOURCE.read_text(encoding="utf-8"), ["teacher-run"]),
-        cell("code", "import json\n\n" + legacy.prompt_cell(), ["teacher-prompt"]),
-        cell("code", TEACHER_BODY),
-        cell("code", TEACHER_END),
+        cell("code", body, ["teacher-prompt"]),
+        cell("code", TEACHER_MAIN, ["teacher-main"]),
     ]
     return notebook(cells)
 
 
 STUDENT_PARAMS = """
 # ---- parameters (edit, then Run all) ------------------------------------------------------
-JOB = "student"                    # Drive folder MyDrive/FinSight/student/ holds train.jsonl and dev.jsonl
+JOB = "student"                    # job folder: train.jsonl and dev.jsonl are its inputs
+IO = "hf"                          # "hf" (private job repo, default) | "drive" (fallback)
+JOBS_REPO = "AkshatTm/finsight-gpu-jobs"
 MODEL = "Qwen/Qwen3-4B-Instruct-2507"   # Apache-2.0, non-thinking; the zero-shot bake-off may change it
 PRECISION = "bf16"                 # "bf16": LoRA on a bf16 base (L4/A100); "nf4": 4-bit QLoRA, the T4 recipe
 EPOCHS = 2
@@ -271,7 +369,7 @@ UPLOAD = False                     # True: push adapter + GGUF (never merged fp1
 HF_REPO = "AkshatTm/finsight-student-4b"
 UNITS_BEFORE = None
 UNITS_AFTER = None
-UNASSIGN = False
+UNASSIGN = True                     # disconnect the runtime when the job ends
 """
 
 STUDENT_SETUP = """
@@ -290,13 +388,13 @@ from transformers import (AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfi
                           TrainerCallback, TrainingArguments)
 
 assert PRECISION in ("bf16", "nf4"), PRECISION
-JOB_DIR = mount_drive(JOB)
+JOBIO = JobIO(JOB, IO, hf_repo=JOBS_REPO, token=hf_secret())
 out = Path("/content/student")
 out.mkdir(parents=True, exist_ok=True)
-ck = Checkpointer(local_dir=out / "ck", drive_dir=JOB_DIR / "ck", every=10**9)  # synced on every save
+ck = JOBIO.checkpointer(every=10**9)  # synced on every save (SyncToDrive callback)
 ckpt_dir = ck.local / "trainer"
 
-train_rows, dev_rows = read_rows(JOB_DIR / "train.jsonl"), read_rows(JOB_DIR / "dev.jsonl")
+train_rows, dev_rows = read_rows(JOBIO.fetch_input("train.jsonl")), read_rows(JOBIO.fetch_input("dev.jsonl"))
 assert not {r["company"] for r in train_rows} & {r["company"] for r in dev_rows}, "company on both sides"
 if SMOKE:
     train_rows, dev_rows = train_rows[:64], dev_rows[:16]
@@ -378,12 +476,12 @@ if EXPORT_GGUF:
 (out / "metrics.json").write_text(json.dumps(metrics, indent=1), encoding="utf-8")
 
 # ---- keep the small files on Drive; optionally upload to a private HF repo --------------------------
-keep = JOB_DIR / "out"
-keep.mkdir(parents=True, exist_ok=True)
+keep = ck.local  # the job's out/ folder (synced to the HF repo or Drive below)
 shutil.copytree(adapter, keep / "adapter", dirs_exist_ok=True)
 shutil.copy(out / "metrics.json", keep / "metrics.json")
 if EXPORT_GGUF:
     shutil.copy(gguf, keep / gguf.name)
+ck.sync()
 if UPLOAD:
     from google.colab import userdata
     from huggingface_hub import HfApi
@@ -397,8 +495,9 @@ print("STUDENT OK", json.dumps({k: v for k, v in metrics.items() if k != "log_hi
 """
 
 STUDENT_END = """
-s = run_summary(JOB_DIR, "student", started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
+s = run_summary(ck.local, "student", started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
                 items_done=len(train), pins={"torch": torch.__version__}, extra={"precision": PRECISION, "smoke": SMOKE})
+ck.sync()
 print(json.dumps(s, indent=1))
 unassign_runtime(UNASSIGN)
 """
@@ -418,9 +517,9 @@ teacher pairs (`train.jsonl`, `dev.jsonl` in `MyDrive/FinSight/student/`, made b
 serving prompt (`finsight.risks.simplify`).
 
 - **PRECISION `bf16`** (L4/A100): LoRA r=16 on a bf16 base, no 4-bit. **`nf4`**: the T4 recipe (4-bit, fp16).
-- Checkpoints go to local disk and are copied to Drive on every save (`SAVE_STEPS`); a disconnect resumes.
+- Checkpoints go to local disk and are copied to the private HF job repo (or Drive) on every save (`SAVE_STEPS`); a disconnect resumes.
 - Then the adapter is merged **temporarily** to make a **GGUF Q4_K_M** with llama.cpp. The merged fp16
-  weights are deleted. Only the adapter and the GGUF are kept (Drive) and, with `UPLOAD`, pushed to a
+  weights are deleted. Only the adapter and the GGUF are kept (job repo / Drive) and, with `UPLOAD`, pushed to a
   **private** Hugging Face repo. Never merged fp16.
 - The teacher rewrites are AI-made, and the corpus terms are non-commercial: keep the repo private.
 - Smoke first (`SMOKE = True`, T4, `nf4`), then the real run on an L4 or A100.
@@ -429,7 +528,7 @@ serving prompt (`finsight.risks.simplify`).
         cell("markdown", md),
         cell("code", STUDENT_PARAMS, ["parameters"]),
         cell("code", STUDENT_SETUP),
-        cell("code", COMMON_CELL.replace('JOB_DIR = mount_drive("rate_check")\n', "")),
+        cell("code", COMMON_CELL),
         cell("code", legacy.prompt_cell(), ["student-prompt"]),
         cell("code", legacy.PREP, ["student-prep"]),
         cell("code", STUDENT_BODY),

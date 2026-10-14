@@ -5,12 +5,13 @@
 - **MODE: overnight autonomous run** (user asleep): everything on Sonnet, one PR per part, merged by Claude when green. Order: C0.2 ✓ → C1.1 ✓ → C1.2 (code ✓, fetch RUNNING) → C1.3 (code ✓, batch parse RUNNING) → C1.4 real run → C2.1 … C2.8 (code + notebooks only). Stop rules: money/keys/GCP/deploy, same bug twice (write `BLOCKED.md`, move on), all blocked.
 - **Background jobs (started by Claude, repo root):** `scripts/fetch_offer_docs.py` (log `data/raw/logs/fetch1.log`) and `data/raw/logs/loop.sh` (repeats `scripts/batch_parse.py`; log `data/raw/logs/batch.log`; appends `LOOP_DONE` at the end). `configs/ipo_universe.csv` is rewritten by the fetch: do NOT commit it until both finish; then `batch_parse.py --apply`, `--report`, fix repeated failures (regression tests), `uv run poe docs-gen`, commit "data: fetch + parse status" (closes #175/#176).
 - **Last done:** C0.2-C2.6, C2.8 code merged; C1.2/C1.3 data merged (275 parsed, 14 excluded, 0 failed); **C1.4 split frozen** (train 499, dev 55, test 110, bench empty until C4.1); CG0 setup check passed. C2.7 skipped (below the cut line).
-- **Next:** C2.2 teacher bake-off (Opus-marked), then teacher run (Colab), classifier, student.
+- **Next:** C0.2 vLLM pin test on Colab (preset `rate_check`, `gpu_jobs.py push rate_check` done), then C2.2 bake-off (Opus), C2.3, classifier, student. Colab lane runs through the private HF job repo (C-ADR-13).
 - **Pending (Akshat):** vLLM pin test on the L4 (AKSHAT_TODO, C0.2).
 - **Opus-marked parts done on Sonnet (review in the morning):** C2.2 (pick rule in `src/finsight/risks/bakeoff.py`, C-ADR-05).
 - **Open questions:** none.
 
 ## Log
+- Colab lane automated: HF job repo IO, `scripts/gpu_jobs.py`, presets, GPU auto-config, auto-disconnect (C-ADR-13 proposed); colab-mcp installed locally
 - C2.1 done: bank 29,677 rows (440 IPOs), eval 8,819 (110 test IPOs), teacher input 12,305 achievable at cap 35, 12,000 written; E13b hand-checked (73/75 boundaries)
 - C1.4 done: splits frozen (`configs/splits.yaml`, `data/manifests/`), leakage tests green; CG0 setup check passed (HF, Kaggle via `uvx kaggle`, disk)
 - C1.2/C1.3 done: 289 docs fetched, 275 parsed, 14 excluded (12 SME, 2 unnumbered risks); section-header dash fix

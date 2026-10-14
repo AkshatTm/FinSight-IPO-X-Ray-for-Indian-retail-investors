@@ -1,21 +1,20 @@
-# COLAB_STEPS_teacher_bakeoff — Qwen3-14B-AWQ vs Qwen3-32B-AWQ on 300 risks (C2.2)
+# COLAB_STEPS_teacher_bakeoff — teacher candidates on 300 risks (C2.2)
 
-**Job:** both teachers answer the same 300 risks; you then rate a blind sheet. **GPU:** **A100** (the 32B model needs ~40 GB; on an L4 the notebook skips it and only the 14B runs, and then Claude records "14B used directly" as an ADR). **Expected:** ~1–1.5 h ≈ 7–10 units (A100 ~6.77 units/h) plus a smoke run on a T4 (~0.1 units). **Notebook:** `notebooks/colab/c2_teacher.ipynb`.
+**Job:** every candidate answers the same 300 risks; you then rate a blind sheet. **GPU:** the fastest your plan lists (check H100, then A100-80GB, then A100-40GB); on an L4 the notebook skips models that do not fit. **Expected:** about 1–1.5 h ≈ 7–10 units on an A100 (6.77 units/h), plus a smoke run on a cheap GPU (~0.1–0.3 units). Update after C2.2 step "candidates" fixes the model list. **Notebook:** `notebooks/colab/c2_teacher.ipynb`.
 
-## Before (on the laptop, Claude does this)
+## Before (laptop, Claude)
 1. `uv run python scripts/teacher_bakeoff.py sample` → `data/processed/teacher/bakeoff/bakeoff_risks.jsonl` (300 train+dev risks).
-2. You need the **vLLM pin** from the L4 test (`COLAB_STEPS_rate_check.md`). If you have not run that yet, run it first (~15 min).
+2. The **vLLM pin** from the L4 test is written into the notebook's `VLLM_PIN` (`COLAB_STEPS_rate_check.md`).
+3. `uv run python scripts/gpu_jobs.py push bakeoff`.
 
-## Run (you)
-1. Google Drive: create `MyDrive/FinSight/teacher_bakeoff/` and copy `bakeoff_risks.jsonl` into it. Make sure `MyDrive/FinSight/_common.py` exists (copy `notebooks/colab/_common.py`).
-2. Upload `notebooks/colab/c2_teacher.ipynb` to Colab. Runtime → **T4 GPU** for the smoke run.
-3. Parameter cell: `VLLM_PIN` = the pin from the L4 test, `QUANT = "awq"` on a T4 (T4 cannot use `awq_marlin`), `MODELS = ["Qwen/Qwen3-14B-AWQ"]`, `SMOKE = True`. Type `UNITS_BEFORE`. Run all. It must print `TEACHER OK` with 20 written. (If the 14B does not fit the T4 with `MAX_MODEL_LEN = 2048`, skip the smoke on T4 and smoke on the L4 instead.)
-4. **Real run:** Runtime → **A100 GPU**. Parameters: `QUANT = "awq_marlin"`, `MODELS` as in the file (both), `SMOKE = False`, `EVERY = 100`. Run all. The 14B runs first, then the 32B.
-5. If the runtime disconnects: reconnect, run all again. It resumes from `MyDrive/FinSight/teacher_bakeoff/out/` (you lose at most one batch of 100).
-6. At the end type `UNITS_AFTER`, re-run the last cell, then disconnect the runtime (`UNASSIGN = True`).
+## Run (you, or Claude through colab-mcp)
+1. Colab secret `HF_TOKEN` with notebook access on (once). Open `c2_teacher.ipynb`.
+2. **Smoke:** cheap GPU (L4 or T4), `PRESET = "bakeoff_smoke"`, type `UNITS_BEFORE`, Run all. Each model that fits prints `TEACHER OK` with 20 written.
+3. **Real run:** the fastest GPU, `PRESET = "bakeoff"`, Run all. The notebook picks `awq_marlin` and `GPU_MEM` from the GPU, prints `PROGRESS ... ETA` after every batch, ends with `TEACHER DONE` and disconnects.
+4. A disconnect is safe: reconnect, same preset, run all; it resumes from the job repo.
 
-## Bring back
-- Copy `MyDrive/FinSight/teacher_bakeoff/out/raw_qwen3-14b-awq.jsonl`, `raw_qwen3-32b-awq.jsonl`, `run_summary_*.json` into `data/processed/teacher/bakeoff/`, and `MyDrive/FinSight/teacher_bakeoff/run_summary.json` to `eval_results/c/bakeoff_run_summary.json`; then `uv run python scripts/log_compute.py eval_results/c/bakeoff_run_summary.json`.
+## Bring back (laptop, Claude)
+- `uv run python scripts/gpu_jobs.py status bakeoff`, then `... pull bakeoff --units-before <n> --units-after <n>`: raw files and per-model summaries go to `data/processed/teacher/bakeoff/`, the run summary to `eval_results/c/bakeoff_run_summary.json`, and the compute row is logged.
 - Tell Claude "bake-off is back". Claude runs `scripts/teacher_bakeoff.py sheet` (blind 100-row CSV).
 
 ## Rate the sheet (you, ~30 min)
@@ -24,4 +23,4 @@
 
 ## If it goes wrong
 - vLLM import/engine error: paste the last 30 lines to Claude; try the next pin in the L4 test list.
-- Out of memory on the A100: lower `GPU_MEM` to 0.85 or `MAX_MODEL_LEN` to 3072.
+- Out of memory: `MAX_MODEL_LEN = 3072` or `QUANT_OVERRIDE`; models that do not fit are skipped with a message.

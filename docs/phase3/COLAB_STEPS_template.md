@@ -1,25 +1,25 @@
 # COLAB_STEPS_<job> template (copy, rename, fill the <> parts)
 
-**Job:** <what it does> · **GPU:** <T4 | L4 | A100> · **Expected:** <hours> ≈ <units> units (rates: T4 ~1.07, L4 ~1.54, A100 ~6.77 units/h; `docs/phase3/C03_TRAINING.md` §4) · **Notebook:** `notebooks/colab/<file>.ipynb`
+**Job:** <what it does> · **GPU:** <T4 | L4 | A100-40GB | A100-80GB | H100> · **Expected:** <hours> ≈ <units> units (rates: T4 ~1.07, L4 ~1.54, A100 ~6.77 units/h; H100 not measured; `docs/phase3/C03_TRAINING.md` §4) · **Notebook:** `notebooks/colab/<file>.ipynb`
 
 ## Once (first Colab job only)
-1. In Google Drive create `MyDrive/FinSight/` and copy `notebooks/colab/_common.py` into it.
-2. Colab secret `HF_TOKEN` (key icon → Add secret → notebook access on), only for jobs that upload weights.
+1. Colab secret `HF_TOKEN` (key icon → Add secret → **Notebook access on**). It is the same token as `.env`; it is read inside the notebook and never printed.
+2. The private job repo `AkshatTm/finsight-gpu-jobs` is created by `scripts/gpu_jobs.py push` (no Drive copying). Drive mode (`IO = "drive"`) still works as a fallback: copy `notebooks/colab/_common.py` to `MyDrive/FinSight/` and the inputs to `MyDrive/FinSight/<job>/`.
 
-## Run
-1. Upload the notebook to Colab (File → Upload notebook). Runtime → Change runtime type → **<GPU>**.
-2. Upload the inputs to `MyDrive/FinSight/<job>/`: <files>.
-3. Read your compute units in the Resources panel and type them into `UNITS_BEFORE` in the parameter cell.
-4. **Smoke first:** set `SMOKE = True`, run all (T4, minutes). It must end with a `run_summary.json`.
-5. Real run: `SMOKE = False`, run all. If the runtime disconnects, reconnect, run the first cells again and run all: the notebook resumes from the Drive checkpoints (you lose at most ~10 minutes).
-6. When the last cell finishes, type the units into `UNITS_AFTER`, re-run the last cell, then **disconnect the runtime** (set `UNASSIGN = True` to automate).
+## Before (laptop, Claude)
+1. `uv run python scripts/gpu_jobs.py push <job>` uploads the inputs, `_common.py` and the notebooks.
 
-## Bring back
-- Copy from `MyDrive/FinSight/<job>/` to the repo: <output files> → `<destination>`.
-- `run_summary.json` → `eval_results/c/` and run `uv run python scripts/log_compute.py eval_results/c/run_summary.json` (rename it first so files do not collide).
+## Run (you, or Claude through colab-mcp)
+1. Upload `notebooks/colab/<file>.ipynb` to Colab (or open it from the job repo's `notebooks/` folder). Runtime → Change runtime type → **<GPU>**. Check which GPUs your plan lists; the notebook picks the quantisation kernel and `GPU_MEM` from the GPU it gets.
+2. Parameter cell: set `PRESET` (<presets>), type `UNITS_BEFORE` from the Resources panel. Leave `UNITS_AFTER = None` (give it to `gpu_jobs.py pull --units-after` later). Run all.
+3. Progress prints `PROGRESS ... ETA` after every batch. The notebook ends with `<JOB> DONE` and disconnects the runtime (`UNASSIGN = True`, also after a crash).
+4. A disconnect is safe: reconnect, pick the same preset, run all; it resumes from the repo (at most one batch redone).
+
+## Bring back (laptop, Claude)
+- `uv run python scripts/gpu_jobs.py status <job>` shows progress; `... pull <job> --units-before <n> --units-after <n>` downloads the outputs to the paths below and logs the compute row.
 - Tell Claude: "<job> is back".
 
 ## If it goes wrong
-- Out of memory: lower `MAX_MODEL_LEN` / batch size, or use the fallback in the notebook's parameter cell.
+- Out of memory: lower `MAX_MODEL_LEN` or use `QUANT_OVERRIDE` / `MODELS_OVERRIDE`; a model that does not fit the GPU is skipped with a message.
 - `No GPU available`: try again later or take an L4; never debug on an A100.
-- Stuck for > 15 minutes with no new lines in the output file: stop, copy the Drive folder, tell Claude.
+- No new `PROGRESS` line for > 15 minutes: stop the runtime, run `gpu_jobs.py status <job>`, tell Claude.
