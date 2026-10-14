@@ -705,6 +705,14 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why keep outcomes away from the fit?* A threshold tuned on outcomes would make E21 circular.
 3. *What if E21 shows nothing?* It is reported as it is; the level is a reading aid, not a forecast.
 
+### C51. The test-slice gold sets (built for C2.4 and C2.5)
+**What it does.** `finsight.risks.gold_sets` and `scripts/gold_sets.py` draw two human-checked sets from `test` IPOs only, with a fixed seed: gold-150 (15 risks from each of 10 IPOs) for the classifier and gold-50 (5 risks from each of 10 other IPOs) for the simplifier. A Colab job (`gold_eval`) runs the teacher and the bake-off runner-up on them. gold-150 becomes a sheet with the category pre-filled by the runner-up; Akshat corrects it, and the number of changed labels is reported. gold-50 becomes a blind, shuffled sheet of rewrites from three systems (the zero-shot base, the student, the teacher) with the system names in a separate key; Akshat rates meaning and plainness, and `score50` reports each system with a Wilson interval.
+**Limits.** One rater; a pre-filled sheet can anchor the rater (the change count makes that visible); 50 risks per system is small.
+**Likely viva questions.**
+1. *Why pre-fill from the runner-up and not the teacher?* The classifier learns from the teacher, so a gold set checked against the teacher's own labels would favour it.
+2. *Why test IPOs only, and why different IPOs for the two sets?* Gold sets measure the final models and never tune them (C-ADR-02); separate IPOs keep the two measurements independent.
+3. *Why put the teacher in the gold-50 comparison?* It shows how much of the teacher's quality the small student keeps.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.
