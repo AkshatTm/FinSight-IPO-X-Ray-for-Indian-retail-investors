@@ -99,6 +99,18 @@ def test_certainty_is_kept() -> None:
     )
 
 
+def test_negated_assurance_is_a_hedge_not_a_definite_claim() -> None:
+    """C2.2 smoke: "renewal is not assured" -> "not guaranteed" keeps the hedge."""
+    src = "Licences may lapse. Our operations need licences; renewal is not assured."
+    good = "Licences must be renewed, and renewal is not guaranteed."
+    assert certainty_changed(src, good) is None
+    assert certainty_changed(src, "There is no guarantee the licences are renewed.") is None
+    assert certainty_changed(src, "The licences will be renewed.") == "hedge_dropped"
+    assert certainty_changed(src, "Renewal may fail; it is guaranteed to be slow.") == (
+        "definite_added"
+    )
+
+
 def test_word_count() -> None:
     assert word_count("one two  three\nfour") == 4
 

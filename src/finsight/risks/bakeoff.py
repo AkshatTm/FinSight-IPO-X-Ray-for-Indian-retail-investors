@@ -1,13 +1,15 @@
 """Teacher bake-off: sample, blind rating sheet, scoring, recorded pick rule (C2.2, C-ADR-05).
 
-Two candidate teachers (Qwen3-14B-AWQ and Qwen3-32B-AWQ) answer the same 300 risks with the same
-prompt. The filters run on both. Akshat rates a **blind, shuffled** sheet of 50 risks x 2 teachers
-(100 rows, no model column; the key is kept in a separate file). The pick rule is fixed before
-any rating exists:
+Candidate teachers (C-ADR-05: Qwen3.8-27B-FP8, Gemma-4-31B-it bf16, Qwen3-32B-AWQ baseline) answer
+the same 300 risks with the same prompt on the same GPU (G4). The filters run on every output.
+Akshat rates a **blind, shuffled** sheet of 50 risks x every teacher (150 rows for three; no model
+column; the key is kept in a separate file). The pick rule is fixed before any rating exists:
 
-1. highest share of ``faithful == yes`` among the rated outputs;
-2. if the two shares are within ``TIE`` of each other, the lower drop rate on all 300 risks;
-3. if still tied, the faster run.
+1. highest share of ``faithful == yes`` among the rated outputs; every model within ``TIE`` (0.05)
+   of the best share is tied with it;
+2. among tied models, the lowest *critical* drop rate on all 300 risks: ``number_mismatch`` plus
+   ``certainty_changed`` (the overall drop rate is reported, not used);
+3. if still tied, the faster run (generation seconds on the same 300 risks and GPU).
 
 Everything is computed from files by this code; nothing is typed in by hand. Ratings are human
 labels (``label_source`` = ``human:akshat`` in the sheet's rating columns); the teacher outputs
@@ -30,14 +32,16 @@ from finsight.risks.teacher_input import Candidate
 
 SAMPLE_SEED = 2026
 SHEET_SEED = 4242
-TIE = 0.02  # shares of "faithful: yes" closer than this count as a tie
+TIE = 0.05  # shares of "faithful: yes" within this of the best count as a tie
+CRITICAL_REASONS = ("number_mismatch", "certainty_changed")  # tie-break drop reasons
 SHEET_COLUMNS = (
     "sheet_id", "original", "simple", "category", "seriousness_1to5", "hard_fact",
     "faithful", "category_correct", "notes",
 )  # fmt: skip
 RULE = (
-    "highest faithful=yes share among rated outputs; if within 0.02, lower drop rate on the "
-    "300 risks; if still tied, the faster run"
+    "highest faithful=yes share among rated outputs; models within 0.05 of the best are tied; "
+    "among tied, lowest number_mismatch + certainty_changed drop rate on the 300 risks; "
+    "if still tied, the faster run"
 )
 
 
@@ -180,6 +184,7 @@ def score(
             "faithful_yes_ci95": wilson(yes, n),
             "category_correct_share": round(catyes / n, 4) if n else None,
             "drop_rate_total": round(1 - rep["kept"] / rep["total"], 4) if rep["total"] else None,
+            "drop_rate_critical": critical_drop_rate(rep),
             "kept": rep["kept"],
             "total": rep["total"],
             "seconds": seconds.get(m),
@@ -188,26 +193,47 @@ def score(
     return out
 
 
-def pick(models: dict[str, dict[str, Any]]) -> dict[str, str]:
-    """Apply the recorded rule to the per-model scores."""
-    ranked = sorted(models, key=lambda m: -(models[m]["faithful_yes_share"] or 0))
-    best, other = ranked[0], ranked[-1]
-    if len(ranked) == 1:
-        return {"model": best, "because": "only one model"}
-    gap = (models[best]["faithful_yes_share"] or 0) - (models[other]["faithful_yes_share"] or 0)
-    if gap > TIE:
-        return {"model": best, "because": f"faithful=yes share higher by {gap:.3f}"}
-    d_best, d_other = models[best]["drop_rate_total"], models[other]["drop_rate_total"]
-    if d_best != d_other:
-        win = best if d_best < d_other else other
-        return {"model": win, "because": "faithful=yes tie; lower drop rate"}
-    s_best, s_other = models[best]["seconds"], models[other]["seconds"]
-    if s_best is not None and s_other is not None and s_best != s_other:
-        return {
-            "model": best if s_best < s_other else other,
-            "because": "tie on quality and drops; faster",
-        }
-    return {"model": best, "because": "complete tie; first by name"}
+def critical_drop_rate(report: dict[str, Any]) -> float | None:
+    """Share of the risks dropped for ``number_mismatch`` or ``certainty_changed``."""
+    total = report.get("total") or 0
+    if not total:
+        return None
+    dropped = report.get("dropped") or {}
+    return round(sum(dropped.get(r, 0) for r in CRITICAL_REASONS) / total, 4)
+
+
+def pick(models: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Apply the recorded rule (C-ADR-05) to the per-model scores (any number of models)."""
+    names = sorted(models)
+    if len(names) == 1:
+        return {"model": names[0], "because": "only one model", "tied": names}
+    share = {m: models[m]["faithful_yes_share"] or 0.0 for m in names}
+    best = max(share.values())
+    tied = [m for m in names if best - share[m] <= TIE + 1e-9]
+    if len(tied) == 1:
+        runner_up = max(v for m, v in share.items() if m != tied[0])
+        because = f"faithful=yes share higher by {best - runner_up:.3f} (> {TIE})"
+        return {"model": tied[0], "tied": tied, "because": because}
+
+    def crit(m: str) -> float:
+        d = models[m].get("drop_rate_critical")
+        return float("inf") if d is None else d
+
+    low = min(crit(m) for m in tied)
+    tied2 = [m for m in tied if crit(m) == low]
+    if len(tied2) == 1:
+        because = "faithful=yes tie; lowest number_mismatch + certainty_changed drop rate"
+        return {"model": tied2[0], "tied": tied, "because": because}
+
+    def secs(m: str) -> float:
+        s = models[m].get("seconds")
+        return float("inf") if s is None else s
+
+    fastest = min(tied2, key=lambda m: (secs(m), m))
+    if sum(secs(m) == secs(fastest) for m in tied2) == 1:
+        because = "tie on quality and critical drops; faster"
+        return {"model": fastest, "tied": tied, "because": because}
+    return {"model": fastest, "tied": tied, "because": "complete tie; first by name"}
 
 
 def write_result(result: dict[str, Any], path: Path) -> None:

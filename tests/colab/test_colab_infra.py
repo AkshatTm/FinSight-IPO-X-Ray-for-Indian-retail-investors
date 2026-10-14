@@ -167,7 +167,10 @@ def _cell_source(nb: dict, tag: str | None = None, index: int | None = None) -> 
 
 @pytest.mark.parametrize(
     ("gpu_gb", "slugs"),
-    [(80, ["qwen3-14b-awq", "qwen3-32b-awq"]), (24, ["qwen3-14b-awq"])],  # L4-only fallback
+    [
+        (95, ["qwen3.8-27b-fp8", "gemma-4-31b-it", "qwen3-32b-awq"]),  # G4: all three candidates
+        (40, ["qwen3.8-27b-fp8", "qwen3-32b-awq"]),  # A100-40GB: bf16 Gemma (~66 GiB) is skipped
+    ],
 )
 def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, gpu_gb: int, slugs: list[str]
@@ -194,7 +197,11 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
     torch.__version__ = "0-fake"
     torch.cuda = types.SimpleNamespace(
         get_device_properties=lambda i: types.SimpleNamespace(total_memory=gpu_gb * 1024**3),
-        get_device_name=lambda i: "NVIDIA A100-SXM4-80GB" if gpu_gb == 80 else "NVIDIA L4",
+        get_device_name=lambda i: (
+            "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+            if gpu_gb == 95
+            else "NVIDIA A100-SXM4-40GB"
+        ),
         get_device_capability=lambda i=0: (8, 0),
         empty_cache=lambda: None,
     )
@@ -221,6 +228,11 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
     monkeypatch.setitem(sys.modules, "torch", torch)
     monkeypatch.setitem(sys.modules, "vllm", vllm)
     monkeypatch.setitem(sys.modules, "vllm.sampling_params", sp)
+    tf = types.ModuleType("transformers")  # offline: no model config lookups
+    tf.AutoConfig = types.SimpleNamespace(  # type: ignore[attr-defined]
+        from_pretrained=lambda repo: types.SimpleNamespace(vision_config=None)
+    )
+    monkeypatch.setitem(sys.modules, "transformers", tf)
 
     unassigned: list[bool] = []
     ns: dict = {
@@ -242,7 +254,8 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
     assert ns["messages"]("T", "b") == teacher.messages("T", "b")
     exec(_cell_source(nb, "teacher-main"), ns)
     out = tmp_path / "hub" / "bakeoff" / "out"  # every batch was uploaded to the "Hub"
-    assert sorted(p.name for p in out.glob("raw_*.jsonl")) == [f"raw_{s}.jsonl" for s in slugs]
+    got = sorted(p.name for p in out.glob("raw_*.jsonl"))
+    assert got == sorted(f"raw_{s}.jsonl" for s in slugs)
     for slug in slugs:
         raw = (out / f"raw_{slug}.jsonl").read_text(encoding="utf-8").splitlines()
         assert len(raw) == 20  # SMOKE: 20 risks per model
@@ -251,7 +264,11 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
     final = json.loads((out / "run_summary.json").read_text())
     assert final["job"] == "bakeoff"
     assert final["preset"] == "bakeoff_smoke"
-    assert all(kw["quantization"] == "awq_marlin" for kw in seen_kw)
+    for kw in seen_kw:  # AWQ takes the GPU kernel; FP8 / bf16 checkpoints declare their own
+        awq = "awq" in str(kw["model"]).lower()
+        assert kw["quantization"] == ("awq_marlin" if awq else None)
+        assert kw["dtype"] == ("float16" if awq else "auto")
+    assert all(kw.get("max_num_seqs") == (256 if gpu_gb == 95 else None) for kw in seen_kw)
     assert unassigned == [True]  # the runtime is released at the end
 
 
