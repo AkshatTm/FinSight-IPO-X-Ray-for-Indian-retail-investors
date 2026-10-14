@@ -37,6 +37,7 @@ RISKS = DIR / "bakeoff_risks.jsonl"
 SHEET = DIR / "bakeoff_sheet.csv"
 KEY = DIR / "bakeoff_key.json"
 RESULT = ROOT / "eval_results" / "c" / "teacher_bakeoff.json"
+RATER = "ai_blind"  # C-ADR-05: blind AI rater (Claude), reviewed and accepted by Akshat
 
 
 def raw_files() -> dict[str, Path]:
@@ -101,7 +102,12 @@ def cmd_score() -> None:
     """Score the rated sheet and write ``eval_results/c/teacher_bakeoff.json``."""
     rep, _, secs = reports()
     result = score(read_sheet(SHEET), json.loads(KEY.read_text(encoding="utf-8")), rep, secs)
-    result["label_source"] = "human:akshat (ratings); teacher outputs are AI labels"
+    result["rater"] = RATER
+    result["label_source"] = (
+        "ai_blind: ratings by a blind AI rater (Claude, separate session, never saw the key), "
+        "reviewed and accepted by Akshat; teacher outputs are AI labels"
+    )
+    result["generation_seconds_note"] = "seconds = generation of the 280 risks after the smoke"
     write_result(result, RESULT)
     print(json.dumps(result["pick"]), "->", RESULT)
 

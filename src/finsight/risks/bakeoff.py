@@ -11,8 +11,9 @@ column; the key is kept in a separate file). The pick rule is fixed before any r
    ``certainty_changed`` (the overall drop rate is reported, not used);
 3. if still tied, the faster run (generation seconds on the same 300 risks and GPU).
 
-Everything is computed from files by this code; nothing is typed in by hand. Ratings are human
-labels (``label_source`` = ``human:akshat`` in the sheet's rating columns); the teacher outputs
+Everything is computed from files by this code; nothing is typed in by hand. The C2.2 ratings were
+made by a blind AI rater (Claude, separate session, never saw the key) and accepted by Akshat
+(``rater: ai_blind`` in the result file); the teacher outputs
 carry their own ``teacher:<model>:<prompt>`` label source.
 """
 
@@ -239,4 +240,5 @@ def pick(models: dict[str, dict[str, Any]]) -> dict[str, Any]:
 def write_result(result: dict[str, Any], path: Path) -> None:
     """``eval_results/c/teacher_bakeoff.json`` (LF endings)."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(result, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    text = json.dumps(result, indent=1, ensure_ascii=False) + "\n"
+    path.write_text(text, encoding="utf-8", newline="\n")
