@@ -35,9 +35,9 @@ from finsight.risks.novelty_tau import (  # noqa: E402
 )
 from finsight.splits import load_splits, reference_bank  # noqa: E402
 
-BANK = ROOT / "data" / "processed" / "risk_bank" / "risk_bank.parquet"
+BANK = ROOT / "data" / "processed" / "bank" / "risk_bank.parquet"
 SHEET = ROOT / "data" / "gold" / "novelty_pairs.csv"
-KEY = ROOT / "data" / "processed" / "risk_bank" / "novelty_pairs_key.json"
+KEY = ROOT / "data" / "processed" / "bank" / "novelty_pairs_key.json"
 RESULT = ROOT / "eval_results" / "b" / "novelty.json"
 
 
@@ -94,7 +94,7 @@ def cmd_sheet() -> None:
     splits = load_splits(ROOT / "configs" / "splits.yaml")
     bank = load_bank(BANK, years=None)
     pairs = collect_pairs(bank, parquet_columns(BANK), splits, make_source(splits))
-    picked = sample_pairs(pairs, 100)
+    picked = sample_pairs(pairs, 60, bins=6)  # B04 E22: 60 pairs, 10 per similarity bin
     write_sheet(picked, SHEET, KEY)
     print(
         f"{len(pairs)} candidate pairs; wrote {len(picked)} to {SHEET} (key: {KEY.name}, do not open)"
