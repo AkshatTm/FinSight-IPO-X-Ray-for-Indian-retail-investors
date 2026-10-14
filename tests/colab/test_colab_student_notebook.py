@@ -25,8 +25,22 @@ def test_every_code_cell_parses() -> None:
 def test_parameters_cell_has_precision_and_smoke_defaults() -> None:
     params = next(source(c) for c in cells() if "parameters" in c["metadata"].get("tags", []))
     assert 'PRECISION = "bf16"' in params
-    assert "SMOKE = True" in params  # a first run is always the cheap one
+    assert 'PRESET = "student_smoke"' in params  # a first run is always the cheap one
     assert "UPLOAD = False" in params
+    ns: dict = {}
+    exec(params, ns)
+    assert (ns["SMOKE"], ns["EXPORT_GGUF"]) == (True, False)
+    full = ns["PRESETS"]["student"]
+    assert (full["smoke"], full["export_gguf"]) == (False, True)
+    assert ns["BATCH_SIZE"] is None  # chosen from the GPU
+
+
+def test_batch_comes_from_the_gpu_and_a_crash_releases_it() -> None:
+    main = next(source(c) for c in cells() if "student-main" in c["metadata"].get("tags", []))
+    assert 'auto_bs = {"G4": (16, 1)' in main  # effective batch 16 on every tier
+    assert "per_device_train_batch_size=bs" in main
+    assert "finally:\n    unassign_runtime(UNASSIGN)" in main
+    assert main.count("unassign_runtime(") == 1  # only in the finally block
 
 
 def test_never_ships_merged_weights() -> None:
