@@ -9,6 +9,7 @@
 
 ## Run (Claude through colab-mcp; you pick the GPU and Connect)
 1. Runtime → Change runtime type → **G4** → Connect. Tell Claude the units in the Resources panel.
+   The notebook runs through the **runner** (`notebooks/colab/teacher_runner.py`, two cells): it downloads the pushed `c2_teacher.ipynb` and runs it as a plain python process, because vLLM's engine crashed inside the kernel (`io.UnsupportedOperation: fileno`). The kernel releases the GPU when `UNASSIGN = True`.
 2. **Smoke:** `PRESET = "teacher_smoke"`, `UNASSIGN = False` (20 risks, must print `TEACHER OK`).
 3. **Full run:** `PRESET = "teacher_full"`, `UNASSIGN = True`. Batches of 512 risks, each uploaded to the HF job repo, `PROGRESS ... ETA` after each; ends with `TEACHER DONE` and disconnects (also after a crash).
 4. Claude runs `uv run python scripts/gpu_jobs.py status teacher_full --wait` in the background (exit 0 = done, exit 2 = no new rows for 20 min).
