@@ -113,6 +113,15 @@ def test_pull_with_nothing_yet_is_an_error(repo: Path, tmp_path: Path) -> None:
         gj.pull(gj.JOBS["bakeoff"], common.DirBackend(tmp_path / "hub"), root=repo)
 
 
+def test_patch_units_reclassifies_gpu_from_name() -> None:
+    s = gj.patch_units(
+        {"gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition", "gpu_class": "other",
+         "wall_seconds": 764.3}, 199.79, 197.7)  # fmt: skip
+    assert s["gpu_class"] == "G4"
+    assert s["units_per_hour_reference"] == 8.9
+    assert s["units_used"] == 2.09
+
+
 def test_patch_units_keeps_missing_values() -> None:
     s = gj.patch_units({"wall_seconds": 1800}, 100.0, None)
     assert s["units_before"] == 100.0

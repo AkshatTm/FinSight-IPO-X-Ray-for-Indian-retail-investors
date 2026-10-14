@@ -164,7 +164,15 @@ def status(job: Job, store: Any, root: Path = ROOT) -> dict[str, Any]:
 def patch_units(
     summary: dict[str, Any], before: float | None, after: float | None
 ) -> dict[str, Any]:
-    """Fill ``units_before`` / ``units_after`` (typed by Akshat) and recompute the derived fields."""
+    """Fill ``units_before`` / ``units_after`` (typed by Akshat) and recompute the derived fields.
+
+    The GPU class is re-derived from the ``nvidia-smi`` name with the current ``_common`` mapping,
+    so a summary written by an older notebook (e.g. a G4 recorded as ``other``) logs correctly.
+    """
+    if summary.get("gpu"):
+        c = common()
+        summary["gpu_class"] = c.gpu_class(summary["gpu"])
+        summary["units_per_hour_reference"] = c.OBSERVED_UNITS_PER_HOUR.get(summary["gpu_class"])
     if before is not None:
         summary["units_before"] = before
     if after is not None:

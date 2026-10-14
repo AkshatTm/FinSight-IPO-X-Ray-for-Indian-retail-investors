@@ -34,7 +34,7 @@ DRIVE_MOUNT = Path("/content/drive")
 DRIVE_ROOT = DRIVE_MOUNT / "MyDrive" / "FinSight"
 
 # Observed Colab Pro rates (C0.2, units per hour). Used only to estimate cost in run_summary.
-OBSERVED_UNITS_PER_HOUR = {"T4": 1.07, "L4": 1.54, "A100": 6.77}  # H100: not measured yet
+OBSERVED_UNITS_PER_HOUR = {"T4": 1.07, "L4": 1.54, "A100": 6.77, "G4": 8.9}  # H100: not offered on Pro
 
 
 def mount_drive(job: str, root: Path | None = None) -> Path:
@@ -260,7 +260,12 @@ def gpu_info() -> dict[str, Any]:
 
 
 def gpu_class(name: str) -> str:
-    """Map an nvidia-smi name to ``T4`` / ``L4`` / ``A100`` / ``H100`` / ``other``."""
+    """Map an nvidia-smi name to ``G4`` / ``T4`` / ``L4`` / ``A100`` / ``H100`` / ``other``.
+
+    Colab's "G4" runtime is an NVIDIA RTX PRO 6000 Blackwell (96 GB, compute capability 12.0).
+    """
+    if "RTX PRO 6000" in name and "Blackwell" in name:
+        return "G4"
     for k in ("H100", "A100", "L4", "T4"):
         if k in name:
             return k
@@ -268,17 +273,22 @@ def gpu_class(name: str) -> str:
 
 
 def gpu_tier(name: str, mem_gb: float) -> str:
-    """``H100`` / ``A100-80GB`` / ``A100-40GB`` / ``L4`` / ``T4`` / ``other`` from name and memory."""
+    """``G4`` / ``H100`` / ``A100-80GB`` / ``A100-40GB`` / ``L4`` / ``T4`` / ``other`` from name and memory."""
     cls = gpu_class(name)
     if cls == "A100":
         return "A100-80GB" if mem_gb > 60 else "A100-40GB"
     return cls
 
 
-# Per-tier vLLM settings. ``awq_marlin`` needs compute capability 8.0+ (L4, A100, H100); a T4
-# (sm75) needs plain ``awq``. H100 can also run FP8 checkpoints (``fp8_ok``).
+# Per-tier vLLM settings. ``awq_marlin`` needs compute capability 8.0+ (L4, A100, H100, G4); a T4
+# (sm75) needs plain ``awq``. ``fp8_ok``: native FP8 (sm89+); ``nvfp4_ok``: native NVFP4 (Blackwell).
+# ``quant`` applies to AWQ checkpoints only; FP8 / compressed-tensors / NVFP4 checkpoints declare
+# their own scheme. ``max_num_seqs`` caps vLLM's concurrent sequences; ``batch`` (when set) is the
+# number of items per checkpointed generation call, so the big GPUs are kept full.
 _TIER_CONFIG: dict[str, dict[str, Any]] = {
-    "H100": {"quant": "awq_marlin", "gpu_mem": 0.92, "fp8_ok": True},
+    "G4": {"quant": "awq_marlin", "gpu_mem": 0.90, "fp8_ok": True, "nvfp4_ok": True,
+           "max_num_seqs": 256, "batch": 512},
+    "H100": {"quant": "awq_marlin", "gpu_mem": 0.92, "fp8_ok": True, "max_num_seqs": 256, "batch": 512},
     "A100-80GB": {"quant": "awq_marlin", "gpu_mem": 0.92, "fp8_ok": False},
     "A100-40GB": {"quant": "awq_marlin", "gpu_mem": 0.90, "fp8_ok": False},
     "L4": {"quant": "awq_marlin", "gpu_mem": 0.90, "fp8_ok": True},
@@ -299,7 +309,8 @@ def gpu_config(name: str, mem_gb: float, capability: tuple[int, int] | None = No
         cfg = dict(_TIER_CONFIG[tier])
     else:  # an unlisted GPU: choose the kernel by compute capability
         modern = capability is not None and capability[0] >= 8
-        cfg = {"quant": "awq_marlin" if modern else "awq", "gpu_mem": 0.88, "fp8_ok": False}
+        fp8 = capability is not None and capability >= (8, 9)
+        cfg = {"quant": "awq_marlin" if modern else "awq", "gpu_mem": 0.88, "fp8_ok": fp8}
     return {"tier": tier, "mem_gb": round(mem_gb, 1), **cfg}
 
 
