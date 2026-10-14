@@ -1,0 +1,72 @@
+{
+ "rule": "highest faithful=yes share among rated outputs; models within 0.05 of the best are tied; among tied, lowest number_mismatch + certainty_changed drop rate on the 300 risks; if still tied, the faster run",
+ "tie": 0.05,
+ "models": {
+  "gemma-4-31b-it": {
+   "rated": 50,
+   "faithful": {
+    "yes": 49,
+    "partly": 1
+   },
+   "faithful_yes_share": 0.98,
+   "faithful_yes_ci95": [
+    0.895,
+    0.9965
+   ],
+   "category_correct_share": 0.96,
+   "drop_rate_total": 0.0433,
+   "drop_rate_critical": 0.0367,
+   "kept": 287,
+   "total": 300,
+   "seconds": 62
+  },
+  "qwen3-32b-awq": {
+   "rated": 50,
+   "faithful": {
+    "yes": 45,
+    "partly": 4,
+    "no": 1
+   },
+   "faithful_yes_share": 0.9,
+   "faithful_yes_ci95": [
+    0.7864,
+    0.9565
+   ],
+   "category_correct_share": 0.9,
+   "drop_rate_total": 0.0867,
+   "drop_rate_critical": 0.0867,
+   "kept": 274,
+   "total": 300,
+   "seconds": 33
+  },
+  "qwen3.8-27b-fp8": {
+   "rated": 50,
+   "faithful": {
+    "yes": 44,
+    "partly": 5,
+    "no": 1
+   },
+   "faithful_yes_share": 0.88,
+   "faithful_yes_ci95": [
+    0.7619,
+    0.9438
+   ],
+   "category_correct_share": 0.96,
+   "drop_rate_total": 0.0533,
+   "drop_rate_critical": 0.05,
+   "kept": 284,
+   "total": 300,
+   "seconds": 41
+  }
+ },
+ "pick": {
+  "model": "gemma-4-31b-it",
+  "tied": [
+   "gemma-4-31b-it"
+  ],
+  "because": "faithful=yes share higher by 0.080 (> 0.05)"
+ },
+ "rater": "ai_blind",
+ "label_source": "ai_blind: ratings by a blind AI rater (Claude, separate session, never saw the key), reviewed and accepted by Akshat; teacher outputs are AI labels",
+ "generation_seconds_note": "seconds = generation of the 280 risks after the smoke"
+}

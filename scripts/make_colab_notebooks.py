@@ -221,7 +221,7 @@ VLLM_PIN = "vllm==0.31.0"  # C0.2 pin: works on L4 (sm89) and G4 RTX PRO 6000 Bl
 MODELS_OVERRIDE = None     # e.g. ["org/model-AWQ"]; None = the preset's models
 QUANT_OVERRIDE = None      # None = AWQ repos: kernel from the GPU; FP8/compressed-tensors/NVFP4: from the checkpoint
 MAX_MODEL_LEN = 4096
-TEACHER_PICK = None        # the bake-off winner (C-ADR-05), e.g. "Qwen/Qwen3.8-27B-FP8"
+TEACHER_PICK = "google/gemma-4-31B-it"  # C-ADR-05 winner (eval_results/c/teacher_bakeoff.json)
 """
     + TEACHER_PRESETS
     + """
