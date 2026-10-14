@@ -126,3 +126,38 @@ def test_patch_units_keeps_missing_values() -> None:
     s = gj.patch_units({"wall_seconds": 1800}, 100.0, None)
     assert s["units_before"] == 100.0
     assert "units_used" not in s
+
+
+def test_wait_returns_done_when_the_real_summary_lands(repo: Path, tmp_path: Path) -> None:
+    hub = tmp_path / "hub"
+    _fake_run(hub, finished=False)
+    store = common.DirBackend(hub)
+    polls: list[str] = []
+
+    def sleep(_: float) -> None:  # the run finishes between the first and second poll
+        if not (hub / "bakeoff" / "out" / "run_summary.json").exists():
+            _fake_run_summary(hub, smoke=False)
+
+    state, info = gj.wait(gj.JOBS["bakeoff"], store, root=repo, sleep=sleep, echo=polls.append)
+    assert state == "done"
+    assert info["summary"]["preset"] == "bakeoff"
+    assert len(polls) == 2
+
+
+def test_wait_ignores_the_smoke_summary_and_reports_a_stall(repo: Path, tmp_path: Path) -> None:
+    hub = tmp_path / "hub"
+    _fake_run(hub, finished=False)
+    _fake_run_summary(hub, smoke=True)  # the smoke run's summary is not the end
+    t = iter(range(0, 10_000, 300))
+    state, _ = gj.wait(
+        gj.JOBS["bakeoff"], common.DirBackend(hub), root=repo, stall=1200,
+        clock=lambda: float(next(t)), sleep=lambda _: None, echo=lambda _: None,
+    )  # fmt: skip
+    assert state == "stalled"
+
+
+def _fake_run_summary(hub: Path, smoke: bool) -> None:
+    summary = {"job": "bakeoff", "preset": "bakeoff_smoke" if smoke else "bakeoff",
+               "finished_utc": "2026-10-16T01:00:00+00:00", "gpu_class": "G4",
+               "wall_seconds": 600, "smoke": smoke}  # fmt: skip
+    (hub / "bakeoff" / "out" / "run_summary.json").write_text(json.dumps(summary), "utf-8")
