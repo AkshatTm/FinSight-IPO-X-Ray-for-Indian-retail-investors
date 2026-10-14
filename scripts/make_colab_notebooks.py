@@ -189,17 +189,21 @@ finally:
 
 
 TEACHER_PRESETS = """
-# candidate teachers (C2.2); the full run uses only the chosen one
-BASELINE = "Qwen/Qwen3-32B-AWQ"
+# candidate teachers (C2.2, C-ADR-05 as accepted); the full run uses only the chosen one
+QWEN38 = "Qwen/Qwen3.8-27B-FP8"     # Apache-2.0, FP8 checkpoint (native on the G4)
+GEMMA4 = "google/gemma-4-31B-it"    # Apache-2.0, bf16 (~63 GB)
+BASELINE = "Qwen/Qwen3-32B-AWQ"     # Apache-2.0, AWQ 4-bit
+CANDIDATES = [QWEN38, GEMMA4, BASELINE]
+TEACHER = TEACHER_PICK or BASELINE  # set TEACHER_PICK above once the bake-off is scored
 PRESETS = {
     # 20 risks per model, then stop: must print TEACHER OK. Models too big for the GPU are skipped.
-    "bakeoff_smoke": {"job": "bakeoff", "input": "bakeoff_risks.jsonl", "models": [SMALL, BASELINE],
+    "bakeoff_smoke": {"job": "bakeoff", "input": "bakeoff_risks.jsonl", "models": CANDIDATES,
                       "smoke": True, "every": 20, "max_tokens": 300},
-    "bakeoff": {"job": "bakeoff", "input": "bakeoff_risks.jsonl", "models": [SMALL, BASELINE],
+    "bakeoff": {"job": "bakeoff", "input": "bakeoff_risks.jsonl", "models": CANDIDATES,
                 "smoke": False, "every": 50, "max_tokens": 300},
-    "teacher_smoke": {"job": "teacher_full", "input": "risks.jsonl", "models": [BASELINE],
+    "teacher_smoke": {"job": "teacher_full", "input": "risks.jsonl", "models": [TEACHER],
                       "smoke": True, "every": 20, "max_tokens": 300},
-    "teacher_full": {"job": "teacher_full", "input": "risks.jsonl", "models": [BASELINE],
+    "teacher_full": {"job": "teacher_full", "input": "risks.jsonl", "models": [TEACHER],
                      "smoke": False, "every": 200, "max_tokens": 300},
 }
 """
@@ -217,13 +221,14 @@ VLLM_PIN = "vllm==0.31.0"  # C0.2 pin: works on L4 (sm89) and G4 RTX PRO 6000 Bl
 MODELS_OVERRIDE = None     # e.g. ["org/model-AWQ"]; None = the preset's models
 QUANT_OVERRIDE = None      # None = AWQ repos: kernel from the GPU; FP8/compressed-tensors/NVFP4: from the checkpoint
 MAX_MODEL_LEN = 4096
-SMALL = "Qwen/Qwen3-14B-AWQ"
+TEACHER_PICK = None        # the bake-off winner (C-ADR-05), e.g. "Qwen/Qwen3.8-27B-FP8"
 """
     + TEACHER_PRESETS
     + """
 _P = PRESETS[PRESET]
 JOB, INPUT_FILE, SMOKE, EVERY, MAX_TOKENS = _P["job"], _P["input"], _P["smoke"], _P["every"], _P["max_tokens"]
 MODELS = MODELS_OVERRIDE or _P["models"]
+assert JOB != "teacher_full" or TEACHER_PICK or MODELS_OVERRIDE, "set TEACHER_PICK (the C-ADR-05 winner) first"
 """
 )
 
@@ -241,10 +246,11 @@ from vllm import LLM, SamplingParams
 
 
 def model_fits(model, gpu_gb, gpu_mem):
-    # 4-bit weights ~0.6 GiB per billion parameters, FP8 ~1.1; plus ~4 GiB for CUDA and KV cache
+    # GiB per billion parameters: 4-bit ~0.6, FP8 ~1.1, bf16 ~2.0; plus ~4 GiB for CUDA and KV cache
     name = model.split("/")[-1].lower()
     m = re.search(r"(\\d+(?:\\.\\d+)?)b", name)
-    per_b = 1.1 if "fp8" in name else 0.6
+    four_bit = any(t in name for t in ("awq", "gptq", "w4a16", "nvfp4", "mxfp4", "int4", "4bit"))
+    per_b = 0.6 if four_bit else 1.1 if "fp8" in name else 2.0
     return True if m is None else gpu_gb * gpu_mem >= per_b * float(m.group(1)) + 4
 
 

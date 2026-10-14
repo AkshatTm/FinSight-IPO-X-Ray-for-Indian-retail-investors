@@ -25,6 +25,10 @@ HEDGES = (
     "there is no assurance",
     "cannot assure",
     "no assurance",
+    "not assured",
+    "not guaranteed",
+    "no guarantee",
+    "not certain",
 )
 DEFINITE = ("will", "definitely", "certainly", "surely", "always", "never", "guaranteed")
 
@@ -34,10 +38,20 @@ def _has(words: tuple[str, ...], text: str) -> set[str]:
     return {w for w in words if re.search(rf"\b{re.escape(w)}\b", low)}
 
 
+# A negated definite word is a hedge ("renewal is not guaranteed"), not a definite claim.
+_NEGATED = re.compile(
+    r"\b(?:not|no)\s+(?:be\s+)?(?:guaranteed|guarantee|certain|certainly|assured)\b"
+)
+
+
+def _definite(text: str) -> set[str]:
+    return _has(DEFINITE, _NEGATED.sub(" ", text.lower().replace("’", "'")))
+
+
 def certainty_changed(original: str, rewrite: str) -> str | None:
     """A short reason when the rewrite changes how certain the statement is, else ``None``."""
     src_h, out_h = _has(HEDGES, original), _has(HEDGES, rewrite)
-    src_d, out_d = _has(DEFINITE, original), _has(DEFINITE, rewrite)
+    src_d, out_d = _definite(original), _definite(rewrite)
     if src_h and not out_h:
         return "hedge_dropped"
     if out_d - src_d:
