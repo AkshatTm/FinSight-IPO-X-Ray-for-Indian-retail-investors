@@ -142,28 +142,47 @@ def cmd_gold150(_: argparse.Namespace) -> None:
 
 
 def cmd_generate(a: argparse.Namespace) -> None:
-    """gold-50 rewrites from a local model (``base`` zero-shot or the ``student``)."""
-    from finsight.risks.simplify import Simplifier, _backend
+    """gold-50 rewrites from a local model (``base`` zero-shot or the ``student``).
+
+    Same prompt and cleaning as the product (``simplify``); the cleaned text is kept even when a
+    post-check fails, with the failure in ``check``, so it can still be rated.
+    """
+    from finsight.generate import LLMUnavailable
+    from finsight.risks.simplify import MAX_NEW_TOKENS, _backend, clean, student_prompt
 
     llm = _backend(a.backend, a.model, ROOT / "models")
-    simp = Simplifier(llm, a.model)
     out = []
     for c in _load(SET50):
-        rw = simp.rewrite(c.title, c.body)
-        out.append({"risk_id": c.risk_id, "system": a.system, **rw.as_dict()})
-        print(c.risk_id, rw.status, rw.reason, flush=True)
+        raw = None
+        for _ in range(2):  # one retry on a timeout
+            try:
+                raw = llm.generate(student_prompt(c.title, c.body), max_tokens=MAX_NEW_TOKENS,
+                                   temperature=0.2)  # fmt: skip
+                break
+            except LLMUnavailable as err:
+                print(c.risk_id, "unavailable:", str(err)[:80], flush=True)
+        text = clean(raw) if raw is not None else ""
+        check = _check(c, text) if text else "unavailable"
+        out.append({"risk_id": c.risk_id, "system": a.system, "model": a.model, "text": text,
+                    "check": check})  # fmt: skip
+        print(c.risk_id, check or "passed", flush=True)
     _write_jsonl(out, DIR / f"rewrites_{a.system}.jsonl")
 
 
-def _outputs() -> dict[str, dict[str, str]]:
-    """``system -> risk_id -> rewrite``: teacher from its raw answers, others from ``generate``.
-
-    The teacher's rewrite passes the same post-checks as the served ones (``simplify.post_check``).
-    """
+def _check(c: Candidate, text: str) -> str:
+    """The product's post-check on a rewrite: ``""`` when it passes, else the reason."""
     from finsight.risks.simplify import post_check
 
-    out: dict[str, dict[str, str]] = {}
-    teacher: dict[str, str] = {}
+    original = f"{c.title}\n\n{c.body}" if c.title.strip() else c.body
+    problem = post_check(original, text)
+    return problem[0] if problem else ""
+
+
+def _outputs() -> dict[str, dict[str, dict[str, str]]]:
+    """``system -> risk_id -> {text, check}``: teacher from its raw answers, others from
+    ``generate``. Every system's text passes through the same post-checks."""
+    out: dict[str, dict[str, dict[str, str]]] = {}
+    teacher: dict[str, dict[str, str]] = {}
     risks = {c.risk_id: c for c in _load(SET50)}
     for rid, raw in _raw(TEACHER_MODEL).items():
         if rid not in risks:
@@ -172,14 +191,15 @@ def _outputs() -> dict[str, dict[str, str]]:
             text = parse_output(raw).simple
         except ValueError:
             continue
-        c = risks[rid]
-        original = f"{c.title}\n\n{c.body}" if c.title.strip() else c.body
-        if not post_check(original, text):
-            teacher[rid] = text
+        teacher[rid] = {"text": text, "check": _check(risks[rid], text)}
     out["teacher"] = teacher
     for p in sorted(DIR.glob("rewrites_*.jsonl")):
         out[p.stem.removeprefix("rewrites_")] = {
-            str(r["risk_id"]): str(r.get("simple") or "") for r in read_jsonl(p)
+            str(r["risk_id"]): {
+                "text": str(r.get("text") or ""),
+                "check": str(r.get("check") or ""),
+            }
+            for r in read_jsonl(p)
         }
     return out
 
