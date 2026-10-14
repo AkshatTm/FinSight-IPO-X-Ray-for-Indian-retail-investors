@@ -57,3 +57,13 @@ def test_selection_is_deterministic_and_seeded() -> None:
 def test_as_row_has_the_notebook_columns() -> None:
     row = cand("A", 1).as_row()
     assert {"risk_id", "company", "title", "body"} <= set(row)
+
+
+def test_table_row_titles_are_dropped() -> None:
+    cands = [
+        cand("A", 1, title="Healthcare professional 11.46% 13.24% 15.02%"),
+        cand("A", 2, title="Our revenue depends on 3 customers"),
+    ]
+    sel = select(cands)
+    assert sel.dropped["table_title"] == 1
+    assert [c.title for c in sel.chosen] == ["Our revenue depends on 3 customers"]

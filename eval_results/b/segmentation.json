@@ -179,6 +179,16 @@
    "vks-projects-2012"
   ],
   "skipped": [],
-  "gold_boundaries_e13b": "pending: Akshat's segmentation spot-check (AKSHAT_TODO)"
+  "gold_boundaries_e13b": {
+  "checked": 75,
+  "new_pipeline": 50,
+  "old_corpus": 25,
+  "boundaries_correct": 73,
+  "boundaries_correct_share": 0.973,
+  "merged_risks": 2,
+  "merged_words_over_600": 2,
+  "note": "2 of 50 new-pipeline risks merged (bold title missed next to a table; a '2.' number glued to the previous line), both over 600 words so max_words=600 filters them. Minor: ~1% of titles are table rows (guarded in teacher input as table_title), old-corpus titles sometimes cut at the first sentence of a 2-sentence title, stray 'table' placeholders and page numbers in bodies.",
+  "checked_by": "Akshat (hand check, outside the session)"
+ }
  }
 }

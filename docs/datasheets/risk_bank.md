@@ -12,7 +12,7 @@ Built by `scripts/build_risk_bank.py` from the frozen split (`configs/splits.yam
 - `data/processed/bank/risk_eval.parquet` (gitignored): the same for **test** IPOs. Used only when evaluating; never read by training code.
 - Committed manifests `data/manifests/risk_bank.json` (kind `train`), `risk_eval.json` (kind `eval`) and `risk_bank_product.json` (kind `product_reference`). The leakage test checks them without reading any data.
 
-Segmentation counts and the automatic checks (E13) are in `eval_results/b/segmentation.json`; the hand-checked boundaries (E13b) are pending Akshat's spot-check.
+Segmentation counts and the automatic checks (E13) are in `eval_results/b/segmentation.json`; the hand-checked boundaries (E13b): 75 risks checked by hand (50 new pipeline, 25 old corpus), 73 boundaries correct (97%). The 2 errors are merged risks (a bold title missed next to a table; a "2." number glued to the previous line), both over 600 words, so the teacher's `max_words` filter drops them. Minor issues: about 1% of titles are table rows (guarded by the `table_title` drop in the teacher input), old-corpus titles are sometimes cut at the first sentence of a two-sentence title, and some bodies hold stray "table" placeholders and page numbers.
 
 ## How novelty reads the bank
 
@@ -22,7 +22,7 @@ Novelty of a risk = the share of distinct past companies, inside the **rolling 4
 
 29,677 risk rows from 440 train + dev IPOs (`risks_by_year` in `eval_results/b/segmentation.json`); 8,819 eval rows from 110 test IPOs. 114 split IPOs have no document (mostly 2009–2013 filings and a few later ones) and are skipped. 20 documents segmented into fewer than 10 risks (for example angel-one-2020, devyani-international-2021, inox-india-2023); they stay in the bank as they are and are listed for the spot-check.
 
-Teacher input (`data/processed/teacher/risks.jsonl`, gitignored; manifest `data/manifests/teacher_input.json`): 25,330 candidates from train IPOs, **8,889 achievable** under the 25-per-company cap, below the 12,000 target. Dropped: 13,099 over the company cap, 3,189 too long, 117 too short, 36 duplicate titles. Only 400 rows are from 2025, so the 2024+ weighting is thin.
+Teacher input (`data/processed/teacher/risks.jsonl`, gitignored; manifest `data/manifests/teacher_input.json`): 25,330 candidates from train IPOs, **12,305 achievable** under the 35-per-company cap (25 gave only 8,889), so 12,000 are written from 377 IPOs. Dropped: 9,682 over the company cap, 3,189 too long, 117 too short, 36 duplicate titles, 1 table-row title. By year: 3,245 rows from 2024 and 560 from 2025 (31.7% are 2024+).
 
 ## Known limits
 

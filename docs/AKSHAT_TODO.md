@@ -229,4 +229,4 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - **Vercel rewrite and slow live answers**: a long CPU answer may be cut by the proxy limit; the fix is a CORS rule and a direct call (see DEPLOY_STEPS).
 - **Report**: every file in `report/` is a draft to rewrite in your voice; sections 1, 2, 9, 10 are not drafted. Check each `[verify]` citation. README "What I learned" is yours.
 
-- [ ] C2.1 segmentation spot-check (50 risks, ~40 min) + E13b boundaries; also look at the 20 documents with < 10 risks (see `docs/datasheets/risk_bank.md`). Decide whether 8,889 teacher inputs (target 12k) is enough or the per-company cap should rise.
+- [x] C2.1 segmentation spot-check (50 risks, ~40 min) + E13b boundaries; also look at the 20 documents with < 10 risks (see `docs/datasheets/risk_bank.md`). Decide whether 8,889 teacher inputs (target 12k) is enough or the per-company cap should rise.
