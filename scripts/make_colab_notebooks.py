@@ -205,13 +205,16 @@ PRESETS = {
                       "smoke": True, "every": 20, "max_tokens": 300},
     "teacher_full": {"job": "teacher_full", "input": "risks.jsonl", "models": [TEACHER],
                      "smoke": False, "every": 200, "max_tokens": 300},
+    # test-slice gold sets (C2.4 gold-150 pre-fill, C2.5 gold-50 teacher system): evaluation only
+    "gold_eval": {"job": "gold_eval", "input": "gold_eval_risks.jsonl", "models": [TEACHER, QWEN38],
+                  "smoke": False, "every": 50, "max_tokens": 300},
 }
 """
 
 TEACHER_PARAMS = (
     """
 # ---- parameters: pick a preset, then Run all ------------------------------------------------
-PRESET = "bakeoff_smoke"   # bakeoff_smoke | bakeoff | teacher_smoke | teacher_full
+PRESET = "bakeoff_smoke"   # bakeoff_smoke | bakeoff | teacher_smoke | teacher_full | gold_eval
 IO = "hf"                  # "hf" (private job repo, default) | "drive" (fallback)
 JOBS_REPO = "AkshatTm/finsight-gpu-jobs"
 UNITS_BEFORE = None        # compute units in the Resources panel before the run
@@ -364,7 +367,8 @@ One JSON answer per risk: `category`, `seriousness_1to5`, `hard_fact`, `simple` 
 from `finsight.risks` by `scripts/make_colab_notebooks.py`, so they are the tested ones.
 
 **Pick `PRESET`, Run all.** Presets: `bakeoff_smoke` (20 risks per model), `bakeoff` (300 risks,
-all candidates), `teacher_smoke`, `teacher_full` (12k, the chosen model). The quantisation kernel
+all candidates), `teacher_smoke`, `teacher_full` (12k, the chosen model), `gold_eval` (test-slice
+gold sets: teacher + Qwen3.8, evaluation only). The quantisation kernel
 and memory fraction come from the detected GPU (T4, L4, A100-40GB, A100-80GB, H100); a model that
 does not fit the GPU is skipped.
 

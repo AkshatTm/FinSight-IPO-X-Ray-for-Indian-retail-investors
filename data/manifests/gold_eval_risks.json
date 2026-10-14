@@ -1,0 +1,31 @@
+{
+  "artefact": "gold_eval_risks",
+  "kind": "eval",
+  "ipo_ids": [
+    "aastha-spintex-2026",
+    "acevector-2026",
+    "ardee-industries-2026",
+    "asset-reconstruction-company-india-2026",
+    "augmont-enterprises-2026",
+    "bharat-coking-coal-2026",
+    "esds-software-solution-2026",
+    "innovision-2026",
+    "knack-packaging-2026",
+    "lalithaa-jewellery-mart-2026",
+    "leap-india-2026",
+    "manika-plastech-2026",
+    "meesho-2025",
+    "nephrocare-health-services-2025",
+    "rays-of-belief-2026",
+    "sai-parenteral-s-2026",
+    "shiprocket-2026",
+    "sonaselection-india-2026",
+    "technocraft-ventures-2026",
+    "turtlemint-fintech-solutions-2026"
+  ],
+  "inputs": [],
+  "sha256": "ca389c7761e58d2346a56b04ad5fb7e368764548cd4c7299b7bb85ab5c48c854",
+  "written_by": "scripts/gold_sets.py",
+  "note": "gold-150 (15 x 10 test IPOs) + gold-50 (5 x 10 other test IPOs)",
+  "n_ipos": 20
+}
