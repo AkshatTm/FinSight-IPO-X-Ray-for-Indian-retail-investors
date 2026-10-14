@@ -193,7 +193,12 @@ def wait(
     """
     last_rows, last_change = -1, clock()
     while True:
-        info = status(job, store, root=root)
+        try:
+            info = status(job, store, root=root)
+        except OSError as err:  # a file re-uploaded mid-download, a network blip: poll again
+            echo(f"[wait {job.name}] poll failed ({type(err).__name__}: {str(err)[:80]}); retrying")
+            sleep(interval)
+            continue
         rows = sum(info["rows"].values())
         summary = info.get("summary") or {}
         echo(f"[wait {job.name}] rows {rows} of target {info.get('target')} per model | "
