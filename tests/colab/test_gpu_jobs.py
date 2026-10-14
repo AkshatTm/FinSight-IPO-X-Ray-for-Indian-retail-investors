@@ -156,6 +156,26 @@ def test_wait_ignores_the_smoke_summary_and_reports_a_stall(repo: Path, tmp_path
     assert state == "stalled"
 
 
+def test_wait_survives_a_failed_poll(repo: Path, tmp_path: Path, monkeypatch) -> None:
+    hub = tmp_path / "hub"
+    _fake_run(hub, finished=False)
+    _fake_run_summary(hub, smoke=False)
+    real, calls = gj.status, []
+
+    def flaky(*a, **k):  # the first poll hits a half-uploaded file
+        calls.append(1)
+        if len(calls) == 1:
+            raise OSError("Consistency check failed")
+        return real(*a, **k)
+
+    monkeypatch.setattr(gj, "status", flaky)
+    polls: list[str] = []
+    state, _ = gj.wait(gj.JOBS["bakeoff"], common.DirBackend(hub), root=repo,
+                       sleep=lambda _: None, echo=polls.append)  # fmt: skip
+    assert state == "done"
+    assert "retrying" in polls[0]
+
+
 def _fake_run_summary(hub: Path, smoke: bool) -> None:
     summary = {"job": "bakeoff", "preset": "bakeoff_smoke" if smoke else "bakeoff",
                "finished_utc": "2026-10-16T01:00:00+00:00", "gpu_class": "G4",
