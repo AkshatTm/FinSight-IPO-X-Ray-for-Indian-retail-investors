@@ -355,7 +355,8 @@ class JobIO:
         if io not in ("hf", "drive"):
             raise ValueError(f"io must be 'hf' or 'drive', not {io!r}")
         self.job, self.io = job, io
-        self.work = Path(work)
+        # one folder per job: a second job in the same runtime must not start from the first's files
+        self.work = Path(work) / job
         self.work.mkdir(parents=True, exist_ok=True)
         self.drive_dir: Path | None = None
         self.store: Any = None

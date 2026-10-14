@@ -401,5 +401,7 @@ def test_jobio_modes(tmp_path: Path) -> None:
         io.fetch_input("nope.jsonl")
     with pytest.raises(ValueError, match="HF_TOKEN"):
         common.JobIO("job", "hf", work=tmp_path / "w2")
+    other = common.JobIO("other", "hf", store=hub, work=tmp_path / "w")  # same runtime, next job
+    assert other.checkpointer().local != io.checkpointer().local
     drive = common.JobIO("job", "drive", drive_root=tmp_path / "drive", work=tmp_path / "w3")
     assert drive.fetch_input("a.jsonl") == tmp_path / "drive" / "job" / "a.jsonl"
