@@ -39,7 +39,7 @@ B03 stays the spec for each model. This file changes **where** jobs run, **how b
 
 ### C2.3 Teacher full run (was B2.3b, bigger)
 
-- Input: `train` risks, 40–600 words, **max 25 per company**, stratified by year with **extra weight on 2024+**. Target `min(12,000, achievable)` (config `teacher.n_risks`). With ~500 train companies a cap of 20 allows at most ~10–11k, so the export prints the achievable number.
+- Input: `train` risks, 40–600 words, **max 35 per company** (25 gave only 8,889 achievable; 35 gives 12,305), table-row titles dropped, stratified by year with **extra weight on 2024+**. Target `min(12,000, achievable)` (config `teacher.n_risks`). With ~500 train companies a cap of 20 allows at most ~10–11k, so the export prints the achievable number.
 - Colab A100 with vLLM, checkpoint every 200 items. Filters → drop rates.
 - Quality-100 from the **full** output (not the pilot): go/no-go ≥ 85 % "same meaning: yes" (B03 §3.4). If no-go: fix the prompt, re-run 500, re-rate.
 - Outputs as B03 §3.5; datasheet updated with the chosen model and counts.

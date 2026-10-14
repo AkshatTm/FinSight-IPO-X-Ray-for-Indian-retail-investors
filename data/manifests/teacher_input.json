@@ -381,8 +381,8 @@
     "zinka-logistics-solutions-2024"
   ],
   "inputs": [],
-  "sha256": "92d76a9e2e66fb90a377fa5ffdc926ec4d0cdd3f720660e291190fd13245a0ec",
+  "sha256": "c40010ddac8147298675570d5d4546a018cebad8e748a61350ed4c2b9cc7a76c",
   "written_by": "scripts/export_teacher_input.py",
-  "note": "8889 risks; achievable 8889; cap 25 per company",
+  "note": "12000 risks; achievable 12305; cap 35 per company",
   "n_ipos": 377
 }

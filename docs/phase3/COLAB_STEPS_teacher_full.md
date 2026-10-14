@@ -3,7 +3,7 @@
 **Job:** the chosen teacher labels and rewrites up to 12,000 `train` risks. **GPU:** A100 (or L4 if the bake-off chose the 14B). **Expected:** 2–4 h ≈ 14–27 units on an A100 (6.77 units/h); vLLM is probably faster than that. **Notebook:** `notebooks/colab/c2_teacher.ipynb` (same notebook as the bake-off).
 
 ## Before (laptop, Claude)
-1. The split is frozen, the bank is built and `uv run python scripts/export_teacher_input.py` has written `data/processed/teacher/risks.jsonl` (it prints how many risks are achievable; the cap of 25 per company may keep it under 12,000).
+1. The split is frozen, the bank is built and `uv run python scripts/export_teacher_input.py` has written `data/processed/teacher/risks.jsonl` (it prints how many risks are achievable; the cap of 35 per company gives 12,305 achievable, 12,000 written).
 2. The bake-off is decided (`eval_results/c/teacher_bakeoff.json`, C-ADR-05 accepted) or the 14B is used directly. Use the vLLM pin from the L4 test.
 
 ## Run (you)
