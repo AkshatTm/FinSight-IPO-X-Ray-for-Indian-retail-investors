@@ -71,7 +71,7 @@ else:
     drive.mount("/content/drive")
     sys.path.insert(0, "/content/drive/MyDrive/FinSight")
 from _common import (JobIO, Checkpointer, DirBackend, run_summary, gpu_info, gpu_config,
-                     hf_secret, unassign_runtime)
+                     gpu_probe, hf_secret, unassign_runtime)
 print(gpu_info())
 """
 
@@ -270,8 +270,11 @@ def load_kwargs(model, gpu_quant):
 
 def main():
     LIMIT = 20 if SMOKE else None
-    gpu_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
-    CFG = gpu_config(torch.cuda.get_device_name(0), gpu_gb, torch.cuda.get_device_capability())
+    # no torch.cuda call before vLLM: CUDA in this process would force vLLM's engine onto "spawn"
+    probe = gpu_probe()
+    assert probe, "no GPU: Runtime > Change runtime type"
+    gpu_name, gpu_gb, gpu_cap = probe
+    CFG = gpu_config(gpu_name, gpu_gb, gpu_cap)
     quant = QUANT_OVERRIDE or CFG["quant"]
     print(f"PRESET {PRESET} | GPU {CFG['tier']} {CFG['mem_gb']} GiB | quant {quant} | models {MODELS}", flush=True)
     jobio = JobIO(JOB, IO, hf_repo=JOBS_REPO, token=hf_secret())
@@ -327,7 +330,8 @@ def main():
         print("TEACHER OK", json.dumps(summary), flush=True)
         del llm
         gc.collect()
-        torch.cuda.empty_cache()
+        if torch.cuda.is_initialized():
+            torch.cuda.empty_cache()
     s = run_summary(ck.local, JOB, started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
                     items_done=len(items), pins=pins,
                     extra={"models": MODELS, "smoke": SMOKE, "preset": PRESET, "gpu_config": CFG})
