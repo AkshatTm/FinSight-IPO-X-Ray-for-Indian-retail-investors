@@ -259,6 +259,25 @@ def gpu_info() -> dict[str, Any]:
     return {"gpu": name, "memory": mem, "driver": driver}
 
 
+def gpu_probe() -> tuple[str, float, tuple[int, int]] | None:
+    """``(name, memory GiB, compute capability)`` from ``nvidia-smi``, without touching CUDA.
+
+    vLLM forks its engine process; if the notebook process has already initialised CUDA (any
+    ``torch.cuda.*`` call), vLLM must fall back to ``spawn``, which fails inside a notebook.
+    """
+    try:
+        out = subprocess.run(
+            ["nvidia-smi", "--query-gpu=name,memory.total,compute_cap",
+             "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=20, check=True,
+        ).stdout.strip().splitlines()[0]
+    except (OSError, subprocess.SubprocessError, IndexError):
+        return None
+    name, mem_mib, cap = [s.strip() for s in out.split(",")]
+    major, minor = (int(x) for x in cap.split("."))
+    return name, float(mem_mib) / 1024, (major, minor)
+
+
 def gpu_class(name: str) -> str:
     """Map an nvidia-smi name to ``G4`` / ``T4`` / ``L4`` / ``A100`` / ``H100`` / ``other``.
 

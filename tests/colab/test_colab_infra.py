@@ -195,15 +195,16 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
 
     torch = types.ModuleType("torch")
     torch.__version__ = "0-fake"
+
+    def no_cuda(*_: object) -> None:  # any CUDA call before vLLM forces "spawn" (C2.2 crash)
+        raise AssertionError("torch.cuda touched in the notebook process")
+
     torch.cuda = types.SimpleNamespace(
-        get_device_properties=lambda i: types.SimpleNamespace(total_memory=gpu_gb * 1024**3),
-        get_device_name=lambda i: (
-            "NVIDIA RTX PRO 6000 Blackwell Server Edition"
-            if gpu_gb == 95
-            else "NVIDIA A100-SXM4-40GB"
-        ),
-        get_device_capability=lambda i=0: (8, 0),
-        empty_cache=lambda: None,
+        get_device_properties=no_cuda, get_device_name=no_cuda, get_device_capability=no_cuda,
+        empty_cache=no_cuda, is_initialized=lambda: False,
+    )  # fmt: skip
+    gpu_name = (
+        "NVIDIA RTX PRO 6000 Blackwell Server Edition" if gpu_gb == 95 else "NVIDIA A100-SXM4-40GB"
     )
     vllm = types.ModuleType("vllm")
     reply = json.dumps({"category": "financial", "seriousness_1to5": 3, "hard_fact": True,
@@ -239,6 +240,7 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
         "JobIO": lambda job, io, hf_repo=None, token=None: common.JobIO(
             job, "hf", store=hub, work=tmp_path / "work"),
         "hf_secret": lambda: "x", "gpu_config": common.gpu_config,
+        "gpu_probe": lambda: (gpu_name, float(gpu_gb), (12, 0) if gpu_gb == 95 else (8, 0)),
         "run_summary": common.run_summary,
         "gpu_info": common.gpu_info, "STARTED": 0.0,
         "unassign_runtime": lambda enabled: unassigned.append(enabled),
@@ -281,16 +283,14 @@ def test_teacher_notebook_releases_gpu_on_crash(
     mk = load("make_colab_notebooks", "scripts/make_colab_notebooks.py")
     nb = mk.teacher()
     torch = types.ModuleType("torch")
-    torch.cuda = types.SimpleNamespace(
-        get_device_properties=lambda i: (_ for _ in ()).throw(RuntimeError("no gpu")),
-    )
     monkeypatch.setitem(sys.modules, "torch", torch)
     monkeypatch.setitem(sys.modules, "vllm", types.ModuleType("vllm"))
     monkeypatch.setitem(sys.modules, "vllm.sampling_params", types.ModuleType("x"))
     vllm = sys.modules["vllm"]
     vllm.LLM = vllm.SamplingParams = object  # type: ignore[attr-defined]
     unassigned: list[bool] = []
-    ns: dict = {"unassign_runtime": lambda enabled: unassigned.append(enabled), "STARTED": 0.0}
+    ns: dict = {"unassign_runtime": lambda enabled: unassigned.append(enabled), "STARTED": 0.0,
+                "gpu_probe": lambda: (_ for _ in ()).throw(RuntimeError("no gpu"))}  # fmt: skip
     exec(_cell_source(nb, "parameters"), ns)
     with pytest.raises(RuntimeError, match="no gpu"):
         exec(_cell_source(nb, "teacher-main"), ns)
@@ -373,6 +373,16 @@ def test_teacher_model_fits_by_size_and_precision() -> None:
     assert fits("Qwen/Qwen3-32B-AWQ", 79.0, 0.92)
     assert fits("mistralai/Mistral-Small-4-119B-2603-NVFP4", 95.0, 0.90)
     assert not fits("mistralai/Mistral-Small-4-119B-2603-NVFP4", 79.0, 0.92)
+
+
+def test_gpu_probe_parses_nvidia_smi(monkeypatch: pytest.MonkeyPatch) -> None:
+    out = "NVIDIA RTX PRO 6000 Blackwell Server Edition, 97887, 12.0\n"
+    monkeypatch.setattr(common.subprocess, "run",
+                        lambda *a, **k: type("R", (), {"stdout": out})())  # fmt: skip
+    name, gb, cap = common.gpu_probe()
+    assert name.startswith("NVIDIA RTX PRO 6000")
+    assert round(gb, 1) == 95.6
+    assert cap == (12, 0)
 
 
 def test_gpu_config_unknown_gpu_uses_capability() -> None:
