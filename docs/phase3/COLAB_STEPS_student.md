@@ -8,15 +8,15 @@
 3. The zero-shot bake-off picked the base model (gold-50 sheet); if it changed `MODEL`, set it in the notebook.
 
 ## Run (you)
-1. Drive: create `MyDrive/FinSight/student/`, copy `train.jsonl` and `dev.jsonl` into it. `_common.py` must be in `MyDrive/FinSight/`.
+1. Laptop: `uv run python scripts/gpu_jobs.py push student` (uploads `train.jsonl`, `dev.jsonl`, `_common.py`; Drive mode `IO = "drive"` is the fallback). Colab secret `HF_TOKEN` with notebook access on.
 2. Upload `notebooks/colab/c2_student.ipynb`. **Smoke first:** T4, `PRECISION = "nf4"`, `SMOKE = True`, `EXPORT_GGUF = False` (10 steps, minutes).
 3. **Real run:** L4 or A100, `PRECISION = "bf16"`, `SMOKE = False`, `EXPORT_GGUF = True`. On an A100 `BATCH_SIZE = 8`, `GRAD_ACCUM = 2`. Type `UNITS_BEFORE`, run all.
-4. A disconnect is safe: reconnect, run all, it resumes from the newest checkpoint in `MyDrive/FinSight/student/ck/trainer/` (at most `SAVE_STEPS` = 200 steps redone).
-5. When it ends type `UNITS_AFTER`, re-run the last cell, disconnect the runtime.
+4. A disconnect is safe: reconnect, run all, it resumes from the newest checkpoint in the job repo (`student/out/trainer/`; at most `SAVE_STEPS` = 200 steps redone).
+5. When it ends the runtime disconnects itself (`UNASSIGN = True`); give `UNITS_AFTER` to `gpu_jobs.py pull`.
 6. Optional: `UPLOAD = True` pushes the adapter and GGUF to the **private** repo `HF_REPO` (token in Colab secrets as `HF_TOKEN`). Merged fp16 weights are never kept or uploaded.
 
 ## Bring back
-- `MyDrive/FinSight/student/out/` → `adapter/`, `simplifier-q4_k_m.gguf`, `metrics.json` to `models/student/` (gitignored); `run_summary.json` to `eval_results/c/` and run `scripts/log_compute.py` on it.
+- `uv run python scripts/gpu_jobs.py pull student --units-before <n> --units-after <n>`: `adapter/`, `simplifier-q4_k_m.gguf`, `metrics.json` → `models/student/` (gitignored); the run summary → `eval_results/c/student_run_summary.json` and the compute row is logged.
 - Tell Claude "student is back". Claude runs E18–E20 (meaning kept, numbers copied, forbidden phrases) on the gold-50 and the held-out dev rows, measures CPU seconds per risk, and writes `docs/model_cards/risk_simplifier.md`.
 
 ## Honesty notes

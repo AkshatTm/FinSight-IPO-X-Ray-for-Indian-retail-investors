@@ -172,7 +172,7 @@ def _cell_source(nb: dict, tag: str | None = None, index: int | None = None) -> 
 def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, gpu_gb: int, slugs: list[str]
 ) -> None:
-    """Smoke (C2.2): the real cells run on 20 fake risks with stub torch/vllm and Drive in tmp."""
+    """Smoke (C2.2): the real cells run on 20 fake risks, stub torch/vllm, a folder as the Hub."""
     import sys
     import types
 
@@ -182,29 +182,34 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
 
     mk = load("make_colab_notebooks", "scripts/make_colab_notebooks.py")
     nb = mk.teacher()
-    job = tmp_path / "drive" / "teacher_bakeoff"
-    job.mkdir(parents=True)
+    hub = common.DirBackend(tmp_path / "hub")
     rows = loader.fake_risks()
-    (job / "bakeoff_risks.jsonl").write_text(
+    src = tmp_path / "bakeoff_risks.jsonl"
+    src.write_text(
         "\n".join(json.dumps({"risk_id": f"r{i}", "title": r.get("title", ""), "body": r["body"]})
                   for i, r in enumerate(rows)), encoding="utf-8")  # fmt: skip
+    hub.put([(src, "bakeoff/in/bakeoff_risks.jsonl")])
 
     torch = types.ModuleType("torch")
     torch.__version__ = "0-fake"
     torch.cuda = types.SimpleNamespace(
         get_device_properties=lambda i: types.SimpleNamespace(total_memory=gpu_gb * 1024**3),
+        get_device_name=lambda i: "NVIDIA A100-SXM4-80GB" if gpu_gb == 80 else "NVIDIA L4",
+        get_device_capability=lambda i=0: (8, 0),
         empty_cache=lambda: None,
     )
     vllm = types.ModuleType("vllm")
     reply = json.dumps({"category": "financial", "seriousness_1to5": 3, "hard_fact": True,
                         "simple": "A short plain sentence.", "numbers_copied": []})  # fmt: skip
+    seen_kw: list[dict] = []
 
     class FakeLLM:
         def __init__(self, **kw: object) -> None:
-            self.kw = kw
+            seen_kw.append(kw)
 
         def chat(self, chats, params, use_tqdm=False, chat_template_kwargs=None):  # type: ignore[no-untyped-def]
             assert chat_template_kwargs == {"enable_thinking": False}
+            assert params["max_tokens"] == 300
             return [
                 types.SimpleNamespace(outputs=[types.SimpleNamespace(text=reply)]) for _ in chats
             ]
@@ -216,25 +221,105 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
     monkeypatch.setitem(sys.modules, "torch", torch)
     monkeypatch.setitem(sys.modules, "vllm", vllm)
     monkeypatch.setitem(sys.modules, "vllm.sampling_params", sp)
-    monkeypatch.setattr(common, "DRIVE_ROOT", tmp_path / "drive")
 
-    ns: dict = {"mount_drive": lambda j: common.mount_drive(j, root=tmp_path / "drive"),
-                "Checkpointer": lambda local_dir, drive_dir, every: common.Checkpointer(
-                    tmp_path / "local", drive_dir, every),
-                "run_summary": common.run_summary, "gpu_info": common.gpu_info,
-                "unassign_runtime": common.unassign_runtime, "STARTED": 0.0}  # fmt: skip
+    unassigned: list[bool] = []
+    ns: dict = {
+        "JobIO": lambda job, io, hf_repo=None, token=None: common.JobIO(
+            job, "hf", store=hub, work=tmp_path / "work"),
+        "hf_secret": lambda: "x", "gpu_config": common.gpu_config,
+        "run_summary": common.run_summary,
+        "gpu_info": common.gpu_info, "STARTED": 0.0,
+        "unassign_runtime": lambda enabled: unassigned.append(enabled),
+    }  # fmt: skip
     exec(_cell_source(nb, "parameters"), ns)
-    ns.update(SMOKE=True, EVERY=7)
+    assert ns["PRESET"] == "bakeoff_smoke"
+    assert ns["IO"] == "hf"
+    assert ns["UNASSIGN"] is True
+    assert ns["MAX_TOKENS"] == 300
+    ns.update(EVERY=7)
     exec(_cell_source(nb, "teacher-run"), ns)
     exec(_cell_source(nb, "teacher-prompt"), ns)
     assert ns["messages"]("T", "b") == teacher.messages("T", "b")
-    exec(_cell_source(nb, index=-2), ns)  # body
-    exec(_cell_source(nb, index=-1), ns)  # run_summary
-    out = job / "out"
+    exec(_cell_source(nb, "teacher-main"), ns)
+    out = tmp_path / "hub" / "bakeoff" / "out"  # every batch was uploaded to the "Hub"
     assert sorted(p.name for p in out.glob("raw_*.jsonl")) == [f"raw_{s}.jsonl" for s in slugs]
     for slug in slugs:
         raw = (out / f"raw_{slug}.jsonl").read_text(encoding="utf-8").splitlines()
         assert len(raw) == 20  # SMOKE: 20 risks per model
         assert json.loads(raw[0])["model"].lower().endswith(slug)
         assert json.loads((out / f"run_summary_{slug}.json").read_text())["written"] == 20
-    assert json.loads((job / "run_summary.json").read_text())["job"] == "teacher_bakeoff"
+    final = json.loads((out / "run_summary.json").read_text())
+    assert final["job"] == "bakeoff"
+    assert final["preset"] == "bakeoff_smoke"
+    assert all(kw["quantization"] == "awq_marlin" for kw in seen_kw)
+    assert unassigned == [True]  # the runtime is released at the end
+
+
+def test_teacher_notebook_releases_gpu_on_crash(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import sys
+    import types
+
+    mk = load("make_colab_notebooks", "scripts/make_colab_notebooks.py")
+    nb = mk.teacher()
+    torch = types.ModuleType("torch")
+    torch.cuda = types.SimpleNamespace(
+        get_device_properties=lambda i: (_ for _ in ()).throw(RuntimeError("no gpu")),
+    )
+    monkeypatch.setitem(sys.modules, "torch", torch)
+    monkeypatch.setitem(sys.modules, "vllm", types.ModuleType("vllm"))
+    monkeypatch.setitem(sys.modules, "vllm.sampling_params", types.ModuleType("x"))
+    vllm = sys.modules["vllm"]
+    vllm.LLM = vllm.SamplingParams = object  # type: ignore[attr-defined]
+    unassigned: list[bool] = []
+    ns: dict = {"unassign_runtime": lambda enabled: unassigned.append(enabled), "STARTED": 0.0}
+    exec(_cell_source(nb, "parameters"), ns)
+    with pytest.raises(RuntimeError, match="no gpu"):
+        exec(_cell_source(nb, "teacher-main"), ns)
+    assert unassigned == [True]
+
+
+def test_checkpointer_resumes_from_the_hub_on_a_new_runtime(tmp_path: Path) -> None:
+    hub = common.DirBackend(tmp_path / "hub")
+    ck = common.Checkpointer(tmp_path / "a", None, every=1, store=hub, remote_prefix="j/out")
+    ck.append("raw.jsonl", {"id": "x"})
+    ck.append("raw.jsonl", {"id": "y"})
+    fresh = common.Checkpointer(tmp_path / "b", None, every=1, store=hub, remote_prefix="j/out")
+    assert fresh.done_ids("raw.jsonl") == {"x", "y"}
+
+
+@pytest.mark.parametrize(
+    ("name", "gb", "tier", "quant"),
+    [
+        ("NVIDIA H100 80GB HBM3", 79.1, "H100", "awq_marlin"),
+        ("NVIDIA A100-SXM4-80GB", 79.2, "A100-80GB", "awq_marlin"),
+        ("NVIDIA A100-SXM4-40GB", 39.5, "A100-40GB", "awq_marlin"),
+        ("NVIDIA L4", 22.5, "L4", "awq_marlin"),
+        ("Tesla T4", 14.6, "T4", "awq"),
+    ],
+)
+def test_gpu_config_by_tier(name: str, gb: float, tier: str, quant: str) -> None:
+    cfg = common.gpu_config(name, gb)
+    assert (cfg["tier"], cfg["quant"]) == (tier, quant)
+    assert 0.8 <= cfg["gpu_mem"] <= 0.95
+
+
+def test_gpu_config_unknown_gpu_uses_capability() -> None:
+    assert common.gpu_config("NVIDIA RTX 6000 Ada", 48, (8, 9))["quant"] == "awq_marlin"
+    assert common.gpu_config("Some Old GPU", 12, (7, 5))["quant"] == "awq"
+
+
+def test_jobio_modes(tmp_path: Path) -> None:
+    hub = common.DirBackend(tmp_path / "hub")
+    src = tmp_path / "in.jsonl"
+    src.write_text("{}\n", encoding="utf-8")
+    hub.put([(src, "job/in/in.jsonl")])
+    io = common.JobIO("job", "hf", store=hub, work=tmp_path / "w")
+    assert io.fetch_input("in.jsonl").read_text() == "{}\n"
+    with pytest.raises(FileNotFoundError):
+        io.fetch_input("nope.jsonl")
+    with pytest.raises(ValueError, match="HF_TOKEN"):
+        common.JobIO("job", "hf", work=tmp_path / "w2")
+    drive = common.JobIO("job", "drive", drive_root=tmp_path / "drive", work=tmp_path / "w3")
+    assert drive.fetch_input("a.jsonl") == tmp_path / "drive" / "job" / "a.jsonl"
