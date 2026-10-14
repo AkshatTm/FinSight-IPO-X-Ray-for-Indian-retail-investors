@@ -19,7 +19,7 @@ B03 stays the spec for each model. This file changes **where** jobs run, **how b
 4. **Compute-unit log:** the last cell writes `run_summary.json` with GPU type, wall time, items/steps done and Akshat's reading of compute units before/after (typed into a parameter cell) → copied to `eval_results/c/compute_log.jsonl` by a local script.
 5. Weights go to a **private Hugging Face repo** (`AkshatTm/finsight-<model>`) as **adapters, GGUF or ONNX only, never merged fp16** (HF private storage is limited). Drive keeps checkpoints and adapters. Never to git.
 6. Disconnect the runtime when the cell finishes (`from google.colab import runtime; runtime.unassign()` at the end, behind a flag).
-7. Pin library versions in the first cell (vLLM, transformers, peft, trl, bitsandbytes, llama.cpp commit) and record them in `run_summary.json`. The current teacher notebook pins `vllm==0.8.5.post1` with `VLLM_USE_V1=0`; that old engine is gone in later vLLM and the install downgrades torch on current Colab images. **C0.2's rate-check notebook also installs the candidate vLLM pin and loads a small AWQ model**; the version that works is the pin. AWQ uses `awq_marlin` on L4/A100.
+7. Pin library versions in the first cell (vLLM, transformers, peft, trl, bitsandbytes, llama.cpp commit) and record them in `run_summary.json`. **vLLM pin: `vllm==0.31.0`** (C0.2 rate check: L4 sm89 and G4 RTX PRO 6000 Blackwell sm120; it installs its own torch 2.13 over the Colab image's torch 2.11 + CUDA 13.0, Python 3.13). The old `vllm==0.8.5.post1` / `0.11` pins downgraded torch and are retired. AWQ checkpoints use `awq_marlin` (sm80+); FP8, compressed-tensors (w4a16) and NVFP4 checkpoints take their scheme from the checkpoint (`quantization=None`, `dtype="auto"`); vision-language checkpoints load text-only (`limit_mm_per_prompt` 0). Summaries: `eval_results/c/rate_check_run_summary_{l4,g4}.json`.
 
 ## 3. The jobs
 
@@ -85,14 +85,24 @@ The budget is **200 compute units** (Colab Pro / Google AI Pro; 199.97 available
 | T4 | 15 GB | 12.7 GB | ~1.07 |
 | L4 | 22.5 GB | 53 GB | ~1.54 |
 | A100-SXM4-80GB (High-RAM) | 80 GB | 167 GB (368 GB local scratch) | ~6.77 |
+| **G4** = NVIDIA RTX PRO 6000 Blackwell Server Edition (sm 12.0) | 95.6 GB | 176.9 GB | ~8.9 |
 
-So 200 units ≈ 29 A100 hours, or ≈ 130 L4 hours. The A100 has 80 GB, so Qwen3-32B-AWQ fits with a large KV cache; the L4-only fallback (22.5 GB) stays documented because an A100 is not guaranteed at any given moment. The vLLM `awq_marlin` kernel needs compute capability 8.0+, so the vLLM smoke test runs on the L4 only (no T4). Rates are logged in `eval_results/c/compute_log.jsonl` (`scripts/log_compute.py`); the vLLM pin is still **pending** until Akshat runs `c0_rate_check.ipynb` on the L4 (`COLAB_STEPS_rate_check.md`).
+H100 is listed but needs a higher plan (not available on Pro). So 200 units ≈ 22 G4 hours, ≈ 29 A100 hours or ≈ 130 L4 hours. Rates are logged in `eval_results/c/compute_log.jsonl` (`scripts/log_compute.py`, `scripts/gpu_jobs.py pull`).
+
+**Measured speed (C0.2, vLLM 0.31.0):**
+
+| GPU | fp16 matmul | Decode, Qwen3-4B-AWQ, 128 × 256 tokens | Teacher prompt + JSON schema, Qwen3.8-27B-FP8, 50 bake-off risks |
+| --- | --- | --- | --- |
+| L4 | 45.9 TFLOPS | 3,320 tok/s | (does not fit: ~31 GB of FP8 weights) |
+| G4 | 377 TFLOPS | 15,221 tok/s | 280 risks/min, 538 output tok/s, 50/50 valid JSON, 258 s model load |
+
+**Teacher GPU: G4** (Akshat's call, C0.2): 96 GB fits a 27–32B model in FP8 (native on Blackwell) or a ~120B MoE in NVFP4, and the measured teacher rate makes the full run about an hour. The A100 check was skipped. `_common.gpu_config` has a `G4` tier (`fp8_ok`, `nvfp4_ok`, `max_num_seqs` 256, 512 risks per checkpointed batch).
 
 | Job | GPU | Hours (estimate) | Units (estimate) |
 | --- | --- | --- | --- |
-| Smoke runs (all jobs) + C0.2 vLLM smoke | T4 (+ ~0.3 h L4) | 3 | ~4 |
-| Teacher bake-off (2 × 300 risks) | A100 | 1–1.5 | ~7–10 |
-| Teacher full (≈ min(12k, achievable) risks) | A100 | 2–4 (vLLM throughput probably makes this < 2 h; kept conservative) | ~14–27 |
+| Smoke runs (all jobs) + C0.2 vLLM smoke | T4 / L4 (+ G4 check) | 3 | ~4 (C0.2 used 0.18 on L4 + 2.09 on G4) |
+| Teacher bake-off (2–3 models × 300 risks, after a 20-risk smoke) | G4 | ~0.5 (per model: ~5 min download + load, ~1–2 min generation) | ~4–6 |
+| Teacher full (12,000 risks) | G4 | ~0.6–1 (12,000 ÷ 280 risks/min ≈ 43 min at the measured rate, + load) | ~6–9 |
 | Student 4B LoRA + GGUF export | L4 (or A100) | 2–3 | ~3–5 (L4) / ~14–20 (A100) |
 | ~~Classifier large, 3 seeds~~ | cut | — | 0 |
 | ~~Student 8B~~ | cut | — | 0 |

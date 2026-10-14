@@ -27,12 +27,12 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 - [x] **C0.1 Phase 3 docs + rules** · 💻 L · **O** · Needs: Akshat drops `docs/phase3/` in the repo
   Commit `docs/phase3/` and the kickoff-review fixes, Akshat approves the critical path (§6), apply the CLAUDE.md patch (C00 §5), record C-ADR-01…11 as proposed, mark absorbed B-parts in B07, create labels `colab`/`kaggle`, milestones CG0–CG6 and issues for all C0–C4 parts, reset `PROGRESS.md` "Resume here" for Phase 3.
   *Done when:* merged; issues and milestones exist.
-- [ ] **C0.2 Colab + HF + compute log** · 💻 L + 🟠 G · S · Needs: C0.1, Akshat setup (C06 §1)
+- [x] **C0.2 Colab + HF + compute log** · 💻 L + 🟠 G · S · Needs: C0.1, Akshat setup (C06 §1)
   `notebooks/colab/_common.py` (Drive mount, local-disk checkpoints synced to Drive, resume helpers, run_summary), `docs/phase3/COLAB_STEPS_template.md`, `scripts/log_compute.py` → `eval_results/c/compute_log.jsonl`, HF private upload helper. A tiny smoke notebook Akshat runs once on T4, L4 and A100 to **record the real compute-unit rates** and **test the vLLM pin with a small AWQ model** (C03 §2.7); C03 §4 table updated from them.
   *Done when:* observed rates committed; budget table re-planned.
   *Status:* code merged; rates measured by hand and logged (T4 1.07, L4 1.54, A100 6.77 units/h), C03 §4 re-planned. **Left:** the vLLM pin test on the L4 (`COLAB_STEPS_rate_check.md`, in AKSHAT_TODO).
 
-**CG0:** docs merged · Colab rates known · HF private repo works · Kaggle CLI works on the laptop.
+**CG0:** docs merged · Colab rates known · HF private repo works · Kaggle CLI works on the laptop. **Passed** (vLLM pin `vllm==0.31.0` on L4 + G4; teacher GPU G4).
 
 ### C1 — Newest-IPO data → gate CG1
 

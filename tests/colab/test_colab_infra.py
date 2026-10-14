@@ -297,12 +297,65 @@ def test_checkpointer_resumes_from_the_hub_on_a_new_runtime(tmp_path: Path) -> N
         ("NVIDIA A100-SXM4-40GB", 39.5, "A100-40GB", "awq_marlin"),
         ("NVIDIA L4", 22.5, "L4", "awq_marlin"),
         ("Tesla T4", 14.6, "T4", "awq"),
+        ("NVIDIA RTX PRO 6000 Blackwell Server Edition", 95.0, "G4", "awq_marlin"),
     ],
 )
 def test_gpu_config_by_tier(name: str, gb: float, tier: str, quant: str) -> None:
     cfg = common.gpu_config(name, gb)
     assert (cfg["tier"], cfg["quant"]) == (tier, quant)
     assert 0.8 <= cfg["gpu_mem"] <= 0.95
+
+
+def test_gpu_config_g4_blackwell() -> None:
+    """Colab G4 = RTX PRO 6000 Blackwell (sm120, 96 GB): FP8 + NVFP4 native, big batches."""
+    name = "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+    assert common.gpu_class(name) == "G4"
+    cfg = common.gpu_config(name, 95.0, (12, 0))
+    assert (cfg["tier"], cfg["fp8_ok"], cfg["nvfp4_ok"]) == ("G4", True, True)
+    assert (cfg["max_num_seqs"], cfg["batch"]) == (256, 512)
+    assert common.OBSERVED_UNITS_PER_HOUR["G4"] == 8.9
+    assert not common.gpu_config("NVIDIA L4", 22.0).get("batch")  # small GPUs keep the preset batch
+
+
+def _teacher_helpers() -> dict:
+    """``model_fits`` and ``load_kwargs`` from the generated teacher-main cell."""
+    mk = load("make_colab_notebooks", "scripts/make_colab_notebooks.py")
+    src = _cell_source(mk.teacher(), "teacher-main")
+    ns: dict = {"QUANT_OVERRIDE": None}
+    exec("import re\n" + src[src.index("def model_fits") : src.index("def main")], ns)
+    return ns
+
+
+def test_teacher_load_kwargs_by_checkpoint_type(monkeypatch: pytest.MonkeyPatch) -> None:
+    import sys
+    import types
+
+    fake = types.ModuleType("transformers")  # offline: VLM configs have a vision_config
+    fake.AutoConfig = types.SimpleNamespace(  # type: ignore[attr-defined]
+        from_pretrained=lambda repo: types.SimpleNamespace(
+            vision_config={} if "Qwen3.8" in repo else None
+        )
+    )
+    monkeypatch.setitem(sys.modules, "transformers", fake)
+    ns = _teacher_helpers()
+    awq = ns["load_kwargs"]("Qwen/Qwen3-32B-AWQ", "awq_marlin")
+    assert (awq["quantization"], awq["dtype"]) == ("awq_marlin", "float16")
+    assert "limit_mm_per_prompt" not in awq
+    for repo in ("Qwen/Qwen3.8-27B-FP8", "google/gemma-4-31B-it-qat-w4a16-ct",
+                 "mistralai/Mistral-Small-4-119B-2603-NVFP4"):  # fmt: skip
+        kw = ns["load_kwargs"](repo, "awq_marlin")
+        assert (kw["quantization"], kw["dtype"]) == (None, "auto")  # scheme from the checkpoint
+    vlm = ns["load_kwargs"]("Qwen/Qwen3.8-27B-FP8", "awq_marlin")
+    assert vlm["limit_mm_per_prompt"] == {"image": 0, "video": 0}  # text-only
+
+
+def test_teacher_model_fits_by_size_and_precision() -> None:
+    fits = _teacher_helpers()["model_fits"]
+    assert fits("Qwen/Qwen3.8-27B-FP8", 95.0, 0.90)
+    assert not fits("Qwen/Qwen3.8-27B-FP8", 22.0, 0.90)  # ~34 GiB FP8 does not fit an L4
+    assert fits("Qwen/Qwen3-32B-AWQ", 79.0, 0.92)
+    assert fits("mistralai/Mistral-Small-4-119B-2603-NVFP4", 95.0, 0.90)
+    assert not fits("mistralai/Mistral-Small-4-119B-2603-NVFP4", 79.0, 0.92)
 
 
 def test_gpu_config_unknown_gpu_uses_capability() -> None:

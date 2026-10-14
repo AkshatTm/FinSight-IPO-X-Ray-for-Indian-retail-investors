@@ -107,7 +107,7 @@ UNITS_BEFORE = None            # compute units in the Resources panel before the
 UNITS_AFTER = None             # optional; gpu_jobs.py pull --units-after fills it in later
 UNASSIGN = True                # disconnect the runtime when the job ends
 # candidate vLLM pins, tried in order; the first that imports and generates becomes THE pin
-VLLM_CANDIDATES = ["vllm==0.11.0", "vllm==0.10.2", "vllm"]
+VLLM_CANDIDATES = ["vllm==0.31.0", "vllm==0.30.0", "vllm==0.29.0"]
 """
         + RATE_PRESETS
         + """
@@ -146,11 +146,18 @@ from vllm import LLM, SamplingParams
 llm = LLM('{MODEL}', quantization='{CFG["quant"]}', max_model_len=2048, gpu_memory_utilization={CFG["gpu_mem"]})
 out = llm.generate(['Explain an IPO in one sentence.'], SamplingParams(max_tokens=40))
 print('GEN_OK', out[0].outputs[0].text)
+import time
+ps = ['Rewrite this risk in plain English, keep every number: risk ' + str(i) for i in range(128)]
+t = time.time()
+outs = llm.generate(ps, SamplingParams(max_tokens=256, temperature=0, ignore_eos=True))
+print('TOKS_PER_S', round(sum(len(o.outputs[0].token_ids) for o in outs) / (time.time() - t), 1))
 """
         r = subprocess.run([sys.executable, "-c", test], capture_output=True, text=True)
         print(r.stdout[-800:], r.stderr[-800:])
         if "GEN_OK" in r.stdout:
             PIN_OK = pin
+            m = [ln for ln in r.stdout.splitlines() if ln.startswith("TOKS_PER_S")]
+            EXTRA["decode_toks_per_s_128x256"] = float(m[-1].split()[1]) if m else None
             break
     ver = subprocess.run([sys.executable, "-m", "pip", "show", "vllm"], capture_output=True, text=True).stdout
     EXTRA.update(vllm_pin=PIN_OK, vllm_pip_show=ver[:300], model=MODEL, quantization=CFG["quant"])
@@ -206,9 +213,9 @@ JOBS_REPO = "AkshatTm/finsight-gpu-jobs"
 UNITS_BEFORE = None        # compute units in the Resources panel before the run
 UNITS_AFTER = None         # optional; gpu_jobs.py pull --units-after fills it in later
 UNASSIGN = True            # disconnect the runtime when the job ends (also if it crashes)
-VLLM_PIN = "vllm==0.11.0"  # REPLACE with the pin recorded by the L4 rate check (COLAB_STEPS_rate_check)
+VLLM_PIN = "vllm==0.31.0"  # C0.2 pin: works on L4 (sm89) and G4 RTX PRO 6000 Blackwell (sm120)
 MODELS_OVERRIDE = None     # e.g. ["org/model-AWQ"]; None = the preset's models
-QUANT_OVERRIDE = None      # None = chosen from the detected GPU (awq on T4, awq_marlin on sm80+)
+QUANT_OVERRIDE = None      # None = AWQ repos: kernel from the GPU; FP8/compressed-tensors/NVFP4: from the checkpoint
 MAX_MODEL_LEN = 4096
 SMALL = "Qwen/Qwen3-14B-AWQ"
 """
@@ -234,9 +241,25 @@ from vllm import LLM, SamplingParams
 
 
 def model_fits(model, gpu_gb, gpu_mem):
-    # AWQ 4-bit weights ~0.6 GiB per billion parameters, plus ~4 GiB for CUDA and KV cache
-    m = re.search(r"(\\d+(?:\\.\\d+)?)b", model.split("/")[-1].lower())
-    return True if m is None else gpu_gb * gpu_mem >= 0.6 * float(m.group(1)) + 4
+    # 4-bit weights ~0.6 GiB per billion parameters, FP8 ~1.1; plus ~4 GiB for CUDA and KV cache
+    name = model.split("/")[-1].lower()
+    m = re.search(r"(\\d+(?:\\.\\d+)?)b", name)
+    per_b = 1.1 if "fp8" in name else 0.6
+    return True if m is None else gpu_gb * gpu_mem >= per_b * float(m.group(1)) + 4
+
+
+def load_kwargs(model, gpu_quant):
+    # AWQ repos take the GPU's AWQ kernel and fp16; other checkpoints declare their own quantisation
+    awq = "awq" in model.lower()
+    kw = {"quantization": QUANT_OVERRIDE or (gpu_quant if awq else None), "dtype": "float16" if awq else "auto"}
+    try:
+        from transformers import AutoConfig
+        vision = getattr(AutoConfig.from_pretrained(model), "vision_config", None) is not None
+    except Exception:  # unknown config: load as is (a VLM then also loads its vision encoder)
+        vision = False
+    if vision:
+        kw["limit_mm_per_prompt"] = {"image": 0, "video": 0}  # vision-language model: text only
+    return kw
 
 
 def main():
@@ -259,8 +282,11 @@ def main():
             print("skipping", model, f"- does not fit {gpu_gb:.0f} GiB (use a larger GPU or the smaller model)", flush=True)
             continue
         out_path = ck.path(f"raw_{slug}.jsonl")
-        llm = LLM(model=model, quantization=quant, dtype="float16", max_model_len=MAX_MODEL_LEN,
-                  gpu_memory_utilization=CFG["gpu_mem"], enforce_eager=False, seed=2026)
+        kw = load_kwargs(model, quant)
+        if CFG.get("max_num_seqs"):
+            kw["max_num_seqs"] = CFG["max_num_seqs"]
+        llm = LLM(model=model, max_model_len=MAX_MODEL_LEN, gpu_memory_utilization=CFG["gpu_mem"],
+                  enforce_eager=False, seed=2026, **kw)
         try:  # vLLM <= 0.10
             from vllm.sampling_params import GuidedDecodingParams
             params = SamplingParams(temperature=0.2, top_p=0.9, max_tokens=MAX_TOKENS,
@@ -284,7 +310,8 @@ def main():
             eta = (total - done) / rate / 60 if rate > 0 else float("nan")
             print(f"PROGRESS {slug}: {done}/{total} ({done / max(total, 1):.0%}) | {rate:.2f} risk/s | ETA {eta:.1f} min", flush=True)
 
-        stats = run_teacher(items, generate, out_path, every=EVERY, limit=LIMIT,
+        every = EVERY if SMOKE else max(EVERY, CFG.get("batch") or 0)  # big GPUs: bigger batches
+        stats = run_teacher(items, generate, out_path, every=every, limit=LIMIT,
                             meta={"model": model, "prompt_version": PROMPT_VERSION}, after_batch=after_batch)
         written += stats["written"]
         summary = {**stats, "model": model, "prompt_version": PROMPT_VERSION, "seconds": round(time.time() - t0),
