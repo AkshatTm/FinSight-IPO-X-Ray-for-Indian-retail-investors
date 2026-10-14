@@ -92,6 +92,17 @@ JOBS: dict[str, Job] = {
         target_from="risks.jsonl",
         single_raw_copy="data/processed/teacher/raw.jsonl",
     ),
+    "gold_eval": Job(
+        name="gold_eval",
+        notebook="c2_teacher.ipynb",
+        inputs={"data/processed/gold_eval/gold_eval_risks.jsonl": "gold_eval_risks.jsonl"},
+        outputs={
+            "raw_*.jsonl": "data/processed/gold_eval/",
+            "run_summary_*.json": "data/processed/gold_eval/",
+        },
+        summary="eval_results/c/gold_eval_run_summary.json",
+        target_from="gold_eval_risks.jsonl",
+    ),
     "student": Job(
         name="student",
         notebook="c2_student.ipynb",
@@ -159,7 +170,7 @@ def status(job: Job, store: Any, root: Path = ROOT) -> dict[str, Any]:
                         k: s.get(k)
                         for k in ("preset", "gpu", "wall_seconds", "units_used", "smoke")
                     }
-    info["done"] = "summary" in info
+    info["done"] = "summary" in info and not info["summary"].get("smoke")  # smoke != done
     return info
 
 
