@@ -8,9 +8,9 @@
   "wall_seconds": 358.5,
   "items_done": 300,
   "units_before": 197.7,
-  "units_after": null,
-  "units_used": null,
-  "units_per_hour_observed": null,
+  "units_after": 193.67,
+  "units_used": 4.03,
+  "units_per_hour_observed": 40.47,
   "units_per_hour_reference": 8.9,
   "pins": {
     "vllm": "vllm==0.31.0",
