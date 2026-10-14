@@ -66,12 +66,17 @@ def test_category_sheet_and_gold() -> None:
 
 def test_rewrite_sheet_blind_and_score() -> None:
     risks = pick(_by_ipo(), 2, 2)
-    out = {s: {c.risk_id: f"{s} text" for c in risks} for s in ("base", "student", "teacher")}
+    out = {
+        s: {c.risk_id: {"text": f"{s} text", "check": ""} for c in risks}
+        for s in ("base", "student", "teacher")
+    }
     del out["base"][risks[0].risk_id]  # that risk is dropped for every system
+    out["base"][risks[1].risk_id]["check"] = "too_long"  # rejected, but still rated
     rows, key = rewrite_sheet(risks, out)
     assert len(rows) == 9
     assert set(key) == {r["sheet_id"] for r in rows}
     assert "system" not in rows[0]
+    assert "check" not in rows[0]
     for r in rows:
         r["faithful"] = "yes" if key[r["sheet_id"]]["system"] == "teacher" else "partly"
         r["plain_english_1to5"] = "4"
@@ -79,6 +84,9 @@ def test_rewrite_sheet_blind_and_score() -> None:
     assert res["teacher"]["faithful_yes_share"] == 1.0
     assert res["base"]["faithful"] == {"partly": 3}
     assert res["base"]["plain_english_mean"] == 4
+    assert res["base"]["post_checks"] == {"passed": 2, "too_long": 1}
+    assert res["base"]["passed_checks_share"] == 0.6667
+    assert res["teacher"]["passed_checks_share"] == 1.0
     rows[0]["faithful"] = ""
     with pytest.raises(ValueError, match="unrated"):
         score_rewrites(rows, key)
