@@ -2,6 +2,7 @@
 
     uv run python scripts/gpu_jobs.py push bakeoff          # inputs, _common.py and notebooks up
     uv run python scripts/gpu_jobs.py status bakeoff        # progress from the latest checkpoint
+    uv run python scripts/gpu_jobs.py status bakeoff --wait # block until done (exit 0) or stalled 20 min (2)
     uv run python scripts/gpu_jobs.py pull bakeoff [--units-before 190 --units-after 181.4]
 
 The repo (``AkshatTm/finsight-gpu-jobs``, a private dataset) holds ``<job>/in/<file>`` (inputs) and
@@ -20,6 +21,7 @@ import importlib.util
 import json
 import sys
 import tempfile
+import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -161,6 +163,40 @@ def status(job: Job, store: Any, root: Path = ROOT) -> dict[str, Any]:
     return info
 
 
+def wait(
+    job: Job,
+    store: Any,
+    *,
+    root: Path = ROOT,
+    interval: float = 300,
+    stall: float = 1200,
+    clock: Callable[[], float] = time.monotonic,
+    sleep: Callable[[float], None] = time.sleep,
+    echo: Callable[[str], None] = print,
+) -> tuple[str, dict[str, Any]]:
+    """Poll ``status`` until the real (non-smoke) run summary appears, or rows stop growing.
+
+    Returns ``("done", info)`` when ``run_summary.json`` of a non-smoke run is in the repo (the
+    notebook writes it just before ``TEACHER DONE``), or ``("stalled", info)`` when the row count
+    has not changed for ``stall`` seconds (disconnect or crash; the run resumes from the repo).
+    """
+    last_rows, last_change = -1, clock()
+    while True:
+        info = status(job, store, root=root)
+        rows = sum(info["rows"].values())
+        summary = info.get("summary") or {}
+        echo(f"[wait {job.name}] rows {rows} of target {info.get('target')} per model | "
+             f"files {len(info['files'])} | summary preset {summary.get('preset')}")  # fmt: skip
+        if info["done"] and not summary.get("smoke"):
+            return "done", info
+        now = clock()
+        if rows != last_rows:
+            last_rows, last_change = rows, now
+        elif now - last_change >= stall:
+            return "stalled", info
+        sleep(interval)
+
+
 def patch_units(
     summary: dict[str, Any], before: float | None, after: float | None
 ) -> dict[str, Any]:
@@ -269,6 +305,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--units-before", type=float)
     ap.add_argument("--units-after", type=float)
     ap.add_argument("--no-log", action="store_true", help="pull without writing the compute log")
+    ap.add_argument(
+        "--wait",
+        action="store_true",
+        help="status: block until the real run is done (exit 0) or stalls (exit 2)",
+    )
+    ap.add_argument("--interval", type=float, default=300, help="--wait poll seconds")
+    ap.add_argument("--stall", type=float, default=1200, help="--wait: seconds without new rows")
     a = ap.parse_args(argv)
     job = JOBS[a.job]
     store = make_store(a.repo, create=a.command == "push")
@@ -277,6 +320,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"pushed {len(sent)} file(s) to {a.repo} (private):")
         for r in sent:
             print("  ", r)
+    elif a.command == "status" and a.wait:
+        state, info = wait(job, store, interval=a.interval, stall=a.stall,
+                           echo=lambda m: print(m, flush=True))  # fmt: skip
+        print(f"{job.name.upper()} {state.upper()}", json.dumps(info), flush=True)
+        return 0 if state == "done" else 2
     elif a.command == "status":
         print(json.dumps(status(job, store), indent=1))
     else:
