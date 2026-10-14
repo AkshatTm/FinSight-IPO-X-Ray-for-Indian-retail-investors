@@ -71,7 +71,7 @@ else:
     drive.mount("/content/drive")
     sys.path.insert(0, "/content/drive/MyDrive/FinSight")
 from _common import (JobIO, Checkpointer, DirBackend, run_summary, gpu_info, gpu_config,
-                     gpu_probe, hf_secret, unassign_runtime)
+                     gpu_probe, gpu_tier, hf_secret, unassign_runtime)
 print(gpu_info())
 """
 
@@ -388,6 +388,7 @@ does not fit the GPU is skipped.
 
 STUDENT_PARAMS = """
 # ---- parameters (edit, then Run all) ------------------------------------------------------
+PRESET = "student_smoke"           # student_smoke (10 steps, no GGUF) | student (full run + GGUF)
 JOB = "student"                    # job folder: train.jsonl and dev.jsonl are its inputs
 IO = "hf"                          # "hf" (private job repo, default) | "drive" (fallback)
 JOBS_REPO = "AkshatTm/finsight-gpu-jobs"
@@ -395,13 +396,16 @@ MODEL = "Qwen/Qwen3-4B-Instruct-2507"   # Apache-2.0, non-thinking; the zero-sho
 PRECISION = "bf16"                 # "bf16": LoRA on a bf16 base (L4/A100); "nf4": 4-bit QLoRA, the T4 recipe
 EPOCHS = 2
 LEARNING_RATE = 2e-4
-BATCH_SIZE = 2                     # raise to 8 on an A100 in bf16
-GRAD_ACCUM = 8
+BATCH_SIZE = None                  # None = from the GPU (effective batch 16): G4/A100-80 16x1, A100-40 8x2, L4/T4 2x8
+GRAD_ACCUM = None
 MAX_SEQ = 1024
 SAVE_STEPS = 200
 SEED = 2026
-SMOKE = True                       # True: 64 train / 16 dev rows, 10 steps (run on a T4 with PRECISION = "nf4")
-EXPORT_GGUF = True
+PRESETS = {
+    "student_smoke": {"smoke": True, "export_gguf": False},   # 64 train / 16 dev rows, 10 steps
+    "student": {"smoke": False, "export_gguf": True},
+}
+SMOKE, EXPORT_GGUF = PRESETS[PRESET]["smoke"], PRESETS[PRESET]["export_gguf"]
 UPLOAD = False                     # True: push adapter + GGUF (never merged fp16) to a private HF repo
 HF_REPO = "AkshatTm/finsight-student-4b"
 UNITS_BEFORE = None
@@ -415,128 +419,140 @@ subprocess.run([sys.executable, "-m", "pip", "install", "-q", "peft>=0.13", "bit
                 "huggingface_hub"], check=True)
 """
 
-STUDENT_BODY = """
-import json, random, shutil, time
-from pathlib import Path
-import numpy as np
-import torch
-from peft import LoraConfig, PeftModel, get_peft_model, prepare_model_for_kbit_training
-from transformers import (AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, Trainer,
-                          TrainerCallback, TrainingArguments)
+STUDENT_MAIN = """
+# One function, so a crash also releases the GPU (UNASSIGN).
+def main():
+    import json, random, shutil, time
+    from pathlib import Path
+    import numpy as np
+    import torch
+    from peft import LoraConfig, PeftModel, get_peft_model, prepare_model_for_kbit_training
+    from transformers import (AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, Trainer,
+                              TrainerCallback, TrainingArguments)
 
-assert PRECISION in ("bf16", "nf4"), PRECISION
-JOBIO = JobIO(JOB, IO, hf_repo=JOBS_REPO, token=hf_secret())
-out = Path("/content/student")
-out.mkdir(parents=True, exist_ok=True)
-ck = JOBIO.checkpointer(every=10**9)  # synced on every save (SyncToDrive callback)
-ckpt_dir = ck.local / "trainer"
+    assert PRECISION in ("bf16", "nf4"), PRECISION
+    gpu_name, gpu_gb, gpu_cap = gpu_probe()
+    tier = gpu_tier(gpu_name, gpu_gb)
+    auto_bs = {"G4": (16, 1), "H100": (16, 1), "A100-80GB": (16, 1), "A100-40GB": (8, 2)}.get(tier, (2, 8))
+    bs, accum = BATCH_SIZE or auto_bs[0], GRAD_ACCUM or auto_bs[1]
+    print(f"PRESET {PRESET} | GPU {tier} {gpu_gb:.0f} GiB | {PRECISION} | batch {bs} x accum {accum}", flush=True)
+    JOBIO = JobIO(JOB, IO, hf_repo=JOBS_REPO, token=hf_secret())
+    out = Path("/content/student")
+    out.mkdir(parents=True, exist_ok=True)
+    ck = JOBIO.checkpointer(every=10**9)  # synced on every save (SyncToDrive callback)
+    ckpt_dir = ck.local / "trainer"
 
-train_rows, dev_rows = read_rows(JOBIO.fetch_input("train.jsonl")), read_rows(JOBIO.fetch_input("dev.jsonl"))
-assert not {r["company"] for r in train_rows} & {r["company"] for r in dev_rows}, "company on both sides"
-if SMOKE:
-    train_rows, dev_rows = train_rows[:64], dev_rows[:16]
-random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
+    train_rows, dev_rows = read_rows(JOBIO.fetch_input("train.jsonl")), read_rows(JOBIO.fetch_input("dev.jsonl"))
+    assert not {r["company"] for r in train_rows} & {r["company"] for r in dev_rows}, "company on both sides"
+    if SMOKE:
+        train_rows, dev_rows = train_rows[:64], dev_rows[:16]
+    random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL)
-pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
-train = [e for e in (encode_row(tokenizer, r, MAX_SEQ) for r in train_rows) if e]
-dev = [e for e in (encode_row(tokenizer, r, MAX_SEQ) for r in dev_rows) if e]
-print(len(train), "train |", len(dev), "dev | skipped as too long:", len(train_rows) + len(dev_rows) - len(train) - len(dev))
+    tokenizer = AutoTokenizer.from_pretrained(MODEL)
+    pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
+    train = [e for e in (encode_row(tokenizer, r, MAX_SEQ) for r in train_rows) if e]
+    dev = [e for e in (encode_row(tokenizer, r, MAX_SEQ) for r in dev_rows) if e]
+    print(len(train), "train |", len(dev), "dev | skipped as too long:", len(train_rows) + len(dev_rows) - len(train) - len(dev))
 
-class Rows(torch.utils.data.Dataset):
-    def __init__(self, rows): self.rows = rows
-    def __len__(self): return len(self.rows)
-    def __getitem__(self, i): return self.rows[i]
+    class Rows(torch.utils.data.Dataset):
+        def __init__(self, rows): self.rows = rows
+        def __len__(self): return len(self.rows)
+        def __getitem__(self, i): return self.rows[i]
 
-def collator(batch):
-    ids, labels, mask = collate(batch, pad_id)
-    return {"input_ids": torch.tensor(ids), "labels": torch.tensor(labels), "attention_mask": torch.tensor(mask)}
+    def collator(batch):
+        ids, labels, mask = collate(batch, pad_id)
+        return {"input_ids": torch.tensor(ids), "labels": torch.tensor(labels), "attention_mask": torch.tensor(mask)}
 
-if PRECISION == "nf4":  # the T4 recipe: 4-bit base, fp16 compute
-    bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True,
-                             bnb_4bit_compute_dtype=torch.float16)
-    model = AutoModelForCausalLM.from_pretrained(MODEL, quantization_config=bnb, torch_dtype=torch.float16,
-                                                 device_map="auto")
-    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
-else:  # L4/A100: LoRA on a bf16 base, no quantisation
-    model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.bfloat16, device_map="auto")
-    model.gradient_checkpointing_enable()
-    model.enable_input_require_grads()
-lora = LoraConfig(r=16, lora_alpha=32, lora_dropout=0.05, task_type="CAUSAL_LM",
-                  target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"])
-model = get_peft_model(model, lora)
-model.print_trainable_parameters()
+    if PRECISION == "nf4":  # the T4 recipe: 4-bit base, fp16 compute
+        bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True,
+                                 bnb_4bit_compute_dtype=torch.float16)
+        model = AutoModelForCausalLM.from_pretrained(MODEL, quantization_config=bnb, torch_dtype=torch.float16,
+                                                     device_map="auto")
+        model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
+    else:  # L4/A100: LoRA on a bf16 base, no quantisation
+        model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.bfloat16, device_map="auto")
+        model.gradient_checkpointing_enable()
+        model.enable_input_require_grads()
+    lora = LoraConfig(r=16, lora_alpha=32, lora_dropout=0.05, task_type="CAUSAL_LM",
+                      target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"])
+    model = get_peft_model(model, lora)
+    model.print_trainable_parameters()
 
-class SyncToDrive(TrainerCallback):
-    def on_save(self, args, state, control, **kwargs):
-        ck.sync()  # a disconnect loses at most SAVE_STEPS steps
+    class SyncToDrive(TrainerCallback):
+        def on_save(self, args, state, control, **kwargs):
+            ck.sync()  # a disconnect loses at most SAVE_STEPS steps
 
-args = TrainingArguments(
-    output_dir=str(ckpt_dir), num_train_epochs=EPOCHS, max_steps=10 if SMOKE else -1,
-    per_device_train_batch_size=BATCH_SIZE, per_device_eval_batch_size=BATCH_SIZE,
-    gradient_accumulation_steps=GRAD_ACCUM, learning_rate=LEARNING_RATE, lr_scheduler_type="cosine",
-    warmup_ratio=0.03, fp16=(PRECISION == "nf4"), bf16=(PRECISION == "bf16"), gradient_checkpointing=True,
-    logging_steps=10, eval_strategy="steps", eval_steps=SAVE_STEPS, save_strategy="steps",
-    save_steps=SAVE_STEPS, save_total_limit=2, report_to="none", seed=SEED, remove_unused_columns=False)
-trainer = Trainer(model=model, args=args, train_dataset=Rows(train), eval_dataset=Rows(dev),
-                  data_collator=collator, callbacks=[SyncToDrive()])
-t0 = time.time()
-resume = ck.latest_trainer_checkpoint("trainer")
-print("resuming from", resume) if resume else print("fresh run")
-trainer.train(resume_from_checkpoint=resume)
-eval_loss = trainer.evaluate()["eval_loss"]
-adapter = out / "adapter"
-model.save_pretrained(str(adapter)); tokenizer.save_pretrained(str(adapter))
-metrics = {"model": MODEL, "precision": PRECISION, "epochs": EPOCHS, "smoke": SMOKE, "n_train": len(train),
-           "n_dev": len(dev), "dev_loss": eval_loss, "train_runtime_s": round(time.time() - t0),
-           "log_history": trainer.state.log_history, "gpu": torch.cuda.get_device_name(0)}
-del model, trainer; torch.cuda.empty_cache()
+    args = TrainingArguments(
+        output_dir=str(ckpt_dir), num_train_epochs=EPOCHS, max_steps=10 if SMOKE else -1,
+        per_device_train_batch_size=bs, per_device_eval_batch_size=bs,
+        gradient_accumulation_steps=accum, learning_rate=LEARNING_RATE, lr_scheduler_type="cosine",
+        warmup_ratio=0.03, fp16=(PRECISION == "nf4"), bf16=(PRECISION == "bf16"), gradient_checkpointing=True,
+        logging_steps=10, eval_strategy="steps", eval_steps=SAVE_STEPS, save_strategy="steps",
+        save_steps=SAVE_STEPS, save_total_limit=2, report_to="none", seed=SEED, remove_unused_columns=False)
+    trainer = Trainer(model=model, args=args, train_dataset=Rows(train), eval_dataset=Rows(dev),
+                      data_collator=collator, callbacks=[SyncToDrive()])
+    t0 = time.time()
+    resume = ck.latest_trainer_checkpoint("trainer")
+    print("resuming from", resume) if resume else print("fresh run")
+    trainer.train(resume_from_checkpoint=resume)
+    eval_loss = trainer.evaluate()["eval_loss"]
+    adapter = out / "adapter"
+    model.save_pretrained(str(adapter)); tokenizer.save_pretrained(str(adapter))
+    metrics = {"model": MODEL, "precision": PRECISION, "epochs": EPOCHS, "smoke": SMOKE, "n_train": len(train),
+               "n_dev": len(dev), "dev_loss": eval_loss, "train_runtime_s": round(time.time() - t0),
+               "log_history": trainer.state.log_history, "gpu": torch.cuda.get_device_name(0)}
+    del model, trainer; torch.cuda.empty_cache()
 
-# ---- merge (temporary, only to make the GGUF; the merged fp16 weights are deleted below) --------
-gguf = out / "simplifier-q4_k_m.gguf"
-if EXPORT_GGUF:
-    base = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.float16, device_map="cpu")
-    merged = PeftModel.from_pretrained(base, str(adapter)).merge_and_unload()
-    merged.save_pretrained(str(out / "merged"), safe_serialization=True); tokenizer.save_pretrained(str(out / "merged"))
-    del base, merged
-    run = lambda cmd: subprocess.run(cmd, check=True, shell=True)
-    lc = Path("/tmp/llama.cpp")
-    if not lc.exists():
-        run(f"git clone --depth 1 https://github.com/ggml-org/llama.cpp {lc}")
-    run(f"{sys.executable} -m pip install -q -r {lc}/requirements/requirements-convert_hf_to_gguf.txt")
-    run(f"{sys.executable} {lc}/convert_hf_to_gguf.py {out / 'merged'} --outtype f16 --outfile {out / 'f16.gguf'}")
-    run(f"cmake -S {lc} -B {lc}/build -DGGML_CUDA=OFF -DLLAMA_CURL=OFF && cmake --build {lc}/build --target llama-quantize -j 4")
-    run(f"{lc}/build/bin/llama-quantize {out / 'f16.gguf'} {gguf} Q4_K_M")
-    (out / "f16.gguf").unlink()
-    shutil.rmtree(out / "merged")  # never kept: merged fp16 weights do not go to Drive or the Hub
-    metrics["gguf_mb"] = round(gguf.stat().st_size / 2**20)
-(out / "metrics.json").write_text(json.dumps(metrics, indent=1), encoding="utf-8")
-
-# ---- keep the small files on Drive; optionally upload to a private HF repo --------------------------
-keep = ck.local  # the job's out/ folder (synced to the HF repo or Drive below)
-shutil.copytree(adapter, keep / "adapter", dirs_exist_ok=True)
-shutil.copy(out / "metrics.json", keep / "metrics.json")
-if EXPORT_GGUF:
-    shutil.copy(gguf, keep / gguf.name)
-ck.sync()
-if UPLOAD:
-    from google.colab import userdata
-    from huggingface_hub import HfApi
-    api = HfApi(token=userdata.get("HF_TOKEN"))
-    api.create_repo(HF_REPO, private=True, exist_ok=True)
-    api.upload_folder(folder_path=str(adapter), path_in_repo="adapter", repo_id=HF_REPO)
+    # ---- merge (temporary, only to make the GGUF; the merged fp16 weights are deleted below) --------
+    gguf = out / "simplifier-q4_k_m.gguf"
     if EXPORT_GGUF:
-        api.upload_file(path_or_fileobj=str(gguf), path_in_repo=gguf.name, repo_id=HF_REPO)
-    print("uploaded adapter + GGUF to the private repo", HF_REPO)
-print("STUDENT OK", json.dumps({k: v for k, v in metrics.items() if k != "log_history"}))
-"""
+        base = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.float16, device_map="cpu")
+        merged = PeftModel.from_pretrained(base, str(adapter)).merge_and_unload()
+        merged.save_pretrained(str(out / "merged"), safe_serialization=True); tokenizer.save_pretrained(str(out / "merged"))
+        del base, merged
+        run = lambda cmd: subprocess.run(cmd, check=True, shell=True)
+        lc = Path("/tmp/llama.cpp")
+        if not lc.exists():
+            run(f"git clone --depth 1 https://github.com/ggml-org/llama.cpp {lc}")
+        run(f"{sys.executable} -m pip install -q -r {lc}/requirements/requirements-convert_hf_to_gguf.txt")
+        run(f"{sys.executable} {lc}/convert_hf_to_gguf.py {out / 'merged'} --outtype f16 --outfile {out / 'f16.gguf'}")
+        run(f"cmake -S {lc} -B {lc}/build -DGGML_CUDA=OFF -DLLAMA_CURL=OFF && cmake --build {lc}/build --target llama-quantize -j 4")
+        run(f"{lc}/build/bin/llama-quantize {out / 'f16.gguf'} {gguf} Q4_K_M")
+        (out / "f16.gguf").unlink()
+        shutil.rmtree(out / "merged")  # never kept: merged fp16 weights do not go to Drive or the Hub
+        metrics["gguf_mb"] = round(gguf.stat().st_size / 2**20)
+    (out / "metrics.json").write_text(json.dumps(metrics, indent=1), encoding="utf-8")
 
-STUDENT_END = """
-s = run_summary(ck.local, "student", started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
-                items_done=len(train), pins={"torch": torch.__version__}, extra={"precision": PRECISION, "smoke": SMOKE})
-ck.sync()
-print(json.dumps(s, indent=1))
-unassign_runtime(UNASSIGN)
+    # ---- keep the small files on Drive; optionally upload to a private HF repo --------------------------
+    keep = ck.local  # the job's out/ folder (synced to the HF repo or Drive below)
+    shutil.copytree(adapter, keep / "adapter", dirs_exist_ok=True)
+    shutil.copy(out / "metrics.json", keep / "metrics.json")
+    if EXPORT_GGUF:
+        shutil.copy(gguf, keep / gguf.name)
+    ck.sync()
+    if UPLOAD:
+        from google.colab import userdata
+        from huggingface_hub import HfApi
+        api = HfApi(token=userdata.get("HF_TOKEN"))
+        api.create_repo(HF_REPO, private=True, exist_ok=True)
+        api.upload_folder(folder_path=str(adapter), path_in_repo="adapter", repo_id=HF_REPO)
+        if EXPORT_GGUF:
+            api.upload_file(path_or_fileobj=str(gguf), path_in_repo=gguf.name, repo_id=HF_REPO)
+        print("uploaded adapter + GGUF to the private repo", HF_REPO)
+    print("STUDENT OK", json.dumps({k: v for k, v in metrics.items() if k != "log_history"}))
+    s = run_summary(ck.local, "student", started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
+                    items_done=len(train), pins={"torch": torch.__version__}, extra={"precision": PRECISION, "smoke": SMOKE, "preset": PRESET, "batch": [bs, accum]})
+    ck.sync()
+    print(json.dumps(s, indent=1))
+
+
+try:
+    main()
+except BaseException as exc:  # the GPU must not idle after a crash
+    print("STUDENT FAILED:", type(exc).__name__, str(exc)[:300], flush=True)
+    raise
+finally:
+    unassign_runtime(UNASSIGN)
 """
 
 
@@ -559,7 +575,7 @@ serving prompt (`finsight.risks.simplify`).
   weights are deleted. Only the adapter and the GGUF are kept (job repo / Drive) and, with `UPLOAD`, pushed to a
   **private** Hugging Face repo. Never merged fp16.
 - The teacher rewrites are AI-made, and the corpus terms are non-commercial: keep the repo private.
-- Smoke first (`SMOKE = True`, T4, `nf4`), then the real run on an L4 or A100.
+- Smoke first (`PRESET = \"student_smoke\"`), then `PRESET = \"student\"` (G4 recommended: fastest, about the same units as an L4).
 """
     cells = [
         cell("markdown", md),
@@ -568,8 +584,7 @@ serving prompt (`finsight.risks.simplify`).
         cell("code", COMMON_CELL),
         cell("code", legacy.prompt_cell(), ["student-prompt"]),
         cell("code", legacy.PREP, ["student-prep"]),
-        cell("code", STUDENT_BODY),
-        cell("code", STUDENT_END),
+        cell("code", STUDENT_MAIN, ["student-main"]),
     ]
     return notebook(cells)
 
