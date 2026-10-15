@@ -1,7 +1,8 @@
 """Risk-category classifier (B03 §4): TF-IDF + logistic-regression baseline on the laptop CPU,
 DeBERTa (trained on Kaggle) served as ONNX int8 on the CPU worker.
 
-    uv run python -m finsight.risks.classify split      # train/dev by company + Kaggle folder
+    uv run python -m finsight.risks.classify split --gold data/gold/gold150.jsonl
+        # train/dev by company, gold-150 as test, written as the Kaggle dataset folder
     uv run python -m finsight.risks.classify baseline   # fit on train, score dev (and gold)
 
 Labels are the teacher's (``label_source`` says so); gold-150 is for the final report only and
@@ -35,6 +36,7 @@ class Example:
     company: str
     text: str
     label: str
+    band: int | None = None  # seriousness band 1, 2, 3, 4 = severe (C2.3b)
 
 
 class Classifier(Protocol):
@@ -65,7 +67,13 @@ def load_examples(labels_path: Path, risks_path: Path) -> list[Example]:
         if risk is None or row.get("category") not in CATEGORIES:
             continue
         company = str(row.get("company") or risk.get("company") or "")
-        out.append(Example(str(row["risk_id"]), company, original_text(risk), row["category"]))
+        band = row.get("seriousness_band")
+        out.append(
+            Example(
+                str(row["risk_id"]), company, original_text(risk), row["category"],
+                int(band) if band is not None else None,
+            )
+        )  # fmt: skip
     return out
 
 
@@ -79,10 +87,17 @@ def split_by_company(
     return train, dev
 
 
-def write_split(train: Sequence[Example], dev: Sequence[Example], folder: Path) -> Path:
-    """``train.jsonl``, ``dev.jsonl`` and ``labels.json``: the private Kaggle dataset."""
+def write_split(
+    train: Sequence[Example],
+    dev: Sequence[Example],
+    folder: Path,
+    test: Sequence[Example] = (),
+) -> Path:
+    """``train.jsonl``, ``dev.jsonl``, ``labels.json`` and (with gold rows) ``test.jsonl``: the
+    private Kaggle dataset. ``test`` is gold-150: scored once with the dev-chosen epoch."""
     folder.mkdir(parents=True, exist_ok=True)
-    for name, rows in (("train", train), ("dev", dev)):
+    named = [("train", train), ("dev", dev)] + ([("test", test)] if test else [])
+    for name, rows in named:
         with (folder / f"{name}.jsonl").open("w", encoding="utf-8") as f:
             for ex in rows:
                 f.write(json.dumps(ex.__dict__, ensure_ascii=False) + "\n")
@@ -222,8 +237,12 @@ def main(argv: list[str] | None = None) -> None:
             args.teacher_dir / "labels.clean.jsonl", args.teacher_dir / "risks.jsonl"
         )
         train, dev = split_by_company(examples)
-        write_split(train, dev, args.split_dir)
-        print(f"train {len(train)} dev {len(dev)} -> {args.split_dir}")
+        test = [Example(**r) for r in read_jsonl(args.gold)] if args.gold else []
+        overlap = {e.company for e in test} & {e.company for e in train + dev}
+        if overlap:
+            raise SystemExit(f"gold companies also in train/dev: {sorted(overlap)[:5]}")
+        write_split(train, dev, args.split_dir, test)
+        print(f"train {len(train)} dev {len(dev)} test {len(test)} -> {args.split_dir}")
         return
 
     def rows(name: str) -> list[Example]:

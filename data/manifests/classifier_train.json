@@ -344,7 +344,7 @@
     "zinka-logistics-solutions-2024"
   ],
   "inputs": [],
-  "sha256": "fb9072acedb70b168759869761545fe876f28f6726652a66247b327ca3cecea4",
+  "sha256": "31c21a5d002a9b80c88d2c65ca9e93cf15a39aea8488db34526592891fd3ca01",
   "written_by": "scripts/classifier_kaggle.py",
   "note": "teacher-labelled risks, split by company",
   "n_ipos": 340

@@ -24,6 +24,7 @@ import argparse
 import contextlib
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +36,7 @@ from finsight.risks.gold_sets import (  # noqa: E402
     GOLD50,
     GOLD150,
     REWRITE_COLUMNS,
+    agreement,
     category_gold,
     category_sheet,
     pick,
@@ -43,7 +45,13 @@ from finsight.risks.gold_sets import (  # noqa: E402
     score_rewrites,
     write_csv,
 )
-from finsight.risks.teacher import CATEGORIES, parse_output  # noqa: E402
+from finsight.risks.teacher import CATEGORIES, TeacherOutput, parse_output  # noqa: E402
+from finsight.risks.teacher_cleanup import (  # noqa: E402
+    load_rules,
+    remap_category,
+    remap_version,
+    seriousness_band,
+)
 from finsight.risks.teacher_input import Candidate  # noqa: E402
 from finsight.risks.teacher_run import read_jsonl  # noqa: E402
 
@@ -131,14 +139,52 @@ def cmd_sheet150(a: argparse.Namespace) -> None:
     )
 
 
+def _parsed(model: str, ids: set[str]) -> dict[str, TeacherOutput]:
+    out = {}
+    for rid, raw in _raw(model).items():
+        if rid in ids:
+            with contextlib.suppress(ValueError):
+                out[rid] = parse_output(raw)
+    return out
+
+
 def cmd_gold150(_: argparse.Namespace) -> None:
-    """Verified sheet -> ``data/gold/gold150.jsonl`` and the change count."""
+    """Verified sheet -> ``data/gold/gold150.jsonl`` (category gold + the teacher's seriousness
+    band as ``band``), the change count and the agreement of the pre-fill, the raw teacher and
+    the remapped teacher with the gold categories."""
     key = json.loads(PREFILL.read_text(encoding="utf-8"))
-    rows, stats = category_gold(read_csv(SHEET150), key["prefill"], CATEGORIES)
+    rated = read_csv(SHEET150)
+    ids = {r["risk_id"] for r in rated}
+    teacher = _parsed(TEACHER_MODEL, ids)
+    bands = {rid: seriousness_band(o.seriousness_1to5) for rid, o in teacher.items()}
+    rows, stats = category_gold(rated, key["prefill"], CATEGORIES, bands)
     _write_jsonl(rows, GOLD150_OUT)
+    gold = {r["risk_id"]: r["label"] for r in rows}
+    rules = load_rules()
+    remapped = {r["risk_id"]: remap_category(r["title"], r["text"], teacher[r["risk_id"]].category,
+                                             rules)[0]
+                for r in rated if r["risk_id"] in teacher}  # fmt: skip
+    prefill = {k: v for k, v in key["prefill"].items() if v}
+    agree = {
+        f"prefill:{key['source']}": agreement(gold, prefill, CATEGORIES),
+        f"teacher_raw:{TEACHER_MODEL}": agreement(
+            gold, {k: o.category for k, o in teacher.items()}, CATEGORIES
+        ),
+        f"teacher_remapped:{TEACHER_MODEL}+{remap_version()}": agreement(
+            gold, remapped, CATEGORIES
+        ),
+    }
     _dump({**stats, "prefill_source": key["source"],
-           "label_source": "human:akshat (verified a model pre-fill)"}, RESULT150)  # fmt: skip
+           "label_source": "human:akshat (verified a model pre-fill)",
+           "band_source": f"teacher:{TEACHER_MODEL} (no human seriousness label on gold-150)",
+           "band_counts": dict(sorted(Counter(r["band"] for r in rows).items(), key=str)),
+           "agreement_with_gold": agree,
+           "test_informed": "remap-v2 rules were tightened after the gold-150 review (C2.3b), so "
+                            "the remapped-teacher agreement and classifier scores on gold-150 are "
+                            "test-informed"}, RESULT150)  # fmt: skip
     print(json.dumps(stats), "->", GOLD150_OUT)
+    for name, a in agree.items():
+        print(f"{name}: {a['share']:.1%} ({a['agree']}/{a['n']})")
 
 
 def cmd_generate(a: argparse.Namespace) -> None:

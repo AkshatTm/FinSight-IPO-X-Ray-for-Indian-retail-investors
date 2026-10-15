@@ -1,0 +1,281 @@
+{
+ "n": 150,
+ "changed_from_prefill": 18,
+ "changed_share": 0.12,
+ "prefill_source": "qwen3.8-27b-fp8",
+ "label_source": "human:akshat (verified a model pre-fill)",
+ "band_source": "teacher:gemma-4-31b-it (no human seriousness label on gold-150)",
+ "band_counts": {
+  "1": 30,
+  "2": 86,
+  "3": 30,
+  "4": 4
+ },
+ "agreement_with_gold": {
+  "prefill:qwen3.8-27b-fp8": {
+   "n": 150,
+   "missing": 0,
+   "agree": 132,
+   "share": 0.88,
+   "ci95": [
+    0.8183,
+    0.9227
+   ],
+   "per_category": {
+    "financial": {
+     "n": 23,
+     "agree": 18,
+     "share": 0.7826,
+     "model_said": {
+      "legal_litigation": 2,
+      "technology_data": 2,
+      "debt_liquidity": 1
+     }
+    },
+    "debt_liquidity": {
+     "n": 9,
+     "agree": 9,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "customers_suppliers": {
+     "n": 3,
+     "agree": 2,
+     "share": 0.6667,
+     "model_said": {
+      "market_macro": 1
+     }
+    },
+    "competition": {
+     "n": 2,
+     "agree": 2,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "legal_litigation": {
+     "n": 2,
+     "agree": 2,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "regulatory": {
+     "n": 23,
+     "agree": 17,
+     "share": 0.7391,
+     "model_said": {
+      "legal_litigation": 3,
+      "promoters_governance": 3
+     }
+    },
+    "promoters_governance": {
+     "n": 17,
+     "agree": 16,
+     "share": 0.9412,
+     "model_said": {
+      "legal_litigation": 1
+     }
+    },
+    "operations": {
+     "n": 24,
+     "agree": 22,
+     "share": 0.9167,
+     "model_said": {
+      "promoters_governance": 1,
+      "market_macro": 1
+     }
+    },
+    "technology_data": {
+     "n": 7,
+     "agree": 7,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "market_macro": {
+     "n": 40,
+     "agree": 37,
+     "share": 0.925,
+     "model_said": {
+      "regulatory": 3
+     }
+    }
+   }
+  },
+  "teacher_raw:gemma-4-31b-it": {
+   "n": 150,
+   "missing": 0,
+   "agree": 132,
+   "share": 0.88,
+   "ci95": [
+    0.8183,
+    0.9227
+   ],
+   "per_category": {
+    "financial": {
+     "n": 23,
+     "agree": 18,
+     "share": 0.7826,
+     "model_said": {
+      "debt_liquidity": 1,
+      "regulatory": 1,
+      "promoters_governance": 1,
+      "technology_data": 1,
+      "legal_litigation": 1
+     }
+    },
+    "debt_liquidity": {
+     "n": 9,
+     "agree": 9,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "customers_suppliers": {
+     "n": 3,
+     "agree": 2,
+     "share": 0.6667,
+     "model_said": {
+      "market_macro": 1
+     }
+    },
+    "competition": {
+     "n": 2,
+     "agree": 2,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "legal_litigation": {
+     "n": 2,
+     "agree": 2,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "regulatory": {
+     "n": 23,
+     "agree": 21,
+     "share": 0.913,
+     "model_said": {
+      "promoters_governance": 2
+     }
+    },
+    "promoters_governance": {
+     "n": 17,
+     "agree": 15,
+     "share": 0.8824,
+     "model_said": {
+      "debt_liquidity": 1,
+      "regulatory": 1
+     }
+    },
+    "operations": {
+     "n": 24,
+     "agree": 21,
+     "share": 0.875,
+     "model_said": {
+      "promoters_governance": 2,
+      "competition": 1
+     }
+    },
+    "technology_data": {
+     "n": 7,
+     "agree": 7,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "market_macro": {
+     "n": 40,
+     "agree": 35,
+     "share": 0.875,
+     "model_said": {
+      "promoters_governance": 2,
+      "financial": 2,
+      "debt_liquidity": 1
+     }
+    }
+   }
+  },
+  "teacher_remapped:gemma-4-31b-it+remap-v2": {
+   "n": 150,
+   "missing": 0,
+   "agree": 140,
+   "share": 0.9333,
+   "ci95": [
+    0.8816,
+    0.9634
+   ],
+   "per_category": {
+    "financial": {
+     "n": 23,
+     "agree": 21,
+     "share": 0.913,
+     "model_said": {
+      "operations": 1,
+      "promoters_governance": 1
+     }
+    },
+    "debt_liquidity": {
+     "n": 9,
+     "agree": 9,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "customers_suppliers": {
+     "n": 3,
+     "agree": 2,
+     "share": 0.6667,
+     "model_said": {
+      "market_macro": 1
+     }
+    },
+    "competition": {
+     "n": 2,
+     "agree": 2,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "legal_litigation": {
+     "n": 2,
+     "agree": 2,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "regulatory": {
+     "n": 23,
+     "agree": 23,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "promoters_governance": {
+     "n": 17,
+     "agree": 15,
+     "share": 0.8824,
+     "model_said": {
+      "debt_liquidity": 1,
+      "regulatory": 1
+     }
+    },
+    "operations": {
+     "n": 24,
+     "agree": 24,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "technology_data": {
+     "n": 7,
+     "agree": 7,
+     "share": 1.0,
+     "model_said": {}
+    },
+    "market_macro": {
+     "n": 40,
+     "agree": 35,
+     "share": 0.875,
+     "model_said": {
+      "promoters_governance": 2,
+      "financial": 2,
+      "debt_liquidity": 1
+     }
+    }
+   }
+  }
+ },
+ "test_informed": "remap-v2 rules were tightened after the gold-150 review (C2.3b), so the remapped-teacher agreement and classifier scores on gold-150 are test-informed"
+}

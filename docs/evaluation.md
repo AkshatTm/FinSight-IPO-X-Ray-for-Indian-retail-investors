@@ -52,7 +52,7 @@ The registry is read from the two plan tables. "Not run yet" means no result fil
 | E19 | Are rewrites easier to read? | not run yet |
 | E20 | Do rewrites keep numbers and certainty? | not run yet |
 | E21 | Does the risk level relate to real outcomes? | not run yet |
-| E22 | Is "unusual" meaningful? | not run yet |
+| E22 | Is "unusual" meaningful? | `b/novelty.json` |
 | E23 | Speed and robustness on unseen PDFs | not run yet |
 | E24 | Cost | not run yet |
 | E8r | Does the guard still behave after allowing risk-level questions? | not run yet |
