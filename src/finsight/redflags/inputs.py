@@ -112,7 +112,8 @@ def _short(text: str, words: int = 18) -> str:
 
 
 def _yes_no(text: str) -> bool | None:
-    t = text.strip().lower()
+    """Yes/no from the first word, so "Yes — 9 criminal proceedings" and "No (Nil ...)" work."""
+    t = re.split(r"[\s(—–:,;]+", text.strip().lower(), maxsplit=1)[0]
     if t in {"yes", "y", "true"}:
         return True
     if t in {"no", "n", "false", "nil", "none"}:
@@ -124,23 +125,92 @@ def _yes_no(text: str) -> bool | None:
 _YEARS = {"latest": 0, "latest-1": 1, "latest-2": 2}
 
 
+_LEAD_NUMBER = re.compile(r"^\s*[<>~≈]?\s*(-?\d[\d,]*(?:\.\d+)?)(?=\s|\(|;|$)")
+_REMARK = re.compile(r"\s+\((?=[^)]*[A-Za-z]{2})[^)]*\)\s*$")  # not "(120.5)", a negative
+_NUMERIC_KEYS = frozenset(
+    {
+        "promoter_holding_post_pct", "general_purposes_pct_of_fresh", "customer_top1_pct",
+        "customer_top10_pct", "issuer_pe", "pledged_promoter_pct",
+    }
+)  # fmt: skip
+
+
+def gold_number(raw: str) -> Decimal | None:
+    """A plain number, or the leading one of an annotated value such as ``"0 (Nil)"``.
+
+    ``"N.A. (no fresh issue)"`` and other words give ``None``; a leading ``<`` is dropped.
+    """
+    plain = _decimal(raw)
+    if plain is not None:
+        return plain
+    match = _LEAD_NUMBER.match(raw)
+    return _decimal(match.group(1)) if match else None
+
+
+_PE_TAIL = re.compile(r"\(?\s*(?:highest|industry average|average)\b", re.IGNORECASE)
+_PE_NUMBER = re.compile(r"(?<![\d.])\d[\d,]*\.\d+")
+
+
+def gold_peer_pes(raw: str) -> list[Decimal]:
+    """Per-peer P/E values from ``"Name 24.88; Name 19.80 (highest 24.88, ...)"``.
+
+    The "(highest ..., average ...)" tail is cut off; a list with no per-peer figures gives ``[]``.
+    """
+    head = _PE_TAIL.split(raw, maxsplit=1)[0]
+    if re.fullmatch(r"[\d.,;\s]+", head):  # a bare list "68.2, 20"
+        values = [_decimal(p) for p in re.split(r"[;,]\s*", head.strip()) if p.strip()]
+    else:  # names may carry digits ("360 One WAM 26.85"), so only decimals count
+        values = [_decimal(m.group(0)) for m in _PE_NUMBER.finditer(head)]
+    return [v for v in values if v is not None]
+
+
+_SCALE_WORD = re.compile(r"\b(?:thousand|lakh|lac|million|mn|crore|cr|billion|bn)\b", re.IGNORECASE)
+_MULTI_PART_AMOUNTS = frozenset({"litigation_amount_total", "rpt_total"})
+_FOREIGN = re.compile(
+    r"(?:USD|EUR|US\$|\$|€)\s*\d[\d,]*(?:\.\d+)?(?:\s*(?:million|billion))?", re.IGNORECASE
+)
+_AMOUNT = re.compile(r"(?<![\d.])\d[\d,]*(?:\.\d+)?")
+
+
+def gold_amount_parts(raw: str) -> list[Decimal]:
+    """Every rupee amount printed in a by-party text such as ``"Company: 1,011.7 and 179.0"``.
+
+    Parenthetical remarks and foreign-currency claims (USD, EUR) are left out.
+    """
+    text = _FOREIGN.sub(" ", re.sub(r"\([^)]*\)", " ", raw))
+    values = [_decimal(m.group(0)) for m in _AMOUNT.finditer(text)]
+    return [v for v in values if v is not None]
+
+
+def _zero_money(raw: str) -> Money:
+    return Money(value_inr=Decimal(0), currency="INR", raw=raw or "0", precision=0)
+
+
 def _gold_amount(row: Mapping[str, Any]) -> Any:
     raw = str(row.get("value_raw") or "").strip()
+    unit = _REMARK.sub("", str(row.get("unit") or "").strip())  # "₹ million (plus USD claims)"
+    if row.get("status") == "stated_zero":  # an explicit Nil / "-" / N.A.: the value is 0
+        return Decimal(0) if unit == "%" else _zero_money(raw)
     if not raw or row.get("status") in {"not_found", "placeholder"}:
         return None
-    unit = str(row.get("unit") or "").strip()
-    if unit == "%":
-        return _decimal(raw)
-    if unit:
-        header = (
-            unit if unit.lower().startswith("₹ in") else f"₹ in {unit.replace('₹', '').strip()}"
-        )
-        return (
-            parse_amount(raw, header)
-            if unit.lower() not in {"₹", "rs", "inr"}
-            else parse_amount(f"₹ {raw}")
-        )
-    return parse_amount(raw) or _decimal(raw)
+    raw = _REMARK.sub("", raw)  # "5,882.43 (income-tax demand)" -> "5,882.43"
+    if row.get("key") in _MULTI_PART_AMOUNTS and re.search(r"[A-Za-z]{3}", raw):
+        parts = gold_amount_parts(raw)
+        if parts:  # "Against Company 1,391.41; against Directors 0.50": no printed total, so sum
+            raw = f"{sum(parts):.2f}"
+    if unit.startswith("%"):
+        return gold_number(raw)
+    try:
+        if _SCALE_WORD.search(unit):  # "₹ million", "₹ in crore"
+            header = (
+                unit if unit.lower().startswith("₹ in") else f"₹ in {unit.replace('₹', '').strip()}"
+            )
+            return parse_amount(raw, header)
+        if unit:  # "₹", "₹ per share": rupees as printed
+            return parse_amount(f"₹ {raw}")
+        return parse_amount(raw) or _decimal(raw)
+    except ValueError:  # text that is not an amount ("Negligible")
+        return None
 
 
 def inputs_from_gold(
@@ -158,6 +228,13 @@ def inputs_from_gold(
     peers: list[Decimal] = []
     for row in rows:
         key, raw = str(row["key"]), str(row.get("value_raw") or "").strip()
+        if row.get("status") == "stated_zero":
+            if key == "criminal_cases_any":
+                raw = "No"
+            elif key == "auditor_remarks":
+                raw = "None"
+            elif key in _NUMERIC_KEYS or key.startswith("waca_"):
+                raw = "0"
         value = _gold_amount(row)
         if row.get("page"):
             data["evidence"][key] = PageEvidence(
@@ -185,9 +262,9 @@ def inputs_from_gold(
             if raw.lower() in {"no identifiable promoter", "none", "professionally managed"}:
                 data["promoter_identifiable"] = False
             else:
-                data["promoter_post_pct"] = _decimal(raw)
+                data["promoter_post_pct"] = gold_number(raw)
         elif key == "general_purposes_pct_of_fresh":
-            data["general_purposes_pct"] = _decimal(raw)
+            data["general_purposes_pct"] = gold_number(raw)
         elif key == "criminal_cases_any":
             if raw.isdigit():
                 data["criminal_cases"] = int(raw)
@@ -196,18 +273,18 @@ def inputs_from_gold(
         elif key == "litigation_amount_total":
             data["litigation_amount"] = _money(value)
         elif key == "customer_top1_pct":
-            data["customer_top1_pct"] = _decimal(raw)
+            data["customer_top1_pct"] = gold_number(raw)
         elif key == "customer_top10_pct":
-            data["customer_top10_pct"] = _decimal(raw)
+            data["customer_top10_pct"] = gold_number(raw)
         elif key == "peer_pe_list":
-            peers = [d for part in re.split(r"[;,]\s*", raw) if (d := _decimal(part)) is not None]
+            peers = gold_peer_pes(raw)
         elif key == "issuer_pe":
-            data["issuer_pe"] = _decimal(raw)
+            data["issuer_pe"] = gold_number(raw)
         elif key == "auditor_remarks":
             data["auditor"] = auditor_kind(raw) if raw else None
             data["auditor_short"] = _short(raw)
         elif key == "pledged_promoter_pct":
-            data["pledged_pct"] = _decimal(raw)
+            data["pledged_pct"] = gold_number(raw)
         elif key == "is_financial_company":
             data["is_financial_company"] = bool(_yes_no(raw))
     for key, values in yearly.items():
