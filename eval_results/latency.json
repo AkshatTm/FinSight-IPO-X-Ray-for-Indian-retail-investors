@@ -46,39 +46,39 @@
       "backend": "ollama",
       "model": "qwen3.5:2b"
     },
-    "created_at": "2026-10-02T06:28:11+00:00",
-    "n_questions": 20,
+    "created_at": "2026-10-15T20:57:50+00:00",
+    "n_questions": 10,
     "outcomes": {
-      "answered": 20
+      "answered": 10
     },
     "first_token_ms": {
-      "median": 25410.6,
-      "p90": 27576.4,
-      "max": 40208.6
+      "median": 5854.8,
+      "p90": 9131.0,
+      "max": 19661.5
     },
     "total_ms": {
-      "median": 31958.5,
-      "p90": 37267.2,
-      "max": 45744.5
+      "median": 9552.4,
+      "p90": 11344.1,
+      "max": 22618.3
     },
     "stage_median_ms": {
-      "generating": 14072.5,
+      "generating": 6973.5,
       "guard": 0.0,
-      "retrieving": 17380.5,
-      "verifying": 4.0
+      "retrieving": 1758.0,
+      "verifying": 5.5
     },
-    "first_question_total_ms": 45744.47939998936,
+    "first_question_total_ms": 22618.340299995907,
     "memory_peak": {
-      "process_rss_gb": 3.66,
-      "ollama_rss_gb": 0.02,
+      "process_rss_gb": 5.02,
+      "ollama_rss_gb": 0.03,
       "system_ram_used_gb": 14.99,
-      "gpu_used_gb": 3.8
+      "gpu_used_gb": 3.79
     },
     "memory_before": {
-      "process_rss_gb": 3.06,
-      "ollama_rss_gb": 0.01,
-      "system_ram_used_gb": 13.82,
-      "gpu_used_gb": 3.8
+      "process_rss_gb": 2.55,
+      "ollama_rss_gb": 0.02,
+      "system_ram_used_gb": 10.77,
+      "gpu_used_gb": 3.39
     }
   }
 }

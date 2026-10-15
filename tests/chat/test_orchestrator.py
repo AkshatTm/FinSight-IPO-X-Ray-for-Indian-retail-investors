@@ -142,3 +142,12 @@ def test_a_rejected_answer_is_sent_as_not_found_without_verdicts() -> None:
     answer = next(e for n, e in events if n == "answer")
     assert "could not find" in answer.text
     assert "verdict" not in names(events)
+
+
+def test_rerank_pool_is_capped_only_on_cpu() -> None:
+    from finsight.chat.orchestrator import rerank_pool
+
+    assert rerank_pool(20, "cpu") == 10
+    assert rerank_pool(20, "cuda") == 20
+    assert rerank_pool(20, None) == 20  # no reranker: BM25 pool unchanged
+    assert rerank_pool(6, "cpu") == 6

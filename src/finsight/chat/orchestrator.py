@@ -63,6 +63,15 @@ _CITATION = re.compile(r"\[(\d+)\]")
 _DONE = object()
 
 
+CPU_RERANK_POOL = 10  # C3.7: on CPU the reranker costs ~1.3 s per passage (pool 20: 43 s, 10: 26 s)
+
+
+def rerank_pool(pool: int, device: str | None) -> int:
+    """The rerank pool for the device the cross-encoder runs on: capped on CPU, where a full
+    pool makes one answer take over 40 s (``scripts/profile_retrieval.py``)."""
+    return min(pool, CPU_RERANK_POOL) if device == "cpu" else pool
+
+
 def _ms(start: float) -> int:
     return int((time.perf_counter() - start) * 1000)
 
@@ -147,7 +156,7 @@ class ChatOrchestrator:
             settings.paths.processed_dir,
             embedder=embedder,
             reranker=reranker,
-            pool=settings.retrieve.rerank_top_n,
+            pool=rerank_pool(settings.retrieve.rerank_top_n, getattr(reranker, "device", None)),
             thresholds=settings.retrieve.abstain_thresholds,
             top_k=settings.retrieve.final_top_k,
         )

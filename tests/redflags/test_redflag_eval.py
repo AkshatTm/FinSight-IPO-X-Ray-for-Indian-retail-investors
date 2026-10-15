@@ -61,3 +61,33 @@ def test_non_dev_slices_need_final_and_a_verified_gold(tmp_path: Path) -> None:
         ev.main(["--slice", "all", "--final", "--allow-unverified", "--gold", str(gold)])
     with pytest.raises(SystemExit):
         ev.main(["--gold", str(tmp_path / "missing.jsonl")])
+
+
+def test_predict_passes_the_xray_offer_facts_to_the_rules(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """E15 wiring (C3.7): RF04/RF05 read offer price / issue split from the X-Ray, so the
+    evaluator must hand ``xray.json`` to ``inputs_from_summary`` like the pipeline stage does."""
+    import summary_eval
+
+    import finsight.redflags as rf
+    from finsight.core.schemas import FinancialSummary, XRay
+
+    seen: list[XRay | None] = []
+
+    def fake_inputs(summary: FinancialSummary, xray: XRay | None = None) -> object:
+        seen.append(xray)
+        return rf.RedFlagInputs(doc_id=summary.doc_id)
+
+    monkeypatch.setattr(
+        summary_eval, "load_summary", lambda *_: (FinancialSummary(doc_id="d"), "rhp")
+    )
+    monkeypatch.setattr(rf, "inputs_from_summary", fake_inputs)
+    (tmp_path / "x").mkdir()
+    ev.predict(tmp_path, "x")  # no xray.json: still runs, with None
+    xray = XRay(ipo_id="x", company="X", built_at="2025-01-01T00:00:00Z", fields=[], derived={})
+    (tmp_path / "x" / "xray.json").write_text(xray.model_dump_json(), encoding="utf-8")
+    ev.predict(tmp_path, "x")
+    assert seen[0] is None
+    assert seen[1] is not None
+    assert seen[1].ipo_id == "x"
