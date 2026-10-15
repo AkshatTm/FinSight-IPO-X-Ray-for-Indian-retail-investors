@@ -53,7 +53,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   *Status:* code merged (C1.4 code-only PR: `finsight.splits`, CLI `python -m finsight.splits build [--freeze]`, `tests/test_split_leakage.py`). Real-data run done on Sonnet: Akshat confirmed the counts, `--freeze` written (`configs/splits.yaml`, 4 manifests in `data/manifests/`), leakage tests run and pass. `bench` is empty until C4.1 sets it.
   *Done when:* split frozen; leakage test green in `poe test`.
 - [x] **C1.5 BIR link check + backfill** · 💻 L · S · Needs: CG0
-  Count live links → `eval_results/c/bir_links.json`: 855 links 2009-2023, 48 answer as direct PDFs, 780 are HTML filing pages (SEBI/exchange), 27 dead. Backfill of the 48 direct PDFs waits for Akshat's decision (AKSHAT_TODO); the HTML pages would need the C1.2 fetcher's page-to-PDF step.
+  Count live links → `eval_results/c/bir_links.json`: 855 links 2009-2023, 48 answer as direct PDFs, 780 are HTML filing pages (SEBI/exchange), 27 dead. Backfill done (`scripts/backfill_bir_pdfs.py`, `eval_results/c/bir_backfill.json`): PDF files 0 → 40 (340 MB, one per `mapping_key`) in the new gitignored `data/raw/bir_backfill/`; nothing reads it and no split or eval set changed. The HTML pages would need the C1.2 fetcher's page-to-PDF step.
 
 **CG1:** split frozen · every new document parsed or excluded with a reason · leakage test green.
 
@@ -92,10 +92,11 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 ### C3 — Product on real data → gate CG4
 
 - [ ] **C3.1 ★ Summary + financial extraction + E14** (was B1.3a-left + B1.3b) · 💻 L + 👤 A · **O** · Needs: C1.3, gold v3 verified for E14 (code can start before)
-  - [ ] C3.1a financial tables + financials stage: PR #224 (done once merged; dev coverage: all 11 values in 67 % of RHPs, cross-source agreement 257/258) · [ ] C3.1b · [ ] E14
+  - [x] C3.1a financial tables + financials stage (#224; dev coverage: all 11 values in 67 % of RHPs, cross-source agreement 257/258) · [x] C3.1b other red-flag inputs (#230) · [x] E14 final v1 (#236): NVM 0.682 (195 rows), status 0.667, page 0.766 on gold v3 (10 IPOs, verified by Akshat)
   - [ ] Follow-up (parse): *Summary of the Offer Document* missed in 16/55 dev RHPs; do it next to the heading-denylist task.
-- [ ] **C3.2 Red flags wired + E15** (was B1.4-left) · 💻 L · S · Needs: C3.1, gold v3 verified
+- [x] **C3.2 Red flags wired + E15** (was B1.4-left) · 💻 L · S · Needs: C3.1, gold v3 verified
   Includes rule-based flags (going concern, default / loan recall, SEBI/RBI/ED orders, fraud, qualified audit) that force the severe band regardless of the model.
+  *Status:* merged (#233); E15 final v1 (#236): accuracy 0.646 on 130 rows, 0 serious disagreements. RF04/RF05 are low because the evaluator lacks the X-Ray offer facts (fix in C3.7).
 - [ ] **C3.3 Trained models into the upload pipeline** · 💻 L · S · Needs: C2.4, C2.5, C2.6, C3.2
   Classifier ONNX, student GGUF (top 15 automatic, rest on click), novelty with τ, risk level → full report for any upload. Models load one stage at a time (16 GB RAM shared with Windows and Claude Code); measure RAM and seconds with `scripts/measure_memory.py`; try partial llama.cpp GPU offload on the 4 GB RTX 2050.
   *Latency plan (from C2.5, 12.3 s/risk on the laptop CPU ≈ 14 min per IPO of ~67 risks):* precompute simplifications for showcase / listed IPOs at ingest; for an upload simplify the top-N by seriousness up front and the rest lazily when the user expands a risk; batch / parallel requests to Ollama; measure GPU latency for the deployed version (C3.8 / C5.1). Not built yet.
