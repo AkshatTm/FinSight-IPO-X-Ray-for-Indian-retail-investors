@@ -9,7 +9,7 @@ be read is never ranked either (nothing is guessed from column order).
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Literal
 
 PERIOD_KEYS = ("latest", "latest-1", "latest-2")
@@ -75,6 +75,27 @@ def parse_period(header: str) -> Period:
     )  # fmt: skip
 
 
+_FY_WORDS = re.compile(r"\bfiscal\b|\bfinancial year\b|\bfy\b", re.IGNORECASE)
+_TWELVE = re.compile(r"\b(?:twelve|12)[\s-]*months\b", re.IGNORECASE)
+
+
+def trailing_as_stub(periods: list[Period]) -> list[Period]:
+    """ "Twelve months ended September 30" beside "Financial Year 2023" columns is a trailing
+    period, not a fiscal year: it becomes a clear stub unless it ends in the fiscal month."""
+    fiscal = [p for p in periods if p.kind == "year" and _FY_WORDS.search(p.label)]
+    if not fiscal:
+        return periods
+    months = {p.month for p in fiscal if p.month}
+    return [
+        replace(p, kind="stub", clear_stub=True)
+        if _TWELVE.search(p.label)
+        and not _FY_WORDS.search(p.label)
+        and (not months or p.month not in months)
+        else p
+        for p in periods
+    ]
+
+
 def rank_years(periods: list[Period]) -> dict[int, str]:
     """Column index → "latest" / "latest-1" / "latest-2" for full-year columns with a year.
 
@@ -89,6 +110,7 @@ def rank_years(periods: list[Period]) -> dict[int, str]:
     itself a part-year period ("nine months"): either would shift "latest" onto an older column.
     Ranked years are consecutive; ranking stops at the first gap.
     """
+    periods = trailing_as_stub(periods)
     year_months: set[str | None] = {
         p.month for p in periods if p.kind == "year" and p.explicit and p.month
     }
