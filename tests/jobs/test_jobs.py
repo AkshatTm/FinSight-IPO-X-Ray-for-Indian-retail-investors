@@ -211,6 +211,10 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         if e.event == "stage" and e.data["status"] == "end"
     }
     assert ends["risks_split"] == {"n_risks": 3}
+    # The synthetic RHP has no financial tables: summary.json says so, the job stays ready.
+    assert ends["financials"] == {"ready": True, "found": 0, "total": 11}
+    summary = get_json(storage, doc_key(doc_id, "summary.json"))
+    assert {v["status"] for v in summary["revenue"]} == {"not_found"}
     assert ends["parsed"] == {"pages_done": 5, "pages_total": 5}
 
     # A retry finds every output cached and does no work (scratch is empty in a new job).
@@ -223,7 +227,7 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         for e in db.events_after(again.job_id)
         if e.data.get("detail") == {"cached": True}
     ]
-    assert cached == ["parsed", "sections", "risks_split"]
+    assert cached == ["parsed", "sections", "financials", "risks_split"]
 
 
 def test_risks_split_reads_stored_outputs_when_earlier_stages_were_cached(
