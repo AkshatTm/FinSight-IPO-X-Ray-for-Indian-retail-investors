@@ -1,0 +1,713 @@
+{
+  "slice": "dev",
+  "written_by": "scripts/summary_coverage.py",
+  "written_utc": "2026-10-15T12:30:20Z",
+  "n_ipos": 55,
+  "n_read": 55,
+  "share": {
+    "net_worth": {
+      "found": 0.927,
+      "placeholder": 0.0,
+      "not_found": 0.073
+    },
+    "operating_cash_flow:latest": {
+      "found": 0.855,
+      "placeholder": 0.0,
+      "not_found": 0.145
+    },
+    "operating_cash_flow:latest-1": {
+      "found": 0.855,
+      "placeholder": 0.0,
+      "not_found": 0.145
+    },
+    "operating_cash_flow:latest-2": {
+      "found": 0.855,
+      "placeholder": 0.0,
+      "not_found": 0.145
+    },
+    "profit_after_tax:latest": {
+      "found": 0.927,
+      "placeholder": 0.0,
+      "not_found": 0.073
+    },
+    "profit_after_tax:latest-1": {
+      "found": 0.927,
+      "placeholder": 0.0,
+      "not_found": 0.073
+    },
+    "profit_after_tax:latest-2": {
+      "found": 0.927,
+      "placeholder": 0.0,
+      "not_found": 0.073
+    },
+    "revenue:latest": {
+      "found": 0.891,
+      "placeholder": 0.0,
+      "not_found": 0.109
+    },
+    "revenue:latest-1": {
+      "found": 0.891,
+      "placeholder": 0.0,
+      "not_found": 0.109
+    },
+    "revenue:latest-2": {
+      "found": 0.891,
+      "placeholder": 0.0,
+      "not_found": 0.109
+    },
+    "total_borrowings": {
+      "found": 0.764,
+      "placeholder": 0.0,
+      "not_found": 0.236
+    },
+    "all_fields_found": 0.673
+  },
+  "cross_check": {
+    "fields_compared": 258,
+    "fields_disagreeing": 1,
+    "rule": "same field from 2+ sources (summary / sfi / cash) within 1 %"
+  },
+  "ipos": [
+    {
+      "ipo_id": "aditya-infotech-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.41
+    },
+    {
+      "ipo_id": "advance-agrolife-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.35
+    },
+    {
+      "ipo_id": "all-time-plastics-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 8,
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.49
+    },
+    {
+      "ipo_id": "anlon-healthcare-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 5,
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 0.84
+    },
+    {
+      "ipo_id": "anthem-biosciences-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.45
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.57
+    },
+    {
+      "ipo_id": "bluestone-jewellery-and-lifestyle-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.28
+    },
+    {
+      "ipo_id": "bmw-ventures-2025",
+      "status": "read",
+      "unit": "in lakh",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.22
+    },
+    {
+      "ipo_id": "brigade-hotel-ventures-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.15
+    },
+    {
+      "ipo_id": "canara-hsbc-life-insurance-company-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 0,
+      "missing": [
+        "net_worth",
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "profit_after_tax:latest",
+        "profit_after_tax:latest-1",
+        "profit_after_tax:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2",
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.69
+    },
+    {
+      "ipo_id": "canara-robeco-asset-management-company-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.43
+    },
+    {
+      "ipo_id": "crizac-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.12
+    },
+    {
+      "ipo_id": "dev-accelerator-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.17
+    },
+    {
+      "ipo_id": "euro-pratik-sales-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 3,
+      "missing": [
+        "net_worth",
+        "profit_after_tax:latest",
+        "profit_after_tax:latest-1",
+        "profit_after_tax:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2",
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.28
+    },
+    {
+      "ipo_id": "fabtech-technologies-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.6
+    },
+    {
+      "ipo_id": "ganesh-consumer-products-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.38
+    },
+    {
+      "ipo_id": "gem-aromatics-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.18
+    },
+    {
+      "ipo_id": "gk-energy-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.29
+    },
+    {
+      "ipo_id": "glottis-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.16
+    },
+    {
+      "ipo_id": "gng-electronics-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.0
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.54
+    },
+    {
+      "ipo_id": "highway-infrastructure-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 8,
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2"
+      ],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.47
+    },
+    {
+      "ipo_id": "indiqube-spaces-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "missing": [
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.42
+    },
+    {
+      "ipo_id": "indogulf-cropsciences-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.32
+    },
+    {
+      "ipo_id": "ivalue-infosolutions-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "missing": [
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.15
+    },
+    {
+      "ipo_id": "jain-resource-recycling-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.6
+    },
+    {
+      "ipo_id": "jaro-institute-of-technology-management-and-research-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 3,
+      "missing": [
+        "net_worth",
+        "profit_after_tax:latest",
+        "profit_after_tax:latest-1",
+        "profit_after_tax:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2",
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.23
+    },
+    {
+      "ipo_id": "jinkushal-industries-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.13
+    },
+    {
+      "ipo_id": "jsw-cement-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.96
+    },
+    {
+      "ipo_id": "laxmi-india-finance-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 5,
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.2
+    },
+    {
+      "ipo_id": "m-b-engineering-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 8,
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.36
+    },
+    {
+      "ipo_id": "mangal-electrical-industries-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.29
+    },
+    {
+      "ipo_id": "midwest-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "missing": [
+        "total_borrowings"
+      ],
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.23
+    },
+    {
+      "ipo_id": "national-securities-depository-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.37
+    },
+    {
+      "ipo_id": "om-freight-forwarders-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.09
+    },
+    {
+      "ipo_id": "orkla-india-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.43
+    },
+    {
+      "ipo_id": "pace-digitek-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.49
+    },
+    {
+      "ipo_id": "patel-retail-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 7,
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.56
+    },
+    {
+      "ipo_id": "regaal-resources-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "missing": [
+        "total_borrowings"
+      ],
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.25
+    },
+    {
+      "ipo_id": "rubicon-research-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.65
+    },
+    {
+      "ipo_id": "saatvik-green-energy-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "missing": [
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.45
+    },
+    {
+      "ipo_id": "sambhv-steel-tubes-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.56
+    },
+    {
+      "ipo_id": "seshaasai-technologies-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.47
+    },
+    {
+      "ipo_id": "shanti-gold-international-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.11
+    },
+    {
+      "ipo_id": "shreeji-shipping-global-limited-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "missing": [
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.24
+    },
+    {
+      "ipo_id": "shringar-house-of-mangalsutra-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.15
+    },
+    {
+      "ipo_id": "smartworks-coworking-spaces-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.56
+    },
+    {
+      "ipo_id": "solarworld-energy-solutions-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.31
+    },
+    {
+      "ipo_id": "travel-food-services-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.63
+    },
+    {
+      "ipo_id": "trualt-bioenergy-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "missing": [],
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.98
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "missing": [],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.5
+    },
+    {
+      "ipo_id": "vikram-solar-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 7,
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.61
+    },
+    {
+      "ipo_id": "vikran-engineering-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "missing": [
+        "total_borrowings"
+      ],
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.33
+    },
+    {
+      "ipo_id": "vms-tmt-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "missing": [],
+      "compared": 9,
+      "disagree": [
+        "profit_after_tax:latest"
+      ],
+      "seconds": 1.18
+    },
+    {
+      "ipo_id": "wework-india-management-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 3,
+      "missing": [
+        "net_worth",
+        "profit_after_tax:latest",
+        "profit_after_tax:latest-1",
+        "profit_after_tax:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2",
+        "total_borrowings"
+      ],
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.87
+    }
+  ]
+}
