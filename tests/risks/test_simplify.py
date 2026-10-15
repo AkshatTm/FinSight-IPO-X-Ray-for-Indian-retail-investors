@@ -93,6 +93,14 @@ def test_rejected_rewrite_keeps_no_text() -> None:
     assert r.reason == "certainty_changed"
 
 
+def test_draft_keeps_rejected_text_for_rating() -> None:
+    assert Simplifier(Fake("Losing one will hurt."), "s").draft(TITLE, BODY) == (
+        "Losing one will hurt.",
+        "certainty_changed",
+    )
+    assert Simplifier(Fake(f'"{GOOD}"'), "s").draft(TITLE, BODY) == (GOOD, "")
+
+
 def test_fallback_is_used_and_flagged_when_the_student_is_missing() -> None:
     s = Simplifier(Fake(LLMUnavailable("no file")), "student", Fake(GOOD), "base")
     r = s.rewrite(TITLE, BODY)

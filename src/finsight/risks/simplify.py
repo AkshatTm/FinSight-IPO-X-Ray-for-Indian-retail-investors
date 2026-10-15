@@ -161,6 +161,18 @@ class Simplifier:
             return Rewrite("rejected", None, *problem, model, fell_back, seconds)
         return Rewrite("ready", text, "", "", model, fell_back, seconds)
 
+    def draft(self, title: str, body: str) -> tuple[str, str]:
+        """The cleaned output even when a post-check fails, and that check (``""`` = passed).
+
+        For blind rating sheets (gold-50), where a rejected rewrite is still rated; the product
+        uses ``rewrite``. Raises ``LLMUnavailable`` like the backend.
+        """
+        original = f"{title}\n\n{body}" if title.strip() else body
+        raw, _, _ = self._ask(student_prompt(title, body))
+        text = clean(raw)
+        problem = post_check(original, text)
+        return text, problem[0] if problem else ""
+
 
 def _backend(backend: str, model: str, models_dir: Path) -> TextLLM:
     if backend == "llama-cpp":
