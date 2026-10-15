@@ -148,21 +148,18 @@ def cmd_generate(a: argparse.Namespace) -> None:
     post-check fails, with the failure in ``check``, so it can still be rated.
     """
     from finsight.generate import LLMUnavailable
-    from finsight.risks.simplify import MAX_NEW_TOKENS, _backend, clean, student_prompt
+    from finsight.risks.simplify import Simplifier, _backend
 
-    llm = _backend(a.backend, a.model, ROOT / "models")
+    simp = Simplifier(_backend(a.backend, a.model, ROOT / "models"), a.model)
     out = []
     for c in _load(SET50):
-        raw = None
+        text, check = "", "unavailable"
         for _ in range(2):  # one retry on a timeout
             try:
-                raw = llm.generate(student_prompt(c.title, c.body), max_tokens=MAX_NEW_TOKENS,
-                                   temperature=0.2)  # fmt: skip
+                text, check = simp.draft(c.title, c.body)
                 break
             except LLMUnavailable as err:
                 print(c.risk_id, "unavailable:", str(err)[:80], flush=True)
-        text = clean(raw) if raw is not None else ""
-        check = _check(c, text) if text else "unavailable"
         out.append({"risk_id": c.risk_id, "system": a.system, "model": a.model, "text": text,
                     "check": check})  # fmt: skip
         print(c.risk_id, check or "passed", flush=True)
