@@ -657,6 +657,10 @@ def _classifier_block() -> str:
     return "\n".join(lines) + "\n"
 
 
+# 29,677 risks in the bank / 440 IPOs (C2.1, PROGRESS.md); used only for the wall-clock line.
+RISKS_PER_IPO = 29677 / 440
+
+
 def _student_block() -> str:
     c = ROOT / "eval_results" / "c"
     tm, vs = c / "student_train_metrics.json", c / "student_vs_base_gold50.json"
@@ -689,7 +693,10 @@ def _student_block() -> str:
             f"CPU only (Ollama, no GPU layers; {cpu['n']} dev risks): "
             f"{cpu['seconds_per_risk_mean']} s per risk on average "
             f"(median {cpu['seconds_per_risk_median']}, max {cpu['seconds_per_risk_max']}), "
-            f"{cpu['tokens_per_s']} tokens/s.",
+            f"{cpu['tokens_per_s']} tokens/s. At the corpus average of "
+            f"{RISKS_PER_IPO:.0f} risks per IPO that is about "
+            f"{cpu['seconds_per_risk_mean'] * RISKS_PER_IPO / 60:.0f} minutes per IPO "
+            "if every risk is simplified one after another on the CPU.",
             "",
             f"Readability (FKGL, E19): original {d['fkgl_original']} to rewrite "
             f"{d['fkgl_rewrite']} on dev (drop {d['fkgl_drop']}, n={d['n']}); gold-50: "
@@ -698,6 +705,23 @@ def _student_block() -> str:
             f"Number and certainty checks (E20): {e20_line(r20['dev_sample'], 'dev')}; "
             f"{e20_line(r20['gold50'], 'gold-50')}.",
         ]
+    hp = c / "simplify_gold50.json"
+    if hp.exists():
+        h = json.loads(hp.read_text(encoding="utf-8"))
+        lines += [
+            "",
+            "Human rating, gold-50 (E18; blind, shuffled, one rater):",
+            "",
+            "| System | Faithful yes (95% CI) | Partly | Plain English (1-5) | Passed checks |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+        for name, r in h["systems"].items():
+            lo, hi = r["faithful_yes_ci95"]
+            lines.append(
+                f"| {name} | {r['faithful_yes_share']:.2f} ({lo:.2f}-{hi:.2f}) "
+                f"| {r['faithful'].get('partly', 0)}/{r['rated']} "
+                f"| {r['plain_english_mean']:.2f} | {r['passed_checks_share']:.2f} |"
+            )
     return "\n".join(lines) + "\n"
 
 

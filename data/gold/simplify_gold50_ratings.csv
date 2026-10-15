@@ -1,0 +1,151 @@
+sheet_id,faithful,plain_english_1to5,notes
+g001,partly,3,"Misreads the audit-trail point: the issue is that some accounting software lacked the audit-trail feature, not that entries were added. Keeps jargon (Rule 11(g), Annexure VII)."
+g002,yes,3,"Choppy, telegraphic sentences."
+g003,yes,4,
+g004,yes,5,
+g005,yes,4,
+g006,yes,3,Long.
+g007,yes,2,Keeps a confusing fragment about custodian value/costs; hard to follow.
+g008,yes,5,
+g009,yes,4,
+g010,yes,3,Long.
+g011,yes,5,
+g012,yes,3,Long list-style rewrite.
+g013,yes,5,
+g014,yes,3,Dense with numbers; reads like notes.
+g015,yes,3,Choppy.
+g016,yes,5,
+g017,yes,3,Very choppy short sentences.
+g018,yes,5,
+g019,yes,3,
+g020,yes,4,
+g021,yes,3,Choppy.
+g022,yes,5,
+g023,yes,4,
+g024,partly,4,"Unsupported: ""some leases end soon""; the original gives terms (9 years, 24 months, 12 months-9 years), not imminent expiry."
+g025,yes,5,
+g026,partly,3,"Wrong: says power costs are ""each quarter""; the figures are one quarter plus three fiscal years. Output cut off mid-sentence."
+g027,yes,3,
+g028,partly,4,"Overstates: original says no rejections or liability claims from defects (and no compliance breaches), not that there were no product defects at all."
+g029,yes,4,
+g030,yes,3,"Dangling ""Details of this average cost are given below"" with no details."
+g031,yes,4,
+g032,yes,4,
+g033,yes,5,
+g034,yes,3,
+g035,yes,5,
+g036,partly,3,"Misleading: reads as if investors now pay the old 20.56% rate; 20.56% was the company-level DDT rate, investors pay their applicable rate."
+g037,yes,3,
+g038,yes,5,
+g039,yes,4,
+g040,yes,5,
+g041,yes,5,
+g042,yes,5,
+g043,yes,5,
+g044,yes,3,
+g045,yes,5,
+g046,yes,3,Long; output cut off mid-sentence.
+g047,yes,4,"Slightly odd: ""for 169 countries until March 31, 2026"" can read as if the service ended."
+g048,yes,5,
+g049,yes,5,
+g050,partly,3,Wrong: says capital gains tax applies only if held >12 months; the 12-month line separates long- vs short-term rates. Output cut off mid-sentence.
+g051,yes,5,
+g052,yes,4,"Calls the Indian Rupee a foreign currency (mirrors the source list); says capex ""uses"" foreign currency when the original says future capex may."
+g053,yes,5,
+g054,yes,3,Near copy of the original.
+g055,yes,5,
+g056,yes,5,
+g057,partly,4,"Misleading: omits that the disqualification was stayed by the Delhi High Court and his DIN reactivated on Dec 1, 2019, so it reads as disqualified until 2022."
+g058,partly,2,"Corrupted date (""July 2 or 1"" for July 2021); output cut off mid-sentence; very choppy."
+g059,yes,4,
+g060,yes,5,
+g061,yes,5,
+g062,yes,3,Long; output cut off mid-sentence.
+g063,yes,5,
+g064,yes,3,Number formatting glitch (326. 68); output cut off mid-sentence.
+g065,yes,3,"Choppy and awkward (""Shares transfers may only happen with limits"")."
+g066,yes,3,
+g067,yes,4,
+g068,yes,4,
+g069,yes,5,
+g070,yes,5,
+g071,partly,4,"Overstates: only the location of retired assets is missing, not all details."
+g072,yes,5,
+g073,yes,5,
+g074,yes,4,
+g075,yes,5,
+g076,yes,5,
+g077,yes,5,
+g078,yes,5,
+g079,yes,4,
+g080,yes,5,
+g081,yes,5,
+g082,yes,5,
+g083,yes,5,
+g084,yes,5,
+g085,yes,5,
+g086,yes,5,
+g087,yes,5,
+g088,yes,4,
+g089,yes,3,
+g090,yes,3,Long; output cut off mid-sentence.
+g091,yes,5,
+g092,yes,5,
+g093,yes,5,
+g094,partly,3,Wrong: gives 0.015% / 0.003% as STT rates; those are the stamp duty rates.
+g095,yes,5,
+g096,yes,5,
+g097,yes,5,
+g098,yes,3,
+g099,yes,5,
+g100,yes,3,
+g101,yes,3,Long; output cut off mid-sentence.
+g102,yes,5,
+g103,yes,4,
+g104,yes,3,
+g105,yes,3,"Long, close to a copy of the original."
+g106,yes,5,
+g107,yes,3,Long; output cut off mid-sentence.
+g108,yes,3,"Slight overstatement (""No legal action can follow""); original says investors may not be able to seek recourse. Choppy."
+g109,yes,2,"Garbled date sentence (""On March 4, 2011, India started merger rules on June 1, 2011""); awkward throughout."
+g110,yes,4,
+g111,yes,5,
+g112,yes,5,
+g113,yes,5,
+g114,yes,5,
+g115,yes,5,
+g116,yes,5,
+g117,partly,3,"Omits the court stay / DIN reactivation in 2019, so reads as disqualified until 2022."
+g118,yes,3,"Choppy; ""Results depend on reader's knowledge"" is unclear."
+g119,yes,5,
+g120,yes,5,
+g121,yes,4,
+g122,yes,3,"Typo ""12 to or nine years""; long."
+g123,yes,5,
+g124,yes,4,
+g125,yes,5,
+g126,yes,4,
+g127,yes,3,
+g128,yes,4,
+g129,yes,5,
+g130,yes,3,
+g131,yes,3,"Choppy; drops ""pre-Offer, fully diluted"" qualifier on 34.28%."
+g132,yes,3,"Garbled sentence: ""Operations in foreign markets have no prior experience""."
+g133,yes,5,
+g134,yes,5,
+g135,yes,5,
+g136,partly,3,"Inverts the condition: rights apply UNLESS waived by a three-fourths vote, not ""only if"" three-fourths vote for a waiver."
+g137,yes,5,
+g138,yes,4,"Awkward phrase: ""Short-term gains also apply tax""."
+g139,yes,5,
+g140,yes,3,
+g141,yes,5,
+g142,yes,5,
+g143,partly,3,"Wrong owner: says ""we have 97.00% ownership""; it is the Corporate Promoter VRIDAA Holding Trust that holds 97% of the company."
+g144,yes,5,"Adds ""as security for loans"" (reasonable reading of a pledge, not stated)."
+g145,yes,5,
+g146,yes,5,
+g147,yes,3,"Very long, list of short sentences."
+g148,yes,5,
+g149,yes,5,
+g150,yes,4,

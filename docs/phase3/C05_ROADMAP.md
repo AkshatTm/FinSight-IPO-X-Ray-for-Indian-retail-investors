@@ -75,12 +75,12 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 - [ ] **C2.4 Classifier** (was B2.4b) · 💻 L + 🔵 K + 👤 A · S · Needs: CG2, C2.3b, gold-150
   TF-IDF; base 3 seeds (Kaggle); large 3 seeds (Colab); base must beat TF-IDF on dev; ONNX int8; E16; model card. Seriousness scored with MAE, within-1 accuracy and severe-band recall.
-- [ ] **C2.5 Student simplifier** (was B2.5b) · 💻 L + 🟠 G + 👤 A · S · Needs: CG2, C2.3b, gold-50 sheet
+- [x] **C2.5 Student simplifier** (was B2.5b) · 💻 L + 🟠 G + 👤 A · S · Needs: CG2, C2.3b, gold-50 sheet
   Zero-shot bake-off; 4B bf16 LoRA on Colab; 8B variant; GGUF; E18–E20 + CPU seconds; model card.
   - [x] Zero-shot base (gold-50: 16/50 pass the product checks)
   - [x] 4B bf16 LoRA on Colab G4 + GGUF Q4_K_M (dev loss 0.353; gold-50 post-check pass 49/50, `eval_results/c/student_vs_base_gold50.json`)
-  - [ ] gold-50 blind sheet rated by Akshat (`sheet50` → `score50`)
-  - [ ] 8B variant (preset + `COLAB_STEPS_student_8b.md` ready; waits for Akshat's "go") · [x] E19, E20 + CPU seconds per risk (`eval_results/c/student_eval.json`: 12.3 s/risk CPU, FKGL 19.0 → 9.6, 95 % pass the checks on dev) · [ ] E18 (needs the rated sheet) · [x] model card `docs/model_cards/risk_simplifier.md` (E18 row added after `score50`)
+  - [x] gold-50 blind sheet rated by Akshat (`sheet50` → `score50`): faithful yes base 0.84 / student 0.92 / teacher 0.98; plain English 3.00 / 4.64 / 4.80 (`eval_results/c/simplify_gold50.json`)
+  - [ ] 8B variant, still open, `Qwen/Qwen3-8B` + `enable_thinking=False` approved (preset + `COLAB_STEPS_student_8b.md` ready; waits for Akshat's "go") · [x] E19, E20 + CPU seconds per risk (`eval_results/c/student_eval.json`: 12.3 s/risk CPU, FKGL 19.0 → 9.6, 95 % pass the checks on dev) · [x] E18 · [x] model card `docs/model_cards/risk_simplifier.md` (E18 row added after `score50`)
 - [ ] **C2.6 Novelty τ + E22** (was B2.2b) · 💻 L + 👤 A · S · Needs: C2.1, C1.4 window
 - [ ] **C2.8 Risk-level thresholds + E17/E21 + E8r** (was B2.6b) · 💻 L · S · Needs: C2.4, C3.2, C1.4 window
   Wires `risklevel` to `reference_scores` + the window; thresholds fitted on train + dev only; E21 as the risk-points-only variant with the limitation stated.
@@ -90,10 +90,13 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 ### C3 — Product on real data → gate CG4
 
 - [ ] **C3.1 ★ Summary + financial extraction + E14** (was B1.3a-left + B1.3b) · 💻 L + 👤 A · **O** · Needs: C1.3, gold v3 verified for E14 (code can start before)
+  - [ ] C3.1a financial tables + financials stage: PR #224 (done once merged; dev coverage: all 11 values in 67 % of RHPs, cross-source agreement 257/258) · [ ] C3.1b · [ ] E14
+  - [ ] Follow-up (parse): *Summary of the Offer Document* missed in 16/55 dev RHPs; do it next to the heading-denylist task.
 - [ ] **C3.2 Red flags wired + E15** (was B1.4-left) · 💻 L · S · Needs: C3.1, gold v3 verified
   Includes rule-based flags (going concern, default / loan recall, SEBI/RBI/ED orders, fraud, qualified audit) that force the severe band regardless of the model.
 - [ ] **C3.3 Trained models into the upload pipeline** · 💻 L · S · Needs: C2.4, C2.5, C2.6, C3.2
   Classifier ONNX, student GGUF (top 15 automatic, rest on click), novelty with τ, risk level → full report for any upload. Models load one stage at a time (16 GB RAM shared with Windows and Claude Code); measure RAM and seconds with `scripts/measure_memory.py`; try partial llama.cpp GPU offload on the 4 GB RTX 2050.
+  *Latency plan (from C2.5, 12.3 s/risk on the laptop CPU ≈ 14 min per IPO of ~67 risks):* precompute simplifications for showcase / listed IPOs at ingest; for an upload simplify the top-N by seriousness up front and the rest lazily when the user expands a risk; batch / parallel requests to Ollama; measure GPU latency for the deployed version (C3.8 / C5.1). Not built yet.
 - [ ] **C3.4 Compare on the rolling window** (was B3.2b) · 💻 L · S · Needs: C1.4, C3.1
   The Compare tab moves from its provisional data to the `splits.reference` rolling window.
 - [ ] **C3.5 Newest-IPO showcase** · 💻 L + 👤 A · S · Needs: C3.3
