@@ -81,3 +81,9 @@ Each ADR follows the template in `docs/09_DECISIONS.md`. Where a decision came f
 **Context:** Drive copying made every Colab run a manual relay and lost progress when a runtime died overnight.
 **Decision:** inputs, per-batch checkpoints and outputs of Colab jobs live in the private dataset repo `AkshatTm/finsight-gpu-jobs` (`<job>/in/`, `<job>/out/`), moved by `scripts/gpu_jobs.py push|status|pull`; `HF_TOKEN` is a Colab secret. Notebooks resume from the repo, release the GPU when they end or crash, and take a preset plus the GPU's own quantisation kernel. Drive mode stays as a fallback. The repo is private because the corpus terms are non-commercial.
 **Consequences:** a fresh runtime can resume with no manual copying; an HF token is needed in Colab; each batch is one repo commit.
+
+## C-ADR-14 Novelty tau 0.71 from 60 rated pairs — proposed
+
+**Context:** tau (when a past risk counts as "the same risk") was a 0.80 placeholder. The rule (lowest similarity with >= 90 % "same" and >= 10 pairs at or above it, unsure left out) was fixed in `finsight.risks.novelty_tau` before rating.
+**Decision:** tau = 0.71 (rule picks 0.7103; precision 0.911 on 45 pairs, 95 % Wilson CI 0.793–0.965). Pairs are dev IPOs against their reference window; one rater (Akshat), similarity hidden. Record: `eval_results/b/novelty.json`.
+**Consequences:** more risks count as "common" than under 0.80; the CI lower bound is below 0.90, so tau is stated with its interval and the single-rater caveat. `seriousness.boilerplate_novelty` (0.80) is a separate heuristic and is not changed.
