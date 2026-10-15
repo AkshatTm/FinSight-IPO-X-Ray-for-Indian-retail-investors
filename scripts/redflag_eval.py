@@ -84,14 +84,18 @@ def predict(processed: Path, ipo_id: str) -> tuple[dict[str, str], list[str]]:
     """Statuses (and severe override ids) the pipeline's rules give the IPO's RHP."""
     from summary_eval import load_summary
 
-    from finsight.core.schemas import ParsedDoc
+    from finsight.core.schemas import ParsedDoc, XRay
     from finsight.redflags import detect_severe, evaluate, inputs_from_summary
     from finsight.redflags.severe import with_auditor
 
     summary, _ = load_summary(processed, ipo_id, "rhp")
     if summary is None:
         return {}, []
-    inputs = inputs_from_summary(summary)
+    xray_path = processed / ipo_id / "xray.json"
+    # The X-Ray carries the offer facts (price, fresh issue, OFS) that RF04 and RF05 compare
+    # against; without it those two checks are "not available" whatever the document says.
+    xray = XRay.model_validate_json(xray_path.read_bytes()) if xray_path.exists() else None
+    inputs = inputs_from_summary(summary, xray)
     severe: list[str] = []
     parsed = processed / ipo_id / "parsed.json"
     sections_path = processed / ipo_id / "sections.json"

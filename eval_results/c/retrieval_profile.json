@@ -1,0 +1,73 @@
+{
+  "llm_resident": true,
+  "llm": "qwen3.5:2b",
+  "results": [
+    {
+      "embedder_device": "cuda",
+      "reranker_device": "cuda",
+      "rerank_top_n": 20,
+      "n_questions": 6,
+      "gpu_used_gb": 3.73,
+      "search_s_median": 0.87,
+      "search_s_max": 1.02,
+      "embed_s_mean": 0.06,
+      "rerank_s_mean": 0.82
+    },
+    {
+      "embedder_device": "cuda",
+      "reranker_device": "cpu",
+      "rerank_top_n": 20,
+      "n_questions": 6,
+      "gpu_used_gb": 3.67,
+      "search_s_median": 42.69,
+      "search_s_max": 46.51,
+      "embed_s_mean": 0.18,
+      "rerank_s_mean": 42.82
+    },
+    {
+      "embedder_device": "cpu",
+      "reranker_device": "cpu",
+      "rerank_top_n": 20,
+      "n_questions": 6,
+      "gpu_used_gb": 3.81,
+      "search_s_median": 44.72,
+      "search_s_max": 46.91,
+      "embed_s_mean": 0.2,
+      "rerank_s_mean": 44.44
+    },
+    {
+      "embedder_device": "cuda",
+      "reranker_device": "cuda",
+      "rerank_top_n": 10,
+      "n_questions": 6,
+      "gpu_used_gb": 3.73,
+      "search_s_median": 0.52,
+      "search_s_max": 0.55,
+      "embed_s_mean": 0.03,
+      "rerank_s_mean": 0.48
+    },
+    {
+      "embedder_device": "cuda",
+      "reranker_device": "cpu",
+      "rerank_top_n": 10,
+      "n_questions": 6,
+      "gpu_used_gb": 3.62,
+      "search_s_median": 26.31,
+      "search_s_max": 27.44,
+      "embed_s_mean": 0.25,
+      "rerank_s_mean": 25.93
+    },
+    {
+      "embedder_device": "cpu",
+      "reranker_device": "cpu",
+      "rerank_top_n": 10,
+      "n_questions": 6,
+      "gpu_used_gb": 3.67,
+      "search_s_median": 26.3,
+      "search_s_max": 30.29,
+      "embed_s_mean": 0.22,
+      "rerank_s_mean": 26.82
+    }
+  ],
+  "written_utc": "2026-10-15T20:54:50Z"
+}
