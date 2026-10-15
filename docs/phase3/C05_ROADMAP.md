@@ -53,7 +53,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   *Status:* code merged (C1.4 code-only PR: `finsight.splits`, CLI `python -m finsight.splits build [--freeze]`, `tests/test_split_leakage.py`). Real-data run done on Sonnet: Akshat confirmed the counts, `--freeze` written (`configs/splits.yaml`, 4 manifests in `data/manifests/`), leakage tests run and pass. `bench` is empty until C4.1 sets it.
   *Done when:* split frozen; leakage test green in `poe test`.
 - [x] **C1.5 BIR link check + backfill** · 💻 L · S · Needs: CG0
-  Count live links → `eval_results/c/bir_links.json`: 855 links 2009-2023, 48 answer as direct PDFs, 780 are HTML filing pages (SEBI/exchange), 27 dead. Backfill of the 48 direct PDFs waits for Akshat's decision (AKSHAT_TODO); the HTML pages would need the C1.2 fetcher's page-to-PDF step.
+  Count live links → `eval_results/c/bir_links.json`: 855 links 2009-2023, 48 answer as direct PDFs, 780 are HTML filing pages (SEBI/exchange), 27 dead. Backfill done (`scripts/backfill_bir_pdfs.py`, `eval_results/c/bir_backfill.json`): PDF files 0 → 40 (340 MB, one per `mapping_key`) in the new gitignored `data/raw/bir_backfill/`; nothing reads it and no split or eval set changed. The HTML pages would need the C1.2 fetcher's page-to-PDF step.
 
 **CG1:** split frozen · every new document parsed or excluded with a reason · leakage test green.
 

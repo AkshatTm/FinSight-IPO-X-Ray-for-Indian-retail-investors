@@ -1,0 +1,93 @@
+{
+ "label_version": 3,
+ "documents": {
+  "dev/new": 52,
+  "train/corpus": 389,
+  "train/new": 110
+ },
+ "skipped_showcase": 3,
+ "skipped_excluded": 0,
+ "missing_inputs": [],
+ "seeds_by_source_field": {
+  "corpus:book_running_lead_managers": 110,
+  "corpus:face_value": 255,
+  "corpus:fresh_issue_size": 109,
+  "corpus:ofs_amount": 96,
+  "corpus:ofs_shares": 136,
+  "corpus:promoters": 127,
+  "corpus:registrar": 99,
+  "corpus:total_issue_size": 127,
+  "new:book_running_lead_managers": 119,
+  "new:face_value": 132,
+  "new:fresh_issue_size": 89,
+  "new:ofs_amount": 29,
+  "new:ofs_shares": 76,
+  "new:promoters": 115,
+  "new:registrar": 157,
+  "new:total_issue_size": 55
+ },
+ "seed_dropped": {
+  "fresh_issue_size": {
+   "ambiguous": 2,
+   "excel_disagrees": 14,
+   "inconsistent": 1,
+   "no_match": 308,
+   "placeholder": 28
+  },
+  "ofs_shares": {
+   "ambiguous": 16,
+   "excel_disagrees": 19,
+   "no_match": 259,
+   "placeholder": 45
+  },
+  "ofs_amount": {
+   "ambiguous": 6,
+   "excel_disagrees": 23,
+   "inconsistent": 1,
+   "no_match": 283,
+   "placeholder": 113
+  },
+  "total_issue_size": {
+   "ambiguous": 14,
+   "excel_disagrees": 71,
+   "inconsistent": 1,
+   "no_match": 140,
+   "placeholder": 143
+  },
+  "face_value": {
+   "ambiguous": 46,
+   "excel_disagrees": 4,
+   "no_match": 114
+  },
+  "book_running_lead_managers": {
+   "ambiguous": 11,
+   "no_match": 311
+  },
+  "registrar": {
+   "ambiguous": 4,
+   "no_match": 291
+  },
+  "promoters": {
+   "ambiguous": 24,
+   "no_match": 238,
+   "not_cover_format": 47
+  }
+ },
+ "train": {
+  "ipos": 412,
+  "examples": 9315,
+  "positives": 3739,
+  "by_label_source": {
+   "rules_cover_seed": 4777,
+   "rules+excel_seed": 4538
+  }
+ },
+ "dev": {
+  "ipos": 52,
+  "examples": 2471,
+  "positives": 985,
+  "by_label_source": {
+   "rules_cover_seed": 2471
+  }
+ }
+}
