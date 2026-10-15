@@ -75,3 +75,13 @@ def test_onnx_export_matches_pytorch(tmp_path: Path) -> None:
     out = exp.export(src, tmp_path / "onnx")
     result = exp.check(src, out, dev)
     assert result["agreement"] >= 0.9
+
+
+def test_model_is_cast_to_fp32_before_amp_training() -> None:
+    """The first Kaggle smoke died on fp16 gradients (checkpoint dtype leaked into training)."""
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2]
+    for name in ("b2_classifier_base_kaggle.ipynb", "b2_classifier_large_kaggle.ipynb"):
+        text = (root / "notebooks" / name).read_text(encoding="utf-8")
+        assert ").float().to(DEVICE)" in text
