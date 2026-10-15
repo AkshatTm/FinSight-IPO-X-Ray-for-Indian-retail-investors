@@ -1,6 +1,6 @@
-"""The upload pipeline's stages (B02 §3.1): ``validated``, ``detected``, ``parsed``, ``sections``
-and ``risks_split`` so far; later parts append facts, financials, red flags, risk scoring, risk
-level, simplify, index and compare to ``upload_stages``.
+"""The upload pipeline's stages (B02 §3.1): ``validated``, ``detected``, ``parsed``, ``sections``,
+``financials`` and ``risks_split`` so far; later parts append facts, red flags, risk scoring,
+risk level, simplify, index and compare to ``upload_stages``.
 
 Stages hand their results to later ones through ``ctx.scratch``; on a retry a cached stage is
 skipped, so later stages read its stored output instead (``_parsed_doc``, ``_sections``).
@@ -14,12 +14,13 @@ from typing import Any
 
 from pydantic import TypeAdapter
 
-from finsight.core.schemas import ParsedDoc, Section
+from finsight.core.schemas import SUMMARY_HAS_VALUE, ParsedDoc, Section
 from finsight.ingest import validate_pdf
 from finsight.jobs.runner import JobContext, Stage, StageRejected
 from finsight.parse import extract_tables, find_sections, parse_pdf, pymupdf_backend
 from finsight.pipeline import RISKS, RISKS_FILE, split_risks
 from finsight.storage import put_json
+from finsight.summary import SUMMARY_FILE, extract_summary
 
 SOURCE = "source.pdf"
 PARSED = "parsed.json"
@@ -87,6 +88,17 @@ def _sections(ctx: JobContext) -> list[Section]:
     return sections
 
 
+def _financials(ctx: JobContext) -> dict[str, Any]:
+    summary = extract_summary(_parsed_doc(ctx), _sections(ctx), ctx.doc_id)
+    put_json(ctx.storage, ctx.key(SUMMARY_FILE), summary.model_dump(mode="json"))
+    values = [
+        *summary.revenue, *summary.profit_after_tax, *summary.operating_cash_flow,
+        summary.total_borrowings, summary.net_worth,
+    ]  # fmt: skip
+    found = sum(v is not None and v.status in SUMMARY_HAS_VALUE for v in values)
+    return {"ready": True, "found": found, "total": len(values)}
+
+
 def _risks_split(ctx: JobContext) -> dict[str, Any]:
     parsed, sections = _parsed_doc(ctx), _sections(ctx)
     # Bold table headers must not start a risk, so the Risk Factors tables are found first.
@@ -108,5 +120,6 @@ def upload_stages() -> list[Stage]:
         Stage("detected", _detected, output=None, requires=("validated",), critical=True),
         Stage("parsed", _parsed, output=PARSED, requires=("detected",), critical=True),
         Stage("sections", _sections_stage, output=SECTIONS, requires=("parsed",)),
+        Stage("financials", _financials, output=SUMMARY_FILE, requires=("sections",)),
         Stage("risks_split", _risks_split, output=RISKS_FILE, requires=("sections",)),
     ]

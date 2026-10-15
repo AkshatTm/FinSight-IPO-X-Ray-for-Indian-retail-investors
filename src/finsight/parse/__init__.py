@@ -3,10 +3,11 @@
 from finsight.parse.clean import EDGE_BAND, boilerplate_keys, line_key, read_printed_page
 from finsight.parse.page_images import render_pages
 from finsight.parse.pdf_text import parse_pdf
-from finsight.parse.sections import KEY_SECTIONS, find_sections
+from finsight.parse.sections import KEY_SECTIONS, find_sections, find_subsection_pages
 from finsight.parse.tables import (
     Backend,
     default_backend,
+    detect_header_scale,
     extract_tables,
     is_pure_ofs,
     objects_table,
@@ -20,8 +21,10 @@ __all__ = [
     "Backend",
     "boilerplate_keys",
     "default_backend",
+    "detect_header_scale",
     "extract_tables",
     "find_sections",
+    "find_subsection_pages",
     "is_pure_ofs",
     "line_key",
     "objects_table",

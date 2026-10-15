@@ -56,6 +56,8 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `operating_cash_flow` | `list[SummaryValue]` | `[]` |
 | `total_borrowings` | `SummaryValue \| None` | — |
 | `net_worth` | `SummaryValue \| None` | — |
+| `total_borrowings_stub` | `SummaryValue \| None` | — |
+| `net_worth_stub` | `SummaryValue \| None` | — |
 | `waca` | `list[SummaryValue]` | `[]` |
 | `litigation` | `dict[str, SummaryValue]` | `{}` |
 | `rpt_total` | `SummaryValue \| None` | — |
@@ -77,7 +79,7 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `value` | `Union[Money \| Count \| Percent \| Placeholder \| Range, str, NoneType]` | — |
 | `period` | `str \| None` | — |
 | `evidence` | `PageEvidence \| None` | — |
-| `status` | `Literal['found', 'placeholder', 'not_found']` | `not_found` |
+| `status` | `Literal['found', 'stated_zero', 'placeholder', 'not_found']` | `not_found` |
 
 ## Red flag (`RedFlag`, inside `redflags.json`)
 
