@@ -234,5 +234,5 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - [x] C2.1 segmentation spot-check (50 risks, ~40 min) + E13b boundaries; also look at the 20 documents with < 10 risks (see `docs/datasheets/risk_bank.md`). Decide whether 8,889 teacher inputs (target 12k) is enough or the per-company cap should rise.
 - [ ] C2.5 gold-50: run `uv run python scripts/gold_sets.py sheet50`, rate `faithful` and `plain_english_1to5` in `data/gold/simplify_gold50_sheet.csv` (~45 min), then tell Claude "gold-50 rated" (→ `score50`).
 - [x] C2.5 units logged: 182.88 before, 171.38 after (11.5 used), row in `eval_results/c/compute_log.jsonl`.
-- [ ] C2.5 notebook fix (Claude, next local session): make the GGUF step reuse the original tokenizer files and add a re-run path from checkpoint-N; the Colab run needed that by hand.
+- [x] C2.5 notebook fix (done): the GGUF step now copies the base model's original tokenizer files into `merged/` (byte-equality assert, `tests/colab/test_colab_student_notebook.py`); a re-run resumes from the latest trainer checkpoint, so a finished run only repeats merge + export.
 - [ ] Spot-check the remap: `eval_results/c/teacher_cleanup_report.json` → `category_samples` (5 per rule, 7 rules). The brand rule changed 399 rows, the biggest; check it reads right.

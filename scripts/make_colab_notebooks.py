@@ -518,8 +518,15 @@ def main():
     if EXPORT_GGUF:
         base = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.float16, device_map="cpu")
         merged = PeftModel.from_pretrained(base, str(adapter)).merge_and_unload()
-        merged.save_pretrained(str(out / "merged"), safe_serialization=True); tokenizer.save_pretrained(str(out / "merged"))
+        merged.save_pretrained(str(out / "merged"), safe_serialization=True)
         del base, merged
+        # The converter's older transformers cannot read a tokenizer_config.json re-written by the current
+        # transformers (it failed the first C2.5 run), so ship the base model's ORIGINAL tokenizer files.
+        from huggingface_hub import snapshot_download
+        orig = Path(snapshot_download(MODEL, allow_patterns=["tokenizer*", "vocab.json", "merges.txt", "special_tokens_map.json", "added_tokens.json"]))
+        for f in orig.iterdir():
+            shutil.copy(f, out / "merged" / f.name)
+        assert (out / "merged" / "tokenizer_config.json").read_bytes() == (orig / "tokenizer_config.json").read_bytes()
         run = lambda cmd: subprocess.run(cmd, check=True, shell=True)
         lc = Path("/tmp/llama.cpp")
         if not lc.exists():
