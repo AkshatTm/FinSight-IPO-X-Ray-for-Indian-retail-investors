@@ -1,0 +1,25 @@
+{
+ "total": 12000,
+ "kept": 10892,
+ "dropped": {
+  "invalid_json": 36,
+  "bad_category": 0,
+  "bad_schema": 0,
+  "number_mismatch": 204,
+  "forbidden_phrase": 6,
+  "too_long": 0,
+  "certainty_changed": 292,
+  "duplicate": 570
+ },
+ "drop_rate": {
+  "invalid_json": 0.003,
+  "bad_category": 0.0,
+  "bad_schema": 0.0,
+  "number_mismatch": 0.017,
+  "forbidden_phrase": 0.0005,
+  "too_long": 0.0,
+  "certainty_changed": 0.024333333333333332,
+  "duplicate": 0.0475
+ },
+ "label_source": "teacher:google/gemma-4-31B-it:teacher-v1"
+}

@@ -210,10 +210,12 @@ Rows exclude the CSV header. Labels written with AI help carry `label_source`.
 | `weaklabel_audit.jsonl` | 50 | `id`, `ipo_id`, `field_id`, `question`, `answer`, `answers`, `passage`, `label`, `notes`, `label_source` |
 | `advice_guard_set.csv` | 120 | `question`, `language`, `is_advice (must block?)`, `tricky_note`, `reviewed_by_akshat (Y/edit)` |
 | `asr_references.csv` | 10 | `clip`, `reference`, `reference_corrected`, `reference_source`, `reviewed_by_akshat` |
+| `gold150_sheet.csv` | 150 | `risk_id`, `company`, `title`, `text`, `category`, `notes` |
 | `gold_verify_sheet.csv` | 110 | `ipo_id`, `field_id`, `document`, `PDF page`, `status`, `value (what I read)`, `quote (copied from that page)`, `verified? (Y/N)`, `your correction` |
 | `hindi_fluency_sheet.csv` | 92 | `model`, `ipo`, `question`, `answer`, `status`, `auto_correct (verifier)`, `old auto_correct`, `fluency_1_to_5`, `comment` |
 | `hindi_fluency_sheet_checked.csv` | 40 | `model`, `ipo`, `question`, `answer`, `correct? (Claude check)`, `what is wrong (Claude check)`, `fluency_1_to_5 (YOU)`, `comment (YOU)` |
 | `hindi_fluency_sheet_rated.csv` | 60 | `model`, `ipo`, `question`, `answer`, `auto_correct (CC)`, `correct (Claude re-check)`, `fluency_1_to_5 (Claude draft, Akshat to confirm)`, `comment (Claude draft)` |
+| `novelty_pairs.csv` | 60 | `pair_id`, `a_company`, `a_title`, `a_text`, `b_company`, `b_title`, `b_text`, `same_risk` |
 
 ## Result files (`eval_results/`)
 

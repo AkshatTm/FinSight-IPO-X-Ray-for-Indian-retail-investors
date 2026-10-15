@@ -1,0 +1,28 @@
+{
+ "skipped": 20,
+ "written": 11980,
+ "model": "google/gemma-4-31B-it",
+ "prompt_version": "teacher-v1",
+ "seconds": 2628,
+ "smoke": false,
+ "gpu": {
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "memory": "97887 MiB",
+  "driver": "580.82.07"
+ },
+ "gpu_config": {
+  "tier": "G4",
+  "mem_gb": 95.6,
+  "quant": "awq_marlin",
+  "gpu_mem": 0.9,
+  "fp8_ok": true,
+  "nvfp4_ok": true,
+  "max_num_seqs": 256,
+  "batch": 512
+ },
+ "pins": {
+  "vllm": "vllm==0.31.0",
+  "torch": "2.13.0+cu130"
+ },
+ "max_tokens": 300
+}

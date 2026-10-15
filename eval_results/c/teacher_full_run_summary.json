@@ -1,0 +1,34 @@
+{
+  "job": "teacher_full",
+  "finished_utc": "2026-10-14T23:49:58+00:00",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "gpu_class": "G4",
+  "driver": "580.82.07",
+  "python": "3.13.15",
+  "wall_seconds": 2680.2,
+  "items_done": 12000,
+  "units_before": 193.67,
+  "units_after": null,
+  "units_used": null,
+  "units_per_hour_observed": null,
+  "units_per_hour_reference": 8.9,
+  "pins": {
+    "vllm": "vllm==0.31.0",
+    "torch": "2.13.0+cu130"
+  },
+  "models": [
+    "google/gemma-4-31B-it"
+  ],
+  "smoke": false,
+  "preset": "teacher_full",
+  "gpu_config": {
+    "tier": "G4",
+    "mem_gb": 95.6,
+    "quant": "awq_marlin",
+    "gpu_mem": 0.9,
+    "fp8_ok": true,
+    "nvfp4_ok": true,
+    "max_num_seqs": 256,
+    "batch": 512
+  }
+}
