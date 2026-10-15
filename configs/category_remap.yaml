@@ -1,13 +1,60 @@
-# Deterministic post-hoc category remap for the teacher labels (C2.3b).
+# Deterministic post-hoc category remap for the teacher labels (C2.3b; v2 after the gold-150 review).
 # Quality-100 found the same theme labelled differently across rows; one category per theme.
 # A rule fires on the risk TITLE (the first 200 chars of the body when the risk has no title);
 # the first matching rule wins. Patterns are case-insensitive regexes.
+# subject_only: match only the title before its consequence clause ("X may adversely affect our
+#   business, reputation ..." -> "X"), so a word that is only a consequence does not fire.
+# exclude: the rule is skipped when one of these matches the title.
 # Counts per rule are written to eval_results/c/teacher_cleanup_report.json.
-version: remap-v1
+version: remap-v2
 rules:
+  - name: offer_mechanics
+    target: market_macro
+    note: listing timing, bid withdrawal, minimum subscription (grouped with listing/price risks)
+    patterns:
+      - 'minimum subscription'
+      - '(QIBs?|qualified institutional|non-institutional|investors|bidders).{0,60}\b(withdraw|lower)\w*.{0,40}\bbids?\b'
+      - 'withdraw(al of)? (their |the )?bids?'
+      - 'final listing and trading approvals?'
+      - '(trading|listing) (approvals?|permissions?)'
+      - 'delay(s|ed)? in (the )?listing'
+      - 'listing .{0,40}(may|might|could|will) (not )?(be )?(delayed|not occur|happen)'
+      - '(listing|commencement of trading) .{0,40}(within|in) .{0,20}(time|days)'
+      - 'refund of .{0,30}(application|bid) (money|amounts?)'
+  - name: statutory_dues
+    target: financial
+    note: delays or defaults in paying PF / ESI / GST / TDS and other statutory dues
+    patterns:
+      - 'statutory dues'
+      - '\b(delay|default|irregular)\w*.{0,40}\b(payment|deposit|remitt?)\w*.{0,60}(provident fund|\bPF\b|\bESIC?\b|employees.? state insurance|\bGST\b|goods and services tax|\bTDS\b|\btax(es)?\b|statutory)'
+      - '(provident fund|\bPF\b|\bESIC?\b|employees.? state insurance).{0,60}\b(delay\w*|default\w*|late|belated)\b'
+  - name: filing_delays
+    target: regulatory
+    note: delayed or missed filings with the RoC, GST returns and similar statutory forms
+    patterns:
+      - '\b(delay(s|ed)?|late|belated|default(s|ed)?|non-?filing|failure to file|not filed)\b.{0,60}\bfil(e|ed|ing)?\b.{0,40}\b(returns?|forms?|RoC|registrar|GST|e-?forms?|annual)\b'
+      - '\b(delay(s|ed)?|late|belated|default(s|ed)?)\b.{0,15}\bfil(ed|ing)\b'
+      - '\bfil(ed|ing)\b.{0,40}\b(returns?|forms?)\b.{0,40}\b(delay(s|ed)?|late|belated|beyond|after the due)\b'
+      - '\be?-?forms?\s+(MGT|AOC|PAS|DIR|CHG|INC|DPT|ADT|MSME|SH)[- ]?\d'
+      - '\b(RoC|registrar of companies|GSTR-?\d*|GST returns?)\b.{0,60}\b(delay(s|ed)?|late|belated|non-?compliance|default(s|ed)?)\b'
+      - '\b(delay(s|ed)?|late|belated|non-?compliance|default(s|ed)?)\b.{0,60}\b(RoC|registrar of companies|GSTR-?\d*|GST returns?)\b'
+  - name: listed_company_compliance
+    target: regulatory
+    note: limited history as a public / listed company and its compliance burden (gold-150 review)
+    patterns:
+      - 'limited (operating )?history as a (public|listed)'
+      - 'no (prior )?(experience|history) .{0,30}(as a )?listed (company|entity)'
+      - '(obligations|requirements|compliance) .{0,30}(as a )?(public(ly)?|listed) (listed )?(company|entity)'
   - name: key_personnel
     target: operations
     note: key personnel / management dependence is one category (people live in operations)
+    exclude:  # titles that name KMP but are about their interests, pay or cases (gold-150)
+      - '\binterests?\b'
+      - 'remuneration'
+      - '\bbenefits\b'
+      - 'legal proceedings'
+      - 'litigation'
+      - 'affidavits?'
     patterns:
       - 'key (managerial |management )?personnel'
       - 'senior management'
@@ -16,10 +63,11 @@ rules:
       - '\battrition\b'
   - name: shareholder_rights_foreign_judgments
     target: regulatory
-    note: shareholder rights under Indian law and enforcing foreign judgments
+    note: shareholder rights under Indian law, pre-emptive rights and enforcing foreign judgments
     patterns:
       - 'rights of (the )?(share|equity share)holders'
       - 'shareholders?.{0,20}rights'
+      - 'pre-?emptive rights'
       - 'enforce(ment|ability)? of (foreign |civil )?(judgments?|liabilit)'
       - 'judgments? (of|from|obtained in) .{0,30}(courts?|jurisdictions?)'
   - name: use_of_proceeds
@@ -29,8 +77,9 @@ rules:
       - 'objects? of the (issue|offer)'
       - 'use of (the )?(net )?(issue |offer )?proceeds'
       - 'utili[sz]ation of (the )?(net )?(issue |offer )?proceeds'
-      - 'working capital (requirements?|estimates?)'
+      - 'working capital (requirements? )?estimates?'
       - 'estimates?.{0,30}working capital'
+      - 'working capital requirements?.{0,40}(not been appraised|proceeds|funded from)'
       - 'not been (independently )?appraised'
   - name: joint_venture
     target: operations
@@ -45,18 +94,35 @@ rules:
     patterns:
       - 'manage (our |the )?(future |rapid |expected )?growth'
       - 'growth (strategy|management)'
-  - name: brand_reputation
-    target: operations
-    note: brand, reputation and negative publicity
-    patterns:
-      - '\bbrands?\b'
-      - 'reputation'
-      - '(negative|adverse) publicity'
-  - name: caro_statutory_dues
+  - name: auditor_remarks
     target: financial
-    note: auditor CARO remarks and statutory dues
+    note: CARO remarks, qualifications, emphasis of matter and other auditor report modifications
     patterns:
       - '\bCARO\b'
       - 'auditors?.{0,3} (report|observations?|qualifications?|remarks?)'
-      - 'statutory dues'
+      - 'audit (report|opinion)s?.{0,40}(modif|qualif|adverse|emphasis|remark)'
+      - 'modif(ied|ications?) (opinion|in .{0,30}audit|to .{0,30}audit)'
+      - 'qualified (audit )?opinion'
       - 'emphasis of matter'
+  - name: non_gaap
+    target: financial
+    note: non-GAAP / non-Ind AS measures and operational-metric disclaimers
+    patterns:
+      - 'non-?GAAP'
+      - 'non-?Ind ?AS'
+      - 'not (a )?(measures?|defined|recogni[sz]ed) .{0,40}(under|by|in) .{0,10}(Ind ?AS|GAAP|IFRS)'
+      - '(supplementa\w*|alternative|non-?standard) (financial )?(performance )?measures?'
+  - name: brand_reputation
+    target: operations
+    note: brand, reputation and publicity when they are the subject of the risk, not a consequence
+    subject_only: true
+    exclude:
+      - 'intellectual property'
+      - '\btrade ?marks?\b'
+      - '\bpatents?\b'
+      - '\bcopyrights?\b'
+    patterns:
+      - '(?<!-)\bbrands?\b(?!-)'
+      - 'reputation'
+      - '(negative|adverse|unfavou?rable) (publicity|media|press|news)'
+      - '\bpublicity\b'
