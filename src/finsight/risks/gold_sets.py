@@ -16,12 +16,13 @@ from __future__ import annotations
 
 import csv
 import random
-from collections import defaultdict
+from collections import Counter, defaultdict
 from collections.abc import Iterable, Mapping
 from pathlib import Path
 from typing import Any
 
 from finsight.risks.bakeoff import wilson
+from finsight.risks.teacher_data import original_text
 from finsight.risks.teacher_input import Candidate
 
 SEED = 2027
@@ -68,9 +69,16 @@ def category_sheet(risks: list[Candidate], prefill: Mapping[str, str]) -> list[d
 
 
 def category_gold(
-    rated: list[dict[str, str]], prefill: Mapping[str, str], categories: Iterable[str]
-) -> tuple[list[dict[str, str]], dict[str, Any]]:
+    rated: list[dict[str, str]],
+    prefill: Mapping[str, str],
+    categories: Iterable[str],
+    bands: Mapping[str, int] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Verified rows for ``classify --gold`` and the change count against the pre-fill.
+
+    The text has the layout the teacher and the classifier's training rows use
+    (``teacher_data.original_text``). ``bands`` (the teacher's seriousness band per risk) is
+    added as ``band`` when given: gold-150 has no human seriousness label.
 
     Raises:
         ValueError: when a row has no category or one outside the list.
@@ -82,11 +90,37 @@ def category_gold(
         if cat not in allowed:
             raise ValueError(f"{r['risk_id']}: category {cat!r} is not one of the {len(allowed)}")
         changed += cat != prefill.get(r["risk_id"], "")
-        rows.append({"risk_id": r["risk_id"], "company": r["company"],
-                     "text": f"{r['title']}\n\n{r['text']}".strip(), "label": cat})  # fmt: skip
+        row: dict[str, Any] = {
+            "risk_id": r["risk_id"], "company": r["company"],
+            "text": original_text({"title": r["title"], "body": r["text"]}), "label": cat,
+        }  # fmt: skip
+        if bands is not None:
+            row["band"] = bands.get(r["risk_id"])
+        rows.append(row)
     n = len(rows)
     return rows, {"n": n, "changed_from_prefill": changed,
                   "changed_share": round(changed / n, 4) if n else None}  # fmt: skip
+
+
+def agreement(
+    gold: Mapping[str, str], pred: Mapping[str, str], categories: Iterable[str]
+) -> dict[str, Any]:
+    """How often a model's category equals the gold one: overall and per gold category (the
+    share of that category's gold rows the model got), plus the rows it missed per category."""
+    ids = [i for i in gold if i in pred]
+    per: dict[str, dict[str, Any]] = {}
+    for cat in categories:
+        rows = [i for i in ids if gold[i] == cat]
+        if not rows:
+            continue
+        hit = sum(pred[i] == cat for i in rows)
+        wrong = Counter(pred[i] for i in rows if pred[i] != cat)
+        per[cat] = {"n": len(rows), "agree": hit, "share": round(hit / len(rows), 4),
+                    "model_said": dict(wrong.most_common())}  # fmt: skip
+    hit = sum(gold[i] == pred[i] for i in ids)
+    return {"n": len(ids), "missing": len(gold) - len(ids), "agree": hit,
+            "share": round(hit / len(ids), 4) if ids else None,
+            "ci95": wilson(hit, len(ids)) if ids else None, "per_category": per}  # fmt: skip
 
 
 # ----------------------------------------------------------------------------- gold-50

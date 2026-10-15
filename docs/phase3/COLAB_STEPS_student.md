@@ -3,15 +3,15 @@
 **Job:** LoRA fine-tune of `Qwen/Qwen3-4B-Instruct-2507` on the filtered teacher rewrites, then a GGUF Q4_K_M. **GPU:** **G4** recommended (RTX PRO 6000 Blackwell, bf16, batch 16×1): ~0.5–0.8 h ≈ 5–7 units at ~8.9 units/h. An L4 also works (bf16, 2×8) but takes ~4–5 h for about the same units (~7). A T4 only for a smoke run (`PRECISION = "nf4"`). Record the real figure. **Notebook:** `notebooks/colab/c2_student.ipynb`. **Do not launch before CG2** (quality-100 at least 85 % "same meaning: yes").
 
 ## Before (laptop, Claude)
-1. CG2 passed: the quality-100 sheet scored at least 85 % and `python -m finsight.risks.teacher_data filter` wrote `simplify.jsonl`.
-2. `uv run python -m finsight.risks.simplify split` wrote `train.jsonl` and `dev.jsonl` (split by company; no test or bench company).
+1. CG2 passed (quality-100: faithful 98 %) and `python -m finsight.risks.teacher_cleanup run` wrote `simplify.clean.jsonl` (strict number filter applied).
+2. `uv run python -m finsight.risks.simplify split` wrote `train.jsonl` (10,362) and `dev.jsonl` (529) from the clean pairs (split by company; no test or bench company).
 3. `uv run python scripts/gpu_jobs.py push student` (uploads `train.jsonl`, `dev.jsonl`, `_common.py` and the notebooks to the private HF job repo; Drive mode `IO = "drive"` is the fallback). Colab secret `HF_TOKEN` with notebook access on.
 
 ## Run (Claude through colab-mcp; you pick the GPU and Connect)
 1. Runtime → Change runtime type → **G4** → Connect. Tell Claude the units in the Resources panel.
 2. **Smoke:** `PRESET = "student_smoke"`, `UNASSIGN = False` (64 train / 16 dev rows, 10 steps, no GGUF; minutes).
-3. **Real run:** `PRESET = "student"`, `UNASSIGN = True`, `UNITS_BEFORE = <n>`. Batch and precision come from the GPU tier. Run all.
-4. A disconnect is safe: reconnect, run all, it resumes from the newest checkpoint in the job repo (`student/out/trainer/`; at most `SAVE_STEPS` = 200 steps redone).
+3. **Real run:** `PRESET = "student"`, `UNASSIGN = True`, `UNITS_BEFORE = <n>`, `RESUME = True`. Batch and precision come from the GPU tier. Run all. `RESUME = False` ignores old checkpoints (use it after a smoke run on the same job repo).
+4. A disconnect is safe: reconnect, run all, it resumes from the newest checkpoint in the job repo (`student/out/trainer/`; a checkpoint is saved every `SAVE_STEPS` = 200 steps and at the end of each epoch).
 5. When it ends the runtime disconnects itself (`main()` releases it in `finally`, also after a crash); give `UNITS_AFTER` to `gpu_jobs.py pull`.
 6. Optional: `UPLOAD = True` pushes the adapter and GGUF to the **private** repo `HF_REPO`. Merged fp16 weights are never kept or uploaded.
 

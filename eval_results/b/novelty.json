@@ -1,0 +1,64 @@
+{
+ "rule": "tau = the lowest similarity such that, among rated pairs with similarity >= tau, the share judged 'same' is at least 90% and there are at least 10 such pairs. 'unsure' ratings are left out. Fixed before rating.",
+ "n_rated": 60,
+ "n_unsure": 1,
+ "placeholder_tau": 0.8,
+ "tau": 0.7103,
+ "curve": [
+  {
+   "tau": 0.6,
+   "n": 59,
+   "same": 47,
+   "precision": 0.7966
+  },
+  {
+   "tau": 0.65,
+   "n": 55,
+   "same": 47,
+   "precision": 0.8545
+  },
+  {
+   "tau": 0.7,
+   "n": 46,
+   "same": 41,
+   "precision": 0.8913
+  },
+  {
+   "tau": 0.75,
+   "n": 37,
+   "same": 35,
+   "precision": 0.9459
+  },
+  {
+   "tau": 0.8,
+   "n": 30,
+   "same": 30,
+   "precision": 1.0
+  },
+  {
+   "tau": 0.85,
+   "n": 24,
+   "same": 24,
+   "precision": 1.0
+  },
+  {
+   "tau": 0.9,
+   "n": 15,
+   "same": 15,
+   "precision": 1.0
+  },
+  {
+   "tau": 0.95,
+   "n": 7,
+   "same": 7,
+   "precision": 1.0
+  }
+ ],
+ "label_source": "human:akshat (single rater, pairs shown without similarity)",
+ "precision_at_tau": 0.9111,
+ "n_at_tau": 45,
+ "ci95": [
+  0.7927,
+  0.9649
+ ]
+}

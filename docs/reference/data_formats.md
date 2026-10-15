@@ -201,6 +201,7 @@ Rows exclude the CSV header. Labels written with AI help carry `label_source`.
 
 | File | Rows | Columns |
 | --- | --- | --- |
+| `gold150.jsonl` | 150 | `risk_id`, `company`, `text`, `label`, `band` |
 | `gold_prefill.jsonl` | 110 | `ipo_id`, `field_id`, `doc`, `value_raw`, `page`, `quote`, `status`, `labelled_at`, `notes` |
 | `gold_template.jsonl` | 110 | `ipo_id`, `field_id`, `doc`, `value_raw`, `page`, `quote`, `status`, `labelled_at`, `notes` |
 | `gold_v3_template.jsonl` | 270 | `ipo_id`, `key`, `period`, `doc`, `expected_section`, `red_flags`, `value_raw`, `unit`, `page`, `quote`, `status`, `label_source`, `changed_by_akshat`, `labelled_at`, `notes` |

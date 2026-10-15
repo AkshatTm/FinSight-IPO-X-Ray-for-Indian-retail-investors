@@ -403,7 +403,8 @@ LEARNING_RATE = 2e-4
 BATCH_SIZE = None                  # None = from the GPU (effective batch 16): G4/A100-80 16x1, A100-40 8x2, L4/T4 2x8
 GRAD_ACCUM = None
 MAX_SEQ = 1024
-SAVE_STEPS = 200
+SAVE_STEPS = 200                   # also saves at the end of every epoch
+RESUME = True                      # False = ignore any checkpoint in the job repo and start fresh
 SEED = 2026
 PRESETS = {
     "student_smoke": {"smoke": True, "export_gguf": False},   # 64 train / 16 dev rows, 10 steps
@@ -485,6 +486,9 @@ def main():
     model.print_trainable_parameters()
 
     class SyncToDrive(TrainerCallback):
+        def on_epoch_end(self, args, state, control, **kwargs):
+            control.should_save = True  # a checkpoint at every epoch boundary as well
+
         def on_save(self, args, state, control, **kwargs):
             ck.sync()  # a disconnect loses at most SAVE_STEPS steps
 
@@ -498,7 +502,7 @@ def main():
     trainer = Trainer(model=model, args=args, train_dataset=Rows(train), eval_dataset=Rows(dev),
                       data_collator=collator, callbacks=[SyncToDrive()])
     t0 = time.time()
-    resume = ck.latest_trainer_checkpoint("trainer")
+    resume = ck.latest_trainer_checkpoint("trainer") if RESUME else None
     print("resuming from", resume) if resume else print("fresh run")
     trainer.train(resume_from_checkpoint=resume)
     eval_loss = trainer.evaluate()["eval_loss"]

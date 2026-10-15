@@ -15,7 +15,9 @@ from pydantic import BaseModel, Field, ValidationError
 from finsight.core.schemas import RiskCategory
 
 CATEGORIES: tuple[str, ...] = get_args(RiskCategory)
-PROMPT_VERSION = "teacher-v1"
+PROMPT_VERSION = (
+    "teacher-v1.1"  # v1.1 adds CATEGORY_RULES; the 12k run used v1 + configs/category_remap.yaml
+)
 
 CATEGORY_HELP = {
     "financial": "losses, falling revenue or margins, cash flow, working capital",
@@ -32,6 +34,17 @@ CATEGORY_HELP = {
     "market_macro": "economy, industry cycles, currency, share price after listing",
 }
 
+# One line per theme the quality-100 rating found labelled inconsistently (C2.3b). Mirrored by
+# configs/category_remap.yaml, which applies the same decisions to the v1 run after the fact.
+CATEGORY_RULES = (
+    "key personnel or management dependence = operations",
+    "shareholder rights under Indian law and enforcing foreign judgments = regulatory",
+    "objects of the issue, use of proceeds, working-capital estimates = financial",
+    "joint-venture control or deadlock, managing growth, brand, reputation, negative publicity"
+    " = operations",
+    "auditor CARO remarks and statutory dues = financial",
+)
+
 SYSTEM = f"""You label risk factors from Indian IPO offer documents and rewrite them in plain
 English. Answer with one JSON object and nothing else.
 
@@ -47,7 +60,8 @@ Fields:
   and never judge the IPO as good, bad, safe or worth it.
 - "numbers_copied": every number you used in "simple", copied exactly.
 
-Categories: {"; ".join(f"{k} = {v}" for k, v in CATEGORY_HELP.items())}."""
+Categories: {"; ".join(f"{k} = {v}" for k, v in CATEGORY_HELP.items())}.
+Tie-breaks: {"; ".join(CATEGORY_RULES)}."""
 
 
 class TeacherOutput(BaseModel):

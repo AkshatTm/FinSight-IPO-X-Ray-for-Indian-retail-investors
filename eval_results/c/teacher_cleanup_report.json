@@ -1,0 +1,258 @@
+{
+ "remap_version": "remap-v2",
+ "pairs_in": 10892,
+ "pairs_kept": 10891,
+ "strict_dropped": {
+  "sign_flip": 2
+ },
+ "strict_dropped_rows": 1,
+ "strict_flagged": 9,
+ "strict_examples": {
+  "sign_flip": [
+   {
+    "risk_id": "sanstar-2024#r29",
+    "detail": "285.97 called negative: The company had negative cash flows from operating activities of 285.97, (60.17), and 297."
+   },
+   {
+    "risk_id": "sanstar-2024#r29",
+    "detail": "297.14 called negative: The company had negative cash flows from operating activities of 285.97, (60.17), and 297."
+   }
+  ],
+  "inclusion_polarity": [
+   {
+    "risk_id": "aadhar-housing-finance-2024#r19",
+    "detail": "These include 2,899,830 shares on March 25, 1991, 100,000 shares in FY 1992, 1,500,000 sha"
+   },
+   {
+    "risk_id": "capacit-e-infraprojects-2017#r4",
+    "detail": "This includes receiving ` 80 in cash."
+   },
+   {
+    "risk_id": "globe-civil-projects-2025#r11",
+    "detail": "This includes records for 240,000 Equity Shares and a 2002 takeover of M/s."
+   },
+   {
+    "risk_id": "godrej-agrovet-2017#r64",
+    "detail": "Shares sold within 12 months are generally taxable."
+   },
+   {
+    "risk_id": "infibeam-incorporation-2016#r50",
+    "detail": "This includes a tax liability exceeding provisions by ₹7.32 million as of 30 September 201"
+   },
+   {
+    "risk_id": "pc-jeweller-2012#r30",
+    "detail": "The company has various insurance policies, including a jeweller's block policy for ` 14,8"
+   },
+   {
+    "risk_id": "r-k-swamy-2024#r24",
+    "detail": "Some claims are quantifiable, including 52.13, 0.44, and 39.56."
+   },
+   {
+    "risk_id": "rail-vikas-nigam-2019#r3",
+    "detail": "Previously, the company could approve up to 100% for price escalation and 20% for other re"
+   },
+   {
+    "risk_id": "zaggle-prepaid-ocean-services-2023#r40",
+    "detail": "This includes 1,829,269 shares to Ashish Rameshchandra Kachola and 1,829,269 shares to Ben"
+   }
+  ]
+ },
+ "labels": 10892,
+ "category_changed_by_rule": {
+  "brand_reputation": 100,
+  "use_of_proceeds": 111,
+  "shareholder_rights_foreign_judgments": 94,
+  "joint_venture": 28,
+  "growth_management": 22,
+  "statutory_dues": 33,
+  "key_personnel": 92,
+  "auditor_remarks": 15,
+  "non_gaap": 2,
+  "offer_mechanics": 1,
+  "filing_delays": 1,
+  "listed_company_compliance": 3
+ },
+ "category_changed_total": 502,
+ "category_moves": {
+  "promoters_governance -> operations": 107,
+  "promoters_governance -> financial": 75,
+  "promoters_governance -> regulatory": 64,
+  "regulatory -> financial": 42,
+  "competition -> operations": 33,
+  "legal_litigation -> regulatory": 32,
+  "market_macro -> operations": 30,
+  "legal_litigation -> financial": 22,
+  "financial -> operations": 19,
+  "legal_litigation -> operations": 15,
+  "customers_suppliers -> operations": 14,
+  "operations -> financial": 13,
+  "regulatory -> operations": 12,
+  "technology_data -> operations": 8,
+  "debt_liquidity -> financial": 7,
+  "debt_liquidity -> operations": 4,
+  "technology_data -> financial": 2,
+  "market_macro -> regulatory": 2,
+  "regulatory -> market_macro": 1
+ },
+ "category_samples": {
+  "brand_reputation": [
+   "[market_macro -> operations] Negative publicity could damage our reputation and adversely impact our business and financial results.",
+   "[competition -> operations] We rely heavily on our existing brands, the dilution of which could adversely affect our business.",
+   "[market_macro -> operations] Negative publicity relating to celebrities who endorse our products and brands may adversely affect our reputa",
+   "[market_macro -> operations] In the event our existing customers and targeted customer segments are not receptive to our new brand and iden",
+   "[customers_suppliers -> operations] We are significantly dependent upon third party contract manufacturers for our private label brand apparel."
+  ],
+  "use_of_proceeds": [
+   "[promoters_governance -> financial] Our management will have flexibility over the use of the Net Proceeds of the Fresh Issue.",
+   "[promoters_governance -> financial] The Objects of the Offer for which funds are being raised have not been appraised by any bank or financial ins",
+   "[promoters_governance -> financial] Any variation in the utilization of the Net Proceeds would be subject to certain compliance requirements, incl",
+   "[operations -> financial] As part of the Objects of the Issue, our Company proposes to use a portion of the Net Proceeds towards contrac",
+   "[promoters_governance -> financial] Objects of the Offer for which the funds are being raised have not been appraised by any bank or financial ins"
+  ],
+  "shareholder_rights_foreign_judgments": [
+   "[promoters_governance -> regulatory] Holders of Equity Shares may be restricted in their ability to exercise pre-emptive rights under Indian law an",
+   "[promoters_governance -> regulatory] Investors may be restricted in their ability to exercise pre-emptive rights under Indian law and thereby may s",
+   "[legal_litigation -> regulatory] Investors may not be able to enforce a judgment of a foreign court against us.",
+   "[legal_litigation -> regulatory] 79 Investors may not be able to enforce a judgment of a foreign court against our Company.",
+   "[promoters_governance -> regulatory] Holders of Equity Shares may be restricted in their ability to exercise pre-emptive rights under Indian law an"
+  ],
+  "joint_venture": [
+   "[promoters_governance -> operations] Our Company is currently a joint venture between the Promoters and we will continue to be controlled by our Pr",
+   "[promoters_governance -> operations] Our Promoters and Directors are involved with ventures (other than our Subsidiaries and Joint Venture) engaged",
+   "[financial -> operations] Any current and future strategic investment, alliance, joint venture or other business combination may materia",
+   "[debt_liquidity -> operations] CCVL became our wholly owned subsidiary pursuant to the CCVL Acquisition and any failure to realize the antici",
+   "[financial -> operations] We are party to joint venture agreements in respect of several of our projects for which we are required to ma"
+  ],
+  "growth_management": [
+   "[financial -> operations] Our historical growth rates may not be indicative of our future growth and if we do not manage our growth or s",
+   "[financial -> operations] Our business has grown rapidly and we may not be able to sustain our historical growth rates in the future. An",
+   "[financial -> operations] Our profit for the Fiscals 2024, 2023 and 2022 may not be indicative of our future financial performance. Fail",
+   "[legal_litigation -> operations] Our Company and one of our Director is involved in certain legal proceedings, and an adverse outcome in any su",
+   "[financial -> operations] If we are not able to adequately manage our growth strategy, we will not be able to sustain our growth level, "
+  ],
+  "statutory_dues": [
+   "[legal_litigation -> financial] There have been certain instances of delays in payment of statutory dues in relation to our employees by our C",
+   "[legal_litigation -> financial] There have been certain instances of delays in payment of statutory dues by our Company. Any further delays in",
+   "[regulatory -> financial] There have been certain instances of delays in payment of statutory dues by our Company and our Subsidiary in ",
+   "[legal_litigation -> financial] There are certain delays in payment of statutory dues (provident fund dues) by us and our Joint Venture.",
+   "[regulatory -> financial] There have been certain instances of delays, or errors in the past in relation to payment in relation to emplo"
+  ],
+  "key_personnel": [
+   "[promoters_governance -> operations] Our success largely depends upon the knowledge and experience of our Promoters and our Key Management Personne",
+   "[promoters_governance -> operations] Our success depends heavily upon our Promoters and Senior Management for their continuing services, strategic ",
+   "[promoters_governance -> operations] Our success largely depends upon the knowledge and experience of our Promoters, Directors and our senior manag",
+   "[legal_litigation -> operations] Our Company, Subsidiaries, Promoters, Directors, Key Managerial Personnel and Senior Management are involved a",
+   "[promoters_governance -> operations] We are dependent on our senior management and other key personnel, and the loss of, or our inability to attrac"
+  ],
+  "auditor_remarks": [
+   "[operations -> financial] Our Statutory Auditors have included certain emphasis of matters in their audit reports.",
+   "[legal_litigation -> financial] Our Statutory Auditors have included certain remarks in connection with the Companies (Auditor’s Report) Order",
+   "[promoters_governance -> financial] Bharti Infratel’s audit report includes specific qualifications with regard to delayed statutory payments and ",
+   "[legal_litigation -> financial] Our Statutory Auditor’s report for for the last three Fiscals and nine months period ended December 31, 2020 m",
+   "[promoters_governance -> financial] Qualifications or adverse remarks under Companies (Auditors Report) Order, 2020 (“CARO”) in the Statutory Audi"
+  ],
+  "non_gaap": [
+   "[technology_data -> financial] We track certain operational metrics and non-GAAP measures for our operations. Certain of our operational metr",
+   "[technology_data -> financial] We track certain operational and non-GAAP metrics with internal systems and tools and do not independently ver"
+  ],
+  "offer_mechanics": [
+   "[regulatory -> market_macro] Qualified Institutional Buyers and Non-Institutional Investors are not permitted to withdraw or lower their Bi"
+  ],
+  "filing_delays": [
+   "[legal_litigation -> regulatory] There have been some instances of non-filing/ delayed filing/ incorrect filings in the past with the Registrar"
+  ],
+  "listed_company_compliance": [
+   "[promoters_governance -> regulatory] The requirements of being a listed company may strain our resources.",
+   "[promoters_governance -> regulatory] The requirements of being a public listed company may strain our resources and impose additional requirements.",
+   "[market_macro -> regulatory] The requirements of being a listed company may strain our resources and have an adverse effect on our business"
+  ]
+ },
+ "category_counts_after": {
+  "operations": 2248,
+  "market_macro": 2018,
+  "regulatory": 1545,
+  "financial": 1540,
+  "promoters_governance": 1152,
+  "customers_suppliers": 540,
+  "technology_data": 538,
+  "debt_liquidity": 527,
+  "legal_litigation": 446,
+  "competition": 338
+ },
+ "seriousness_band_counts": {
+  "1": 1669,
+  "2": 5793,
+  "3": 2942,
+  "4": 488
+ },
+ "seriousness_level_counts": {
+  "1": 1669,
+  "2": 5793,
+  "3": 2942,
+  "4": 471,
+  "5": 17
+ },
+ "nonrisk_titles": 22,
+ "nonrisk_title_examples": [
+  {
+   "risk_id": "acme-solar-holdings-2024#r39",
+   "title": "Rating Agency Credit Rating Fiscal"
+  },
+  {
+   "risk_id": "acme-solar-holdings-2024#r70",
+   "title": "Name of Agency Rating Outlook Date"
+  },
+  {
+   "risk_id": "arisinfra-solutions-2025#r80",
+   "title": "Cash flow from operating activities"
+  },
+  {
+   "risk_id": "dee-development-engineers-2024#r24",
+   "title": "Malwa Power Private Limited (Subsidiary)"
+  },
+  {
+   "risk_id": "doms-industries-2023#r26",
+   "title": "Industry Data - Industry information included in this Red Herring Prospectus has been derived from a"
+  },
+  {
+   "risk_id": "exicom-tele-systems-2024#r61",
+   "title": "Financial Year Securities premium account (₹ Retained earnings account (₹ million) million)"
+  },
+  {
+   "risk_id": "go-digit-insurance-2024#r4",
+   "title": "Nine Months Ended December 31, 2023"
+  },
+  {
+   "risk_id": "healthcare-global-enterprises-2016#r12",
+   "title": "If BACC Healthcare's promoter Dr."
+  },
+  {
+   "risk_id": "juniper-hotels-2024#r44",
+   "title": "Currency of Presentation – Financial Data of Subsidiaries"
+  },
+  {
+   "risk_id": "krishna-institute-of-medical-sciences-2021#r1",
+   "title": "Manipal Health Enterprises Private Limited; and"
+  },
+  {
+   "risk_id": "laxmi-dental-2025#r100",
+   "title": "Name of Agency Rating Outlook Date"
+  },
+  {
+   "risk_id": "laxmi-dental-2025#r16",
+   "title": "Signature Smiles Dental Clinic Private Limited"
+  },
+  {
+   "risk_id": "medi-assist-healthcare-services-2024#r12",
+   "title": "Violation of Regulation 21(3)(a) of the"
+  },
+  {
+   "risk_id": "medi-assist-healthcare-services-2024#r15",
+   "title": "Regulation 23 of the TPA Regulations:"
+  },
+  {
+   "risk_id": "premier-energies-2024#r60",
+   "title": "Particulars As of August 10, 2024"
+  }
+ ]
+}

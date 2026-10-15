@@ -8,6 +8,7 @@ import pytest
 
 from finsight.risks.gold_sets import (
     CATEGORY_COLUMNS,
+    agreement,
     category_gold,
     category_sheet,
     pick,
@@ -59,6 +60,11 @@ def test_category_sheet_and_gold() -> None:
     gold, stats = category_gold(rows, pre, ["legal", "financial", "market"])
     assert [g["label"] for g in gold] == ["legal", "legal", "market"]
     assert stats == {"n": 3, "changed_from_prefill": 2, "changed_share": 0.6667}
+    # same text layout as the classifier's training rows (teacher_data.original_text)
+    assert gold[0]["text"] == f"Title: {rows[0]['title']}\n\n{rows[0]['text']}"
+    assert "band" not in gold[0]
+    banded, _ = category_gold(rows, pre, ["legal", "financial", "market"], {rows[0]["risk_id"]: 4})
+    assert [g["band"] for g in banded] == [4, None, None]
     rows[0]["category"] = "nope"
     with pytest.raises(ValueError, match="not one of"):
         category_gold(rows, pre, ["legal"])
@@ -98,3 +104,15 @@ def test_csv_roundtrip(tmp_path: Path) -> None:
     write_csv(rows, CATEGORY_COLUMNS, p)
     assert read_csv(p) == rows
     assert b"\r\n" not in p.read_bytes()
+
+
+def test_agreement_per_gold_category() -> None:
+    gold = {"a": "legal", "b": "legal", "c": "market", "d": "market"}
+    pred = {"a": "legal", "b": "market", "c": "market"}  # d has no prediction
+    out = agreement(gold, pred, ["legal", "market", "financial"])
+    assert (out["n"], out["missing"], out["agree"], out["share"]) == (3, 1, 2, 0.6667)
+    assert out["per_category"]["legal"] == {
+        "n": 2, "agree": 1, "share": 0.5, "model_said": {"market": 1}
+    }  # fmt: skip
+    assert out["per_category"]["market"]["share"] == 1.0
+    assert "financial" not in out["per_category"]
