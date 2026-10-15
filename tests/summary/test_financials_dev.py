@@ -132,7 +132,9 @@ def test_feeds_the_red_flag_checks(summaries: dict[str, FinancialSummary]) -> No
 
 
 def test_missing_sections_give_not_found() -> None:
-    doc = loader.load_doc("ather-energy-2025")
+    full = loader.load_doc("ather-energy-2025")
+    # Without a Summary section the first 40 pages are scanned (no Risk Factors here either).
+    doc = full.model_copy(update={"pages": [p for p in full.pages if p.number > 40]})
     only_cover: list[Section] = [s for s in loader.load_sections("ather-energy-2025")
                                  if s.id == "cover"]  # fmt: skip
     s = extract_summary(doc, only_cover, subsections={})

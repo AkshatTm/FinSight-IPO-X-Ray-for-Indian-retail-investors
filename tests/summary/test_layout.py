@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from finsight.core.schemas import Page, Word
 from finsight.summary import clean_label, read_tables
-from finsight.summary.layout import is_nil, is_placeholder, is_value_token
+from finsight.summary.layout import is_nil, is_placeholder, is_value_token, unit_of
 
 COLS = (225.0, 303.0, 373.0)
 
@@ -120,6 +120,47 @@ def test_label_above_values_line() -> None:
 def test_no_table_on_a_text_page() -> None:
     words = [*_label("The Company had revenue of 1,234 and 5,678 in two years", 100)]
     assert read_tables(_page(words)) == []
+
+
+def test_unit_sentence_with_a_digit() -> None:
+    text = "All amounts are ₹ in millions unless otherwise stated (0 represents amount less than"
+    assert unit_of(text) == "₹ in million"
+    assert unit_of("(Amount in millions of INR unless otherwise stated)") == "₹ in million"
+    assert unit_of("(₹ in lakhs)") == "₹ in lakh"
+    assert unit_of("Revenue from operations") is None
+
+
+def _three_columns(header_y: float = 100) -> list[Word]:
+    return [
+        _w("(₹", 300, header_y - 10), _w("in", 315, header_y - 10),
+        _w("million)", 330, header_y - 10),
+        # "Fiscal 2025" straddles the first two columns but names only the first.
+        _w("Fiscal", 190, header_y), _w("2025", 217, header_y),
+        _w("Fiscal", 262, header_y), _w("2024", 289, header_y),
+        _w("Fiscal", 335, header_y), _w("2023", 362, header_y),
+    ]  # fmt: skip
+
+
+def test_year_phrases_go_to_one_column_in_reading_order() -> None:
+    words = [
+        *_three_columns(),
+        *_label("Revenue from operations", 130), *_values(["10.00", "9.00", "8.00"], 130),
+        *_label("Profit for the year", 145), *_values(["1.00", "2.00", "3.00"], 145),
+        *_label("Net worth", 160), *_values(["4.00", "5.00", "6.00"], 160),
+    ]  # fmt: skip
+    (table,) = read_tables(_page(words))
+    assert [c.header for c in table.columns] == ["Fiscal 2025", "Fiscal 2024", "Fiscal 2023"]
+
+
+def test_second_block_takes_no_figures_as_headers() -> None:
+    words = _three_columns()
+    for k, y in enumerate(range(130, 190, 15)):
+        words += [*_label(f"Item {k}", y), *_values(["1.00", "2.00", "3.00"], y)]
+    for text, y in (("Net cash from operating", 300), ("Net cash used", 315), ("Net", 330)):
+        words += [*_label(text, y), *_values(["7.00", "8.00", "9.00"], y)]
+    first, second = read_tables(_page(words))
+    assert first.columns[0].header == "Fiscal 2025"
+    assert [c.header for c in second.columns] == ["", "", ""]  # filled from `first` later
 
 
 def test_clean_label() -> None:

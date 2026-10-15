@@ -15,7 +15,12 @@ from pydantic import TypeAdapter
 from finsight.core.schemas import FinancialSummary, ParsedDoc, Section
 from finsight.parse import find_subsection_pages
 from finsight.storage import Storage, doc_key, put_json
-from finsight.summary.financials import FinancialValues, clean_label, extract_financials
+from finsight.summary.financials import (
+    FinancialValues,
+    clean_label,
+    extract_financials,
+    values_by_source,
+)
 from finsight.summary.layout import GridTable, read_tables
 from finsight.summary.periods import PERIOD_KEYS, Period, parse_period, rank_years
 
@@ -81,4 +86,5 @@ __all__ = [
     "parse_period",
     "rank_years",
     "read_tables",
+    "values_by_source",
 ]

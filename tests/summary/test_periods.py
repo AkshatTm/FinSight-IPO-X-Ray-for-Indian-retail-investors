@@ -105,6 +105,53 @@ def test_duplicate_years_keep_the_first_column() -> None:
     }
 
 
+def test_newer_vague_period_column_blocks_ranking() -> None:
+    # GNG (dev): "For the period ended March 31, 2025" may be a full year; leaving it out would
+    # make FY2024 "latest".
+    headers = [
+        "For the period ended March 31, 2025",
+        "For the year ended March 31, 2024",
+        "For the year ended March 31, 2023",
+    ]
+    assert rank_years([parse_period(h) for h in headers]) == {}
+
+
+def test_bare_year_next_to_stubs_blocks_ranking() -> None:
+    # Orkla (dev): a lone "2025" between quarter columns and "Fiscal 2024".
+    headers = [
+        "For the Three months period ended June 30, 2025",
+        "For the Three months period ended June 30, 2024",
+        "2025",
+        "Fiscal 2024",
+        "2023",
+    ]
+    assert rank_years([parse_period(h) for h in headers]) == {}
+
+
+def test_bare_year_without_stubs_is_a_year() -> None:
+    # Brigade (dev): the year header is centred over the two right-hand columns only.
+    headers = [
+        "2025",
+        "As at and for the year ended March 31, 2024",
+        "As at and for the year ended March 31, 2023",
+    ]
+    assert rank_years([parse_period(h) for h in headers]) == {
+        0: "latest",
+        1: "latest-1",
+        2: "latest-2",
+    }
+
+
+def test_two_years_in_one_header_are_unreadable() -> None:
+    assert parse_period("Fiscal 2024 Fiscal 2025").year is None
+    assert rank_years([parse_period("Fiscal 2025"), parse_period("Fiscal 2024 Fiscal 2025")]) == {}
+
+
+def test_ranking_stops_at_a_gap() -> None:
+    headers = ["Fiscal 2025", "Fiscal 2023", "Fiscal 2022"]
+    assert rank_years([parse_period(h) for h in headers]) == {0: "latest"}
+
+
 @given(st.lists(st.text(max_size=60), max_size=8))
 def test_rank_never_crashes_and_gives_at_most_three(headers: list[str]) -> None:
     ranks = rank_years([parse_period(h) for h in headers])

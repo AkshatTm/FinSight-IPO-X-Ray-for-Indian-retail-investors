@@ -37,7 +37,9 @@ _DAY_CELL = re.compile(r"^\d{1,2},?$")
 _MONTH = re.compile(
     r"\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?\b", re.IGNORECASE
 )
-_HEADER_LABELS = re.compile(r"^(particulars|s\.?|no\.?|sr\.?|sl\.?)$", re.IGNORECASE)
+_HEADER_LABELS = re.compile(
+    r"^(particulars|s\.?|no\.?|sr\.?|sl\.?|s\.\s?no\.?|sr\.\s?no\.?|sl\.\s?no\.?)$", re.IGNORECASE
+)
 
 
 def is_value_token(text: str) -> bool:
@@ -158,13 +160,38 @@ def _is_header_line(line: Line, cells: dict[int, Word]) -> bool:
 
 
 def _phrases(words: list[Word]) -> list[tuple[float, float, str]]:
+    """Header words grouped into phrases; tight columns are kept apart by ending a phrase after a
+    year ("March, 2025 | March, 2024") and starting one at "For" / "As" ("For the three | For
+    the year")."""
     out: list[list[Word]] = []
     for w in words:
-        if out and w.bbox[0] - out[-1][-1].bbox[2] <= PHRASE_GAP:
+        close = bool(out) and w.bbox[0] - out[-1][-1].bbox[2] <= PHRASE_GAP
+        after_year = bool(out) and _YEAR_CELL.match(out[-1][-1].text.strip(" ,.")) is not None
+        if close and not after_year and not _PHRASE_START.match(w.text):
             out[-1].append(w)
         else:
             out.append([w])
     return [(p[0].bbox[0], p[-1].bbox[2], " ".join(w.text for w in p)) for p in out]
+
+
+_PHRASE_START = re.compile(r"^(For|As)$")
+_UNIT_SENTENCE = re.compile(
+    r"(?:₹|\brs\.?|\binr\b|\brupees\b)\s*(?:in\s+)?(lakhs?|lacs?|crores?|millions?|billions?)\b"
+    r"|\bin\s+(?:₹|rs\.?|inr|rupees)\s*(lakhs?|lacs?|crores?|millions?|billions?)\b"
+    r"|\b(lakhs?|lacs?|crores?|millions?|billions?)\s+of\s+(?:₹|inr|rupees)\b",
+    re.IGNORECASE,
+)
+
+
+def unit_of(text: str) -> str | None:
+    """The unit a table states: a header such as "(₹ in million)", or a sentence such as "All
+    amounts are ₹ in millions unless otherwise stated (0 represents ...)"."""
+    if found := detect_header_scale(text):
+        return found
+    if m := _UNIT_SENTENCE.search(text):
+        word = next(g for g in m.groups() if g).lower().rstrip("s")
+        return f"₹ in {'lakh' if word == 'lac' else word}"
+    return None
 
 
 def _blocks(lines: list[Line], min_x: float) -> list[list[int]]:
@@ -229,21 +256,36 @@ def _read_block(page: Page, lines: list[Line], block: list[int], min_x: float) -
     data = [i for i in data if i not in header_lines]
     if not data:
         return None
-    label_right = max((w.bbox[2] for i in data for w in parsed[i][1]), default=first_left - 1)
     spacing = statistics.median([b.right - a.right for a, b in itertools.pairwise(columns)])
     for k, col in enumerate(columns):
-        col.left = max(label_right, col.right - spacing) if k == 0 else columns[k - 1].right
-    unit = _header_band(lines, data[0], columns, label_right)
+        col.left = col.right - spacing if k == 0 else columns[k - 1].right
+    margin = min((w.bbox[0] for i in data for w in parsed[i][1]), default=columns[0].left)
+    unit = _header_band(lines, data[0], columns, margin)
     if unit is None:
         unit = _page_unit(lines, data[0])
     rows = _rows(lines, parsed, data, pure_label)
     return GridTable(page=page.number, columns=columns, rows=rows, unit=unit)
 
 
-def _header_band(
-    lines: list[Line], first: int, columns: list[Column], label_right: float
-) -> str | None:
-    """Fill each column's header from the lines above the first data row; return the unit."""
+_YEAR_IN = re.compile(r"\b(?:19|20)\d\d\b")
+
+
+def _overlap(x0: float, x1: float, col: Column) -> float:
+    return min(x1, col.right + 2) - max(x0, col.left + 2)
+
+
+def _over(x0: float, x1: float, col: Column) -> bool:
+    return _overlap(x0, x1, col) > 3
+
+
+def _header_band(lines: list[Line], first: int, columns: list[Column], margin: float) -> str | None:
+    """Fill each column's header from the lines above the first data row; return the unit.
+
+    A phrase over one or more columns is header text, even when a centred header starts left
+    of the first column. A line with no such phrase is a label-column sub-heading ("A. Cash
+    flows from operating activities") and is passed over. A phrase that starts at the table's
+    left margin and runs over two or more columns is running text, and ends the header.
+    """
     top = lines[first].top
     parts: dict[int, list[str]] = {k: [] for k in range(len(columns))}
     unit = None
@@ -251,23 +293,32 @@ def _header_band(
         line = lines[i]
         if top - line.top > HEADER_SPAN:
             break
-        if found := detect_header_scale(line.text):
+        if found := unit_of(line.text):
             unit = found
             break
-        label_area = [
-            w
-            for w in line.words
-            if w.bbox[2] <= label_right + 1 and not _HEADER_LABELS.match(w.text)
+        phrases = [
+            (x0, x1, text, [k for k, col in enumerate(columns) if _over(x0, x1, col)])
+            for x0, x1, text in _phrases(line.words)
         ]
-        words = [w for w in line.words if w.bbox[2] > label_right + 1]
-        if len(label_area) >= 3 and words:
-            break  # running text above the table
-        if label_area:
-            continue  # a sub-heading in the label column ("A. Cash flows from operating ...")
-        for x0, x1, text in _phrases(words):
-            for k, col in enumerate(columns):
-                if min(x1, col.right + 2) - max(x0, col.left + 2) > 3:
-                    parts[k].insert(0, text)
+        if any(x0 <= margin + 6 and len(ks) >= 2 for x0, _, _, ks in phrases):
+            break
+        if any(
+            is_value_token(w.text)
+            and not _YEAR_CELL.match(w.text)
+            and _column_of(w, columns) is not None
+            for w in line.words
+        ):
+            break  # a figure row of the table above: this block continues it, no header here
+        line_parts: dict[int, list[str]] = {}
+        for x0, x1, text, ks in phrases:
+            if _HEADER_LABELS.match(text) or not ks:
+                continue
+            if _YEAR_IN.search(text):  # "Fiscal 2025" names one column: the one it covers most
+                ks = [max(ks, key=lambda k: _overlap(x0, x1, columns[k]))]
+            for k in ks:
+                line_parts.setdefault(k, []).append(text)
+        for k, texts in line_parts.items():
+            parts[k][:0] = texts
     for k, col in enumerate(columns):
         col.header = " ".join(parts[k])
     return unit
@@ -276,7 +327,7 @@ def _header_band(
 def _page_unit(lines: list[Line], first: int) -> str | None:
     """The nearest unit line above the table on the same page."""
     for i in range(first - 1, -1, -1):
-        if found := detect_header_scale(lines[i].text):
+        if found := unit_of(lines[i].text):
             return found
     return None
 

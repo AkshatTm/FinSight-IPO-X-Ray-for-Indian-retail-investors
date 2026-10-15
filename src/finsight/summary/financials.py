@@ -23,7 +23,15 @@ from decimal import Decimal
 
 from finsight.core.schemas import Money, Page, PageEvidence, ParsedDoc, Section, SummaryValue, Word
 from finsight.normalize import parse_amount
-from finsight.summary.layout import GridTable, Row, is_nil, is_placeholder, read_tables, union_bbox
+from finsight.summary.layout import (
+    GridTable,
+    Row,
+    is_nil,
+    is_placeholder,
+    read_tables,
+    union_bbox,
+    unit_of,
+)
 from finsight.summary.periods import PERIOD_KEYS, parse_period, rank_years
 
 YEARLY = ("revenue", "profit_after_tax", "operating_cash_flow")
@@ -63,14 +71,19 @@ RULES: dict[str, list[RowRule]] = {
         _rule(
             r"^(restated )?(consolidated )?(net )?(profit|loss|\(loss\)|\(profit\))\b",
             _RATIO + r"|\bbefore\b|attributable|\bearning|comprehensive|exceptional|operating"
-            r"|\bgross\b|ebitda|discontinued|from operations|\bon (sale|disposal)\b|\bshare of\b",
+            r"|\bgross\b|ebitda|discontinued|continuing|from operations|\b(profit|loss|gain) on\b"
+            r"|\bshare of\b",
         ),
-        _rule(r"^(restated )?(net )?profit after tax\b|^pat\b", _RATIO),
+        _rule(r"^(restated )?(net )?profit after tax\b|^pat\b", _RATIO + r"|continuing"),
     ],
-    "net_worth": [_rule(r"^(total )?net ?worth\b", _RATIO + r"|adjusted|tangible")],
+    "net_worth": [
+        _rule(r"^(total )?net ?worth\b", _RATIO + r"|adjusted|tangible"),
+        # Some summaries print Ind AS "Total equity" in place of "Net worth" (dev: Bluestone).
+        _rule(r"^total equity\b", _RATIO + r"|liabilities|non[\s-]*controlling"),
+    ],
     "total_borrowings": [_rule(r"^total borrowings?\b", _RATIO + r"|net debt|/")],
     "operating_cash_flow": [
-        _rule(r"^net cash\b.*\boperating activit", r"\bbefore\b"),
+        _rule(r"^net cash(?:\s*flows?)?\b.*\boperating activit", r"\bbefore\b"),
         _rule(r"^cash (flows? )?(generated|used|from).*operating activit", r"\bbefore\b"),
     ],
 }
@@ -90,6 +103,15 @@ def find_row(table: GridTable, rules: list[RowRule]) -> Row | None:
 
 
 # ------------------------------------------------------------------------- values
+def row_unit(row: Row, table_unit: str | None) -> str | None:
+    """A unit printed in the row label ("Revenue from Operations (₹ in million)") wins over the
+    table's when it has a scale or the table's has none."""
+    own = unit_of(" ".join(p for p in (row.label, row.label_below) if p))
+    if own and (" in " in own or table_unit is None or " in " not in table_unit):
+        return own
+    return table_unit
+
+
 def _money(word: Word, unit: str) -> Money | None:
     raw = word.text.strip().rstrip("*^#@†‡")
     if is_nil(raw):
@@ -111,13 +133,14 @@ def _value(
     key: str, period: str, table: GridTable, row: Row, col: int, doc_id: str
 ) -> SummaryValue | None:
     cell = row.cells.get(col)
-    if cell is None or table.unit is None:
+    unit = row_unit(row, table.unit)
+    if cell is None or unit is None:
         return None
     header = table.columns[col].header
-    ev = _evidence(doc_id, table.page, row, cell, header, table.unit)
+    ev = _evidence(doc_id, table.page, row, cell, header, unit)
     if is_placeholder(cell.text):
         return SummaryValue(key=key, period=period, evidence=ev, status="placeholder")
-    money = _money(cell, table.unit)
+    money = _money(cell, unit)
     if money is None:
         return None
     return SummaryValue(key=key, value=money, period=period, evidence=ev, status="found")
@@ -131,6 +154,7 @@ def _missing(key: str, period: str | None) -> SummaryValue:
 class _Ranked:
     table: GridTable
     years: dict[str, int]  # "latest" -> column index
+    continues: _Ranked | None = None  # the same table on the previous page
 
 
 def _ranked(table: GridTable) -> _Ranked:
@@ -183,13 +207,78 @@ def _section_pages(sections: list[Section], section_id: str, limit: int = 40) ->
     return []
 
 
+SUMMARY_WINDOW = 40  # pages scanned before Risk Factors when no Summary section was detected
+
+
+def summary_pages(sections: list[Section]) -> list[int]:
+    """Pages of the Summary of the Offer Document.
+
+    When the section was not detected, the pages just before Risk Factors (where ICDR puts the
+    summary) are scanned instead; the best-scoring table there must still show two of the
+    summary rows to be used.
+    """
+    if pages := _section_pages(sections, "summary"):
+        return pages
+    rf = next((s.start_page for s in sections if s.id == "risk_factors"), None)
+    if rf is None:
+        return list(range(1, SUMMARY_WINDOW + 1))
+    return list(range(max(1, rf - SUMMARY_WINDOW), rf))
+
+
+def _same_columns(a: GridTable, b: GridTable) -> bool:
+    return len(a.columns) == len(b.columns) and all(
+        abs(x.right - y.right) <= 6 for x, y in zip(a.columns, b.columns, strict=True)
+    )
+
+
 def _tables(doc: ParsedDoc, numbers: Iterable[int]) -> list[_Ranked]:
-    return [_ranked(t) for page in _pages(doc, numbers) for t in read_tables(page) if t.unit]
+    """Tables with a unit. A table that continues the previous one (same columns, on the next
+    page or further down the same page) takes its unit when it states none, and its headers
+    when it repeats none."""
+    out: list[_Ranked] = []
+    previous: _Ranked | None = None
+    for page in _pages(doc, numbers):
+        for table in read_tables(page):
+            continues = None
+            same = previous is not None and _same_columns(previous.table, table)
+            headless = not any(c.header for c in table.columns)
+            if previous is not None and same and (table.unit is None or headless):
+                continues = previous
+                table.unit = table.unit or previous.table.unit
+                if headless:
+                    for c, p in zip(table.columns, previous.table.columns, strict=True):
+                        c.header = p.header
+            if table.unit:
+                ranked = _ranked(table)
+                ranked.continues = continues
+                out.append(ranked)
+                previous = ranked
+    return out
 
 
-def _score(t: _Ranked) -> int:
+def _with_continuations(best: _Ranked, tables: list[_Ranked]) -> list[_Ranked]:
+    """``best`` and the pages it runs on to."""
+    chain = [best]
+    for t in tables:
+        if t.continues is chain[-1]:
+            chain.append(t)
+    return chain
+
+
+def _score(chain: list[_Ranked]) -> int:
+    """How many of the four summary rows a table (with its continuation pages) shows."""
     keys = ("revenue", "profit_after_tax", "net_worth", "total_borrowings")
-    return sum(find_row(t.table, RULES[k]) is not None for k in keys) if t.years else 0
+    return sum(
+        any(t.years and find_row(t.table, RULES[k]) is not None for t in chain) for k in keys
+    )
+
+
+def _summary_table(tables: list[_Ranked]) -> list[_Ranked]:
+    """The restated financial summary: the table showing the most summary rows (at least 2),
+    with the pages it continues on; the earliest wins a tie."""
+    chains = [_with_continuations(t, tables) for t in tables if t.continues is None]
+    best = max(chains, key=_score, default=[])
+    return best if best and _score(best) >= 2 else []
 
 
 @dataclass
@@ -204,11 +293,17 @@ class FinancialValues:
     net_worth: SummaryValue
 
 
-def _fill(key: str, tables: list[_Ranked], doc_id: str, out: dict[str, SummaryValue]) -> None:
+def _fill(
+    key: str,
+    tables: list[_Ranked],
+    doc_id: str,
+    out: dict[str, SummaryValue],
+    rules: list[RowRule] | None = None,
+) -> None:
     """Fill the still-missing periods of ``key`` from the first table that has its row."""
     periods = PERIOD_KEYS if key in YEARLY else ("latest",)
     for t in tables:
-        row = find_row(t.table, RULES[key])
+        row = find_row(t.table, rules or RULES[key])
         if row is None:
             continue
         for period in periods:
@@ -227,16 +322,16 @@ def extract_financials(
     cash_flow_pages: list[int] | None = None,
 ) -> FinancialValues:
     """Read the C3.1a values from a parsed document (full or fixture pages)."""
-    summary = sorted(_tables(doc, _section_pages(sections, "summary")), key=_score, reverse=True)
-    summary = [t for t in summary if _score(t) >= 2][:1]
+    summary = _summary_table(_tables(doc, summary_pages(sections)))
     sfi = _tables(doc, _section_pages(sections, "summary_financial_information"))
     cash = _tables(doc, cash_flow_pages or [])
     found: dict[str, dict[str, SummaryValue]] = {k: {} for k in (*YEARLY, *POINT)}
     for key in ("revenue", "profit_after_tax", "net_worth", "total_borrowings"):
         _fill(key, summary + sfi, doc_id, found[key])
     borrowings = found["total_borrowings"]
-    if "latest" not in borrowings and summary and (v := _sum_borrowings(summary[0], doc_id)):
-        borrowings["latest"] = v
+    for t in summary:
+        if "latest" not in borrowings and (v := _sum_borrowings(t, doc_id)):
+            borrowings["latest"] = v
     _fill("operating_cash_flow", summary + sfi + cash, doc_id, found["operating_cash_flow"])
     unit = summary[0].table.unit if summary else next((t.table.unit for t in sfi), None)
 
@@ -254,3 +349,33 @@ def extract_financials(
         total_borrowings=point("total_borrowings"),
         net_worth=point("net_worth"),
     )
+
+
+def values_by_source(
+    doc: ParsedDoc,
+    sections: list[Section],
+    doc_id: str,
+    cash_flow_pages: list[int] | None = None,
+) -> dict[str, dict[str, Decimal]]:
+    """Each field read from each source on its own ("summary", "sfi", "cash"), in rupees.
+
+    For the coverage script's cross-check: two sources that both print a value should agree;
+    a disagreement points at a wrong row or column. Net worth is compared only where a row says
+    "Net worth" (Ind AS "Total equity" legitimately differs from it).
+    """
+    sources = {
+        "summary": _summary_table(_tables(doc, summary_pages(sections))),
+        "sfi": _tables(doc, _section_pages(sections, "summary_financial_information")),
+        "cash": _tables(doc, cash_flow_pages or []),
+    }
+    out: dict[str, dict[str, Decimal]] = {}
+    for name, tables in sources.items():
+        for key in ("operating_cash_flow",) if name == "cash" else (*YEARLY, *POINT):
+            found: dict[str, SummaryValue] = {}
+            rules = RULES[key][:1] if key == "net_worth" else RULES[key]
+            _fill(key, tables, doc_id, found, rules)
+            for period, v in found.items():
+                if isinstance(v.value, Money) and v.value.value_inr is not None:
+                    field = key if key in POINT else f"{key}:{period}"
+                    out.setdefault(field, {})[name] = v.value.value_inr
+    return out
