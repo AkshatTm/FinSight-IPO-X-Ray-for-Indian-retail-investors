@@ -32,15 +32,23 @@ Product post-checks on gold-50 (test (gold-50), seed 2026, single run):
 | base (`qwen3:4b-instruct-2507-q4_K_M`) | 16/50 | 79.0 | 38 | {'number_mismatch': 4, 'too_long': 30} |
 | student (`finsight-student:q4`) | 49/50 | 43.2 | 0 | {'certainty_changed': 1} |
 
-CPU only (Ollama, no GPU layers; 60 dev risks): 12.3 s per risk on average (median 12.2, max 27.7), 4.7 tokens/s.
+CPU only (Ollama, no GPU layers; 60 dev risks): 12.3 s per risk on average (median 12.2, max 27.7), 4.7 tokens/s. At the corpus average of 67 risks per IPO that is about 14 minutes per IPO if every risk is simplified one after another on the CPU.
 
 Readability (FKGL, E19): original 19.01 to rewrite 9.59 on dev (drop 9.42, n=60); gold-50: 17.83 to 9.36 (drop 8.47).
 
 Number and certainty checks (E20): dev: 3/60 rejected {'number_mismatch': 1, 'certainty_changed': 2}; gold-50: 1/50 rejected {'certainty_changed': 1}.
 
+Human rating, gold-50 (E18; blind, shuffled, one rater):
+
+| System | Faithful yes (95% CI) | Partly | Plain English (1-5) | Passed checks |
+| --- | --- | --- | --- | --- |
+| base | 0.84 (0.71-0.92) | 8/50 | 3.00 | 0.32 |
+| student | 0.92 (0.81-0.97) | 4/50 | 4.64 | 0.98 |
+| teacher | 0.98 (0.90-1.00) | 1/50 | 4.80 | 1.00 |
+
 <!-- generated:results end -->
 
-The human meaning rating (E18, gold-50, blind, shuffled: zero-shot base vs student vs teacher) is added after `gold_sets.py score50`.
+The student's four "partly" rows are meaning slips (an overstated "no defects", an invented "leases end soon", an omitted court stay, "all details missing"): added or dropped qualifiers, which the number and certainty checks do not see.
 
 ## Limitations
 
