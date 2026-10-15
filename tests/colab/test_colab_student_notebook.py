@@ -81,3 +81,12 @@ def test_prep_helpers_mask_the_prompt_and_pad() -> None:
     assert len(ids[1]) == len(ids[0])
     assert labels[1][-1] == -100
     assert mask[1][-1] == 0
+
+
+def test_gguf_step_uses_the_original_tokenizer_files() -> None:
+    """The first C2.5 run died on a re-saved tokenizer_config.json the converter could not read."""
+    body = "\n".join(source(c) for c in cells() if c["cell_type"] == "code")
+    assert 'tokenizer.save_pretrained(str(out / "merged"))' not in body
+    assert "snapshot_download(MODEL" in body
+    assert 'out / "merged" / "tokenizer_config.json"' in body  # byte-equality assert
+    assert body.index("snapshot_download(MODEL") < body.index("convert_hf_to_gguf.py")
