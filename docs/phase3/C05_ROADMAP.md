@@ -82,7 +82,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   - [x] Zero-shot base (gold-50: 16/50 pass the product checks)
   - [x] 4B bf16 LoRA on Colab G4 + GGUF Q4_K_M (dev loss 0.353; gold-50 post-check pass 49/50, `eval_results/c/student_vs_base_gold50.json`)
   - [x] gold-50 blind sheet rated by Akshat (`sheet50` → `score50`): faithful yes base 0.84 / student 0.92 / teacher 0.98; plain English 3.00 / 4.64 / 4.80 (`eval_results/c/simplify_gold50.json`)
-  - [ ] 8B variant, still open, `Qwen/Qwen3-8B` + `enable_thinking=False` approved (preset + `COLAB_STEPS_student_8b.md` ready; waits for Akshat's "go") · [x] E19, E20 + CPU seconds per risk (`eval_results/c/student_eval.json`: 12.3 s/risk CPU, FKGL 19.0 → 9.6, 95 % pass the checks on dev) · [x] E18 · [x] model card `docs/model_cards/risk_simplifier.md` (E18 row added after `score50`)
+  - [x] 8B variant (`Qwen/Qwen3-8B`, `enable_thinking=False`; G4, 1 h 46 m, 16.4 units): dev loss 0.342 vs 0.353, but gold-50 post-checks 30/50 vs 49/50 (35 of 50 over 60 words, mean 68.7 words vs 43.2): **not adopted, the 4B stays the product model** (C-ADR-18, `eval_results/c/student_8b_vs_4b_gold50.json`)
 - [ ] **C2.6 Novelty τ + E22** (was B2.2b) · 💻 L + 👤 A · S · Needs: C2.1, C1.4 window
 - [ ] **C2.8 Risk-level thresholds + E17/E21 + E8r** (was B2.6b) · 💻 L · S · Needs: C2.4, C3.2, C1.4 window
   Wires `risklevel` to `reference_scores` + the window; thresholds fitted on train + dev only; E21 as the risk-points-only variant with the limitation stated.

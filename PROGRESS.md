@@ -9,6 +9,7 @@
 - **Open files / failing tests:** none new (fast suite green apart from the regenerated docs page).
 
 ## Log
+- C2.5 8B variant done and not adopted: gold-50 post-checks 30/50 vs the 4B's 49/50 (outputs too long, 68.7 vs 43.2 words) despite dev loss 0.342 vs 0.353; 16.4 units; serving format checked (raw training format gives the same lengths); the 4B stays the product model (C-ADR-18)
 - C2.4 base done: 3 seeds on Kaggle, dev macro-F1 0.892 ± 0.006 vs TF-IDF 0.862, gold-150 0.899; seriousness MAE 0.186 / severe recall 0.56 (dev); ONNX fp32 exact (int8 rejected); large on Colab pending
 - C1.5 done: BIR link check (`scripts/check_bir_links.py`): 855 links, 48 direct PDFs live, 780 HTML pages, 27 dead; backfill decision in AKSHAT_TODO
 - C3.1a: summary financial tables + financials stage (PR #224); dev coverage: all 11 values in 67% of RHPs, cross-source agreement 257/258.
