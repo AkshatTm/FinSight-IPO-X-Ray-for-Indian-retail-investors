@@ -231,7 +231,9 @@ def main(argv: list[str] | None = None) -> None:
     """CLI: ``split`` the teacher pairs into train and dev for the student."""
     p = argparse.ArgumentParser(prog="python -m finsight.risks.simplify")
     p.add_argument("command", choices=["split"])
-    p.add_argument("--pairs", type=Path, default=Path("data/processed/teacher/simplify.jsonl"))
+    p.add_argument(
+        "--pairs", type=Path, default=Path("data/processed/teacher/simplify.clean.jsonl")
+    )
     p.add_argument("--out", type=Path, default=Path("data/processed/kaggle/simplify"))
     args = p.parse_args(argv)
     train, dev = split_pairs(list(read_jsonl(args.pairs)))

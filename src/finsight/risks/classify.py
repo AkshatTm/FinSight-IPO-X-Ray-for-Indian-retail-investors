@@ -219,7 +219,7 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.command == "split":
         examples = load_examples(
-            args.teacher_dir / "labels.jsonl", args.teacher_dir / "risks.jsonl"
+            args.teacher_dir / "labels.clean.jsonl", args.teacher_dir / "risks.jsonl"
         )
         train, dev = split_by_company(examples)
         write_split(train, dev, args.split_dir)

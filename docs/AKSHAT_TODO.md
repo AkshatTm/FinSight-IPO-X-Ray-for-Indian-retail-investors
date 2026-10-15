@@ -232,3 +232,9 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - **Report**: every file in `report/` is a draft to rewrite in your voice; sections 1, 2, 9, 10 are not drafted. Check each `[verify]` citation. README "What I learned" is yours.
 
 - [x] C2.1 segmentation spot-check (50 risks, ~40 min) + E13b boundaries; also look at the 20 documents with < 10 risks (see `docs/datasheets/risk_bank.md`). Decide whether 8,889 teacher inputs (target 12k) is enough or the per-company cap should rise.
+
+## C2.3b follow-ups
+- [ ] Merge PR #217 (CG2 + full-scope roadmap), then the C2.3b PR.
+- [ ] Tell Claude the Colab units after last night's G4 session (Resources panel; 193.67 before) so it can log them.
+- [ ] Rate `data/gold/gold150_sheet.csv` (fix `category`; tie-break rules are in `configs/category_remap.yaml`) and `data/gold/novelty_pairs.csv`.
+- [ ] Spot-check the remap: `eval_results/c/teacher_cleanup_report.json` → `category_samples` (5 per rule, 7 rules). The brand rule changed 399 rows, the biggest; check it reads right.

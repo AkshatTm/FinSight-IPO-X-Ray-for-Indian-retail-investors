@@ -1,0 +1,62 @@
+# Deterministic post-hoc category remap for the teacher labels (C2.3b).
+# Quality-100 found the same theme labelled differently across rows; one category per theme.
+# A rule fires on the risk TITLE (the first 200 chars of the body when the risk has no title);
+# the first matching rule wins. Patterns are case-insensitive regexes.
+# Counts per rule are written to eval_results/c/teacher_cleanup_report.json.
+version: remap-v1
+rules:
+  - name: key_personnel
+    target: operations
+    note: key personnel / management dependence is one category (people live in operations)
+    patterns:
+      - 'key (managerial |management )?personnel'
+      - 'senior management'
+      - 'loss of (the )?services'
+      - 'depend(s|ent|ence)? (up)?on (our |the )?(key|senior|management|directors)'
+      - '\battrition\b'
+  - name: shareholder_rights_foreign_judgments
+    target: regulatory
+    note: shareholder rights under Indian law and enforcing foreign judgments
+    patterns:
+      - 'rights of (the )?(share|equity share)holders'
+      - 'shareholders?.{0,20}rights'
+      - 'enforce(ment|ability)? of (foreign |civil )?(judgments?|liabilit)'
+      - 'judgments? (of|from|obtained in) .{0,30}(courts?|jurisdictions?)'
+  - name: use_of_proceeds
+    target: financial
+    note: objects of the issue, use of proceeds and working-capital estimates
+    patterns:
+      - 'objects? of the (issue|offer)'
+      - 'use of (the )?(net )?(issue |offer )?proceeds'
+      - 'utili[sz]ation of (the )?(net )?(issue |offer )?proceeds'
+      - 'working capital (requirements?|estimates?)'
+      - 'estimates?.{0,30}working capital'
+      - 'not been (independently )?appraised'
+  - name: joint_venture
+    target: operations
+    note: JV control and deadlock
+    patterns:
+      - 'joint ventures?'
+      - '\bJVs?\b'
+      - 'deadlock'
+  - name: growth_management
+    target: operations
+    note: managing growth
+    patterns:
+      - 'manage (our |the )?(future |rapid |expected )?growth'
+      - 'growth (strategy|management)'
+  - name: brand_reputation
+    target: operations
+    note: brand, reputation and negative publicity
+    patterns:
+      - '\bbrands?\b'
+      - 'reputation'
+      - '(negative|adverse) publicity'
+  - name: caro_statutory_dues
+    target: financial
+    note: auditor CARO remarks and statutory dues
+    patterns:
+      - '\bCARO\b'
+      - 'auditors?.{0,3} (report|observations?|qualifications?|remarks?)'
+      - 'statutory dues'
+      - 'emphasis of matter'

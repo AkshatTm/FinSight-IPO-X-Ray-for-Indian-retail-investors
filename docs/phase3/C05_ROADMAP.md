@@ -65,8 +65,9 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   `COLAB_STEPS_teacher_bakeoff.md`; Qwen3-14B-AWQ vs Qwen3-32B-AWQ (L4-only fallback in C03); 300 risks × 2 teachers; filters; blind sheet (100 rows); Akshat rates; ADR → `eval_results/c/teacher_bakeoff.json`.
 - [x] **C2.3 Teacher full run** (was B2.3b) · 💻 L + 🟠 G + 👤 A · S · Needs: C2.2 · run done on the G4 (12,000 risks, 10,892 kept); **CG2 passed** (quality-100: faithful 98 %, category correct 94 %)
   ≈12k `train` risks on Colab A100; filters; quality-100 from the full output; go/no-go.
-- [ ] **C2.3b Teacher data clean-up** · 💻 L · S · Needs: CG2
+- [x] **C2.3b Teacher data clean-up** · 💻 L · S · Needs: CG2
   Strict number filter (scale/unit and sign vs the source) over the kept rows; deterministic category remap for the themes quality-100 found inconsistent + one rule per theme in the teacher category guide; non-risk title count; seriousness distribution (4 + 5 → "severe" if level 5 < ~100).
+  *Status:* done: `finsight.risks.teacher_cleanup`, `configs/category_remap.yaml`, `eval_results/c/teacher_cleanup_report.json`. 10,891 of 10,892 pairs kept, 799 categories remapped, 22 non-risk titles, severe band = 488 (level 5 has 17).
 - [ ] **C2.7 Extractor v2** · 💻 L + 🔵 K · S · Needs: CG1 (runs in parallel with C2.2–C2.3)
   Weak labels over `train` incl. 2024+ (wires `weaklabel` to manifests); Kaggle 3 seeds; ladder row `qa_finetuned_v2`; keep only if it wins on dev.
 
