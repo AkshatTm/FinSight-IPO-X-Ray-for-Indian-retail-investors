@@ -46,7 +46,7 @@ The registry is read from the two plan tables. "Not run yet" means no result fil
 | E13 | Are risks split correctly? | `b/segmentation.json` |
 | E14 | Are red-flag inputs extracted correctly? | not run yet |
 | E15 | Do red-flag statuses agree with hand-computed ones? | not run yet |
-| E16 | How good is the category classifier? | `b/classifier_tfidf.json` |
+| E16 | How good is the category classifier? | `b/classifier_base.json`, `b/classifier_tfidf.json` |
 | E17 | Does the seriousness rule make sense? | not run yet |
 | E18 | Are rewrites faithful? | not run yet |
 | E19 | Are rewrites easier to read? | not run yet |

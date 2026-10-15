@@ -1,0 +1,7 @@
+{
+ "n": 1060,
+ "agreement": 1.0,
+ "torch_macro_f1": 0.8993188849985394,
+ "onnx_macro_f1": 0.8993188849985394,
+ "onnx_seconds_per_risk": 0.5594214250943415
+}

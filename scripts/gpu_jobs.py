@@ -131,6 +131,23 @@ JOBS: dict[str, Job] = {
         },
         summary="eval_results/c/student_8b_run_summary.json",
     ),
+    "classifier_large": Job(
+        name="classifier_large",
+        notebook="b2_classifier_large_kaggle.ipynb",
+        inputs={
+            "data/processed/kaggle/risk-classifier/train.jsonl": "train.jsonl",
+            "data/processed/kaggle/risk-classifier/dev.jsonl": "dev.jsonl",
+            "data/processed/kaggle/risk-classifier/test.jsonl": "test.jsonl",
+            "data/processed/kaggle/risk-classifier/labels.json": "labels.json",
+            "notebooks/b2_classifier_large_kaggle.ipynb": "notebook.ipynb",
+        },
+        outputs={
+            "metrics-*.json": "models/risk_classifier_large/",
+            "dev-predictions-*.json": "models/risk_classifier_large/",
+            "test-predictions-*.json": "models/risk_classifier_large/",
+        },
+        summary="eval_results/c/classifier_large_run_summary.json",
+    ),
 }
 
 
