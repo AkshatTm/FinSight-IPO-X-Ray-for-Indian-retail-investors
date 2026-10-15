@@ -90,3 +90,31 @@ def test_gguf_step_uses_the_original_tokenizer_files() -> None:
     assert "snapshot_download(MODEL" in body
     assert 'out / "merged" / "tokenizer_config.json"' in body  # byte-equality assert
     assert body.index("snapshot_download(MODEL") < body.index("convert_hf_to_gguf.py")
+
+
+def test_8b_preset_has_its_own_job_model_and_no_think() -> None:
+    params = next(source(c) for c in cells() if "parameters" in c["metadata"].get("tags", []))
+    ns: dict = {}
+    exec(params.replace('PRESET = "student_smoke"', 'PRESET = "student_8b"', 1), ns)
+    assert (ns["JOB"], ns["MODEL"], ns["NO_THINK"]) == ("student_8b", "Qwen/Qwen3-8B", True)
+    assert ns["HF_REPO"].endswith("student-8b")
+    assert ns["EXPORT_GGUF"] is True
+    ns4: dict = {}
+    exec(params, ns4)
+    assert ns4["JOB"] == "student"  # the 4B path is untouched
+    assert ns4["NO_THINK"] is False
+
+
+def test_8b_job_pulls_into_its_own_folder() -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("gpu_jobs", ROOT / "scripts" / "gpu_jobs.py")
+    assert spec is not None
+    assert spec.loader is not None
+    mod = importlib.util.module_from_spec(spec)
+    import sys
+
+    sys.modules["gpu_jobs"] = mod
+    spec.loader.exec_module(mod)
+    outs = mod.JOBS["student_8b"].outputs.values()
+    assert all("student_8b" in o for o in outs)

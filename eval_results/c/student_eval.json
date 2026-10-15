@@ -1,0 +1,51 @@
+{
+ "model": "finsight-student:q4",
+ "seed": 2026,
+ "cpu": {
+  "num_gpu": 0,
+  "n": 60,
+  "seconds_per_risk_mean": 12.3,
+  "seconds_per_risk_median": 12.2,
+  "seconds_per_risk_max": 27.7,
+  "tokens_per_s": 4.7,
+  "mean_output_tokens": 57.9
+ },
+ "e19_readability": {
+  "dev_sample": {
+   "n": 60,
+   "fkgl_original": 19.01,
+   "fkgl_rewrite": 9.59,
+   "fkgl_drop": 9.42,
+   "flesch_original": 16.8,
+   "flesch_rewrite": 45.9
+  },
+  "gold50": {
+   "n": 50,
+   "fkgl_original": 17.83,
+   "fkgl_rewrite": 9.36,
+   "fkgl_drop": 8.47,
+   "flesch_original": 20.6,
+   "flesch_rewrite": 48.7
+  }
+ },
+ "e20_checks": {
+  "dev_sample": {
+   "n": 60,
+   "rejected": 3,
+   "pass_rate": 0.95,
+   "reasons": {
+    "number_mismatch": 1,
+    "certainty_changed": 2
+   }
+  },
+  "gold50": {
+   "n": 50,
+   "rejected": 1,
+   "pass_rate": 0.98,
+   "reasons": {
+    "certainty_changed": 1
+   }
+  }
+ },
+ "finished_utc": "2026-10-15T11:50:02+00:00"
+}
