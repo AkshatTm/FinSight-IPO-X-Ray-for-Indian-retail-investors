@@ -1,0 +1,67 @@
+{
+ "checked_utc": "2026-10-15T13:42:26+00:00",
+ "links": 855,
+ "distinct_urls": 855,
+ "total": {
+  "live_other": 780,
+  "live_pdf": 48,
+  "dead_None": 27
+ },
+ "by_close_year": {
+  "2009": {
+   "live_other": 38
+  },
+  "2010": {
+   "live_other": 111
+  },
+  "2011": {
+   "live_other": 61
+  },
+  "2012": {
+   "live_other": 18
+  },
+  "2013": {
+   "live_other": 5
+  },
+  "2014": {
+   "live_other": 10
+  },
+  "2015": {
+   "live_other": 39,
+   "live_pdf": 2
+  },
+  "2016": {
+   "live_other": 47,
+   "live_pdf": 4
+  },
+  "2017": {
+   "live_other": 67,
+   "live_pdf": 8
+  },
+  "2018": {
+   "live_pdf": 3,
+   "live_other": 45
+  },
+  "2019": {
+   "live_other": 23,
+   "live_pdf": 7
+  },
+  "2020": {
+   "live_pdf": 1,
+   "live_other": 27
+  },
+  "2021": {
+   "live_other": 115,
+   "live_pdf": 9
+  },
+  "2022": {
+   "live_pdf": 5,
+   "live_other": 69
+  },
+  "2023": {
+   "live_other": 105,
+   "dead_None": 27,
+   "live_pdf": 9
+  }
+ }
+}

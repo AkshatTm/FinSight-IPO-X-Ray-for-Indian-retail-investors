@@ -9,6 +9,7 @@
 - **Open files / failing tests:** none new (fast suite green apart from the regenerated docs page).
 
 ## Log
+- C1.5 done: BIR link check (`scripts/check_bir_links.py`): 855 links, 48 direct PDFs live, 780 HTML pages, 27 dead; backfill decision in AKSHAT_TODO
 - C3.1a: summary financial tables + financials stage (PR #224); dev coverage: all 11 values in 67% of RHPs, cross-source agreement 257/258.
 - C2.5 done (4B): gold-50 human rating: faithful yes base 0.84 / student 0.92 (CI 0.81-0.97) / teacher 0.98, plain English 3.00 / 4.64 / 4.80; post-check rejects cut-off outputs now (base had 9; student and teacher 0)
 - C2.5 follow-ups: notebook GGUF fix + test, `train_runtime_s` 4,224 s recorded, model card, E19/E20 + CPU timing (12.3 s per risk, 60 dev risks; FKGL 19.0 -> 9.6; 3/60 rejected), 8B preset + steps ready, gold-50 sheet written
