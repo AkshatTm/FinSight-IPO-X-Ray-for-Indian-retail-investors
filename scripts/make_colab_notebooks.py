@@ -421,6 +421,8 @@ STUDENT_SETUP = """
 import subprocess, sys
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "peft>=0.13", "bitsandbytes>=0.45",
                 "huggingface_hub"], check=True)
+# Colab ships torchao 0.10, which peft rejects (needs >= 0.16); LoRA does not use it.
+subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "torchao"], check=False)
 """
 
 STUDENT_MAIN = """
@@ -490,7 +492,7 @@ def main():
         output_dir=str(ckpt_dir), num_train_epochs=EPOCHS, max_steps=10 if SMOKE else -1,
         per_device_train_batch_size=bs, per_device_eval_batch_size=bs,
         gradient_accumulation_steps=accum, learning_rate=LEARNING_RATE, lr_scheduler_type="cosine",
-        warmup_ratio=0.03, fp16=(PRECISION == "nf4"), bf16=(PRECISION == "bf16"), gradient_checkpointing=True,
+        warmup_steps=max(1, int(0.03 * math.ceil(len(train) / (bs * accum)) * EPOCHS)), fp16=(PRECISION == "nf4"), bf16=(PRECISION == "bf16"), gradient_checkpointing=True,
         logging_steps=10, eval_strategy="steps", eval_steps=SAVE_STEPS, save_strategy="steps",
         save_steps=SAVE_STEPS, save_total_limit=2, report_to="none", seed=SEED, remove_unused_columns=False)
     trainer = Trainer(model=model, args=args, train_dataset=Rows(train), eval_dataset=Rows(dev),
