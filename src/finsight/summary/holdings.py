@@ -165,6 +165,8 @@ def promoter_post(doc: ParsedDoc, sections: list[Section], doc_id: str) -> Summa
     if any(v is None for v in values):
         return SummaryValue(key="promoter_holding_post_pct", status="not_found")
     total = sum((v for v in values if v is not None), Decimal(0))
+    if total > 100:  # a share-count column read as "%" (C3.7b), or non-promoter rows added up
+        return SummaryValue(key="promoter_holding_post_pct", status="not_found")
     value = Percent(value=total, raw=f"{total}%")
     status = "found" if total > 0 else "stated_zero"
     return SummaryValue(

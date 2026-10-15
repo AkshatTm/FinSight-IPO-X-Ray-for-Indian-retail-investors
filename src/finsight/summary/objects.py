@@ -5,6 +5,8 @@
   is a ``placeholder``. When the row and the "Gross Proceeds" row (else the "Net Proceeds" /
   "Total" row) both print amounts, the share is their ratio; the evidence names the rows used.
   A printed percentage in the row is used as printed.
+  A pure offer for sale (no fresh issue, "will not receive any proceeds") has no such row: it
+  is a ``stated_zero``, with the sentence that says so.
 * ``rpt_total``: a "Total" row of the related-party transactions table in the Summary, latest
   full fiscal year column. Many RHPs list the transactions without a total: then nothing is
   added up and the value is not found.
@@ -25,6 +27,7 @@ from finsight.core.schemas import (
     SummaryValue,
 )
 from finsight.normalize import parse_amount
+from finsight.parse import is_pure_ofs
 from finsight.summary.anchored import Cell, is_cell_value, split_line
 from finsight.summary.financials import (
     _RATIO,
@@ -42,6 +45,10 @@ _GCP = re.compile(r"general\s+corporate\s+purposes?", re.IGNORECASE)
 # The row label, not a sentence such as "... towards general corporate purposes shall not exceed".
 _GCP_ROW = re.compile(
     r"^(?:\(?[a-z0-9]{1,3}[.)]\s*)?general\s+corporate\s+purposes?\W*(?:\(\d{1,2}\)\W*)*$",
+    re.IGNORECASE,
+)
+_NO_PROCEEDS = re.compile(
+    r"[^.]{0,200}will not receive any (?:of the )?proceeds (?:from|of) the Offer[^.]{0,120}\.?",
     re.IGNORECASE,
 )
 _MARKS = re.compile(r"[*^#@†‡]+|\(\d{1,2}\)")
@@ -138,6 +145,15 @@ def general_purposes(doc: ParsedDoc, sections: list[Section], doc_id: str) -> Su
     for page in pages:
         if _GCP.search(page.text) and (found := _gcp_on_page(page, doc_id)):
             return found
+    for page in pages:
+        if is_pure_ofs(page.text):
+            m = _NO_PROCEEDS.search(" ".join(page.text.split()))
+            sentence = m.group(0) if m else "The Offer is entirely an Offer for Sale."
+            return SummaryValue(
+                key="general_purposes_pct_of_fresh", value=Percent(value=Decimal(0), raw="N.A."),
+                period="final", status="stated_zero",
+                evidence=PageEvidence(doc_id=doc_id, page=page.number, sentence=sentence[:300]),
+            )  # fmt: skip
     return None
 
 

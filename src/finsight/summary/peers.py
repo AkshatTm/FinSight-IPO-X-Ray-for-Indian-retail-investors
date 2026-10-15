@@ -95,7 +95,16 @@ def _from_ruled(tables: list[Table], doc_id: str, issuer: str) -> list[Peer]:
 def extract_peers(
     doc: ParsedDoc, sections: list[Section], doc_id: str, tables: list[Table] | None = None
 ) -> list[Peer]:
-    """The peer table of Basis for Offer Price (ruled tables first, then words)."""
+    """The peer table of Basis for Offer Price (ruled tables first, then words); the issuer's
+    P/E from its own statement when the table gives none."""
+    return with_issuer_pe(
+        _peer_table(doc, sections, doc_id, tables), issuer_pe_statement(doc, sections, doc_id)
+    )
+
+
+def _peer_table(
+    doc: ParsedDoc, sections: list[Section], doc_id: str, tables: list[Table] | None
+) -> list[Peer]:
     hint = _issuer_words(doc.ipo_id or doc_id)
     ruled = [t for t in tables or [] if t.section_id == "basis_for_offer_price"]
     if peers := _from_ruled(ruled, doc_id, hint):
@@ -110,3 +119,60 @@ def extract_peers(
         if peers := peers_from_words(table, doc_id, hint):
             return peers
     return []
+
+
+# ------------------------------------------------------------------ issuer P/E statement
+_PE_ROW = re.compile(
+    r"Based\s+on\s+(?P<kind>basic|diluted)\s+EPS(?P<rest>.{0,160}?)(?=Based\s+on\s|\d\.\s|$)",
+    re.IGNORECASE | re.DOTALL,
+)
+_DATE = re.compile(
+    r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
+    r"\s+\d{1,2}(?:,?\s+\d{4})?|\bF\.?Y\.?\s*\d{2,4}(?:[-–]\d{2,4})?"
+    r"|\b(?:19|20)\d{2}\b(?:[-–]\d{2,4})?",
+    re.IGNORECASE,
+)
+_PE_FIGURE = re.compile(r"\[\s*●\s*\]|(?<![\d.])\d{1,4}(?:\.\d{1,2})?(?![\d.])")
+
+
+def issuer_pe_statement(doc: ParsedDoc, sections: list[Section], doc_id: str) -> Peer | None:
+    """The issuer's own "P/E ratio in relation to the Offer Price" rows of Basis for Offer Price.
+
+    "Based on basic EPS for financial year ended March 31, 2025 | 62.05" (or ``[●]`` in an RHP,
+    or two columns at the floor and cap price). The basic-EPS row wins; the first figure of the
+    row is the P/E (at the floor price when two are printed). Returns a Peer row for the issuer
+    (``pe`` ``None`` for a ``[●]``), or ``None`` when the page has no such table.
+    """
+    pages = _pages(doc, _section_pages(sections, "basis_for_offer_price", 30))
+    best: tuple[int, Peer] | None = None
+    for page in pages:
+        text = " ".join(page.text.split())
+        if not re.search(r"P\s*/\s*E\s+(?:at|ratio)|price\s*/?\s*earning", text, re.IGNORECASE):
+            continue
+        for m in _PE_ROW.finditer(text):
+            rest = _DATE.sub(" ", m.group("rest"))
+            fig = _PE_FIGURE.search(rest)
+            if fig is None:
+                continue
+            raw = fig.group(0)
+            pe = None if "●" in raw else Decimal(raw)
+            rank = 0 if m.group("kind").lower() == "basic" else 1
+            if best is not None and best[0] <= rank:
+                continue
+            sentence = " ".join(m.group(0).split())[:300]
+            ev = PageEvidence(doc_id=doc_id, page=page.number, sentence=sentence)
+            best = (rank, Peer(name="Issuer", is_issuer=True, pe=pe, evidence=ev))
+    return best[1] if best else None
+
+
+def with_issuer_pe(peers: list[Peer], statement: Peer | None) -> list[Peer]:
+    """``peers`` with the issuer row's P/E filled from the statement when the table had none."""
+    if statement is None or statement.pe is None:
+        return peers
+    issuer = next((p for p in peers if p.is_issuer), None)
+    if issuer is None:
+        return [statement, *peers]
+    if issuer.pe is None:
+        issuer.pe = statement.pe
+        issuer.evidence = statement.evidence
+    return peers
