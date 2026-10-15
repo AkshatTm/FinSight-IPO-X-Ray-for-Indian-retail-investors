@@ -91,7 +91,21 @@ def _row(key: str, raw: str = "", unit: str = "", status: str = "found", **kw: A
         (_row("auditor_remarks", "Emphasis of matter on basis of preparation"), True),
         (_row("auditor_remarks", "None"), False),
         (_row("peer_pe_list", "68.2, 20"), True),
-        (_row("peer_pe_list", "20"), False),
+        (_row("peer_pe_list", "20"), True),  # contains: the pipeline may list more peers
+        (_row("peer_pe_list", "20; 99.5"), False),
+        (_row("peer_pe_list", "Hero 20.0; TVS 68.2 (highest 68.2, lowest 20.0)"), True),
+        (_row("criminal_cases_any", "Yes — 12 proceedings by the Company"), True),
+        (_row("criminal_cases_any", "Nil", status="stated_zero"), False),  # pipeline has 12
+        (_row("pledged_promoter_pct", "0 (Nil)", "%", status="stated_zero"), False),  # has 3.93
+        (_row("pledged_promoter_pct", "3.93 (of promoter holding)", "%"), True),
+        (
+            _row("litigation_amount_total", "Company 1,000.00; Promoter 101,600.58", "₹ million"),
+            True,
+        ),
+        (_row("litigation_amount_total", "Company 1,000.00; Promoter 5.0", "₹ million"), False),
+        (_row("issuer_pe", "N.A. (loss-making)", "times"), True),  # no figure on either side
+        (_row("waca_promoters", "Negligible", "₹ per share"), True),  # pipeline leaves it out
+        (_row("customer_top10_pct", "<0.34 (top 20 borrowers)", "% of loans"), False),
         (_row("issuer_pe", status="placeholder"), True),
         (_row("customer_top10_pct", status="not_found"), True),
         (_row("rpt_total", "125.38", "₹ million"), False),

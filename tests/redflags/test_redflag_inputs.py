@@ -102,6 +102,44 @@ def test_gold_rows_become_inputs_with_units_and_evidence() -> None:
     assert x.evidence["offer_price"].doc_id == "doc_fedcba9876543210"
 
 
+def test_stated_zero_rows_load_as_zero_not_as_missing() -> None:
+    rows = [
+        row("total_borrowings", "0 (Nil)", "₹ million", status="stated_zero"),
+        row("pledged_promoter_pct", "0 (Nil)", "%", "final", status="stated_zero"),
+        row("general_purposes_pct_of_fresh", "N.A. (no fresh issue)", "", "final",
+            status="stated_zero"),
+        row("criminal_cases_any", "Nil in every cell", "count", status="stated_zero"),
+        row("auditor_remarks", "-", "", status="stated_zero"),
+        row("peer_pe_list", "None — no listed peers", "times", "final", status="stated_zero"),
+    ]  # fmt: skip
+    x = inputs_from_gold(DOC, rows)
+    assert x.total_borrowings is not None
+    assert x.total_borrowings.value_inr == Decimal(0)
+    assert (x.pledged_pct, x.general_purposes_pct) == (Decimal(0), Decimal(0))
+    assert (x.criminal_any, x.criminal_cases) == (False, None)
+    assert x.auditor == "none"
+    assert x.peer_median_pe is None
+
+
+def test_annotated_and_multi_part_gold_text_is_read() -> None:
+    rows = [
+        row("pledged_promoter_pct", "0 (Nil)", "%", "final"),
+        row("criminal_cases_any", "Yes — 9 criminal proceedings by the Promoter"),
+        row("issuer_pe", "31.35 (diluted); 29.94 (basic)", "times", "final"),
+        row("peer_pe_list", "Angel One 24.88; 360 One WAM 26.85 (highest 26.85, average 25.9)"),
+        row("litigation_amount_total", "Against Company 1,391.41; against Directors 0.50; "
+            "against Subsidiaries USD 2 million (not converted)", "₹ million"),
+        row("profit_after_tax", "(120.5)", "₹ million"),
+    ]  # fmt: skip
+    x = inputs_from_gold(DOC, rows)
+    assert (x.pledged_pct, x.criminal_any, x.issuer_pe) == (Decimal(0), True, Decimal("31.35"))
+    assert x.peer_median_pe == Decimal("25.865")
+    assert x.litigation_amount is not None
+    assert x.litigation_amount.value_inr == Decimal("1391910000.00")
+    assert x.profit_after_tax[0] is not None
+    assert x.profit_after_tax[0].value_inr == Decimal("-120500000.0")  # "(120.5)" stays negative
+
+
 def test_gold_inputs_through_the_rules() -> None:
     by_id = {f.id: f for f in evaluate(inputs_from_gold(DOC, GOLD)).flags}
     assert by_id["RF01"].status == "watch"  # loss in the latest year only

@@ -9,10 +9,20 @@ Prospectus when the row says so and it was parsed). Gold values are normalised w
 parsers as the red-flag gold path (``redflags.inputs``), so both sides use one unit convention.
 
 * A gold ``placeholder`` or ``not_found`` row is correct when the pipeline reports that status.
+* A gold ``stated_zero`` row (an explicit Nil / "-" / N.A.) is correct when the pipeline reports
+  ``stated_zero`` or the value 0 (for ``criminal_cases_any``: zero cases; ``peer_pe_list``: no
+  peers; ``auditor_remarks``: no remarks).
 * A gold value is correct (numeric value match, NVM) when the pipeline's value matches: money
   within 0.5 % (tables round differently), percentages within 0.05 points, counts exactly,
-  yes/no exactly, auditor remarks by kind (qualified / emphasis / CARO / none), peer P/E lists
-  element by element within 1 %.
+  yes/no exactly (first word, so "Yes — 9 proceedings" works), auditor remarks by kind
+  (qualified / emphasis / CARO / none).
+* Multi-part text values are scored leniently, never by exact string: peer P/E lists by
+  *contains* (every gold peer figure is among the pipeline's, within 1 %); litigation / RPT by-party
+  amounts match any printed part or their sum (0.5 %); selling-shareholder costs match when the
+  pipeline's share-weighted average lies within the per-holder range; "<0.34" and "Negligible" are
+  upper bounds; issuer P/E lists match any listed figure. A gold text with no figure
+  ("N.A. (loss-making)") is correct when the pipeline gives none; a found peer list with no
+  per-peer figures is ``unscorable`` and left out of the accuracy.
 * Page agreement is reported where both sides give a page.
 
 Offer facts (price, fresh issue, OFS) are X-Ray fields, scored elsewhere; they are counted as out
@@ -50,7 +60,14 @@ from finsight.core.schemas import (  # noqa: E402
     Section,
     SummaryValue,
 )
-from finsight.redflags.inputs import _decimal, _gold_amount, _yes_no, auditor_kind  # noqa: E402
+from finsight.redflags.inputs import (  # noqa: E402
+    _gold_amount,
+    _yes_no,
+    auditor_kind,
+    gold_amount_parts,
+    gold_number,
+    gold_peer_pes,
+)
 
 GOLD = ROOT / "data" / "gold" / "gold_v3_summary.jsonl"
 OUT = ROOT / "eval_results" / "b" / "summary_extraction.json"
@@ -134,8 +151,22 @@ def predicted(summary: FinancialSummary, key: str, period: str) -> Pred:
     return Pred("not_found")
 
 
+PCT_KEYS = {
+    "promoter_holding_post_pct", "general_purposes_pct_of_fresh", "customer_top1_pct",
+    "customer_top10_pct", "pledged_promoter_pct",
+}  # fmt: skip
+MULTI_PART_MONEY = {"litigation_amount_total", "rpt_total"}
+WACA_KEYS = {"waca_promoters", "waca_selling_shareholders"}
+NEGLIGIBLE = Decimal("0.01")  # "Negligible" is printed for costs of at most ₹ 0.01
+
+
 def gold_value(row: Mapping[str, Any]) -> Any:
-    """The gold row's value normalised like the red-flag gold path."""
+    """The gold row's value normalised like the red-flag gold path.
+
+    Single values come back as a number, int, bool or text. Multi-part text comes back as a list
+    (peer P/Es, per-holder costs, by-party amounts, alternative P/Es) and bounds ("<0.34",
+    "Negligible") as ``("<=", number)``; ``None`` means the gold text states no number (``N.A.``).
+    """
     key, raw = str(row["key"]), str(row.get("value_raw") or "").strip()
     if key == "criminal_cases_any":
         return int(raw) if raw.isdigit() else _yes_no(raw)
@@ -144,17 +175,34 @@ def gold_value(row: Mapping[str, Any]) -> Any:
     if key == "auditor_remarks":
         return raw
     if key == "peer_pe_list":
-        return sorted(d for part in re.split(r"[;,]\s*", raw) if (d := _decimal(part)) is not None)
-    if key in {
-        "promoter_holding_post_pct", "general_purposes_pct_of_fresh", "customer_top1_pct",
-        "customer_top10_pct", "pledged_promoter_pct", "issuer_pe",
-    }:  # fmt: skip
-        return _decimal(raw)
+        return sorted(gold_peer_pes(raw))
+    if key == "issuer_pe":  # "31.35 (diluted); 29.94 (basic)": any of the listed figures
+        return [
+            d for part in raw.split(";") if (d := gold_number(part.strip())) is not None
+        ] or None
+    if key in PCT_KEYS:
+        d = gold_number(raw)
+        if d is not None and raw.lstrip().startswith("<"):
+            return ("<=", d)
+        return d
+    if key in WACA_KEYS:
+        if raw.lower().startswith("negligible"):
+            return ("<=", NEGLIGIBLE)
+        return gold_peer_pes(raw) or None
+    if key in MULTI_PART_MONEY and re.search(r"[A-Za-z]{3}", raw):
+        parts = gold_amount_parts(raw)
+        unit = str(row.get("unit") or "")
+        moneys = [
+            m.value_inr
+            for p in parts
+            if isinstance(m := _gold_amount({"key": key, "value_raw": f"{p}", "unit": unit}), Money)
+            and m.value_inr is not None
+        ]
+        if moneys:  # any single printed amount, or all of them added up
+            return [*moneys, sum(moneys, Decimal(0))]
     value = _gold_amount(row)
     if isinstance(value, Money):
         return value.value_inr
-    if key in {"waca_promoters", "waca_selling_shareholders"} and raw:
-        return _decimal(raw)
     return value
 
 
@@ -167,6 +215,18 @@ def values_match(key: str, gold: Any, pred: Any) -> bool:
     """Whether the pipeline's value is the gold value under the key's rule."""
     if gold is None or pred is None:
         return False
+    if isinstance(gold, tuple):  # an upper bound: "<0.34", "Negligible"
+        return Decimal(pred) <= gold[1] + (PCT_TOL if key in PCT_KEYS else Decimal(0))
+    if isinstance(gold, list):
+        if not gold:
+            return False
+        if key == "peer_pe_list":  # contains: every gold peer is among the pipeline's
+            return all(any(_close(Decimal(g), Decimal(p), PE_TOL) for p in pred) for g in gold)
+        if key in WACA_KEYS:  # a share-weighted average lies within the per-holder range
+            lo, hi = min(gold), max(gold)
+            return lo * (1 - MONEY_TOL) <= Decimal(pred) <= hi * (1 + MONEY_TOL)
+        rel = PE_TOL if key == "issuer_pe" else MONEY_TOL
+        return any(_close(Decimal(g), Decimal(pred), rel) for g in gold)
     if key == "criminal_cases_any":
         if isinstance(gold, bool):
             return gold == (int(pred) > 0)
@@ -186,6 +246,28 @@ def values_match(key: str, gold: Any, pred: Any) -> bool:
     return _close(Decimal(gold), Decimal(pred), MONEY_TOL)
 
 
+def zero_matches(key: str, pred: Pred) -> bool:
+    """Whether the pipeline reports the explicit zero a ``stated_zero`` gold row records.
+
+    Numbers: ``stated_zero`` or a value of 0. ``criminal_cases_any``: zero cases / "No". Peer
+    list: no peers. Auditor remarks: no remarks (kind ``none``).
+    """
+    if pred.status == "stated_zero":
+        return True
+    if key == "peer_pe_list":
+        return pred.status not in SUMMARY_HAS_VALUE or pred.value in (None, [])
+    if pred.status not in SUMMARY_HAS_VALUE or pred.value is None:
+        return False
+    if key == "auditor_remarks":
+        return auditor_kind(str(pred.value)) == "none"
+    if key == "is_financial_company":
+        return not pred.value
+    try:
+        return Decimal(str(int(pred.value) if isinstance(pred.value, bool) else pred.value)) == 0
+    except ArithmeticError:
+        return False
+
+
 def score_row(row: Mapping[str, Any], summary: FinancialSummary | None) -> dict[str, Any]:
     """One scored gold row."""
     key, period = str(row["key"]), str(row["period"])
@@ -200,10 +282,23 @@ def score_row(row: Mapping[str, Any], summary: FinancialSummary | None) -> dict[
     out |= {"scope": "summary", "pred_status": pred.status}
     if gold_status in {"placeholder", "not_found"}:
         out["correct"] = pred.status == gold_status
+    elif gold_status == "stated_zero":
+        out["correct"] = zero_matches(key, pred)
     else:
-        out["correct"] = pred.status in SUMMARY_HAS_VALUE and values_match(
-            key, gold_value(row), pred.value
-        )
+        gold = gold_value(row)
+        has = pred.status in SUMMARY_HAS_VALUE
+        if gold is None or gold == []:
+            if key != "peer_pe_list" and str(row.get("value_raw") or "").strip():
+                # The gold text names no number ("N.A. (loss-making)"): the pipeline must give none.
+                out["gold_expects_no_value"] = True
+                out["correct"] = not has or pred.value in (None, [])
+            else:
+                out["unscorable"] = True  # found, but nothing to compare with
+                out["correct"] = False
+        elif isinstance(gold, tuple) and key in WACA_KEYS and not has:
+            out["correct"] = True  # "Negligible" costs are left out of the average, and named
+        else:
+            out["correct"] = has and values_match(key, gold, pred.value)
     gold_page = row.get("page")
     if gold_page and pred.page:
         out["page_match"] = int(gold_page) == int(pred.page)
@@ -212,7 +307,8 @@ def score_row(row: Mapping[str, Any], summary: FinancialSummary | None) -> dict[
 
 def summarise(scored: list[dict[str, Any]]) -> dict[str, Any]:
     """Accuracy per key, NVM over gold values, status accuracy over gold blanks, page agreement."""
-    rows = [r for r in scored if r.get("scope") == "summary"]
+    all_rows = [r for r in scored if r.get("scope") == "summary"]
+    rows = [r for r in all_rows if not r.get("unscorable")]  # found, but gold has no figure
     per_key: dict[str, Counter[str]] = defaultdict(Counter)
     for r in rows:
         per_key[r["key"]]["n"] += 1
@@ -227,6 +323,7 @@ def summarise(scored: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "n_rows": len(rows),
         "n_out_of_scope": sum(r.get("scope") == "out_of_scope" for r in scored),
+        "n_unscorable": len(all_rows) - len(rows),
         "nvm": share(valued, "correct"),
         "n_valued": len(valued),
         "status_accuracy_on_blanks": share(blanks, "correct"),
