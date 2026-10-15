@@ -34,6 +34,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Read the units in the Colab Resources panel (before the session: 193.67) and tell Claude, so the teacher_full + gold_eval session is logged.
 - [ ] **Rate the quality-100 sheet** `data/processed/teacher/quality_sheet.csv` (~30 min): `faithful` = yes / partly / no, `category_correct` = yes / no (write the right category in `notes`). Tell Claude "quality-100 rated". CG2 = at least 85 % yes.
 
+### C2.7 extractor v2: a decision before it can start
+- [ ] The weak labels (ADR-038) come from the BIR spreadsheet's allow-listed value columns matched into the cover pages, and that spreadsheet ends with close year 2023 (`eval_results/c/bir_links.json` by year). So "weak labels over `train` incl. 2024+" has **no value source for the 2024+ IPOs**. Options: (a) keep 2009-2023 only: v2 would equal v1, so skip C2.7 and say so; (b) label 2024+ cover pages from the rule extractor plus the C3.1a cross-source agreement (agreeing values only): a self-training signal, labelled `label_source=rules_agree`, audited on 50 rows by you; (c) you hand-verify values for the 2024+ train IPOs (~150 IPOs, too slow). Claude recommends (b). Say "C2.7 option b" (or a/c) and it runs on Kaggle with 3 seeds; no GPU session is open for it until then.
+
 ### C1.5 BIR backfill decision
 - [ ] `eval_results/c/bir_links.json`: of 855 BIR spreadsheet links (2009-2023) only 48 are direct PDFs that still answer (2015-2023: 2, 4, 8, 3, 7, 1, 9, 5, 9); 780 are HTML filing pages and 27 are dead (all 2023). Decide: backfill the 48 PDFs (gives older RHPs with font cues for risk splitting; cheap), and/or have Claude extend the fetcher to resolve the HTML pages to PDFs (bigger, uncertain). Low priority.
 
