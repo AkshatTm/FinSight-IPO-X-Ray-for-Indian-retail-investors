@@ -73,10 +73,10 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 **CG2:** teacher output accepted (≥ 85 % "same meaning: yes" on quality-100) · datasheet updated.
 
-- [ ] **C2.4 Classifier** (was B2.4b) · 💻 L + 🔵 K + 👤 A · S · Needs: CG2, C2.3b, gold-150
+- [x] **C2.4 Classifier** (was B2.4b) · 💻 L + 🔵 K + 👤 A · S · Needs: CG2, C2.3b, gold-150
   TF-IDF; base 3 seeds (Kaggle); large 3 seeds (Colab); base must beat TF-IDF on dev; ONNX; E16; model card. Seriousness scored with MAE, within-1 accuracy and severe-band recall.
   - [x] TF-IDF 0.862 · [x] base 3 seeds: dev macro-F1 0.892 ± 0.006 (beats TF-IDF), gold-150 0.899 (best seed 0.881, acc 0.933) · [x] seriousness dev MAE 0.186, within-1 0.997, severe recall 0.56 (gold-150 best seed: MAE 0.14, severe recall 0.75 on 4 rows) · [x] E16 · [x] ONNX **fp32** (int8 broke DeBERTa-v3: agreement 0.05, best 0.82; `eval_results/c/classifier_onnx_int8_attempt.json`) · [x] model card
-  - [ ] large 3 seeds on Colab (`docs/phase3/colab_run_classifier_large_cell.py`, inputs pushed; waits for the G4 after the 8B)
+  - [x] large 3 seeds on the Colab G4 (~1 h 25 m): dev macro-F1 0.894 ± 0.007 vs base 0.892 ± 0.006 (+0.002, inside the seed spread), seriousness severe recall 0.49 vs 0.56, gold-150 0.875 vs 0.899: **large does not win; the base stays** (`eval_results/c/classifier_large.json`). C2.4 done.
 - [x] **C2.5 Student simplifier** (was B2.5b) · 💻 L + 🟠 G + 👤 A · S · Needs: CG2, C2.3b, gold-50 sheet
   Zero-shot bake-off; 4B bf16 LoRA on Colab; 8B variant; GGUF; E18–E20 + CPU seconds; model card.
   - [x] Zero-shot base (gold-50: 16/50 pass the product checks)
