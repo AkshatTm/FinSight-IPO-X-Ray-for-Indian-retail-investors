@@ -12,7 +12,7 @@ Thresholds version: `b01-initial-1` (stored in every `redflags.json`). Missing d
 | RF02 | Cash from the business | Watch if the business used more cash than it brought in last year. Concern if that happened in 2 or more of the last 3 years. | `concern_negative_years` = 2 |
 | RF03 | Debt | Total borrowings divided by net worth. Watch above 1.0, Concern above 2.0. Not used for lenders. | `watch_above` = 1.0, `concern_above` = 2.0 |
 | RF04 | Who gets the IPO money | The share of the IPO that goes to existing shareholders who are selling. Watch above 50%, Concern above 80%. | `watch_above_pct` = 50, `concern_above_pct` = 80 |
-| RF05 | What insiders paid | The IPO price divided by the average price selling shareholders paid. Watch at 5 times or more, Concern at 20 times or more. | `watch_at_least` = 5, `concern_at_least` = 20 |
+| RF05 | What insiders paid | The IPO price divided by the average price the promoters paid. Watch at 5 times or more, Concern at 20 times or more. | `watch_at_least` = 5, `concern_at_least` = 20 |
 | RF06 | Founders' stake after the IPO | Promoter and promoter group holding after the IPO. Watch below 40%, Concern below 25% or when there is no identifiable promoter. | `watch_below_pct` = 40, `concern_below_pct` = 25 |
 | RF07 | Vague use of money | The share of the new money set aside for general purposes or acquisitions not yet named. Watch above 20%, Concern at 30% or more. | `watch_above_pct` = 20, `concern_at_least_pct` = 30 |
 | RF08 | Court cases | Watch if there is any criminal case involving the company, promoters or directors. Concern if the amounts in dispute are more than 10% of net worth. | `concern_above_pct_of_net_worth` = 10 |

@@ -30,11 +30,18 @@ KEYS: list[tuple[str, tuple[str, ...], str, str, str]] = [
     ("fresh_issue_amount", ("final",), "prospectus", "cover / the offer", "RF04,RF07"),
     ("ofs_amount", ("final",), "prospectus", "cover / the offer", "RF04"),
     (
+        "waca_promoters",
+        ("final",),
+        "prospectus",
+        "summary: average cost of acquisition, promoters only, share-weighted",
+        "RF05",
+    ),
+    (
         "waca_selling_shareholders",
         ("final",),
         "prospectus",
-        "summary: weighted average cost of acquisition",
-        "RF05",
+        "summary: average cost of acquisition, selling shareholders only, share-weighted",
+        "",
     ),
     (
         "promoter_holding_post_pct",

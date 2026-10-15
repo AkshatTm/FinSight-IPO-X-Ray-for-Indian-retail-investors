@@ -1,6 +1,6 @@
 """The upload pipeline's stages (B02 §3.1): ``validated``, ``detected``, ``parsed``, ``sections``,
-``financials`` and ``risks_split`` so far; later parts append facts, red flags, risk scoring,
-risk level, simplify, index and compare to ``upload_stages``.
+``financials``, ``redflags`` and ``risks_split`` so far; later parts append facts, risk
+scoring, risk level, simplify, index and compare to ``upload_stages``.
 
 Stages hand their results to later ones through ``ctx.scratch``; on a retry a cached stage is
 skipped, so later stages read its stored output instead (``_parsed_doc``, ``_sections``).
@@ -19,6 +19,8 @@ from finsight.ingest import validate_pdf
 from finsight.jobs.runner import JobContext, Stage, StageRejected
 from finsight.parse import extract_tables, find_sections, parse_pdf, pymupdf_backend
 from finsight.pipeline import RISKS, RISKS_FILE, split_risks
+from finsight.redflags import REDFLAGS_FILE
+from finsight.redflags import build as build_redflags
 from finsight.storage import put_json
 from finsight.summary import PEER_SECTIONS, SUMMARY_FILE, extract_summary
 
@@ -108,7 +110,7 @@ def _financials(ctx: JobContext) -> dict[str, Any]:
         summary.litigation.get("criminal_cases"), summary.litigation.get("amount_total"),
         summary.rpt_total, summary.promoter_holding_post, summary.pledged_pct,
         summary.customer_top1_pct, summary.customer_top10_pct, summary.general_purposes_pct,
-        summary.waca[0] if summary.waca else None,
+        next((v for v in summary.waca if v.key == "waca_promoters"), None),
     ]  # fmt: skip
     return {
         "ready": True,
@@ -118,6 +120,20 @@ def _financials(ctx: JobContext) -> dict[str, Any]:
         "other_placeholder": sum(v is not None and v.status == "placeholder" for v in fields),
         "peers": len(summary.peers),
         "financial_company": summary.is_financial_company,
+    }
+
+
+def _redflags(ctx: JobContext) -> dict[str, Any]:
+    flags = build_redflags(ctx.storage, ctx.doc_id, _parsed_doc(ctx), _sections(ctx))
+    by_status: dict[str, int] = {}
+    for f in flags.flags:
+        by_status[f.status] = by_status.get(f.status, 0) + 1
+    return {
+        "ready": True,
+        "n_flags": len(flags.flags),
+        "concern": by_status.get("concern", 0),
+        "watch": by_status.get("watch", 0),
+        "severe": [o.id for o in flags.severe_overrides],
     }
 
 
@@ -143,5 +159,6 @@ def upload_stages() -> list[Stage]:
         Stage("parsed", _parsed, output=PARSED, requires=("detected",), critical=True),
         Stage("sections", _sections_stage, output=SECTIONS, requires=("parsed",)),
         Stage("financials", _financials, output=SUMMARY_FILE, requires=("sections",)),
+        Stage("redflags", _redflags, output=REDFLAGS_FILE, requires=("financials",)),
         Stage("risks_split", _risks_split, output=RISKS_FILE, requires=("sections",)),
     ]

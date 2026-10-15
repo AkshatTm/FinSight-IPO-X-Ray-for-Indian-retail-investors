@@ -55,7 +55,7 @@ export const REDFLAGS: Schemas["RedFlags"] = {
     flag("RF02", "Cash from the business", "watch", "The business used more cash than it brought in last year (₹-38.2 crore).", { "Operating cash flow FY2026": "₹-38.2 crore" }, 318, "Watch if negative in the latest year; Concern if negative in 2 of the last 3 years."),
     flag("RF03", "Debt", "ok", "Debt is 0.4× its net worth.", { "Debt": "₹410.0 crore", "Net worth": "₹1,025.0 crore" }, 305, "Watch above 1.0×; Concern above 2.0×."),
     flag("RF04", "Who gets the IPO money", "concern", "85.0% of the money goes to existing shareholders who are selling, not to the company.", { "Fresh issue": "₹150.0 crore", "Offer for sale": "₹850.0 crore" }, 12, "Watch above 50%; Concern above 80%."),
-    flag("RF05", "What insiders paid", "watch", "Selling shareholders bought their shares at an average of ₹42.10. The IPO price is ₹310, about 7.4× more.", { "Average cost": "₹42.10", "Price": "₹310" }, 21, "Watch at 5× or more; Concern at 20× or more."),
+    flag("RF05", "What insiders paid", "watch", "Promoters bought their shares at an average of ₹42.10. The IPO price is ₹310, about 7.4× more.", { "Average cost": "₹42.10", "Price": "₹310" }, 21, "Watch at 5× or more; Concern at 20× or more."),
     flag("RF06", "Founders' stake after the IPO", "ok", "Promoters will still own 61.2% of the company.", { "Promoter stake after": "61.2%" }, 88),
     flag("RF07", "Vague use of money", "not_applicable", "", {}, 0),
     flag("RF08", "Court cases", "watch", "There are 2 criminal case(s) involving the company, promoters or directors.", { "Criminal cases": "2" }, 377),

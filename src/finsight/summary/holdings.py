@@ -259,11 +259,43 @@ def _aca_tables(doc: ParsedDoc, sections: list[Section]) -> list[AnchoredTable]:
     return []
 
 
-def waca(doc: ParsedDoc, sections: list[Section], doc_id: str) -> list[SummaryValue]:
-    """Promoters' and selling shareholders' average cost of acquisition (₹ per share).
+_TABLE_END = re.compile(r"^(?:last|weighted|average|total)\b", re.IGNORECASE)
+_SELLING = re.compile(r"selling\s+shareholder|investor\s+selling|selling\s+investor", re.IGNORECASE)
 
-    The first value is the share-weighted average over the holders whose cost is printed ("Nil"
-    counts as zero; "Negligible" and "N.A." are left out and named), then one value per holder.
+
+def _weighted(
+    holders: list[SummaryValue], weights: list[Decimal], key: str, kind: str, note: str
+) -> SummaryValue | None:
+    """The share-weighted average of ``holders`` (computed; the evidence sentence says so)."""
+    if not holders or sum(weights) == 0:
+        return None
+    costs = [
+        h.value.value_inr if isinstance(h.value, Money) and h.value.value_inr is not None
+        else Decimal(0)
+        for h in holders
+    ]  # fmt: skip
+    avg = sum((c * w for c, w in zip(costs, weights, strict=True)), Decimal(0))
+    avg = (avg / sum(weights)).quantize(Decimal("0.01"))
+    first = holders[0].evidence
+    assert first is not None
+    ev = first.model_copy(
+        update={
+            "bbox": None,
+            "sentence": f"[computed: share-weighted average cost of acquisition of "
+            f"{len(holders)} {kind}, ₹ per share]{note}"[:600],
+        }
+    )
+    money = Money(value_inr=avg, currency="INR", raw=str(avg), precision=2)
+    return SummaryValue(key=key, value=money, period="weighted", evidence=ev, status="found")
+
+
+def waca(doc: ParsedDoc, sections: list[Section], doc_id: str) -> list[SummaryValue]:
+    """Average cost of acquisition (₹ per share) of the Promoters, and of the Selling Shareholders.
+
+    C-ADR-16/17: the red flag uses the **promoters** only (``waca_promoters``, share-weighted;
+    holders before the "Selling Shareholders" heading). ``waca_selling_shareholders`` is kept as a
+    separate figure, then one ``waca_holder`` per holder (its group in the evidence sentence).
+    "Nil" counts as zero; "Negligible" and "N.A." holders are left out and named.
     """
     tables = _aca_tables(doc, sections)
     if not tables:
@@ -280,52 +312,55 @@ def waca(doc: ParsedDoc, sections: list[Section], doc_id: str) -> list[SummaryVa
     if cost_col is None or shares_col is None:
         return []
     holders: list[SummaryValue] = []
-    weight, total = Decimal(0), Decimal(0)
-    left_out: list[str] = []
+    weights: dict[str, list[Decimal]] = {"promoters": [], "selling": []}
+    by_kind: dict[str, list[SummaryValue]] = {"promoters": [], "selling": []}
+    left_out: dict[str, list[str]] = {"promoters": [], "selling": []}
+    kind = "promoters"
+    ended = False
     for t in tables:
         for row in t.rows:
+            name = re.sub(r"^\d+\.\s*", "", _clean(row.label) or row.group)
+            if _TABLE_END.search(name):
+                ended = True  # the next tables are the 1/2/3-year averages, not holders
+            if ended:
+                break
+            if _SELLING.search(row.group):
+                kind = "selling"
             cost_cell, shares_cell = row.cells.get(cost_col), row.cells.get(shares_col)
-            name = _clean(row.label) or row.group
             if cost_cell is None or shares_cell is None or not re.search(r"[A-Za-z]{3}", name):
                 continue
             cost_text, shares_text = _clean(cost_cell.text), _clean(shares_cell.text)
             if _LEFT_OUT.search(cost_text):
-                left_out.append(f"{name}: {cost_cell.text}")
+                left_out[kind].append(f"{name}: {cost_cell.text}")
                 continue
             cost = Decimal(0) if is_nil(cost_text) else cell_number(cost_text)
             shares = cell_number(shares_text)
             if cost is None or shares is None or shares <= 0:
                 continue
-            weight += shares
-            total += shares * cost
+            label = "Selling Shareholder" if kind == "selling" else "Promoter"
             ev = PageEvidence(
                 doc_id=doc_id, page=t.page, bbox=cell_box(row, shares_cell, cost_cell),
-                sentence=f"{name}: {shares_cell.text} shares, average cost ₹{cost_cell.text}",
+                sentence=f"{label} {name}: {shares_cell.text} shares, "
+                f"average cost ₹{cost_cell.text}",
             )  # fmt: skip
             money = Money(value_inr=cost, currency="INR", raw=cost_cell.text, precision=2)
-            holders.append(
-                SummaryValue(key="waca_holder", value=money, period=name, evidence=ev,
-                             status="found" if cost > 0 else "stated_zero")
+            value = SummaryValue(
+                key="waca_holder", value=money, period=name, evidence=ev,
+                status="found" if cost > 0 else "stated_zero",
             )  # fmt: skip
-    if not holders or weight == 0:
-        return []
-    avg = (total / weight).quantize(Decimal("0.01"))
-    first = holders[0].evidence
-    assert first is not None
-    note = f"; left out: {'; '.join(left_out)}" if left_out else ""
-    ev = first.model_copy(
-        update={
-            "bbox": None,
-            "sentence": f"[computed: share-weighted average cost of acquisition of "
-            f"{len(holders)} holders, ₹ per share]{note}"[:600],
-        }
-    )
-    money = Money(value_inr=avg, currency="INR", raw=str(avg), precision=2)
-    weighted = SummaryValue(
-        key="waca_selling_shareholders", value=money, period="weighted", evidence=ev,
-        status="found",
-    )  # fmt: skip
-    return [weighted, *holders]
+            holders.append(value)
+            by_kind[kind].append(value)
+            weights[kind].append(shares)
+    out: list[SummaryValue] = []
+    for k, key, noun in (
+        ("promoters", "waca_promoters", "promoters"),
+        ("selling", "waca_selling_shareholders", "selling shareholders"),
+    ):
+        note = f"; left out: {'; '.join(left_out[k])}" if left_out[k] else ""
+        w = _weighted(by_kind[k], weights[k], key, noun, note)
+        if w is not None:
+            out.append(w)
+    return [*out, *holders]
 
 
 def extract_holdings(doc: ParsedDoc, sections: list[Section], doc_id: str) -> Holdings:

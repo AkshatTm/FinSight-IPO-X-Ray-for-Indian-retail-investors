@@ -68,7 +68,7 @@ GOLD = [
     row("offer_price", "321", "₹", "final", doc="prospectus", page=1),
     row("fresh_issue_amount", "2,626.00", "₹ million", "final", doc="prospectus"),
     row("ofs_amount", "", "", "final", status="not_found"),
-    row("waca_selling_shareholders", "10.70", "₹", "final"),
+    row("waca_promoters", "10.70", "₹", "final"),
     row("promoter_holding_post_pct", "38.2", "%", "final"),
     row("general_purposes_pct_of_fresh", "[●]", "", "final", status="placeholder"),
     row("criminal_cases_any", "yes"),

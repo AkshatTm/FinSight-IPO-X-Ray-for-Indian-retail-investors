@@ -37,6 +37,8 @@ from finsight.core.schemas import (  # noqa: E402
 )
 from finsight.ingest.fetch import read_rows  # noqa: E402
 from finsight.parse import find_subsection_pages  # noqa: E402
+from finsight.redflags import detect_severe, evaluate, inputs_from_summary  # noqa: E402
+from finsight.redflags.severe import with_auditor  # noqa: E402
 from finsight.splits import load_splits  # noqa: E402
 from finsight.summary import extract_summary, values_by_source  # noqa: E402
 
@@ -82,12 +84,46 @@ def other_fields(summary: FinancialSummary) -> dict[str, str]:
         "customer_top1_pct": summary.customer_top1_pct,
         "customer_top10_pct": summary.customer_top10_pct,
         "general_purposes_pct": summary.general_purposes_pct,
-        "waca": summary.waca[0] if summary.waca else None,
+        "waca": next((v for v in summary.waca if v.key == "waca_promoters"), None),
     }
     out = {k: (v.status if v else "not_found") for k, v in values.items()}
     out["peers"] = "found" if summary.peers else "not_found"
     out["auditor_remarks"] = "found" if summary.auditor_remarks else "not_found"
     return out
+
+
+def redflag_row(
+    doc: ParsedDoc, secs: list[Section], summary: FinancialSummary, ipo_id: str
+) -> dict[str, Any]:
+    """Statuses of the 13 checks and the severe override ids for one IPO (C3.2)."""
+    inputs = inputs_from_summary(summary)
+    remark = next((v.evidence for v in summary.auditor_remarks if v.evidence), None)
+    severe = with_auditor(inputs.auditor == "qualified", detect_severe(doc, secs, ipo_id), remark)
+    return {
+        "statuses": {f.id: f.status for f in evaluate(inputs).flags},
+        "severe": [o.id for o in severe],
+        "severe_evidence": [
+            {"id": o.id, "page": o.evidence.page, "sentence": (o.evidence.sentence or "")[:240]}
+            for o in severe
+        ],
+    }
+
+
+def summarise_redflags(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Per check: the share of IPOs per status; per override kind: the share of IPOs hit."""
+    read = [r for r in rows if r["status"] == "read" and "redflags" in r]
+    n = len(read) or 1
+    per: dict[str, Counter[str]] = {}
+    sev: Counter[str] = Counter()
+    for r in read:
+        for rf, st in r["redflags"]["statuses"].items():
+            per.setdefault(rf, Counter())[st] += 1
+        sev.update(set(r["redflags"]["severe"]))
+    return {
+        "checks": {rf: {s: round(v / n, 3) for s, v in c.items()} for rf, c in sorted(per.items())},
+        "severe_overrides": {k: round(v / n, 3) for k, v in sorted(sev.items())},
+        "any_severe": round(sum(bool(r["redflags"]["severe"]) for r in read) / n, 3),
+    }
 
 
 def doc_paths(processed: Path, ipo_id: str, sha: str | None) -> tuple[Path, Path]:
@@ -165,6 +201,7 @@ def main(argv: list[str] | None = None) -> int:
             "missing": sorted(k for k, s in status.items() if s not in SUMMARY_HAS_VALUE),
             "fields": status,
             "other": other,
+            "redflags": redflag_row(doc, secs, summary, entry.ipo_id),
             "financial_company": summary.is_financial_company,
             "n_peers": len(summary.peers),
             "compared": compared,
@@ -180,6 +217,7 @@ def main(argv: list[str] | None = None) -> int:
         "n_read": sum(r["status"] == "read" for r in rows),
         "share": summarise(rows),
         "share_c3_1b": summarise_other(rows),
+        "redflags_c3_2": summarise_redflags(rows),
         "financial_companies": [r["ipo_id"] for r in rows if r.get("financial_company")],
         "stub_balance_sheet": {
             k: sum(k in r.get("stub", []) for r in rows)
@@ -191,6 +229,11 @@ def main(argv: list[str] | None = None) -> int:
             "rule": "same field from 2+ sources (summary / sfi / cash) within 1 %",
         },
         "ipos": [{k: v for k, v in r.items() if k not in ("fields", "other")} for r in rows],
+        "severe_by_ipo": {
+            r["ipo_id"]: r["redflags"]["severe_evidence"]
+            for r in rows
+            if r.get("redflags", {}).get("severe")
+        },
     }
     out = a.out or ROOT / "eval_results" / "c" / f"summary_coverage_{a.slice}.json"
     out.parent.mkdir(parents=True, exist_ok=True)

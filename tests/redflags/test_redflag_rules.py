@@ -133,7 +133,7 @@ def test_rf05_sentence_uses_units_as_written() -> None:
     flag = run(offer_price=parse_amount("₹ 321"), waca=parse_amount("₹ 10.70"))["RF05"]
     assert flag == (
         "concern",
-        "Selling shareholders bought their shares at an average of ₹10.70. "
+        "Promoters bought their shares at an average of ₹10.70. "
         "The IPO price is ₹321, about 30× more.",
     )
 

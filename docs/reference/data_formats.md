@@ -99,6 +99,7 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | Field | Type | Default |
 | --- | --- | --- |
 | `flags` | `list[RedFlag]` | `[]` |
+| `severe_overrides` | `list[SevereOverride]` | `[]` |
 | `financial_company` | `bool` | false |
 | `thresholds_version` | `str` | `""` |
 
@@ -140,13 +141,14 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `corpus_n` | `int` | required |
 | `provisional` | `bool` | required |
 | `behind_click` | `bool` | required |
+| `forced_by` | `list[str]` | `[]` |
 | `disclaimer_key` | `str` | `risklevel.disclaimer` |
 
 ## Reason behind the level (`RiskLevelReason`)
 
 | Field | Type | Default |
 | --- | --- | --- |
-| `source` | `Literal['redflag', 'risk']` | required |
+| `source` | `Literal['redflag', 'risk', 'override']` | required |
 | `id` | `str` | required |
 | `label` | `str` | required |
 | `points` | `int` | required |

@@ -77,9 +77,10 @@ def _events(client: TestClient, doc_id: str, last: int | None = None) -> list[tu
 def test_full_upload_flow(client: TestClient, tmp_path: Path) -> None:
     doc_id = _upload(client, _pdf(tmp_path, "drhp"))
     events = _events(client, doc_id)
-    # received, then start + end for each of the 6 stages, then done
-    assert [e for _, e in events] == ["stage"] * 13 + ["done"]
-    assert [s for s, _ in events] == list(range(1, 15))
+    # received, then start + end for each of the 7 stages (the redflags stage also unlocks the
+    # `redflags` part with a `ready` event), then done
+    assert [e for _, e in events] == ["stage"] * 13 + ["ready"] + ["stage"] * 2 + ["done"]
+    assert [s for s, _ in events] == list(range(1, 18))
     assert _events(client, doc_id, last=4) == events[4:]  # replay after any seq
     detail = client.get(f"/api/docs/{doc_id}").json()
     assert detail["doc"]["doc_type"] == "drhp"
@@ -91,6 +92,7 @@ def test_full_upload_flow(client: TestClient, tmp_path: Path) -> None:
         ("parsed", "done"),
         ("sections", "done"),
         ("financials", "done"),
+        ("redflags", "done"),
         ("risks_split", "done"),
     ]
     report = client.get(f"/api/docs/{doc_id}/report")

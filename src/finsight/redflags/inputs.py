@@ -46,7 +46,8 @@ class RedFlagInputs(BaseModel):
     offer_price: Money | None = None
     fresh_amount: Money | None = None
     ofs_amount: Money | None = None
-    waca: Money | None = None
+    waca: Money | None = None  # promoters only, share-weighted (C-ADR-16)
+    waca_selling: Money | None = None  # selling shareholders, shown beside it, not used
     promoter_post_pct: Decimal | None = None
     promoter_identifiable: bool = True
     general_purposes_pct: Decimal | None = None
@@ -173,6 +174,10 @@ def inputs_from_gold(
         elif key == "ofs_amount":
             data["ofs_amount"] = _money(value)
         elif key == "waca_selling_shareholders":
+            data["waca_selling"] = _money(value) or (
+                parse_amount(f"₹ {raw}") if raw and _decimal(raw) is not None else None
+            )
+        elif key == "waca_promoters":
             data["waca"] = _money(value) or (
                 parse_amount(f"₹ {raw}") if raw and _decimal(raw) is not None else None
             )
@@ -266,8 +271,11 @@ def inputs_from_summary(summary: FinancialSummary, xray: XRay | None = None) -> 
         ),
         "is_financial_company": summary.is_financial_company,
     }
-    if summary.waca:
-        data["waca"] = _money(keep("waca_selling_shareholders", summary.waca[0]))
+    by_key = {v.key: v for v in summary.waca if v.key != "waca_holder"}
+    data["waca"] = _money(keep("waca_promoters", by_key.get("waca_promoters")))
+    data["waca_selling"] = _money(
+        keep("waca_selling_shareholders", by_key.get("waca_selling_shareholders"))
+    )
     criminal = keep("criminal_cases_any", summary.litigation.get("criminal_cases"))
     if isinstance(criminal, str):
         data["criminal_any"] = _yes_no(criminal)

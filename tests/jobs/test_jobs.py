@@ -216,6 +216,13 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         "ready": True, "found": 0, "total": 11, "other_found": 0, "other_placeholder": 0,
         "peers": 0, "financial_company": False,
     }  # fmt: skip
+    # Red flags run on the empty summary: every check is unavailable, no severe override.
+    assert ends["redflags"] == {
+        "ready": True, "n_flags": 13, "concern": 0, "watch": 0, "severe": [],
+    }  # fmt: skip
+    flags = get_json(storage, doc_key(doc_id, "redflags.json"))
+    assert len(flags["flags"]) == 13
+    assert flags["severe_overrides"] == []
     summary = get_json(storage, doc_key(doc_id, "summary.json"))
     assert {v["status"] for v in summary["revenue"]} == {"not_found"}
     assert (summary["litigation"], summary["peers"], summary["auditor_remarks"]) == ({}, [], [])
@@ -231,7 +238,7 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         for e in db.events_after(again.job_id)
         if e.data.get("detail") == {"cached": True}
     ]
-    assert cached == ["parsed", "sections", "financials", "risks_split"]
+    assert cached == ["parsed", "sections", "financials", "redflags", "risks_split"]
 
 
 def test_risks_split_reads_stored_outputs_when_earlier_stages_were_cached(
