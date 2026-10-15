@@ -204,18 +204,16 @@ def rf05(x: RedFlagInputs, c: Mapping[str, Any], na: str) -> Result:
         return Result("not_available", na)
     price, waca, xs = money(x.offer_price), money(x.waca), num(gap)  # type: ignore[arg-type]
     used = {"price": f"₹{price}", "waca": f"₹{waca}", "x": xs}
-    keys = ["offer_price", "waca_selling_shareholders"]
+    keys = ["offer_price", "waca_promoters"]
     sentence = (
-        f"Selling shareholders bought their shares at an average of ₹{waca}. "
+        f"Promoters bought their shares at an average of ₹{waca}. "
         f"The IPO price is ₹{price}, about {xs}× more."
     )
     if gap >= _d("concern_at_least", c):
         return Result("concern", sentence, used, keys)
     if gap >= _d("watch_at_least", c):
         return Result("watch", sentence, used, keys)
-    return Result(
-        "ok", f"The IPO price is {xs}× what selling shareholders paid on average.", used, keys
-    )
+    return Result("ok", f"The IPO price is {xs}× what promoters paid on average.", used, keys)
 
 
 def rf06(x: RedFlagInputs, c: Mapping[str, Any], na: str) -> Result:

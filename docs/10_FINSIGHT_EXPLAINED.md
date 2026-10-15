@@ -778,3 +778,15 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 **Severity band.** Only 17 of 10,892 risks got seriousness 5, too few to learn. Levels 4 and 5 merge into one "severe" band (488 risks); the classifier is scored on MAE, within-1 accuracy and recall on that band.
 
 **Honest limits.** The remap is rule-based and was checked on samples, not on every row. The strict number checks are heuristics; the report lists counts and examples (`eval_results/c/teacher_cleanup_report.json`).
+
+### C3.2 — Red flags wired, severe overrides, E15
+
+**What changed.** The 13 red-flag rules already ran on `summary.json`; C3.2 adds them to the upload pipeline as the `redflags` stage (after `financials`) and adds five *severe overrides*.
+
+**WACA is promoters only.** RF05 compares the offer price with what the *promoters* paid per share (share-weighted over the promoter rows of the "average cost of acquisition" table). The selling shareholders' average is kept as a separate number and every holder's own cost is kept too. Rows before the "Selling Shareholders" heading are promoters; "Nil" counts as zero; "Negligible" and "N.A." holders are left out and named. If no promoter has a printed cost, RF05 is "not available" rather than guessed.
+
+**Severe overrides.** `redflags/severe.py` reads the document's own sentences for going concern doubt, a loan default or recall, a regulator order (SEBI / RBI / ED, a debarment, a wilful-defaulter listing), a fraud classification and a qualified audit opinion. A sentence counts only if it states a fact: sentences with "no", "not", "neither" or a hedge ("may", "could", "if") are skipped, and boilerplate sections are not scanned. Any hit forces the risk level to *high* regardless of points or the model, lists the reason first, and carries its page and sentence. It describes what the document says; it never says what to do.
+
+**E15.** `scripts/redflag_eval.py` compares the 13 statuses the pipeline gives with `data/gold/redflag_status_gold.jsonl` (accuracy, confusion, serious OK-vs-Concern disagreements). The real run waits for verified gold v3.
+
+**Honest limits.** The override patterns were tuned on the dev slice by hand-reading about 15 hits (precision looked good, recall is not measured); sentences cut across a page break are missed; the check is wording-based, so a new phrasing slips through.

@@ -399,10 +399,26 @@ class RedFlag(BaseModel):
     points: int = 0
 
 
+class SevereOverride(BaseModel):
+    """A fact that puts the risk level in the high band whatever the model says (C3.2).
+
+    ``evidence`` carries the page and the document's own sentence; ``mentions`` counts the
+    sentences of that kind in the document.
+    """
+
+    id: str  # going_concern, default_or_recall, regulator_order, fraud, qualified_audit
+    title: str
+    sentence: str
+    evidence: PageEvidence
+    rule: str = ""
+    mentions: int = 1
+
+
 class RedFlags(BaseModel):
     """``redflags.json`` (B06 §3 ``/redflags``)."""
 
     flags: list[RedFlag] = Field(default_factory=list)
+    severe_overrides: list[SevereOverride] = Field(default_factory=list)
     financial_company: bool = False  # lenders: debt checks are "not applicable"
     thresholds_version: str = ""
 
@@ -410,7 +426,7 @@ class RedFlags(BaseModel):
 class RiskLevelReason(BaseModel):
     """One reason behind the risk level: a red flag or a risk, with points and anchor."""
 
-    source: Literal["redflag", "risk"]
+    source: Literal["redflag", "risk", "override"]
     id: str
     label: str
     points: int
@@ -431,6 +447,7 @@ class RiskLevel(BaseModel):
     corpus_n: int
     provisional: bool  # thresholds are placeholders until B2.6b
     behind_click: bool
+    forced_by: list[str] = Field(default_factory=list)  # severe override ids (C3.2)
     disclaimer_key: str = "risklevel.disclaimer"
 
 

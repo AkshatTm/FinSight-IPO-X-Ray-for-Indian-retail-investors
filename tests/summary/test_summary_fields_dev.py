@@ -99,26 +99,39 @@ def test_general_purposes_is_a_placeholder_in_an_rhp(
     assert gcp.evidence.page == 27
 
 
-# ipo -> (weighted average ₹, holders with a printed cost, holders left out, page)
+# ipo -> (promoters' weighted average ₹, promoter holders, selling shareholders' weighted
+# average ₹, selling holders, page of the first row). None = no holder with a printed cost.
 WACA = {
-    "ather-energy-2025": (Decimal("129.66"), 9, 0, 44),  # p44-45, IITM's "Nil" counts as zero
-    "hexaware-technologies-2025": (Decimal("385.35"), 1, 0, 24),
-    "urban-company-2025": (Decimal("14.42"), 8, 3, 36),  # founders' cost "Negligible": left out
+    "ather-energy-2025": (Decimal("113.18"), 3, Decimal("158.81"), 6, 44),  # IITM's "Nil" = 0
+    "hexaware-technologies-2025": (Decimal("385.35"), 1, None, 0, 24),
+    "urban-company-2025": (None, 0, Decimal("14.42"), 5, 36),  # founders' "Negligible": left out
 }
 
 
 @pytest.mark.parametrize("ipo", DEV)
-def test_waca(summaries: dict[str, FinancialSummary], ipo: str) -> None:
-    avg, holders, left_out, page = WACA[ipo]
+def test_waca_promoters_and_selling_shareholders_are_separate(
+    summaries: dict[str, FinancialSummary], ipo: str
+) -> None:
+    prom, n_prom, sell, n_sell, page = WACA[ipo]
     waca = summaries[ipo].waca
-    first = waca[0]
-    assert first.key == "waca_selling_shareholders"
-    assert isinstance(first.value, Money)
-    assert first.value.value_inr == avg
-    assert first.evidence is not None
-    assert first.evidence.page == page
-    assert len(waca) == 1 + holders
-    assert (first.evidence.sentence or "").count("Negligible") == left_out
+    by_key = {v.key: v for v in waca if v.key != "waca_holder"}
+    holders = [v for v in waca if v.key == "waca_holder"]
+    assert len(holders) == n_prom + n_sell
+    for key, expected in (("waca_promoters", prom), ("waca_selling_shareholders", sell)):
+        value = by_key.get(key)
+        if expected is None:
+            assert value is None
+            continue
+        assert value is not None
+        assert isinstance(value.value, Money)
+        assert value.value.value_inr == expected
+        assert value.evidence is not None
+        assert (value.evidence.sentence or "").startswith("[computed: share-weighted")
+    sentences = [(h.evidence.sentence or "") for h in holders if h.evidence]
+    assert sum(s.startswith("Promoter ") for s in sentences) == n_prom
+    assert waca[0].evidence is not None
+    assert waca[0].evidence.page == page
+    assert not any(h.period.lower().startswith("last") for h in holders)
 
 
 def test_peers(summaries: dict[str, FinancialSummary]) -> None:

@@ -105,7 +105,10 @@ def predicted(summary: FinancialSummary, key: str, period: str) -> Pred:
         "customer_top1_pct": summary.customer_top1_pct,
         "customer_top10_pct": summary.customer_top10_pct,
         "pledged_promoter_pct": summary.pledged_pct,
-        "waca_selling_shareholders": summary.waca[0] if summary.waca else None,
+        "waca_promoters": next((v for v in summary.waca if v.key == "waca_promoters"), None),
+        "waca_selling_shareholders": next(
+            (v for v in summary.waca if v.key == "waca_selling_shareholders"), None
+        ),
     }
     if key in simple:
         return _sv(simple[key])
@@ -150,7 +153,7 @@ def gold_value(row: Mapping[str, Any]) -> Any:
     value = _gold_amount(row)
     if isinstance(value, Money):
         return value.value_inr
-    if key == "waca_selling_shareholders" and raw:
+    if key in {"waca_promoters", "waca_selling_shareholders"} and raw:
         return _decimal(raw)
     return value
 

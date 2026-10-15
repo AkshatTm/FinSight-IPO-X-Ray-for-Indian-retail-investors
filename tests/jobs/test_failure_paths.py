@@ -156,6 +156,7 @@ def test_real_upload_stages_follow_the_b02_graph() -> None:
         ("parsed", True),
         ("sections", False),
         ("financials", False),
+        ("redflags", False),
         ("risks_split", False),
     ]
     assert all(s.requires == GRAPH[s.name][0] for s in stages)
