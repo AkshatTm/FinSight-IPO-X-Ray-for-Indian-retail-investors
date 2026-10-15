@@ -13,14 +13,14 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Google Cloud: open the console once and note the remaining trial credit (don't create anything).
 
 ### C0.2 (merged): vLLM smoke on the L4, ~15 min
-- [ ] Rates are already logged (T4 1.07, L4 1.54, A100 6.77 units/h). Only the **vLLM pin** is pending: follow `docs/phase3/COLAB_STEPS_rate_check.md` on the **L4** (`RUN_VLLM = True`), then tell Claude "vLLM pin is back" with the `vllm_pin` value. Until then C2.2/C2.3 notebooks keep `VLLM_PIN` as a parameter.
+- [x] Done: vLLM pin `vllm==0.31.0` on the L4 and the G4 (CG0 passed). ~~Only the **vLLM pin** is pending: follow `docs/phase3/COLAB_STEPS_rate_check.md` on the **L4** (`RUN_VLLM = True`), then tell Claude "vLLM pin is back" with the `vllm_pin` value.~~
 - [ ] Check `uv run python scripts/hf_upload.py --check` passes (needs `HF_TOKEN` in `.env`) and `kaggle kernels list --mine` works (CG0).
 
 ### C1.1 (merged): IPO list, ~5 min, optional
 - [ ] Skim `docs/datasheets/new_ipos.md` and `configs/ipo_universe.csv` (289 rows: 2024 = 94, 2025 = 98, 2026 = 97). The overnight run pre-approved it; 2026 is above your ~80 estimate (many RHPs filed in September for issues not open yet, plus some SME-looking Prospectus-only rows that C1.3 will flag). Drop rows you dislike by setting `status` to `excluded` with a `reason`.
 
 ### C2.2 teacher bake-off (code merged; needs the frozen split + the vLLM pin first), ~1 h + 30 min rating
-- [ ] After C1.4 is frozen and the bank is built: `uv run python scripts/teacher_bakeoff.py sample`, then follow `docs/phase3/COLAB_STEPS_teacher_bakeoff.md` (A100, ~7–10 units), then rate the blind sheet. Note: C2.2 is an Opus-marked part that was done on Sonnet overnight — review `src/finsight/risks/bakeoff.py` (the pick rule) and C-ADR-05 before you rely on it.
+- [x] Done: Gemma-4-31B-it chosen (C-ADR-05, `eval_results/c/teacher_bakeoff.json`; blind AI rater, accepted). ~~After C1.4 is frozen and the bank is built: `uv run python scripts/teacher_bakeoff.py sample`, then follow `docs/phase3/COLAB_STEPS_teacher_bakeoff.md` (A100, ~7–10 units), then rate the blind sheet. Note: C2.2 is an Opus-marked part that was done on Sonnet overnight — review `src/finsight/risks/bakeoff.py` (the pick rule) and C-ADR-05 before you rely on it.~~
 
 ### C1.4 split: frozen
 - [x] Counts confirmed and frozen (train 499, dev 55, test 110, 14 excluded; bench empty until C4.1). Next: real C2.1 (`scripts/build_risk_bank.py`, `scripts/export_teacher_input.py`).
@@ -30,17 +30,19 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Fetch finished: 289 universe rows, all PDFs downloaded (no manual downloads needed; 6 network errors succeeded on retry). Parsed 275; excluded 14: 12 SME covers (C-ADR-09) and 2 whose risk factors are unnumbered (`priority-jewels-2026`, `kanohar-electricals-2026`; the segmenter needs numbered headings). Skim `configs/ipo_universe.csv` (2026 has more rows than expected: SEBI lists filings, not completed IPOs) and `eval_results/c/parse_batch.json`. `patel-retail-2025` yielded only 18 risks: worth a look.
 
 ### C2.3 teacher full run (code and steps merged), ~2–4 h Colab + 30 min rating
-- [ ] After the bake-off pick: `uv run python scripts/export_teacher_input.py`, then `docs/phase3/COLAB_STEPS_teacher_full.md` (A100, ~14–27 units), rate the quality-100 sheet, go/no-go (≥ 85 %).
+- [x] Teacher run done on the G4 (12,000 risks, 44.7 min; kept 10,892 after the filters).
+- [ ] Read the units in the Colab Resources panel (before the session: 193.67) and tell Claude, so the teacher_full + gold_eval session is logged.
+- [ ] **Rate the quality-100 sheet** `data/processed/teacher/quality_sheet.csv` (~30 min): `faithful` = yes / partly / no, `category_correct` = yes / no (write the right category in `notes`). Tell Claude "quality-100 rated". CG2 = at least 85 % yes.
 
 ### C2.5 student (notebook and steps merged), ~1–2 h Colab
-- [ ] After CG2: `uv run python -m finsight.risks.simplify split`, then `docs/phase3/COLAB_STEPS_student.md` (smoke on a T4 with `nf4`, then the real run on an L4/A100); rate the gold-50 sheet for the zero-shot bake-off first.
+- [ ] After CG2 (split already written: train 10,363 / dev 529): connect a **G4**, Claude runs `student_smoke` then `student` (`docs/phase3/COLAB_STEPS_student.md`, ~0.5–0.8 h ≈ 5–7 units). Then Claude writes the blind gold-50 sheet `data/gold/simplify_gold50_sheet.csv` (base / student / teacher; base rewrites already made) and you rate it (~45 min).
 
 ### C2.4 classifier (code merged), ~30 min rating + 3 Kaggle runs
-- [ ] After CG2: `uv run python -m finsight.risks.classify split`, `uv run python scripts/classifier_kaggle.py manifests`, `... dataset --username <you>`, then `push smoke`, `status`, `fetch`; if it is green, `push 13`, `42`, `2026` and `fetch` each (Claude can run these); `summary` writes E16 (must beat TF-IDF on dev).
-- [ ] Verify the pre-filled gold-150 (drawn from dev/test showcase + new test IPOs) so E16 can also report gold; then export ONNX (`scripts/export_onnx_classifier.py`).
+- [ ] After CG2 (split + manifests already written: train 9,832 / dev 1,060): Claude runs `... dataset --username <you>`, then `push smoke`, `status`, `fetch`; if it is green, `push 13`, `42`, `2026` and `fetch` each (Claude can run these); `summary` writes E16 (must beat TF-IDF on dev).
+- [ ] **Verify gold-150** `data/gold/gold150_sheet.csv` (~45 min; 15 risks × 10 test IPOs, `category` pre-filled by Qwen3.8, the bake-off runner-up, not the teacher): correct `category` where wrong (one of the 10 listed in `src/finsight/risks/teacher.py`). Tell Claude "gold-150 verified"; Claude runs `scripts/gold_sets.py gold150`, then the 3 seeds and ONNX export.
 
 ### C2.6 novelty threshold (code merged), ~30–40 min rating
-- [ ] After the C1.4 freeze and the real bank build (`scripts/build_risk_bank.py`): `uv run python scripts/novelty_pairs.py sheet`, rate `data/gold/novelty_pairs.csv` (column `same_risk` = yes / no / unsure; is it the same risk, ignoring company names and numbers?), tell Claude "novelty pairs rated". Claude runs `score`, sets `novelty.tau` in `configs/risks.yaml` from `eval_results/b/novelty.json` and writes the ADR.
+- [ ] Sheet ready (60 pairs): rate `data/gold/novelty_pairs.csv` (~30 min) (column `same_risk` = yes / no / unsure; is it the same risk, ignoring company names and numbers?), tell Claude "novelty pairs rated". Claude runs `score`, sets `novelty.tau` in `configs/risks.yaml` from `eval_results/b/novelty.json` and writes the ADR.
 
 ### C2.8 risk-level thresholds (code merged), needs C2.4, C3.2, C3.3 outputs
 - [ ] After the trained models are wired into the upload pipeline (C3.3) and every IPO has `<ipo_id>.json` (and `.flags.json`) in `data/processed/risk_bank/scored/`: `uv run python scripts/corpus_points.py scores`, then `... fit` (needs at least 30 train + dev scores); check `configs/risklevel.yaml` is no longer provisional.

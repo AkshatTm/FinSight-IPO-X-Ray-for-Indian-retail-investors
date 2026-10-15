@@ -59,9 +59,9 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 - [x] **C2.1 Risk bank + E13** (was B2.1a-left + B2.1b) · 💻 L (+ 🔵 K if slow) · S · Needs: CG1, Akshat's segmentation spot-check
   Golden tests on fixture pages; segment `train`+`dev`; bge-m3 bank with `ipo_id`/`doc_date`/`split` + manifest; separate eval parquet for test/bench; wire `risks.bank`/`novelty` to the `splits.reference` window; E13/E13b; teacher input export (cap 25 per company, target min(12k, achievable)) + manifest.
-- [ ] **C2.2 ★ Teacher bake-off** · 💻 L + 🟠 G + 👤 A · **O** · Needs: C2.1
+- [x] **C2.2 ★ Teacher bake-off** · 💻 L + 🟠 G + 👤 A · **O** · Needs: C2.1 · done: Gemma-4-31B-it (C-ADR-05, G4; Qwen3.8-27B-FP8 and Qwen3-32B-AWQ as the other candidates)
   `COLAB_STEPS_teacher_bakeoff.md`; Qwen3-14B-AWQ vs Qwen3-32B-AWQ (L4-only fallback in C03); 300 risks × 2 teachers; filters; blind sheet (100 rows); Akshat rates; ADR → `eval_results/c/teacher_bakeoff.json`. Below the cut line (§6): if cut, 14B is used directly and logged as an ADR.
-- [ ] **C2.3 Teacher full run** (was B2.3b) · 💻 L + 🟠 G + 👤 A · S · Needs: C2.2
+- [ ] **C2.3 Teacher full run** (was B2.3b) · 💻 L + 🟠 G + 👤 A · S · Needs: C2.2 · run done on the G4 (12,000 risks, 10,892 kept); quality-100 rating pending (CG2)
   ≈12k `train` risks on Colab A100; filters; quality-100 from the full output; go/no-go.
 - [ ] **C2.7 Extractor v2** · 💻 L + 🔵 K · S · Needs: CG1 (runs in parallel with C2.2–C2.3) · below the cut line
   Weak labels over `train` incl. 2024+ (wires `weaklabel` to manifests); Kaggle 3 seeds; ladder row `qa_finetuned_v2`; keep only if it wins on dev.
