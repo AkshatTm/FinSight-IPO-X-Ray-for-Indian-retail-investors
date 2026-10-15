@@ -392,11 +392,9 @@ does not fit the GPU is skipped.
 
 STUDENT_PARAMS = """
 # ---- parameters (edit, then Run all) ------------------------------------------------------
-PRESET = "student_smoke"           # student_smoke (10 steps, no GGUF) | student (full run + GGUF)
-JOB = "student"                    # job folder: train.jsonl and dev.jsonl are its inputs
+PRESET = "student_smoke"           # student_smoke | student (4B) | student_8b_smoke | student_8b (own job folder)
 IO = "hf"                          # "hf" (private job repo, default) | "drive" (fallback)
 JOBS_REPO = "AkshatTm/finsight-gpu-jobs"
-MODEL = "Qwen/Qwen3-4B-Instruct-2507"   # Apache-2.0, non-thinking; the zero-shot bake-off may change it
 PRECISION = "bf16"                 # "bf16": LoRA on a bf16 base (L4/A100); "nf4": 4-bit QLoRA, the T4 recipe
 EPOCHS = 2
 LEARNING_RATE = 2e-4
@@ -409,10 +407,20 @@ SEED = 2026
 PRESETS = {
     "student_smoke": {"smoke": True, "export_gguf": False},   # 64 train / 16 dev rows, 10 steps
     "student": {"smoke": False, "export_gguf": True},
+    # 8B variant (C2.5): Qwen/Qwen3-8B is a hybrid thinking model, so the chat template is called with
+    # enable_thinking=False (empty think block, same as the non-thinking 4B). Own job folder, own repo.
+    "student_8b_smoke": {"smoke": True, "export_gguf": False, "job": "student_8b",
+                         "model": "Qwen/Qwen3-8B", "no_think": True, "hf_repo": "AkshatTm/finsight-student-8b"},
+    "student_8b": {"smoke": False, "export_gguf": True, "job": "student_8b",
+                   "model": "Qwen/Qwen3-8B", "no_think": True, "hf_repo": "AkshatTm/finsight-student-8b"},
 }
-SMOKE, EXPORT_GGUF = PRESETS[PRESET]["smoke"], PRESETS[PRESET]["export_gguf"]
+_P = PRESETS[PRESET]
+SMOKE, EXPORT_GGUF = _P["smoke"], _P["export_gguf"]
+JOB = _P.get("job", "student")     # job folder in the HF job repo: train.jsonl and dev.jsonl are its inputs
+MODEL = _P.get("model", "Qwen/Qwen3-4B-Instruct-2507")   # Apache-2.0, non-thinking
+NO_THINK = _P.get("no_think", False)
 UPLOAD = False                     # True: push adapter + GGUF (never merged fp16) to a private HF repo
-HF_REPO = "AkshatTm/finsight-student-4b"
+HF_REPO = _P.get("hf_repo", "AkshatTm/finsight-student-4b")
 UNITS_BEFORE = None
 UNITS_AFTER = None
 UNASSIGN = True                     # disconnect the runtime when the job ends
@@ -456,6 +464,9 @@ def main():
     random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL)
+    if NO_THINK:  # hybrid-thinking base: always render the empty think block, in training and at serving
+        import functools
+        tokenizer.apply_chat_template = functools.partial(tokenizer.apply_chat_template, enable_thinking=False)
     pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
     train = [e for e in (encode_row(tokenizer, r, MAX_SEQ) for r in train_rows) if e]
     dev = [e for e in (encode_row(tokenizer, r, MAX_SEQ) for r in dev_rows) if e]
@@ -518,8 +529,15 @@ def main():
     if EXPORT_GGUF:
         base = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.float16, device_map="cpu")
         merged = PeftModel.from_pretrained(base, str(adapter)).merge_and_unload()
-        merged.save_pretrained(str(out / "merged"), safe_serialization=True); tokenizer.save_pretrained(str(out / "merged"))
+        merged.save_pretrained(str(out / "merged"), safe_serialization=True)
         del base, merged
+        # The converter's older transformers cannot read a tokenizer_config.json re-written by the current
+        # transformers (it failed the first C2.5 run), so ship the base model's ORIGINAL tokenizer files.
+        from huggingface_hub import snapshot_download
+        orig = Path(snapshot_download(MODEL, allow_patterns=["tokenizer*", "vocab.json", "merges.txt", "special_tokens_map.json", "added_tokens.json"]))
+        for f in orig.iterdir():
+            shutil.copy(f, out / "merged" / f.name)
+        assert (out / "merged" / "tokenizer_config.json").read_bytes() == (orig / "tokenizer_config.json").read_bytes()
         run = lambda cmd: subprocess.run(cmd, check=True, shell=True)
         lc = Path("/tmp/llama.cpp")
         if not lc.exists():
@@ -550,7 +568,7 @@ def main():
             api.upload_file(path_or_fileobj=str(gguf), path_in_repo=gguf.name, repo_id=HF_REPO)
         print("uploaded adapter + GGUF to the private repo", HF_REPO)
     print("STUDENT OK", json.dumps({k: v for k, v in metrics.items() if k != "log_history"}))
-    s = run_summary(ck.local, "student", started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
+    s = run_summary(ck.local, JOB, started=STARTED, units_before=UNITS_BEFORE, units_after=UNITS_AFTER,
                     items_done=len(train), pins={"torch": torch.__version__}, extra={"precision": PRECISION, "smoke": SMOKE, "preset": PRESET, "batch": [bs, accum]})
     ck.sync()
     print(json.dumps(s, indent=1))

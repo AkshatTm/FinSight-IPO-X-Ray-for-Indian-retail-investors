@@ -149,7 +149,7 @@ def run(task, seed):
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
     model = AutoModelForSequenceClassification.from_pretrained(
         MODEL, num_labels=len(labels), id2label=dict(enumerate(labels)),
-        label2id={l: i for i, l in enumerate(labels)}).to(DEVICE)
+        label2id={l: i for i, l in enumerate(labels)}).float().to(DEVICE)  # fp32 master weights: recent transformers load the checkpoint dtype (fp16)
     opt = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=0.01)
     steps = EPOCHS * math.ceil(len(train) / (BATCH_SIZE * GRAD_ACCUM))
     sched = get_linear_schedule_with_warmup(opt, int(0.06 * steps), steps)

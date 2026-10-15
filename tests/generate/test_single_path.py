@@ -21,6 +21,9 @@ ALLOWED = {
     # user question, and every output passes its own post-checks (numbers, forbidden phrases,
     # length, certainty) before it can be shown.
     "src/finsight/risks/simplify.py",
+    # C2.5: times the student on CPU (num_gpu=0, which the backend does not expose) and scores
+    # E19/E20. Same simplifier prompt, document text only, output goes to post_check, never shown.
+    "scripts/student_eval.py",
     # C0.2: generates the Colab vLLM smoke notebook; its one fixed prompt ("Explain an IPO")
     # checks the vLLM pin on a tiny model, never user input and never shown in the product.
     "scripts/make_colab_notebooks.py",
