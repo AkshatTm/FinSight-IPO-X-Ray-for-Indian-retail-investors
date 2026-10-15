@@ -657,6 +657,55 @@ def _classifier_block() -> str:
     return "\n".join(lines) + "\n"
 
 
+def _student_block() -> str:
+    c = ROOT / "eval_results" / "c"
+    tm, vs = c / "student_train_metrics.json", c / "student_vs_base_gold50.json"
+    if not (tm.exists() and vs.exists()):
+        return "The student has not been trained yet; the numbers appear here after C2.5."
+    m = json.loads(tm.read_text(encoding="utf-8"))
+    g = json.loads(vs.read_text(encoding="utf-8"))
+    lines = [
+        f"Base `{m['model']}`, LoRA, {m['precision']}, {m['epochs']} epochs, {m['steps']} steps "
+        f"on {m['gpu']} in {m['train_runtime_s']} s; {m['n_train']} training and {m['n_dev']} dev "
+        f"pairs; dev loss {m['dev_loss']:.3f}; Q4_K_M GGUF {m['gguf_mb']} MB.",
+        "",
+        f"Product post-checks on gold-50 ({g['split']}, seed {g['seed']}, single run):",
+        "",
+        "| System | Passed | Mean words | Over 60 words | Failures |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for name, r in g["systems"].items():
+        lines.append(
+            f"| {name} (`{r['model']}`) | {r['passed']}/{g['n']} | {r['mean_words']} "
+            f"| {r['over_60_words']} | {r['failure_reasons'] or 'none'} |"
+        )
+    ev = c / "student_eval.json"
+    if ev.exists():
+        e = json.loads(ev.read_text(encoding="utf-8"))
+        cpu, r19, r20 = e["cpu"], e["e19_readability"], e["e20_checks"]
+        d, gd = r19["dev_sample"], r19["gold50"]
+        lines += [
+            "",
+            f"CPU only (Ollama, no GPU layers; {cpu['n']} dev risks): "
+            f"{cpu['seconds_per_risk_mean']} s per risk on average "
+            f"(median {cpu['seconds_per_risk_median']}, max {cpu['seconds_per_risk_max']}), "
+            f"{cpu['tokens_per_s']} tokens/s.",
+            "",
+            f"Readability (FKGL, E19): original {d['fkgl_original']} to rewrite "
+            f"{d['fkgl_rewrite']} on dev (drop {d['fkgl_drop']}, n={d['n']}); gold-50: "
+            f"{gd['fkgl_original']} to {gd['fkgl_rewrite']} (drop {gd['fkgl_drop']}).",
+            "",
+            f"Number and certainty checks (E20): {e20_line(r20['dev_sample'], 'dev')}; "
+            f"{e20_line(r20['gold50'], 'gold-50')}.",
+        ]
+    return "\n".join(lines) + "\n"
+
+
+def e20_line(r: dict, label: str) -> str:
+    """One E20 summary phrase: rejected count, rate and reasons."""
+    return f"{label}: {r['rejected']}/{r['n']} rejected {r['reasons'] or ''}".rstrip()
+
+
 def _universe_block() -> str:
     with (ROOT / "configs" / "ipo_universe.csv").open(encoding="utf-8", newline="") as fh:
         rows = list(csv.DictReader(fh))
@@ -700,6 +749,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/datasheets/new_ipos.md": {"universe": _universe_block},
     "docs/phase2/datasheets/teacher_outputs.md": {"run": _teacher_block},
     "docs/model_cards/risk_classifier.md": {"results": _classifier_block},
+    "docs/model_cards/risk_simplifier.md": {"results": _student_block},
     "report/07_results.md": {"phase2": _phase2_block},
 }
 

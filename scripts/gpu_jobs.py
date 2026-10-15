@@ -117,6 +117,20 @@ JOBS: dict[str, Job] = {
         },
         summary="eval_results/c/student_run_summary.json",
     ),
+    "student_8b": Job(
+        name="student_8b",
+        notebook="c2_student.ipynb",
+        inputs={
+            "data/processed/kaggle/simplify/train.jsonl": "train.jsonl",
+            "data/processed/kaggle/simplify/dev.jsonl": "dev.jsonl",
+        },
+        outputs={
+            "adapter/*": "models/student_8b/adapter/",
+            "*.gguf": "models/student_8b/",
+            "metrics.json": "models/student_8b/",
+        },
+        summary="eval_results/c/student_8b_run_summary.json",
+    ),
 }
 
 
