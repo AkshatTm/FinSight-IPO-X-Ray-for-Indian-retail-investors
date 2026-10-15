@@ -750,3 +750,15 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 33. **Why did MuRIL not replace the keyword guard?** It blocked 4 of 9 factual questions on the held-out part; tiny sample, AI-drafted set, so the simpler guard stays.
 34. **What did you do after seeing test results, and how do you say so?** Reverted fresh and total issue size to rules-first after test showed the dev-only choice cost accuracy; disclosed as test-informed, dev-only choice kept as a second configuration.
 35. **What is not measured about the deployed demo?** The quantised model's answer quality, BM25-only retrieval, and live latency on a shared CPU.
+
+### C2.3b — Cleaning the teacher's answers (`finsight.risks.teacher_cleanup`)
+
+**What it is for.** The teacher model (Gemma-4-31B) rewrote about 11,000 risk factors and labelled them. We rated 100 of them by hand and found two kinds of mistake that the first filter missed. This module is the second, stricter filter, and it fixes inconsistent labels.
+
+**Strict numbers.** The first filter asked: "is every number in the rewrite also in the source?". That passes "285.97" for "₹285.97 million" (the unit fell off) and passes a rewrite that calls a number negative when the source printed it positive. `strict_numbers.py` adds two checks that drop the row (`unit_dropped`, `sign_flip`) and one that only flags it (`inclusion_polarity`, "included" vs "not included"). Dropped rows leave the student's training pairs; their category label stays for the classifier.
+
+**Category remap.** The teacher sometimes put the same theme into different categories (key-person risk was `operations` in one filing and `promoters_governance` in another). `configs/category_remap.yaml` lists one rule per theme, matched on the risk title; the first match wins. The original label is kept in `category_teacher`. The same decisions are also written as one-line tie-breaks in the teacher prompt (`teacher-v1.1`) for any future run.
+
+**Severity band.** Only 17 of 10,892 risks got seriousness 5, too few to learn. Levels 4 and 5 merge into one "severe" band (488 risks); the classifier is scored on MAE, within-1 accuracy and recall on that band.
+
+**Honest limits.** The remap is rule-based and was checked on samples, not on every row. The strict number checks are heuristics; the report lists counts and examples (`eval_results/c/teacher_cleanup_report.json`).

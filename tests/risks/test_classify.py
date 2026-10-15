@@ -137,7 +137,10 @@ def test_cli_split_then_baseline(tmp_path: Path) -> None:
     teacher = tmp_path / "teacher"
     teacher.mkdir()
     examples = fake_set()
-    with (teacher / "risks.jsonl").open("w") as r, (teacher / "labels.jsonl").open("w") as lab:
+    with (
+        (teacher / "risks.jsonl").open("w") as r,
+        (teacher / "labels.clean.jsonl").open("w") as lab,
+    ):
         for e in examples:
             r.write(json.dumps({"risk_id": e.risk_id, "company": e.company, "body": e.text}) + "\n")
             lab.write(json.dumps({"risk_id": e.risk_id, "category": e.label}) + "\n")
