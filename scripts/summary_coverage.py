@@ -26,7 +26,13 @@ sys.path.insert(0, str(ROOT / "src"))
 from pydantic import TypeAdapter  # noqa: E402
 
 from finsight.core.ids import make_doc_id  # noqa: E402
-from finsight.core.schemas import FinancialSummary, ParsedDoc, Section, SummaryValue  # noqa: E402
+from finsight.core.schemas import (  # noqa: E402
+    SUMMARY_HAS_VALUE,
+    FinancialSummary,
+    ParsedDoc,
+    Section,
+    SummaryValue,
+)
 from finsight.ingest.fetch import read_rows  # noqa: E402
 from finsight.parse import find_subsection_pages  # noqa: E402
 from finsight.splits import load_splits  # noqa: E402
@@ -83,7 +89,7 @@ def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
             per_field.setdefault(name, Counter())[status] += 1
     n = len(read)
     return {
-        name: {s: round(c[s] / n, 3) for s in ("found", "placeholder", "not_found")}
+        name: {s: round(c[s] / n, 3) for s in ("found", "stated_zero", "placeholder", "not_found")}
         for name, c in sorted(per_field.items())
     } | ({"all_fields_found": round(sum(r["n_found"] == 11 for r in read) / n, 3)} if n else {})
 
@@ -117,8 +123,9 @@ def main(argv: list[str] | None = None) -> int:
             "ipo_id": entry.ipo_id,
             "status": "read",
             "unit": summary.currency_unit,
-            "n_found": sum(s == "found" for s in status.values()),
-            "missing": sorted(k for k, s in status.items() if s != "found"),
+            "n_found": sum(s in SUMMARY_HAS_VALUE for s in status.values()),
+            "stub": [k for k in ("total_borrowings_stub", "net_worth_stub") if getattr(summary, k)],
+            "missing": sorted(k for k, s in status.items() if s not in SUMMARY_HAS_VALUE),
             "fields": status,
             "compared": compared,
             "disagree": disagree,
@@ -132,6 +139,10 @@ def main(argv: list[str] | None = None) -> int:
         "n_ipos": len(entries),
         "n_read": sum(r["status"] == "read" for r in rows),
         "share": summarise(rows),
+        "stub_balance_sheet": {
+            k: sum(k in r.get("stub", []) for r in rows)
+            for k in ("total_borrowings_stub", "net_worth_stub")
+        },
         "cross_check": {
             "fields_compared": sum(r.get("compared", 0) for r in rows),
             "fields_disagreeing": sum(len(r.get("disagree", [])) for r in rows),

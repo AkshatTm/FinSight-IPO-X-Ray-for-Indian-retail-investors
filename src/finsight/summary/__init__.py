@@ -54,6 +54,8 @@ def extract_summary(
         operating_cash_flow=fin.operating_cash_flow,
         total_borrowings=fin.total_borrowings,
         net_worth=fin.net_worth,
+        total_borrowings_stub=fin.total_borrowings_stub,
+        net_worth_stub=fin.net_worth_stub,
     )
 
 

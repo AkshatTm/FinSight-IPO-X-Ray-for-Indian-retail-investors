@@ -95,7 +95,10 @@ def test_every_value_is_found_with_page_and_box(
     values += [s.total_borrowings, s.net_worth]
     for v in values:
         assert v is not None
-        assert v.status == "found"
+        # Hexaware and Urban print "-" for borrowings in an otherwise numeric table.
+        assert v.status == (
+            "stated_zero" if v.key == "total_borrowings" and ipo != DEV[0] else "found"
+        )
         assert v.evidence is not None
         assert v.evidence.bbox is not None
         assert v.evidence.sentence
@@ -114,6 +117,26 @@ def test_money_is_scaled_and_signed(summaries: dict[str, FinancialSummary]) -> N
     assert nil is not None
     assert isinstance(nil.value, Money)
     assert nil.value.value_inr == 0
+
+
+def test_balance_sheet_primary_and_stub(summaries: dict[str, FinancialSummary]) -> None:
+    ather = summaries["ather-energy-2025"]
+    assert ather.net_worth is not None
+    assert ather.net_worth.period == "latest"
+    assert (ather.net_worth.evidence.sentence or "").startswith(
+        "[primary: latest full fiscal year]"
+    )
+    stub, debt = ather.net_worth_stub, ather.total_borrowings_stub
+    assert stub is not None
+    assert debt is not None
+    assert _raw([stub, debt]) == ["1,080", "11,216"]
+    assert "December 31, 2024" in (stub.period or "")
+    assert stub.evidence is not None
+    assert (stub.evidence.sentence or "").startswith("[secondary: stub period]")
+    # Hexaware's stub columns (Sept 2024) show 48,760 net worth.
+    hexa = summaries["hexaware-technologies-2025"].net_worth_stub
+    assert hexa is not None
+    assert _raw([hexa]) == ["48,760"]
 
 
 def test_stub_period_is_not_latest(summaries: dict[str, FinancialSummary]) -> None:

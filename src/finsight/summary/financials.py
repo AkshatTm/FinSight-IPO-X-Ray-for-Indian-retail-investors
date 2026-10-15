@@ -8,10 +8,12 @@ Where each value is read, in order:
 - Operating cash flow: the restated cash-flow summary in Summary Financial Information, then the
   restated cash-flow statement pages (``find_subsection_pages(...)["cash_flows"]``).
 
-Yearly values are the last three full fiscal years, latest first; balance-sheet values (net worth,
-borrowings) are taken at the latest full fiscal year end, matching ``latest``. Every value is
-``found`` (with its page, box and row), ``placeholder`` (``[●]``) or ``not_found``. A printed
-dash or "Nil" is a stated zero. Without a unit line ("₹ in million") no amount is read.
+Yearly values are the last three full fiscal years, latest first. Balance-sheet values (net worth,
+borrowings) are primary at the latest full fiscal year end (``latest``); when the same table also
+prints a newer part-year column, that value is kept as a secondary ``*_stub`` value whose
+``period`` is the printed date. Every value is ``found`` (with its page, box and row),
+``stated_zero``, ``placeholder`` (``[●]``) or ``not_found``. A dash or "Nil" is ``stated_zero``
+only when its row or column otherwise prints figures. Without a unit line no amount is read.
 """
 
 from __future__ import annotations
@@ -121,29 +123,52 @@ def _money(word: Word, unit: str) -> Money | None:
     return amount if isinstance(amount, Money) else None
 
 
-def _evidence(doc_id: str, page: int, row: Row, cell: Word, header: str, unit: str) -> PageEvidence:
+PRIMARY = "primary: latest full fiscal year"
+SECONDARY = "secondary: stub period"
+
+
+def _evidence(
+    doc_id: str, page: int, row: Row, cell: Word, header: str, unit: str, role: str = ""
+) -> PageEvidence:
     label = " ".join(p for p in (row.label, row.label_below) if p) or row.label_above
     sentence = f"{label} — {header}: {cell.text} ({unit})" if header else f"{label}: {cell.text}"
+    if role:
+        sentence = f"[{role}] {sentence}"
     return PageEvidence(
         doc_id=doc_id, page=page, bbox=union_bbox([*row.label_words, cell]), sentence=sentence
     )
 
 
+def _is_number(word: Word | None) -> bool:
+    return word is not None and not is_nil(word.text) and not is_placeholder(word.text)
+
+
+def otherwise_numeric(table: GridTable, row: Row, col: int) -> bool:
+    """Another cell of the row, or of the column, prints a real figure: a dash there is a zero
+    the document states, not an empty cell."""
+    if any(_is_number(w) for k, w in row.cells.items() if k != col):
+        return True
+    return any(_is_number(r.cells.get(col)) for r in table.rows if r is not row)
+
+
 def _value(
-    key: str, period: str, table: GridTable, row: Row, col: int, doc_id: str
+    key: str, period: str, table: GridTable, row: Row, col: int, doc_id: str, role: str = ""
 ) -> SummaryValue | None:
     cell = row.cells.get(col)
     unit = row_unit(row, table.unit)
     if cell is None or unit is None:
         return None
     header = table.columns[col].header
-    ev = _evidence(doc_id, table.page, row, cell, header, unit)
+    ev = _evidence(doc_id, table.page, row, cell, header, unit, role)
     if is_placeholder(cell.text):
         return SummaryValue(key=key, period=period, evidence=ev, status="placeholder")
+    if is_nil(cell.text) and not otherwise_numeric(table, row, col):
+        return None
     money = _money(cell, unit)
     if money is None:
         return None
-    return SummaryValue(key=key, value=money, period=period, evidence=ev, status="found")
+    status = "stated_zero" if is_nil(cell.text) else "found"
+    return SummaryValue(key=key, value=money, period=period, evidence=ev, status=status)
 
 
 def _missing(key: str, period: str | None) -> SummaryValue:
@@ -155,26 +180,51 @@ class _Ranked:
     table: GridTable
     years: dict[str, int]  # "latest" -> column index
     continues: _Ranked | None = None  # the same table on the previous page
+    stub: int | None = None  # the newest part-year column, when the years were ranked
+
+    def column(self, period: str) -> int | None:
+        return self.stub if period == "stub" else self.years.get(period)
+
+    def period_label(self, period: str) -> str:
+        """``period`` for a value: the key, or the printed header for the stub column."""
+        if period == "stub" and self.stub is not None:
+            return self.table.columns[self.stub].header or "stub"
+        return period
 
 
 def _ranked(table: GridTable) -> _Ranked:
-    ranks = rank_years([parse_period(c.header) for c in table.columns])
-    return _Ranked(table, {period: col for col, period in ranks.items()})
+    periods = [parse_period(c.header) for c in table.columns]
+    ranks = rank_years(periods)
+    years = {period: col for col, period in ranks.items()}
+    stub = None
+    if "latest" in years:
+        latest = periods[years["latest"]].year or 0
+        stubs = [
+            (p.year, -i) for i, p in enumerate(periods)
+            if p.kind == "stub" and p.year is not None and p.year >= latest
+        ]  # fmt: skip
+        stub = -max(stubs)[1] if stubs else None
+    return _Ranked(table, years, stub=stub)
 
 
-def _sum_borrowings(t: _Ranked, doc_id: str) -> SummaryValue | None:
+def _role(period: str) -> str:
+    return SECONDARY if period == "stub" else PRIMARY
+
+
+def _sum_borrowings(t: _Ranked, doc_id: str, period: str = "latest") -> SummaryValue | None:
     """Total borrowings from one "Borrowings" row, or current + non-current rows of one table."""
-    col = t.years.get("latest")
+    col = t.column(period)
     if col is None:
         return None
+    label, role = t.period_label(period), _role(period)
     single = find_row(t.table, [_BORROWINGS])
     if single is not None:
-        return _value("total_borrowings", "latest", t.table, single, col, doc_id)
+        return _value("total_borrowings", label, t.table, single, col, doc_id, role)
     cur, non = find_row(t.table, [_CURRENT]), find_row(t.table, [_NON_CURRENT])
     if cur is None or non is None:
         return None
-    a = _value("total_borrowings", "latest", t.table, cur, col, doc_id)
-    b = _value("total_borrowings", "latest", t.table, non, col, doc_id)
+    a = _value("total_borrowings", label, t.table, cur, col, doc_id, role)
+    b = _value("total_borrowings", label, t.table, non, col, doc_id, role)
     if a is None or b is None or a.evidence is None or b.evidence is None:
         return None
     ma, mb = a.value, b.value
@@ -190,7 +240,7 @@ def _sum_borrowings(t: _Ranked, doc_id: str) -> SummaryValue | None:
         update={"sentence": f"{a.evidence.sentence}; {b.evidence.sentence}", "bbox": None}
     )
     return SummaryValue(
-        key="total_borrowings", value=total, period="latest", evidence=ev, status="found"
+        key="total_borrowings", value=total, period=label, evidence=ev, status="found"
     )
 
 
@@ -291,6 +341,8 @@ class FinancialValues:
     operating_cash_flow: list[SummaryValue]
     total_borrowings: SummaryValue
     net_worth: SummaryValue
+    total_borrowings_stub: SummaryValue | None = None
+    net_worth_stub: SummaryValue | None = None
 
 
 def _fill(
@@ -300,8 +352,13 @@ def _fill(
     out: dict[str, SummaryValue],
     rules: list[RowRule] | None = None,
 ) -> None:
-    """Fill the still-missing periods of ``key`` from the first table that has its row."""
-    periods = PERIOD_KEYS if key in YEARLY else ("latest",)
+    """Fill the still-missing periods of ``key`` from the first table that has its row.
+
+    Balance-sheet values (``POINT``) take ``latest`` as the primary value and, from the same
+    table only, the newest stub column as ``out["stub"]`` (secondary).
+    """
+    point = key in POINT
+    periods = ("latest",) if point else PERIOD_KEYS
     for t in tables:
         row = find_row(t.table, rules or RULES[key])
         if row is None:
@@ -309,8 +366,15 @@ def _fill(
         for period in periods:
             if period in out or period not in t.years:
                 continue
-            if (v := _value(key, period, t.table, row, t.years[period], doc_id)) is not None:
+            role = PRIMARY if point else ""
+            col = t.years[period]
+            if (v := _value(key, period, t.table, row, col, doc_id, role)) is not None:
                 out[period] = v
+                if point and t.stub is not None:
+                    label = t.period_label("stub")
+                    stub = _value(key, label, t.table, row, t.stub, doc_id, SECONDARY)
+                    if stub is not None:
+                        out["stub"] = stub
         if all(p in out for p in periods):
             return
 
@@ -332,6 +396,8 @@ def extract_financials(
     for t in summary:
         if "latest" not in borrowings and (v := _sum_borrowings(t, doc_id)):
             borrowings["latest"] = v
+            if s := _sum_borrowings(t, doc_id, "stub"):
+                borrowings["stub"] = s
     _fill("operating_cash_flow", summary + sfi + cash, doc_id, found["operating_cash_flow"])
     unit = summary[0].table.unit if summary else next((t.table.unit for t in sfi), None)
 
@@ -348,6 +414,8 @@ def extract_financials(
         operating_cash_flow=yearly("operating_cash_flow"),
         total_borrowings=point("total_borrowings"),
         net_worth=point("net_worth"),
+        total_borrowings_stub=found["total_borrowings"].get("stub"),
+        net_worth_stub=found["net_worth"].get("stub"),
     )
 
 

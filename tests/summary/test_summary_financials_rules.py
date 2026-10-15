@@ -119,8 +119,66 @@ def test_dash_is_a_stated_zero_and_placeholder_is_kept() -> None:
         _doc({30: _summary_page(rows)}), _sections(summary=(28, 33)), subsections={}
     )
     assert s.total_borrowings is not None
+    assert s.total_borrowings.status == "stated_zero"
     assert isinstance(s.total_borrowings.value, Money)
     assert s.total_borrowings.value.value_inr == 0
+
+
+def test_all_dash_row_in_a_numeric_column_is_a_stated_zero() -> None:
+    rows = [*SUMMARY_ROWS[:3], ("Total borrowings", ["-", "-", "Nil"])]
+    s = extract_summary(
+        _doc({30: _summary_page(rows)}), _sections(summary=(28, 33)), subsections={}
+    )
+    assert s.total_borrowings is not None
+    assert s.total_borrowings.status == "stated_zero"
+
+
+def test_dash_with_no_figure_in_its_row_or_column_is_not_read() -> None:
+    from finsight.summary.financials import otherwise_numeric
+    from finsight.summary.layout import Column, GridTable, Row
+
+    def cell(text: str) -> Word:
+        return _w(text, 200, 100)
+
+    rows = [
+        Row(top=100, label="Total borrowings", label_below="", label_above="", label_words=[],
+            cells={0: cell("-"), 1: cell("-")}),
+        Row(top=115, label="Other", label_below="", label_above="", label_words=[],
+            cells={0: cell("—"), 1: cell("5.00")}),
+    ]  # fmt: skip
+    table = GridTable(page=1, columns=[Column(right=230), Column(right=310)], rows=rows, unit="x")
+    assert not otherwise_numeric(table, rows[0], 0)  # its row and column hold only dashes
+    assert otherwise_numeric(table, rows[0], 1)  # column 1 prints 5.00
+
+
+def test_stub_balance_is_kept_as_a_secondary_value() -> None:
+    cols = (230.0, 310.0, 390.0, 470.0)
+    headers = ["Nine months Dec 2025", "Fiscal 2025", "Fiscal 2024", "Fiscal 2023"]
+    words = [_w("(₹ in million)", 300, 80)]
+    for right, header in zip(cols, headers, strict=True):
+        x = right - 4 * len(header) - 6
+        for part in header.split():
+            words.append(_w(part, x, 100))
+            x += 4 * len(part) + 3
+    rows = [
+        ("Revenue from operations", ["30.00", "300.00", "200.00", "100.00"]),
+        ("Profit for the year", ["3.00", "30.00", "20.00", "10.00"]),
+        ("Net worth", ["95.00", "90.00", "60.00", "50.00"]),
+        ("Total borrowings", ["-", "45.00", "40.00", "35.00"]),
+    ]
+    for k, (label, values) in enumerate(rows):
+        y = 130 + 15 * k
+        words += _label(label, y)
+        words += [_w(v, r - 5 * len(v), y, r) for v, r in zip(values, cols, strict=True)]
+    s = extract_summary(_doc({30: words}), _sections(summary=(28, 33)), subsections={})
+    assert [v.status for v in s.revenue] == ["found", "found", "found"]
+    assert s.net_worth is not None
+    assert s.net_worth.period == "latest"
+    assert s.net_worth_stub is not None
+    assert s.net_worth_stub.period is not None
+    assert "2025" in s.net_worth_stub.period
+    assert s.total_borrowings_stub is not None
+    assert s.total_borrowings_stub.status == "stated_zero"
 
 
 def test_summary_window_before_risk_factors_when_section_is_missing() -> None:

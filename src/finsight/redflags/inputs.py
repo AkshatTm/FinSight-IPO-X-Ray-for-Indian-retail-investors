@@ -20,7 +20,15 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field
 
 from finsight.compare import issuer_pe, peer_median_pe
-from finsight.core.schemas import FinancialSummary, Money, PageEvidence, Percent, SummaryValue, XRay
+from finsight.core.schemas import (
+    SUMMARY_HAS_VALUE,
+    FinancialSummary,
+    Money,
+    PageEvidence,
+    Percent,
+    SummaryValue,
+    XRay,
+)
 from finsight.normalize import parse_amount
 
 AuditorKind = Literal["none", "emphasis", "caro", "qualified"]
@@ -206,7 +214,7 @@ def inputs_from_gold(
 
 # ------------------------------------------------------------------------- pipeline
 def _value(sv: SummaryValue | None) -> Any:
-    return sv.value if sv is not None and sv.status == "found" else None
+    return sv.value if sv is not None and sv.status in SUMMARY_HAS_VALUE else None
 
 
 def _offer_value(
@@ -230,7 +238,7 @@ def inputs_from_summary(summary: FinancialSummary, xray: XRay | None = None) -> 
     evidence: dict[str, PageEvidence] = {}
 
     def keep(name: str, sv: SummaryValue | None) -> Any:
-        if sv is not None and sv.evidence is not None and sv.status == "found":
+        if sv is not None and sv.evidence is not None and sv.status in SUMMARY_HAS_VALUE:
             evidence[name] = sv.evidence
         return _value(sv)
 

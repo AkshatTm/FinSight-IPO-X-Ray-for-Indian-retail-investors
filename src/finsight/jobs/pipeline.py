@@ -14,7 +14,7 @@ from typing import Any
 
 from pydantic import TypeAdapter
 
-from finsight.core.schemas import ParsedDoc, Section
+from finsight.core.schemas import SUMMARY_HAS_VALUE, ParsedDoc, Section
 from finsight.ingest import validate_pdf
 from finsight.jobs.runner import JobContext, Stage, StageRejected
 from finsight.parse import extract_tables, find_sections, parse_pdf, pymupdf_backend
@@ -95,7 +95,7 @@ def _financials(ctx: JobContext) -> dict[str, Any]:
         *summary.revenue, *summary.profit_after_tax, *summary.operating_cash_flow,
         summary.total_borrowings, summary.net_worth,
     ]  # fmt: skip
-    found = sum(v is not None and v.status == "found" for v in values)
+    found = sum(v is not None and v.status in SUMMARY_HAS_VALUE for v in values)
     return {"ready": True, "found": found, "total": len(values)}
 
 
