@@ -1,13 +1,15 @@
 # PROGRESS (newest first; "Resume here" on top; ≤ 10 log lines; Phase 2 log: docs/PROGRESS_PHASE2.md, Phase 1: docs/PROGRESS_PHASE1.md)
 
 ## Resume here
-- **Phase:** Phase 3, gate-driven, local code (C-ADR-01, C-ADR-10). Plan: `docs/phase3/C05_ROADMAP.md` (full scope, no cut line) + `docs/phase3/C_EXECUTION_PLAN.md`. Session B (C4.1 bench) has not started (issue #193 open, no branch yet).
-- **Last done:** CG2 passed (quality-100: faithful 98 %, category 94 %; PR #217 awaits merge). **C2.3b ✓:** strict number filter dropped 2 rewrites (+9 flagged), 799 categories remapped (7 rules), 22 non-risk titles, severity bands 1/2/3/severe = 1,669 / 5,793 / 2,942 / 488. Student split now train 10,362 / dev 529; classifier split train 9,832 / dev 1,060 (clean labels).
-- **Next (Akshat):** (1) tell Claude the Colab units (last night's G4 session, 193.67 before); (2) connect a G4 and run `COLAB_STEPS_student.md` (smoke, then real, ~5-7 units); (3) rate gold-150 (`data/gold/gold150_sheet.csv`, use the 5 tie-break rules in `configs/category_remap.yaml`) and the 60 novelty pairs (`data/gold/novelty_pairs.csv`).
-- **Next (Claude):** `gpu_jobs.py push student` once Akshat is ready; then C2.4 classifier seeds on Kaggle after gold-150; code lane C3.1, C3.2 (incl. severe rules), C1.5.
-- **Open files / failing tests:** none (fast suite green).
+- **Phase:** Phase 3, gate-driven, local code (C-ADR-01, C-ADR-10). Plan: `docs/phase3/C05_ROADMAP.md` + `docs/phase3/C_EXECUTION_PLAN.md`.
+- **Last done (C2.5, 4B student, Sonnet):** LoRA r=16 on Qwen3-4B-Instruct-2507, bf16, G4, 2 epochs, 1,290 steps, 1 h 10 m 24 s train time; dev loss 0.353 (0.437 at step 200). Adapter + `simplifier-q4_k_m.gguf` (2.4 GB) in `models/student/` (gitignored) and the private job repo `AkshatTm/finsight-gpu-jobs` (`student/out/`). Gold-50 (test slice, product post-check, single seed): student **49/50** pass vs base **16/50**; mean 43 words vs 79, 0 vs 38 over 60 words (`eval_results/c/student_vs_base_gold50.json`).
+- **Flags:** (1) the notebook's GGUF step failed on the first run (llama.cpp converter's older transformers cannot read the new tokenizer_config) and the runtime was recycled; the final adapter is checkpoint-1290 and the GGUF was built in a second step on the same G4 with the original tokenizer files; the fix for the notebook is not in yet (see AKSHAT_TODO). (2) `metrics.json` was assembled from checkpoint-1290 `trainer_state.json`, so `train_runtime_s` is 0 there; the real figure is 4,224 s from the trainer progress bar. (3) Student runs through Ollama (`finsight-student:q4`, base model's template) for gold-50 generation; `llama_cpp` is not installed locally.
+- **Next:** you rate `data/gold/simplify_gold50_sheet.csv` (run `uv run python scripts/gold_sets.py sheet50` first; 150 rows base/student/teacher, blind) -> `score50`; then E18-E20 + CPU seconds per risk, 8B variant, model card.
+- **Units (Colab Pro):** 171.38 left after the C2.5 session (182.88 at start, 11.5 used; logged in `eval_results/c/compute_log.jsonl`).
+- **Open files / failing tests:** none new (fast suite green apart from the regenerated docs page).
 
 ## Log
+- C2.5 done (4B): student LoRA trained on the G4 (dev loss 0.353, gold-50 post-check 49/50 vs base 16/50), GGUF built; human gold-50 rating, E18-E20, 8B and model card still open
 - C2.3b done: `teacher_cleanup` (strict numbers, category remap v1, non-risk titles, severe band); teacher prompt v1.1 tie-break rules; student notebook `RESUME` flag + per-epoch checkpoint
 - **CG2 passed** (C2.3): quality-100 rated, faithful 98 % | category_correct 94 % | notes 17 (`data/processed/teacher/quality_sheet.csv` + `quality_ratings.csv`, committed); no teacher rerun. Follow-ups → C2.3b (strict number filter, category remap, title check, severe band). Roadmap back to full scope (no cut line); C1.2/C1.3 ticked.
 - C2.3 teacher run: Gemma-4-31B-it on the G4, 12,000 risks in 44.7 min, 10,892 kept; quality-100 sheet written; gold_eval (gold-150 pre-fill + gold-50 teacher) done; G4 released

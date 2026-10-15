@@ -77,6 +77,10 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   TF-IDF; base 3 seeds (Kaggle); large 3 seeds (Colab); base must beat TF-IDF on dev; ONNX int8; E16; model card. Seriousness scored with MAE, within-1 accuracy and severe-band recall.
 - [ ] **C2.5 Student simplifier** (was B2.5b) · 💻 L + 🟠 G + 👤 A · S · Needs: CG2, C2.3b, gold-50 sheet
   Zero-shot bake-off; 4B bf16 LoRA on Colab; 8B variant; GGUF; E18–E20 + CPU seconds; model card.
+  - [x] Zero-shot base (gold-50: 16/50 pass the product checks)
+  - [x] 4B bf16 LoRA on Colab G4 + GGUF Q4_K_M (dev loss 0.353; gold-50 post-check pass 49/50, `eval_results/c/student_vs_base_gold50.json`)
+  - [ ] gold-50 blind sheet rated by Akshat (`sheet50` → `score50`)
+  - [ ] 8B variant · [ ] E18–E20 + CPU seconds per risk · [ ] model card `docs/model_cards/risk_simplifier.md`
 - [ ] **C2.6 Novelty τ + E22** (was B2.2b) · 💻 L + 👤 A · S · Needs: C2.1, C1.4 window
 - [ ] **C2.8 Risk-level thresholds + E17/E21 + E8r** (was B2.6b) · 💻 L · S · Needs: C2.4, C3.2, C1.4 window
   Wires `risklevel` to `reference_scores` + the window; thresholds fitted on train + dev only; E21 as the risk-points-only variant with the limitation stated.
