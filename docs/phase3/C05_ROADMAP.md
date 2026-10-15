@@ -122,6 +122,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 - [ ] **C4.5 Improvement loop + bench v2** · 💻 L · O for diagnosis, S for fixes · Needs: CG5
   Error analysis on bench-dev only; fixes with tests; FinSight re-run; v2 tables.
+  - [ ] Qualifier / hedge-consistency check for the simplifier: compare original vs rewrite for added or dropped qualifiers ("soon", "all", "only", "no", an omitted court stay). C2.5 gold-50: all 4 of the student's "partly" rows were this kind; the number and certainty checks do not see them.
 
 **CG6 = FEATURE FREEZE:** bench v2 done · all shipped features stable · nothing new after this, only fixes and docs.
 
