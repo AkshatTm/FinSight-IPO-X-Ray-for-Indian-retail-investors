@@ -27,6 +27,9 @@ ALLOWED = {
     # C0.2: generates the Colab vLLM smoke notebook; its one fixed prompt ("Explain an IPO")
     # checks the vLLM pin on a tiny model, never user input and never shown in the product.
     "scripts/make_colab_notebooks.py",
+    # C3.7: keeps the answer model resident in Ollama while timing retrieval; one fixed prompt
+    # ("hi", one token), never user input and never shown.
+    "scripts/profile_retrieval.py",
 }
 
 
