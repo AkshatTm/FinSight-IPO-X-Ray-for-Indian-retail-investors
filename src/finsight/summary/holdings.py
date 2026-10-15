@@ -15,13 +15,29 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 
-from finsight.core.schemas import Page, PageEvidence, ParsedDoc, Percent, Section, SummaryValue
-from finsight.summary.anchored import AnchoredRow, AnchoredTable, Cell, cell_box, read_anchored
+from finsight.compare import cell_number
+from finsight.core.schemas import (
+    Money,
+    Page,
+    PageEvidence,
+    ParsedDoc,
+    Percent,
+    Section,
+    SummaryValue,
+)
+from finsight.summary.anchored import (
+    AnchoredRow,
+    AnchoredTable,
+    Cell,
+    cell_box,
+    read_anchored,
+    read_continuation,
+)
 from finsight.summary.financials import _pages, _section_pages, summary_pages
-from finsight.summary.layout import is_nil, is_placeholder
+from finsight.summary.layout import is_nil, is_placeholder, lines_of
 
 _POST = re.compile(r"post-?\s?offer", re.IGNORECASE)
 _PRE = r"pre-?\s?offer"
@@ -49,11 +65,12 @@ MAX_PAGES = 3
 
 @dataclass
 class Holdings:
-    """The three promoter inputs."""
+    """The promoter inputs and the average cost of acquisition."""
 
     promoter_holding_post: SummaryValue | None
     pledged_pct: SummaryValue | None
     promoter_identifiable: bool
+    waca: list[SummaryValue] = field(default_factory=list)
 
 
 def _clean(text: str) -> str:
@@ -211,10 +228,111 @@ def identifiable(doc: ParsedDoc) -> bool:
     return not any(_NO_PROMOTER.search(" ".join(p.text.split())) for p in doc.pages)
 
 
+_ACA_HEADING = re.compile(
+    r"average\s+cost\s+of\s+acquisition\s+(?:per\s+equity\s+share\s+)?(?:of\s+)?(?:equity\s+)?"
+    r"shares?\s+(?:for|by|of|held)",
+    re.IGNORECASE,
+)
+_ACA_HEADER = r"cost\s+of\s+acquisition|average\s+cost|acquisition"
+_LEFT_OUT = re.compile(r"negligible|n\.?\s?a\.?|not applicable|[●•]", re.IGNORECASE)
+
+
+def _aca_tables(doc: ParsedDoc, sections: list[Section]) -> list[AnchoredTable]:
+    """The average-cost-of-acquisition table under its Summary heading, and its run-on page."""
+    pages = _pages(doc, summary_pages(sections))
+    for k, page in enumerate(pages):
+        if not _ACA_HEADING.search(" ".join(page.text.split())):
+            continue
+        heading = next(
+            (ln.top for ln in lines_of(page.words) if _ACA_HEADING.search(ln.text)), None
+        )
+        table = read_anchored(page, _ACA_HEADER, require=(r"number|shares",), after=heading)
+        if table is None or not table.columns:
+            continue
+        tables = [table]
+        nxt = pages[k + 1] if k + 1 < len(pages) else None
+        if nxt is not None and nxt.number == page.number + 1:
+            more = read_continuation(nxt, table)
+            if more is not None and more.rows:
+                tables.append(more)
+        return tables
+    return []
+
+
+def waca(doc: ParsedDoc, sections: list[Section], doc_id: str) -> list[SummaryValue]:
+    """Promoters' and selling shareholders' average cost of acquisition (₹ per share).
+
+    The first value is the share-weighted average over the holders whose cost is printed ("Nil"
+    counts as zero; "Negligible" and "N.A." are left out and named), then one value per holder.
+    """
+    tables = _aca_tables(doc, sections)
+    if not tables:
+        return []
+    # The cost is the rightmost column; its header words may sit outside the narrow column.
+    cost_col = tables[0].column(_ACA_HEADER, rightmost=True)
+    if cost_col is None:
+        cost_col = len(tables[0].columns) - 1
+    shares_col = next(
+        (k for k, c in enumerate(tables[0].columns)
+         if k != cost_col and re.search(r"number|shares", c.header, re.IGNORECASE)),
+        None,
+    )  # fmt: skip
+    if cost_col is None or shares_col is None:
+        return []
+    holders: list[SummaryValue] = []
+    weight, total = Decimal(0), Decimal(0)
+    left_out: list[str] = []
+    for t in tables:
+        for row in t.rows:
+            cost_cell, shares_cell = row.cells.get(cost_col), row.cells.get(shares_col)
+            name = _clean(row.label) or row.group
+            if cost_cell is None or shares_cell is None or not re.search(r"[A-Za-z]{3}", name):
+                continue
+            cost_text, shares_text = _clean(cost_cell.text), _clean(shares_cell.text)
+            if _LEFT_OUT.search(cost_text):
+                left_out.append(f"{name}: {cost_cell.text}")
+                continue
+            cost = Decimal(0) if is_nil(cost_text) else cell_number(cost_text)
+            shares = cell_number(shares_text)
+            if cost is None or shares is None or shares <= 0:
+                continue
+            weight += shares
+            total += shares * cost
+            ev = PageEvidence(
+                doc_id=doc_id, page=t.page, bbox=cell_box(row, shares_cell, cost_cell),
+                sentence=f"{name}: {shares_cell.text} shares, average cost ₹{cost_cell.text}",
+            )  # fmt: skip
+            money = Money(value_inr=cost, currency="INR", raw=cost_cell.text, precision=2)
+            holders.append(
+                SummaryValue(key="waca_holder", value=money, period=name, evidence=ev,
+                             status="found" if cost > 0 else "stated_zero")
+            )  # fmt: skip
+    if not holders or weight == 0:
+        return []
+    avg = (total / weight).quantize(Decimal("0.01"))
+    first = holders[0].evidence
+    assert first is not None
+    note = f"; left out: {'; '.join(left_out)}" if left_out else ""
+    ev = first.model_copy(
+        update={
+            "bbox": None,
+            "sentence": f"[computed: share-weighted average cost of acquisition of "
+            f"{len(holders)} holders, ₹ per share]{note}"[:600],
+        }
+    )
+    money = Money(value_inr=avg, currency="INR", raw=str(avg), precision=2)
+    weighted = SummaryValue(
+        key="waca_selling_shareholders", value=money, period="weighted", evidence=ev,
+        status="found",
+    )  # fmt: skip
+    return [weighted, *holders]
+
+
 def extract_holdings(doc: ParsedDoc, sections: list[Section], doc_id: str) -> Holdings:
-    """Post-offer promoter share, pledged share and the identifiable-promoter flag."""
+    """Post-offer promoter share, pledged share, identifiable-promoter flag and WACA."""
     return Holdings(
         promoter_holding_post=promoter_post(doc, sections, doc_id),
         pledged_pct=pledged(doc, sections, doc_id),
         promoter_identifiable=identifiable(doc),
+        waca=waca(doc, sections, doc_id),
     )

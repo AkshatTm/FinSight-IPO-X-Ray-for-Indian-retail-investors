@@ -20,6 +20,9 @@ _STUB = re.compile(
     re.IGNORECASE,
 )
 _VAGUE_STUB = re.compile(r"\bperiod ended\b", re.IGNORECASE)  # a short first year, or a stub
+_YEAR_OR_PERIOD = re.compile(
+    r"\b(?:year|fiscal)\s*/\s*period\b|\bperiod\s*/\s*(?:year|fiscal)\b", re.IGNORECASE
+)
 _FULL = re.compile(
     r"\byears?\b|\bfiscal\b|\bfy\s*['’]?\s*(?:\d{2}|\d{4})?\b|\bfinancial year\b|\btwelve months\b"
     r"|\b12 months\b",
@@ -57,7 +60,10 @@ def parse_period(header: str) -> Period:
     """Classify a column header such as "As at and for the Financial Year ended March 31, 2024"."""
     text = " ".join(header.split())
     clear = _STUB.search(text) is not None
-    stub = clear or _VAGUE_STUB.search(text) is not None
+    # "For the Fiscal/ period ended June 30, 2024" is used for full years and stubs alike: such
+    # a column counts as a date only, so the fiscal month (rank_years) decides.
+    either = _YEAR_OR_PERIOD.search(text) is not None and not clear
+    stub = clear or (_VAGUE_STUB.search(text) is not None and not either)
     full = _FULL.search(text) is not None
     kind: Literal["year", "stub"] = "stub" if stub else "year"
     months = _MONTH.findall(text)
@@ -70,7 +76,7 @@ def parse_period(header: str) -> Period:
     elif m := _FY_SHORT.search(text):
         year = 2000 + int(m[1])
     return Period(
-        kind=kind, year=year, label=text, explicit=stub or full,
+        kind=kind, year=year, label=text, explicit=(stub or full) and not either,
         month=months[-1].lower()[:3] if months else None, clear_stub=clear,
     )  # fmt: skip
 

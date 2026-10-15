@@ -22,6 +22,7 @@ HEADER_GAP = 14.0  # header lines are at most this far apart
 HEADER_LINES = 18  # the header band is at most this many lines
 DATA_GAP = 50.0  # data lines further apart than this end the table (a page number below)
 HEADER_PAD = 8.0  # header words this far beside a column still name it
+CONTINUATION_LINES = 12  # a run-on table restarts within the first lines of the next page
 LABEL_GAP = 13.0  # a label-only line this close below a data line continues its label
 
 _MARKS = r"[*^#@†‡$]*"
@@ -181,6 +182,7 @@ def read_anchored(
     start: str | re.Pattern[str],
     require: tuple[str, ...] = (),
     min_cells: int = 2,
+    after: float | None = None,
 ) -> AnchoredTable | None:
     """The table whose header band contains ``start`` (and every ``require`` pattern).
 
@@ -189,16 +191,36 @@ def read_anchored(
         start: A pattern one header word or phrase matches ("criminal", "P/E").
         require: Patterns the header band text must also match.
         min_cells: Value cells a line needs to start the data rows.
+        after: Only header lines below this top edge (the table under a known heading).
     """
     pat = re.compile(start, re.IGNORECASE) if isinstance(start, str) else start
     needs = [re.compile(r, re.IGNORECASE) for r in require]
     lines = lines_of(page.words)
     for i, line in enumerate(lines):
-        if not pat.search(line.text):
+        if (after is not None and line.top <= after) or not pat.search(line.text):
             continue
         table = _read_from(page, lines, i, needs, min_cells)
         if table is not None:
             return table
+    return None
+
+
+def read_continuation(page: Page, table: AnchoredTable, min_cells: int = 2) -> AnchoredTable | None:
+    """The rows of ``table`` that run on at the top of the next page, without a new header.
+
+    The first line with ``min_cells`` value cells among the page's first lines starts the rows;
+    cells are placed in ``table``'s columns.
+    """
+    lines = lines_of(page.words)
+    for j, line in enumerate(lines[:CONTINUATION_LINES]):
+        _, cells = split_line(line)
+        if _value_cells(cells) >= min_cells:
+            parsed = _data_lines(page, lines, j)
+            columns = [AnchoredColumn(c.x0, c.x1, c.header) for c in table.columns]
+            rows = _rows(parsed, columns)
+            return AnchoredTable(
+                page=page.number, header_text=table.header_text, columns=columns, rows=rows
+            )
     return None
 
 
@@ -227,19 +249,8 @@ def _read_from(
     band_text = " ".join(ln.text for ln in band)
     if not all(r.search(band_text) for r in needs):
         return None
-    parsed: list[tuple[Line, list[Word], list[Cell]]] = []
-    last_top = lines[data_start].top
-    for line in lines[data_start:]:
-        if line.top - last_top > DATA_GAP or _running_text(line, page.width):
-            break
-        label, cells = split_line(line)
-        if any(len(c.words) >= 6 and not is_cell_value(c.text) for c in cells):
-            break  # prose in the value columns: the notes under the table
-        parsed.append((line, label, cells))
-        if cells:
-            last_top = line.top
-    data = [p for p in parsed if p[2]]
-    columns = _columns(data)
+    parsed = _data_lines(page, lines, data_start)
+    columns = _columns([p for p in parsed if p[2]])
     for k, col in enumerate(columns):
         # Header words may start a little left or right of the narrow figure column under them.
         left = columns[k - 1].x1 if k else col.x0 - 2 * HEADER_PAD
@@ -249,6 +260,31 @@ def _read_from(
         col.header = " ".join(
             w.text for ln in band for w in ln.words if min(w.bbox[2], x1) - max(w.bbox[0], x0) > 0
         )
+    rows = _rows(parsed, columns)
+    return AnchoredTable(page=page.number, header_text=band_text, columns=columns, rows=rows)
+
+
+def _data_lines(
+    page: Page, lines: list[Line], data_start: int
+) -> list[tuple[Line, list[Word], list[Cell]]]:
+    """The table's lines from ``data_start`` until prose, notes or a large gap."""
+    parsed: list[tuple[Line, list[Word], list[Cell]]] = []
+    last_top = lines[data_start].top
+    for line in lines[data_start:]:
+        if line.top - last_top > DATA_GAP or _running_text(line, page.width):
+            break
+        label, cells = split_line(line)
+        if any(len(c.words) >= 6 and not is_cell_value(c.text) for c in cells):
+            break  # prose in the value columns: the notes under the table
+        parsed.append((line, label, cells))
+        last_top = line.top  # a long wrapped label keeps the table going
+    return parsed
+
+
+def _rows(
+    parsed: list[tuple[Line, list[Word], list[Cell]]], columns: list[AnchoredColumn]
+) -> list[AnchoredRow]:
+    """Data rows with their cells by column; label-only lines continue a label or name a group."""
     rows: list[AnchoredRow] = []
     group, prev_top = "", -1e9
     for line, label, cells in parsed:
@@ -275,7 +311,7 @@ def _read_from(
             if at is not None and at not in row.cells:
                 row.cells[at] = cell
         rows.append(row)
-    return AnchoredTable(page=page.number, header_text=band_text, columns=columns, rows=rows)
+    return rows
 
 
 def cell_box(row: AnchoredRow, *cells: Cell | None) -> tuple[float, float, float, float] | None:

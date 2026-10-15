@@ -20,7 +20,7 @@ from finsight.jobs.runner import JobContext, Stage, StageRejected
 from finsight.parse import extract_tables, find_sections, parse_pdf, pymupdf_backend
 from finsight.pipeline import RISKS, RISKS_FILE, split_risks
 from finsight.storage import put_json
-from finsight.summary import SUMMARY_FILE, extract_summary
+from finsight.summary import PEER_SECTIONS, SUMMARY_FILE, extract_summary
 
 SOURCE = "source.pdf"
 PARSED = "parsed.json"
@@ -89,14 +89,36 @@ def _sections(ctx: JobContext) -> list[Section]:
 
 
 def _financials(ctx: JobContext) -> dict[str, Any]:
-    summary = extract_summary(_parsed_doc(ctx), _sections(ctx), ctx.doc_id)
+    parsed, sections = _parsed_doc(ctx), _sections(ctx)
+    # Ruled peer tables, when PyMuPDF finds them; the summary reads the words otherwise.
+    tables = _with_pdf(
+        ctx,
+        lambda path: extract_tables(
+            path, parsed, sections, backend=pymupdf_backend, section_ids=PEER_SECTIONS
+        ),
+    )
+    summary = extract_summary(parsed, sections, ctx.doc_id, tables=tables)
     put_json(ctx.storage, ctx.key(SUMMARY_FILE), summary.model_dump(mode="json"))
     values = [
         *summary.revenue, *summary.profit_after_tax, *summary.operating_cash_flow,
         summary.total_borrowings, summary.net_worth,
     ]  # fmt: skip
     found = sum(v is not None and v.status in SUMMARY_HAS_VALUE for v in values)
-    return {"ready": True, "found": found, "total": len(values)}
+    fields = [
+        summary.litigation.get("criminal_cases"), summary.litigation.get("amount_total"),
+        summary.rpt_total, summary.promoter_holding_post, summary.pledged_pct,
+        summary.customer_top1_pct, summary.customer_top10_pct, summary.general_purposes_pct,
+        summary.waca[0] if summary.waca else None,
+    ]  # fmt: skip
+    return {
+        "ready": True,
+        "found": found,
+        "total": len(values),
+        "other_found": sum(v is not None and v.status in SUMMARY_HAS_VALUE for v in fields),
+        "other_placeholder": sum(v is not None and v.status == "placeholder" for v in fields),
+        "peers": len(summary.peers),
+        "financial_company": summary.is_financial_company,
+    }
 
 
 def _risks_split(ctx: JobContext) -> dict[str, Any]:
