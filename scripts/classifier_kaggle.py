@@ -32,6 +32,7 @@ from finsight.risks.clf_runs import (  # noqa: E402
     kernel_folder,
     kernel_slug,
     summarise,
+    summarise_band,
     write_json,
 )
 from finsight.risks.teacher_run import read_jsonl  # noqa: E402
@@ -92,7 +93,8 @@ def cmd_fetch(username: str, run: str) -> int:
     code = kaggle("kernels", "output", f"{username}/{kernel_slug(run)}", "-p", str(out), "-o", "-q")
     if code != 0:
         return code
-    for f in sorted(out.rglob("metrics-*.json")) + sorted(out.rglob("dev-predictions-*.json")):
+    kept = ("metrics-*.json", "dev-predictions-*.json", "test-predictions-*.json")
+    for f in (p for pattern in kept for p in sorted(out.rglob(pattern))):
         MODELS.mkdir(parents=True, exist_ok=True)
         shutil.copy2(f, MODELS / f.name)
     for seed_dir in out.rglob("seed-*"):
@@ -103,12 +105,15 @@ def cmd_fetch(username: str, run: str) -> int:
 
 
 def cmd_summary() -> None:
-    """E16 for the base model from every real ``metrics-<seed>.json`` in the models folder."""
+    """E16 for the base model from every real metrics file in the models folder: category
+    (``metrics-<seed>.json``) and, when present, seriousness bands (``metrics-band-<seed>.json``)."""
     metrics = [
         json.loads(p.read_text(encoding="utf-8")) for p in sorted(MODELS.glob("metrics-*.json"))
     ]
     baseline = json.loads(BASELINE.read_text(encoding="utf-8")) if BASELINE.exists() else None
     result = summarise(metrics, baseline)
+    if any(m.get("task") == "band" and not m.get("smoke") for m in metrics):
+        result = {"category": result, "seriousness": summarise_band(metrics)}
     write_json(RESULT, result)
     print(json.dumps(result, indent=1))
 

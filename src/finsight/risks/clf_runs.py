@@ -90,7 +90,7 @@ def summarise(
     The best seed is picked on **dev** only; gold-150 never chooses anything. Smoke runs are
     refused: a summary over a 200-row slice would be mistaken for a result.
     """
-    real = [m for m in metrics if not m.get("smoke")]
+    real = [m for m in metrics if not m.get("smoke") and m.get("task", "category") == "category"]
     if not real:
         raise ValueError("no non-smoke metrics to summarise")
     f1 = {int(m["seed"]): float(m["dev"]["macro_f1"]) for m in real}
@@ -110,10 +110,59 @@ def summarise(
     }
     if len(f1) == 1:
         out["note"] = "single seed: no spread can be reported"
+    tests = {int(m["seed"]): m["test"] for m in real if m.get("test")}
+    if tests:
+        out["test_label_source"] = "human:akshat (gold-150, test-slice IPOs)"
+        out["test_macro_f1_by_seed"] = {str(s): round(t["macro_f1"], 4) for s, t in tests.items()}
+        out["test_macro_f1_mean"] = _mean(t["macro_f1"] for t in tests.values())
+        out["test_best_seed"] = tests.get(best)
     if baseline is not None:
         base = float(baseline["dev"]["macro_f1"])
         out["tfidf_dev_macro_f1"] = round(base, 4)
         out["beats_tfidf"] = out["dev_macro_f1_mean"] > base
+    return out
+
+
+BAND_KEYS = ("macro_f1", "mae", "within_1", "severe_recall", "severe_precision")
+
+
+def _mean(xs: Iterable[float | None]) -> float | None:
+    vals = [float(x) for x in xs if x is not None]
+    return round(statistics.fmean(vals), 4) if vals else None
+
+
+def summarise_band(metrics: Sequence[dict[str, Any]]) -> dict[str, Any]:
+    """Seriousness bands (1, 2, 3, 4 = severe): per-seed and mean dev scores (macro-F1, MAE,
+    within-1, severe recall / precision), the best seed on dev macro-F1 and its test scores.
+
+    Test bands are the teacher's (gold-150 has no human seriousness label), so test numbers are
+    agreement with the teacher on held-out IPOs.
+    """
+    real = [m for m in metrics if not m.get("smoke") and m.get("task") == "band"]
+    if not real:
+        raise ValueError("no non-smoke band metrics to summarise")
+    by_seed = {int(m["seed"]): m for m in real}
+    best = max(by_seed, key=lambda s: (by_seed[s]["dev"]["macro_f1"], -s))
+    out: dict[str, Any] = {
+        "model": real[0]["model"],
+        "bands": "1, 2, 3, 4 = severe (levels 4 and 5 merged)",
+        "n_seeds": len(by_seed),
+        "seeds": sorted(by_seed),
+        "dev_by_seed": {str(s): {k: m["dev"].get(k) for k in BAND_KEYS} for s, m in
+                        sorted(by_seed.items())},
+        "dev_mean": {k: _mean(m["dev"].get(k) for m in real) for k in BAND_KEYS},
+        "best_seed": best,
+        "selected_on": "dev band macro-F1 (gold-150 is for the final report only)",
+        "label_source": "teacher (AI labels); see docs/phase2/datasheets/teacher_outputs.md",
+        "n_train": real[0].get("n_train"),
+        "n_dev": real[0].get("n_dev"),
+    }  # fmt: skip
+    test = by_seed[best].get("test")
+    if test:
+        out["test_best_seed"] = {k: test.get(k) for k in (*BAND_KEYS, "severe_support", "n")}
+        out["test_label_source"] = "teacher:gemma-4-31b-it band on gold-150 (no human label)"
+    if len(by_seed) == 1:
+        out["note"] = "single seed: no spread can be reported"
     return out
 
 

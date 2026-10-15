@@ -15,6 +15,7 @@ from finsight.risks.teacher_cleanup import (
     load_rules,
     remap_category,
     seriousness_band,
+    subject_of,
 )
 
 
@@ -63,12 +64,55 @@ def test_inclusion_polarity_is_a_flag_not_a_drop() -> None:
         ("The objects of the Issue have not been appraised", "financial"),
         ("Our joint venture partner may deadlock decisions", "operations"),
         ("Negative publicity could damage our brand", "operations"),
+        ("We may be unable to maintain our brand, which could affect our sales", "operations"),
+        ("We could be adversely affected due to negative publicity on products", "operations"),
         ("The auditors' report contains CARO remarks on statutory dues", "financial"),
+        ("There have been delays in payment of provident fund and ESI contributions", "financial"),
+        ("There have been instances of delayed filing of GST returns", "regulatory"),
+        ("We have delayed filings with the Registrar of Companies in the past", "regulatory"),
+        ("Holders may not be able to exercise pre-emptive rights under Indian law", "regulatory"),
+        ("Our auditors have included a modified opinion in the audit report", "financial"),
+        ("Investors are not permitted to withdraw or lower their Bids", "market_macro"),
+        ("The Offer may fail if minimum subscription is not received", "market_macro"),
+        ("We use certain non-GAAP measures that are not defined under Ind AS", "financial"),
     ],
 )
 def test_remap_rules(title: str, expected: str) -> None:
     new, rule = remap_category(title, "", "promoters_governance", load_rules())
     assert (new, rule is not None) == (expected, True)
+
+
+@pytest.mark.parametrize(
+    ("title", "category"),
+    [  # reputation / brand only as a consequence (gold-150: aastha-spintex-2026#r51)
+        (
+            "Our inability to protect our intellectual property may adversely affect our "
+            "business, reputation and results of operations.",
+            "technology_data",
+        ),
+        ("Any failure in payment of dues may have a material adverse effect on our reputation.",
+         "debt_liquidity"),
+        ("If we suffer a data breach, our reputation could be harmed.", "technology_data"),
+        ("Our business, reputation and results could be impacted by adverse results in legal "
+         "proceedings.", "legal_litigation"),
+        ("We sell through large format stores and multi-brand outlets", "customers_suppliers"),
+        ("Our Directors and Key Managerial Personnel have interests in our Company",
+         "promoters_governance"),
+        ("Our working capital requirements are sensitive to gold prices", "market_macro"),
+    ],
+)  # fmt: skip
+def test_remap_does_not_fire_on_consequences_or_exclusions(title: str, category: str) -> None:
+    assert remap_category(title, "", category, load_rules()) == (category, None)
+
+
+def test_subject_of_cuts_the_consequence() -> None:
+    assert subject_of("Losing our key patents may adversely affect our reputation").strip() == (
+        "Losing our key patents"
+    )
+    assert subject_of("If X happens to us, our brand may suffer") == "If X happens to us,"
+    assert subject_of("We could be adversely affected by publicity") == (
+        "We could be adversely affected by publicity"
+    )
 
 
 def test_remap_leaves_unmatched() -> None:
@@ -134,7 +178,11 @@ def test_clean_writes_files(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> 
             "\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8"
         )
     report = clean(tmp_path)
+    assert report["remap_version"] == "remap-v2"
     assert report["pairs_kept"] == 1
+    before = (tmp_path / "simplify.clean.jsonl").stat().st_mtime_ns
+    clean(tmp_path)  # identical output: the student pairs file is not rewritten
+    assert (tmp_path / "simplify.clean.jsonl").stat().st_mtime_ns == before
     assert report["strict_dropped"] == {"sign_flip": 1}
     out = [json.loads(x) for x in (tmp_path / "labels.clean.jsonl").read_text().splitlines()]
     assert out[0]["category"] == "operations"
