@@ -1,0 +1,18 @@
+risk_id,faithful,category_correct,notes
+aditya-birla-sun-life-amc-2021#r6,1,0,Growth-management risk; should be operations (same theme as Capital Small Finance Bank r29).
+cl-educate-2017#r1,1,0,"Brand/reputation risk, not promoters/governance; should be operations."
+craftsman-automation-2021#r9,1,1,Minor: implies both JVs date from June 2007; only the Carl Stahl JV does.
+hindustan-aeronautics-2018#r50,1,0,JV control/deadlock risk; should be operations (Craftsman Automation r9 JV risk is operations).
+infibeam-incorporation-2016#r50,0,1,Wrong: says the ₹7.32m tax excess is included in the ₹109.56m total; original says notes items are NOT included. Also drops the ₹158.68m unprovided telecom demand.
+juniper-hotels-2024#r44,1,1,Source title misparsed ('Currency of Presentation'); simplification itself fine.
+krsnaa-diagnostics-2021#r63,1,1,Minor: drops hedge — company 'believes' it was not a PFIC.
+narayana-hrudayalaya-2015#r59,1,1,Source loss table garbled; company list matches but figures unverifiable.
+precision-camshafts-2016#r45,1,1,Source sentence on vehicle sales is itself garbled; simplification mirrors it.
+psp-projects-2017#r13,1,1,Key-personnel risk labelled operations here but promoters_governance for HUDCO r37 and Narayana Hrudayalaya r55 — pick one.
+rategain-travel-technologies-2021#r10,1,0,Use-of-proceeds risk; should be financial (Arisinfra r40 same theme is financial).
+sanstar-2024#r29,0,1,Wrong: calls 285.97 and 297.14 negative; only (60.17) is negative (brackets). Units (₹ million) missing. Seriousness 4 looks too high for one negative year.
+shankara-building-products-2017#r13,1,0,"Brand/negative publicity risk, not competition; should be operations."
+sigachi-industries-2021#r24,1,1,Minor: implies wood pulp is corrosive; it is the combustible material.
+speciality-restaurants-2012#r21,1,1,Minor: says 'most' supply agreements end after one year; original says all.
+unimech-aerospace-and-manufacturing-2024#r35,1,0,Auditor CARO remarks on statutory dues; should be financial. Title text in source is a misparsed heading.
+updater-services-2023#r82,1,1,Same shareholder-rights risk is regulatory for CMS Info Systems r60 and Sai Silks r68 — keep consistent.
