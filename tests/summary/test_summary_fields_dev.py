@@ -80,11 +80,13 @@ def test_post_offer_holding_is_a_placeholder_in_an_rhp(
     assert post.evidence.page == page
 
 
-def test_offer_for_sale_only_ipo_has_no_gcp_and_no_post_table(
+def test_offer_for_sale_only_ipo_has_a_stated_zero_gcp_and_no_post_table(
     summaries: dict[str, FinancialSummary],
 ) -> None:
     hexa = summaries["hexaware-technologies-2025"]
-    assert hexa.general_purposes_pct is None
+    gcp = hexa.general_purposes_pct  # C3.7b: "will not receive any proceeds" is a stated zero
+    assert gcp is not None
+    assert gcp.status == "stated_zero"
     assert hexa.promoter_holding_post is None
 
 
