@@ -38,6 +38,8 @@ Seriousness band (1, 2, 3, 4 = severe (levels 4 and 5 merged)), 3 seeds, dev mea
 
 <!-- generated:results end -->
 
+A DeBERTa-v3-large run (3 seeds, same data and recipe, Colab G4) reached dev macro-F1 0.894 against the base's 0.892, inside the seed spread, with lower severe-band recall (0.49 vs 0.56) and gold-150 macro-F1 0.875 vs 0.899. The base model is kept (`eval_results/c/classifier_large.json`).
+
 ## Limitations
 
 - The labels come from a teacher model, not from people; the classifier can only be as good as they are. Gold-150 (verified by Akshat) measures the gap.
