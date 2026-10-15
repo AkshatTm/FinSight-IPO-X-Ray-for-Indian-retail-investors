@@ -9,7 +9,7 @@ be read is never ranked either (nothing is guessed from column order).
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Literal
 
 PERIOD_KEYS = ("latest", "latest-1", "latest-2")
@@ -20,6 +20,9 @@ _STUB = re.compile(
     re.IGNORECASE,
 )
 _VAGUE_STUB = re.compile(r"\bperiod ended\b", re.IGNORECASE)  # a short first year, or a stub
+_YEAR_OR_PERIOD = re.compile(
+    r"\b(?:year|fiscal)\s*/\s*period\b|\bperiod\s*/\s*(?:year|fiscal)\b", re.IGNORECASE
+)
 _FULL = re.compile(
     r"\byears?\b|\bfiscal\b|\bfy\s*['’]?\s*(?:\d{2}|\d{4})?\b|\bfinancial year\b|\btwelve months\b"
     r"|\b12 months\b",
@@ -57,7 +60,10 @@ def parse_period(header: str) -> Period:
     """Classify a column header such as "As at and for the Financial Year ended March 31, 2024"."""
     text = " ".join(header.split())
     clear = _STUB.search(text) is not None
-    stub = clear or _VAGUE_STUB.search(text) is not None
+    # "For the Fiscal/ period ended June 30, 2024" is used for full years and stubs alike: such
+    # a column counts as a date only, so the fiscal month (rank_years) decides.
+    either = _YEAR_OR_PERIOD.search(text) is not None and not clear
+    stub = clear or (_VAGUE_STUB.search(text) is not None and not either)
     full = _FULL.search(text) is not None
     kind: Literal["year", "stub"] = "stub" if stub else "year"
     months = _MONTH.findall(text)
@@ -70,9 +76,30 @@ def parse_period(header: str) -> Period:
     elif m := _FY_SHORT.search(text):
         year = 2000 + int(m[1])
     return Period(
-        kind=kind, year=year, label=text, explicit=stub or full,
+        kind=kind, year=year, label=text, explicit=(stub or full) and not either,
         month=months[-1].lower()[:3] if months else None, clear_stub=clear,
     )  # fmt: skip
+
+
+_FY_WORDS = re.compile(r"\bfiscal\b|\bfinancial year\b|\bfy\b", re.IGNORECASE)
+_TWELVE = re.compile(r"\b(?:twelve|12)[\s-]*months\b", re.IGNORECASE)
+
+
+def trailing_as_stub(periods: list[Period]) -> list[Period]:
+    """ "Twelve months ended September 30" beside "Financial Year 2023" columns is a trailing
+    period, not a fiscal year: it becomes a clear stub unless it ends in the fiscal month."""
+    fiscal = [p for p in periods if p.kind == "year" and _FY_WORDS.search(p.label)]
+    if not fiscal:
+        return periods
+    months = {p.month for p in fiscal if p.month}
+    return [
+        replace(p, kind="stub", clear_stub=True)
+        if _TWELVE.search(p.label)
+        and not _FY_WORDS.search(p.label)
+        and (not months or p.month not in months)
+        else p
+        for p in periods
+    ]
 
 
 def rank_years(periods: list[Period]) -> dict[int, str]:
@@ -89,6 +116,7 @@ def rank_years(periods: list[Period]) -> dict[int, str]:
     itself a part-year period ("nine months"): either would shift "latest" onto an older column.
     Ranked years are consecutive; ranking stops at the first gap.
     """
+    periods = trailing_as_stub(periods)
     year_months: set[str | None] = {
         p.month for p in periods if p.kind == "year" and p.explicit and p.month
     }
@@ -117,6 +145,14 @@ def rank_years(periods: list[Period]) -> dict[int, str]:
     if ordered and any(
         i not in ranked and p.year is not None and p.year > ordered[0] and not p.clear_stub
         for i, p in enumerate(periods)
+    ):
+        return {}
+    # A part-year column ending in the fiscal month after "latest" ("three months ended March 31,
+    # 2025" beside "year ended March 31, 2024") is a header that bled over from its neighbour:
+    # the full year it hides would be skipped.
+    if ordered and any(
+        p.kind == "stub" and p.year is not None and p.year > ordered[0] and p.month in year_months
+        for p in periods
     ):
         return {}
     return {seen[y]: PERIOD_KEYS[k] for k, y in enumerate(ordered)}

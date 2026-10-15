@@ -89,6 +89,20 @@ RULES: dict[str, list[RowRule]] = {
         _rule(r"^cash (flows? )?(generated|used|from).*operating activit", r"\bbefore\b"),
     ],
 }
+# Banks, NBFCs and insurers (``auditor.is_financial_company``) print other rows; these are tried
+# only for them, after the rules above.
+FINANCIAL_RULES: dict[str, list[RowRule]] = {
+    "revenue": [
+        _rule(r"^total income\b", _RATIO),
+        _rule(r"^revenue$", _RATIO),  # insurers: "Revenue" (= gross written premium, footnoted)
+        _rule(r"^(net )?premiums? (earned|income)\b|^premium earned", _RATIO),
+        _rule(r"^interest income\b", _RATIO),
+    ],
+    "net_worth": [_rule(r"^(total )?shareholders['’]? (funds|equity)\b", _RATIO)],
+    "profit_after_tax": [],
+    "total_borrowings": [],
+    "operating_cash_flow": [],
+}
 # Used only inside the chosen summary table: a single "Borrowings" row, or current + non-current.
 _BORROWINGS = _rule(r"^borrowings?\b", _RATIO)
 _CURRENT = _rule(r"^current borrowings?\b", _RATIO)
@@ -384,14 +398,20 @@ def extract_financials(
     sections: list[Section],
     doc_id: str,
     cash_flow_pages: list[int] | None = None,
+    financial: bool = False,
 ) -> FinancialValues:
-    """Read the C3.1a values from a parsed document (full or fixture pages)."""
+    """Read the C3.1a values from a parsed document (full or fixture pages).
+
+    ``financial`` (a bank, NBFC or insurer) adds ``FINANCIAL_RULES`` for the rows still missing.
+    """
     summary = _summary_table(_tables(doc, summary_pages(sections)))
     sfi = _tables(doc, _section_pages(sections, "summary_financial_information"))
     cash = _tables(doc, cash_flow_pages or [])
     found: dict[str, dict[str, SummaryValue]] = {k: {} for k in (*YEARLY, *POINT)}
     for key in ("revenue", "profit_after_tax", "net_worth", "total_borrowings"):
         _fill(key, summary + sfi, doc_id, found[key])
+        if financial and FINANCIAL_RULES[key]:
+            _fill(key, summary + sfi, doc_id, found[key], FINANCIAL_RULES[key])
     borrowings = found["total_borrowings"]
     for t in summary:
         if "latest" not in borrowings and (v := _sum_borrowings(t, doc_id)):

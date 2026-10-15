@@ -15,7 +15,7 @@ Rules for every item: each value is a `SummaryValue` with page evidence and a st
    with its date. A dash / "Nil" in an otherwise numeric row is `stated_zero`.
 7. Non-critical `financials` stage after `sections`; a failure does not stop the job.
 
-## C3.1b — the other red-flag inputs
+## C3.1b — the other red-flag inputs (built; decisions in C-ADR-17)
 
 3. `litigation.py`: criminal case count + total amount from the outstanding-litigation summary.
 4. `holdings.py`: promoter post-issue holding, pledged %, promoter WACA, identifiable-promoter flag.
@@ -33,3 +33,10 @@ Rules for every item: each value is a `SummaryValue` with page evidence and a st
 
 - `parse` misses "Summary of the Offer Document" in 16/55 dev RHPs; `summary` scans the 40 pages
   before Risk Factors instead. The fix belongs in `parse`, scheduled with the heading-denylist task.
+- Gold v3: confirm the WACA definition (share-weighted over all Promoters and Selling
+  Shareholders in the Summary's average-cost table) and whether net worth / borrowings "latest"
+  means the fiscal year end (primary) or the stub date (secondary).
+- Tables whose blank-header "phantom" columns sit between year columns (Laxmi India Finance cash
+  flows) are left unranked on purpose; a fix needs the phantom columns told apart in `layout`.
+- Customer-share tables with a bare year beside trailing-period columns (Hexaware) are not dated
+  and not read.

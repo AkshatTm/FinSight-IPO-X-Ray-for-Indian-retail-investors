@@ -1,84 +1,156 @@
 {
   "slice": "dev",
   "written_by": "scripts/summary_coverage.py",
-  "written_utc": "2026-10-15T13:24:08Z",
+  "written_utc": "2026-10-15T14:16:45Z",
   "n_ipos": 55,
   "n_read": 55,
   "share": {
     "net_worth": {
-      "found": 0.927,
+      "found": 0.982,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.073
+      "not_found": 0.018
     },
     "operating_cash_flow:latest": {
-      "found": 0.855,
+      "found": 0.891,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.145
+      "not_found": 0.109
     },
     "operating_cash_flow:latest-1": {
-      "found": 0.855,
+      "found": 0.891,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.145
+      "not_found": 0.109
     },
     "operating_cash_flow:latest-2": {
-      "found": 0.855,
+      "found": 0.891,
       "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.109
+    },
+    "profit_after_tax:latest": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "profit_after_tax:latest-1": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "profit_after_tax:latest-2": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "revenue:latest": {
+      "found": 0.964,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.036
+    },
+    "revenue:latest-1": {
+      "found": 0.964,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.036
+    },
+    "revenue:latest-2": {
+      "found": 0.964,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.036
+    },
+    "total_borrowings": {
+      "found": 0.673,
+      "stated_zero": 0.127,
+      "placeholder": 0.0,
+      "not_found": 0.2
+    },
+    "all_fields_found": 0.727
+  },
+  "share_c3_1b": {
+    "auditor_remarks": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "criminal_cases": {
+      "found": 0.727,
+      "stated_zero": 0.127,
       "placeholder": 0.0,
       "not_found": 0.145
     },
-    "profit_after_tax:latest": {
-      "found": 0.927,
+    "customer_top10_pct": {
+      "found": 0.127,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.073
+      "not_found": 0.873
     },
-    "profit_after_tax:latest-1": {
-      "found": 0.927,
+    "customer_top1_pct": {
+      "found": 0.073,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.073
+      "not_found": 0.927
     },
-    "profit_after_tax:latest-2": {
-      "found": 0.927,
+    "general_purposes_pct": {
+      "found": 0.0,
       "stated_zero": 0.0,
-      "placeholder": 0.0,
-      "not_found": 0.073
+      "placeholder": 0.709,
+      "not_found": 0.291
     },
-    "revenue:latest": {
+    "litigation_amount": {
       "found": 0.891,
+      "stated_zero": 0.018,
+      "placeholder": 0.0,
+      "not_found": 0.091
+    },
+    "peers": {
+      "found": 0.745,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.109
+      "not_found": 0.255
     },
-    "revenue:latest-1": {
-      "found": 0.891,
+    "pledged_pct": {
+      "found": 0.036,
+      "stated_zero": 0.764,
+      "placeholder": 0.0,
+      "not_found": 0.2
+    },
+    "promoter_holding_post": {
+      "found": 0.0,
+      "stated_zero": 0.0,
+      "placeholder": 0.345,
+      "not_found": 0.655
+    },
+    "rpt_total": {
+      "found": 0.055,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.109
+      "not_found": 0.945
     },
-    "revenue:latest-2": {
-      "found": 0.891,
+    "waca": {
+      "found": 0.455,
       "stated_zero": 0.0,
       "placeholder": 0.0,
-      "not_found": 0.109
-    },
-    "total_borrowings": {
-      "found": 0.655,
-      "stated_zero": 0.109,
-      "placeholder": 0.0,
-      "not_found": 0.236
-    },
-    "all_fields_found": 0.673
+      "not_found": 0.545
+    }
   },
+  "financial_companies": [
+    "canara-hsbc-life-insurance-company-2025",
+    "laxmi-india-finance-2025"
+  ],
   "stub_balance_sheet": {
-    "total_borrowings_stub": 8,
-    "net_worth_stub": 8
+    "total_borrowings_stub": 9,
+    "net_worth_stub": 10
   },
   "cross_check": {
-    "fields_compared": 258,
+    "fields_compared": 282,
     "fields_disagreeing": 1,
     "rule": "same field from 2+ sources (summary / sfi / cash) within 1 %"
   },
@@ -90,9 +162,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.74
+      "seconds": 1.64
     },
     {
       "ipo_id": "advance-agrolife-2025",
@@ -101,9 +175,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.49
+      "seconds": 1.62
     },
     {
       "ipo_id": "all-time-plastics-2025",
@@ -116,9 +192,11 @@
         "operating_cash_flow:latest-1",
         "operating_cash_flow:latest-2"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.57
+      "seconds": 1.7
     },
     {
       "ipo_id": "anlon-healthcare-2025",
@@ -134,9 +212,11 @@
         "revenue:latest-1",
         "revenue:latest-2"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 0.94
+      "seconds": 0.99
     },
     {
       "ipo_id": "anthem-biosciences-2025",
@@ -145,9 +225,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 4,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.56
+      "seconds": 2.0
     },
     {
       "ipo_id": "ather-energy-2025",
@@ -159,9 +241,11 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 6,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.75
+      "seconds": 1.85
     },
     {
       "ipo_id": "bluestone-jewellery-and-lifestyle-2025",
@@ -170,9 +254,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 9,
       "compared": 3,
       "disagree": [],
-      "seconds": 1.42
+      "seconds": 1.89
     },
     {
       "ipo_id": "bmw-ventures-2025",
@@ -181,9 +267,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 2,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.28
+      "seconds": 1.78
     },
     {
       "ipo_id": "brigade-hotel-ventures-2025",
@@ -192,32 +280,27 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 11,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.41
+      "seconds": 1.71
     },
     {
       "ipo_id": "canara-hsbc-life-insurance-company-2025",
       "status": "read",
       "unit": "₹ in million",
-      "n_found": 0,
-      "stub": [],
-      "missing": [
-        "net_worth",
-        "operating_cash_flow:latest",
-        "operating_cash_flow:latest-1",
-        "operating_cash_flow:latest-2",
-        "profit_after_tax:latest",
-        "profit_after_tax:latest-1",
-        "profit_after_tax:latest-2",
-        "revenue:latest",
-        "revenue:latest-1",
-        "revenue:latest-2",
-        "total_borrowings"
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
       ],
-      "compared": 0,
+      "missing": [],
+      "financial_company": true,
+      "n_peers": 4,
+      "compared": 3,
       "disagree": [],
-      "seconds": 1.8
+      "seconds": 1.83
     },
     {
       "ipo_id": "canara-robeco-asset-management-company-2025",
@@ -226,9 +309,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 5,
       "compared": 3,
       "disagree": [],
-      "seconds": 1.79
+      "seconds": 2.38
     },
     {
       "ipo_id": "crizac-2025",
@@ -237,9 +322,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 4,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.34
+      "seconds": 1.4
     },
     {
       "ipo_id": "dev-accelerator-2025",
@@ -248,29 +335,24 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.21
+      "seconds": 1.53
     },
     {
       "ipo_id": "euro-pratik-sales-2025",
       "status": "read",
       "unit": "₹ in million",
-      "n_found": 3,
+      "n_found": 11,
       "stub": [],
-      "missing": [
-        "net_worth",
-        "profit_after_tax:latest",
-        "profit_after_tax:latest-1",
-        "profit_after_tax:latest-2",
-        "revenue:latest",
-        "revenue:latest-1",
-        "revenue:latest-2",
-        "total_borrowings"
-      ],
-      "compared": 0,
+      "missing": [],
+      "financial_company": false,
+      "n_peers": 5,
+      "compared": 9,
       "disagree": [],
-      "seconds": 1.64
+      "seconds": 1.74
     },
     {
       "ipo_id": "fabtech-technologies-2025",
@@ -279,9 +361,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.53
+      "seconds": 1.72
     },
     {
       "ipo_id": "ganesh-consumer-products-2025",
@@ -290,9 +374,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.6
+      "seconds": 1.62
     },
     {
       "ipo_id": "gem-aromatics-2025",
@@ -301,9 +387,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 1,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.28
+      "seconds": 1.95
     },
     {
       "ipo_id": "gk-energy-2025",
@@ -312,9 +400,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.46
+      "seconds": 2.55
     },
     {
       "ipo_id": "glottis-2025",
@@ -323,9 +413,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.45
+      "seconds": 3.66
     },
     {
       "ipo_id": "gng-electronics-2025",
@@ -334,9 +426,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 2,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.15
+      "seconds": 1.88
     },
     {
       "ipo_id": "hexaware-technologies-2025",
@@ -348,9 +442,11 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 5,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.74
+      "seconds": 2.13
     },
     {
       "ipo_id": "highway-infrastructure-2025",
@@ -363,9 +459,11 @@
         "operating_cash_flow:latest-1",
         "operating_cash_flow:latest-2"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.31
+      "seconds": 2.21
     },
     {
       "ipo_id": "indiqube-spaces-2025",
@@ -376,9 +474,11 @@
       "missing": [
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.86
+      "seconds": 2.57
     },
     {
       "ipo_id": "indogulf-cropsciences-2025",
@@ -390,9 +490,11 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 8,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.4
+      "seconds": 1.97
     },
     {
       "ipo_id": "ivalue-infosolutions-2025",
@@ -403,9 +505,11 @@
       "missing": [
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 5,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.41
+      "seconds": 1.93
     },
     {
       "ipo_id": "jain-resource-recycling-2025",
@@ -414,9 +518,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.69
+      "seconds": 1.92
     },
     {
       "ipo_id": "jaro-institute-of-technology-management-and-research-2025",
@@ -434,9 +540,11 @@
         "revenue:latest-2",
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.59
+      "seconds": 1.6
     },
     {
       "ipo_id": "jinkushal-industries-2025",
@@ -445,9 +553,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.06
+      "seconds": 1.34
     },
     {
       "ipo_id": "jsw-cement-2025",
@@ -456,30 +566,14 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 4,
       "compared": 6,
       "disagree": [],
-      "seconds": 2.3
+      "seconds": 2.9
     },
     {
       "ipo_id": "laxmi-india-finance-2025",
-      "status": "read",
-      "unit": "₹ in million",
-      "n_found": 5,
-      "stub": [],
-      "missing": [
-        "operating_cash_flow:latest",
-        "operating_cash_flow:latest-1",
-        "operating_cash_flow:latest-2",
-        "revenue:latest",
-        "revenue:latest-1",
-        "revenue:latest-2"
-      ],
-      "compared": 0,
-      "disagree": [],
-      "seconds": 1.54
-    },
-    {
-      "ipo_id": "m-b-engineering-2025",
       "status": "read",
       "unit": "₹ in million",
       "n_found": 8,
@@ -489,9 +583,24 @@
         "operating_cash_flow:latest-1",
         "operating_cash_flow:latest-2"
       ],
+      "financial_company": true,
+      "n_peers": 8,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.5
+      "seconds": 4.86
+    },
+    {
+      "ipo_id": "m-b-engineering-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "financial_company": false,
+      "n_peers": 6,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 5.26
     },
     {
       "ipo_id": "mangal-electrical-industries-2025",
@@ -500,22 +609,28 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.2
+      "seconds": 2.18
     },
     {
       "ipo_id": "midwest-2025",
       "status": "read",
       "unit": "₹ in million",
       "n_found": 10,
-      "stub": [],
+      "stub": [
+        "net_worth_stub"
+      ],
       "missing": [
         "total_borrowings"
       ],
-      "compared": 3,
+      "financial_company": false,
+      "n_peers": 2,
+      "compared": 9,
       "disagree": [],
-      "seconds": 1.71
+      "seconds": 2.12
     },
     {
       "ipo_id": "national-securities-depository-2025",
@@ -524,9 +639,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 2,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.33
+      "seconds": 1.77
     },
     {
       "ipo_id": "om-freight-forwarders-2025",
@@ -535,9 +652,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 5,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.35
+      "seconds": 3.75
     },
     {
       "ipo_id": "orkla-india-2025",
@@ -549,9 +668,11 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 2,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.61
+      "seconds": 2.67
     },
     {
       "ipo_id": "pace-digitek-2025",
@@ -560,9 +681,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 4,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.51
+      "seconds": 1.81
     },
     {
       "ipo_id": "patel-retail-2025",
@@ -576,9 +699,11 @@
         "operating_cash_flow:latest-2",
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.62
+      "seconds": 1.72
     },
     {
       "ipo_id": "regaal-resources-2025",
@@ -589,9 +714,11 @@
       "missing": [
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 5,
       "compared": 3,
       "disagree": [],
-      "seconds": 1.29
+      "seconds": 1.78
     },
     {
       "ipo_id": "rubicon-research-2025",
@@ -603,9 +730,11 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 8,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.89
+      "seconds": 2.44
     },
     {
       "ipo_id": "saatvik-green-energy-2025",
@@ -616,9 +745,11 @@
       "missing": [
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 3,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.85
+      "seconds": 2.17
     },
     {
       "ipo_id": "sambhv-steel-tubes-2025",
@@ -630,9 +761,11 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 7,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.49
+      "seconds": 2.07
     },
     {
       "ipo_id": "seshaasai-technologies-2025",
@@ -641,9 +774,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 1,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.78
+      "seconds": 1.83
     },
     {
       "ipo_id": "shanti-gold-international-2025",
@@ -652,9 +787,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.0
+      "seconds": 1.28
     },
     {
       "ipo_id": "shreeji-shipping-global-limited-2025",
@@ -665,9 +802,11 @@
       "missing": [
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.46
+      "seconds": 1.34
     },
     {
       "ipo_id": "shringar-house-of-mangalsutra-2025",
@@ -676,9 +815,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 4,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.18
+      "seconds": 1.47
     },
     {
       "ipo_id": "smartworks-coworking-spaces-2025",
@@ -687,9 +828,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 2,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.92
+      "seconds": 2.05
     },
     {
       "ipo_id": "solarworld-energy-solutions-2025",
@@ -698,9 +841,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 6,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.66
+      "seconds": 1.95
     },
     {
       "ipo_id": "travel-food-services-2025",
@@ -709,9 +854,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 9,
       "disagree": [],
-      "seconds": 1.78
+      "seconds": 1.72
     },
     {
       "ipo_id": "trualt-bioenergy-2025",
@@ -720,9 +867,11 @@
       "n_found": 11,
       "stub": [],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 4,
       "compared": 3,
       "disagree": [],
-      "seconds": 2.17
+      "seconds": 2.51
     },
     {
       "ipo_id": "urban-company-2025",
@@ -734,9 +883,11 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.74
+      "seconds": 2.01
     },
     {
       "ipo_id": "vikram-solar-2025",
@@ -750,9 +901,11 @@
         "operating_cash_flow:latest-2",
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.61
+      "seconds": 2.11
     },
     {
       "ipo_id": "vikran-engineering-2025",
@@ -763,9 +916,11 @@
       "missing": [
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 7,
       "compared": 6,
       "disagree": [],
-      "seconds": 1.5
+      "seconds": 1.72
     },
     {
       "ipo_id": "vms-tmt-2025",
@@ -777,31 +932,28 @@
         "net_worth_stub"
       ],
       "missing": [],
+      "financial_company": false,
+      "n_peers": 0,
       "compared": 9,
       "disagree": [
         "profit_after_tax:latest"
       ],
-      "seconds": 1.9
+      "seconds": 1.45
     },
     {
       "ipo_id": "wework-india-management-2025",
       "status": "read",
       "unit": "₹ in million",
-      "n_found": 3,
+      "n_found": 10,
       "stub": [],
       "missing": [
-        "net_worth",
-        "profit_after_tax:latest",
-        "profit_after_tax:latest-1",
-        "profit_after_tax:latest-2",
-        "revenue:latest",
-        "revenue:latest-1",
-        "revenue:latest-2",
         "total_borrowings"
       ],
+      "financial_company": false,
+      "n_peers": 4,
       "compared": 0,
       "disagree": [],
-      "seconds": 1.95
+      "seconds": 2.43
     }
   ]
 }

@@ -212,9 +212,13 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
     }
     assert ends["risks_split"] == {"n_risks": 3}
     # The synthetic RHP has no financial tables: summary.json says so, the job stays ready.
-    assert ends["financials"] == {"ready": True, "found": 0, "total": 11}
+    assert ends["financials"] == {
+        "ready": True, "found": 0, "total": 11, "other_found": 0, "other_placeholder": 0,
+        "peers": 0, "financial_company": False,
+    }  # fmt: skip
     summary = get_json(storage, doc_key(doc_id, "summary.json"))
     assert {v["status"] for v in summary["revenue"]} == {"not_found"}
+    assert (summary["litigation"], summary["peers"], summary["auditor_remarks"]) == ({}, [], [])
     assert ends["parsed"] == {"pages_done": 5, "pages_total": 5}
 
     # A retry finds every output cached and does no work (scratch is empty in a new job).

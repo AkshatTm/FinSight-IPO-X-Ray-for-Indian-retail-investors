@@ -152,6 +152,52 @@ def test_ranking_stops_at_a_gap() -> None:
     assert rank_years([parse_period(h) for h in headers]) == {0: "latest"}
 
 
+def _rank(headers: list[str]) -> dict[int, str]:
+    return rank_years([parse_period(h) for h in headers])
+
+
+def test_trailing_twelve_months_beside_fiscal_years_is_a_stub() -> None:
+    # Hexaware's customer table: TTM columns ending September beside calendar fiscal years.
+    headers = [
+        "For the twelve months ended September 30, 2024",
+        "For the Financial Year 2023",
+        "For the Financial Year 2022",
+        "For the Financial Year 2021",
+    ]
+    assert _rank(headers) == {1: "latest", 2: "latest-1", 3: "latest-2"}
+
+
+def test_twelve_months_ending_in_the_fiscal_month_is_the_year() -> None:
+    headers = [
+        "For the twelve months ended March 31, 2025",
+        "Fiscal 2024 (year ended March 31, 2024)",
+    ]
+    assert _rank(headers) == {0: "latest", 1: "latest-1"}
+
+
+def test_year_or_period_columns_are_dated_by_the_fiscal_month() -> None:
+    # Canara HSBC Life's cash-flow statement uses "Fiscal/ period ended" for years and stubs.
+    headers = [
+        "June 30, 2025",
+        "For the Fiscal/ period ended June 30, 2024",
+        "For the Fiscal/ period ended March 31, 2025",
+        "For the Fiscal/ period ended March 31, 2024",
+        "March 31, 2023",
+    ]
+    assert _rank(headers) == {2: "latest", 3: "latest-1", 4: "latest-2"}
+
+
+def test_stub_header_bled_onto_a_fiscal_year_end_blocks_ranking() -> None:
+    # WeWork's SFI: "three months ended March 31, 2025" sits where FY2025 should be.
+    headers = [
+        "For the three months ended June 30, 2025",
+        "For the three months ended March 31, 2025",
+        "For the year ended March 31, 2024",
+        "For the year ended March 31, 2023",
+    ]
+    assert _rank(headers) == {}
+
+
 @given(st.lists(st.text(max_size=60), max_size=8))
 def test_rank_never_crashes_and_gives_at_most_three(headers: list[str]) -> None:
     ranks = rank_years([parse_period(h) for h in headers])

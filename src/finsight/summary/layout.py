@@ -295,7 +295,9 @@ def _header_band(lines: list[Line], first: int, columns: list[Column], margin: f
             break
         if found := unit_of(line.text):
             unit = found
-            break
+            if any(parts.values()):
+                break
+            continue  # "(₹ in million)" printed between the year headers and the figures
         phrases = [
             (x0, x1, text, [k for k, col in enumerate(columns) if _over(x0, x1, col)])
             for x0, x1, text in _phrases(line.words)
