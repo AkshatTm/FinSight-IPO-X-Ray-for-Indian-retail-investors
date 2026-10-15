@@ -1,0 +1,25 @@
+{
+  "job": "student_8b",
+  "finished_utc": "2026-10-15T15:42:14+00:00",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "gpu_class": "G4",
+  "driver": "580.82.07",
+  "python": "3.13.15",
+  "wall_seconds": 6386.1,
+  "items_done": 10307,
+  "units_before": 171.38,
+  "units_after": 154.98,
+  "units_used": 16.4,
+  "units_per_hour_observed": 9.25,
+  "units_per_hour_reference": 8.9,
+  "pins": {
+    "torch": "2.11.0+cu130"
+  },
+  "precision": "bf16",
+  "smoke": false,
+  "preset": "student_8b",
+  "batch": [
+    16,
+    1
+  ]
+}

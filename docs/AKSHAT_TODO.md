@@ -40,8 +40,11 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 ### C1.5 BIR backfill decision
 - [ ] `eval_results/c/bir_links.json`: of 855 BIR spreadsheet links (2009-2023) only 48 are direct PDFs that still answer (2015-2023: 2, 4, 8, 3, 7, 1, 9, 5, 9); 780 are HTML filing pages and 27 are dead (all 2023). Decide: backfill the 48 PDFs (gives older RHPs with font cues for risk splitting; cheap), and/or have Claude extend the fetcher to resolve the HTML pages to PDFs (bigger, uncertain). Low priority.
 
-### C2.5 8B student: needs you (colab-mcp could not reach the new notebook)
-- [ ] The colab-mcp connection opens in the browser profile that is the default for the laptop, not in the Gmail account that owns the Colab Pro units. Either make that profile the one the connect link opens in, or run the 8B yourself: on a **G4** runtime paste `docs/phase3/colab_run_student_8b_cell.py` into one code cell and run it (smoke then the full run; ~2–2.5 h, ≈ 20–22 units; HF_TOKEN secret on). If it disconnects, set `MODE = "resume"` and run it again. Then tell Claude the units before and after, and "8B done".
+### C2.5 8B student: done, not adopted
+- [x] Ran on the G4 (1 h 46 m, 16.4 units, 171.38 → 154.98). Gold-50 post-checks 30/50 vs the 4B's 49/50, so the 4B stays (C-ADR-18). Nothing for you to do; the old paste-in cell `docs/phase3/colab_run_student_8b_cell.py` is no longer needed.
+
+### C2.4 classifier-large: needs a G4
+- [ ] When you are ready: connect a **G4** in the Colab notebook already open (the colab-mcp connection works now) and tell Claude "G4 on". Claude pastes `docs/phase3/colab_run_classifier_large_cell.py` and runs DeBERTa-v3-large, 3 seeds × (category + band), on the G4 (~1.5–2.5 h, ≈ 15–20 units; the base took ~1 h per seed on a Kaggle T4). Large only replaces the base if it wins on dev by more than the seed spread (0.006 macro-F1).
 
 ### C2.5 student (notebook and steps merged), ~1–2 h Colab
 - [ ] After CG2 (split already written: train 10,363 / dev 529): connect a **G4**, Claude runs `student_smoke` then `student` (`docs/phase3/COLAB_STEPS_student.md`, ~0.5–0.8 h ≈ 5–7 units). Then Claude writes the blind gold-50 sheet `data/gold/simplify_gold50_sheet.csv` (base / student / teacher; base rewrites already made) and you rate it (~45 min).

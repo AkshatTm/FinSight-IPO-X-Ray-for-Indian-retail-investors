@@ -50,6 +50,10 @@ Human rating, gold-50 (E18; blind, shuffled, one rater):
 
 The student's four "partly" rows are meaning slips (an overstated "no defects", an invented "leases end soon", an omitted court stay, "all details missing"): added or dropped qualifiers, which the number and certainty checks do not see.
 
+## The 8B variant (not adopted)
+
+`Qwen/Qwen3-8B` with the same data and recipe reached dev loss 0.342 (4B: 0.353) but passes the product post-checks on 30 of the 50 gold-50 risks (4B: 49), with a mean of 68.7 words (4B: 43.2) and 35 rewrites over 60 words. The serving format was checked and is not the cause. The 4B stays the product model (C-ADR-18); numbers: `eval_results/c/student_8b_vs_4b_gold50.json`.
+
 ## Limitations
 
 - Labels come from a teacher model, not from people; the student copies its style and its mistakes.
