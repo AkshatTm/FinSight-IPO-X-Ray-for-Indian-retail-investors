@@ -34,6 +34,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Read the units in the Colab Resources panel (before the session: 193.67) and tell Claude, so the teacher_full + gold_eval session is logged.
 - [ ] **Rate the quality-100 sheet** `data/processed/teacher/quality_sheet.csv` (~30 min): `faithful` = yes / partly / no, `category_correct` = yes / no (write the right category in `notes`). Tell Claude "quality-100 rated". CG2 = at least 85 % yes.
 
+### C1.5 BIR backfill decision
+- [ ] `eval_results/c/bir_links.json`: of 855 BIR spreadsheet links (2009-2023) only 48 are direct PDFs that still answer (2015-2023: 2, 4, 8, 3, 7, 1, 9, 5, 9); 780 are HTML filing pages and 27 are dead (all 2023). Decide: backfill the 48 PDFs (gives older RHPs with font cues for risk splitting; cheap), and/or have Claude extend the fetcher to resolve the HTML pages to PDFs (bigger, uncertain). Low priority.
+
 ### C2.5 8B student: needs you (colab-mcp could not reach the new notebook)
 - [ ] The colab-mcp connection opens in the browser profile that is the default for the laptop, not in the Gmail account that owns the Colab Pro units. Either make that profile the one the connect link opens in, or run the 8B yourself: on a **G4** runtime paste `docs/phase3/colab_run_student_8b_cell.py` into one code cell and run it (smoke then the full run; ~2–2.5 h, ≈ 20–22 units; HF_TOKEN secret on). If it disconnects, set `MODE = "resume"` and run it again. Then tell Claude the units before and after, and "8B done".
 
