@@ -34,6 +34,9 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Read the units in the Colab Resources panel (before the session: 193.67) and tell Claude, so the teacher_full + gold_eval session is logged.
 - [ ] **Rate the quality-100 sheet** `data/processed/teacher/quality_sheet.csv` (~30 min): `faithful` = yes / partly / no, `category_correct` = yes / no (write the right category in `notes`). Tell Claude "quality-100 rated". CG2 = at least 85 % yes.
 
+### C2.5 8B student: needs you (colab-mcp could not reach the new notebook)
+- [ ] The colab-mcp connection opens in the browser profile that is the default for the laptop, not in the Gmail account that owns the Colab Pro units. Either make that profile the one the connect link opens in, or run the 8B yourself: on a **G4** runtime paste `docs/phase3/colab_run_student_8b_cell.py` into one code cell and run it (smoke then the full run; ~2–2.5 h, ≈ 20–22 units; HF_TOKEN secret on). If it disconnects, set `MODE = "resume"` and run it again. Then tell Claude the units before and after, and "8B done".
+
 ### C2.5 student (notebook and steps merged), ~1–2 h Colab
 - [ ] After CG2 (split already written: train 10,363 / dev 529): connect a **G4**, Claude runs `student_smoke` then `student` (`docs/phase3/COLAB_STEPS_student.md`, ~0.5–0.8 h ≈ 5–7 units). Then Claude writes the blind gold-50 sheet `data/gold/simplify_gold50_sheet.csv` (base / student / teacher; base rewrites already made) and you rate it (~45 min).
 
