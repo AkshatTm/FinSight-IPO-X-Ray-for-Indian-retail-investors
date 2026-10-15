@@ -638,7 +638,9 @@ def _classifier_block() -> str:
     path = ROOT / "eval_results" / "b" / "classifier_base.json"
     if not path.exists():
         return "The base classifier has not been trained yet; the numbers appear here after C2.4."
-    r = json.loads(path.read_text(encoding="utf-8"))
+    full = json.loads(path.read_text(encoding="utf-8"))
+    r = full.get("category", full)
+    band = full.get("seriousness")
     rows = [f"| {s} | {f:.3f} |" for s, f in r["dev_macro_f1_by_seed"].items()]
     sd = "n/a (one seed)" if r["dev_macro_f1_sd"] is None else f"{r['dev_macro_f1_sd']:.3f}"
     lines = [
@@ -654,6 +656,26 @@ def _classifier_block() -> str:
     if "tfidf_dev_macro_f1" in r:
         verdict = "beats" if r["beats_tfidf"] else "does **not** beat"
         lines += ["", f"The mean {verdict} the TF-IDF baseline ({r['tfidf_dev_macro_f1']:.3f})."]
+    if "test_macro_f1_by_seed" in r:
+        t = r["test_best_seed"]
+        lines += [
+            "",
+            f"Gold-150 ({r['test_label_source']}, scored once at the epoch dev chose): macro-F1 "
+            f"{r['test_macro_f1_mean']:.3f} mean over seeds "
+            f"({', '.join(f'{k}: {v:.3f}' for k, v in r['test_macro_f1_by_seed'].items())}); "
+            f"best seed {r['best_seed']}: accuracy {t['accuracy']:.3f}, macro-F1 {t['macro_f1']:.3f}.",
+        ]
+    if band:
+        m, tb = band["dev_mean"], band["test_best_seed"]
+        lines += [
+            "",
+            f"Seriousness band ({band['bands']}), {band['n_seeds']} seeds, dev mean: macro-F1 "
+            f"{m['macro_f1']:.3f}, MAE {m['mae']:.3f}, within-1 {m['within_1']:.3f}, severe recall "
+            f"{m['severe_recall']:.3f} (precision {m['severe_precision']:.3f}). Gold-150, best "
+            f"seed: macro-F1 {tb['macro_f1']:.3f}, MAE {tb['mae']:.3f}, within-1 "
+            f"{tb['within_1']:.3f}, severe recall {tb['severe_recall']:.2f} on only "
+            f"{tb['severe_support']} severe rows. {band['test_label_source']}.",
+        ]
     return "\n".join(lines) + "\n"
 
 
