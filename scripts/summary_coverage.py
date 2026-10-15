@@ -1,10 +1,12 @@
-"""How often the financial fields are found on the dev slice (C3.1a tuning; not E14).
+"""How often the summary fields are found on the dev slice (C3.1 tuning; not E14).
 
     uv run python scripts/summary_coverage.py [--slice dev] [--processed data/processed]
 
 Runs ``extract_summary`` on every parsed RHP of the slice (batch store for new IPOs, the showcase
 folders for showcase IPOs) and writes ``eval_results/c/summary_coverage_<slice>.json``: per field
-the share found / placeholder / not found, and per IPO the fields that were not found. Coverage
+the share found / stated zero / placeholder / not found (``share``: the 11 financial values of
+C3.1a; ``share_c3_1b``: the other red-flag inputs), which IPOs read as financial companies, and
+per IPO the financial values that were not found. Coverage
 only: no values are compared with gold. Only ``dev`` and ``train`` may be run (C-ADR-02: test and
 bench documents never inform tuning; E14 measures them once, after gold v3 is verified).
 """
