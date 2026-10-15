@@ -21,6 +21,7 @@ CELL_GAP = 6.0  # words closer than this form one cell ("USD 2 million", "[ ● 
 HEADER_GAP = 14.0  # header lines are at most this far apart
 HEADER_LINES = 18  # the header band is at most this many lines
 DATA_GAP = 50.0  # data lines further apart than this end the table (a page number below)
+HEADER_PAD = 8.0  # header words this far beside a column still name it
 LABEL_GAP = 13.0  # a label-only line this close below a data line continues its label
 
 _MARKS = r"[*^#@†‡$]*"
@@ -81,6 +82,7 @@ class AnchoredRow:
     label_words: list[Word]
     cells: dict[int, Cell] = field(default_factory=dict)
     group: str = ""  # the last label-only heading above the row ("Promoters", "Directors")
+    label_after: str = ""  # a label-only line right below (a wrapped name: "Limited")
 
 
 @dataclass
@@ -136,8 +138,12 @@ def split_line(line: Line) -> tuple[list[Word], list[Cell]]:
     return words, []
 
 
+_FOOTNOTE = re.compile(r"^\(?\d{1,2}\)$|,$")
+
+
 def _value_cells(cells: list[Cell]) -> int:
-    return sum(is_cell_value(c.text) for c in cells)
+    """Value cells that are not footnote marks ("(1)", "1)") or dates split over words ("28,")."""
+    return sum(is_cell_value(c.text) and not _FOOTNOTE.search(c.text) for c in cells)
 
 
 def _running_text(line: Line, page_width: float) -> bool:
@@ -146,7 +152,7 @@ def _running_text(line: Line, page_width: float) -> bool:
     if len(ws) < 8:
         return False
     gaps = [b.bbox[0] - a.bbox[2] for a, b in itertools.pairwise(ws)]
-    wide = sum(g >= 12 for g in gaps)
+    wide = sum(g >= 8 for g in gaps)  # prose words sit 2-5 pt apart, header phrases 10+
     return wide <= 1 and ws[-1].bbox[2] - ws[0].bbox[0] > page_width * 0.45
 
 
@@ -217,7 +223,7 @@ def _read_from(
             break
     if data_start is None:
         return None
-    band = lines[first:data_start]
+    band = [ln for ln in lines[first:data_start] if not _running_text(ln, page.width)]
     band_text = " ".join(ln.text for ln in band)
     if not all(r.search(band_text) for r in needs):
         return None
@@ -234,12 +240,14 @@ def _read_from(
             last_top = line.top
     data = [p for p in parsed if p[2]]
     columns = _columns(data)
-    for col in columns:
+    for k, col in enumerate(columns):
+        # Header words may start a little left or right of the narrow figure column under them.
+        left = columns[k - 1].x1 if k else col.x0 - 2 * HEADER_PAD
+        right = columns[k + 1].x0 if k + 1 < len(columns) else col.x1 + 2 * HEADER_PAD
+        x0 = col.x0 - min(HEADER_PAD, (col.x0 - left) / 2)
+        x1 = col.x1 + min(HEADER_PAD, (right - col.x1) / 2)
         col.header = " ".join(
-            w.text
-            for ln in band
-            for w in ln.words
-            if min(w.bbox[2], col.x1) - max(w.bbox[0], col.x0) > 0
+            w.text for ln in band for w in ln.words if min(w.bbox[2], x1) - max(w.bbox[0], x0) > 0
         )
     rows: list[AnchoredRow] = []
     group, prev_top = "", -1e9
@@ -247,7 +255,10 @@ def _read_from(
         if not cells:
             text = " ".join(w.text for w in label)
             dangling = bool(rows) and bool(_DANGLING.search(rows[-1].label))
-            if rows and line.top - prev_top <= LABEL_GAP and (text[:1].islower() or dangling):
+            near = bool(rows) and line.top - prev_top <= LABEL_GAP
+            if near and not rows[-1].label_after:
+                rows[-1].label_after = text
+            if near and (text[:1].islower() or dangling):
                 rows[-1].label = f"{rows[-1].label} {text}".strip()
                 rows[-1].label_words.extend(label)
                 prev_top = line.top
@@ -260,9 +271,9 @@ def _read_from(
             group=group,
         )  # fmt: skip
         for cell in cells:
-            k = _column_of(cell, columns)
-            if k is not None and k not in row.cells:
-                row.cells[k] = cell
+            at = _column_of(cell, columns)
+            if at is not None and at not in row.cells:
+                row.cells[at] = cell
         rows.append(row)
     return AnchoredTable(page=page.number, header_text=band_text, columns=columns, rows=rows)
 
