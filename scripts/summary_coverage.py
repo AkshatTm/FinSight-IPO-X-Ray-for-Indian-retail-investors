@@ -68,6 +68,26 @@ def fields(summary: FinancialSummary) -> dict[str, SummaryValue | None]:
     return out
 
 
+def other_fields(summary: FinancialSummary) -> dict[str, str]:
+    """Status of each C3.1b input (``peers`` / ``auditor_remarks``: found when any were read)."""
+    lit = summary.litigation
+    values: dict[str, SummaryValue | None] = {
+        "criminal_cases": lit.get("criminal_cases"),
+        "litigation_amount": lit.get("amount_total"),
+        "rpt_total": summary.rpt_total,
+        "promoter_holding_post": summary.promoter_holding_post,
+        "pledged_pct": summary.pledged_pct,
+        "customer_top1_pct": summary.customer_top1_pct,
+        "customer_top10_pct": summary.customer_top10_pct,
+        "general_purposes_pct": summary.general_purposes_pct,
+        "waca": summary.waca[0] if summary.waca else None,
+    }
+    out = {k: (v.status if v else "not_found") for k, v in values.items()}
+    out["peers"] = "found" if summary.peers else "not_found"
+    out["auditor_remarks"] = "found" if summary.auditor_remarks else "not_found"
+    return out
+
+
 def doc_paths(processed: Path, ipo_id: str, sha: str | None) -> tuple[Path, Path]:
     """``parsed.json`` and ``sections.json`` of one IPO's RHP.
 
@@ -94,6 +114,20 @@ def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
     } | ({"all_fields_found": round(sum(r["n_found"] == 11 for r in read) / n, 3)} if n else {})
 
 
+def summarise_other(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Per C3.1b field: the share of IPOs per status."""
+    read = [r for r in rows if r["status"] == "read"]
+    per_field: dict[str, Counter[str]] = {}
+    for r in read:
+        for name, status in r["other"].items():
+            per_field.setdefault(name, Counter())[status] += 1
+    n = len(read) or 1
+    return {
+        name: {s: round(c[s] / n, 3) for s in ("found", "stated_zero", "placeholder", "not_found")}
+        for name, c in sorted(per_field.items())
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     """CLI entry point."""
     ap = argparse.ArgumentParser(description=__doc__)
@@ -117,6 +151,7 @@ def main(argv: list[str] | None = None) -> int:
         summary = extract_summary(doc, secs, entry.ipo_id)
         seconds = round(time.perf_counter() - t0, 2)
         status = {k: (v.status if v else "not_found") for k, v in fields(summary).items()}
+        other = other_fields(summary)
         cash = find_subsection_pages(doc, secs).get("cash_flows", [])
         compared, disagree = cross_check(values_by_source(doc, secs, entry.ipo_id, cash))
         rows.append({
@@ -127,6 +162,9 @@ def main(argv: list[str] | None = None) -> int:
             "stub": [k for k in ("total_borrowings_stub", "net_worth_stub") if getattr(summary, k)],
             "missing": sorted(k for k, s in status.items() if s not in SUMMARY_HAS_VALUE),
             "fields": status,
+            "other": other,
+            "financial_company": summary.is_financial_company,
+            "n_peers": len(summary.peers),
             "compared": compared,
             "disagree": disagree,
             "seconds": seconds,
@@ -139,6 +177,8 @@ def main(argv: list[str] | None = None) -> int:
         "n_ipos": len(entries),
         "n_read": sum(r["status"] == "read" for r in rows),
         "share": summarise(rows),
+        "share_c3_1b": summarise_other(rows),
+        "financial_companies": [r["ipo_id"] for r in rows if r.get("financial_company")],
         "stub_balance_sheet": {
             k: sum(k in r.get("stub", []) for r in rows)
             for k in ("total_borrowings_stub", "net_worth_stub")
@@ -148,7 +188,7 @@ def main(argv: list[str] | None = None) -> int:
             "fields_disagreeing": sum(len(r.get("disagree", [])) for r in rows),
             "rule": "same field from 2+ sources (summary / sfi / cash) within 1 %",
         },
-        "ipos": [{k: v for k, v in r.items() if k != "fields"} for r in rows],
+        "ipos": [{k: v for k, v in r.items() if k not in ("fields", "other")} for r in rows],
     }
     out = a.out or ROOT / "eval_results" / "c" / f"summary_coverage_{a.slice}.json"
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -51,8 +51,8 @@ _FINANCIAL = [
         r"(?:registered\s+with\s+the\s+(?:RBI|Reserve Bank of India)\s+as\s+)?"
         r"an?\s+(?:[\w-]+\s+){0,6}?(?:non[\s-]*banking\s+"
         r"financ\w+\s+compan|NBFC|housing\s+finance\s+compan|core\s+investment\s+compan)",
-        r"\b(?:our company|the company|we)\b[^.]{0,160}?\b(?:life|general|health|non-life)\s+insur"
-        r"(?:ance\s+compan|er\b)",
+        r"\b(?:our company|the company|we)\s+(?:is|are)\s+(?:an?|the|one of (?:the|india['’]s))\s+"
+        r"(?:[\w’'-]+\s+){0,6}?(?:life|general|health|non-life)\s+insur(?:ance\s+compan|er\b)",
         r"\b(?:our company|the company|we)\b[^.]{0,120}?\bregistered\s+with\s+(?:the\s+)?(?:IRDAI|"
         r"Insurance Regulatory and Development Authority)",
         r"\b(?:our bank|we are an?\s+(?:[\w-]+\s+){0,3}bank\b|small\s+finance\s+bank\s+licen)",

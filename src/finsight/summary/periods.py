@@ -147,4 +147,12 @@ def rank_years(periods: list[Period]) -> dict[int, str]:
         for i, p in enumerate(periods)
     ):
         return {}
+    # A part-year column ending in the fiscal month after "latest" ("three months ended March 31,
+    # 2025" beside "year ended March 31, 2024") is a header that bled over from its neighbour:
+    # the full year it hides would be skipped.
+    if ordered and any(
+        p.kind == "stub" and p.year is not None and p.year > ordered[0] and p.month in year_months
+        for p in periods
+    ):
+        return {}
     return {seen[y]: PERIOD_KEYS[k] for k, y in enumerate(ordered)}
