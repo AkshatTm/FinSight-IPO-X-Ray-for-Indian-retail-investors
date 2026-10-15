@@ -232,3 +232,6 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 - **Report**: every file in `report/` is a draft to rewrite in your voice; sections 1, 2, 9, 10 are not drafted. Check each `[verify]` citation. README "What I learned" is yours.
 
 - [x] C2.1 segmentation spot-check (50 risks, ~40 min) + E13b boundaries; also look at the 20 documents with < 10 risks (see `docs/datasheets/risk_bank.md`). Decide whether 8,889 teacher inputs (target 12k) is enough or the per-company cap should rise.
+- [ ] C2.5 gold-50: run `uv run python scripts/gold_sets.py sheet50`, rate `faithful` and `plain_english_1to5` in `data/gold/simplify_gold50_sheet.csv` (~45 min), then tell Claude "gold-50 rated" (→ `score50`).
+- [ ] C2.5 units: read the Resources panel (before the student run: 182.88) and tell Claude the figure so the compute row is logged (`scripts/log_compute.py --manual`).
+- [ ] C2.5 notebook fix (Claude, next local session): make the GGUF step reuse the original tokenizer files and add a re-run path from checkpoint-N; the Colab run needed that by hand.

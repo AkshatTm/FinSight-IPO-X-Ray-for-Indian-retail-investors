@@ -1,0 +1,31 @@
+{
+ "n": 50,
+ "split": "test (gold-50)",
+ "seed": 2026,
+ "systems": {
+  "base": {
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "pass_rate": 0.32,
+   "passed": 16,
+   "failure_reasons": {
+    "number_mismatch": 4,
+    "too_long": 30
+   },
+   "mean_words": 79.0,
+   "over_60_words": 38,
+   "mean_longest_sentence_words": 14.2
+  },
+  "student": {
+   "model": "finsight-student:q4",
+   "pass_rate": 0.98,
+   "passed": 49,
+   "failure_reasons": {
+    "certainty_changed": 1
+   },
+   "mean_words": 43.2,
+   "over_60_words": 0,
+   "mean_longest_sentence_words": 16.3
+  }
+ },
+ "finished_utc": "2026-10-15T10:55:37+00:00"
+}
