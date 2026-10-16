@@ -152,7 +152,7 @@ def process_one(
     sampler = RamSampler().start()
     t0 = time.perf_counter()
     try:
-        result = run_job(ctx, upload_stages())
+        result = run_job(ctx, upload_stages(models=False))
     finally:
         peak = sampler.stop()
     wall = round(time.perf_counter() - t0, 1)
