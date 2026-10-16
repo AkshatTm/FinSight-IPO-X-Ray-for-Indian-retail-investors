@@ -2,7 +2,7 @@
 
     uv run python scripts/validate_risklevel.py --outcomes data/gold/outcomes.csv
 
-``outcomes.csv`` has ``ipo_id,listing_gain_pct``. Reads the score table written by
+``outcomes.csv`` has ``ipo_id,listing_gain_pct``. Reads the points-only score table written by
 ``scripts/corpus_points.py scores --points-only`` and the fitted thresholds in
 ``configs/risklevel.yaml``; writes ``eval_results/b/risklevel_validation.json`` with the
 limitation stated. Evaluation only: nothing here feeds a threshold, a prompt or the product, and
@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -24,7 +25,12 @@ from finsight.evaluate.outcomes import validate  # noqa: E402
 from finsight.risklevel import load_config  # noqa: E402
 from finsight.risklevel.reference import read_scores  # noqa: E402
 
-TABLE = ROOT / "data" / "processed" / "risk_bank" / "reference_scores.csv"
+TABLE = (
+    Path(os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data"))
+    / "processed"
+    / "risk_bank"
+    / "points_only_scores.csv"
+)
 RESULT = ROOT / "eval_results" / "b" / "risklevel_validation.json"
 
 
