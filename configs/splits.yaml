@@ -9,7 +9,7 @@ rules:
   train_share: 0.7
   demo_newest: 3.0
 changed_by_adr:
-- C-ADR-22
+- C-ADR-24
 counts:
   dev/new: 52
   dev/showcase: 3

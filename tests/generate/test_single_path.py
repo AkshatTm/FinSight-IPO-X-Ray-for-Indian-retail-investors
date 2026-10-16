@@ -30,6 +30,10 @@ ALLOWED = {
     # C3.7: keeps the answer model resident in Ollama while timing retrieval; one fixed prompt
     # ("hi", one token), never user input and never shown.
     "scripts/profile_retrieval.py",
+    # C4.1: FinSight Bench runs raw models (student, base) on the frozen bench prompts to compare
+    # them with the product path; rules_v1 itself goes through ``respond``. Evaluation only: the
+    # input is the bench's stored prompt text, the output is scored and never shown.
+    "scripts/bench_run.py",
 }
 
 

@@ -1,4 +1,4 @@
-"""Build and freeze FinSight Bench v1 (C4.1, C04, C-ADR-06, C-ADR-22).
+"""Build and freeze FinSight Bench v1 (C4.1, C04, C-ADR-06, C-ADR-24).
 
     uv run python scripts/bench_build.py build --processed <data/processed> --gold-dir <data/gold>
     uv run python scripts/bench_build.py freeze      # hashes every input, sets frozen: true
