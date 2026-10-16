@@ -46,6 +46,8 @@ class RedFlagInputs(BaseModel):
     offer_price: Money | None = None
     fresh_amount: Money | None = None
     ofs_amount: Money | None = None
+    fresh_blank: bool = False  # the document prints [●] for it: unknown, never zero
+    ofs_blank: bool = False
     waca: Money | None = None  # promoters only, share-weighted (C-ADR-16)
     waca_selling: Money | None = None  # selling shareholders, shown beside it, not used
     promoter_post_pct: Decimal | None = None
@@ -301,18 +303,25 @@ def _value(sv: SummaryValue | None) -> Any:
 
 def _offer_value(
     xray: XRay | None, field_id: str, doc_id: str
-) -> tuple[Money | None, PageEvidence | None]:
+) -> tuple[Money | None, PageEvidence | None, bool]:
+    """A real amount (the Prospectus one when both documents have it) and whether the only
+    thing the documents print is a ``[●]`` blank (unknown, never zero)."""
     if xray is None:
-        return None, None
+        return None, None, False
     for field in xray.fields:
-        if field.field_id == field_id and field.chosen is not None:
-            money = _money(field.chosen.value)
-            ev = PageEvidence(
-                doc_id=doc_id, page=field.chosen.page, bbox=field.chosen.bbox,
-                sentence=field.chosen.sentence,
-            )  # fmt: skip
-            return money, ev if money else None
-    return None, None
+        if field.field_id != field_id:
+            continue
+        pool = ([field.chosen] if field.chosen else []) + [
+            c for c in field.candidates if c is not field.chosen
+        ]
+        real = [c for c in pool if _money(c.value) is not None]
+        real.sort(key=lambda c: c.doc_type != "prospectus")  # Prospectus first, stable
+        if real:
+            best = real[0]
+            ev = PageEvidence(doc_id=doc_id, page=best.page, bbox=best.bbox, sentence=best.sentence)
+            return _money(best.value), ev, False
+        return None, None, any(c.value is not None and c.value.kind == "placeholder" for c in pool)
+    return None, None, False
 
 
 def inputs_from_summary(summary: FinancialSummary, xray: XRay | None = None) -> RedFlagInputs:
@@ -374,8 +383,10 @@ def inputs_from_summary(summary: FinancialSummary, xray: XRay | None = None) -> 
         ("fresh_amount", "fresh_issue_size", "fresh_issue_amount"),
         ("ofs_amount", "ofs_amount", "ofs_amount"),
     ):
-        money, ev = _offer_value(xray, field_id, summary.doc_id)
+        money, ev, blank = _offer_value(xray, field_id, summary.doc_id)
         data[name] = money
+        if name != "offer_price":
+            data[name.replace("_amount", "_blank")] = blank
         if ev is not None:
             evidence[key] = ev
     price = data["offer_price"].value_inr if data["offer_price"] else None

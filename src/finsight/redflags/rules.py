@@ -169,11 +169,19 @@ def _fresh_ofs(x: RedFlagInputs) -> tuple[Decimal, Decimal] | None:
     ofs = x.ofs_amount.value_inr if x.ofs_amount and x.ofs_amount.value_inr is not None else None
     if fresh is None and ofs is None:
         return None
+    if (fresh is None and x.fresh_blank) or (ofs is None and x.ofs_blank):
+        return None  # a [●] blank is unknown, not zero: the split cannot be judged
     return fresh or Decimal(0), ofs or Decimal(0)
 
 
 def rf04(x: RedFlagInputs, c: Mapping[str, Any], na: str) -> Result:
     split = _fresh_ofs(x)
+    if split is None and (x.fresh_blank or x.ofs_blank):
+        return Result(
+            "not_available",
+            "Not available: the document leaves the fresh issue or sale amount blank ([●]) "
+            "until the final Prospectus.",
+        )
     if split is None or sum(split) <= 0:
         return Result("not_available", na)
     fresh, ofs = split
