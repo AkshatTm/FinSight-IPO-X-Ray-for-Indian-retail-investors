@@ -86,6 +86,7 @@ class Pred:
     status: str  # found / stated_zero / placeholder / not_found
     value: Any = None
     page: int | None = None
+    parts: tuple[str, ...] = ()  # auditor remarks: each text on its own
 
 
 def _sv(v: SummaryValue | None) -> Pred:
@@ -136,7 +137,7 @@ def predicted(summary: FinancialSummary, key: str, period: str) -> Pred:
         if not texts:
             return Pred("not_found")
         page = summary.auditor_remarks[0].evidence
-        return Pred("found", " ".join(texts), page.page if page else None)
+        return Pred("found", " ".join(texts), page.page if page else None, tuple(texts))
     peers = [p for p in summary.peers if not p.is_issuer]
     issuer = next((p for p in summary.peers if p.is_issuer), None)
     if key == "peer_pe_list":
@@ -268,19 +269,41 @@ def zero_matches(key: str, pred: Pred) -> bool:
         return False
 
 
-def score_row(row: Mapping[str, Any], summary: FinancialSummary | None) -> dict[str, Any]:
-    """One scored gold row."""
+def _qualified(text: str) -> bool:
+    """Whether an auditor remark is a qualification (a qualified opinion or a CARO remark)."""
+    return auditor_kind(text) in {"qualified", "caro"}
+
+
+def score_row(
+    row: Mapping[str, Any], summary: FinancialSummary | None, convention: str = "v3"
+) -> dict[str, Any]:
+    """One scored gold row.
+
+    ``convention`` ``"v3.1"`` (C-ADR-20) reads ``auditor_remarks`` as qualifications only: an
+    Emphasis of Matter beside "no qualifications" is still "no qualifications". The row flag
+    ``computed`` (a value worked out from printed figures) is passed through to the result.
+    """
     key, period = str(row["key"]), str(row["period"])
     gold_status = str(row.get("status") or "found")
     out: dict[str, Any] = {
         "ipo_id": row["ipo_id"], "key": key, "period": period, "doc": row.get("doc"),
         "gold_status": gold_status, "label_source": row.get("label_source") or "",
     }  # fmt: skip
+    if row.get("computed"):
+        out["gold_computed"] = True
+    if row.get("needs_akshat_verify"):
+        out["pending_verify"] = True
     if key in OUT_OF_SCOPE:
         return out | {"scope": "out_of_scope"}
     pred = predicted(summary, key, period) if summary is not None else Pred("not_found")
     out |= {"scope": "summary", "pred_status": pred.status}
-    if gold_status in {"placeholder", "not_found"}:
+    if convention == "v3.1" and key == "auditor_remarks" and gold_status == "found":
+        has = pred.status in SUMMARY_HAS_VALUE
+        texts = pred.parts or ((str(pred.value),) if has and pred.value else ())
+        out["correct"] = has and _qualified(str(row.get("value_raw") or "")) == any(
+            _qualified(t) for t in texts
+        )
+    elif gold_status in {"placeholder", "not_found"}:
         out["correct"] = pred.status == gold_status
     elif gold_status == "stated_zero":
         out["correct"] = zero_matches(key, pred)
@@ -338,12 +361,17 @@ def summarise(scored: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def unverified(rows: Iterable[Mapping[str, Any]]) -> list[str]:
-    """``ipo_id:key:period`` of every row Akshat has not verified."""
+def unverified(rows: Iterable[Mapping[str, Any]], pending_ok: bool = False) -> list[str]:
+    """``ipo_id:key:period`` of every row Akshat has not verified.
+
+    ``pending_ok`` (gold v3.1) lets rows that wait for his check (``needs_akshat_verify``) through;
+    the result file counts them.
+    """
     return [
         f"{r['ipo_id']}:{r['key']}:{r['period']}"
         for r in rows
         if VERIFIED not in str(r.get("label_source") or "")
+        and not (pending_ok and r.get("needs_akshat_verify"))
     ]
 
 
@@ -375,7 +403,18 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, default=None)
     ap.add_argument("--allow-unverified", action="store_true", help="dev only: a tuning draft")
     ap.add_argument("--final", action="store_true", help="the one E14 run on test/all slices")
+    ap.add_argument(
+        "--pending-ok", action="store_true",
+        help="gold v3.1: rows marked needs_akshat_verify are scored and counted as pending",
+    )  # fmt: skip
+    ap.add_argument(
+        "--convention",
+        choices=("v3", "v3.1"),
+        default=None,
+        help="gold convention (default: v3.1 when the gold file name says v3_1)",
+    )
     a = ap.parse_args(argv)
+    convention = a.convention or ("v3.1" if "v3_1" in a.gold.name else "v3")
     demo = yaml.safe_load((ROOT / "configs" / "demo_ipos.yaml").read_text(encoding="utf-8"))
     split = {e["ipo_id"]: e["split"] for e in demo["ipos"]}
     if a.slice != "dev" and not a.final:
@@ -384,7 +423,7 @@ def main(argv: list[str] | None = None) -> int:
         ap.error("the final E14 run needs every row verified")
     rows = [json.loads(x) for x in a.gold.read_text(encoding="utf-8").splitlines() if x.strip()]
     rows = [r for r in rows if a.slice == "all" or split.get(str(r["ipo_id"])) == a.slice]
-    missing = unverified(rows)
+    missing = unverified(rows, a.pending_ok)
     if missing and not a.allow_unverified:
         ap.error(f"{len(missing)} gold rows are not verified yet (e.g. {missing[0]})")
     cache: dict[tuple[str, str], tuple[FinancialSummary | None, str]] = {}
@@ -394,12 +433,15 @@ def main(argv: list[str] | None = None) -> int:
         if k not in cache:
             cache[k] = load_summary(a.processed, *k)
         summary, used = cache[k]
-        scored.append(score_row(row, summary) | {"doc_used": used})
+        scored.append(score_row(row, summary, convention) | {"doc_used": used})
     result = {
         "experiment": "E14 summary extraction",
         "slice": a.slice,
         "final": a.final,
         "draft": bool(missing),
+        "gold": a.gold.name,
+        "convention": convention,
+        "n_pending_verify": sum(bool(r.get("needs_akshat_verify")) for r in rows),
         "written_by": "scripts/summary_eval.py",
         "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "rules": {"money_rel_tol": str(MONEY_TOL), "pct_abs_tol": str(PCT_TOL),
