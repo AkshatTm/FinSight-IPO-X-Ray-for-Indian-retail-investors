@@ -1,6 +1,6 @@
 # FinSight Bench
 
-`bench/v1/` is frozen (C-ADR-06, C-ADR-22): the files listed in `manifest.yaml` `frozen_files` never
+`bench/v1/` is frozen (C-ADR-06, C-ADR-24): the files listed in `manifest.yaml` `frozen_files` never
 change; a later version gets `bench/v2/`. `answers/` and `paste/` are outputs and may be filled.
 
 | What | Where |

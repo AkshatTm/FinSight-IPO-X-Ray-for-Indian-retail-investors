@@ -129,6 +129,10 @@ disclosures:
   by Claude Code from templates, not by Akshat.
 - Single run per system (temperature 0 for local and teacher; app defaults for frontier apps).
 - Akshat built FinSight and is the single rater in C4.4.
+- scripts/summary_eval.py changed on main (gold v3.1 convention option, C-ADR-22) after the freeze and
+  before any scoring; its default v3 rules, which the bench uses, are unchanged, and its hash was re-recorded.
+- Keys are gold v3 (every row Akshat-verified); gold v3.1 (C-ADR-22) landed after the build and still
+  has rows waiting for his check.
 frozen_files:
   inputs/prompts.jsonl.gz: e0e736c3583bfec1fbe3a0dd2fa62be834cefc9415840205e3ea9c376ca0e10f
   items/task_a.jsonl: 89547f36191a864b871dbd01d9f54c544623c84e73c8cbf40ac3a8ae79baf00f
@@ -145,7 +149,7 @@ frozen_files:
   prompts/task_d.md: 2b05c685abe521dc40e1d30fb458bba9425d78d68625f48b02b6192e23b723a7
   scoring.yaml: 2ac8ea0283bfd396eb056efa56b9670c00f9b79fac36cb57cd67a48cec3654ca
 scorer_sha256:
-  scripts/summary_eval.py: 7367aa91d819952bf7554fc37695469760ea3aeaa9a026b412df1faf823ea5f4
+  scripts/summary_eval.py: b6eb5fccb2f031eddd6de53a5821d129b27cd791648090f6734d2bd8bcf86088
   scripts/redflag_eval.py: 46961857ecd4505a6bd9b119c5e8a135d8caa3ba7ed8a781636477feb32d3815
   scripts/bench_score.py: 8fc21dbddead9b8ca635715214289567450e0e8b2ea4151674b4df3f366a6689
   src/finsight/bench/score.py: d0f5ee83a04698cb491d2d7c35753837ad4816a2a3df00660c09be2d04486198
