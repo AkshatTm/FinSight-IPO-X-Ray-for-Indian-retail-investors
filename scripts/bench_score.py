@@ -12,6 +12,7 @@ Every number is a single run; nothing here is typed by hand.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import statistics
 import sys
@@ -32,6 +33,7 @@ from bench_run import BENCH, load_prompts, passages  # noqa: E402
 from redflag_eval import ORDINAL  # noqa: E402
 
 from finsight.bench import (  # noqa: E402
+    FLAT,
     Patterns,
     gold_amount_from_row,
     load,
@@ -58,6 +60,19 @@ SCORER_FILES = (
 MONEY_KEYS = {"revenue", "profit_after_tax", "operating_cash_flow", "total_borrowings", "net_worth",
               "fresh_issue_amount", "ofs_amount", "offer_price", "rpt_total",
               "litigation_amount_total"}  # fmt: skip
+
+
+# Scorer changes made after the freeze and before any score was read; each applies to every system.
+POST_FREEZE_CHANGES = [
+    "scripts/summary_eval.py: main gained the opt-in gold v3.1 convention (off here; v3 keys).",
+    "finsight/bench/score.py: gold_in_context / citation_has_value also accept the gold's printed "
+    "digits (3+) in table text, since tables print bare numbers with the unit in the header.",
+    "finsight/bench/answers.py: Task A replies shaped {field id: value} or {field id: {status, "
+    "value, unit, page}} are read (value-only ones get no unit or page) instead of scoring as "
+    "unparseable; the fields are counted as n_flat_format_fields.",
+    "scripts/bench_score.py: the counts above, and the error-analysis picks use a sha256 order of "
+    "item ids instead of sorted ids (all picks were the first IPO); no metric changes.",
+]
 
 
 def _jsonl(path: Path) -> list[dict[str, Any]]:
@@ -180,7 +195,11 @@ def task_a_b(system: str, answers: list[dict[str, Any]], ctx: dict[str, Any]) ->
             mrow = model_row(item["key"], item["period"], fa)
             model_rows[item["ipo_id"]].append(mrow)
             pred = pred_from_row(mrow)
-            problem = "unparseable" if reply and reply.unparseable else None
+            problem = (
+                "unparseable" if reply and reply.unparseable
+                else "flat_format" if reply and reply.problems[:1] == [FLAT]
+                else None
+            )  # fmt: skip
         scored = score_pred(key, pred)
         rows_a.append({"item_id": item["item_id"], "ipo_id": item["ipo_id"], "key": item["key"],
                        "period": item["period"], "doc": item["doc"], "prompt_id": item["prompt_id"],
@@ -280,6 +299,7 @@ def summarise(rows: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
               "scale_error_rate": metric(valued, "scale_error"),
               "n_missing": sum(r["missing"] for r in rows["A"]),
               "n_unparseable_fields": sum(r.get("problem") == "unparseable" for r in rows["A"]),
+              "n_flat_format_fields": sum(r.get("problem") == "flat_format" for r in rows["A"]),
               "latency": _latency(list({r["prompt_id"]: r for r in rows["A"]}.values()))},
         "B": {"status_accuracy": metric(b, "correct"),
               "serious_disagreements": sum(r["serious"] for r in b),
@@ -307,13 +327,15 @@ def summarise(rows: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
 
 
 def failures(all_rows: dict[str, dict[str, list[dict[str, Any]]]], n: int = 10) -> list[dict]:
-    """``n`` failures by a fixed rule: round-robin over (system, task), first failing item id."""
+    """``n`` failures by a fixed rule: round-robin over (system, task), failing items in sha256
+    order of their id (a fixed shuffle, so the picks spread over IPOs instead of the first one)."""
     pools: list[list[dict[str, Any]]] = []
     for system, rows in all_rows.items():
         for task, field in (("A", "correct"), ("C", "correct"), ("G", "passes"), ("D", "passes"),
                             ("B", "correct")):  # fmt: skip
             bad = sorted((r for r in rows.get(task, []) if not r.get("missing")
-                          and r.get(field) is False), key=lambda r: r["item_id"])  # fmt: skip
+                          and r.get(field) is False),
+                         key=lambda r: hashlib.sha256(r["item_id"].encode()).hexdigest())  # fmt: skip
             if bad:
                 pools.append([{"system": system, "task": task, **r} for r in bad])
     picked: list[dict[str, Any]] = []
@@ -393,6 +415,7 @@ def main() -> int:
         "scorer_changed_since_freeze": sorted(
             f for f, h in drift.items() if frozen_scorer.get(f) not in (None, h)
         ),
+        "post_freeze_scorer_changes": POST_FREEZE_CHANGES,
         "disclosures": manifest.disclosures,
     }
     (OUT / "bench_summary.json").write_text(json.dumps(result, indent=1, default=str) + "\n",

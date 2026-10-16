@@ -66,6 +66,23 @@ def _done(path: Path) -> set[str]:
     }
 
 
+def drop_errors(path: Path) -> list[str]:
+    """Remove rows whose call failed (server crash, timeout) so a rerun repeats them once.
+
+    The removed rows go to ``errors.jsonl`` beside the answers, so every retry stays on record.
+    """
+    if not path.exists():
+        return []
+    rows = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
+    bad = [r for r in rows if r.get("error") and r.get("error") != "refusal"]
+    if bad:
+        for r in bad:
+            _append(path.with_name("errors.jsonl"), r)
+        keep = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows if r not in bad)
+        path.write_text(keep, encoding="utf-8", newline="\n")
+    return [r["prompt_id"] for r in bad]
+
+
 def _append(path: Path, row: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8", newline="\n") as fh:
@@ -255,6 +272,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--processed", type=Path, default=ROOT / "data" / "processed")
     ap.add_argument("--limit", type=int, default=None, help="first N prompts (smoke runs)")
     ap.add_argument("--allow-unfrozen", action="store_true", help="smoke runs before the freeze")
+    ap.add_argument("--retry-errors", action="store_true", help="rerun prompts whose call failed")
     a = ap.parse_args(argv)
     manifest = load(BENCH)
     if not manifest.frozen and not a.allow_unfrozen:
@@ -264,6 +282,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     out = out_dir / "answers.jsonl"
     prompts = [p for p in load_prompts() if p["task"] in a.tasks][: a.limit]
+    retried = drop_errors(out) if a.retry_errors else []
     started = _now()
     t0 = time.perf_counter()
     if a.system == "rules_v1":
@@ -290,6 +309,7 @@ def main(argv: list[str] | None = None) -> int:
         "ended_utc": _now(),
         "wall_seconds": round(time.perf_counter() - t0, 1),
         "single_run": True,
+        "retried_after_error": retried,
     }
     runs = out_dir / "run.json"
     history = json.loads(runs.read_text(encoding="utf-8")) if runs.exists() else []

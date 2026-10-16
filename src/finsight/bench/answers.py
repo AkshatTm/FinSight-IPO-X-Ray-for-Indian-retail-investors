@@ -66,10 +66,63 @@ def _page(value: Any) -> int | None:
     return int(m.group()) if m else None
 
 
+def _entry(fid: str, item: dict[str, Any], problems: list[str]) -> FieldAnswer:
+    """One ``{status, value, unit, page}`` entry; an unknown status is flagged and not found."""
+    status = str(item.get("status") or "").strip().lower().replace(" ", "_")
+    if status not in STATUSES:
+        problems.append(f"{fid}: status {status!r}")
+        status = "not_found"
+    value = item.get("value")
+    return FieldAnswer(
+        id=fid,
+        status=status,
+        value="" if value is None else str(value).strip(),
+        unit=str(item.get("unit") or "").strip(),
+        page=_page(item.get("page")),
+    )
+
+
+FLAT = "flat_format: keyed by field id instead of a fields list"
+"""First problem of a reply read by ``_flat`` (counted separately by the bench scorer)."""
+
+_NOT_FOUND = re.compile(r"^\s*(?:not[ _]found|n/?a|none|null|unknown|-)?\s*$", re.I)
+
+
+def _flat(data: dict[str, Any], wanted: Sequence[str]) -> TaskAReply:
+    """A reply that maps field ids straight to values: value only, no unit or page.
+
+    Only the obvious statuses are read from the value: empty / "not found" is ``not_found`` and
+    ``[●]`` is ``placeholder``; anything else is ``found`` as written.
+    """
+    reply = TaskAReply(problems=[FLAT])
+    for fid in wanted:
+        if fid not in data:
+            reply.problems.append(f"{fid}: missing")
+            continue
+        raw = data[fid]
+        if isinstance(raw, dict) and ("status" in raw or "value" in raw):  # {"<id>": {entry}}
+            reply.fields[fid] = _entry(fid, raw, reply.problems)
+            continue
+        value = "" if raw is None else str(raw).strip()
+        if isinstance(raw, dict | list):
+            value = json.dumps(raw, ensure_ascii=False)
+        status = (
+            "placeholder" if "[●]" in value or "[•]" in value
+            else "not_found" if _NOT_FOUND.match(value)
+            else "found"
+        )  # fmt: skip
+        reply.fields[fid] = FieldAnswer(id=fid, status=status, value=value)
+    return reply
+
+
 def parse_task_a(text: str, wanted: Sequence[str]) -> TaskAReply:
     """Read the fields ``wanted`` (ids like ``revenue@latest``) from a Task A reply."""
     data = _load(text)
     items = data.get("fields") if isinstance(data, dict) else data
+    if isinstance(data, dict) and not isinstance(items, list):
+        flat = items if isinstance(items, dict) else data
+        if any(w in flat for w in wanted):  # {"<field id>": "<value>"}: value only
+            return _flat(flat, wanted)
     if not isinstance(items, list):
         return TaskAReply(unparseable=True, problems=["no JSON object with a fields list"])
     reply = TaskAReply()
@@ -78,18 +131,7 @@ def parse_task_a(text: str, wanted: Sequence[str]) -> TaskAReply:
             reply.problems.append("an entry without an id")
             continue
         fid = str(item["id"]).strip()
-        status = str(item.get("status") or "").strip().lower().replace(" ", "_")
-        if status not in STATUSES:
-            reply.problems.append(f"{fid}: status {status!r}")
-            status = "not_found"
-        value = item.get("value")
-        reply.fields[fid] = FieldAnswer(
-            id=fid,
-            status=status,
-            value="" if value is None else str(value).strip(),
-            unit=str(item.get("unit") or "").strip(),
-            page=_page(item.get("page")),
-        )
+        reply.fields[fid] = _entry(fid, item, reply.problems)
     reply.problems += [f"{w}: missing" for w in wanted if w not in reply.fields]
     return reply
 

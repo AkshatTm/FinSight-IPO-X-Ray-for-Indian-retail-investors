@@ -129,10 +129,20 @@ def score_question(
     return out
 
 
+_DIGITS = re.compile(r"\d[\d,]*(?:\.\d+)?")
+
+
 def _holds(passage: Passage, gold: Amount) -> bool:
-    """The passage prints the gold value (in any unit)."""
+    """The passage prints the gold value: as an amount in any unit, or as the gold's printed
+    digits (financial tables print bare numbers and state the unit once, in the header)."""
     g = _abs(gold)
-    return any(same_value(_abs(a), g) for a in amounts(passage.text))
+    if any(same_value(_abs(a), g) for a in amounts(passage.text)):
+        return True
+    m = _DIGITS.search(getattr(gold, "raw", "") or "")
+    if m is None or len(m.group().replace(",", "").replace(".", "")) < 3:
+        return False  # one- and two-digit numbers match too much by chance
+    want = m.group().replace(",", "")
+    return any(x.replace(",", "") == want for x in _DIGITS.findall(passage.text))
 
 
 def score_rewrite(original: str, raw: str) -> dict[str, Any]:

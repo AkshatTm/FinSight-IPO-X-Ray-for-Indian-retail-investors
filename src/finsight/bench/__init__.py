@@ -10,6 +10,7 @@ answer parsing, scoring rules, statistics and the freeze guard.
 """
 
 from finsight.bench.answers import (
+    FLAT,
     FieldAnswer,
     TaskAReply,
     bundle,
@@ -57,6 +58,7 @@ from finsight.bench.stats import mcnemar_exact, metric, paired, per_ipo
 __all__ = [
     "CHAT_BUDGET_CHARS",
     "FIELDS",
+    "FLAT",
     "GROUPS",
     "PERIODS",
     "TASK_A_BUDGET_CHARS",
