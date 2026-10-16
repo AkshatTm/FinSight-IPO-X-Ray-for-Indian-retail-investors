@@ -71,6 +71,7 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 
 ### C2.8 risk-level thresholds (code merged), needs C2.4, C3.2, C3.3 outputs
 - [ ] After the trained models are wired into the upload pipeline (C3.3) and every IPO has `<ipo_id>.json` (and `.flags.json`) in `data/processed/risk_bank/scored/`: `uv run python scripts/corpus_points.py scores`, then `... fit` (needs at least 30 train + dev scores); check `configs/risklevel.yaml` is no longer provisional.
+- [x] Fit done (thresholds 0.2857 / 0.4167, 165 IPOs). Remaining for E21:
 - [ ] For E21 put a measured-outcome column in `data/gold/outcomes.csv` (`ipo_id,listing_gain_pct`; your own source, check it) and run `uv run python scripts/validate_risklevel.py --outcomes data/gold/outcomes.csv` with `scores --points-only` first. The result is reported whatever it shows.
 
 ### Later (prepared by each part when it is reached)

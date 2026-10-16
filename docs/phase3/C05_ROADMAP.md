@@ -88,6 +88,9 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   *Result:* 60 pairs rated by Akshat (47 same, 12 different, 1 unsure); τ = 0.71, precision 0.911 on 45 pairs (95 % CI 0.793-0.965), single rater (C-ADR-14, `eval_results/b/novelty.json`, merged in #219).
 - [ ] **C2.8 Risk-level thresholds + E17/E21 + E8r** (was B2.6b) · 💻 L · S · Needs: C2.4, C3.2, C1.4 window
   Wires `risklevel` to `reference_scores` + the window; thresholds fitted on train + dev only; E21 as the risk-points-only variant with the limitation stated.
+  - [x] Scoring chain `scripts/score_reference_ipos.py` (440 IPOs, 29,677 risks, 165 with red flags) and fit: thresholds **0.2857 / 0.4167**, `corpus_n` 165, `provisional: false` (C-ADR-25)
+  - [ ] E21: needs Akshat's `data/gold/outcomes.csv`; the points-only variant saturates (188 of 440 IPOs at 1.0)
+  - [ ] E17 (rule seriousness vs teacher bands), E8r (guard re-run) and `seriousness.json` / `guard_b.json` not run in this pass
 
 **CG3:** classifier and student trained, evaluated, exported · τ and thresholds computed · extractor v2 trained and decided (kept only if it wins on dev). CG3 waits on the code lane too: C2.8 needs C3.2.
 

@@ -1,12 +1,13 @@
-# Risk level (B02 §7.4, B-ADR-11). PROVISIONAL: these numbers are placeholders made up for
-# development, not measured. B2.6b replaces them with the 2018-2023 corpus distribution (date,
-# corpus_n) and sets provisional: false. The UI shows corpus_n from here, never a typed number.
-provisional: true
-computed_on: null
-corpus_n: 0
+# Risk level (B02 §7.4, B-ADR-11). Fitted by C2.8 (C-ADR-25): thresholds are the terciles of the full
+# score (red flags + rare-risk points) of the 165 train + dev IPOs that are full documents; corpus_n and
+# computed_on come from the fit. The UI shows corpus_n from here, never a typed number.
+provisional: false
+window_years: 4
+computed_on: 1a32ec6
+corpus_n: 165
 points: { concern: 2, watch: 1, risk: 1, max_risk_points: 4 }
 unusual_below: 0.10          # a high-seriousness risk below this novelty adds a point
-thresholds: { low_below: 0.20, high_from: 0.40 }   # bottom third / top third of reference scores
+thresholds: { low_below: 0.2857, high_from: 0.4167 }
 # Reference scores at percentiles 0, 10, ..., 100 (for "more disclosed risk than p% of past IPOs").
-reference_quantiles: [0.0, 0.08, 0.13, 0.17, 0.20, 0.25, 0.30, 0.35, 0.40, 0.50, 0.80]
+reference_quantiles: [0.0, 0.125, 0.2114, 0.2778, 0.3125, 0.35, 0.3889, 0.4286, 0.4555, 0.5678, 0.75]
 behind_click: false          # B01 §10.2: hide the level behind a click if the teacher asks

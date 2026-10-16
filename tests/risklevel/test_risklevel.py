@@ -117,9 +117,12 @@ def test_thresholds() -> None:
     assert level_for(0.4, t) == "high"
 
 
-def test_committed_config_is_marked_provisional() -> None:
+def test_committed_config_is_the_fitted_one() -> None:
     cfg = load_config()
-    assert cfg["provisional"] is True
+    assert cfg["provisional"] is False
+    assert cfg["computed_on"]
+    assert cfg["corpus_n"] >= 30
+    assert cfg["thresholds"]["low_below"] < cfg["thresholds"]["high_from"]
     q = cfg["reference_quantiles"]
     assert q == sorted(q)
     assert len(q) == 11
