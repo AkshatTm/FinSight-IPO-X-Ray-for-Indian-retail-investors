@@ -39,16 +39,17 @@ test("upload → stages → report tabs → workspace → chat, with no failed r
   await page.getByRole("tab", { name: "Compare" }).click();
   await expect(page.getByRole("heading", { name: "How it compares" })).toBeVisible();
 
-  await page.getByRole("link", { name: "Facts, pages and Ask" }).click();
+  // The link appears when the last step (the search index) is done.
+  await page.getByRole("link", { name: "Facts, pages and Ask" }).click({ timeout: 600_000 });
   await expect(page).toHaveURL(new RegExp(`/ipos/${docId}$`));
-  await expect(page.getByText("Key facts")).toBeVisible({ timeout: 120_000 });
+  await expect(page.getByRole("heading", { name: "Key facts" })).toBeVisible({ timeout: 120_000 });
   const skip = page.getByRole("button", { name: "Skip tour" });
   if (await skip.isVisible()) await skip.click();
 
   const box = page.getByRole("textbox", { name: "Ask a question" });
   await box.fill("Should I apply for this IPO?");
   await box.press("Enter");
-  await expect(page.getByText(/can't tell you whether to apply|not a SEBI-registered/i).first()).toBeVisible({
+  await expect(page.getByText("I can't tell you whether to invest.").first()).toBeVisible({
     timeout: 60_000,
   });
 
