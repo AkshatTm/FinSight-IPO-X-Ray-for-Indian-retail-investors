@@ -1,8 +1,11 @@
+import os
 import sys
 from pathlib import Path
 
 import pytest
 
+# The trained-model stages need weights and the GPU; tests that want them ask for them.
+os.environ.setdefault("FINSIGHT_JOBS__MODEL_STAGES", "0")
 sys.path.insert(0, str(Path(__file__).resolve().parents[0] / "fixtures"))
 
 from make_fixture_pdf import build, build_table_pdf

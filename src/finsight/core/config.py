@@ -140,7 +140,7 @@ class SimplifyConfig(BaseModel):
     """Plain-English rewrites (B02 §8): top N automatic, the rest on click."""
 
     backend: Literal["ollama", "llama-cpp"] = "ollama"
-    model: str = "qwen3.5:2b"
+    model: str = "finsight-student:q4"  # the C2.5 student, served by Ollama
     # The base instruct model with the same prompt, used (and flagged) when the student is
     # unavailable; a GGUF file name for llama-cpp, a tag for Ollama.
     fallback_model: str | None = None
@@ -151,6 +151,8 @@ class JobsConfig(BaseModel):
     """Job runner settings: stages run in-process on a worker thread (B02 §10)."""
 
     poll_interval_s: float = 1.0
+    # The trained-model stages (risks_scored, risk_level, simplify, index); tests switch them off.
+    model_stages: bool = True
     # B02 §11: a stage that runs longer fails (parse: 10 min). Keyed by stage name.
     stage_timeouts_s: dict[str, float] = Field(default_factory=lambda: {"parsed": 600.0})
 

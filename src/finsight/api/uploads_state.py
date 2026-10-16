@@ -16,7 +16,9 @@ from finsight.api.errors import ApiError
 from finsight.auth import AuthError, User, user_from_header
 from finsight.core.config import Settings, get_settings
 from finsight.db import Database, make_database
-from finsight.jobs import InlineLauncher, Launcher, process_document
+from finsight.jobs import InlineLauncher, Launcher, SimplifyDrain, process_document
+from finsight.risks import Simplifier
+from finsight.risks import make_simplifier as make_simplifier_from
 from finsight.storage import Storage, make_storage
 
 
@@ -28,15 +30,24 @@ class UploadState:
     db: Database
     storage: Storage
     launcher: Launcher
+    drain: SimplifyDrain | None = None
 
 
 def build_upload_state(settings: Settings) -> UploadState:
     """Wire the profile's database, storage and job launcher."""
     db, storage = make_database(settings), make_storage(settings)
-    launcher: Launcher = InlineLauncher(
-        lambda doc_id, job_id: process_document(db, storage, settings, doc_id, job_id)
-    )
-    return UploadState(settings, db, storage, launcher)
+
+    def make_simplifier() -> Simplifier:
+        return make_simplifier_from(settings.simplify, settings.paths.models_dir)
+
+    drain = SimplifyDrain(db, storage, make_simplifier)
+
+    def work(doc_id: str, job_id: str) -> None:
+        process_document(db, storage, settings, doc_id, job_id)
+        drain.kick(doc_id)  # the top-N rewrites fill in while the reader looks at the report
+
+    launcher: Launcher = InlineLauncher(work)
+    return UploadState(settings, db, storage, launcher, drain)
 
 
 @lru_cache(maxsize=1)
