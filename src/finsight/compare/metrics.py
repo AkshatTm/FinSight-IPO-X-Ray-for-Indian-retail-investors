@@ -41,7 +41,7 @@ def plausible(metric: str, value: object) -> bool:
     return lo <= d <= hi and not (metric == "pe" and d == 0)
 
 
-def _money(value: Value | None) -> Decimal | None:
+def _money(value: object) -> Decimal | None:
     if isinstance(value, Money) and value.value_inr is not None and value.value_inr > 0:
         return value.value_inr
     return None
