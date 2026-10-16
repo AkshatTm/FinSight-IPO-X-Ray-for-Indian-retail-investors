@@ -48,6 +48,7 @@ class IpoSummary(BaseModel):
     fresh_inr: str | None = None
     ofs_inr: str | None = None
     xray_status: Literal["ready", "building", "missing"]
+    report_doc_id: str | None = None  # the full report of its RHP, when one has been built
 
 
 class PageSize(BaseModel):

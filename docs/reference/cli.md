@@ -12,6 +12,7 @@ Run with `uv run poe <task>`.
 | `test-all` | All tests including slow (real models) |
 | `fmt` | Auto-fix and format |
 | `typecheck` | mypy on the correctness-critical packages |
+| `app` | Start the whole app on this laptop: installs the model groups, checks Ollama and the student model, API on :8000, frontend on :3000 |
 | `api` | FastAPI on :8000 |
 | `record-demo` | Record real chat streams into data/demo_cache (needs Ollama) |
 | `gen-openapi` | Write openapi.json (add --check to verify it is current) |

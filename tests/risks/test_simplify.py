@@ -127,7 +127,7 @@ def test_make_simplifier_picks_backends(tmp_path: Path) -> None:
     assert s.fallback is not None
     assert s.fallback_model == "b.gguf"
     assert s.fallback is not None
-    assert make_simplifier(SimplifyConfig(), tmp_path).llm.model == "qwen3.5:2b"  # type: ignore[attr-defined]
+    assert make_simplifier(SimplifyConfig(), tmp_path).llm.model == "finsight-student:q4"  # type: ignore[attr-defined]
 
 
 def test_a_missing_gguf_file_fails_cleanly(tmp_path: Path) -> None:

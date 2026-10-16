@@ -305,6 +305,7 @@ export const STRINGS = d({
     hi: "पहली बार आए हैं? Ather Energy से शुरू करें। इसमें फ्रेश इश्यू और ओएफएस दोनों हैं, इसलिए आपको हर तरह के तथ्य दिखेंगे।",
   },
   "lib.hintLink": { en: "Open Ather Energy", hi: "Ather Energy खोलें" },
+  "lib.report": { en: "Full report", hi: "पूरी रिपोर्ट" },
   "lib.notSet": { en: "Set when the final price is fixed", hi: "अंतिम कीमत तय होने पर पता चलेगा" },
 
   // 7.1 / 7.2 workspace

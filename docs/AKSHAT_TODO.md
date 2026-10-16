@@ -1,6 +1,20 @@
 # Akshat's to-do
 
-## Phase 3 (now): in critical-path order (C05 §6, C06)
+## Local app week (now): run it on your laptop
+
+- [ ] Read `docs/RUN_LOCALLY.md`, then `uv run poe app` and open http://localhost:3000/upload. Try your own RHP / prospectus PDF (text PDF, not a scan).
+- [ ] Decide: should the library show the "Full report" link for the 10 showcase IPOs? Build them with `uv run python scripts/build_showcase.py` (about 5 min each, run while nothing else is running).
+- [ ] Decide which newest IPOs lead the class demo (C3.5 asks you to pick; the code works for any PDF).
+- [ ] Hindi strings added this week (`labb.bench.*`, `rl.override`, `rf.severe.*`, `lib.report`, `ws.backReport`) are builder drafts: review.
+
+### Next week (deferred on purpose; none of it is needed to run the product)
+- [ ] **E17** risk-level outcome check, **E21** (needs outcomes data), **E8r** guard re-run after the red-flag decision.
+- [ ] **Bench runs**: base model, teacher and frontier systems on bench v1 (only `rules_v1` and the student are scored; the base run was partial and ran out of memory on the laptop).
+- [ ] **Gold v3.1 verification** (`data/gold/gold_v3_1_verify.csv`) and the **E7 hand-check** (`data/gold/e7_handcheck.csv`).
+- [ ] C3.5 leftovers: record the demo cache for the chosen IPOs (`uv run poe record-demo`), landing-page stats from real files.
+- [ ] Playwright against the real app needs a PDF and about 10 minutes: `E2E_REAL=1 E2E_PDF=<pdf> pnpm test:e2e local-app-real` (in `frontend/`).
+
+## Phase 3 (before this week): in critical-path order (C05 §6, C06)
 
 Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07_PROMPTS.md`) plus the part line. Hours are estimates (C06).
 

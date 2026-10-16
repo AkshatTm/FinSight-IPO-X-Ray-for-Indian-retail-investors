@@ -103,20 +103,22 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 - [x] **C3.2 Red flags wired + E15** (was B1.4-left) · 💻 L · S · Needs: C3.1, gold v3 verified
   Includes rule-based flags (going concern, default / loan recall, SEBI/RBI/ED orders, fraud, qualified audit) that force the severe band regardless of the model.
   *Status:* merged (#233); E15 final v1 (#236): accuracy 0.646 on 130 rows, 0 serious disagreements. RF04/RF05 were low because the evaluator lacked the X-Ray offer facts; fixed in C3.7: **E15 v2 0.762** (v1 0.646 frozen; wiring alone 0.731).
-- [ ] **C3.3 Trained models into the upload pipeline** · 💻 L · S · Needs: C2.4, C2.5, C2.6, C3.2
+- [x] **C3.3 Trained models into the upload pipeline** · 💻 L · S · Needs: C2.4, C2.5, C2.6, C3.2
   Classifier ONNX, student GGUF (top 15 automatic, rest on click), novelty with τ, risk level → full report for any upload. Models load one stage at a time (16 GB RAM shared with Windows and Claude Code); measure RAM and seconds with `scripts/measure_memory.py`; try partial llama.cpp GPU offload on the 4 GB RTX 2050.
-  *Latency plan (from C2.5, 12.3 s/risk on the laptop CPU ≈ 14 min per IPO of ~67 risks):* precompute simplifications for showcase / listed IPOs at ingest; for an upload simplify the top-N by seriousness up front and the rest lazily when the user expands a risk; batch / parallel requests to Ollama; measure GPU latency for the deployed version (C3.8 / C5.1). Not built yet.
+  *Latency plan (from C2.5, 12.3 s/risk on the laptop CPU ≈ 14 min per IPO of ~67 risks):* precompute simplifications for showcase / listed IPOs at ingest; for an upload simplify the top-N by seriousness up front and the rest lazily when the user expands a risk; batch / parallel requests to Ollama; measure GPU latency for the deployed version (C3.8 / C5.1).
+  *Status (local app week):* built in `jobs/model_stages.py`: `risks_scored` (ONNX classifier, bge-m3 novelty against the product reference window, seriousness), `risk_level`, `simplify` (top 15 queued, a background drain in the API process; click-to-explain retried), `index` (publishes the upload in the showcase layout so facts, pages and chat work). Smoke run on two non-gold RHPs: 20/20 checks, 160 to 350 s per document. `uv run poe app`, `docs/RUN_LOCALLY.md`. RAM / seconds per model were not measured with `measure_memory.py`.
 - [x] **C3.4 Compare on the rolling window** (was B3.2b) · 💻 L · S · Needs: C1.4, C3.1
   The Compare tab moves from its provisional data to the `splits.reference` rolling window.
   *Status:* merged (#240, #241; C-ADR-21). Reference n = 40 on issue size only (provisional); the upload pipeline gained `facts` and `compare` stages.
-- [ ] **C3.5 Newest-IPO showcase** · 💻 L + 👤 A · S · Needs: C3.3
+- [ ] **C3.5 Newest-IPO showcase** (code done; building the reports and picking the leads is open) · 💻 L + 👤 A · S · Needs: C3.3
   Build reports and X-Rays for the `demo` IPOs; add them to the library; record the demo cache; landing stats from real files. Akshat picks which IPOs lead the class demo.
-- [ ] **C3.6 Report UI + Lab on the real API** (was B3.1b + B3.4b) · 💻 L · S · Needs: C3.3
+- [x] **C3.6 Report UI + Lab on the real API** (product part) (was B3.1b + B3.4b) · 💻 L · S · Needs: C3.3
   Mocks regenerated from real files by script; Lab sections for E13–E24 and the bench.
+  *Status (local app week):* done: report tabs run on the real API (severe overrides now shown; the Compare and upload-limit copy fixed), `/api/lab/c/bench` + Lab Bench section, OpenAPI and TS types regenerated, stream proxy fixed (job events and chat no longer cut at 30 s). Not done: regenerating `frontend/mocks/report.ts` from real files, Lab sections for E17/E21 (no results yet).
 - [x] **C3.7 Chat fixes** · 💻 L + 👤 A · S · Needs: CG0 · code part done (#239); Akshat's E7 hand-check still open (AKSHAT_TODO)
   Investigate the 32 s `full`-profile latency; Akshat decides the "red flags in chat" guard question; E7 hand-check.
   *Status:* the 32 s was not reproduced (9.6 s median; the CPU reranker costs 26-45 s, pool capped). Red flags in chat: **allowed** (option a, decided).
-- [ ] **C3.8 Hardening sweep** (was B3.5b, local) · 💻 L · S · Needs: C3.6
+- [ ] **C3.8 Hardening sweep** (Playwright `local-app-real` written; sweep of all pages pending) (was B3.5b, local) · 💻 L · S · Needs: C3.6
 
 **CG4:** upload any new RHP on the laptop → full report with trained models, red flags with pages, risk level with reasons + disclaimer; Playwright sweep green.
 

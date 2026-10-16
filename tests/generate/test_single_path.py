@@ -34,6 +34,11 @@ ALLOWED = {
     # them with the product path; rules_v1 itself goes through ``respond``. Evaluation only: the
     # input is the bench's stored prompt text, the output is scored and never shown.
     "scripts/bench_run.py",
+    # Local app week: ``run_app.py`` only asks Ollama to load the student (no prompt, keep_alive
+    # 30 m); ``smoke_local.py`` sends its three fixed questions through the product's own
+    # ``/api/chat`` route, so the answers still go through the guard, verifier and ``respond``.
+    "scripts/run_app.py",
+    "scripts/smoke_local.py",
 }
 
 

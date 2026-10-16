@@ -33,7 +33,7 @@ export const UPLOAD = {
     en: "We ask you to sign in only to prevent misuse. We don't use your Google data for anything else.",
     hi: "हम साइन इन केवल दुरुपयोग रोकने के लिए कहते हैं। आपके Google डेटा का हम किसी और काम में इस्तेमाल नहीं करते।",
   },
-  "up.limits": { en: "You can analyse 3 documents a day.", hi: "आप दिन में 3 दस्तावेज़ों का विश्लेषण कर सकते हैं।" },
+  "up.limits": { en: "You can analyse {n} documents a day.", hi: "आप दिन में {n} दस्तावेज़ों का विश्लेषण कर सकते हैं।" },
   "up.paused": {
     en: "Uploads are paused right now. You can still explore the sample reports.",
     hi: "अभी अपलोड रुके हुए हैं। आप फिर भी सैंपल रिपोर्ट देख सकते हैं।",

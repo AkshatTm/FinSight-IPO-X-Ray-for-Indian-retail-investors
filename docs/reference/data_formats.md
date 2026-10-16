@@ -208,15 +208,23 @@ Rows exclude the CSV header. Labels written with AI help carry `label_source`.
 | `gold150.jsonl` | 150 | `risk_id`, `company`, `text`, `label`, `band` |
 | `gold_prefill.jsonl` | 110 | `ipo_id`, `field_id`, `doc`, `value_raw`, `page`, `quote`, `status`, `labelled_at`, `notes` |
 | `gold_template.jsonl` | 110 | `ipo_id`, `field_id`, `doc`, `value_raw`, `page`, `quote`, `status`, `labelled_at`, `notes` |
+| `gold_v3_1_summary.jsonl` | 280 | `ipo_id`, `key`, `period`, `doc`, `expected_section`, `red_flags`, `value_raw`, `unit`, `page`, `quote`, `status`, `label_source`, `changed_by_akshat`, `labelled_at`, `notes` |
+| `gold_v3_prefill_part1.jsonl` | 270 | `ipo_id`, `key`, `period`, `value_raw`, `unit`, `page`, `quote`, `status`, `notes` |
+| `gold_v3_summary.jsonl` | 280 | `ipo_id`, `key`, `period`, `doc`, `expected_section`, `red_flags`, `value_raw`, `unit`, `page`, `quote`, `status`, `label_source`, `changed_by_akshat`, `labelled_at`, `notes` |
 | `gold_v3_template.jsonl` | 270 | `ipo_id`, `key`, `period`, `doc`, `expected_section`, `red_flags`, `value_raw`, `unit`, `page`, `quote`, `status`, `label_source`, `changed_by_akshat`, `labelled_at`, `notes` |
 | `gold_values.jsonl` | 110 | `ipo_id`, `field_id`, `doc`, `value_raw`, `page`, `quote`, `status`, `labelled_at`, `notes`, `label_source` |
 | `questions_dev.jsonl` | 50 | `ipo_id`, `question`, `language`, `answer_gold`, `evidence_doc`, `evidence_page`, `answerable`, `split`, `label_source`, `review_status` |
 | `questions_test.jsonl` | 67 | `ipo_id`, `question`, `language`, `answer_gold`, `evidence_doc`, `evidence_page`, `answerable`, `split`, `label_source`, `review_status` |
+| `redflag_status_gold.jsonl` | 130 | `ipo_id`, `rf`, `status`, `sentence`, `numbers_used`, `thresholds_version`, `label_source`, `spot_checked_by_akshat` |
+| `redflag_status_gold_v3_1.jsonl` | 130 | `ipo_id`, `rf`, `status`, `sentence`, `numbers_used`, `thresholds_version`, `label_source`, `spot_checked_by_akshat` |
 | `weaklabel_audit.jsonl` | 50 | `id`, `ipo_id`, `field_id`, `question`, `answer`, `answers`, `passage`, `label`, `notes`, `label_source` |
 | `advice_guard_set.csv` | 120 | `question`, `language`, `is_advice (must block?)`, `tricky_note`, `reviewed_by_akshat (Y/edit)` |
 | `asr_references.csv` | 10 | `clip`, `reference`, `reference_corrected`, `reference_source`, `reviewed_by_akshat` |
+| `e7_handcheck.csv` | 40 | `id`, `slice`, `ipo`, `language`, `question`, `answerable_in_document`, `gold_answer`, `system_answer`, `number_ticks`, `instruction`, `answer_right_yes_no`, `ticks_fair_yes_no_or_note` |
 | `gold150_ratings.csv` | 19 | `risk_id`, `category`, `notes` |
 | `gold150_sheet.csv` | 150 | `risk_id`, `company`, `title`, `text`, `category`, `notes` |
+| `gold_v3_1_verify.csv` | 11 | `ipo_id`, `key`, `period`, `what_changed`, `old_value`, `new_value`, `page`, `quote`, `what_to_check`, `verified_yes_no`, `your_value_if_different` |
+| `gold_v3_review.csv` | 280 | `ipo_id`, `key`, `period`, `doc`, `value_raw`, `unit`, `page`, `status`, `quote`, `notes` |
 | `gold_verify_sheet.csv` | 110 | `ipo_id`, `field_id`, `document`, `PDF page`, `status`, `value (what I read)`, `quote (copied from that page)`, `verified? (Y/N)`, `your correction` |
 | `hindi_fluency_sheet.csv` | 92 | `model`, `ipo`, `question`, `answer`, `status`, `auto_correct (verifier)`, `old auto_correct`, `fluency_1_to_5`, `comment` |
 | `hindi_fluency_sheet_checked.csv` | 40 | `model`, `ipo`, `question`, `answer`, `correct? (Claude check)`, `what is wrong (Claude check)`, `fluency_1_to_5 (YOU)`, `comment (YOU)` |

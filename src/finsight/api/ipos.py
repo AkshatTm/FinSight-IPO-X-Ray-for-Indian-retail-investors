@@ -54,8 +54,11 @@ def _config(name: str) -> Any:
 class IpoStore:
     """The demo IPOs and their processed files."""
 
-    def __init__(self, processed_dir: Path, fields: list[FieldSpec]) -> None:
+    def __init__(
+        self, processed_dir: Path, fields: list[FieldSpec], reports_dir: Path | None = None
+    ) -> None:
         self.processed_dir = processed_dir
+        self.reports_dir = reports_dir  # data/store/docs: where upload reports are kept
         self.fields = {f.id: f for f in fields}
         self._ipos: dict[str, DemoIpo] = {i.ipo_id: i for i in list_demo_ipos()}
         meta = _config("ipo_meta.yaml")["ipos"]
@@ -128,7 +131,13 @@ class IpoStore:
             fresh_inr=_money_inr(xray, "fresh_issue_size"),
             ofs_inr=_money_inr(xray, "ofs_amount"),
             xray_status="ready" if xray else "missing",
+            report_doc_id=self._report_id(ipo),
         )
+
+    def _report_id(self, ipo: DemoIpo) -> str | None:
+        """The RHP's report id when the upload pipeline has finished for it."""
+        done = self.reports_dir is not None and (self.reports_dir / ipo.rhp.doc_id / "index.json")
+        return ipo.rhp.doc_id if done and done.exists() else None
 
     # ---------------------------------------------------------------- detail
     def detail(self, ipo_id: str) -> IpoDetail:

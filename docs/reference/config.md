@@ -46,10 +46,11 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 | `auth.audience` | str | `authenticated` | `FINSIGHT_AUTH__AUDIENCE` |
 | `auth.admin_emails` | list | `[]` | `FINSIGHT_AUTH__ADMIN_EMAILS` |
 | `simplify.backend` | Literal | `ollama` | `FINSIGHT_SIMPLIFY__BACKEND` |
-| `simplify.model` | str | `qwen3.5:2b` | `FINSIGHT_SIMPLIFY__MODEL` |
+| `simplify.model` | str | `finsight-student:q4` | `FINSIGHT_SIMPLIFY__MODEL` |
 | `simplify.fallback_model` | str \| None | — | `FINSIGHT_SIMPLIFY__FALLBACK_MODEL` |
 | `simplify.auto_top_n` | int | `15` | `FINSIGHT_SIMPLIFY__AUTO_TOP_N` |
 | `jobs.poll_interval_s` | float | `1.0` | `FINSIGHT_JOBS__POLL_INTERVAL_S` |
+| `jobs.model_stages` | bool | true | `FINSIGHT_JOBS__MODEL_STAGES` |
 | `jobs.stage_timeouts_s` | dict | `{'parsed': 600.0}` | `FINSIGHT_JOBS__STAGE_TIMEOUTS_S` |
 | `demo_mode` | bool | false | `DEMO_MODE` |
 
@@ -93,6 +94,21 @@ Values each profile sets (everything else keeps the default).
 | `retrieve.rerank` | true |
 | `retrieve.abstain_thresholds.hybrid+rerank` | `-4.402` |
 | `voice.asr` | `faster-whisper-large-v3-turbo` |
+| `verify.nli` | false |
+| `demo_mode` | false |
+
+### `local`
+
+| Key | Value |
+| --- | --- |
+| `llm.backend` | `ollama` |
+| `llm.model` | `finsight-student:q4` |
+| `llm.num_ctx` | `2048` |
+| `retrieve.dense` | false |
+| `retrieve.rerank` | true |
+| `retrieve.rerank_top_n` | `20` |
+| `voice.asr` | `faster-whisper-medium` |
+| `voice.idle_unload_s` | `60` |
 | `verify.nli` | false |
 | `demo_mode` | false |
 
