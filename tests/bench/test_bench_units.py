@@ -168,6 +168,8 @@ def test_question_correct_scale_and_abstain() -> None:
     ok = score_question("Revenue was ₹ 17,538 million [1].", "answerable", gold, ps, PAT, 30, "rhp")
     assert ok["outcome"] == "correct"
     assert ok["citation_page_match"]
+    assert ok["citation_has_value"]
+    assert ok["gold_in_context"]
     assert ok["verified_share"] == 1.0
     crore = score_question("It was ₹ 1,753.8 crore.", "scale", gold, ps, PAT)
     assert crore["correct"]  # a correct conversion counts

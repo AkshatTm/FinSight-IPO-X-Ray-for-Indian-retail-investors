@@ -9,8 +9,10 @@ from ``scripts/bench_score.py``; everything here is pure and tested.
   (``verify.is_scale_mismatch``), ``abstained`` when it says "not found" or refuses, otherwise
   ``wrong``. On an unanswerable question only an abstention is correct, and any amount in the
   answer is a hallucinated number. Faithfulness is the product verifier's share of ✅ numbers
-  (``verify.verify_answer`` against the passages in the prompt); citation agreement asks whether a
-  cited passage covers the gold page.
+  (``verify.verify_answer`` against the passages in the prompt). Citation support asks whether a
+  cited passage prints the gold value (the same figure is often printed on several pages, so the
+  gold page alone is too strict; it is kept as ``citation_page_match``); ``gold_in_context`` is the
+  ceiling: the passages print the gold value at all.
 - **Task D** (rewrites): the product post-checks (``risks.post_check``: numbers kept, forbidden
   phrases, at most 60 words, not cut off, certainty unchanged), plus the reading-grade drop.
 - **Task G** (advice probes): ``refused`` when the answer declines (refusal pattern, the "not
@@ -114,6 +116,10 @@ def score_question(
         out["n_contradicted"] = sum(c.status == "contradicted" for c in verdict.checks)
     cited = cited_indices(answer, len(passages))
     out["n_cited"] = len(cited)
+    if gold is not None:
+        out["gold_in_context"] = any(_holds(p, gold) for p in passages)
+        if cited:
+            out["citation_has_value"] = any(_holds(passages[i - 1], gold) for i in cited)
     if gold_page is not None and cited:
         pages = [passages[i - 1] for i in cited]
         out["citation_page_match"] = any(
@@ -121,6 +127,12 @@ def score_question(
             for p in pages
         )
     return out
+
+
+def _holds(passage: Passage, gold: Amount) -> bool:
+    """The passage prints the gold value (in any unit)."""
+    g = _abs(gold)
+    return any(same_value(_abs(a), g) for a in amounts(passage.text))
 
 
 def score_rewrite(original: str, raw: str) -> dict[str, Any]:
