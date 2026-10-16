@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // The rewrite proxy cuts a response after 30 s by default. Job events (minutes) and a first chat
+  // answer on a cold reranker (about 40 s) are streams, so the proxy waits an hour.
+  experimental: { proxyTimeout: 3_600_000 },
   // Real-API mode: the browser calls same-origin /api/*, Next forwards to FastAPI.
   async rewrites() {
     if (process.env.NEXT_PUBLIC_USE_MOCKS === "1") return [];

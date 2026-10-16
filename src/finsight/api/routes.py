@@ -265,6 +265,12 @@ def lab_b(name: LabBName, state: State) -> LabPayload:
     return content.lab_b(state.settings.paths.eval_dir, name)
 
 
+@router.get("/lab/c/bench", tags=["lab"])
+def lab_c_bench(state: State) -> LabPayload:
+    """Model Lab, Phase 3: FinSight Bench v1 scores per system and task (C4.1)."""
+    return content.lab_c_bench(state.settings.paths.eval_dir)
+
+
 @router.get("/glossary", tags=["content"])
 def glossary(lang: Language = "en") -> list[GlossaryEntry]:
     """Glossary terms in the chosen language (English where Hindi is missing)."""

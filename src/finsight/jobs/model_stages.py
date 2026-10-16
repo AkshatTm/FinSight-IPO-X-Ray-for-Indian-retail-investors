@@ -21,6 +21,7 @@ from typing import Any
 
 from finsight.core.logging import get_logger
 from finsight.core.schemas import ParsedDoc, Risk
+from finsight.core.schemas import XRay as XRayModel
 from finsight.jobs.pipeline import (
     PARSED,
     SECTIONS,
@@ -214,8 +215,13 @@ def _index(ctx: JobContext) -> dict[str, Any]:
     from finsight.core.schemas import Table
 
     out.tables.write_bytes(TypeAdapter(list[Table]).dump_json(tables, indent=1))
+    company = _company(ctx)
     if ctx.storage.exists(ctx.key(XRAY)):
-        xray_path(processed, ctx.doc_id).write_bytes(ctx.storage.get_bytes(ctx.key(XRAY)))
+        xray = XRayModel.model_validate_json(ctx.storage.get_bytes(ctx.key(XRAY)))
+        if company and xray.company in ("", ctx.doc_id):  # the facts stage ran before the name
+            xray = xray.model_copy(update={"company": company})
+            put_json(ctx.storage, ctx.key(XRAY), xray.model_dump(mode="json"))
+        xray_path(processed, ctx.doc_id).write_text(xray.model_dump_json(), encoding="utf-8")
     _with_pdf(ctx, lambda path: render_pages(path, out.pages_dir))
     report = run_index(processed, ctx.doc_id, docs=("rhp",))
     doc = ctx.db.get_doc(ctx.doc_id)

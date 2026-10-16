@@ -186,6 +186,20 @@ export const LAB = {
     hi: "ट्रेनिंग लेबल लोगों ने नहीं, एक बड़े ओपन मॉडल ने बनाए। केवल टेस्ट सेट हाथ से लेबल किया गया।",
   },
 
+  "labb.bench.h": { en: "FinSight Bench", hi: "FinSight बेंच" },
+  "labb.bench.shows": {
+    en: "The same questions, field lookups and red-flag checks given to each system on IPOs from after training. One run per system; scores come from files, not from this page.",
+    hi: "हर सिस्टम को ट्रेनिंग के बाद के आईपीओ पर वही सवाल, फ़ील्ड और रेड-फ़्लैग जाँच दी गई। हर सिस्टम का एक ही रन; स्कोर फ़ाइलों से आते हैं।",
+  },
+  "labb.bench.col.system": { en: "System", hi: "सिस्टम" },
+  "labb.bench.col.a": { en: "Facts found (A)", hi: "मिले तथ्य (A)" },
+  "labb.bench.col.b": { en: "Red-flag status (B)", hi: "रेड-फ़्लैग स्थिति (B)" },
+  "labb.bench.col.c": { en: "Answered (C)", hi: "जवाब सही (C)" },
+  "labb.bench.col.abstain": { en: "Refused unanswerable (C)", hi: "बिना जवाब वाले मना किए (C)" },
+  "labb.bench.note": {
+    en: "{n} IPOs, bench {v}, frozen {when}. Ranges are 95% bootstrap intervals across documents.",
+    hi: "{n} आईपीओ, बेंच {v}, फ़्रीज़ {when}। दायरे दस्तावेज़ों पर 95% बूटस्ट्रैप अंतराल हैं।",
+  },
   "labb.rw.h": { en: "Plain-English rewrites", hi: "आसान अंग्रेज़ी में दोबारा लिखना" },
   "labb.rw.shows": {
     en: "Whether the rewrites keep the meaning, how much easier they are to read, and how many the checks reject.",
