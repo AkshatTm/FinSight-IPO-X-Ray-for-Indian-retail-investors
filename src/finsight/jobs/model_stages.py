@@ -96,7 +96,7 @@ def _company(ctx: JobContext) -> str:
 def _release_gpu() -> None:
     gc.collect()
     try:
-        import torch
+        import torch  # type: ignore[import-not-found,unused-ignore]
 
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
