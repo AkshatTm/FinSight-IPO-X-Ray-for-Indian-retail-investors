@@ -34,6 +34,16 @@ profiles:
     verify: { nli: false } # turns on with P5.5
     demo_mode: false
 
+  local:
+    # The laptop app (docs/RUN_LOCALLY.md, `uv run poe app`): the C2.5 student answers and
+    # rewrites through Ollama, retrieval is BM25 plus the cross-encoder reranker (GPU when there is
+    # one, otherwise CPU with the pool capped at 10), Hindi voice runs on the CPU when the mic is used.
+    llm: { backend: ollama, model: "finsight-student:q4", num_ctx: 2048 }
+    retrieve: { dense: false, rerank: true, rerank_top_n: 20 }
+    voice: { asr: "faster-whisper-medium", idle_unload_s: 60 }
+    verify: { nli: false }
+    demo_mode: false
+
   deploy_cpu:
     # ADR-022 (pending): BM25 + small rerank + smallest LLM that passes the quality bar.
     llm: { backend: llama-cpp, model: "smallest-passing-gguf", num_ctx: 2048 }

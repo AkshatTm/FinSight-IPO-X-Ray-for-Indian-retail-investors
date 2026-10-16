@@ -66,6 +66,9 @@ export function ReportView({ doc }: { doc: Schemas["DocRecord"] }) {
           <button type="button" onClick={() => void share()} className="rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface-2">
             {copied ? t("rep.copied") : t("rep.share")}
           </button>
+          <Link href={`/ipos/${doc.doc_id}`} className="rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface-2">
+            {t("rep.workspace")}
+          </Link>
           {report.data?.companion_doc_id && (
             <Link href={`/reports/${report.data.companion_doc_id}`} className="underline underline-offset-2">
               {t("rep.companion")}

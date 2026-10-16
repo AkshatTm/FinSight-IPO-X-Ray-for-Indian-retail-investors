@@ -46,6 +46,8 @@ def build_upload_state(settings: Settings) -> UploadState:
         process_document(db, storage, settings, doc_id, job_id)
         drain.kick(doc_id)  # the top-N rewrites fill in while the reader looks at the report
 
+    for doc_id in db.docs_with_queue():  # rewrites queued before a restart carry on
+        drain.kick(doc_id)
     launcher: Launcher = InlineLauncher(work)
     return UploadState(settings, db, storage, launcher, drain)
 
