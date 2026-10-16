@@ -34,7 +34,14 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Read the units in the Colab Resources panel (before the session: 193.67) and tell Claude, so the teacher_full + gold_eval session is logged.
 - [ ] **Rate the quality-100 sheet** `data/processed/teacher/quality_sheet.csv` (~30 min): `faithful` = yes / partly / no, `category_correct` = yes / no (write the right category in `notes`). Tell Claude "quality-100 rated". CG2 = at least 85 % yes.
 
-### C2.7 extractor v2: done, one decision for you
+### Decided (nothing to do)
+- [x] **Red flags in chat: allowed** (option a, C3.7). **Extractor: v1 stays the product extractor**, v2 is a reported ablation (C2.7).
+
+### Open from C3.7 / C3.1b
+- [ ] **E7 hand-check**: `eval_results/e7_sample_dev.jsonl` and `e7_sample_test.jsonl` (20 answers each; fill `reviewed_by_akshat`).
+- [ ] **Gold v3.1 row verification** (rows added or changed after the v3 verification, C3.2/C3.7b).
+
+### C2.7 extractor v2: done, decided (v1 kept)
 - [x] Seeds for 2024+ documents come from the Rung-1 rules on the cover pages (`label_source=rules_cover_seed`, no manual labelling, no audit from you); the 10 gold-v3 / demo IPOs are excluded. Result: v2 wins on dev (F1 0.974 vs 0.949) but gold test full NVM is 0.696 vs v1 0.738 (56 values). Decision for you: keep v1 as the product extractor (recommended: no gold-test gain, rules come first) or switch to v2. Say "extractor v2 default" to switch (it is a one-line weights change plus a ladder re-run).
 
 ### C1.5 BIR backfill: done
@@ -53,8 +60,8 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] After CG2 (split + manifests already written: train 9,832 / dev 1,060): Claude runs `... dataset --username <you>`, then `push smoke`, `status`, `fetch`; if it is green, `push 13`, `42`, `2026` and `fetch` each (Claude can run these); `summary` writes E16 (must beat TF-IDF on dev).
 - [ ] **Verify gold-150** `data/gold/gold150_sheet.csv` (~45 min; 15 risks × 10 test IPOs, `category` pre-filled by Qwen3.8, the bake-off runner-up, not the teacher): correct `category` where wrong (one of the 10 listed in `src/finsight/risks/teacher.py`). Tell Claude "gold-150 verified"; Claude runs `scripts/gold_sets.py gold150`, then the 3 seeds and ONNX export.
 
-### C2.6 novelty threshold (code merged), ~30–40 min rating
-- [ ] Sheet ready (60 pairs): rate `data/gold/novelty_pairs.csv` (~30 min) (column `same_risk` = yes / no / unsure; is it the same risk, ignoring company names and numbers?), tell Claude "novelty pairs rated". Claude runs `score`, sets `novelty.tau` in `configs/risks.yaml` from `eval_results/b/novelty.json` and writes the ADR.
+### C2.6 novelty threshold: done
+- [x] Rated (60 pairs), tau 0.71, C-ADR-14. ~~Sheet ready (60 pairs): rate `data/gold/novelty_pairs.csv` (~30 min) (column `same_risk` = yes / no / unsure; is it the same risk, ignoring company names and numbers?), tell Claude "novelty pairs rated". Claude runs `score`, sets `novelty.tau` in `configs/risks.yaml` from `eval_results/b/novelty.json` and writes the ADR.~~
 
 ### C3.1 gold v3 verification: two things to record
 - [ ] While verifying gold v3, note whether **net worth and borrowings** come from the fiscal-year-end column (not a quarter or other column) and whether a **stub-period** value exists for them. Tell Claude; the extractor's column choice depends on it.
@@ -73,7 +80,7 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 
 ### Phase 2 decisions still open
 - Accept or change B-ADR-01..15 and the new C-ADR-01..11 in `docs/09_DECISIONS.md` (C-ADR-12 is accepted).
-- "Red flags in chat" guard question (C3.7) and the copy items under "Copy to approve (Phase 2)" below.
+- ("Red flags in chat" decided: allowed.) The copy items under "Copy to approve (Phase 2)" below.
 
 ## Needs a LOCAL session (Big Phase 2, history: open items moved to Phase 3)
 
