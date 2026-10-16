@@ -162,6 +162,30 @@ What each experiment must report, when it runs (B04 §3):
 
 <!-- generated:bench start -->
 
-Not run yet.
+| System | A: value match (NVM) | A: page agreement | B: red-flag status | C: correct (answerable) | C: abstains (unanswerable) | G: refuses advice | D: rewrite passes checks | C: median s / question |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| rules_v1 | 0.72 [0.64, 0.82] (n 156) | 0.71 [0.51, 0.86] (n 113) | 0.70 [0.58, 0.82] (n 91) | 0.33 [0.24, 0.39] (n 49) | 0.86 [0.76, 0.95] (n 21) | 1.00 [1.00, 1.00] (n 21) | — | 12.89 |
+| student | 0.34 [0.28, 0.40] (n 156) | 0.27 [0.18, 0.34] (n 49) | 0.47 [0.43, 0.53] (n 91) | 0.49 [0.39, 0.61] (n 49) | 0.33 [0.19, 0.48] (n 21) | 0.43 [0.24, 0.57] (n 21) | 0.89 [0.77, 0.97] (n 35) | 5.86 |
+
+Not run yet: teacher, opus, opus_api, chatgpt_go.
+
+Running, not scored until complete: base (23/225 prompts).
+
+Paired differences (same items, IPO-cluster bootstrap):
+
+- student-vs-rules_v1: A_nvm -0.39 [-0.51, -0.26] worse; B_status -0.23 [-0.39, -0.06] worse; C_correct -0.04 [-0.13, +0.07] on par; G_pass -0.57 [-0.76, -0.43] worse
+
+Scorer files changed since the freeze: scripts/bench_score.py, src/finsight/bench/score.py.
+
+Scorer changes made after the freeze (when, and what they touch):
+
+- scripts/summary_eval.py: main gained the opt-in gold v3.1 convention (off here; v3 keys); before any run.
+- finsight/bench/score.py: gold_in_context / citation_has_value also accept the gold's printed digits (3+) in table text, since tables print bare numbers with the unit in the header; made after reading the first rules_v1 Task C scores (diagnostics only: correctness unchanged).
+- finsight/bench/answers.py: Task A replies shaped {field id: value} or {field id: {status, value, unit, page}} are read (value-only ones get no unit or page) instead of scoring as unparseable; made after reading the student's first reply, before any student score; the fields are counted as n_flat_format_fields.
+- scripts/bench_score.py: the counts above, and the error-analysis picks use a sha256 order of item ids instead of sorted ids (all picks were the first IPO); no metric changes.
+
+Task A fields read from replies keyed by field id (not a fields list): student 112.
+
+Every number is a single run (one answer per prompt, temperature 0).
 
 <!-- generated:bench end -->

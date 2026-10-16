@@ -62,14 +62,17 @@ MONEY_KEYS = {"revenue", "profit_after_tax", "operating_cash_flow", "total_borro
               "litigation_amount_total"}  # fmt: skip
 
 
-# Scorer changes made after the freeze and before any score was read; each applies to every system.
+# Scorer changes made after the freeze; each applies to every system, and when it was made is said.
 POST_FREEZE_CHANGES = [
-    "scripts/summary_eval.py: main gained the opt-in gold v3.1 convention (off here; v3 keys).",
+    "scripts/summary_eval.py: main gained the opt-in gold v3.1 convention (off here; v3 keys); "
+    "before any run.",
     "finsight/bench/score.py: gold_in_context / citation_has_value also accept the gold's printed "
-    "digits (3+) in table text, since tables print bare numbers with the unit in the header.",
+    "digits (3+) in table text, since tables print bare numbers with the unit in the header; made "
+    "after reading the first rules_v1 Task C scores (diagnostics only: correctness unchanged).",
     "finsight/bench/answers.py: Task A replies shaped {field id: value} or {field id: {status, "
     "value, unit, page}} are read (value-only ones get no unit or page) instead of scoring as "
-    "unparseable; the fields are counted as n_flat_format_fields.",
+    "unparseable; made after reading the student's first reply, before any student score; the "
+    "fields are counted as n_flat_format_fields.",
     "scripts/bench_score.py: the counts above, and the error-analysis picks use a sha256 order of "
     "item ids instead of sorted ids (all picks were the first IPO); no metric changes.",
 ]
@@ -371,10 +374,15 @@ def main() -> int:
     summaries: dict[str, Any] = {}
     all_rows: dict[str, dict[str, list]] = {}
     pending = []
+    incomplete: dict[str, str] = {}
     for system in SYSTEMS:
         answers = _jsonl(BENCH / "answers" / system / "answers.jsonl")
         if not answers:
             pending.append(system)
+            continue
+        done = sum(a.get("error") is None for a in answers)
+        if system != "rules_v1" and done < len(ctx["prompts"]):  # a partial run is not scored
+            incomplete[system] = f"{done}/{len(ctx['prompts'])}"
             continue
         rows_a, rows_b = task_a_b(system, answers, ctx)
         rows = {"A": rows_a, "B": rows_b, **task_c_d_g(system, answers, ctx)}
@@ -412,6 +420,7 @@ def main() -> int:
         "systems": summaries,
         "comparisons": comparisons,
         "pending_systems": pending,
+        "incomplete_systems": incomplete,
         "scorer_changed_since_freeze": sorted(
             f for f, h in drift.items() if frozen_scorer.get(f) not in (None, h)
         ),
@@ -423,7 +432,8 @@ def main() -> int:
     (OUT / "bench_failures.json").write_text(
         json.dumps(failures(all_rows), indent=1, ensure_ascii=False, default=str) + "\n",
         encoding="utf-8", newline="\n")  # fmt: skip
-    print(f"scored {', '.join(summaries)}; pending {', '.join(pending) or 'none'}")
+    part = ", ".join(f"{s} {n}" for s, n in incomplete.items()) or "none"
+    print(f"scored {', '.join(summaries)}; pending {', '.join(pending) or 'none'}; partial {part}")
     return 0
 
 

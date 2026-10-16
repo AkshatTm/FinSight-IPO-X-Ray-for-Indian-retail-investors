@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -92,8 +93,12 @@ def test_failures_pick_round_robin() -> None:
         "s2": {"A": [], "C": [{"item_id": "c1", "correct": False}], "G": [], "D": [], "B": []},
     }  # fmt: skip
     picked = bench_score.failures(rows, n=3)
+    first, second = sorted(
+        (f"a{i}" for i in range(5)), key=lambda x: hashlib.sha256(x.encode()).hexdigest()
+    )[:2]  # a fixed shuffle, the same on every run
     assert [(p["system"], p["item_id"]) for p in picked] == [
-        ("s1", "a0"),
+        ("s1", first),
         ("s2", "c1"),
-        ("s1", "a1"),
+        ("s1", second),
     ]
+    assert bench_score.failures(rows, n=3) == picked

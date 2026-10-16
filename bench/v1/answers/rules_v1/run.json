@@ -1,0 +1,39 @@
+[
+  {
+    "system": "rules_v1",
+    "model": "qwen3.5:2b",
+    "ollama_digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+    "git_sha": "057931c34d6113e048486e27e8e703b4b06fa470",
+    "bench_version": "v1",
+    "bench_frozen": true,
+    "tasks": "ACDG",
+    "temperature": 0.0,
+    "num_ctx": 2048,
+    "think": false,
+    "hardware": "laptop: RTX 2050 4 GB, 16 GB RAM, Ollama",
+    "started_utc": "2026-10-16T11:16:09Z",
+    "ended_utc": "2026-10-16T11:33:28Z",
+    "wall_seconds": 1038.4,
+    "single_run": true
+  },
+  {
+    "system": "rules_v1",
+    "model": "qwen3.5:2b",
+    "ollama_digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+    "git_sha": "057931c34d6113e048486e27e8e703b4b06fa470",
+    "bench_version": "v1",
+    "bench_frozen": true,
+    "tasks": "CG",
+    "temperature": 0.0,
+    "num_ctx": 2048,
+    "think": false,
+    "hardware": "laptop: RTX 2050 4 GB, 16 GB RAM, Ollama",
+    "started_utc": "2026-10-16T11:33:36Z",
+    "ended_utc": "2026-10-16T11:33:51Z",
+    "wall_seconds": 14.5,
+    "single_run": true,
+    "retried_after_error": [
+      "C:groww-2025:a1"
+    ]
+  }
+]
