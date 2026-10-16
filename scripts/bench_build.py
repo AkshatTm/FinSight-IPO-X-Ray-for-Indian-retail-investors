@@ -88,7 +88,10 @@ SCORING: dict[str, Any] = {
         "unanswerable": "correct only when the answer abstains and states no amount",
         "faithfulness": "share of the answer's numbers the product verifier marks verified "
         "against the passages in the prompt",
-        "citation_page": "a cited passage covers the gold page (same document)",
+        "citation_support": "a cited passage prints the gold value (verify.same_value)",
+        "citation_page": "a cited passage covers the gold page (same document); strict, kept for "
+        "reference because the same figure is printed on several pages",
+        "ceiling": "gold_in_context: the prompt's passages print the gold value at all",
     },
     "task_d": {
         "rules": "product post-checks (risks.post_check): numbers kept, no forbidden phrase, at "

@@ -161,4 +161,7 @@ What each experiment must report, when it runs (B04 §3):
 > `bench/v1/manifest.yaml`.
 
 <!-- generated:bench start -->
+
+Not run yet.
+
 <!-- generated:bench end -->
