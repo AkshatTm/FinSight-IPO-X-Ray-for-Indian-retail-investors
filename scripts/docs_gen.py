@@ -452,6 +452,46 @@ def _ladder_block(rung: str) -> str:
     return "".join(rows)
 
 
+def _extractor_v2_block() -> str:
+    """C2.7: v1 and v2 side by side on the v3 dev rows, then the gold ladder (reporting only)."""
+    cmp = _load("c/extractor_v1_on_v3dev.json")
+    base = _load("c/extractor_v2/extractor_baseline.json")
+    s = cmp["summary"]
+    rows = [
+        f"v3 dev rows: {cmp['n_dev']} questions from IPOs neither version trained on "
+        "(the labels there are rule-derived `rules_cover_seed` values, so this measures agreement "
+        "with the rules, not human-checked accuracy). Mean ± std over 3 seeds.\n\n",
+        "| Model | EM | F1 | Has-answer F1 | No-answer acc |\n| --- | --- | --- | --- | --- |\n",
+        f"| Pretrained, no fine-tuning | {base['EM']:.3f} | {base['F1']:.3f} | "
+        f"{base['HasAns_F1']:.3f} | {base['NoAns_acc']:.3f} |\n",
+    ]
+    for tag, label in (
+        ("v1_on_v3_dev", "v1 (2009-2023 weak labels)"),
+        ("v2_on_v3_dev", "**v2 (+2024+ cover seeds)**"),
+    ):
+        cells = " | ".join(
+            f"{s[tag][n]['mean']:.3f} ± {s[tag][n]['std']:.3f}"
+            for n in ("EM", "F1", "HasAns_F1", "NoAns_acc")
+        )
+        rows.append(f"| {label} | {cells} |\n")
+    gold = [
+        "\n| Gold ladder (10 IPOs, mean over seeds) | Split | Full NVM | Body-only NVM |\n| --- | --- | --- | --- |\n"
+    ]
+    for name, label in (("qa_finetuned", "v1"), ("qa_finetuned_v2", "v2")):
+        files = sorted(glob.glob(str(EVAL / "ladder" / f"{name}_seed*.json")))
+        if name == "qa_finetuned":
+            files = [f for f in files if "_v2_" not in f]
+        runs = [json.loads(Path(f).read_text(encoding="utf-8")) for f in files]
+        for split in ("dev", "test"):
+            if runs:
+                full = sum(r["metrics"][split]["full"]["nvm"] for r in runs) / len(runs)
+                body = sum(r["metrics"][split]["body_only"]["nvm"] for r in runs) / len(runs)
+                gold.append(
+                    f"| {label} ({len(runs)} seeds) | {split} | {full:.3f} | {body:.3f} |\n"
+                )
+    return "".join(rows + gold)
+
+
 def _ci(pair: list[float]) -> str:
     return f"[{pair[0]:.2f}, {pair[1]:.2f}]"
 
@@ -779,6 +819,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
         ),
         "ladder": lambda: _ladder_block("qa_finetuned"),
         "failures": lambda: _failures_block("qa_finetuned"),
+        "v2": _extractor_v2_block,
     },
     "docs/model_cards/bilstm_crf.md": {
         "training": lambda: _training_block(

@@ -68,8 +68,9 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 - [x] **C2.3b Teacher data clean-up** · 💻 L · S · Needs: CG2
   Strict number filter (scale/unit and sign vs the source) over the kept rows; deterministic category remap for the themes quality-100 found inconsistent + one rule per theme in the teacher category guide; non-risk title count; seriousness distribution (4 + 5 → "severe" if level 5 < ~100).
   *Status:* done: `finsight.risks.teacher_cleanup`, `configs/category_remap.yaml`, `eval_results/c/teacher_cleanup_report.json`. 10,891 of 10,892 pairs kept, 799 categories remapped, 22 non-risk titles, severe band = 488 (level 5 has 17).
-- [ ] **C2.7 Extractor v2** · 💻 L + 🔵 K · S · Needs: CG1 (runs in parallel with C2.2–C2.3)
+- [x] **C2.7 Extractor v2** · 💻 L + 🔵 K · S · Needs: CG1 (runs in parallel with C2.2–C2.3)
   Weak labels over `train` incl. 2024+ (wires `weaklabel` to manifests); Kaggle 3 seeds; ladder row `qa_finetuned_v2`; keep only if it wins on dev.
+  *Result:* seeds for 2024+ come from the Rung-1 rules on cover pages (`rules_cover_seed`, no manual labels); 9,315 train examples / 412 IPOs. Dev (52 IPOs neither version saw, rule-derived labels): F1 0.974 vs v1 0.949, EM 0.964 vs 0.936 (3 seeds each, spread ≤ 0.003). Gold ladder (reporting row, test-informed): full NVM dev 0.639 vs 0.611, **test 0.696 vs 0.738** (56 values, 7 IPOs). v2 wins on dev so it is kept as `models/extractor_v2/`, but the product default stays v1 (no gold-test gain, rules come first) until Akshat decides. Numbers: `docs/model_cards/extractor_qa.md`.
 
 **CG2:** teacher output accepted (≥ 85 % "same meaning: yes" on quality-100) · datasheet updated.
 

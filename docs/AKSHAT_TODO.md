@@ -34,8 +34,8 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Read the units in the Colab Resources panel (before the session: 193.67) and tell Claude, so the teacher_full + gold_eval session is logged.
 - [ ] **Rate the quality-100 sheet** `data/processed/teacher/quality_sheet.csv` (~30 min): `faithful` = yes / partly / no, `category_correct` = yes / no (write the right category in `notes`). Tell Claude "quality-100 rated". CG2 = at least 85 % yes.
 
-### C2.7 extractor v2: decided, running on Kaggle
-- [x] Seeds for 2024+ documents come from the Rung-1 rules on the cover pages (`label_source=rules_cover_seed`, no manual labelling, no audit from you); the 10 gold-v3 / demo IPOs are excluded. Nothing for you to do; the v2-vs-v1 comparison is reported even if v2 is not better.
+### C2.7 extractor v2: done, one decision for you
+- [x] Seeds for 2024+ documents come from the Rung-1 rules on the cover pages (`label_source=rules_cover_seed`, no manual labelling, no audit from you); the 10 gold-v3 / demo IPOs are excluded. Result: v2 wins on dev (F1 0.974 vs 0.949) but gold test full NVM is 0.696 vs v1 0.738 (56 values). Decision for you: keep v1 as the product extractor (recommended: no gold-test gain, rules come first) or switch to v2. Say "extractor v2 default" to switch (it is a one-line weights change plus a ladder re-run).
 
 ### C1.5 BIR backfill: done
 - [x] Backfilled the live direct PDFs: 0 → 40 files (340 MB) in `data/raw/bir_backfill/` (gitignored, read by nothing yet; 48 links answered, 40 distinct `mapping_key`s). No split or eval set changed. Resolving the 780 HTML filing pages to PDFs is still open and optional.
