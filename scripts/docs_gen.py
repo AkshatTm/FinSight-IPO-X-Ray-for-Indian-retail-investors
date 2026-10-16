@@ -840,6 +840,9 @@ def _bench_block() -> str:
         out.append(f"| {name} | {row} | {'—' if lat is None else lat} |\n")
     if data.get("pending_systems"):
         out.append(f"\nNot run yet: {', '.join(data['pending_systems'])}.\n")
+    if data.get("incomplete_systems"):
+        part = ", ".join(f"{s} ({n} prompts)" for s, n in data["incomplete_systems"].items())
+        out.append(f"\nRunning, not scored until complete: {part}.\n")
     comps = []
     for pair, metrics in sorted(data.get("comparisons", {}).items()):
         parts = [
@@ -855,7 +858,7 @@ def _bench_block() -> str:
         changed = ", ".join(data["scorer_changed_since_freeze"])
         out.append(f"\nScorer files changed since the freeze: {changed}.\n")
     if data.get("post_freeze_scorer_changes"):
-        out.append("\nChanges made after the freeze, before any score was read:\n\n")
+        out.append("\nScorer changes made after the freeze (when, and what they touch):\n\n")
         out += [f"- {_esc(c)}\n" for c in data["post_freeze_scorer_changes"]]
     flat = {n: s["A"].get("n_flat_format_fields") for n, s in data["systems"].items()}
     if any(flat.values()):
