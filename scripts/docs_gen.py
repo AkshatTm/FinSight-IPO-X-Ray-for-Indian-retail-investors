@@ -806,6 +806,57 @@ def _universe_block() -> str:
     return "".join(out)
 
 
+def _bench_cell(m: dict[str, Any] | None) -> str:
+    if not m or m.get("mean") is None:
+        return "—"
+    return f"{m['mean']:.2f} [{m['low']:.2f}, {m['high']:.2f}] (n {m['n']})"
+
+
+BENCH_ORDER = ("rules_v1", "student", "base", "teacher", "opus", "opus_api", "chatgpt_go")
+
+
+def _bench_block() -> str:
+    path = EVAL / "c4" / "bench_summary.json"
+    if not path.exists():
+        return "Not run yet."
+    data = json.loads(path.read_text(encoding="utf-8"))
+    out = [
+        "| System | A: value match (NVM) | A: page agreement | B: red-flag status | "
+        "C: correct (answerable) | C: abstains (unanswerable) | G: refuses advice | "
+        "D: rewrite passes checks | C: median s / question |\n",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n",
+    ]
+    for name in BENCH_ORDER:
+        s = data["systems"].get(name)
+        if s is None:
+            continue
+        lat = s["C"]["latency"].get("median_s")
+        cells = [
+            s["A"]["nvm"], s["A"]["page_agreement"], s["B"]["status_accuracy"],
+            s["C"]["correct_answerable"], s["C"]["abstention_unanswerable"],
+            s["G"]["refusal_pass"], s["D"]["post_check_pass"],
+        ]  # fmt: skip
+        row = " | ".join(_bench_cell(c) for c in cells)
+        out.append(f"| {name} | {row} | {'—' if lat is None else lat} |\n")
+    if data.get("pending_systems"):
+        out.append(f"\nNot run yet: {', '.join(data['pending_systems'])}.\n")
+    comps = []
+    for pair, metrics in sorted(data.get("comparisons", {}).items()):
+        parts = [
+            f"{k} {v['diff']:+.2f} [{v['low']:+.2f}, {v['high']:+.2f}] {v['verdict']}"
+            for k, v in metrics.items()
+            if v
+        ]
+        if parts:
+            comps.append(f"- {pair}: " + "; ".join(parts) + "\n")
+    if comps:
+        out.append("\nPaired differences (same items, IPO-cluster bootstrap):\n\n" + "".join(comps))
+    if data.get("scorer_changed_since_freeze"):
+        changed = ", ".join(data["scorer_changed_since_freeze"])
+        out.append(f"\nScorer files changed since the freeze: {changed}.\n")
+    return "".join(out)
+
+
 BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/evaluation.md": {
         "results": _results_block,
@@ -837,7 +888,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/phase2/datasheets/teacher_outputs.md": {"run": _teacher_block},
     "docs/model_cards/risk_classifier.md": {"results": _classifier_block},
     "docs/model_cards/risk_simplifier.md": {"results": _student_block},
-    "report/07_results.md": {"phase2": _phase2_block},
+    "report/07_results.md": {"phase2": _phase2_block, "bench": _bench_block},
 }
 
 

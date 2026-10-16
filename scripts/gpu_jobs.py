@@ -92,6 +92,17 @@ JOBS: dict[str, Job] = {
         target_from="risks.jsonl",
         single_raw_copy="data/processed/teacher/raw.jsonl",
     ),
+    "bench_teacher": Job(  # C4.1: the teacher on the frozen bench prompts (bench_vllm_job.py)
+        name="bench_teacher",
+        notebook="",
+        inputs={
+            "bench/v1/inputs/prompts.jsonl.gz": "prompts.jsonl.gz",
+            "scripts/bench_vllm_job.py": "bench_vllm_job.py",
+        },
+        outputs={"raw_*.jsonl": "data/processed/bench_teacher/"},
+        summary="eval_results/c4/bench_teacher_run_summary.json",
+        single_raw_copy="bench/v1/answers/teacher/answers.jsonl",
+    ),
     "gold_eval": Job(
         name="gold_eval",
         notebook="c2_teacher.ipynb",

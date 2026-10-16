@@ -19,9 +19,17 @@ from finsight.risks.filters import FilterReport, Kept, TeacherItem, check_one, f
 from finsight.risks.hedging import hedge_count, hedging
 from finsight.risks.novelty import NoveltyResult, embed_text, novelty, unusualness_label
 from finsight.risks.numbers import risk_numbers
+from finsight.risks.readability import fkgl
 from finsight.risks.segment import RiskSpan, segment_pages, segment_text, to_risks
 from finsight.risks.seriousness import ranked_rids, score_risks
-from finsight.risks.simplify import Rewrite, Simplifier, make_simplifier, post_check
+from finsight.risks.simplify import (
+    Rewrite,
+    Simplifier,
+    make_simplifier,
+    post_check,
+    student_prompt,
+)
+from finsight.risks.simplify import clean as clean_rewrite
 from finsight.risks.teacher import (
     CATEGORIES,
     OUTPUT_SCHEMA,
@@ -53,9 +61,11 @@ __all__ = [
     "add_features",
     "certainty_changed",
     "check_one",
+    "clean_rewrite",
     "company_key",
     "embed_text",
     "filter_outputs",
+    "fkgl",
     "hedge_count",
     "hedging",
     "load_bank",
@@ -73,6 +83,7 @@ __all__ = [
     "segment_pages",
     "segment_text",
     "split_by_company",
+    "student_prompt",
     "to_risks",
     "unmatched_numbers",
     "unusualness_label",
