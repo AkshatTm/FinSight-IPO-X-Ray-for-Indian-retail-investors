@@ -21,6 +21,7 @@ from typing import Any
 
 import yaml
 
+from finsight.compare.metrics import compare_metrics
 from finsight.core.config import project_root
 from finsight.core.schemas import (
     BBox,
@@ -203,7 +204,8 @@ def percentiles(
                 metric=metric,
                 value=v,
                 percentile=percentile(v, quantiles),
-                corpus_n=int(cfg["corpus_n"]),
+                # each metric has its own n: a price or a P/E is often still [●] in an RHP
+                corpus_n=int((cfg.get("metric_n") or {}).get(metric, cfg["corpus_n"])),
             )
         )
     return out
@@ -254,6 +256,7 @@ __all__ = [
     "build",
     "cell_number",
     "compare",
+    "compare_metrics",
     "issuer_pe",
     "load_config",
     "peer_median_pe",
