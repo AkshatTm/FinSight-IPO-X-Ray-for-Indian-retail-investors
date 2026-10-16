@@ -1,6 +1,6 @@
 """The upload pipeline's stages (B02 §3.1): ``validated``, ``detected``, ``parsed``, ``sections``,
-``financials``, ``redflags`` and ``risks_split`` so far; later parts append facts, risk
-scoring, risk level, simplify, index and compare to ``upload_stages``.
+``financials``, ``redflags`` and ``risks_split`` so far; later parts append risk
+scoring, risk level, simplify and index to ``upload_stages``.
 
 Stages hand their results to later ones through ``ctx.scratch``; on a retry a cached stage is
 skipped, so later stages read its stored output instead (``_parsed_doc``, ``_sections``).
@@ -9,12 +9,17 @@ skipped, so later stages read its stored output instead (``_parsed_doc``, ``_sec
 from __future__ import annotations
 
 import tempfile
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 from pydantic import TypeAdapter
 
-from finsight.core.schemas import SUMMARY_HAS_VALUE, ParsedDoc, Section
+from finsight.compare import build as compare_build
+from finsight.compare import compare_metrics
+from finsight.compare import load_config as load_compare_config
+from finsight.core.schemas import SUMMARY_HAS_VALUE, FinancialSummary, ParsedDoc, Section, XRay
+from finsight.extract import upload_xray
 from finsight.ingest import validate_pdf
 from finsight.jobs.runner import JobContext, Stage, StageRejected
 from finsight.parse import extract_tables, find_sections, parse_pdf, pymupdf_backend
@@ -123,6 +128,51 @@ def _financials(ctx: JobContext) -> dict[str, Any]:
     }
 
 
+XRAY = "xray.json"
+COMPARE = "compare.json"
+
+
+def _facts(ctx: JobContext) -> dict[str, Any]:
+    """The fact sheet of the upload (rules + Objects table): offer price, issue split, size."""
+    parsed, sections = _parsed_doc(ctx), _sections(ctx)
+    tables = _with_pdf(
+        ctx,
+        lambda path: extract_tables(
+            path, parsed, sections, backend=pymupdf_backend, section_ids=("objects_of_the_offer",)
+        ),
+    )
+    doc = ctx.db.get_doc(ctx.doc_id)
+    company = (doc.company if doc else None) or ctx.doc_id
+    xray = upload_xray(parsed, sections, tables, ctx.doc_id, company)
+    put_json(ctx.storage, ctx.key(XRAY), xray.model_dump(mode="json"))
+    return {
+        "ready": True,
+        "fields": len(xray.fields),
+        "with_value": sum(f.chosen is not None for f in xray.fields),
+    }
+
+
+def _compare(ctx: JobContext) -> dict[str, Any]:
+    """Peers and where the issue sits among past IPOs (``configs/compare.yaml``)."""
+    summary = FinancialSummary.model_validate_json(ctx.storage.get_bytes(ctx.key(SUMMARY_FILE)))
+    if ctx.storage.exists(ctx.key(XRAY)):
+        xray = XRay.model_validate_json(ctx.storage.get_bytes(ctx.key(XRAY)))
+    else:  # the facts stage failed: peers and the P/E still compare, the rest is left out
+        xray = XRay(
+            ipo_id=ctx.doc_id, company="", built_at=datetime.now(UTC), fields=[], derived={}
+        )
+    metrics, price = compare_metrics(xray, summary)
+    result = compare_build(
+        ctx.storage, ctx.doc_id, summary.peers, metrics, price, load_compare_config()
+    )
+    return {
+        "ready": True,
+        "peers": len(result.peers),
+        "percentiles": [p.metric for p in result.percentiles],
+        "provisional": result.provisional,
+    }
+
+
 def _redflags(ctx: JobContext) -> dict[str, Any]:
     flags = build_redflags(ctx.storage, ctx.doc_id, _parsed_doc(ctx), _sections(ctx))
     by_status: dict[str, int] = {}
@@ -158,7 +208,9 @@ def upload_stages() -> list[Stage]:
         Stage("detected", _detected, output=None, requires=("validated",), critical=True),
         Stage("parsed", _parsed, output=PARSED, requires=("detected",), critical=True),
         Stage("sections", _sections_stage, output=SECTIONS, requires=("parsed",)),
+        Stage("facts", _facts, output=XRAY, requires=("sections",)),
         Stage("financials", _financials, output=SUMMARY_FILE, requires=("sections",)),
         Stage("redflags", _redflags, output=REDFLAGS_FILE, requires=("financials",)),
+        Stage("compare", _compare, output=COMPARE, requires=("financials",)),
         Stage("risks_split", _risks_split, output=RISKS_FILE, requires=("sections",)),
     ]

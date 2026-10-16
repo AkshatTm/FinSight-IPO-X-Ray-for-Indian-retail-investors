@@ -17,6 +17,7 @@ from finsight.extract.rules import COVER_PAGES, RulesExtractor
 from finsight.extract.select import Selection, same_value, select_field
 from finsight.extract.table import TableExtractor, objects_pure_ofs
 from finsight.extract.tokens import tokenize
+from finsight.extract.upload import upload_xray
 from finsight.extract.xray import DocInputs, build_xray
 
 __all__ = [
@@ -48,5 +49,6 @@ __all__ = [
     "select_field",
     "sentence_around",
     "tokenize",
+    "upload_xray",
     "weights_dir",
 ]

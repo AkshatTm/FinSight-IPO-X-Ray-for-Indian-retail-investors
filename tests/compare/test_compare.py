@@ -155,14 +155,18 @@ def test_compare_fills_issuer_pe_and_its_percentile(tmp_path: Path) -> None:
     assert saved["peers"][0]["pe"] == "20.66"
 
 
-def test_shipped_config_is_provisional_and_complete() -> None:
-    cfg = load_config()
-    assert cfg["provisional"] is True  # until the corpus run (B3.2b) replaces the placeholders
-    assert cfg["corpus_n"] == 0
-    for metric in ("issue_size_inr", "ofs_share", "insider_price_gap", "pe"):
-        q = cfg["reference_quantiles"][metric]
+def test_shipped_config_comes_from_the_window_run() -> None:
+    cfg = load_config()  # written by scripts/compare_reference.py (C3.4), never typed
+    assert cfg["corpus_n"] > 0
+    assert cfg["computed_on"]
+    assert set(cfg["metric_n"]) == {"issue_size_inr", "ofs_share", "insider_price_gap", "pe"}
+    assert cfg["reference_quantiles"], "at least one metric has enough values"
+    for metric, q in cfg["reference_quantiles"].items():
         assert len(q) == 11
         assert q == sorted(q)
+        assert cfg["metric_n"][metric] >= 20  # a metric below min_n is absent, not guessed
+    # provisional while any of the four metrics is missing
+    assert cfg["provisional"] is (len(cfg["reference_quantiles"]) < 4)
 
 
 def test_empty_compare() -> None:

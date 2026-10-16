@@ -227,6 +227,12 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
     assert {v["status"] for v in summary["revenue"]} == {"not_found"}
     assert (summary["litigation"], summary["peers"], summary["auditor_remarks"]) == ({}, [], [])
     assert ends["parsed"] == {"pages_done": 5, "pages_total": 5}
+    # facts: the synthetic RHP names no offer price, so nothing selects a value; compare still runs
+    assert ends["facts"]["ready"] is True
+    xray = get_json(storage, doc_key(doc_id, "xray.json"))
+    assert xray["ipo_id"] == doc_id
+    assert ends["compare"]["ready"] is True
+    assert get_json(storage, doc_key(doc_id, "compare.json"))["peers"] == []
 
     # A retry finds every output cached and does no work (scratch is empty in a new job).
     again = db.create_job(doc_id)
@@ -238,7 +244,9 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         for e in db.events_after(again.job_id)
         if e.data.get("detail") == {"cached": True}
     ]
-    assert cached == ["parsed", "sections", "financials", "redflags", "risks_split"]
+    assert cached == [
+        "parsed", "sections", "facts", "financials", "redflags", "compare", "risks_split"
+    ]  # fmt: skip
 
 
 def test_risks_split_reads_stored_outputs_when_earlier_stages_were_cached(
