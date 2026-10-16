@@ -20,6 +20,7 @@ from finsight.core.schemas import (
     Money,
     PageEvidence,
     Peer,
+    Placeholder,
     RedFlags,
     SummaryValue,
     XRay,
@@ -267,3 +268,57 @@ def test_every_showcase_ipo_has_doc_ids_for_the_evidence() -> None:
     docs = script.doc_ids_by_ipo()
     assert len(docs) == 10
     assert all(ids.get("rhp", "").startswith("doc_") for ids in docs.values())
+
+
+def _offer_field(field_id: str, docs_values: list[tuple[str, Any]]) -> FieldResult:
+    cands = [
+        Candidate(
+            field_id=field_id,
+            extractor="rules",
+            doc_type=doc,
+            raw=str(v),
+            value=v,
+            page=3,
+            score=1.0,
+        )
+        for doc, v in docs_values
+    ]
+    return FieldResult(
+        field_id=field_id, chosen=cands[0], candidates=cands, verdict="verified",
+        reason_code="verified", reason="", checks=[],
+    )  # fmt: skip
+
+
+def _summary_for_offer() -> FinancialSummary:
+    return FinancialSummary(doc_id=DOC, built_at=datetime.now(UTC))
+
+
+def test_rf04_ofs_placeholder_is_unknown_not_zero() -> None:
+    """A mostly-OFS RHP prints ₹[●] for the sale amount; it must not read as 0% OFS ("ok")."""
+    blank = Placeholder(raw="[●]")
+    fields = [
+        _offer_field("fresh_issue_size", [("rhp", parse_amount("₹ 1,000 million"))]),
+        _offer_field("ofs_amount", [("rhp", blank)]),
+    ]
+    xray = XRay(ipo_id=DOC, company="Acme", built_at=datetime.now(UTC), fields=fields, derived={})
+    x = inputs_from_summary(_summary_for_offer(), xray)
+    assert x.ofs_blank
+    assert x.ofs_amount is None
+    status, sentence = {f.id: (f.status, f.sentence) for f in evaluate(x).flags}["RF04"]
+    assert status == "not_available"
+    assert "[●]" in sentence
+
+
+def test_offer_values_prefer_the_prospectus_when_both_documents_have_them() -> None:
+    fields = [
+        _offer_field("fresh_issue_size", [("rhp", parse_amount("₹ 500 million"))]),
+        _offer_field(
+            "ofs_amount",
+            [("rhp", Placeholder(raw="[●]")), ("prospectus", parse_amount("₹ 9,000 million"))],
+        ),
+    ]
+    xray = XRay(ipo_id=DOC, company="Acme", built_at=datetime.now(UTC), fields=fields, derived={})
+    x = inputs_from_summary(_summary_for_offer(), xray)
+    assert not x.ofs_blank
+    assert x.ofs_amount is not None
+    assert {f.id: f.status for f in evaluate(x).flags}["RF04"] == "concern"  # 94 % to sellers
