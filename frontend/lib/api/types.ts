@@ -1123,6 +1123,8 @@ export interface components {
              * @enum {string}
              */
             xray_status: "ready" | "building" | "missing";
+            /** Report Doc Id */
+            report_doc_id?: string | null;
         };
         /**
          * Job

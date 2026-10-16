@@ -82,6 +82,11 @@ export function IpoRow({ ipo }: { ipo: Ipo }) {
         <FreshOfsBar ipo={ipo} />
         <p className="text-sm text-muted md:text-right">{t("lib.pages", { n: ipo.rhp_pages })}</p>
       </Link>
+      {ipo.report_doc_id && (
+        <Link href={`/reports/${ipo.report_doc_id}`} className="absolute bottom-2 right-2 rounded-full border border-rule px-3 py-0.5 text-xs hover:bg-surface-2">
+          {t("lib.report")}
+        </Link>
+      )}
       {peek && (
         <div
           aria-hidden

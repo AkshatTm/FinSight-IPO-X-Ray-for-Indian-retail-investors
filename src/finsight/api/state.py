@@ -133,7 +133,11 @@ def get_state() -> AppState:
     settings = get_settings()
     return AppState(
         settings=settings,
-        store=IpoStore(settings.paths.processed_dir, load_fields()),
+        store=IpoStore(
+            settings.paths.processed_dir,
+            load_fields(),
+            settings.root / settings.storage.local_dir / "docs",
+        ),
         traces=TraceStore(settings.paths.data_dir / "traces.sqlite"),
         demo=DemoCache(settings.paths.data_dir / "demo_cache"),
     )
