@@ -7,9 +7,14 @@ from dataclasses import dataclass
 from typing import Literal
 
 from finsight.core.config import get_settings
-from finsight.guard.advice import AdviceCheck, check_advice, normalize_question
+from finsight.guard.advice import (
+    AdviceCheck,
+    check_advice,
+    is_red_flag_question,
+    normalize_question,
+)
 from finsight.guard.clf import Scorer, load_scorer
-from finsight.guard.facts import Fact, facts_payload, refusal_text
+from finsight.guard.facts import SEBI_NOTE, Fact, facts_payload, refusal_text
 from finsight.guard.phrases import PhraseHit, find_forbidden, is_clean, load_phrases
 from finsight.guard.privacy import OutputCheck, PrivacyCheck, check_output, check_privacy
 
@@ -59,6 +64,7 @@ def check_question(question: str, scorer: Scorer | None = None) -> GuardResult:
 
 
 __all__ = [
+    "SEBI_NOTE",
     "AdviceCheck",
     "Fact",
     "GuardResult",
@@ -72,6 +78,7 @@ __all__ = [
     "facts_payload",
     "find_forbidden",
     "is_clean",
+    "is_red_flag_question",
     "load_phrases",
     "normalize_question",
     "refusal_text",
