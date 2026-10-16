@@ -1,0 +1,16 @@
+{
+ "n_dev": 2471,
+ "n_answerable": 985,
+ "n_unanswerable": 1486,
+ "HasAns_EM": 0.550253807106599,
+ "HasAns_F1": 0.6903955539081861,
+ "NoAns_acc": 0.8351278600269179,
+ "EM": 0.7215702144880615,
+ "F1": 0.7774340836096978,
+ "model": "deepset/deberta-v3-base-squad2",
+ "zero_shot": true,
+ "slice": null,
+ "max_len": 384,
+ "stride": 128,
+ "max_answer_tokens": 128
+}
