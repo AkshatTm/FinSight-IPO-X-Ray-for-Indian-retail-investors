@@ -56,6 +56,8 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `operating_cash_flow` | `list[SummaryValue]` | `[]` |
 | `total_borrowings` | `SummaryValue \| None` | — |
 | `net_worth` | `SummaryValue \| None` | — |
+| `total_borrowings_stub` | `SummaryValue \| None` | — |
+| `net_worth_stub` | `SummaryValue \| None` | — |
 | `waca` | `list[SummaryValue]` | `[]` |
 | `litigation` | `dict[str, SummaryValue]` | `{}` |
 | `rpt_total` | `SummaryValue \| None` | — |
@@ -77,7 +79,7 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `value` | `Union[Money \| Count \| Percent \| Placeholder \| Range, str, NoneType]` | — |
 | `period` | `str \| None` | — |
 | `evidence` | `PageEvidence \| None` | — |
-| `status` | `Literal['found', 'placeholder', 'not_found']` | `not_found` |
+| `status` | `Literal['found', 'stated_zero', 'placeholder', 'not_found']` | `not_found` |
 
 ## Red flag (`RedFlag`, inside `redflags.json`)
 
@@ -97,6 +99,7 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | Field | Type | Default |
 | --- | --- | --- |
 | `flags` | `list[RedFlag]` | `[]` |
+| `severe_overrides` | `list[SevereOverride]` | `[]` |
 | `financial_company` | `bool` | false |
 | `thresholds_version` | `str` | `""` |
 
@@ -138,13 +141,14 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `corpus_n` | `int` | required |
 | `provisional` | `bool` | required |
 | `behind_click` | `bool` | required |
+| `forced_by` | `list[str]` | `[]` |
 | `disclaimer_key` | `str` | `risklevel.disclaimer` |
 
 ## Reason behind the level (`RiskLevelReason`)
 
 | Field | Type | Default |
 | --- | --- | --- |
-| `source` | `Literal['redflag', 'risk']` | required |
+| `source` | `Literal['redflag', 'risk', 'override']` | required |
 | `id` | `str` | required |
 | `label` | `str` | required |
 | `points` | `int` | required |
@@ -201,6 +205,7 @@ Rows exclude the CSV header. Labels written with AI help carry `label_source`.
 
 | File | Rows | Columns |
 | --- | --- | --- |
+| `gold150.jsonl` | 150 | `risk_id`, `company`, `text`, `label`, `band` |
 | `gold_prefill.jsonl` | 110 | `ipo_id`, `field_id`, `doc`, `value_raw`, `page`, `quote`, `status`, `labelled_at`, `notes` |
 | `gold_template.jsonl` | 110 | `ipo_id`, `field_id`, `doc`, `value_raw`, `page`, `quote`, `status`, `labelled_at`, `notes` |
 | `gold_v3_template.jsonl` | 270 | `ipo_id`, `key`, `period`, `doc`, `expected_section`, `red_flags`, `value_raw`, `unit`, `page`, `quote`, `status`, `label_source`, `changed_by_akshat`, `labelled_at`, `notes` |
@@ -218,6 +223,9 @@ Rows exclude the CSV header. Labels written with AI help carry `label_source`.
 | `hindi_fluency_sheet_rated.csv` | 60 | `model`, `ipo`, `question`, `answer`, `auto_correct (CC)`, `correct (Claude re-check)`, `fluency_1_to_5 (Claude draft, Akshat to confirm)`, `comment (Claude draft)` |
 | `novelty_pairs.csv` | 60 | `pair_id`, `a_company`, `a_title`, `a_text`, `b_company`, `b_title`, `b_text`, `same_risk` |
 | `novelty_ratings.csv` | 60 | `pair_id`, `same_risk` |
+| `simplify_gold50_ratings.csv` | 150 | `sheet_id`, `faithful`, `plain_english_1to5`, `notes` |
+| `simplify_gold50_sheet.csv` | 150 | `sheet_id`, `original`, `rewrite`, `faithful`, `plain_english_1to5`, `notes` |
+| `simplify_gold50_sheet.orig.csv` | 150 | `sheet_id`, `original`, `rewrite`, `faithful`, `plain_english_1to5`, `notes` |
 
 ## Result files (`eval_results/`)
 

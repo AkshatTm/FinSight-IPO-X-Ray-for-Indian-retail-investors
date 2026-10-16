@@ -211,7 +211,28 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         if e.event == "stage" and e.data["status"] == "end"
     }
     assert ends["risks_split"] == {"n_risks": 3}
+    # The synthetic RHP has no financial tables: summary.json says so, the job stays ready.
+    assert ends["financials"] == {
+        "ready": True, "found": 0, "total": 11, "other_found": 0, "other_placeholder": 0,
+        "peers": 0, "financial_company": False,
+    }  # fmt: skip
+    # Red flags run on the empty summary: every check is unavailable, no severe override.
+    assert ends["redflags"] == {
+        "ready": True, "n_flags": 13, "concern": 0, "watch": 0, "severe": [],
+    }  # fmt: skip
+    flags = get_json(storage, doc_key(doc_id, "redflags.json"))
+    assert len(flags["flags"]) == 13
+    assert flags["severe_overrides"] == []
+    summary = get_json(storage, doc_key(doc_id, "summary.json"))
+    assert {v["status"] for v in summary["revenue"]} == {"not_found"}
+    assert (summary["litigation"], summary["peers"], summary["auditor_remarks"]) == ({}, [], [])
     assert ends["parsed"] == {"pages_done": 5, "pages_total": 5}
+    # facts: the synthetic RHP names no offer price, so nothing selects a value; compare still runs
+    assert ends["facts"]["ready"] is True
+    xray = get_json(storage, doc_key(doc_id, "xray.json"))
+    assert xray["ipo_id"] == doc_id
+    assert ends["compare"]["ready"] is True
+    assert get_json(storage, doc_key(doc_id, "compare.json"))["peers"] == []
 
     # A retry finds every output cached and does no work (scratch is empty in a new job).
     again = db.create_job(doc_id)
@@ -223,7 +244,9 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         for e in db.events_after(again.job_id)
         if e.data.get("detail") == {"cached": True}
     ]
-    assert cached == ["parsed", "sections", "risks_split"]
+    assert cached == [
+        "parsed", "sections", "facts", "financials", "redflags", "compare", "risks_split"
+    ]  # fmt: skip
 
 
 def test_risks_split_reads_stored_outputs_when_earlier_stages_were_cached(

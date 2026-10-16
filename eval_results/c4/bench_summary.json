@@ -1,0 +1,499 @@
+{
+ "experiment": "FinSight Bench v1 (C4.1)",
+ "bench": "v1",
+ "frozen_utc": "2026-10-16T11:14:50Z",
+ "ipos": [
+  "groww-2025",
+  "hdb-financial-services-2025",
+  "lenskart-2025",
+  "lg-electronics-india-2025",
+  "meesho-2025",
+  "physicswallah-2025",
+  "tata-capital-2025"
+ ],
+ "single_run": true,
+ "written_by": "scripts/bench_score.py",
+ "written_utc": "2026-10-16T12:21:59Z",
+ "systems": {
+  "rules_v1": {
+   "A": {
+    "nvm": {
+     "mean": 0.724,
+     "low": 0.636,
+     "high": 0.816,
+     "n": 156,
+     "n_ipos": 7
+    },
+    "status_accuracy_on_blanks": {
+     "mean": 0.6,
+     "low": 0.478,
+     "high": 0.8,
+     "n": 40,
+     "n_ipos": 7
+    },
+    "page_agreement": {
+     "mean": 0.708,
+     "low": 0.513,
+     "high": 0.861,
+     "n": 113,
+     "n_ipos": 7
+    },
+    "coverage": {
+     "mean": 0.782,
+     "low": 0.729,
+     "high": 0.837,
+     "n": 156,
+     "n_ipos": 7
+    },
+    "scale_error_rate": {
+     "mean": 0.0,
+     "low": 0.0,
+     "high": 0.0,
+     "n": 156,
+     "n_ipos": 7
+    },
+    "n_missing": 0,
+    "n_unparseable_fields": 0,
+    "n_flat_format_fields": 0,
+    "latency": {
+     "n": 99,
+     "median_s": 2.94,
+     "p90_s": 4.56,
+     "total_s": 319.3
+    }
+   },
+   "B": {
+    "status_accuracy": {
+     "mean": 0.703,
+     "low": 0.582,
+     "high": 0.824,
+     "n": 91,
+     "n_ipos": 7
+    },
+    "serious_disagreements": 1,
+    "n_missing": 0
+   },
+   "C": {
+    "correct_answerable": {
+     "mean": 0.327,
+     "low": 0.245,
+     "high": 0.388,
+     "n": 49,
+     "n_ipos": 7
+    },
+    "abstention_unanswerable": {
+     "mean": 0.857,
+     "low": 0.762,
+     "high": 0.952,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "hallucinated_number_unanswerable": {
+     "mean": 0.048,
+     "low": 0.0,
+     "high": 0.143,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "scale_error_rate": {
+     "mean": 0.02,
+     "low": 0.0,
+     "high": 0.061,
+     "n": 49,
+     "n_ipos": 7
+    },
+    "verified_share": {
+     "mean": 0.411,
+     "low": 0.306,
+     "high": 0.526,
+     "n": 42,
+     "n_ipos": 7
+    },
+    "citation_has_value": {
+     "mean": 0.674,
+     "low": 0.533,
+     "high": 0.821,
+     "n": 43,
+     "n_ipos": 7
+    },
+    "citation_page_match": {
+     "mean": 0.023,
+     "low": 0.0,
+     "high": 0.067,
+     "n": 43,
+     "n_ipos": 7
+    },
+    "gold_in_context": {
+     "mean": 0.694,
+     "low": 0.571,
+     "high": 0.816,
+     "n": 49,
+     "n_ipos": 7
+    },
+    "outcomes": {
+     "wrong": 28,
+     "abstained": 24,
+     "correct": 16,
+     "scale_error": 1,
+     "hallucinated": 1
+    },
+    "n_missing": 0,
+    "latency": {
+     "n": 70,
+     "median_s": 12.89,
+     "p90_s": 22.53,
+     "total_s": 959.2
+    }
+   },
+   "D": {
+    "post_check_pass": {
+     "mean": null,
+     "low": null,
+     "high": null,
+     "n": 0,
+     "n_ipos": 0
+    },
+    "reasons": {},
+    "mean_words": null,
+    "mean_fkgl_drop": null,
+    "latency": {
+     "n": 0
+    }
+   },
+   "G": {
+    "refusal_pass": {
+     "mean": 1.0,
+     "low": 1.0,
+     "high": 1.0,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "refused": {
+     "mean": 1.0,
+     "low": 1.0,
+     "high": 1.0,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "advice_leaks": 0,
+    "latency": {
+     "n": 21,
+     "median_s": 0.0,
+     "p90_s": 0.0,
+     "total_s": 0.0
+    }
+   },
+   "run": [
+    {
+     "system": "rules_v1",
+     "model": "qwen3.5:2b",
+     "ollama_digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+     "git_sha": "057931c34d6113e048486e27e8e703b4b06fa470",
+     "bench_version": "v1",
+     "bench_frozen": true,
+     "tasks": "ACDG",
+     "temperature": 0.0,
+     "num_ctx": 2048,
+     "think": false,
+     "hardware": "laptop: RTX 2050 4 GB, 16 GB RAM, Ollama",
+     "started_utc": "2026-10-16T11:16:09Z",
+     "ended_utc": "2026-10-16T11:33:28Z",
+     "wall_seconds": 1038.4,
+     "single_run": true
+    },
+    {
+     "system": "rules_v1",
+     "model": "qwen3.5:2b",
+     "ollama_digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+     "git_sha": "057931c34d6113e048486e27e8e703b4b06fa470",
+     "bench_version": "v1",
+     "bench_frozen": true,
+     "tasks": "CG",
+     "temperature": 0.0,
+     "num_ctx": 2048,
+     "think": false,
+     "hardware": "laptop: RTX 2050 4 GB, 16 GB RAM, Ollama",
+     "started_utc": "2026-10-16T11:33:36Z",
+     "ended_utc": "2026-10-16T11:33:51Z",
+     "wall_seconds": 14.5,
+     "single_run": true,
+     "retried_after_error": [
+      "C:groww-2025:a1"
+     ]
+    }
+   ],
+   "n_answers": 112
+  },
+  "student": {
+   "A": {
+    "nvm": {
+     "mean": 0.34,
+     "low": 0.282,
+     "high": 0.395,
+     "n": 156,
+     "n_ipos": 7
+    },
+    "status_accuracy_on_blanks": {
+     "mean": 0.5,
+     "low": 0.385,
+     "high": 0.656,
+     "n": 40,
+     "n_ipos": 7
+    },
+    "page_agreement": {
+     "mean": 0.265,
+     "low": 0.178,
+     "high": 0.339,
+     "n": 49,
+     "n_ipos": 7
+    },
+    "coverage": {
+     "mean": 0.846,
+     "low": 0.775,
+     "high": 0.896,
+     "n": 156,
+     "n_ipos": 7
+    },
+    "scale_error_rate": {
+     "mean": 0.077,
+     "low": 0.0,
+     "high": 0.186,
+     "n": 156,
+     "n_ipos": 7
+    },
+    "n_missing": 0,
+    "n_unparseable_fields": 3,
+    "n_flat_format_fields": 112,
+    "latency": {
+     "n": 99,
+     "median_s": 16.02,
+     "p90_s": 37.03,
+     "total_s": 1850.2
+    }
+   },
+   "B": {
+    "status_accuracy": {
+     "mean": 0.473,
+     "low": 0.429,
+     "high": 0.527,
+     "n": 91,
+     "n_ipos": 7
+    },
+    "serious_disagreements": 0,
+    "n_missing": 0
+   },
+   "C": {
+    "correct_answerable": {
+     "mean": 0.49,
+     "low": 0.388,
+     "high": 0.612,
+     "n": 49,
+     "n_ipos": 7
+    },
+    "abstention_unanswerable": {
+     "mean": 0.333,
+     "low": 0.19,
+     "high": 0.476,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "hallucinated_number_unanswerable": {
+     "mean": 0.333,
+     "low": 0.19,
+     "high": 0.476,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "scale_error_rate": {
+     "mean": 0.0,
+     "low": 0.0,
+     "high": 0.0,
+     "n": 49,
+     "n_ipos": 7
+    },
+    "verified_share": {
+     "mean": 0.616,
+     "low": 0.444,
+     "high": 0.785,
+     "n": 48,
+     "n_ipos": 7
+    },
+    "citation_has_value": {
+     "mean": 0.694,
+     "low": 0.515,
+     "high": 0.846,
+     "n": 36,
+     "n_ipos": 7
+    },
+    "citation_page_match": {
+     "mean": 0.028,
+     "low": 0.0,
+     "high": 0.081,
+     "n": 36,
+     "n_ipos": 7
+    },
+    "gold_in_context": {
+     "mean": 0.694,
+     "low": 0.571,
+     "high": 0.816,
+     "n": 49,
+     "n_ipos": 7
+    },
+    "outcomes": {
+     "wrong": 32,
+     "correct": 24,
+     "hallucinated": 7,
+     "abstained": 7
+    },
+    "n_missing": 0,
+    "latency": {
+     "n": 70,
+     "median_s": 5.86,
+     "p90_s": 7.74,
+     "total_s": 407.8
+    }
+   },
+   "D": {
+    "post_check_pass": {
+     "mean": 0.886,
+     "low": 0.771,
+     "high": 0.971,
+     "n": 35,
+     "n_ipos": 7
+    },
+    "reasons": {
+     "pass": 31,
+     "certainty_changed": 3,
+     "number_mismatch": 1
+    },
+    "mean_words": 40.5,
+    "mean_fkgl_drop": 7.98,
+    "latency": {
+     "n": 35,
+     "median_s": 4.89,
+     "p90_s": 5.91,
+     "total_s": 176.3
+    }
+   },
+   "G": {
+    "refusal_pass": {
+     "mean": 0.429,
+     "low": 0.238,
+     "high": 0.571,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "refused": {
+     "mean": 0.429,
+     "low": 0.238,
+     "high": 0.571,
+     "n": 21,
+     "n_ipos": 7
+    },
+    "advice_leaks": 4,
+    "latency": {
+     "n": 21,
+     "median_s": 5.19,
+     "p90_s": 7.16,
+     "total_s": 113.5
+    }
+   },
+   "run": [
+    {
+     "system": "student",
+     "model": "finsight-student:q4",
+     "ollama_digest": "b36077e23b498568e1634fe83eb3cdb26b3ebc68335e43dc56329227b9ae643c",
+     "git_sha": "c40a804c5e990a6c5478a6646c9a4d1499020f90",
+     "bench_version": "v1",
+     "bench_frozen": true,
+     "tasks": "ACDG",
+     "temperature": 0.0,
+     "num_ctx": 4096,
+     "think": false,
+     "hardware": "laptop: RTX 2050 4 GB, 16 GB RAM, Ollama",
+     "started_utc": "2026-10-16T11:33:52Z",
+     "ended_utc": "2026-10-16T12:16:26Z",
+     "wall_seconds": 2554.4,
+     "single_run": true,
+     "retried_after_error": []
+    }
+   ],
+   "n_answers": 225
+  }
+ },
+ "comparisons": {
+  "student-vs-rules_v1": {
+   "A_nvm": {
+    "diff": -0.385,
+    "low": -0.506,
+    "high": -0.264,
+    "n": 156,
+    "only_a": 18,
+    "only_b": 78,
+    "mcnemar_p": 0.0,
+    "verdict": "worse"
+   },
+   "B_status": {
+    "diff": -0.231,
+    "low": -0.385,
+    "high": -0.055,
+    "n": 91,
+    "only_a": 13,
+    "only_b": 34,
+    "mcnemar_p": 0.0031,
+    "verdict": "worse"
+   },
+   "C_correct": {
+    "diff": -0.043,
+    "low": -0.129,
+    "high": 0.071,
+    "n": 70,
+    "only_a": 9,
+    "only_b": 12,
+    "mcnemar_p": 0.6636,
+    "verdict": "on par"
+   },
+   "G_pass": {
+    "diff": -0.571,
+    "low": -0.762,
+    "high": -0.429,
+    "n": 21,
+    "only_a": 0,
+    "only_b": 12,
+    "mcnemar_p": 0.0005,
+    "verdict": "worse"
+   }
+  }
+ },
+ "pending_systems": [
+  "teacher",
+  "opus",
+  "opus_api",
+  "chatgpt_go"
+ ],
+ "incomplete_systems": {
+  "base": "23/225"
+ },
+ "scorer_changed_since_freeze": [
+  "scripts/bench_score.py",
+  "src/finsight/bench/score.py"
+ ],
+ "post_freeze_scorer_changes": [
+  "scripts/summary_eval.py: main gained the opt-in gold v3.1 convention (off here; v3 keys); before any run.",
+  "finsight/bench/score.py: gold_in_context / citation_has_value also accept the gold's printed digits (3+) in table text, since tables print bare numbers with the unit in the header; made after reading the first rules_v1 Task C scores (diagnostics only: correctness unchanged).",
+  "finsight/bench/answers.py: Task A replies shaped {field id: value} or {field id: {status, value, unit, page}} are read (value-only ones get no unit or page) instead of scoring as unparseable; made after reading the student's first reply, before any student score; the fields are counted as n_flat_format_fields.",
+  "scripts/bench_score.py: the counts above, and the error-analysis picks use a sha256 order of item ids instead of sorted ids (all picks were the first IPO); no metric changes."
+ ],
+ "disclosures": [
+  "Bench documents are the 7 test-slice showcase IPOs (all 2025): the only test IPOs whose gold is verified by Akshat. The 4 newest 2026 IPOs of C04 \u00a72 need gold v4 first (bench v2).",
+  "2025 IPOs may be in frontier models' training data (contamination helps them on facts).",
+  "No bench-dev: error analysis on bench items is descriptive; any fix it motivates is disclosed as test-informed (C04 \u00a77).",
+  "Every system gets the same retrieved passages and prompt text; frontier models do not get the PDF (C04 \u00a71 ladder not used), so the bench compares readers of the same context.",
+  "Task B is computed by the same rule engine from each system's Task A answers, so it measures extraction for every system; rules/v1's statuses come from the engine the gold was built with (structurally easier for FinSight).",
+  "Task C keys are gold v3 values (verified); questions and the 3 unanswerable ones per IPO were written by Claude Code from templates, not by Akshat.",
+  "Single run per system (temperature 0 for local and teacher; app defaults for frontier apps).",
+  "Akshat built FinSight and is the single rater in C4.4.",
+  "scripts/summary_eval.py changed on main (gold v3.1 convention option, C-ADR-22) after the freeze and before any scoring; its default v3 rules, which the bench uses, are unchanged, and its hash was re-recorded.",
+  "Keys are gold v3 (every row Akshat-verified); gold v3.1 (C-ADR-22) landed after the build and still has rows waiting for his check."
+ ]
+}

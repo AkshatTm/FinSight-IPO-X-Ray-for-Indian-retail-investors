@@ -66,6 +66,7 @@ def test_clean(raw: str, want: str) -> None:
         ("Ten customers gave 65% of revenue; losing one may hurt.", "number_mismatch"),
         ("Losing a customer may hurt, so you should avoid this IPO.", "forbidden_phrase"),
         ("Losing a customer may hurt. " + "more " * 70, "too_long"),
+        ("Losing a customer may hurt the business and", "truncated"),  # cut off mid-sentence
         ("Losing a customer will hurt the business.", "certainty_changed"),
     ],
 )
@@ -126,7 +127,7 @@ def test_make_simplifier_picks_backends(tmp_path: Path) -> None:
     assert s.fallback is not None
     assert s.fallback_model == "b.gguf"
     assert s.fallback is not None
-    assert make_simplifier(SimplifyConfig(), tmp_path).llm.model == "qwen3.5:2b"  # type: ignore[attr-defined]
+    assert make_simplifier(SimplifyConfig(), tmp_path).llm.model == "finsight-student:q4"  # type: ignore[attr-defined]
 
 
 def test_a_missing_gguf_file_fails_cleanly(tmp_path: Path) -> None:

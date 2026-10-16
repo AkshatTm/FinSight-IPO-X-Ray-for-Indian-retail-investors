@@ -52,8 +52,8 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   One package: `finsight.splits`. Strict split → `configs/splits.yaml` (C02 §4; showcase roles from `demo_ipos.yaml`), the manifest format + retro manifests for Phase 1 artefacts in `data/manifests/`, `tests/test_split_leakage.py`, `configs/reference.yaml` + the `reference` API (eval and product windows, corpus by close year; C02 §5). **No wiring into other packages here:** C2.1 wires the bank + novelty, C2.7 weak labels, C2.8 risk level, C3.4 compare. Akshat confirms the counts before freezing.
   *Status:* code merged (C1.4 code-only PR: `finsight.splits`, CLI `python -m finsight.splits build [--freeze]`, `tests/test_split_leakage.py`). Real-data run done on Sonnet: Akshat confirmed the counts, `--freeze` written (`configs/splits.yaml`, 4 manifests in `data/manifests/`), leakage tests run and pass. `bench` is empty until C4.1 sets it.
   *Done when:* split frozen; leakage test green in `poe test`.
-- [ ] **C1.5 BIR link check + backfill** · 💻 L · S · Needs: CG0
-  Count live links → `eval_results/c/bir_links.json`; backfill the live ones.
+- [x] **C1.5 BIR link check + backfill** · 💻 L · S · Needs: CG0
+  Count live links → `eval_results/c/bir_links.json`: 855 links 2009-2023, 48 answer as direct PDFs, 780 are HTML filing pages (SEBI/exchange), 27 dead. Backfill done (`scripts/backfill_bir_pdfs.py`, `eval_results/c/bir_backfill.json`): PDF files 0 → 40 (340 MB, one per `mapping_key`) in the new gitignored `data/raw/bir_backfill/`; nothing reads it and no split or eval set changed. The HTML pages would need the C1.2 fetcher's page-to-PDF step.
 
 **CG1:** split frozen · every new document parsed or excluded with a reason · leakage test green.
 
@@ -65,43 +65,60 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
   `COLAB_STEPS_teacher_bakeoff.md`; Qwen3-14B-AWQ vs Qwen3-32B-AWQ (L4-only fallback in C03); 300 risks × 2 teachers; filters; blind sheet (100 rows); Akshat rates; ADR → `eval_results/c/teacher_bakeoff.json`.
 - [x] **C2.3 Teacher full run** (was B2.3b) · 💻 L + 🟠 G + 👤 A · S · Needs: C2.2 · run done on the G4 (12,000 risks, 10,892 kept); **CG2 passed** (quality-100: faithful 98 %, category correct 94 %)
   ≈12k `train` risks on Colab A100; filters; quality-100 from the full output; go/no-go.
-- [ ] **C2.3b Teacher data clean-up** · 💻 L · S · Needs: CG2
+- [x] **C2.3b Teacher data clean-up** · 💻 L · S · Needs: CG2
   Strict number filter (scale/unit and sign vs the source) over the kept rows; deterministic category remap for the themes quality-100 found inconsistent + one rule per theme in the teacher category guide; non-risk title count; seriousness distribution (4 + 5 → "severe" if level 5 < ~100).
-- [ ] **C2.7 Extractor v2** · 💻 L + 🔵 K · S · Needs: CG1 (runs in parallel with C2.2–C2.3)
+  *Status:* done: `finsight.risks.teacher_cleanup`, `configs/category_remap.yaml`, `eval_results/c/teacher_cleanup_report.json`. 10,891 of 10,892 pairs kept, 799 categories remapped, 22 non-risk titles, severe band = 488 (level 5 has 17).
+- [x] **C2.7 Extractor v2** · 💻 L + 🔵 K · S · Needs: CG1 (runs in parallel with C2.2–C2.3)
   Weak labels over `train` incl. 2024+ (wires `weaklabel` to manifests); Kaggle 3 seeds; ladder row `qa_finetuned_v2`; keep only if it wins on dev.
+  *Result:* seeds for 2024+ come from the Rung-1 rules on cover pages (`rules_cover_seed`, no manual labels); 9,315 train examples / 412 IPOs. Dev (52 IPOs neither version saw, rule-derived labels): F1 0.974 vs v1 0.949, EM 0.964 vs 0.936 (3 seeds each, spread ≤ 0.003). Gold ladder (reporting row, test-informed): full NVM dev 0.639 vs 0.611, **test 0.696 vs 0.738** (56 values, 7 IPOs). v2 wins on dev so it is kept as `models/extractor_v2/`, but the product default stays v1 (no gold-test gain, rules come first). **Decided: v1 stays the product extractor; v2 is a reported ablation** (#242). Numbers: `docs/model_cards/extractor_qa.md`.
 
 **CG2:** teacher output accepted (≥ 85 % "same meaning: yes" on quality-100) · datasheet updated.
 
-- [ ] **C2.4 Classifier** (was B2.4b) · 💻 L + 🔵 K + 👤 A · S · Needs: CG2, C2.3b, gold-150
-  TF-IDF; base 3 seeds (Kaggle); large 3 seeds (Colab); base must beat TF-IDF on dev; ONNX int8; E16; model card. Seriousness scored with MAE, within-1 accuracy and severe-band recall.
-- [ ] **C2.5 Student simplifier** (was B2.5b) · 💻 L + 🟠 G + 👤 A · S · Needs: CG2, C2.3b, gold-50 sheet
+- [x] **C2.4 Classifier** (was B2.4b) · 💻 L + 🔵 K + 👤 A · S · Needs: CG2, C2.3b, gold-150
+  TF-IDF; base 3 seeds (Kaggle); large 3 seeds (Colab); base must beat TF-IDF on dev; ONNX; E16; model card. Seriousness scored with MAE, within-1 accuracy and severe-band recall.
+  - [x] TF-IDF 0.862 · [x] base 3 seeds: dev macro-F1 0.892 ± 0.006 (beats TF-IDF), gold-150 0.899 (best seed 0.881, acc 0.933) · [x] seriousness dev MAE 0.186, within-1 0.997, severe recall 0.56 (gold-150 best seed: MAE 0.14, severe recall 0.75 on 4 rows) · [x] E16 · [x] ONNX **fp32** (int8 broke DeBERTa-v3: agreement 0.05, best 0.82; `eval_results/c/classifier_onnx_int8_attempt.json`) · [x] model card
+  - [x] large 3 seeds on the Colab G4 (~1 h 25 m): dev macro-F1 0.894 ± 0.007 vs base 0.892 ± 0.006 (+0.002, inside the seed spread), seriousness severe recall 0.49 vs 0.56, gold-150 0.875 vs 0.899: **large does not win; the base stays** (`eval_results/c/classifier_large.json`). C2.4 done.
+- [x] **C2.5 Student simplifier** (was B2.5b) · 💻 L + 🟠 G + 👤 A · S · Needs: CG2, C2.3b, gold-50 sheet
   Zero-shot bake-off; 4B bf16 LoRA on Colab; 8B variant; GGUF; E18–E20 + CPU seconds; model card.
   - [x] Zero-shot base (gold-50: 16/50 pass the product checks)
   - [x] 4B bf16 LoRA on Colab G4 + GGUF Q4_K_M (dev loss 0.353; gold-50 post-check pass 49/50, `eval_results/c/student_vs_base_gold50.json`)
-  - [ ] gold-50 blind sheet rated by Akshat (`sheet50` → `score50`)
-  - [ ] 8B variant · [ ] E18–E20 + CPU seconds per risk · [ ] model card `docs/model_cards/risk_simplifier.md`
-- [ ] **C2.6 Novelty τ + E22** (was B2.2b) · 💻 L + 👤 A · S · Needs: C2.1, C1.4 window
+  - [x] gold-50 blind sheet rated by Akshat (`sheet50` → `score50`): faithful yes base 0.84 / student 0.92 / teacher 0.98; plain English 3.00 / 4.64 / 4.80 (`eval_results/c/simplify_gold50.json`)
+  - [x] 8B variant (`Qwen/Qwen3-8B`, `enable_thinking=False`; G4, 1 h 46 m, 16.4 units): dev loss 0.342 vs 0.353, but gold-50 post-checks 30/50 vs 49/50 (35 of 50 over 60 words, mean 68.7 words vs 43.2): **not adopted, the 4B stays the product model** (C-ADR-18, `eval_results/c/student_8b_vs_4b_gold50.json`)
+- [x] **C2.6 Novelty τ + E22** (was B2.2b) · 💻 L + 👤 A · S · Needs: C2.1, C1.4 window
+  *Result:* 60 pairs rated by Akshat (47 same, 12 different, 1 unsure); τ = 0.71, precision 0.911 on 45 pairs (95 % CI 0.793-0.965), single rater (C-ADR-14, `eval_results/b/novelty.json`, merged in #219).
 - [ ] **C2.8 Risk-level thresholds + E17/E21 + E8r** (was B2.6b) · 💻 L · S · Needs: C2.4, C3.2, C1.4 window
   Wires `risklevel` to `reference_scores` + the window; thresholds fitted on train + dev only; E21 as the risk-points-only variant with the limitation stated.
+  - [x] Scoring chain `scripts/score_reference_ipos.py` (440 IPOs, 29,677 risks, 165 with red flags) and fit: thresholds **0.2857 / 0.4167**, `corpus_n` 165, `provisional: false` (C-ADR-25)
+  - [ ] E21: needs Akshat's `data/gold/outcomes.csv`; the points-only variant saturates (188 of 440 IPOs at 1.0)
+  - [ ] E17 (rule seriousness vs teacher bands), E8r (guard re-run) and `seriousness.json` / `guard_b.json` not run in this pass
 
 **CG3:** classifier and student trained, evaluated, exported · τ and thresholds computed · extractor v2 trained and decided (kept only if it wins on dev). CG3 waits on the code lane too: C2.8 needs C3.2.
 
 ### C3 — Product on real data → gate CG4
 
-- [ ] **C3.1 ★ Summary + financial extraction + E14** (was B1.3a-left + B1.3b) · 💻 L + 👤 A · **O** · Needs: C1.3, gold v3 verified for E14 (code can start before)
-- [ ] **C3.2 Red flags wired + E15** (was B1.4-left) · 💻 L · S · Needs: C3.1, gold v3 verified
+- [x] **C3.1 ★ Summary + financial extraction + E14** (was B1.3a-left + B1.3b) · 💻 L + 👤 A · **O** · Needs: C1.3, gold v3 verified for E14 (code can start before)
+  - [x] C3.1a financial tables + financials stage (#224; dev coverage: all 11 values in 67 % of RHPs, cross-source agreement 257/258) · [x] C3.1b other red-flag inputs (#230) · [x] E14 final v1 (#236): NVM 0.682 (195 rows), status 0.667, page 0.766 on gold v3 (10 IPOs, verified by Akshat)
+  - [x] Follow-up (parse): *Summary of the Offer Document* missed in 16/55 dev RHPs (ticked in the bookkeeping pass at Akshat's instruction; the summary reader falls back to the 40 pages before Risk Factors, C-ADR-16)
+  - *E14 v2 (C3.7/C3.7b, #239-#241):* NVM **0.769** (v1 0.682, frozen); the stale `sections.json` was the main cause (C-ADR-20).
+- [x] **C3.2 Red flags wired + E15** (was B1.4-left) · 💻 L · S · Needs: C3.1, gold v3 verified
   Includes rule-based flags (going concern, default / loan recall, SEBI/RBI/ED orders, fraud, qualified audit) that force the severe band regardless of the model.
-- [ ] **C3.3 Trained models into the upload pipeline** · 💻 L · S · Needs: C2.4, C2.5, C2.6, C3.2
+  *Status:* merged (#233); E15 final v1 (#236): accuracy 0.646 on 130 rows, 0 serious disagreements. RF04/RF05 were low because the evaluator lacked the X-Ray offer facts; fixed in C3.7: **E15 v2 0.762** (v1 0.646 frozen; wiring alone 0.731).
+- [x] **C3.3 Trained models into the upload pipeline** · 💻 L · S · Needs: C2.4, C2.5, C2.6, C3.2
   Classifier ONNX, student GGUF (top 15 automatic, rest on click), novelty with τ, risk level → full report for any upload. Models load one stage at a time (16 GB RAM shared with Windows and Claude Code); measure RAM and seconds with `scripts/measure_memory.py`; try partial llama.cpp GPU offload on the 4 GB RTX 2050.
-- [ ] **C3.4 Compare on the rolling window** (was B3.2b) · 💻 L · S · Needs: C1.4, C3.1
+  *Latency plan (from C2.5, 12.3 s/risk on the laptop CPU ≈ 14 min per IPO of ~67 risks):* precompute simplifications for showcase / listed IPOs at ingest; for an upload simplify the top-N by seriousness up front and the rest lazily when the user expands a risk; batch / parallel requests to Ollama; measure GPU latency for the deployed version (C3.8 / C5.1).
+  *Status (local app week):* built in `jobs/model_stages.py`: `risks_scored` (ONNX classifier, bge-m3 novelty against the product reference window, seriousness), `risk_level`, `simplify` (top 15 queued, a background drain in the API process; click-to-explain retried), `index` (publishes the upload in the showcase layout so facts, pages and chat work). Smoke run on two non-gold RHPs: 20/20 checks, 160 to 350 s per document. `uv run poe app`, `docs/RUN_LOCALLY.md`. RAM / seconds per model were not measured with `measure_memory.py`.
+- [x] **C3.4 Compare on the rolling window** (was B3.2b) · 💻 L · S · Needs: C1.4, C3.1
   The Compare tab moves from its provisional data to the `splits.reference` rolling window.
-- [ ] **C3.5 Newest-IPO showcase** · 💻 L + 👤 A · S · Needs: C3.3
+  *Status:* merged (#240, #241; C-ADR-21). Reference n = 40 on issue size only (provisional); the upload pipeline gained `facts` and `compare` stages.
+- [ ] **C3.5 Newest-IPO showcase** (code done; building the reports and picking the leads is open) · 💻 L + 👤 A · S · Needs: C3.3
   Build reports and X-Rays for the `demo` IPOs; add them to the library; record the demo cache; landing stats from real files. Akshat picks which IPOs lead the class demo.
-- [ ] **C3.6 Report UI + Lab on the real API** (was B3.1b + B3.4b) · 💻 L · S · Needs: C3.3
+- [x] **C3.6 Report UI + Lab on the real API** (product part) (was B3.1b + B3.4b) · 💻 L · S · Needs: C3.3
   Mocks regenerated from real files by script; Lab sections for E13–E24 and the bench.
-- [ ] **C3.7 Chat fixes** · 💻 L + 👤 A · S · Needs: CG0
+  *Status (local app week):* done: report tabs run on the real API (severe overrides now shown; the Compare and upload-limit copy fixed), `/api/lab/c/bench` + Lab Bench section, OpenAPI and TS types regenerated, stream proxy fixed (job events and chat no longer cut at 30 s). Not done: regenerating `frontend/mocks/report.ts` from real files, Lab sections for E17/E21 (no results yet).
+- [x] **C3.7 Chat fixes** · 💻 L + 👤 A · S · Needs: CG0 · code part done (#239); Akshat's E7 hand-check still open (AKSHAT_TODO)
   Investigate the 32 s `full`-profile latency; Akshat decides the "red flags in chat" guard question; E7 hand-check.
-- [ ] **C3.8 Hardening sweep** (was B3.5b, local) · 💻 L · S · Needs: C3.6
+  *Status:* the 32 s was not reproduced (9.6 s median; the CPU reranker costs 26-45 s, pool capped). Red flags in chat: **allowed** (option a, decided).
+- [ ] **C3.8 Hardening sweep** (Playwright `local-app-real` written; sweep of all pages pending) (was B3.5b, local) · 💻 L · S · Needs: C3.6
 
 **CG4:** upload any new RHP on the laptop → full report with trained models, red flags with pages, risk level with reasons + disclaimer; Playwright sweep green.
 
@@ -118,6 +135,7 @@ The **frontier runs (C4.3) do not need any FinSight model**, so Akshat can do th
 
 - [ ] **C4.5 Improvement loop + bench v2** · 💻 L · O for diagnosis, S for fixes · Needs: CG5
   Error analysis on bench-dev only; fixes with tests; FinSight re-run; v2 tables.
+  - [ ] Qualifier / hedge-consistency check for the simplifier: compare original vs rewrite for added or dropped qualifiers ("soon", "all", "only", "no", an omitted court stay). C2.5 gold-50: all 4 of the student's "partly" rows were this kind; the number and certainty checks do not see them.
 
 **CG6 = FEATURE FREEZE:** bench v2 done · all shipped features stable · nothing new after this, only fixes and docs.
 

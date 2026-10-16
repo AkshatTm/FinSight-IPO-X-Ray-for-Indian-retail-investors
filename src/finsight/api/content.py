@@ -108,3 +108,13 @@ def lab_b(eval_dir: Path, name: str) -> dict[str, Any]:
         raise _not_run(name)
     payload: dict[str, Any] = _read(path)
     return payload
+
+
+def lab_c_bench(eval_dir: Path) -> dict[str, Any]:
+    """FinSight Bench v1 scores (C4.1): ``eval_results/c4/bench_summary.json``, as written by
+    ``scripts/bench_score.py``; 404 ``not_available`` until a system has been scored."""
+    path = eval_dir / "c4" / "bench_summary.json"
+    if not path.exists():
+        raise _not_run("bench")
+    payload: dict[str, Any] = _read(path)
+    return payload

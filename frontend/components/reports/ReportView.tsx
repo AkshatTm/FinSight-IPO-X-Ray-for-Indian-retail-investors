@@ -19,7 +19,7 @@ import { RisksTab } from "./RisksTab";
  * A hash such as "#redflag-RF03" or "#risk-r12" opens its tab and scrolls to the card. Facts and
  * Document stay on the showcase pages until uploads have them (B06 aliases).
  */
-export function ReportView({ doc }: { doc: Schemas["DocRecord"] }) {
+export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocRecord"]; workspaceReady?: boolean }) {
   const { t, lang } = useT();
   // Mounted on the client only (after the document query), so the hash can seed the state.
   const [tab, setTab] = useState<Tab>(() => tabForHash(window.location.hash) ?? "overview");
@@ -66,6 +66,11 @@ export function ReportView({ doc }: { doc: Schemas["DocRecord"] }) {
           <button type="button" onClick={() => void share()} className="rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface-2">
             {copied ? t("rep.copied") : t("rep.share")}
           </button>
+          {workspaceReady && (
+            <Link href={`/ipos/${doc.doc_id}`} className="rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface-2">
+              {t("rep.workspace")}
+            </Link>
+          )}
           {report.data?.companion_doc_id && (
             <Link href={`/reports/${report.data.companion_doc_id}`} className="underline underline-offset-2">
               {t("rep.companion")}

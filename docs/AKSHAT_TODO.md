@@ -1,6 +1,20 @@
 # Akshat's to-do
 
-## Phase 3 (now): in critical-path order (C05 §6, C06)
+## Local app week (now): run it on your laptop
+
+- [ ] Read `docs/RUN_LOCALLY.md`, then `uv run poe app` and open http://localhost:3000/upload. Try your own RHP / prospectus PDF (text PDF, not a scan).
+- [ ] Decide: should the library show the "Full report" link for the 10 showcase IPOs? Build them with `uv run python scripts/build_showcase.py` (about 5 min each, run while nothing else is running).
+- [ ] Decide which newest IPOs lead the class demo (C3.5 asks you to pick; the code works for any PDF).
+- [ ] Hindi strings added this week (`labb.bench.*`, `rl.override`, `rf.severe.*`, `lib.report`, `ws.backReport`) are builder drafts: review.
+
+### Next week (deferred on purpose; none of it is needed to run the product)
+- [ ] **E17** risk-level outcome check, **E21** (needs outcomes data), **E8r** guard re-run after the red-flag decision.
+- [ ] **Bench runs**: base model, teacher and frontier systems on bench v1 (only `rules_v1` and the student are scored; the base run was partial and ran out of memory on the laptop).
+- [ ] **Gold v3.1 verification** (`data/gold/gold_v3_1_verify.csv`) and the **E7 hand-check** (`data/gold/e7_handcheck.csv`).
+- [ ] C3.5 leftovers: record the demo cache for the chosen IPOs (`uv run poe record-demo`), landing-page stats from real files.
+- [ ] Playwright against the real app needs a PDF and about 10 minutes: `E2E_REAL=1 E2E_PDF=<pdf> pnpm test:e2e local-app-real` (in `frontend/`).
+
+## Phase 3 (before this week): in critical-path order (C05 §6, C06)
 
 Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07_PROMPTS.md`) plus the part line. Hours are estimates (C06).
 
@@ -34,6 +48,25 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] Read the units in the Colab Resources panel (before the session: 193.67) and tell Claude, so the teacher_full + gold_eval session is logged.
 - [ ] **Rate the quality-100 sheet** `data/processed/teacher/quality_sheet.csv` (~30 min): `faithful` = yes / partly / no, `category_correct` = yes / no (write the right category in `notes`). Tell Claude "quality-100 rated". CG2 = at least 85 % yes.
 
+### Decided (nothing to do)
+- [x] **Red flags in chat: allowed** (option a, C3.7). **Extractor: v1 stays the product extractor**, v2 is a reported ablation (C2.7).
+
+### Open from C3.7 / C3.1b
+- [ ] **E7 hand-check**: `eval_results/e7_sample_dev.jsonl` and `e7_sample_test.jsonl` (20 answers each; fill `reviewed_by_akshat`).
+- [ ] **Gold v3.1 row verification** (rows added or changed after the v3 verification, C3.2/C3.7b).
+
+### C2.7 extractor v2: done, decided (v1 kept)
+- [x] Seeds for 2024+ documents come from the Rung-1 rules on the cover pages (`label_source=rules_cover_seed`, no manual labelling, no audit from you); the 10 gold-v3 / demo IPOs are excluded. Result: v2 wins on dev (F1 0.974 vs 0.949) but gold test full NVM is 0.696 vs v1 0.738 (56 values). Decision for you: keep v1 as the product extractor (recommended: no gold-test gain, rules come first) or switch to v2. Say "extractor v2 default" to switch (it is a one-line weights change plus a ladder re-run).
+
+### C1.5 BIR backfill: done
+- [x] Backfilled the live direct PDFs: 0 → 40 files (340 MB) in `data/raw/bir_backfill/` (gitignored, read by nothing yet; 48 links answered, 40 distinct `mapping_key`s). No split or eval set changed. Resolving the 780 HTML filing pages to PDFs is still open and optional.
+
+### C2.5 8B student: done, not adopted
+- [x] Ran on the G4 (1 h 46 m, 16.4 units, 171.38 → 154.98). Gold-50 post-checks 30/50 vs the 4B's 49/50, so the 4B stays (C-ADR-18). Nothing for you to do; the old paste-in cell `docs/phase3/colab_run_student_8b_cell.py` is no longer needed.
+
+### C2.4 classifier-large: done, not adopted
+- [x] Ran on the G4; it did not beat the base by more than the seed spread, so nothing changes. One small item for you: read the units left in the Colab Resources panel (154.98 before) and tell Claude, so the compute log row can be completed.
+
 ### C2.5 student (notebook and steps merged), ~1–2 h Colab
 - [ ] After CG2 (split already written: train 10,363 / dev 529): connect a **G4**, Claude runs `student_smoke` then `student` (`docs/phase3/COLAB_STEPS_student.md`, ~0.5–0.8 h ≈ 5–7 units). Then Claude writes the blind gold-50 sheet `data/gold/simplify_gold50_sheet.csv` (base / student / teacher; base rewrites already made) and you rate it (~45 min).
 
@@ -41,11 +74,18 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 - [ ] After CG2 (split + manifests already written: train 9,832 / dev 1,060): Claude runs `... dataset --username <you>`, then `push smoke`, `status`, `fetch`; if it is green, `push 13`, `42`, `2026` and `fetch` each (Claude can run these); `summary` writes E16 (must beat TF-IDF on dev).
 - [ ] **Verify gold-150** `data/gold/gold150_sheet.csv` (~45 min; 15 risks × 10 test IPOs, `category` pre-filled by Qwen3.8, the bake-off runner-up, not the teacher): correct `category` where wrong (one of the 10 listed in `src/finsight/risks/teacher.py`). Tell Claude "gold-150 verified"; Claude runs `scripts/gold_sets.py gold150`, then the 3 seeds and ONNX export.
 
-### C2.6 novelty threshold (code merged), ~30–40 min rating
-- [ ] Sheet ready (60 pairs): rate `data/gold/novelty_pairs.csv` (~30 min) (column `same_risk` = yes / no / unsure; is it the same risk, ignoring company names and numbers?), tell Claude "novelty pairs rated". Claude runs `score`, sets `novelty.tau` in `configs/risks.yaml` from `eval_results/b/novelty.json` and writes the ADR.
+### C2.6 novelty threshold: done
+- [x] Rated (60 pairs), tau 0.71, C-ADR-14. ~~Sheet ready (60 pairs): rate `data/gold/novelty_pairs.csv` (~30 min) (column `same_risk` = yes / no / unsure; is it the same risk, ignoring company names and numbers?), tell Claude "novelty pairs rated". Claude runs `score`, sets `novelty.tau` in `configs/risks.yaml` from `eval_results/b/novelty.json` and writes the ADR.~~
+
+### C3.1 gold v3 verification: two things to record
+- [ ] While verifying gold v3, note whether **net worth and borrowings** come from the fiscal-year-end column (not a quarter or other column) and whether a **stub-period** value exists for them. Tell Claude; the extractor's column choice depends on it.
+
+### C3.3 / C3.8 note: simplifier latency (plan only, nothing built)
+- [ ] 12.3 s per risk on CPU ≈ 14 min per IPO. Plan: precompute simplifications for showcase / listed IPOs at ingest; for uploads simplify the top-N by seriousness first and the rest lazily on expand; batch / parallel Ollama requests; measure GPU latency for the deployed version.
 
 ### C2.8 risk-level thresholds (code merged), needs C2.4, C3.2, C3.3 outputs
 - [ ] After the trained models are wired into the upload pipeline (C3.3) and every IPO has `<ipo_id>.json` (and `.flags.json`) in `data/processed/risk_bank/scored/`: `uv run python scripts/corpus_points.py scores`, then `... fit` (needs at least 30 train + dev scores); check `configs/risklevel.yaml` is no longer provisional.
+- [x] Fit done (thresholds 0.2857 / 0.4167, 165 IPOs). Remaining for E21:
 - [ ] For E21 put a measured-outcome column in `data/gold/outcomes.csv` (`ipo_id,listing_gain_pct`; your own source, check it) and run `uv run python scripts/validate_risklevel.py --outcomes data/gold/outcomes.csv` with `scores --points-only` first. The result is reported whatever it shows.
 
 ### Later (prepared by each part when it is reached)
@@ -55,7 +95,7 @@ Every Claude Code part starts with the Phase 3 resume prompt R (`docs/phase3/C07
 
 ### Phase 2 decisions still open
 - Accept or change B-ADR-01..15 and the new C-ADR-01..11 in `docs/09_DECISIONS.md` (C-ADR-12 is accepted).
-- "Red flags in chat" guard question (C3.7) and the copy items under "Copy to approve (Phase 2)" below.
+- ("Red flags in chat" decided: allowed.) The copy items under "Copy to approve (Phase 2)" below.
 
 ## Needs a LOCAL session (Big Phase 2, history: open items moved to Phase 3)
 
@@ -233,5 +273,6 @@ Start each with prompt L1 from `docs/phase2/B10_PROMPTS.md` (after `/clear`, `gi
 
 - [x] C2.1 segmentation spot-check (50 risks, ~40 min) + E13b boundaries; also look at the 20 documents with < 10 risks (see `docs/datasheets/risk_bank.md`). Decide whether 8,889 teacher inputs (target 12k) is enough or the per-company cap should rise.
 - [ ] C2.5 gold-50: run `uv run python scripts/gold_sets.py sheet50`, rate `faithful` and `plain_english_1to5` in `data/gold/simplify_gold50_sheet.csv` (~45 min), then tell Claude "gold-50 rated" (→ `score50`).
-- [ ] C2.5 units: read the Resources panel (before the student run: 182.88) and tell Claude the figure so the compute row is logged (`scripts/log_compute.py --manual`).
-- [ ] C2.5 notebook fix (Claude, next local session): make the GGUF step reuse the original tokenizer files and add a re-run path from checkpoint-N; the Colab run needed that by hand.
+- [x] C2.5 units logged: 182.88 before, 171.38 after (11.5 used), row in `eval_results/c/compute_log.jsonl`.
+- [x] C2.5 notebook fix (done): the GGUF step now copies the base model's original tokenizer files into `merged/` (byte-equality assert, `tests/colab/test_colab_student_notebook.py`); a re-run resumes from the latest trainer checkpoint, so a finished run only repeats merge + export.
+- [ ] Spot-check the remap: `eval_results/c/teacher_cleanup_report.json` → `category_samples` (5 per rule, 7 rules). The brand rule changed 399 rows, the biggest; check it reads right.

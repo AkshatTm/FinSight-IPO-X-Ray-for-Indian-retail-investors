@@ -332,19 +332,22 @@ Status3 = Literal["ok", "watch", "concern", "not_available", "not_applicable"]
 Level = Literal["low", "medium", "high"]
 
 
-SummaryStatus = Literal["found", "placeholder", "not_found"]
+SummaryStatus = Literal["found", "stated_zero", "placeholder", "not_found"]
+SUMMARY_HAS_VALUE: frozenset[str] = frozenset({"found", "stated_zero"})
 
 
 class SummaryValue(BaseModel):
     """One red-flag input read from the document (B02 §5): the value, its period and its page.
 
     ``placeholder`` is a blank such as ``[●]`` in an RHP; ``not_found`` means the section or row
-    was missing. Money keeps its raw text and scale word, so sentences show units as written.
+    was missing; ``stated_zero`` is a dash or "Nil" in a row or column that otherwise prints
+    figures (the value is a zero, shown apart from a printed number). Money keeps its raw text
+    and scale word, so sentences show units as written.
     """
 
     key: str
     value: Amount | str | None = None
-    period: str | None = None  # "latest", "latest-1", "latest-2" or the printed fiscal label
+    period: str | None = None  # "latest", "latest-1", "latest-2" or the printed date / label
     evidence: PageEvidence | None = None
     status: SummaryStatus = "not_found"
 
@@ -355,6 +358,9 @@ class FinancialSummary(BaseModel):
     Lists of yearly values are latest first. ``litigation`` maps ``criminal_cases`` and
     ``amount_total`` (and any extra counts) to values. ``general_purposes_pct`` (RF07) and
     ``promoter_identifiable`` (RF06) are additions to the B02 sketch that the checks need.
+    ``total_borrowings`` / ``net_worth`` are at the latest full fiscal year end (primary); the
+    ``*_stub`` fields hold the newer part-year balance (secondary, ``period`` = printed date)
+    when the RHP prints one. The checks read the primary values.
     """
 
     doc_id: str
@@ -364,6 +370,8 @@ class FinancialSummary(BaseModel):
     operating_cash_flow: list[SummaryValue] = Field(default_factory=list)
     total_borrowings: SummaryValue | None = None
     net_worth: SummaryValue | None = None
+    total_borrowings_stub: SummaryValue | None = None
+    net_worth_stub: SummaryValue | None = None
     waca: list[SummaryValue] = Field(default_factory=list)
     litigation: dict[str, SummaryValue] = Field(default_factory=dict)
     rpt_total: SummaryValue | None = None
@@ -391,10 +399,26 @@ class RedFlag(BaseModel):
     points: int = 0
 
 
+class SevereOverride(BaseModel):
+    """A fact that puts the risk level in the high band whatever the model says (C3.2).
+
+    ``evidence`` carries the page and the document's own sentence; ``mentions`` counts the
+    sentences of that kind in the document.
+    """
+
+    id: str  # going_concern, default_or_recall, regulator_order, fraud, qualified_audit
+    title: str
+    sentence: str
+    evidence: PageEvidence
+    rule: str = ""
+    mentions: int = 1
+
+
 class RedFlags(BaseModel):
     """``redflags.json`` (B06 §3 ``/redflags``)."""
 
     flags: list[RedFlag] = Field(default_factory=list)
+    severe_overrides: list[SevereOverride] = Field(default_factory=list)
     financial_company: bool = False  # lenders: debt checks are "not applicable"
     thresholds_version: str = ""
 
@@ -402,7 +426,7 @@ class RedFlags(BaseModel):
 class RiskLevelReason(BaseModel):
     """One reason behind the risk level: a red flag or a risk, with points and anchor."""
 
-    source: Literal["redflag", "risk"]
+    source: Literal["redflag", "risk", "override"]
     id: str
     label: str
     points: int
@@ -423,6 +447,7 @@ class RiskLevel(BaseModel):
     corpus_n: int
     provisional: bool  # thresholds are placeholders until B2.6b
     behind_click: bool
+    forced_by: list[str] = Field(default_factory=list)  # severe override ids (C3.2)
     disclaimer_key: str = "risklevel.disclaimer"
 
 

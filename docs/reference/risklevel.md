@@ -4,8 +4,7 @@
 
 How the low / medium / high level is worked out (B02 §7.4). The level always carries its disclaimer; it is not a rating or advice.
 
-!!! warning "Provisional"
-    The thresholds and reference scores below are placeholders made up for development, not measured. A local run over 2018–2023 IPOs replaces them.
+Computed on 1a32ec6 over 165 past IPOs.
 
 ## Points
 
@@ -21,24 +20,24 @@ The score is the points divided by the most points the checks that could run wer
 
 | Level | Score |
 | --- | --- |
-| Low | below 0.2 |
-| Medium | 0.2 to below 0.4 |
-| High | 0.4 and above |
+| Low | below 0.2857 |
+| Medium | 0.2857 to below 0.4167 |
+| High | 0.4167 and above |
 
 ## Reference scores
 
 | Percentile | Score |
 | --- | --- |
 | 0 | 0.0 |
-| 10 | 0.08 |
-| 20 | 0.13 |
-| 30 | 0.17 |
-| 40 | 0.2 |
-| 50 | 0.25 |
-| 60 | 0.3 |
-| 70 | 0.35 |
-| 80 | 0.4 |
-| 90 | 0.5 |
-| 100 | 0.8 |
+| 10 | 0.125 |
+| 20 | 0.2114 |
+| 30 | 0.2778 |
+| 40 | 0.3125 |
+| 50 | 0.35 |
+| 60 | 0.3889 |
+| 70 | 0.4286 |
+| 80 | 0.4555 |
+| 90 | 0.5678 |
+| 100 | 0.75 |
 
 Shown behind a click: `false`.

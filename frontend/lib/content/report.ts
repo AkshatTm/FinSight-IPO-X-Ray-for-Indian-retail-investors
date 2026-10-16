@@ -28,12 +28,13 @@ export const REPORT = {
   "cmp.noPeers": en("The document doesn't name listed peers."),
   "cmp.noData": en("Not enough data to compare."),
   "cmp.issuer": en("This IPO"), // builder draft
-  "cmp.provisional": en("Provisional: the past-IPO figures are placeholders until they are computed from 2018–2023 IPOs."), // builder draft
+  "cmp.provisional": en("Some past-IPO figures are not available for this comparison, so a few metrics are left out."),
   // §5.1 header and §5.2 tabs
   "rep.analysed": en("Analysed {date}"),
   "rep.share": en("Share"),
   "rep.copied": en("Link copied"), // builder draft
   "rep.ask": en("Ask"),
+  "rep.workspace": en("Facts, pages and Ask"),
   "rep.companion": en("Final prospectus also analysed → View"),
   "rep.pages": en("{n} pages"), // builder draft
   "tab.overview": en("Overview"),
@@ -53,6 +54,9 @@ export const REPORT = {
   "rl.show": en("Show the risk level"),
   "rl.why": en("Why"),
   "rl.reason": en("{label} · +{points}"),
+  "rl.override": en("{label} · sets the level to High"),
+  "rf.severe.h": en("Serious findings"),
+  "rf.severe.sub": en("Any one of these sets the risk level to High, whatever the other checks say."),
   "rl.disclaimer": en(
     "This level summarises the risks this document discloses, compared with past Indian IPOs. It is not a recommendation to apply, buy or avoid, and it does not predict how the shares will perform.",
   ),

@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from bisect import bisect_left
 from collections.abc import Sequence
+from datetime import date
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -19,7 +20,14 @@ from typing import Any
 import yaml
 
 from finsight.core.config import project_root
-from finsight.core.schemas import Level, RedFlag, Risk, RiskLevel, RiskLevelReason
+from finsight.core.schemas import (
+    Level,
+    RedFlag,
+    Risk,
+    RiskLevel,
+    RiskLevelReason,
+    SevereOverride,
+)
 from finsight.storage import Storage, doc_key, get_json, put_json
 
 RISKLEVEL_FILE = "risklevel.json"
@@ -66,12 +74,15 @@ def compute(
     risks: Sequence[Risk],
     cfg: dict[str, Any] | None = None,
     reference_scores: Sequence[float] | None = None,
+    overrides: Sequence[SevereOverride] = (),
 ) -> RiskLevel:
     """Points from red flags and rare serious risks, normalised by available checks.
 
     ``reference_scores`` are the scores of the IPOs in the rolling reference window for this
     document's date (``finsight.risklevel.reference.window_scores``). When given, the percentile
-    and ``corpus_n`` come from them instead of the stored deciles.
+    and ``corpus_n`` come from them instead of the stored deciles. ``overrides`` are the severe
+    overrides of the document (C3.2): any one forces the high level, whatever the points say; the
+    score and percentile are still computed from the points.
     """
     c = cfg if cfg is not None else load_config()
     quantiles, corpus_n = c["reference_quantiles"], int(c["corpus_n"])
@@ -120,9 +131,16 @@ def compute(
         pts["max_risk_points"]
     )
     score = round(points / max_points, 4) if max_points else 0.0
-    reasons.sort(key=lambda x: (-x.points, x.source != "redflag", x.id))
+    for o in overrides:
+        reasons.append(
+            RiskLevelReason(
+                source="override", id=o.id, label=o.title, points=0, link=f"#severe-{o.id}"
+            )
+        )
+    reasons.sort(key=lambda x: (x.source != "override", -x.points, x.source != "redflag", x.id))
     return RiskLevel(
-        level=level_for(score, c["thresholds"]),
+        level="high" if overrides else level_for(score, c["thresholds"]),
+        forced_by=[o.id for o in overrides],
         points=points,
         max_points=max_points,
         score=score,
@@ -136,18 +154,45 @@ def compute(
     )
 
 
-def build(storage: Storage, doc_id: str, cfg: dict[str, Any] | None = None) -> RiskLevel:
+def build(
+    storage: Storage,
+    doc_id: str,
+    cfg: dict[str, Any] | None = None,
+    *,
+    company: str | None = None,
+    scores_path: Path | None = None,
+    as_of: date | None = None,
+) -> RiskLevel:
     """The ``risk_level`` stage: read ``redflags.json`` and ``risks.json``, write
-    ``risklevel.json``. A missing file counts as no flags or no risks."""
+    ``risklevel.json``. A missing file counts as no flags or no risks.
+
+    With ``scores_path`` (the reference IPOs' scores, ``reference_scores.csv``) the percentile is
+    placed in the product reference window for ``as_of`` (default today), the issuer left out;
+    without it the stored deciles are used.
+    """
     flags_key, risks_key = doc_key(doc_id, "redflags.json"), doc_key(doc_id, "risks.json")
     flags_doc = get_json(storage, flags_key) if storage.exists(flags_key) else {"flags": []}
     flags = [RedFlag.model_validate(f) for f in flags_doc.get("flags", [])]
+    overrides = [SevereOverride.model_validate(o) for o in flags_doc.get("severe_overrides", [])]
     risks = (
         [Risk.model_validate(r) for r in get_json(storage, risks_key)]
         if storage.exists(risks_key)
         else []
     )
-    result = compute(flags, risks, cfg)
+    reference: list[float] | None = None
+    if scores_path is not None and scores_path.exists():
+        from finsight.risklevel.reference import read_scores, window_scores
+        from finsight.splits import load_splits
+
+        splits = load_splits(project_root() / "configs" / "splits.yaml")
+        reference = window_scores(
+            read_scores(scores_path),
+            splits,
+            as_of or date.today(),
+            kind="product",
+            exclude_company=company or None,
+        )
+    result = compute(flags, risks, cfg, reference_scores=reference, overrides=overrides)
     put_json(storage, doc_key(doc_id, RISKLEVEL_FILE), result.model_dump(mode="json"))
     return result
 

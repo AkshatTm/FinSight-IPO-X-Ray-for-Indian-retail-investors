@@ -41,8 +41,9 @@ from finsight.api.events import (
     VerdictEvent,
 )
 from finsight.chat.objects import objects_passage
+from finsight.chat.redflags import redflags_passage, wants_redflags
 from finsight.chat.traces import TraceStore, new_trace_id
-from finsight.core.schemas import CheckResult, Language, Passage, Trace
+from finsight.core.schemas import CheckResult, Language, Passage, RedFlags, Trace
 from finsight.generate import (
     LLMUnavailable,
     OllamaBackend,
@@ -50,7 +51,7 @@ from finsight.generate import (
     build_prompt,
     respond,
 )
-from finsight.guard import check_question, facts_payload
+from finsight.guard import SEBI_NOTE, check_question, facts_payload, is_red_flag_question
 from finsight.retrieve import Hit, SearchResult, wants_objects
 from finsight.verify import NumberVerdict, verify_answer
 
@@ -61,6 +62,15 @@ Pin = Callable[[str], Passage | None]  # ipo id -> the objects-of-the-offer pass
 
 _CITATION = re.compile(r"\[(\d+)\]")
 _DONE = object()
+
+
+CPU_RERANK_POOL = 10  # C3.7: on CPU the reranker costs ~1.3 s per passage (pool 20: 43 s, 10: 26 s)
+
+
+def rerank_pool(pool: int, device: str | None) -> int:
+    """The rerank pool for the device the cross-encoder runs on: capped on CPU, where a full
+    pool makes one answer take over 40 s (``scripts/profile_retrieval.py``)."""
+    return min(pool, CPU_RERANK_POOL) if device == "cpu" else pool
 
 
 def _ms(start: float) -> int:
@@ -124,6 +134,7 @@ class ChatOrchestrator:
     budget_chars: int
     max_tokens: int = 300
     pin_objects: Pin | None = None
+    pin_flags: Pin | None = None  # uploads: the report's red-flag checks (chat/redflags.py)
 
     @classmethod
     def from_settings(cls, profile: str | None = None) -> ChatOrchestrator:
@@ -147,7 +158,7 @@ class ChatOrchestrator:
             settings.paths.processed_dir,
             embedder=embedder,
             reranker=reranker,
-            pool=settings.retrieve.rerank_top_n,
+            pool=rerank_pool(settings.retrieve.rerank_top_n, getattr(reranker, "device", None)),
             thresholds=settings.retrieve.abstain_thresholds,
             top_k=settings.retrieve.final_top_k,
         )
@@ -178,6 +189,12 @@ class ChatOrchestrator:
             except FileNotFoundError:
                 return None
 
+        def pin_flags(ipo_id: str) -> Passage | None:
+            path = settings.paths.data_dir / "store" / "docs" / ipo_id / "redflags.json"
+            if not path.exists():  # showcase IPOs have no stored report
+                return None
+            return redflags_passage(ipo_id, RedFlags.model_validate_json(path.read_bytes()))
+
         return cls(
             search=retriever.search,
             llm=get_llm(settings.llm),
@@ -185,6 +202,7 @@ class ChatOrchestrator:
             facts=facts,
             budget_chars=max(1500, (settings.llm.num_ctx - 700) * 3),
             pin_objects=pin_objects,
+            pin_flags=pin_flags,
         )
 
     # ------------------------------------------------------------------------------------
@@ -245,6 +263,8 @@ class ChatOrchestrator:
         yield stage("retrieving", "end", timings["retrieving"])
         hits = result.hits
         pinned = self.pin_objects(ipo_id) if self.pin_objects and wants_objects(question) else None
+        if pinned is None and self.pin_flags and wants_redflags(question):
+            pinned = self.pin_flags(ipo_id)
         if (
             pinned is not None
         ):  # ADR-053: the objects passage answers alone; neighbours only distract
@@ -315,6 +335,11 @@ class ChatOrchestrator:
         if response.prompt:  # type: ignore[attr-defined]
             prompt_text = response.prompt.text  # type: ignore[attr-defined]
         n_used = len(response.passages)  # type: ignore[attr-defined]
+        if status == "answered" and is_red_flag_question(question):
+            # C3.7 (Akshat): red flags are answered from the document, with the no-advice note;
+            # appended after the text so the citation and verdict spans stay where they are.
+            note = SEBI_NOTE["hi" if language == "hi" else "en"]
+            text = f"{text}\n\n{note}"
         citations = [
             Citation(n=int(m.group(1)), char_start=m.start(), char_end=m.end())
             for m in _CITATION.finditer(text)

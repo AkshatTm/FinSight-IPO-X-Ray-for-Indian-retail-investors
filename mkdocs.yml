@@ -131,6 +131,7 @@ nav:
       - FinSight Bench: phase3/C04_BENCHMARK.md
       - Roadmap: phase3/C05_ROADMAP.md
       - Execution plan: phase3/C_EXECUTION_PLAN.md
+      - Docs authority: phase3/C09_DOCS_AUTHORITY.md
       - Deployment: phase3/C08_DEPLOY.md
       - Decisions (C-ADRs): phase3/C_DECISIONS.md
   - Project:

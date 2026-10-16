@@ -1,0 +1,20 @@
+risk_id,category,notes
+aastha-spintex-2026#r32,financial,Objects of the Issue funding; use-of-proceeds rule -> financial
+ardee-industries-2026#r33,operations,Key personnel -> operations (tie-break)
+augmont-enterprises-2026#r61,promoters_governance,"Acquisitions without valuation reports: governance issue, not litigation"
+innovision-2026#r23,regulatory,"GST return filing delays: compliance, same as RoC/GSTR filing delays (row with Form MGT-14) which is regulatory"
+innovision-2026#r36,financial,Delayed statutory dues (PF/ESI) -> financial (tie-break)
+innovision-2026#r62,regulatory,Shareholder rights under Indian law -> regulatory (tie-break)
+meesho-2025#r10,customers_suppliers,Risk is demand at the sellers who are the platform's customers
+meesho-2025#r21,financial,Auditor report modifications -> financial (auditor/CARO tie-break)
+meesho-2025#r45,financial,"Non-GAAP / operational measures disclaimer -> financial, like the other non-GAAP rows"
+rays-of-belief-2026#r10,operations,Brand awareness -> operations (brand tie-break)
+rays-of-belief-2026#r45,regulatory,Listed-company compliance burden; same theme as limited public-company history rows (regulatory)
+rays-of-belief-2026#r64,regulatory,Pre-emptive rights = shareholder rights -> regulatory (tie-break)
+sai-parenteral-s-2026#r46,financial,Delayed statutory dues -> financial (tie-break)
+sai-parenteral-s-2026#r9,regulatory,Government blacklisting is an administrative/regulatory action
+technocraft-ventures-2026#r79,regulatory,Pre-emptive rights = shareholder rights -> regulatory (tie-break)
+turtlemint-fintech-solutions-2026#r82,market_macro,Offer mechanics (bid withdrawal) grouped with listing/price risks in market_macro
+turtlemint-fintech-solutions-2026#r84,market_macro,Listing timing; identical risk elsewhere in this sheet is market_macro
+turtlemint-fintech-solutions-2026#r86,market_macro,Offer mechanics (minimum subscription) grouped with listing/price risks in market_macro
+aastha-spintex-2026#r51,technology_data,"Kept technology_data (IP). Title mentions ""reputation"" as a consequence, so the brand/reputation remap regex would wrongly move it to operations"

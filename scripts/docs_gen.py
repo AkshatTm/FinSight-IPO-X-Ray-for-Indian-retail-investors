@@ -452,6 +452,46 @@ def _ladder_block(rung: str) -> str:
     return "".join(rows)
 
 
+def _extractor_v2_block() -> str:
+    """C2.7: v1 and v2 side by side on the v3 dev rows, then the gold ladder (reporting only)."""
+    cmp = _load("c/extractor_v1_on_v3dev.json")
+    base = _load("c/extractor_v2/extractor_baseline.json")
+    s = cmp["summary"]
+    rows = [
+        f"v3 dev rows: {cmp['n_dev']} questions from IPOs neither version trained on "
+        "(the labels there are rule-derived `rules_cover_seed` values, so this measures agreement "
+        "with the rules, not human-checked accuracy). Mean ± std over 3 seeds.\n\n",
+        "| Model | EM | F1 | Has-answer F1 | No-answer acc |\n| --- | --- | --- | --- | --- |\n",
+        f"| Pretrained, no fine-tuning | {base['EM']:.3f} | {base['F1']:.3f} | "
+        f"{base['HasAns_F1']:.3f} | {base['NoAns_acc']:.3f} |\n",
+    ]
+    for tag, label in (
+        ("v1_on_v3_dev", "v1 (2009-2023 weak labels)"),
+        ("v2_on_v3_dev", "**v2 (+2024+ cover seeds)**"),
+    ):
+        cells = " | ".join(
+            f"{s[tag][n]['mean']:.3f} ± {s[tag][n]['std']:.3f}"
+            for n in ("EM", "F1", "HasAns_F1", "NoAns_acc")
+        )
+        rows.append(f"| {label} | {cells} |\n")
+    gold = [
+        "\n| Gold ladder (10 IPOs, mean over seeds) | Split | Full NVM | Body-only NVM |\n| --- | --- | --- | --- |\n"
+    ]
+    for name, label in (("qa_finetuned", "v1"), ("qa_finetuned_v2", "v2")):
+        files = sorted(glob.glob(str(EVAL / "ladder" / f"{name}_seed*.json")))
+        if name == "qa_finetuned":
+            files = [f for f in files if "_v2_" not in f]
+        runs = [json.loads(Path(f).read_text(encoding="utf-8")) for f in files]
+        for split in ("dev", "test"):
+            if runs:
+                full = sum(r["metrics"][split]["full"]["nvm"] for r in runs) / len(runs)
+                body = sum(r["metrics"][split]["body_only"]["nvm"] for r in runs) / len(runs)
+                gold.append(
+                    f"| {label} ({len(runs)} seeds) | {split} | {full:.3f} | {body:.3f} |\n"
+                )
+    return "".join(rows + gold)
+
+
 def _ci(pair: list[float]) -> str:
     return f"[{pair[0]:.2f}, {pair[1]:.2f}]"
 
@@ -638,7 +678,9 @@ def _classifier_block() -> str:
     path = ROOT / "eval_results" / "b" / "classifier_base.json"
     if not path.exists():
         return "The base classifier has not been trained yet; the numbers appear here after C2.4."
-    r = json.loads(path.read_text(encoding="utf-8"))
+    full = json.loads(path.read_text(encoding="utf-8"))
+    r = full.get("category", full)
+    band = full.get("seriousness")
     rows = [f"| {s} | {f:.3f} |" for s, f in r["dev_macro_f1_by_seed"].items()]
     sd = "n/a (one seed)" if r["dev_macro_f1_sd"] is None else f"{r['dev_macro_f1_sd']:.3f}"
     lines = [
@@ -654,7 +696,100 @@ def _classifier_block() -> str:
     if "tfidf_dev_macro_f1" in r:
         verdict = "beats" if r["beats_tfidf"] else "does **not** beat"
         lines += ["", f"The mean {verdict} the TF-IDF baseline ({r['tfidf_dev_macro_f1']:.3f})."]
+    if "test_macro_f1_by_seed" in r:
+        t = r["test_best_seed"]
+        lines += [
+            "",
+            f"Gold-150 ({r['test_label_source']}, scored once at the epoch dev chose): macro-F1 "
+            f"{r['test_macro_f1_mean']:.3f} mean over seeds "
+            f"({', '.join(f'{k}: {v:.3f}' for k, v in r['test_macro_f1_by_seed'].items())}); "
+            f"best seed {r['best_seed']}: accuracy {t['accuracy']:.3f}, macro-F1 {t['macro_f1']:.3f}.",
+        ]
+    if band:
+        m, tb = band["dev_mean"], band["test_best_seed"]
+        lines += [
+            "",
+            f"Seriousness band ({band['bands']}), {band['n_seeds']} seeds, dev mean: macro-F1 "
+            f"{m['macro_f1']:.3f}, MAE {m['mae']:.3f}, within-1 {m['within_1']:.3f}, severe recall "
+            f"{m['severe_recall']:.3f} (precision {m['severe_precision']:.3f}). Gold-150, best "
+            f"seed: macro-F1 {tb['macro_f1']:.3f}, MAE {tb['mae']:.3f}, within-1 "
+            f"{tb['within_1']:.3f}, severe recall {tb['severe_recall']:.2f} on only "
+            f"{tb['severe_support']} severe rows. {band['test_label_source']}.",
+        ]
     return "\n".join(lines) + "\n"
+
+
+# 29,677 risks in the bank / 440 IPOs (C2.1, PROGRESS.md); used only for the wall-clock line.
+RISKS_PER_IPO = 29677 / 440
+
+
+def _student_block() -> str:
+    c = ROOT / "eval_results" / "c"
+    tm, vs = c / "student_train_metrics.json", c / "student_vs_base_gold50.json"
+    if not (tm.exists() and vs.exists()):
+        return "The student has not been trained yet; the numbers appear here after C2.5."
+    m = json.loads(tm.read_text(encoding="utf-8"))
+    g = json.loads(vs.read_text(encoding="utf-8"))
+    lines = [
+        f"Base `{m['model']}`, LoRA, {m['precision']}, {m['epochs']} epochs, {m['steps']} steps "
+        f"on {m['gpu']} in {m['train_runtime_s']} s; {m['n_train']} training and {m['n_dev']} dev "
+        f"pairs; dev loss {m['dev_loss']:.3f}; Q4_K_M GGUF {m['gguf_mb']} MB.",
+        "",
+        f"Product post-checks on gold-50 ({g['split']}, seed {g['seed']}, single run):",
+        "",
+        "| System | Passed | Mean words | Over 60 words | Failures |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for name, r in g["systems"].items():
+        lines.append(
+            f"| {name} (`{r['model']}`) | {r['passed']}/{g['n']} | {r['mean_words']} "
+            f"| {r['over_60_words']} | {r['failure_reasons'] or 'none'} |"
+        )
+    ev = c / "student_eval.json"
+    if ev.exists():
+        e = json.loads(ev.read_text(encoding="utf-8"))
+        cpu, r19, r20 = e["cpu"], e["e19_readability"], e["e20_checks"]
+        d, gd = r19["dev_sample"], r19["gold50"]
+        lines += [
+            "",
+            f"CPU only (Ollama, no GPU layers; {cpu['n']} dev risks): "
+            f"{cpu['seconds_per_risk_mean']} s per risk on average "
+            f"(median {cpu['seconds_per_risk_median']}, max {cpu['seconds_per_risk_max']}), "
+            f"{cpu['tokens_per_s']} tokens/s. At the corpus average of "
+            f"{RISKS_PER_IPO:.0f} risks per IPO that is about "
+            f"{cpu['seconds_per_risk_mean'] * RISKS_PER_IPO / 60:.0f} minutes per IPO "
+            "if every risk is simplified one after another on the CPU.",
+            "",
+            f"Readability (FKGL, E19): original {d['fkgl_original']} to rewrite "
+            f"{d['fkgl_rewrite']} on dev (drop {d['fkgl_drop']}, n={d['n']}); gold-50: "
+            f"{gd['fkgl_original']} to {gd['fkgl_rewrite']} (drop {gd['fkgl_drop']}).",
+            "",
+            f"Number and certainty checks (E20): {e20_line(r20['dev_sample'], 'dev')}; "
+            f"{e20_line(r20['gold50'], 'gold-50')}.",
+        ]
+    hp = c / "simplify_gold50.json"
+    if hp.exists():
+        h = json.loads(hp.read_text(encoding="utf-8"))
+        lines += [
+            "",
+            "Human rating, gold-50 (E18; blind, shuffled, one rater):",
+            "",
+            "| System | Faithful yes (95% CI) | Partly | Plain English (1-5) | Passed checks |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+        for name, r in h["systems"].items():
+            lo, hi = r["faithful_yes_ci95"]
+            lines.append(
+                f"| {name} | {r['faithful_yes_share']:.2f} ({lo:.2f}-{hi:.2f}) "
+                f"| {r['faithful'].get('partly', 0)}/{r['rated']} "
+                f"| {r['plain_english_mean']:.2f} | {r['passed_checks_share']:.2f} |"
+            )
+    return "\n".join(lines) + "\n"
+
+
+def e20_line(r: dict, label: str) -> str:
+    """One E20 summary phrase: rejected count, rate and reasons."""
+    return f"{label}: {r['rejected']}/{r['n']} rejected {r['reasons'] or ''}".rstrip()
 
 
 def _universe_block() -> str:
@@ -671,6 +806,104 @@ def _universe_block() -> str:
     return "".join(out)
 
 
+def _bench_cell(m: dict[str, Any] | None) -> str:
+    if not m or m.get("mean") is None:
+        return "—"
+    return f"{m['mean']:.2f} [{m['low']:.2f}, {m['high']:.2f}] (n {m['n']})"
+
+
+BENCH_ORDER = ("rules_v1", "student", "base", "teacher", "opus", "opus_api", "chatgpt_go")
+
+
+def _bench_block() -> str:
+    path = EVAL / "c4" / "bench_summary.json"
+    if not path.exists():
+        return "Not run yet."
+    data = json.loads(path.read_text(encoding="utf-8"))
+    out = [
+        "| System | A: value match (NVM) | A: page agreement | B: red-flag status | "
+        "C: correct (answerable) | C: abstains (unanswerable) | G: refuses advice | "
+        "D: rewrite passes checks | C: median s / question |\n",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n",
+    ]
+    for name in BENCH_ORDER:
+        s = data["systems"].get(name)
+        if s is None:
+            continue
+        lat = s["C"]["latency"].get("median_s")
+        cells = [
+            s["A"]["nvm"], s["A"]["page_agreement"], s["B"]["status_accuracy"],
+            s["C"]["correct_answerable"], s["C"]["abstention_unanswerable"],
+            s["G"]["refusal_pass"], s["D"]["post_check_pass"],
+        ]  # fmt: skip
+        row = " | ".join(_bench_cell(c) for c in cells)
+        out.append(f"| {name} | {row} | {'—' if lat is None else lat} |\n")
+    if data.get("pending_systems"):
+        out.append(f"\nNot run yet: {', '.join(data['pending_systems'])}.\n")
+    if data.get("incomplete_systems"):
+        part = ", ".join(f"{s} ({n} prompts)" for s, n in data["incomplete_systems"].items())
+        out.append(f"\nRunning, not scored until complete: {part}.\n")
+    comps = []
+    for pair, metrics in sorted(data.get("comparisons", {}).items()):
+        parts = [
+            f"{k} {v['diff']:+.2f} [{v['low']:+.2f}, {v['high']:+.2f}] {v['verdict']}"
+            for k, v in metrics.items()
+            if v
+        ]
+        if parts:
+            comps.append(f"- {pair}: " + "; ".join(parts) + "\n")
+    if comps:
+        out.append("\nPaired differences (same items, IPO-cluster bootstrap):\n\n" + "".join(comps))
+    if data.get("scorer_changed_since_freeze"):
+        changed = ", ".join(data["scorer_changed_since_freeze"])
+        out.append(f"\nScorer files changed since the freeze: {changed}.\n")
+    if data.get("post_freeze_scorer_changes"):
+        out.append("\nScorer changes made after the freeze (when, and what they touch):\n\n")
+        out += [f"- {_esc(c)}\n" for c in data["post_freeze_scorer_changes"]]
+    flat = {n: s["A"].get("n_flat_format_fields") for n, s in data["systems"].items()}
+    if any(flat.values()):
+        counts = ", ".join(f"{n} {v}" for n, v in flat.items() if v)
+        out.append(
+            f"\nTask A fields read from replies keyed by field id (not a fields list): {counts}.\n"
+        )
+    out.append("\nEvery number is a single run (one answer per prompt, temperature 0).\n")
+    return "".join(out)
+
+
+def _bench_what(r: dict[str, Any]) -> str:
+    """One failure in words, from the scored row only."""
+    task = r["task"]
+    if task == "A":
+        got = r.get("pred_value") or r.get("pred_status") or "nothing"
+        return (f"`{r['key']}@{r['period']}`: gave {_short(got, 40)} (p {r.get('pred_page')}), "
+                f"gold {_short(r.get('gold_value'), 40)} (p {r.get('gold_page')})")  # fmt: skip
+    if task == "B":
+        return f"`{r['rf']}`: {r['pred']}, gold {r['gold']}" + (
+            " (serious)" if r["serious"] else ""
+        )
+    if task == "C":
+        gold = r.get("gold_value") or "none (unanswerable)"
+        return f"{r['kind']} → {r['outcome']}; gold {_short(gold, 30)}; said: {_short(r.get('answer'), 110)}"
+    if task == "D":
+        return (
+            f"{r['reason']}: {_short(r.get('detail'), 50)}; rewrite: {_short(r.get('rewrite'), 90)}"
+        )
+    hits = ", ".join(r.get("advice") or []) or "no refusal"
+    return f"{r.get('language')}: {_short(hits, 40)}; said: {_short(r.get('answer'), 110)}"
+
+
+def _bench_failures_block() -> str:
+    path = EVAL / "c4" / "bench_failures.json"
+    if not path.exists():
+        return "Not run yet."
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    out = ["| # | System | Task | Item | What happened |\n", "| --- | --- | --- | --- | --- |\n"]
+    for i, r in enumerate(rows, 1):
+        what = " ".join(_bench_what(r).split())  # answers carry newlines; a table row cannot
+        out.append(f"| {i} | {r['system']} | {r['task']} | `{r['item_id']}` | {what} |\n")
+    return "".join(out)
+
+
 BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/evaluation.md": {
         "results": _results_block,
@@ -684,6 +917,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
         ),
         "ladder": lambda: _ladder_block("qa_finetuned"),
         "failures": lambda: _failures_block("qa_finetuned"),
+        "v2": _extractor_v2_block,
     },
     "docs/model_cards/bilstm_crf.md": {
         "training": lambda: _training_block(
@@ -700,7 +934,9 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/datasheets/new_ipos.md": {"universe": _universe_block},
     "docs/phase2/datasheets/teacher_outputs.md": {"run": _teacher_block},
     "docs/model_cards/risk_classifier.md": {"results": _classifier_block},
-    "report/07_results.md": {"phase2": _phase2_block},
+    "docs/model_cards/risk_simplifier.md": {"results": _student_block},
+    "report/07_results.md": {"phase2": _phase2_block, "bench": _bench_block},
+    "docs/phase3/bench_error_analysis.md": {"failures": _bench_failures_block},
 }
 
 

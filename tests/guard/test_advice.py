@@ -161,3 +161,40 @@ def test_sounds_evaluative_but_is_a_fact() -> None:
         "Minimum kitne shares ke liye apply kar sakte hai?",
     ):
         assert not check_advice(question).blocked, question
+
+
+# C3.7 (Akshat's decision A): red flags are facts. "Is it a red flag, should I skip it?" still asks
+# what to do, and "green flags" is an opinion request.
+RED_FLAG_FACTS = [
+    "What are the red flags in this IPO?",
+    "Does the RHP list any red flags about the promoters?",
+    "Any red-flag in the financials?",
+    "Is the offer for sale a red flag?",
+    "इस IPO में रेड फ्लैग क्या हैं?",
+    "Ather ke red flags kya hain?",
+]
+RED_FLAG_STILL_ADVICE = [
+    "Is the offer for sale a red flag, should I skip it?",
+    "Are there red flags, so should I apply?",
+    "Red flags dekhke bataiye ki apply karna chahiye ya nahi.",
+    "What are the green flags of this IPO?",
+]
+
+
+@pytest.mark.parametrize("question", RED_FLAG_FACTS)
+def test_red_flag_questions_are_not_blocked(question: str) -> None:
+    from finsight.guard import is_red_flag_question
+
+    assert not check_advice(question).blocked
+    assert is_red_flag_question(question)
+
+
+@pytest.mark.parametrize("question", RED_FLAG_STILL_ADVICE)
+def test_red_flag_questions_that_ask_what_to_do_stay_blocked(question: str) -> None:
+    assert check_advice(question).blocked
+
+
+def test_a_plain_question_is_not_a_red_flag_question() -> None:
+    from finsight.guard import is_red_flag_question
+
+    assert not is_red_flag_question("What is the price band?")

@@ -364,6 +364,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/lab/c/bench": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lab C Bench
+         * @description Model Lab, Phase 3: FinSight Bench v1 scores per system and task (C4.1).
+         */
+        get: operations["lab_c_bench_api_lab_c_bench_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/glossary": {
         parameters: {
             query?: never;
@@ -1103,6 +1123,8 @@ export interface components {
              * @enum {string}
              */
             xray_status: "ready" | "building" | "missing";
+            /** Report Doc Id */
+            report_doc_id?: string | null;
         };
         /**
          * Job
@@ -1387,6 +1409,8 @@ export interface components {
         RedFlags: {
             /** Flags */
             flags?: components["schemas"]["RedFlag"][];
+            /** Severe Overrides */
+            severe_overrides?: components["schemas"]["SevereOverride"][];
             /**
              * Financial Company
              * @default false
@@ -1504,6 +1528,8 @@ export interface components {
             provisional: boolean;
             /** Behind Click */
             behind_click: boolean;
+            /** Forced By */
+            forced_by?: string[];
             /**
              * Disclaimer Key
              * @default risklevel.disclaimer
@@ -1519,7 +1545,7 @@ export interface components {
              * Source
              * @enum {string}
              */
-            source: "redflag" | "risk";
+            source: "redflag" | "risk" | "override";
             /** Id */
             id: string;
             /** Label */
@@ -1566,6 +1592,32 @@ export interface components {
             printed_start_page?: string | null;
             /** End Page */
             end_page: number;
+        };
+        /**
+         * SevereOverride
+         * @description A fact that puts the risk level in the high band whatever the model says (C3.2).
+         *
+         *     ``evidence`` carries the page and the document's own sentence; ``mentions`` counts the
+         *     sentences of that kind in the document.
+         */
+        SevereOverride: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /** Sentence */
+            sentence: string;
+            evidence: components["schemas"]["PageEvidence"];
+            /**
+             * Rule
+             * @default
+             */
+            rule: string;
+            /**
+             * Mentions
+             * @default 1
+             */
+            mentions: number;
         };
         /**
          * SimplifyQueued
@@ -2862,6 +2914,46 @@ export interface operations {
             path: {
                 name: "segmentation" | "summary" | "redflags" | "classifier" | "seriousness" | "simplify" | "readability" | "novelty" | "risklevel" | "latency" | "cost";
             };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    lab_c_bench_api_lab_c_bench_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;

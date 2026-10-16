@@ -25,7 +25,7 @@ checks:
     concern_above_pct: "80"
   RF05:
     title: What insiders paid
-    rule: "The IPO price divided by the average price selling shareholders paid. Watch at 5 times or more, Concern at 20 times or more."
+    rule: "The IPO price divided by the average price the promoters paid. Watch at 5 times or more, Concern at 20 times or more."
     watch_at_least: "5"
     concern_at_least: "20"
   RF06:

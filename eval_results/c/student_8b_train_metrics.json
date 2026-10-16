@@ -1,0 +1,13 @@
+{
+ "model": "Qwen/Qwen3-8B",
+ "precision": "bf16",
+ "epochs": 2,
+ "smoke": false,
+ "n_train": 10307,
+ "n_dev": 527,
+ "dev_loss": 0.34182754158973694,
+ "train_runtime_s": 6080,
+ "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+ "gguf_mb": 4795,
+ "steps": 1290
+}

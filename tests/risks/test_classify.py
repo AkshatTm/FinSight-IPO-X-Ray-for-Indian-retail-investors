@@ -14,7 +14,7 @@ from finsight.risks.classify import (
     split_by_company,
     write_split,
 )
-from finsight.risks.clf_metrics import company_bucket, scores
+from finsight.risks.clf_metrics import band_scores, company_bucket, scores
 from finsight.risks.teacher import CATEGORIES
 
 WORDS = {
@@ -137,7 +137,10 @@ def test_cli_split_then_baseline(tmp_path: Path) -> None:
     teacher = tmp_path / "teacher"
     teacher.mkdir()
     examples = fake_set()
-    with (teacher / "risks.jsonl").open("w") as r, (teacher / "labels.jsonl").open("w") as lab:
+    with (
+        (teacher / "risks.jsonl").open("w") as r,
+        (teacher / "labels.clean.jsonl").open("w") as lab,
+    ):
         for e in examples:
             r.write(json.dumps({"risk_id": e.risk_id, "company": e.company, "body": e.text}) + "\n")
             lab.write(json.dumps({"risk_id": e.risk_id, "category": e.label}) + "\n")
@@ -160,3 +163,39 @@ def test_cli_split_then_baseline(tmp_path: Path) -> None:
     result = json.loads(out.read_text())
     assert result["model"] == "tfidf-logreg"
     assert result["dev"]["macro_f1"] == result["gold"]["macro_f1"]
+
+
+def test_band_scores_mae_within_one_and_severe_recall() -> None:
+    out = band_scores([1, 2, 4, 4, 3], [1, 3, 4, 2, 3])
+    assert out["mae"] == pytest.approx(0.6)
+    assert out["within_1"] == pytest.approx(0.8)
+    assert (out["severe_recall"], out["severe_precision"], out["severe_support"]) == (0.5, 1.0, 2)
+    assert out["labels"] == ["1", "2", "3", "4"]
+    assert band_scores([1, 2], [1, 2])["severe_recall"] is None
+
+
+def test_split_carries_bands_and_gold_test(tmp_path: Path) -> None:
+    teacher = tmp_path / "teacher"
+    teacher.mkdir()
+    rows = [("x#r1", "A", "financial", 2), ("y#r1", "B", "operations", 4)]
+    with (
+        (teacher / "risks.jsonl").open("w") as r,
+        (teacher / "labels.clean.jsonl").open("w") as lab,
+    ):
+        for rid, company, cat, band in rows:
+            r.write(json.dumps({"risk_id": rid, "company": company, "body": "text"}) + "\n")
+            lab.write(
+                json.dumps({"risk_id": rid, "category": cat, "seriousness_band": band}) + "\n"
+            )
+    gold = tmp_path / "gold150.jsonl"
+    test_row = {"risk_id": "z#r1", "company": "Z", "text": "t", "label": "financial", "band": 3}
+    gold.write_text(json.dumps(test_row) + "\n")
+    split = tmp_path / "split"
+    args = ["split", "--teacher-dir", str(teacher), "--split-dir", str(split), "--gold", str(gold)]
+    main(args)
+    every = [json.loads(x) for f in ("train", "dev") for x in (split / f"{f}.jsonl").open()]
+    assert sorted(r["band"] for r in every) == [2, 4]
+    assert json.loads((split / "test.jsonl").read_text())["band"] == 3
+    gold.write_text(json.dumps({**test_row, "company": "A"}) + "\n")
+    with pytest.raises(SystemExit, match="gold companies"):
+        main(args)

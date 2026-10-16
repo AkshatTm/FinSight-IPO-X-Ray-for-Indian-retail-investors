@@ -15,10 +15,10 @@ Model work needs `uv sync --group ml`; the docs site needs `uv sync --group docs
 
 ## The loop
 
-The full rules are in [`docs/08_GIT_WORKFLOW.md`](docs/08_GIT_WORKFLOW.md). In short:
+The full rules are in [`docs/08_GIT_WORKFLOW.md`](docs/08_GIT_WORKFLOW.md). For active work, use part IDs and dependency order from [`docs/phase3/C05_ROADMAP.md`](docs/phase3/C05_ROADMAP.md) and [`docs/phase3/C_EXECUTION_PLAN.md`](docs/phase3/C_EXECUTION_PLAN.md). In short:
 
-1. **Issue first**, titled with the roadmap part (for example `B3.2 Compare`).
-2. **Branch** `<type>/<part>-<slug>` from fresh `main`, for example `feat/b3.2-compare`.
+1. **Issue first**, titled with the roadmap part (for example `C2.7 Extractor v2`).
+2. **Branch** `<type>/<part>-<slug>` from fresh `main`, for example `eval/c2.7-extractor-v2`.
 3. **Small green commits** in [Conventional Commits](https://www.conventionalcommits.org/) form, `type(scope): summary`, with `Refs #<issue>`. No "wip" or whitespace-only commits.
 4. **Pull request** that closes the issue; for changes over about 50 lines, put a short plan (at most 15 lines) in the description. Use the template in `.github/pull_request_template.md`.
 5. **CI green, then rebase-merge** (every commit lands on `main`) and delete the branch. Never force-push `main`.

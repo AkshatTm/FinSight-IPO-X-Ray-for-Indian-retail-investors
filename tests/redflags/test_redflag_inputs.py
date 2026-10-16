@@ -20,6 +20,7 @@ from finsight.core.schemas import (
     Money,
     PageEvidence,
     Peer,
+    Placeholder,
     RedFlags,
     SummaryValue,
     XRay,
@@ -68,7 +69,7 @@ GOLD = [
     row("offer_price", "321", "₹", "final", doc="prospectus", page=1),
     row("fresh_issue_amount", "2,626.00", "₹ million", "final", doc="prospectus"),
     row("ofs_amount", "", "", "final", status="not_found"),
-    row("waca_selling_shareholders", "10.70", "₹", "final"),
+    row("waca_promoters", "10.70", "₹", "final"),
     row("promoter_holding_post_pct", "38.2", "%", "final"),
     row("general_purposes_pct_of_fresh", "[●]", "", "final", status="placeholder"),
     row("criminal_cases_any", "yes"),
@@ -100,6 +101,44 @@ def test_gold_rows_become_inputs_with_units_and_evidence() -> None:
         doc_id=DOC, page=210, sentence="Loss for the year (120.5)"
     )
     assert x.evidence["offer_price"].doc_id == "doc_fedcba9876543210"
+
+
+def test_stated_zero_rows_load_as_zero_not_as_missing() -> None:
+    rows = [
+        row("total_borrowings", "0 (Nil)", "₹ million", status="stated_zero"),
+        row("pledged_promoter_pct", "0 (Nil)", "%", "final", status="stated_zero"),
+        row("general_purposes_pct_of_fresh", "N.A. (no fresh issue)", "", "final",
+            status="stated_zero"),
+        row("criminal_cases_any", "Nil in every cell", "count", status="stated_zero"),
+        row("auditor_remarks", "-", "", status="stated_zero"),
+        row("peer_pe_list", "None — no listed peers", "times", "final", status="stated_zero"),
+    ]  # fmt: skip
+    x = inputs_from_gold(DOC, rows)
+    assert x.total_borrowings is not None
+    assert x.total_borrowings.value_inr == Decimal(0)
+    assert (x.pledged_pct, x.general_purposes_pct) == (Decimal(0), Decimal(0))
+    assert (x.criminal_any, x.criminal_cases) == (False, None)
+    assert x.auditor == "none"
+    assert x.peer_median_pe is None
+
+
+def test_annotated_and_multi_part_gold_text_is_read() -> None:
+    rows = [
+        row("pledged_promoter_pct", "0 (Nil)", "%", "final"),
+        row("criminal_cases_any", "Yes — 9 criminal proceedings by the Promoter"),
+        row("issuer_pe", "31.35 (diluted); 29.94 (basic)", "times", "final"),
+        row("peer_pe_list", "Angel One 24.88; 360 One WAM 26.85 (highest 26.85, average 25.9)"),
+        row("litigation_amount_total", "Against Company 1,391.41; against Directors 0.50; "
+            "against Subsidiaries USD 2 million (not converted)", "₹ million"),
+        row("profit_after_tax", "(120.5)", "₹ million"),
+    ]  # fmt: skip
+    x = inputs_from_gold(DOC, rows)
+    assert (x.pledged_pct, x.criminal_any, x.issuer_pe) == (Decimal(0), True, Decimal("31.35"))
+    assert x.peer_median_pe == Decimal("25.865")
+    assert x.litigation_amount is not None
+    assert x.litigation_amount.value_inr == Decimal("1391910000.00")
+    assert x.profit_after_tax[0] is not None
+    assert x.profit_after_tax[0].value_inr == Decimal("-120500000.0")  # "(120.5)" stays negative
 
 
 def test_gold_inputs_through_the_rules() -> None:
@@ -229,3 +268,57 @@ def test_every_showcase_ipo_has_doc_ids_for_the_evidence() -> None:
     docs = script.doc_ids_by_ipo()
     assert len(docs) == 10
     assert all(ids.get("rhp", "").startswith("doc_") for ids in docs.values())
+
+
+def _offer_field(field_id: str, docs_values: list[tuple[str, Any]]) -> FieldResult:
+    cands = [
+        Candidate(
+            field_id=field_id,
+            extractor="rules",
+            doc_type=doc,
+            raw=str(v),
+            value=v,
+            page=3,
+            score=1.0,
+        )
+        for doc, v in docs_values
+    ]
+    return FieldResult(
+        field_id=field_id, chosen=cands[0], candidates=cands, verdict="verified",
+        reason_code="verified", reason="", checks=[],
+    )  # fmt: skip
+
+
+def _summary_for_offer() -> FinancialSummary:
+    return FinancialSummary(doc_id=DOC, built_at=datetime.now(UTC))
+
+
+def test_rf04_ofs_placeholder_is_unknown_not_zero() -> None:
+    """A mostly-OFS RHP prints ₹[●] for the sale amount; it must not read as 0% OFS ("ok")."""
+    blank = Placeholder(raw="[●]")
+    fields = [
+        _offer_field("fresh_issue_size", [("rhp", parse_amount("₹ 1,000 million"))]),
+        _offer_field("ofs_amount", [("rhp", blank)]),
+    ]
+    xray = XRay(ipo_id=DOC, company="Acme", built_at=datetime.now(UTC), fields=fields, derived={})
+    x = inputs_from_summary(_summary_for_offer(), xray)
+    assert x.ofs_blank
+    assert x.ofs_amount is None
+    status, sentence = {f.id: (f.status, f.sentence) for f in evaluate(x).flags}["RF04"]
+    assert status == "not_available"
+    assert "[●]" in sentence
+
+
+def test_offer_values_prefer_the_prospectus_when_both_documents_have_them() -> None:
+    fields = [
+        _offer_field("fresh_issue_size", [("rhp", parse_amount("₹ 500 million"))]),
+        _offer_field(
+            "ofs_amount",
+            [("rhp", Placeholder(raw="[●]")), ("prospectus", parse_amount("₹ 9,000 million"))],
+        ),
+    ]
+    xray = XRay(ipo_id=DOC, company="Acme", built_at=datetime.now(UTC), fields=fields, derived={})
+    x = inputs_from_summary(_summary_for_offer(), xray)
+    assert not x.ofs_blank
+    assert x.ofs_amount is not None
+    assert {f.id: f.status for f in evaluate(x).flags}["RF04"] == "concern"  # 94 % to sellers

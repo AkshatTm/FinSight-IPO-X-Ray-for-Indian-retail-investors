@@ -1,0 +1,288 @@
+{
+ "category": {
+  "model": "microsoft/deberta-v3-base",
+  "n_seeds": 3,
+  "seeds": [
+   13,
+   42,
+   2026
+  ],
+  "dev_macro_f1_by_seed": {
+   "13": 0.8875,
+   "42": 0.8993,
+   "2026": 0.89
+  },
+  "dev_macro_f1_mean": 0.8923,
+  "dev_macro_f1_sd": 0.0062,
+  "best_seed": 42,
+  "selected_on": "dev macro-F1 (gold-150 is for the final report only)",
+  "label_source": "teacher (AI labels); see docs/phase2/datasheets/teacher_outputs.md",
+  "n_train": 9832,
+  "n_dev": 1060,
+  "test_label_source": "human:akshat (gold-150, test-slice IPOs)",
+  "test_macro_f1_by_seed": {
+   "13": 0.9136,
+   "2026": 0.9013,
+   "42": 0.8808
+  },
+  "test_macro_f1_mean": 0.8986,
+  "test_best_seed": {
+   "n": 150,
+   "accuracy": 0.9333333333333333,
+   "macro_f1": 0.8808122372080435,
+   "per_class": {
+    "financial": {
+     "precision": 0.9130434782608695,
+     "recall": 0.9130434782608695,
+     "f1": 0.9130434782608695,
+     "support": 23
+    },
+    "debt_liquidity": {
+     "precision": 0.9,
+     "recall": 1.0,
+     "f1": 0.9473684210526316,
+     "support": 9
+    },
+    "customers_suppliers": {
+     "precision": 1.0,
+     "recall": 0.6666666666666666,
+     "f1": 0.8,
+     "support": 3
+    },
+    "competition": {
+     "precision": 0.6666666666666666,
+     "recall": 1.0,
+     "f1": 0.8,
+     "support": 2
+    },
+    "legal_litigation": {
+     "precision": 1.0,
+     "recall": 0.5,
+     "f1": 0.6666666666666666,
+     "support": 2
+    },
+    "regulatory": {
+     "precision": 0.9583333333333334,
+     "recall": 1.0,
+     "f1": 0.9787234042553191,
+     "support": 23
+    },
+    "promoters_governance": {
+     "precision": 0.9411764705882353,
+     "recall": 0.9411764705882353,
+     "f1": 0.9411764705882353,
+     "support": 17
+    },
+    "operations": {
+     "precision": 0.92,
+     "recall": 0.9583333333333334,
+     "f1": 0.9387755102040817,
+     "support": 24
+    },
+    "technology_data": {
+     "precision": 0.7777777777777778,
+     "recall": 1.0,
+     "f1": 0.8750000000000001,
+     "support": 7
+    },
+    "market_macro": {
+     "precision": 1.0,
+     "recall": 0.9,
+     "f1": 0.9473684210526316,
+     "support": 40
+    }
+   },
+   "labels": [
+    "financial",
+    "debt_liquidity",
+    "customers_suppliers",
+    "competition",
+    "legal_litigation",
+    "regulatory",
+    "promoters_governance",
+    "operations",
+    "technology_data",
+    "market_macro"
+   ],
+   "confusion": [
+    [
+     21,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0
+    ],
+    [
+     0,
+     9,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     23,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     16,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     23,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     7,
+     0
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     36
+    ]
+   ]
+  },
+  "tfidf_dev_macro_f1": 0.8622,
+  "beats_tfidf": true
+ },
+ "seriousness": {
+  "model": "microsoft/deberta-v3-base",
+  "bands": "1, 2, 3, 4 = severe (levels 4 and 5 merged)",
+  "n_seeds": 3,
+  "seeds": [
+   13,
+   42,
+   2026
+  ],
+  "dev_by_seed": {
+   "13": {
+    "macro_f1": 0.7492751825357562,
+    "mae": 0.19811320754716982,
+    "within_1": 0.9971698113207547,
+    "severe_recall": 0.6206896551724138,
+    "severe_precision": 0.46153846153846156
+   },
+   "42": {
+    "macro_f1": 0.7708524070255636,
+    "mae": 0.18396226415094338,
+    "within_1": 0.9962264150943396,
+    "severe_recall": 0.5517241379310345,
+    "severe_precision": 0.64
+   },
+   "2026": {
+    "macro_f1": 0.7649829670286019,
+    "mae": 0.17641509433962263,
+    "within_1": 0.9981132075471698,
+    "severe_recall": 0.5,
+    "severe_precision": 0.5918367346938775
+   }
+  },
+  "dev_mean": {
+   "macro_f1": 0.7617,
+   "mae": 0.1862,
+   "within_1": 0.9972,
+   "severe_recall": 0.5575,
+   "severe_precision": 0.5645
+  },
+  "best_seed": 42,
+  "selected_on": "dev band macro-F1 (gold-150 is for the final report only)",
+  "label_source": "teacher (AI labels); see docs/phase2/datasheets/teacher_outputs.md",
+  "n_train": 9832,
+  "n_dev": 1060,
+  "test_best_seed": {
+   "macro_f1": 0.7905480881457424,
+   "mae": 0.14,
+   "within_1": 0.9933333333333333,
+   "severe_recall": 0.75,
+   "severe_precision": 0.5,
+   "severe_support": 4,
+   "n": 150
+  },
+  "test_label_source": "teacher:gemma-4-31b-it band on gold-150 (no human label)"
+ }
+}

@@ -40,7 +40,7 @@
     "vrl-logistics-2015"
   ],
   "inputs": [],
-  "sha256": "2a0eb74ec2be546f2f4319a4cbbc83bbaa7acaaf79a08645a829b3e260b5bd4b",
+  "sha256": "c2bc8e8c74bef0416fc3071f0caf242dae2e3d0b59addb45aded1a0a77283f65",
   "written_by": "scripts/classifier_kaggle.py",
   "note": "teacher-labelled risks, split by company",
   "n_ipos": 36

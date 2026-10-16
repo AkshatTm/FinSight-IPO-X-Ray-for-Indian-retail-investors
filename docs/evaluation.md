@@ -44,15 +44,15 @@ The registry is read from the two plan tables. "Not run yet" means no result fil
 | E11 | BiLSTM-CRF rung (P1) | `bilstm_metrics-13.json`, `bilstm_metrics-2026.json`, `bilstm_metrics-42.json` |
 | E12 | ASR | `asr.json` |
 | E13 | Are risks split correctly? | `b/segmentation.json` |
-| E14 | Are red-flag inputs extracted correctly? | not run yet |
-| E15 | Do red-flag statuses agree with hand-computed ones? | not run yet |
-| E16 | How good is the category classifier? | not run yet |
+| E14 | Are red-flag inputs extracted correctly? | `b/summary_extraction.json` |
+| E15 | Do red-flag statuses agree with hand-computed ones? | `b/redflags.json` |
+| E16 | How good is the category classifier? | `b/classifier_base.json`, `b/classifier_tfidf.json` |
 | E17 | Does the seriousness rule make sense? | not run yet |
 | E18 | Are rewrites faithful? | not run yet |
 | E19 | Are rewrites easier to read? | not run yet |
 | E20 | Do rewrites keep numbers and certainty? | not run yet |
 | E21 | Does the risk level relate to real outcomes? | not run yet |
-| E22 | Is "unusual" meaningful? | not run yet |
+| E22 | Is "unusual" meaningful? | `b/novelty.json` |
 | E23 | Speed and robustness on unseen PDFs | not run yet |
 | E24 | Cost | not run yet |
 | E8r | Does the guard still behave after allowing risk-level questions? | not run yet |

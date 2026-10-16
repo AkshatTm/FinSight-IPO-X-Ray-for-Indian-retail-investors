@@ -1,0 +1,36 @@
+{
+ "n": 50,
+ "split": "test (gold-50)",
+ "seed": 2026,
+ "systems": {
+  "student_4b": {
+   "model": "finsight-student:q4",
+   "pass_rate": 0.98,
+   "passed": 49,
+   "failure_reasons": {
+    "certainty_changed": 1
+   },
+   "mean_words": 43.2,
+   "over_60_words": 0,
+   "mean_longest_sentence_words": 16.3
+  },
+  "student_8b": {
+   "model": "finsight-student8b:q4",
+   "pass_rate": 0.6,
+   "passed": 30,
+   "failure_reasons": {
+    "too_long": 17,
+    "number_mismatch": 2,
+    "certainty_changed": 1
+   },
+   "mean_words": 68.7,
+   "over_60_words": 35,
+   "mean_longest_sentence_words": 15.8,
+   "fkgl_rewrite": 8.51,
+   "fkgl_original": 17.83,
+   "seconds_per_risk_gpu_offload": 15.3
+  }
+ },
+ "note": "automated post-checks only; human ratings exist for the 4B, base and teacher",
+ "finished_utc": "2026-10-15T16:29:45+00:00"
+}

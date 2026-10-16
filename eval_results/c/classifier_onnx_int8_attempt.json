@@ -1,0 +1,20 @@
+{
+ "model": "microsoft/deberta-v3-base, seed 42 (best on dev)",
+ "n_dev_rows_tried": 150,
+ "reference": "PyTorch argmax on the same rows",
+ "variants_agreement": {
+  "fp32": 1.0,
+  "int8_dynamic_default": 0.06,
+  "int8_matmul_only": 0.067,
+  "int8_matmul_per_channel": 0.033,
+  "int8_matmul_per_channel_reduce_range": 0.82,
+  "int8_ffn_only_per_channel_reduce_range": 0.82
+ },
+ "full_dev_check_default_int8": {
+  "n": 1060,
+  "agreement": 0.049,
+  "onnx_macro_f1": 0.0146,
+  "torch_macro_f1": 0.8993
+ },
+ "decision": "ship fp32 ONNX (agreement 1.0 on 1,060 dev rows, 0.56 s per risk on the laptop CPU); int8 stays opt-in (--int8)"
+}

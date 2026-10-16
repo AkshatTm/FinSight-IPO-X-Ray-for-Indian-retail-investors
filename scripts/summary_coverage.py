@@ -1,0 +1,247 @@
+"""How often the summary fields are found on the dev slice (C3.1 tuning; not E14).
+
+    uv run python scripts/summary_coverage.py [--slice dev] [--processed data/processed]
+
+Runs ``extract_summary`` on every parsed RHP of the slice (batch store for new IPOs, the showcase
+folders for showcase IPOs) and writes ``eval_results/c/summary_coverage_<slice>.json``: per field
+the share found / stated zero / placeholder / not found (``share``: the 11 financial values of
+C3.1a; ``share_c3_1b``: the other red-flag inputs), which IPOs read as financial companies, and
+per IPO the financial values that were not found. Coverage
+only: no values are compared with gold. Only ``dev`` and ``train`` may be run (C-ADR-02: test and
+bench documents never inform tuning; E14 measures them once, after gold v3 is verified).
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import time
+from collections import Counter
+from decimal import Decimal
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from pydantic import TypeAdapter  # noqa: E402
+
+from finsight.core.ids import make_doc_id  # noqa: E402
+from finsight.core.schemas import (  # noqa: E402
+    SUMMARY_HAS_VALUE,
+    FinancialSummary,
+    ParsedDoc,
+    Section,
+    SummaryValue,
+)
+from finsight.ingest.fetch import read_rows  # noqa: E402
+from finsight.parse import find_subsection_pages  # noqa: E402
+from finsight.redflags import detect_severe, evaluate, inputs_from_summary  # noqa: E402
+from finsight.redflags.severe import with_auditor  # noqa: E402
+from finsight.splits import load_splits  # noqa: E402
+from finsight.summary import extract_summary, values_by_source  # noqa: E402
+
+ALLOWED = ("dev", "train")
+SECTIONS = TypeAdapter(list[Section])
+AGREE = Decimal("0.01")  # sources agree within 1 % (tables round differently)
+
+
+def cross_check(by_source: dict[str, dict[str, Decimal]]) -> tuple[int, list[str]]:
+    """(fields printed by 2+ sources, fields where those sources disagree)."""
+    compared, disagree = 0, []
+    for name, values in sorted(by_source.items()):
+        vals = list(values.values())
+        if len(vals) < 2:
+            continue
+        compared += 1
+        top = max(abs(v) for v in vals) or Decimal(1)
+        if (max(vals) - min(vals)) / top > AGREE:
+            disagree.append(name)
+    return compared, disagree
+
+
+def fields(summary: FinancialSummary) -> dict[str, SummaryValue | None]:
+    """Field name → value for the C3.1a fields (yearly fields get a period suffix)."""
+    out: dict[str, SummaryValue | None] = {}
+    for key in ("revenue", "profit_after_tax", "operating_cash_flow"):
+        for v in getattr(summary, key):
+            out[f"{key}:{v.period}"] = v
+    out["total_borrowings"] = summary.total_borrowings
+    out["net_worth"] = summary.net_worth
+    return out
+
+
+def other_fields(summary: FinancialSummary) -> dict[str, str]:
+    """Status of each C3.1b input (``peers`` / ``auditor_remarks``: found when any were read)."""
+    lit = summary.litigation
+    values: dict[str, SummaryValue | None] = {
+        "criminal_cases": lit.get("criminal_cases"),
+        "litigation_amount": lit.get("amount_total"),
+        "rpt_total": summary.rpt_total,
+        "promoter_holding_post": summary.promoter_holding_post,
+        "pledged_pct": summary.pledged_pct,
+        "customer_top1_pct": summary.customer_top1_pct,
+        "customer_top10_pct": summary.customer_top10_pct,
+        "general_purposes_pct": summary.general_purposes_pct,
+        "waca": next((v for v in summary.waca if v.key == "waca_promoters"), None),
+    }
+    out = {k: (v.status if v else "not_found") for k, v in values.items()}
+    out["peers"] = "found" if summary.peers else "not_found"
+    out["auditor_remarks"] = "found" if summary.auditor_remarks else "not_found"
+    return out
+
+
+def redflag_row(
+    doc: ParsedDoc, secs: list[Section], summary: FinancialSummary, ipo_id: str
+) -> dict[str, Any]:
+    """Statuses of the 13 checks and the severe override ids for one IPO (C3.2)."""
+    inputs = inputs_from_summary(summary)
+    remark = next((v.evidence for v in summary.auditor_remarks if v.evidence), None)
+    severe = with_auditor(inputs.auditor == "qualified", detect_severe(doc, secs, ipo_id), remark)
+    return {
+        "statuses": {f.id: f.status for f in evaluate(inputs).flags},
+        "severe": [o.id for o in severe],
+        "severe_evidence": [
+            {"id": o.id, "page": o.evidence.page, "sentence": (o.evidence.sentence or "")[:240]}
+            for o in severe
+        ],
+    }
+
+
+def summarise_redflags(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Per check: the share of IPOs per status; per override kind: the share of IPOs hit."""
+    read = [r for r in rows if r["status"] == "read" and "redflags" in r]
+    n = len(read) or 1
+    per: dict[str, Counter[str]] = {}
+    sev: Counter[str] = Counter()
+    for r in read:
+        for rf, st in r["redflags"]["statuses"].items():
+            per.setdefault(rf, Counter())[st] += 1
+        sev.update(set(r["redflags"]["severe"]))
+    return {
+        "checks": {rf: {s: round(v / n, 3) for s, v in c.items()} for rf, c in sorted(per.items())},
+        "severe_overrides": {k: round(v / n, 3) for k, v in sorted(sev.items())},
+        "any_severe": round(sum(bool(r["redflags"]["severe"]) for r in read) / n, 3),
+    }
+
+
+def doc_paths(processed: Path, ipo_id: str, sha: str | None) -> tuple[Path, Path]:
+    """``parsed.json`` and ``sections.json`` of one IPO's RHP.
+
+    The batch store (same stages as an upload) is preferred; showcase IPOs that were never
+    batch-parsed fall back to their Phase 1 folder.
+    """
+    base = processed / "batch" / "store" / "docs" / make_doc_id(sha) if sha else None
+    if base is None or not (base / "parsed.json").exists():
+        base = processed / ipo_id
+    return base / "parsed.json", base / "sections.json"
+
+
+def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Per-field status shares over the IPOs that were read."""
+    read = [r for r in rows if r["status"] == "read"]
+    per_field: dict[str, Counter[str]] = {}
+    for r in read:
+        for name, status in r["fields"].items():
+            per_field.setdefault(name, Counter())[status] += 1
+    n = len(read)
+    return {
+        name: {s: round(c[s] / n, 3) for s in ("found", "stated_zero", "placeholder", "not_found")}
+        for name, c in sorted(per_field.items())
+    } | ({"all_fields_found": round(sum(r["n_found"] == 11 for r in read) / n, 3)} if n else {})
+
+
+def summarise_other(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Per C3.1b field: the share of IPOs per status."""
+    read = [r for r in rows if r["status"] == "read"]
+    per_field: dict[str, Counter[str]] = {}
+    for r in read:
+        for name, status in r["other"].items():
+            per_field.setdefault(name, Counter())[status] += 1
+    n = len(read) or 1
+    return {
+        name: {s: round(c[s] / n, 3) for s in ("found", "stated_zero", "placeholder", "not_found")}
+        for name, c in sorted(per_field.items())
+    }
+
+
+def main(argv: list[str] | None = None) -> int:
+    """CLI entry point."""
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--slice", default="dev", choices=ALLOWED)
+    ap.add_argument("--processed", type=Path, default=ROOT / "data" / "processed")
+    ap.add_argument("--out", type=Path, default=None)
+    ap.add_argument("--limit", type=int, default=None)
+    a = ap.parse_args(argv)
+    splits = load_splits(ROOT / "configs" / "splits.yaml")
+    sha = {r["ipo_id"]: r["sha256"] for r in read_rows(ROOT / "configs" / "ipo_universe.csv")}
+    entries = [e for e in splits.ipos if e.slice == a.slice and e.source != "corpus"]
+    rows: list[dict[str, Any]] = []
+    for entry in entries[: a.limit]:
+        parsed, sections = doc_paths(a.processed, entry.ipo_id, sha.get(entry.ipo_id))
+        if not parsed.exists() or not sections.exists():
+            rows.append({"ipo_id": entry.ipo_id, "status": "no_parse"})
+            continue
+        t0 = time.perf_counter()
+        doc = ParsedDoc.model_validate_json(parsed.read_bytes())
+        secs = SECTIONS.validate_json(sections.read_bytes())
+        summary = extract_summary(doc, secs, entry.ipo_id)
+        seconds = round(time.perf_counter() - t0, 2)
+        status = {k: (v.status if v else "not_found") for k, v in fields(summary).items()}
+        other = other_fields(summary)
+        cash = find_subsection_pages(doc, secs).get("cash_flows", [])
+        compared, disagree = cross_check(values_by_source(doc, secs, entry.ipo_id, cash))
+        rows.append({
+            "ipo_id": entry.ipo_id,
+            "status": "read",
+            "unit": summary.currency_unit,
+            "n_found": sum(s in SUMMARY_HAS_VALUE for s in status.values()),
+            "stub": [k for k in ("total_borrowings_stub", "net_worth_stub") if getattr(summary, k)],
+            "missing": sorted(k for k, s in status.items() if s not in SUMMARY_HAS_VALUE),
+            "fields": status,
+            "other": other,
+            "redflags": redflag_row(doc, secs, summary, entry.ipo_id),
+            "financial_company": summary.is_financial_company,
+            "n_peers": len(summary.peers),
+            "compared": compared,
+            "disagree": disagree,
+            "seconds": seconds,
+        })  # fmt: skip
+        print(f"{entry.ipo_id:55s} {rows[-1]['n_found']:2d}/11", flush=True)
+    result = {
+        "slice": a.slice,
+        "written_by": "scripts/summary_coverage.py",
+        "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "n_ipos": len(entries),
+        "n_read": sum(r["status"] == "read" for r in rows),
+        "share": summarise(rows),
+        "share_c3_1b": summarise_other(rows),
+        "redflags_c3_2": summarise_redflags(rows),
+        "financial_companies": [r["ipo_id"] for r in rows if r.get("financial_company")],
+        "stub_balance_sheet": {
+            k: sum(k in r.get("stub", []) for r in rows)
+            for k in ("total_borrowings_stub", "net_worth_stub")
+        },
+        "cross_check": {
+            "fields_compared": sum(r.get("compared", 0) for r in rows),
+            "fields_disagreeing": sum(len(r.get("disagree", [])) for r in rows),
+            "rule": "same field from 2+ sources (summary / sfi / cash) within 1 %",
+        },
+        "ipos": [{k: v for k, v in r.items() if k not in ("fields", "other")} for r in rows],
+        "severe_by_ipo": {
+            r["ipo_id"]: r["redflags"]["severe_evidence"]
+            for r in rows
+            if r.get("redflags", {}).get("severe")
+        },
+    }
+    out = a.out or ROOT / "eval_results" / "c" / f"summary_coverage_{a.slice}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    text = json.dumps(result, indent=2, ensure_ascii=False) + "\n"
+    out.write_text(text, encoding="utf-8", newline="\n")
+    print(f"wrote {out}: {result['n_read']}/{result['n_ipos']} read", flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

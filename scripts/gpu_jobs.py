@@ -92,6 +92,17 @@ JOBS: dict[str, Job] = {
         target_from="risks.jsonl",
         single_raw_copy="data/processed/teacher/raw.jsonl",
     ),
+    "bench_teacher": Job(  # C4.1: the teacher on the frozen bench prompts (bench_vllm_job.py)
+        name="bench_teacher",
+        notebook="",
+        inputs={
+            "bench/v1/inputs/prompts.jsonl.gz": "prompts.jsonl.gz",
+            "scripts/bench_vllm_job.py": "bench_vllm_job.py",
+        },
+        outputs={"raw_*.jsonl": "data/processed/bench_teacher/"},
+        summary="eval_results/c4/bench_teacher_run_summary.json",
+        single_raw_copy="bench/v1/answers/teacher/answers.jsonl",
+    ),
     "gold_eval": Job(
         name="gold_eval",
         notebook="c2_teacher.ipynb",
@@ -116,6 +127,37 @@ JOBS: dict[str, Job] = {
             "metrics.json": "models/student/",
         },
         summary="eval_results/c/student_run_summary.json",
+    ),
+    "student_8b": Job(
+        name="student_8b",
+        notebook="c2_student.ipynb",
+        inputs={
+            "data/processed/kaggle/simplify/train.jsonl": "train.jsonl",
+            "data/processed/kaggle/simplify/dev.jsonl": "dev.jsonl",
+        },
+        outputs={
+            "adapter/*": "models/student_8b/adapter/",
+            "*.gguf": "models/student_8b/",
+            "metrics.json": "models/student_8b/",
+        },
+        summary="eval_results/c/student_8b_run_summary.json",
+    ),
+    "classifier_large": Job(
+        name="classifier_large",
+        notebook="b2_classifier_large_kaggle.ipynb",
+        inputs={
+            "data/processed/kaggle/risk-classifier/train.jsonl": "train.jsonl",
+            "data/processed/kaggle/risk-classifier/dev.jsonl": "dev.jsonl",
+            "data/processed/kaggle/risk-classifier/test.jsonl": "test.jsonl",
+            "data/processed/kaggle/risk-classifier/labels.json": "labels.json",
+            "notebooks/b2_classifier_large_kaggle.ipynb": "notebook.ipynb",
+        },
+        outputs={
+            "metrics-*.json": "models/risk_classifier_large/",
+            "dev-predictions-*.json": "models/risk_classifier_large/",
+            "test-predictions-*.json": "models/risk_classifier_large/",
+        },
+        summary="eval_results/c/classifier_large_run_summary.json",
     ),
 }
 

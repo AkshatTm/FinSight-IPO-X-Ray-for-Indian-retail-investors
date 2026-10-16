@@ -34,7 +34,14 @@ from finsight.risks.teacher_run import read_jsonl
 
 PROMPT_VERSION = "student-v1"
 MAX_NEW_TOKENS = 160
-CHECKS = ("number_mismatch", "forbidden_phrase", "too_long", "certainty_changed", "empty")
+CHECKS = (
+    "number_mismatch",
+    "forbidden_phrase",
+    "too_long",
+    "truncated",
+    "certainty_changed",
+    "empty",
+)
 
 INSTRUCTIONS = """Rewrite this risk factor from an Indian IPO offer document in plain English \
 for a first-time investor.
@@ -62,6 +69,9 @@ def clean(raw: str) -> str:
     return re.sub(r"\s+", " ", text.replace("“", '"').replace("”", '"'))
 
 
+_SENTENCE_END = (".", "!", "?", '"', ")", "”", "’")
+
+
 def post_check(original: str, rewrite: str) -> tuple[str, str] | None:
     """``(reason, detail)`` for the first failing check, or ``None`` when the rewrite passes."""
     if not rewrite.strip():
@@ -75,6 +85,8 @@ def post_check(original: str, rewrite: str) -> tuple[str, str] | None:
     n = word_count(rewrite)
     if n > MAX_WORDS:
         return "too_long", str(n)
+    if not rewrite.rstrip().endswith(_SENTENCE_END):  # cut off by the token limit, mid-sentence
+        return "truncated", rewrite.rstrip()[-40:]
     changed = certainty_changed(original, rewrite)
     if changed:
         return "certainty_changed", changed
@@ -231,7 +243,9 @@ def main(argv: list[str] | None = None) -> None:
     """CLI: ``split`` the teacher pairs into train and dev for the student."""
     p = argparse.ArgumentParser(prog="python -m finsight.risks.simplify")
     p.add_argument("command", choices=["split"])
-    p.add_argument("--pairs", type=Path, default=Path("data/processed/teacher/simplify.jsonl"))
+    p.add_argument(
+        "--pairs", type=Path, default=Path("data/processed/teacher/simplify.clean.jsonl")
+    )
     p.add_argument("--out", type=Path, default=Path("data/processed/kaggle/simplify"))
     args = p.parse_args(argv)
     train, dev = split_pairs(list(read_jsonl(args.pairs)))

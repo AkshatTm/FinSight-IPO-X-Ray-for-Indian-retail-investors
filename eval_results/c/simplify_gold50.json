@@ -1,0 +1,60 @@
+{
+ "systems": {
+  "base": {
+   "rated": 50,
+   "faithful": {
+    "partly": 8,
+    "yes": 42
+   },
+   "faithful_yes_share": 0.84,
+   "faithful_yes_ci95": [
+    0.7149,
+    0.9166
+   ],
+   "plain_english_mean": 3.0,
+   "post_checks": {
+    "too_long": 30,
+    "passed": 16,
+    "number_mismatch": 4
+   },
+   "passed_checks_share": 0.32
+  },
+  "student": {
+   "rated": 50,
+   "faithful": {
+    "yes": 46,
+    "partly": 4
+   },
+   "faithful_yes_share": 0.92,
+   "faithful_yes_ci95": [
+    0.8116,
+    0.9685
+   ],
+   "plain_english_mean": 4.64,
+   "post_checks": {
+    "passed": 49,
+    "certainty_changed": 1
+   },
+   "passed_checks_share": 0.98
+  },
+  "teacher": {
+   "rated": 50,
+   "faithful": {
+    "yes": 49,
+    "partly": 1
+   },
+   "faithful_yes_share": 0.98,
+   "faithful_yes_ci95": [
+    0.895,
+    0.9965
+   ],
+   "plain_english_mean": 4.8,
+   "post_checks": {
+    "passed": 50
+   },
+   "passed_checks_share": 1.0
+  }
+ },
+ "set": "gold-50 (test slice)",
+ "label_source": "human:akshat (blind rating)"
+}

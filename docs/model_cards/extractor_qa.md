@@ -69,6 +69,31 @@ Three wrong answers from the test IPOs:
 
 <!-- generated:failures end -->
 
+## Version 2 (C2.7): weak labels extended to 2024+ IPOs
+
+v1 learned from 2009-2023 documents only, because the BIR spreadsheet that supplies the label values ends with close year 2023. v2 adds the 2024+ IPOs of the `train` slice (`configs/splits.yaml`): their seed values come from the Rung-1 rules on the cover pages (`label_source=rules_cover_seed`; no manual labelling, no human audit), the 2009-2023 rows keep `rules+excel_seed`. It trains from the same starting model with the same settings (3 seeds), on 9,315 examples from 412 IPOs. The 3 showcase IPOs are skipped and the `test` / `bench` slices never enter (C-ADR-02; checked by `tests/test_split_leakage.py` through `data/manifests/weaklabel_v3_*.json`). Dev is 52 2024+ IPOs from the `dev` slice that neither version trained on.
+
+<!-- generated:v2 start -->
+
+v3 dev rows: 2471 questions from IPOs neither version trained on (the labels there are rule-derived `rules_cover_seed` values, so this measures agreement with the rules, not human-checked accuracy). Mean ± std over 3 seeds.
+
+| Model | EM | F1 | Has-answer F1 | No-answer acc |
+| --- | --- | --- | --- | --- |
+| Pretrained, no fine-tuning | 0.722 | 0.777 | 0.690 | 0.835 |
+| v1 (2009-2023 weak labels) | 0.936 ± 0.002 | 0.949 ± 0.002 | 0.912 ± 0.003 | 0.974 ± 0.001 |
+| **v2 (+2024+ cover seeds)** | 0.964 ± 0.001 | 0.974 ± 0.000 | 0.969 ± 0.002 | 0.977 ± 0.001 |
+
+| Gold ladder (10 IPOs, mean over seeds) | Split | Full NVM | Body-only NVM |
+| --- | --- | --- | --- |
+| v1 (3 seeds) | dev | 0.611 | 0.714 |
+| v1 (3 seeds) | test | 0.738 | 0.848 |
+| v2 (3 seeds) | dev | 0.639 | 0.738 |
+| v2 (3 seeds) | test | 0.696 | 0.771 |
+
+<!-- generated:v2 end -->
+
+The dev labels are rule-derived, so the dev comparison shows that v2 follows the rules better on new documents, not that its values are more often right; the gold ladder is the check against human-verified values and is a reporting row (test-informed, single gold version). Seeds are 13, 42 and 2026; the weights stay in `models/extractor_v2/` and are not committed.
+
 ## Ethical considerations
 
 The model reads public offer documents only; it sees no personal data beyond names printed in them (promoters, managers). Wrong values could mislead an investor, so every value carries its page and a ✅/⚠️/❌ check, and the app never turns a value into advice.

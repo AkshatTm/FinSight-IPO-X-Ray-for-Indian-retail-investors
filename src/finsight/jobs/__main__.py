@@ -4,6 +4,8 @@
   may also come from ``DOC_ID`` / ``JOB_ID`` environment variables.
 - ``python -m finsight.jobs simplify [<doc_id>]``: queue the top ``simplify.auto_top_n`` risks by
   importance, then drain the simplification queue (on the laptop's CPU).
+- ``python -m finsight.jobs forget <doc_id>``: delete one document's files and rows (and its
+  published workspace), so uploading the same PDF again analyses it from scratch.
 - ``python -m finsight.jobs sweep``: delete documents past retention (run by hand or from Task
   Scheduler).
 """
@@ -61,11 +63,20 @@ def main(argv: list[str]) -> int:
         counts = simplify_document(db, storage, settings, doc_id)
         print(f"{doc_id}: " + " ".join(f"{k} {v}" for k, v in sorted(counts.items())))
         return 0
+    if argv[:1] == ["forget"]:
+        import shutil
+
+        doc_id = argv[1]
+        storage.delete_prefix(f"docs/{doc_id}/")
+        db.delete_doc_rows(doc_id)
+        shutil.rmtree(settings.paths.processed_dir / doc_id, ignore_errors=True)
+        print(f"forgot {doc_id}")
+        return 0
     if argv[:1] == ["sweep"]:
         deleted = sweep(db, storage, settings.uploads.retention_days)
         print(f"deleted {len(deleted)} expired documents")
         return 0
-    print("usage: python -m finsight.jobs run | simplify | sweep", file=sys.stderr)
+    print("usage: python -m finsight.jobs run | simplify | forget | sweep", file=sys.stderr)
     return 2
 
 

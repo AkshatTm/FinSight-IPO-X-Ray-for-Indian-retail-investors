@@ -80,7 +80,7 @@ export function UploadPage() {
           <p className="mt-2 text-sm text-muted">{t("up.signInWhy")}</p>
         </div>
       ) : (
-        <p className="mt-6 text-sm text-muted">{t("up.limits")}</p>
+        limits.per_user_per_day < 100 && <p className="mt-6 text-sm text-muted">{t("up.limits", { n: limits.per_user_per_day })}</p>
       )}
 
       <p className="mt-4 text-xs text-muted">{t("up.consent")}</p>

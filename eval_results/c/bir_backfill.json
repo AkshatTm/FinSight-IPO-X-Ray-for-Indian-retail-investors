@@ -1,0 +1,11 @@
+{
+ "finished_utc": "2026-10-15T20:55:37+00:00",
+ "links_checked": 855,
+ "pdf_files_before": 0,
+ "pdf_files_after": 40,
+ "downloaded_now": 40,
+ "not_direct_pdf_or_dead": 785,
+ "total_mb": 340.0,
+ "destination": "data/raw/bir_backfill/ (gitignored; read by nothing yet)",
+ "splits_or_eval_sets_changed": false
+}

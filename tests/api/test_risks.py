@@ -163,7 +163,7 @@ def test_risk_level_endpoint_follows_the_behind_click_switch(
     build(state.storage, DOC)
     body = client.get(f"/api/docs/{DOC}/risk-level").json()
     assert body["level"] in ("low", "medium", "high")
-    assert body["provisional"] is True
+    assert body["provisional"] is False
     assert body["disclaimer_key"] == "risklevel.disclaimer"
     assert body["behind_click"] is False
     hidden = {**load_config(), "behind_click": True}
@@ -182,11 +182,13 @@ def test_compare_endpoint(client: TestClient, state: UploadState) -> None:
         Peer(name="Acme", eps=Decimal("10"), is_issuer=True),
         Peer(name="Beta", pe=Decimal("40")),
     ]
-    build(state.storage, DOC, peers, {"ofs_share": 0.5}, offer_price=Decimal("200"))
+    build(state.storage, DOC, peers, {"issue_size_inr": 5e9}, offer_price=Decimal("200"))
     body = client.get(f"/api/docs/{DOC}/compare").json()
     assert body["peers"][0]["pe"] == "20.00"
     assert body["peer_median_pe"] == "40"
-    assert {p["metric"] for p in body["percentiles"]} == {"ofs_share", "pe"}
+    assert {p["metric"] for p in body["percentiles"]} == {
+        "issue_size_inr"
+    }  # P/E has too few values
     assert body["provisional"] is True
     assert client.get("/api/docs/doc_0000000000000000/compare").status_code == 404
 

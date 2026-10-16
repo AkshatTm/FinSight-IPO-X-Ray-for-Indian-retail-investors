@@ -5,8 +5,11 @@
 
 ``scores`` reads each IPO's scored risks (``<ipo_id>.json``: Risk objects with seriousness and
 novelty, written by the upload pipeline once the C2 models are wired in, C3.3) and, unless
-``--points-only``, its red flags (``<ipo_id>.flags.json``); it writes ``reference_scores.csv``.
-``--points-only`` is the variant for the corpus years, which have no tables and so no red flags.
+``--points-only``, its red flags (``<ipo_id>.flags.json``); it writes ``reference_scores.csv``
+(only IPOs that have red flags, i.e. documents with word boxes, so every row is the product's
+score). ``--points-only`` writes ``points_only_scores.csv`` for every scored IPO: the variant for
+the corpus years, which have no tables and so no red flags.
+``scripts/score_reference_ipos.py`` writes the scored risks and flags this script reads.
 ``fit`` takes the bottom and top third of the **train + dev** scores (``finsight.risklevel
 .reference``), writes ``eval_results/b/risklevel_fit.json`` and rewrites ``configs/risklevel.yaml``
 (``provisional: false``, ``computed_on`` = the git sha). Test and bench scores are never used.
@@ -18,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -35,17 +39,26 @@ from finsight.risklevel.reference import (  # noqa: E402
 )
 from finsight.splits import load_splits, reference_config  # noqa: E402
 
-SCORED = ROOT / "data" / "processed" / "risk_bank" / "scored"
-TABLE = ROOT / "data" / "processed" / "risk_bank" / "reference_scores.csv"
+DATA = Path(
+    os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data")
+)  # gitignored data may live elsewhere
+BANK_DIR = DATA / "processed" / "risk_bank"
+SCORED = BANK_DIR / "scored"
+TABLE = BANK_DIR / "reference_scores.csv"  # full score (red flags + risk points): the fit input
+POINTS_TABLE = BANK_DIR / "points_only_scores.csv"  # risk points only, every scored IPO (E21)
 CONFIG = ROOT / "configs" / "risklevel.yaml"
 FIT = ROOT / "eval_results" / "b" / "risklevel_fit.json"
 
 
 def cmd_scores(points_only: bool) -> None:
-    """Score every IPO of the split that has scored risks."""
+    """Score every IPO of the split that has scored risks.
+
+    The full table only holds IPOs that have a red-flag file (documents with word boxes), so every
+    row means the same thing as the product's score; the points-only table holds all of them.
+    """
     cfg = load_config()
     scores: dict[str, float] = {}
-    missing = []
+    missing, no_flags = [], []
     for e in load_splits(ROOT / "configs" / "splits.yaml").ipos:
         risks_file = SCORED / f"{e.ipo_id}.json"
         if not risks_file.exists():
@@ -53,17 +66,24 @@ def cmd_scores(points_only: bool) -> None:
             continue
         risks = [Risk.model_validate(r) for r in json.loads(risks_file.read_text(encoding="utf-8"))]
         flags_file = SCORED / f"{e.ipo_id}.flags.json"
+        if not points_only and not flags_file.exists():
+            no_flags.append(e.ipo_id)
+            continue
         flags = (
             []
-            if points_only or not flags_file.exists()
+            if points_only
             else [
                 RedFlag.model_validate(f)
                 for f in json.loads(flags_file.read_text(encoding="utf-8")).get("flags", [])
             ]
         )
         scores[e.ipo_id] = compute(flags, risks, cfg).score
-    write_scores(scores, TABLE)
-    print(f"scored {len(scores)} IPOs, {len(missing)} without scored risks -> {TABLE}")
+    table = POINTS_TABLE if points_only else TABLE
+    write_scores(scores, table)
+    print(
+        f"scored {len(scores)} IPOs, {len(missing)} without scored risks, "
+        f"{len(no_flags)} without red flags (left out) -> {table}"
+    )
 
 
 def cmd_fit() -> None:

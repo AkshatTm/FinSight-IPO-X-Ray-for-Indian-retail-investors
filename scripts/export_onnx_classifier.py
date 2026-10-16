@@ -1,10 +1,11 @@
-"""Export the chosen risk classifier to ONNX int8 for the CPU worker, and check it (B03 §4).
+"""Export the chosen risk classifier to ONNX for the CPU worker, and check it (B03 §4).
 
     uv run --group ml --group onnx python scripts/export_onnx_classifier.py \\
         --model models/risk_classifier/seed-42/final --out models/risk_classifier/onnx \\
         --dev data/processed/kaggle/risk-classifier/dev.jsonl
 
-Local session only (needs torch). Writes ``model.onnx`` (dynamic int8 weights), ``tokenizer.json``
+Local session only (needs torch). Writes ``model.onnx`` (fp32; ``--int8`` adds dynamic int8, which
+broke DeBERTa-v3 in C2.4: 5 % agreement, 82 % at best with per-channel + reduce_range), ``tokenizer.json``
 and ``labels.json`` into ``--out``; with ``--dev`` it scores PyTorch and ONNX on the same rows and
 writes ``onnx_check.json`` next to the model (agreement and both macro-F1s). Weights stay in
 ``models/`` (gitignored).
@@ -28,7 +29,7 @@ from finsight.risks.clf_metrics import scores  # noqa: E402
 from finsight.risks.teacher_run import read_jsonl  # noqa: E402
 
 
-def export(model_dir: Path, out: Path, opset: int = 17) -> Path:
+def export(model_dir: Path, out: Path, opset: int = 17, int8: bool = False) -> Path:
     import torch
     from onnxruntime.quantization import QuantType, quantize_dynamic
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -50,8 +51,11 @@ def export(model_dir: Path, out: Path, opset: int = 17) -> Path:
         opset_version=opset,
         dynamo=False,
     )
-    quantize_dynamic(str(fp32), str(out / "model.onnx"), weight_type=QuantType.QInt8)
-    fp32.unlink()
+    if int8:
+        quantize_dynamic(str(fp32), str(out / "model.onnx"), weight_type=QuantType.QInt8)
+        fp32.unlink()
+    else:
+        fp32.replace(out / "model.onnx")
     tokenizer.save_pretrained(str(out / "_tok"))
     shutil.move(str(out / "_tok" / "tokenizer.json"), out / "tokenizer.json")
     shutil.rmtree(out / "_tok")
@@ -62,7 +66,7 @@ def export(model_dir: Path, out: Path, opset: int = 17) -> Path:
 
 
 def check(model_dir: Path, out: Path, dev_path: Path) -> dict[str, Any]:
-    """PyTorch vs ONNX int8 on the dev rows: agreement, both macro-F1s, seconds per risk."""
+    """PyTorch vs ONNX on the dev rows: agreement, both macro-F1s, seconds per risk."""
     import torch
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
@@ -90,7 +94,7 @@ def check(model_dir: Path, out: Path, dev_path: Path) -> dict[str, Any]:
         "n": len(rows),
         "agreement": sum(a == b for a, b in zip(torch_pred, onnx_pred, strict=True)) / len(rows),
         "torch_macro_f1": scores(gold, torch_pred, labels)["macro_f1"],
-        "onnx_int8_macro_f1": scores(gold, onnx_pred, labels)["macro_f1"],
+        "onnx_macro_f1": scores(gold, onnx_pred, labels)["macro_f1"],
         "onnx_seconds_per_risk": per_risk,
     }
     (out / "onnx_check.json").write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")
@@ -102,8 +106,9 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--model", type=Path, required=True, help="a seed-*/final folder")
     p.add_argument("--out", type=Path, default=Path("models/risk_classifier/onnx"))
     p.add_argument("--dev", type=Path, help="dev.jsonl to compare PyTorch and ONNX")
+    p.add_argument("--int8", action="store_true", help="dynamic int8 weights (broke DeBERTa-v3)")
     args = p.parse_args(argv)
-    export(args.model, args.out)
+    export(args.model, args.out, int8=args.int8)
     print("wrote", args.out)
     if args.dev:
         print(json.dumps(check(args.model, args.out, args.dev), indent=1))

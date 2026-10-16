@@ -149,12 +149,16 @@ def test_error_messages_never_reach_the_event_stream(db: Database, storage: Loca
 
 
 def test_real_upload_stages_follow_the_b02_graph() -> None:
-    stages = upload_stages()
+    stages = upload_stages(models=False)
     assert [(s.name, s.critical) for s in stages] == [
         ("validated", True),
         ("detected", True),
         ("parsed", True),
         ("sections", False),
+        ("facts", False),
+        ("financials", False),
+        ("redflags", False),
+        ("compare", False),
         ("risks_split", False),
     ]
     assert all(s.requires == GRAPH[s.name][0] for s in stages)

@@ -26,6 +26,7 @@ ROUTES = [
     ("GET", "/api/lab/verifier"),
     ("GET", "/api/lab/weaklabels"),
     ("GET", "/api/lab/b/{name}"),  # B3.4a (B06 §5)
+    ("GET", "/api/lab/c/bench"),  # C3.6 (FinSight Bench scores)
     ("GET", "/api/lab/frontier"),
     ("GET", "/api/lab/retrieval"),
     ("GET", "/api/lab/asr"),

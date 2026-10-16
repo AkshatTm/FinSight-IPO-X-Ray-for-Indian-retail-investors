@@ -1,0 +1,2292 @@
+{
+  "slice": "dev",
+  "written_by": "scripts/summary_coverage.py",
+  "written_utc": "2026-10-15T19:37:19Z",
+  "n_ipos": 55,
+  "n_read": 55,
+  "share": {
+    "net_worth": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "operating_cash_flow:latest": {
+      "found": 0.891,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.109
+    },
+    "operating_cash_flow:latest-1": {
+      "found": 0.891,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.109
+    },
+    "operating_cash_flow:latest-2": {
+      "found": 0.891,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.109
+    },
+    "profit_after_tax:latest": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "profit_after_tax:latest-1": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "profit_after_tax:latest-2": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "revenue:latest": {
+      "found": 0.964,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.036
+    },
+    "revenue:latest-1": {
+      "found": 0.964,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.036
+    },
+    "revenue:latest-2": {
+      "found": 0.964,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.036
+    },
+    "total_borrowings": {
+      "found": 0.673,
+      "stated_zero": 0.127,
+      "placeholder": 0.0,
+      "not_found": 0.2
+    },
+    "all_fields_found": 0.727
+  },
+  "share_c3_1b": {
+    "auditor_remarks": {
+      "found": 0.982,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.018
+    },
+    "criminal_cases": {
+      "found": 0.727,
+      "stated_zero": 0.127,
+      "placeholder": 0.0,
+      "not_found": 0.145
+    },
+    "customer_top10_pct": {
+      "found": 0.127,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.873
+    },
+    "customer_top1_pct": {
+      "found": 0.073,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.927
+    },
+    "general_purposes_pct": {
+      "found": 0.0,
+      "stated_zero": 0.0,
+      "placeholder": 0.709,
+      "not_found": 0.291
+    },
+    "litigation_amount": {
+      "found": 0.891,
+      "stated_zero": 0.018,
+      "placeholder": 0.0,
+      "not_found": 0.091
+    },
+    "peers": {
+      "found": 0.745,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.255
+    },
+    "pledged_pct": {
+      "found": 0.036,
+      "stated_zero": 0.764,
+      "placeholder": 0.0,
+      "not_found": 0.2
+    },
+    "promoter_holding_post": {
+      "found": 0.0,
+      "stated_zero": 0.0,
+      "placeholder": 0.345,
+      "not_found": 0.655
+    },
+    "rpt_total": {
+      "found": 0.055,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.945
+    },
+    "waca": {
+      "found": 0.436,
+      "stated_zero": 0.0,
+      "placeholder": 0.0,
+      "not_found": 0.564
+    }
+  },
+  "redflags_c3_2": {
+    "checks": {
+      "RF01": {
+        "ok": 0.891,
+        "concern": 0.073,
+        "not_available": 0.018,
+        "watch": 0.018
+      },
+      "RF02": {
+        "ok": 0.564,
+        "not_available": 0.109,
+        "concern": 0.273,
+        "watch": 0.055
+      },
+      "RF03": {
+        "ok": 0.564,
+        "concern": 0.127,
+        "not_applicable": 0.036,
+        "watch": 0.073,
+        "not_available": 0.2
+      },
+      "RF04": {
+        "not_available": 1.0
+      },
+      "RF05": {
+        "not_available": 1.0
+      },
+      "RF06": {
+        "not_available": 1.0
+      },
+      "RF07": {
+        "not_available": 1.0
+      },
+      "RF08": {
+        "concern": 0.436,
+        "not_available": 0.145,
+        "watch": 0.309,
+        "ok": 0.109
+      },
+      "RF09": {
+        "not_available": 0.945,
+        "ok": 0.055
+      },
+      "RF10": {
+        "not_available": 0.855,
+        "ok": 0.036,
+        "watch": 0.109
+      },
+      "RF11": {
+        "not_available": 0.873,
+        "ok": 0.036,
+        "not_applicable": 0.091
+      },
+      "RF12": {
+        "watch": 0.418,
+        "ok": 0.564,
+        "not_available": 0.018
+      },
+      "RF13": {
+        "ok": 0.764,
+        "watch": 0.018,
+        "concern": 0.018,
+        "not_available": 0.2
+      }
+    },
+    "severe_overrides": {
+      "default_or_recall": 0.055,
+      "going_concern": 0.018,
+      "qualified_audit": 0.018,
+      "regulator_order": 0.182
+    },
+    "any_severe": 0.218
+  },
+  "financial_companies": [
+    "canara-hsbc-life-insurance-company-2025",
+    "laxmi-india-finance-2025"
+  ],
+  "stub_balance_sheet": {
+    "total_borrowings_stub": 9,
+    "net_worth_stub": 10
+  },
+  "cross_check": {
+    "fields_compared": 282,
+    "fields_disagreeing": 1,
+    "rule": "same field from 2+ sources (summary / sfi / cash) within 1 %"
+  },
+  "ipos": [
+    {
+      "ipo_id": "aditya-infotech-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.6
+    },
+    {
+      "ipo_id": "advance-agrolife-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.55
+    },
+    {
+      "ipo_id": "all-time-plastics-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 8,
+      "stub": [],
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "not_available",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.54
+    },
+    {
+      "ipo_id": "anlon-healthcare-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 5,
+      "stub": [],
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "not_available",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.01
+    },
+    {
+      "ipo_id": "anthem-biosciences-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "ok",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 4,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.62
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "concern",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_applicable",
+          "RF12": "watch",
+          "RF13": "watch"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 360,
+            "sentence": "Navin Raheja Independent Director *In the matter relating to Suprajit Engineering Limited, SEBI issued a final order dated April 27, 2021 in respect of certain violations of the provisions of SEBI (Prohibition of Insider Trading) Regulation"
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 6,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.74
+    },
+    {
+      "ipo_id": "bluestone-jewellery-and-lifestyle-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "concern",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_applicable",
+          "RF12": "ok",
+          "RF13": "concern"
+        },
+        "severe": [
+          "default_or_recall"
+        ],
+        "severe_evidence": [
+          {
+            "id": "default_or_recall",
+            "page": 48,
+            "sentence": "There have been delays in payment of statutory dues by our Company in Fiscal 2024 and delay in repayment of loans during Fiscals 2024 and 2023."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 9,
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.64
+    },
+    {
+      "ipo_id": "bmw-ventures-2025",
+      "status": "read",
+      "unit": "in lakh",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "concern",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 2,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.03
+    },
+    {
+      "ipo_id": "brigade-hotel-ventures-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "concern",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 11,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.69
+    },
+    {
+      "ipo_id": "canara-hsbc-life-insurance-company-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "not_applicable",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": true,
+      "n_peers": 4,
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.89
+    },
+    {
+      "ipo_id": "canara-robeco-asset-management-company-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 5,
+      "compared": 3,
+      "disagree": [],
+      "seconds": 2.25
+    },
+    {
+      "ipo_id": "crizac-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "ok",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 4,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.31
+    },
+    {
+      "ipo_id": "dev-accelerator-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "concern",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "ok",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "ok",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.47
+    },
+    {
+      "ipo_id": "euro-pratik-sales-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "watch",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 5,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.33
+    },
+    {
+      "ipo_id": "fabtech-technologies-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.63
+    },
+    {
+      "ipo_id": "ganesh-consumer-products-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.71
+    },
+    {
+      "ipo_id": "gem-aromatics-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "watch",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 32,
+            "sentence": "Further, Gopinath Dairy Products Private Limited was also noted as a wilful defaulter."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 1,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.35
+    },
+    {
+      "ipo_id": "gk-energy-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "watch",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "ok",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.43
+    },
+    {
+      "ipo_id": "glottis-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "ok",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 355,
+            "sentence": "vi. take possession of the hypothecated vehicle and sell the same by private contract or otherwise as pledgee/hypothecate/mortgagee for adjustment of the loan account. vii. proceed against us to declare us as wilful defaulter in accordance "
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.32
+    },
+    {
+      "ipo_id": "gng-electronics-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "watch",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 2,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.12
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "ok",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 5,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.71
+    },
+    {
+      "ipo_id": "highway-infrastructure-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 8,
+      "stub": [],
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "not_available",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.51
+    },
+    {
+      "ipo_id": "indiqube-spaces-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "concern",
+          "RF02": "ok",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_applicable",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.42
+    },
+    {
+      "ipo_id": "indogulf-cropsciences-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "ok",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 8,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.71
+    },
+    {
+      "ipo_id": "ivalue-infosolutions-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 5,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.36
+    },
+    {
+      "ipo_id": "jain-resource-recycling-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "watch",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 43,
+            "sentence": "As a result, SEBI imposed a penalty of ₹300,000 on Kamlesh Jain vide its order dated April 30, 2020, which was duly paid on February 8, 2021. 2."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.91
+    },
+    {
+      "ipo_id": "jaro-institute-of-technology-management-and-research-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 3,
+      "stub": [],
+      "missing": [
+        "net_worth",
+        "profit_after_tax:latest",
+        "profit_after_tax:latest-1",
+        "profit_after_tax:latest-2",
+        "revenue:latest",
+        "revenue:latest-1",
+        "revenue:latest-2",
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "not_available",
+          "RF02": "concern",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 59,
+            "sentence": "An adjudication order dated June 24, 2014 was passed by SEBI which imposed a penalty of ₹ 1 million on our Promoter in relation to the said violation."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.44
+    },
+    {
+      "ipo_id": "jinkushal-industries-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "watch",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.29
+    },
+    {
+      "ipo_id": "jsw-cement-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "watch",
+          "RF02": "ok",
+          "RF03": "concern",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_applicable",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [
+          "going_concern",
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "going_concern",
+            "page": 59,
+            "sentence": "While the accounts of all our subsidiaries and JVs have been prepared on a going concern basis, the auditors of some of our subsidiaries have included the following material uncertainties related to their going concern basis: Fiscal 2025: •"
+          },
+          {
+            "id": "regulator_order",
+            "page": 591,
+            "sentence": "Further to the SCN, the Special Director Enforcement imposed a penalty of ₹ 41.00 million on JSW Steel Limited and a penalty of ₹ 4.00 million on Seshagiri Rao Venkata Satya Metlapalli pursuant to its order dated October 6, 2009 (“Order”)."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 4,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 2.61
+    },
+    {
+      "ipo_id": "laxmi-india-finance-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 8,
+      "stub": [],
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "not_available",
+          "RF03": "not_applicable",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 42,
+            "sentence": "Our Company was debarred from accessing the BSE’s Electronic Book Platform for bidding of debt securities issued on private placement private basis on account of delay in payment of penalties, up to July 2, 2024."
+          }
+        ]
+      },
+      "financial_company": true,
+      "n_peers": 8,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.65
+    },
+    {
+      "ipo_id": "m-b-engineering-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "watch",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 6,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.46
+    },
+    {
+      "ipo_id": "mangal-electrical-industries-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "watch",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.3
+    },
+    {
+      "ipo_id": "midwest-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [
+        "net_worth_stub"
+      ],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 2,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.81
+    },
+    {
+      "ipo_id": "national-securities-depository-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 79,
+            "sentence": "Pursuant to the show cause notice, SEBI passed an order dated December 4, 2008 wherein certain adverse observations were made against our Company (“SEBI Order”)."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 2,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 2.08
+    },
+    {
+      "ipo_id": "om-freight-forwarders-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 5,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.45
+    },
+    {
+      "ipo_id": "orkla-india-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 2,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.7
+    },
+    {
+      "ipo_id": "pace-digitek-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "watch",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 4,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.57
+    },
+    {
+      "ipo_id": "patel-retail-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 7,
+      "stub": [],
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "not_available",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.6
+    },
+    {
+      "ipo_id": "regaal-resources-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 5,
+      "compared": 3,
+      "disagree": [],
+      "seconds": 1.7
+    },
+    {
+      "ipo_id": "rubicon-research-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 8,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 2.08
+    },
+    {
+      "ipo_id": "saatvik-green-energy-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 3,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.75
+    },
+    {
+      "ipo_id": "sambhv-steel-tubes-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "not_available",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 7,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.83
+    },
+    {
+      "ipo_id": "seshaasai-technologies-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "ok",
+          "RF09": "not_available",
+          "RF10": "watch",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 1,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 2.31
+    },
+    {
+      "ipo_id": "shanti-gold-international-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "watch",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "not_available",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.28
+    },
+    {
+      "ipo_id": "shreeji-shipping-global-limited-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "watch",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.33
+    },
+    {
+      "ipo_id": "shringar-house-of-mangalsutra-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "ok",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 4,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.45
+    },
+    {
+      "ipo_id": "smartworks-coworking-spaces-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "concern",
+          "RF02": "ok",
+          "RF03": "concern",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "ok",
+          "RF11": "not_applicable",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [
+          "default_or_recall",
+          "qualified_audit"
+        ],
+        "severe_evidence": [
+          {
+            "id": "default_or_recall",
+            "page": 63,
+            "sentence": "Ghanshyam Sarda, a member of the Promoter Group through Standard Chrome Limited, a joint venture with the Tata Group, had defaulted on bank loans received, resulting in a fall of its share price on stock exchanges, and currently Standard Ch"
+          },
+          {
+            "id": "qualified_audit",
+            "page": 35,
+            "sentence": "Our Statutory Auditors had provided a qualified opinion in our consolidated audit report on internal financial controls for Fiscal 2023."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 2,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 2.01
+    },
+    {
+      "ipo_id": "solarworld-energy-solutions-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "regulator_order",
+            "page": 55,
+            "sentence": "Further, SEBI has issued an adjudication order dated December 31, 2019 (“Order”) pertaining to the buying, selling, and dealing in shares of Gangotri Textiles Limited and addressing Mr."
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 6,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.66
+    },
+    {
+      "ipo_id": "travel-food-services-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 9,
+      "disagree": [],
+      "seconds": 1.54
+    },
+    {
+      "ipo_id": "trualt-bioenergy-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "stub": [],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "concern",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "ok",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 4,
+      "compared": 3,
+      "disagree": [],
+      "seconds": 2.13
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "ok",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "watch",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.75
+    },
+    {
+      "ipo_id": "vikram-solar-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 7,
+      "stub": [],
+      "missing": [
+        "operating_cash_flow:latest",
+        "operating_cash_flow:latest-1",
+        "operating_cash_flow:latest-2",
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "not_available",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "ok",
+          "RF10": "watch",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.59
+    },
+    {
+      "ipo_id": "vikran-engineering-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "watch",
+          "RF13": "ok"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 7,
+      "compared": 6,
+      "disagree": [],
+      "seconds": 1.59
+    },
+    {
+      "ipo_id": "vms-tmt-2025",
+      "status": "read",
+      "unit": "₹ in lakh",
+      "n_found": 11,
+      "stub": [
+        "total_borrowings_stub",
+        "net_worth_stub"
+      ],
+      "missing": [],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "concern",
+          "RF03": "concern",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "ok"
+        },
+        "severe": [
+          "default_or_recall",
+          "regulator_order"
+        ],
+        "severe_evidence": [
+          {
+            "id": "default_or_recall",
+            "page": 47,
+            "sentence": "Eternal Motors Private Limited had availed certain facility from a financial institution and has defaulted on repaying the loan as per the agreed terms."
+          },
+          {
+            "id": "regulator_order",
+            "page": 263,
+            "sentence": "These circumstances led to the declaration of Eternal Motors Private Limited as a wilful defaulter, and further initiation of the liquidation proceedings"
+          }
+        ]
+      },
+      "financial_company": false,
+      "n_peers": 0,
+      "compared": 9,
+      "disagree": [
+        "profit_after_tax:latest"
+      ],
+      "seconds": 1.57
+    },
+    {
+      "ipo_id": "wework-india-management-2025",
+      "status": "read",
+      "unit": "₹ in million",
+      "n_found": 10,
+      "stub": [],
+      "missing": [
+        "total_borrowings"
+      ],
+      "redflags": {
+        "statuses": {
+          "RF01": "ok",
+          "RF02": "ok",
+          "RF03": "not_available",
+          "RF04": "not_available",
+          "RF05": "not_available",
+          "RF06": "not_available",
+          "RF07": "not_available",
+          "RF08": "concern",
+          "RF09": "not_available",
+          "RF10": "not_available",
+          "RF11": "not_available",
+          "RF12": "ok",
+          "RF13": "not_available"
+        },
+        "severe": [],
+        "severe_evidence": []
+      },
+      "financial_company": false,
+      "n_peers": 4,
+      "compared": 0,
+      "disagree": [],
+      "seconds": 1.92
+    }
+  ],
+  "severe_by_ipo": {
+    "ather-energy-2025": [
+      {
+        "id": "regulator_order",
+        "page": 360,
+        "sentence": "Navin Raheja Independent Director *In the matter relating to Suprajit Engineering Limited, SEBI issued a final order dated April 27, 2021 in respect of certain violations of the provisions of SEBI (Prohibition of Insider Trading) Regulation"
+      }
+    ],
+    "bluestone-jewellery-and-lifestyle-2025": [
+      {
+        "id": "default_or_recall",
+        "page": 48,
+        "sentence": "There have been delays in payment of statutory dues by our Company in Fiscal 2024 and delay in repayment of loans during Fiscals 2024 and 2023."
+      }
+    ],
+    "gem-aromatics-2025": [
+      {
+        "id": "regulator_order",
+        "page": 32,
+        "sentence": "Further, Gopinath Dairy Products Private Limited was also noted as a wilful defaulter."
+      }
+    ],
+    "glottis-2025": [
+      {
+        "id": "regulator_order",
+        "page": 355,
+        "sentence": "vi. take possession of the hypothecated vehicle and sell the same by private contract or otherwise as pledgee/hypothecate/mortgagee for adjustment of the loan account. vii. proceed against us to declare us as wilful defaulter in accordance "
+      }
+    ],
+    "jain-resource-recycling-2025": [
+      {
+        "id": "regulator_order",
+        "page": 43,
+        "sentence": "As a result, SEBI imposed a penalty of ₹300,000 on Kamlesh Jain vide its order dated April 30, 2020, which was duly paid on February 8, 2021. 2."
+      }
+    ],
+    "jaro-institute-of-technology-management-and-research-2025": [
+      {
+        "id": "regulator_order",
+        "page": 59,
+        "sentence": "An adjudication order dated June 24, 2014 was passed by SEBI which imposed a penalty of ₹ 1 million on our Promoter in relation to the said violation."
+      }
+    ],
+    "jsw-cement-2025": [
+      {
+        "id": "going_concern",
+        "page": 59,
+        "sentence": "While the accounts of all our subsidiaries and JVs have been prepared on a going concern basis, the auditors of some of our subsidiaries have included the following material uncertainties related to their going concern basis: Fiscal 2025: •"
+      },
+      {
+        "id": "regulator_order",
+        "page": 591,
+        "sentence": "Further to the SCN, the Special Director Enforcement imposed a penalty of ₹ 41.00 million on JSW Steel Limited and a penalty of ₹ 4.00 million on Seshagiri Rao Venkata Satya Metlapalli pursuant to its order dated October 6, 2009 (“Order”)."
+      }
+    ],
+    "laxmi-india-finance-2025": [
+      {
+        "id": "regulator_order",
+        "page": 42,
+        "sentence": "Our Company was debarred from accessing the BSE’s Electronic Book Platform for bidding of debt securities issued on private placement private basis on account of delay in payment of penalties, up to July 2, 2024."
+      }
+    ],
+    "national-securities-depository-2025": [
+      {
+        "id": "regulator_order",
+        "page": 79,
+        "sentence": "Pursuant to the show cause notice, SEBI passed an order dated December 4, 2008 wherein certain adverse observations were made against our Company (“SEBI Order”)."
+      }
+    ],
+    "smartworks-coworking-spaces-2025": [
+      {
+        "id": "default_or_recall",
+        "page": 63,
+        "sentence": "Ghanshyam Sarda, a member of the Promoter Group through Standard Chrome Limited, a joint venture with the Tata Group, had defaulted on bank loans received, resulting in a fall of its share price on stock exchanges, and currently Standard Ch"
+      },
+      {
+        "id": "qualified_audit",
+        "page": 35,
+        "sentence": "Our Statutory Auditors had provided a qualified opinion in our consolidated audit report on internal financial controls for Fiscal 2023."
+      }
+    ],
+    "solarworld-energy-solutions-2025": [
+      {
+        "id": "regulator_order",
+        "page": 55,
+        "sentence": "Further, SEBI has issued an adjudication order dated December 31, 2019 (“Order”) pertaining to the buying, selling, and dealing in shares of Gangotri Textiles Limited and addressing Mr."
+      }
+    ],
+    "vms-tmt-2025": [
+      {
+        "id": "default_or_recall",
+        "page": 47,
+        "sentence": "Eternal Motors Private Limited had availed certain facility from a financial institution and has defaulted on repaying the loan as per the agreed terms."
+      },
+      {
+        "id": "regulator_order",
+        "page": 263,
+        "sentence": "These circumstances led to the declaration of Eternal Motors Private Limited as a wilful defaulter, and further initiation of the liquidation proceedings"
+      }
+    ]
+  }
+}

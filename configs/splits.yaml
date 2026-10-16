@@ -8,7 +8,8 @@ rules:
   dev_share: 0.3333333333333333
   train_share: 0.7
   demo_newest: 3.0
-changed_by_adr: []
+changed_by_adr:
+- C-ADR-24
 counts:
   dev/new: 52
   dev/showcase: 3
@@ -4701,5 +4702,12 @@ demo:
 - nityas-gems-and-jewellery-india-2026
 - srit-india-2026
 - shah-investor-s-home-2026
-bench: []
+bench:
+- groww-2025
+- hdb-financial-services-2025
+- lenskart-2025
+- lg-electronics-india-2025
+- meesho-2025
+- physicswallah-2025
+- tata-capital-2025
 bench_dev: []

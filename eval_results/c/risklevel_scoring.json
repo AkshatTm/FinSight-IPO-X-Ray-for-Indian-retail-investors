@@ -1,0 +1,3553 @@
+{
+ "written_by": "scripts/score_reference_ipos.py",
+ "written_utc": "2026-10-16T12:11:37Z",
+ "classifier": "models/risk_classifier/seed-42/final (torch fp32; ONNX export agrees, 1.000)",
+ "novelty": {
+  "tau": 0.71,
+  "window_years": 4,
+  "kind": "eval",
+  "nearest": 1
+ },
+ "n_ipos": 440,
+ "n_risks": 29677,
+ "by_source": {
+  "corpus": 275,
+  "new": 162,
+  "showcase": 3
+ },
+ "flags": {
+  "ok": 165
+ },
+ "window_ipos": {
+  "min": 0,
+  "median": 100.0,
+  "max": 305
+ },
+ "problems": {},
+ "caveats": [
+  "no reference amount for the material-number rule (as in the pipeline)",
+  "X-Ray built from rules only, without the Objects table (as in compare_reference.py)"
+ ],
+ "ipos": [
+  {
+   "ipo_id": "aadhar-housing-finance-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 61,
+   "window_ipos": 179,
+   "high": 7
+  },
+  {
+   "ipo_id": "aavas-financiers-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 64,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "abans-holdings-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 100,
+   "high": 13
+  },
+  {
+   "ipo_id": "acme-solar-holdings-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 86,
+   "window_ipos": 222,
+   "high": 17
+  },
+  {
+   "ipo_id": "adani-wilmar-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 75,
+   "window_ipos": 100,
+   "high": 12
+  },
+  {
+   "ipo_id": "aditya-birla-sun-life-amc-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 74,
+   "high": 13
+  },
+  {
+   "ipo_id": "aditya-infotech-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 99,
+   "window_ipos": 264,
+   "high": 11
+  },
+  {
+   "ipo_id": "adlabs-entertainment-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 57,
+   "window_ipos": 18,
+   "high": 8
+  },
+  {
+   "ipo_id": "advance-agrolife-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 87,
+   "window_ipos": 292,
+   "high": 9
+  },
+  {
+   "ipo_id": "aegis-vopak-terminals-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 69,
+   "window_ipos": 245,
+   "high": 10
+  },
+  {
+   "ipo_id": "aeroflex-industries-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 21,
+   "window_ipos": 111,
+   "high": 8
+  },
+  {
+   "ipo_id": "aether-industries-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 84,
+   "window_ipos": 100,
+   "high": 10
+  },
+  {
+   "ipo_id": "afcons-infrastructure-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 90,
+   "window_ipos": 220,
+   "high": 16
+  },
+  {
+   "ipo_id": "affle-india-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 54,
+   "window_ipos": 89,
+   "high": 8
+  },
+  {
+   "ipo_id": "ags-transact-technologies-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 100,
+   "high": 8
+  },
+  {
+   "ipo_id": "ajax-engineering-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 68,
+   "window_ipos": 239,
+   "high": 9
+  },
+  {
+   "ipo_id": "akme-fintrade-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 59,
+   "window_ipos": 184,
+   "high": 9
+  },
+  {
+   "ipo_id": "akums-drugs-and-pharmaceuticals-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 85,
+   "window_ipos": 192,
+   "high": 11
+  },
+  {
+   "ipo_id": "alkem-laboratories-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 58,
+   "window_ipos": 18,
+   "high": 10
+  },
+  {
+   "ipo_id": "all-time-plastics-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 68,
+   "window_ipos": 268,
+   "high": 11
+  },
+  {
+   "ipo_id": "amber-enterprises-india-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 53,
+   "window_ipos": 74,
+   "high": 8
+  },
+  {
+   "ipo_id": "ami-organics-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 82,
+   "window_ipos": 74,
+   "high": 10
+  },
+  {
+   "ipo_id": "angel-one-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 2,
+   "window_ipos": 82,
+   "high": 0
+  },
+  {
+   "ipo_id": "anlon-healthcare-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 89,
+   "window_ipos": 278,
+   "high": 9
+  },
+  {
+   "ipo_id": "anthem-biosciences-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 83,
+   "window_ipos": 258,
+   "high": 17
+  },
+  {
+   "ipo_id": "antony-waste-handling-cell-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 60,
+   "window_ipos": 82,
+   "high": 10
+  },
+  {
+   "ipo_id": "anupam-rasayan-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 87,
+   "window_ipos": 74,
+   "high": 21
+  },
+  {
+   "ipo_id": "apeejay-surrendra-park-hotels-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 83,
+   "window_ipos": 157,
+   "high": 15
+  },
+  {
+   "ipo_id": "apex-frozen-foods-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 71,
+   "window_ipos": 44,
+   "high": 8
+  },
+  {
+   "ipo_id": "aptus-value-housing-finance-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 74,
+   "high": 5
+  },
+  {
+   "ipo_id": "archean-chemical-industries-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 100,
+   "high": 10
+  },
+  {
+   "ipo_id": "arisinfra-solutions-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 86,
+   "window_ipos": 249,
+   "high": 14
+  },
+  {
+   "ipo_id": "arkade-developers-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 78,
+   "window_ipos": 213,
+   "high": 7
+  },
+  {
+   "ipo_id": "ask-automotive-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 83,
+   "window_ipos": 111,
+   "high": 24
+  },
+  {
+   "ipo_id": "aster-dm-healthcare-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 5,
+   "window_ipos": 74,
+   "high": 4
+  },
+  {
+   "ipo_id": "astron-paper-board-mill-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 44,
+   "high": 10
+  },
+  {
+   "ipo_id": "ather-energy-2025",
+   "slice": "dev",
+   "source": "showcase",
+   "risks": 97,
+   "window_ipos": 242,
+   "high": 24
+  },
+  {
+   "ipo_id": "au-financiers-india-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 48,
+   "window_ipos": 44,
+   "high": 14
+  },
+  {
+   "ipo_id": "avalon-technologies-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 111,
+   "high": 9
+  },
+  {
+   "ipo_id": "avenue-supermarts-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 2,
+   "window_ipos": 44,
+   "high": 2
+  },
+  {
+   "ipo_id": "awfis-space-solutions-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 72,
+   "window_ipos": 181,
+   "high": 9
+  },
+  {
+   "ipo_id": "azad-engineering-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 111,
+   "high": 8
+  },
+  {
+   "ipo_id": "baazar-style-retail-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 202,
+   "high": 4
+  },
+  {
+   "ipo_id": "bajaj-corp-2010",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 73,
+   "window_ipos": 0,
+   "high": 11
+  },
+  {
+   "ipo_id": "bajaj-housing-finance-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 206,
+   "high": 5
+  },
+  {
+   "ipo_id": "bandhan-bank-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 74,
+   "high": 11
+  },
+  {
+   "ipo_id": "bansal-wire-industries-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 60,
+   "window_ipos": 190,
+   "high": 8
+  },
+  {
+   "ipo_id": "barbeque-nation-hospitality-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 86,
+   "window_ipos": 74,
+   "high": 16
+  },
+  {
+   "ipo_id": "belrise-industries-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 72,
+   "window_ipos": 244,
+   "high": 13
+  },
+  {
+   "ipo_id": "bharat-dynamics-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 76,
+   "window_ipos": 74,
+   "high": 9
+  },
+  {
+   "ipo_id": "bharat-road-network-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 71,
+   "window_ipos": 44,
+   "high": 11
+  },
+  {
+   "ipo_id": "bharti-hexacom-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 174,
+   "high": 9
+  },
+  {
+   "ipo_id": "bharti-infratel-2012",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 18,
+   "window_ipos": 10,
+   "high": 6
+  },
+  {
+   "ipo_id": "bikaji-foods-international-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 100,
+   "high": 21
+  },
+  {
+   "ipo_id": "bls-e-services-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 93,
+   "window_ipos": 156,
+   "high": 7
+  },
+  {
+   "ipo_id": "blue-jet-healthcare-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 111,
+   "high": 5
+  },
+  {
+   "ipo_id": "bluestone-jewellery-and-lifestyle-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 94,
+   "window_ipos": 270,
+   "high": 15
+  },
+  {
+   "ipo_id": "bmw-ventures-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 86,
+   "window_ipos": 292,
+   "high": 11
+  },
+  {
+   "ipo_id": "borana-weaves-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 69,
+   "window_ipos": 243,
+   "high": 10
+  },
+  {
+   "ipo_id": "brainbees-solutions-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 195,
+   "high": 12
+  },
+  {
+   "ipo_id": "brigade-hotel-ventures-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 80,
+   "window_ipos": 262,
+   "high": 12
+  },
+  {
+   "ipo_id": "brooks-laboratories-2011",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 44,
+   "window_ipos": 4,
+   "high": 7
+  },
+  {
+   "ipo_id": "bse-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 54,
+   "window_ipos": 44,
+   "high": 7
+  },
+  {
+   "ipo_id": "c-e-info-systems-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 22,
+   "window_ipos": 74,
+   "high": 4
+  },
+  {
+   "ipo_id": "campus-activewear-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 76,
+   "window_ipos": 100,
+   "high": 18
+  },
+  {
+   "ipo_id": "canara-hsbc-life-insurance-company-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 81,
+   "window_ipos": 303,
+   "high": 3
+  },
+  {
+   "ipo_id": "canara-robeco-asset-management-company-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 68,
+   "window_ipos": 302,
+   "high": 2
+  },
+  {
+   "ipo_id": "capacit-e-infraprojects-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 11,
+   "window_ipos": 44,
+   "high": 1
+  },
+  {
+   "ipo_id": "capital-small-finance-bank-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 90,
+   "window_ipos": 159,
+   "high": 16
+  },
+  {
+   "ipo_id": "career-point-infosystems-2010",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 8,
+   "window_ipos": 0,
+   "high": 4
+  },
+  {
+   "ipo_id": "carraro-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 241,
+   "high": 12
+  },
+  {
+   "ipo_id": "cartrade-tech-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 17,
+   "window_ipos": 74,
+   "high": 1
+  },
+  {
+   "ipo_id": "ceigall-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 72,
+   "window_ipos": 193,
+   "high": 10
+  },
+  {
+   "ipo_id": "cello-world-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 61,
+   "window_ipos": 111,
+   "high": 2
+  },
+  {
+   "ipo_id": "chalet-hotels-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 77,
+   "window_ipos": 89,
+   "high": 11
+  },
+  {
+   "ipo_id": "chemcon-speciality-chemicals-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 60,
+   "window_ipos": 82,
+   "high": 8
+  },
+  {
+   "ipo_id": "chemplast-sanmar-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 33,
+   "window_ipos": 74,
+   "high": 6
+  },
+  {
+   "ipo_id": "cl-educate-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 58,
+   "window_ipos": 44,
+   "high": 18
+  },
+  {
+   "ipo_id": "clean-science-and-technology-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 88,
+   "window_ipos": 74,
+   "high": 13
+  },
+  {
+   "ipo_id": "cms-info-systems-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "coffee-day-enterprises-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 120,
+   "window_ipos": 18,
+   "high": 13
+  },
+  {
+   "ipo_id": "concord-biotech-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 25,
+   "window_ipos": 111,
+   "high": 1
+  },
+  {
+   "ipo_id": "concord-enviro-systems-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 80,
+   "window_ipos": 236,
+   "high": 19
+  },
+  {
+   "ipo_id": "craftsman-automation-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "credit-analysis-research-2012",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 35,
+   "window_ipos": 10,
+   "high": 7
+  },
+  {
+   "ipo_id": "credo-brands-marketing-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 83,
+   "window_ipos": 111,
+   "high": 9
+  },
+  {
+   "ipo_id": "crizac-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 255,
+   "high": 10
+  },
+  {
+   "ipo_id": "cyient-dlm-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 64,
+   "window_ipos": 111,
+   "high": 14
+  },
+  {
+   "ipo_id": "d-b-realty-2010",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 0,
+   "high": 12
+  },
+  {
+   "ipo_id": "dam-capital-advisors-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 57,
+   "window_ipos": 236,
+   "high": 5
+  },
+  {
+   "ipo_id": "data-patterns-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 54,
+   "window_ipos": 74,
+   "high": 6
+  },
+  {
+   "ipo_id": "dee-development-engineers-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 92,
+   "window_ipos": 184,
+   "high": 12
+  },
+  {
+   "ipo_id": "deepak-builders-and-engineers-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 80,
+   "window_ipos": 217,
+   "high": 22
+  },
+  {
+   "ipo_id": "delhivery-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 100,
+   "high": 13
+  },
+  {
+   "ipo_id": "denta-water-and-infra-solutions-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 81,
+   "window_ipos": 237,
+   "high": 11
+  },
+  {
+   "ipo_id": "dev-accelerator-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 280,
+   "high": 11
+  },
+  {
+   "ipo_id": "devyani-international-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 1,
+   "window_ipos": 74,
+   "high": 0
+  },
+  {
+   "ipo_id": "dharmaj-crop-guard-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 100,
+   "high": 10
+  },
+  {
+   "ipo_id": "diffusion-engineers-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 78,
+   "window_ipos": 213,
+   "high": 10
+  },
+  {
+   "ipo_id": "dilip-buildcon-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 7,
+   "window_ipos": 31,
+   "high": 2
+  },
+  {
+   "ipo_id": "divgi-torqtransfer-systems-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 68,
+   "window_ipos": 111,
+   "high": 7
+  },
+  {
+   "ipo_id": "dixon-technologies-india-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 50,
+   "window_ipos": 44,
+   "high": 7
+  },
+  {
+   "ipo_id": "dodla-dairy-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 75,
+   "window_ipos": 74,
+   "high": 2
+  },
+  {
+   "ipo_id": "doms-industries-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 52,
+   "window_ipos": 111,
+   "high": 5
+  },
+  {
+   "ipo_id": "dr-agarwal-s-healthcare-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 238,
+   "high": 11
+  },
+  {
+   "ipo_id": "dr-lal-pathlabs-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 69,
+   "window_ipos": 18,
+   "high": 13
+  },
+  {
+   "ipo_id": "dreamfolks-services-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 100,
+   "high": 9
+  },
+  {
+   "ipo_id": "easy-trip-planners-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 74,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "ecos-india-mobility-and-hospitality-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 200,
+   "high": 2
+  },
+  {
+   "ipo_id": "elin-electronics-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 100,
+   "high": 11
+  },
+  {
+   "ipo_id": "ellenbarrie-industrial-gases-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 90,
+   "window_ipos": 251,
+   "high": 9
+  },
+  {
+   "ipo_id": "emcure-pharmaceuticals-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 91,
+   "window_ipos": 189,
+   "high": 18
+  },
+  {
+   "ipo_id": "entero-healthcare-solutions-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 64,
+   "window_ipos": 161,
+   "high": 5
+  },
+  {
+   "ipo_id": "enviro-infra-engineers-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 227,
+   "high": 8
+  },
+  {
+   "ipo_id": "epack-durable-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 86,
+   "window_ipos": 154,
+   "high": 6
+  },
+  {
+   "ipo_id": "equitas-holdings-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 5,
+   "window_ipos": 31,
+   "high": 2
+  },
+  {
+   "ipo_id": "equitas-small-finance-bank-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 82,
+   "high": 24
+  },
+  {
+   "ipo_id": "eris-lifesciences-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 54,
+   "window_ipos": 44,
+   "high": 9
+  },
+  {
+   "ipo_id": "esaf-small-finance-bank-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 111,
+   "high": 29
+  },
+  {
+   "ipo_id": "ethos-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 100,
+   "high": 8
+  },
+  {
+   "ipo_id": "euro-pratik-sales-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 65,
+   "window_ipos": 282,
+   "high": 12
+  },
+  {
+   "ipo_id": "exicom-tele-systems-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 64,
+   "window_ipos": 165,
+   "high": 9
+  },
+  {
+   "ipo_id": "exxaro-tiles-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 74,
+   "high": 10
+  },
+  {
+   "ipo_id": "fabtech-technologies-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 97,
+   "window_ipos": 296,
+   "high": 13
+  },
+  {
+   "ipo_id": "fedbank-financial-services-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 85,
+   "window_ipos": 111,
+   "high": 12
+  },
+  {
+   "ipo_id": "fine-organic-industries-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 30,
+   "window_ipos": 74,
+   "high": 7
+  },
+  {
+   "ipo_id": "fino-payments-bank-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 74,
+   "high": 17
+  },
+  {
+   "ipo_id": "five-star-business-finance-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 100,
+   "high": 13
+  },
+  {
+   "ipo_id": "flair-writing-industries-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 76,
+   "window_ipos": 111,
+   "high": 11
+  },
+  {
+   "ipo_id": "fusion-micro-finance-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 68,
+   "window_ipos": 100,
+   "high": 14
+  },
+  {
+   "ipo_id": "g-n-a-axles-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 53,
+   "window_ipos": 31,
+   "high": 8
+  },
+  {
+   "ipo_id": "g-r-infraprojects-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 74,
+   "high": 11
+  },
+  {
+   "ipo_id": "gala-precision-engineering-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 76,
+   "window_ipos": 202,
+   "high": 10
+  },
+  {
+   "ipo_id": "galaxy-surfactants-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 48,
+   "window_ipos": 74,
+   "high": 8
+  },
+  {
+   "ipo_id": "gandhar-oil-refinery-india-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 111,
+   "high": 9
+  },
+  {
+   "ipo_id": "ganesh-consumer-products-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 60,
+   "window_ipos": 288,
+   "high": 7
+  },
+  {
+   "ipo_id": "garuda-construction-and-engineering-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 78,
+   "window_ipos": 215,
+   "high": 10
+  },
+  {
+   "ipo_id": "gem-aromatics-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 85,
+   "window_ipos": 274,
+   "high": 10
+  },
+  {
+   "ipo_id": "general-insurance-corporation-of-india-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 44,
+   "high": 13
+  },
+  {
+   "ipo_id": "gk-energy-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 71,
+   "window_ipos": 285,
+   "high": 10
+  },
+  {
+   "ipo_id": "gland-pharma-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 82,
+   "high": 10
+  },
+  {
+   "ipo_id": "glenmark-life-sciences-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 41,
+   "window_ipos": 74,
+   "high": 5
+  },
+  {
+   "ipo_id": "global-health-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 100,
+   "high": 12
+  },
+  {
+   "ipo_id": "global-surfaces-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 81,
+   "window_ipos": 111,
+   "high": 13
+  },
+  {
+   "ipo_id": "globe-civil-projects-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 94,
+   "window_ipos": 250,
+   "high": 18
+  },
+  {
+   "ipo_id": "glottis-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 296,
+   "high": 11
+  },
+  {
+   "ipo_id": "gng-electronics-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 79,
+   "window_ipos": 259,
+   "high": 8
+  },
+  {
+   "ipo_id": "go-digit-general-insurance-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 98,
+   "window_ipos": 180,
+   "high": 19
+  },
+  {
+   "ipo_id": "go-digit-insurance-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 99,
+   "window_ipos": 182,
+   "high": 18
+  },
+  {
+   "ipo_id": "go-fashion-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 74,
+   "high": 15
+  },
+  {
+   "ipo_id": "godavari-biorefineries-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 76,
+   "window_ipos": 219,
+   "high": 11
+  },
+  {
+   "ipo_id": "godrej-agrovet-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 44,
+   "high": 8
+  },
+  {
+   "ipo_id": "gopal-snacks-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 79,
+   "window_ipos": 170,
+   "high": 15
+  },
+  {
+   "ipo_id": "gpt-healthcare-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 65,
+   "window_ipos": 164,
+   "high": 7
+  },
+  {
+   "ipo_id": "gtpl-hathway-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 17,
+   "window_ipos": 44,
+   "high": 4
+  },
+  {
+   "ipo_id": "gujarat-pipavav-port-ltd-gppl-2010",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 58,
+   "window_ipos": 0,
+   "high": 15
+  },
+  {
+   "ipo_id": "h-g-infra-engineering-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 68,
+   "window_ipos": 74,
+   "high": 13
+  },
+  {
+   "ipo_id": "happy-forgings-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 76,
+   "window_ipos": 111,
+   "high": 14
+  },
+  {
+   "ipo_id": "harsha-engineers-international-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 100,
+   "high": 8
+  },
+  {
+   "ipo_id": "hdfc-asset-management-company-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 19,
+   "window_ipos": 74,
+   "high": 5
+  },
+  {
+   "ipo_id": "hdfc-standard-life-insurance-company-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 18,
+   "window_ipos": 44,
+   "high": 7
+  },
+  {
+   "ipo_id": "healthcare-global-enterprises-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 31,
+   "high": 16
+  },
+  {
+   "ipo_id": "hexaware-technologies-2025",
+   "slice": "dev",
+   "source": "showcase",
+   "risks": 73,
+   "window_ipos": 240,
+   "high": 10
+  },
+  {
+   "ipo_id": "highway-infrastructure-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 81,
+   "window_ipos": 266,
+   "high": 6
+  },
+  {
+   "ipo_id": "hindustan-aeronautics-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 80,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "hma-agro-industries-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 79,
+   "window_ipos": 111,
+   "high": 11
+  },
+  {
+   "ipo_id": "home-first-finance-company-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 42,
+   "window_ipos": 74,
+   "high": 5
+  },
+  {
+   "ipo_id": "honasa-consumer-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 111,
+   "high": 19
+  },
+  {
+   "ipo_id": "housing-and-urban-development-corporation-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 59,
+   "window_ipos": 44,
+   "high": 21
+  },
+  {
+   "ipo_id": "hp-adhesives-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 74,
+   "high": 9
+  },
+  {
+   "ipo_id": "hpl-electric-power-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 58,
+   "window_ipos": 31,
+   "high": 12
+  },
+  {
+   "ipo_id": "hyundai-motor-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 93,
+   "window_ipos": 216,
+   "high": 12
+  },
+  {
+   "ipo_id": "icici-lombard-general-insurance-company-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 92,
+   "window_ipos": 44,
+   "high": 17
+  },
+  {
+   "ipo_id": "icici-prudential-life-insurance-company-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 80,
+   "window_ipos": 31,
+   "high": 12
+  },
+  {
+   "ipo_id": "icici-securities-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 74,
+   "high": 8
+  },
+  {
+   "ipo_id": "ideaforge-technology-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 111,
+   "high": 2
+  },
+  {
+   "ipo_id": "ikio-lighting-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 81,
+   "window_ipos": 111,
+   "high": 13
+  },
+  {
+   "ipo_id": "indegene-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 79,
+   "window_ipos": 177,
+   "high": 4
+  },
+  {
+   "ipo_id": "india-pesticides-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 74,
+   "high": 14
+  },
+  {
+   "ipo_id": "india-shelter-finance-corporation-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 75,
+   "window_ipos": 111,
+   "high": 10
+  },
+  {
+   "ipo_id": "indiamart-intermesh-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 62,
+   "window_ipos": 89,
+   "high": 5
+  },
+  {
+   "ipo_id": "indian-energy-exchange-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 52,
+   "window_ipos": 44,
+   "high": 7
+  },
+  {
+   "ipo_id": "indian-renewable-energy-development-agency-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 111,
+   "high": 16
+  },
+  {
+   "ipo_id": "indigo-paints-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 83,
+   "window_ipos": 74,
+   "high": 10
+  },
+  {
+   "ipo_id": "indiqube-spaces-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 80,
+   "window_ipos": 259,
+   "high": 6
+  },
+  {
+   "ipo_id": "indo-farm-equipment-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 83,
+   "window_ipos": 243,
+   "high": 17
+  },
+  {
+   "ipo_id": "indogulf-cropsciences-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 254,
+   "high": 7
+  },
+  {
+   "ipo_id": "indostar-capital-finance-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 74,
+   "high": 13
+  },
+  {
+   "ipo_id": "infibeam-incorporation-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 76,
+   "window_ipos": 31,
+   "high": 3
+  },
+  {
+   "ipo_id": "innova-captab-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 81,
+   "window_ipos": 111,
+   "high": 8
+  },
+  {
+   "ipo_id": "inox-green-energy-services-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 100,
+   "high": 10
+  },
+  {
+   "ipo_id": "inox-india-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 1,
+   "window_ipos": 111,
+   "high": 1
+  },
+  {
+   "ipo_id": "inox-wind-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 87,
+   "window_ipos": 18,
+   "high": 15
+  },
+  {
+   "ipo_id": "interarch-building-products-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 80,
+   "window_ipos": 199,
+   "high": 8
+  },
+  {
+   "ipo_id": "interglobe-aviation-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 68,
+   "window_ipos": 18,
+   "high": 9
+  },
+  {
+   "ipo_id": "international-gemmological-institute-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 65,
+   "window_ipos": 232,
+   "high": 6
+  },
+  {
+   "ipo_id": "inventurus-knowledge-solutions-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 88,
+   "window_ipos": 230,
+   "high": 8
+  },
+  {
+   "ipo_id": "ircon-international-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 74,
+   "high": 9
+  },
+  {
+   "ipo_id": "irctc-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 58,
+   "window_ipos": 89,
+   "high": 6
+  },
+  {
+   "ipo_id": "irm-energy-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 111,
+   "high": 16
+  },
+  {
+   "ipo_id": "ivalue-infosolutions-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 62,
+   "window_ipos": 284,
+   "high": 5
+  },
+  {
+   "ipo_id": "j-g-chemicals-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 80,
+   "window_ipos": 169,
+   "high": 10
+  },
+  {
+   "ipo_id": "jain-resource-recycling-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 89,
+   "window_ipos": 292,
+   "high": 10
+  },
+  {
+   "ipo_id": "jana-small-finance-bank-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 87,
+   "window_ipos": 159,
+   "high": 29
+  },
+  {
+   "ipo_id": "jaro-institute-of-technology-management-and-research-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 290,
+   "high": 6
+  },
+  {
+   "ipo_id": "jinkushal-industries-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 83,
+   "window_ipos": 285,
+   "high": 7
+  },
+  {
+   "ipo_id": "jnk-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 88,
+   "window_ipos": 176,
+   "high": 21
+  },
+  {
+   "ipo_id": "jsw-cement-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 81,
+   "window_ipos": 268,
+   "high": 15
+  },
+  {
+   "ipo_id": "jsw-infrastructure-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 71,
+   "window_ipos": 111,
+   "high": 11
+  },
+  {
+   "ipo_id": "juniper-hotels-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 163,
+   "high": 22
+  },
+  {
+   "ipo_id": "jupiter-life-line-hospitals-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 69,
+   "window_ipos": 111,
+   "high": 7
+  },
+  {
+   "ipo_id": "just-dial-2013",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 61,
+   "window_ipos": 16,
+   "high": 11
+  },
+  {
+   "ipo_id": "jyoti-cnc-automation-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 81,
+   "window_ipos": 152,
+   "high": 12
+  },
+  {
+   "ipo_id": "kalpataru-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 77,
+   "window_ipos": 251,
+   "high": 13
+  },
+  {
+   "ipo_id": "kalyan-jewellers-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 13,
+   "window_ipos": 74,
+   "high": 4
+  },
+  {
+   "ipo_id": "kaynes-technology-india-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 100,
+   "high": 22
+  },
+  {
+   "ipo_id": "keystone-realtors-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 73,
+   "window_ipos": 100,
+   "high": 17
+  },
+  {
+   "ipo_id": "khadim-india-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 25,
+   "window_ipos": 44,
+   "high": 6
+  },
+  {
+   "ipo_id": "krishna-institute-of-medical-sciences-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 2,
+   "window_ipos": 74,
+   "high": 0
+  },
+  {
+   "ipo_id": "krn-heat-exchanger-and-refrigeration-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 211,
+   "high": 16
+  },
+  {
+   "ipo_id": "kronox-lab-sciences-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 59,
+   "window_ipos": 183,
+   "high": 8
+  },
+  {
+   "ipo_id": "kross-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 208,
+   "high": 5
+  },
+  {
+   "ipo_id": "krsnaa-diagnostics-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 84,
+   "window_ipos": 74,
+   "high": 11
+  },
+  {
+   "ipo_id": "krystal-integrated-services-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 171,
+   "high": 16
+  },
+  {
+   "ipo_id": "l-t-finance-holdings-2011",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 7,
+   "window_ipos": 4,
+   "high": 2
+  },
+  {
+   "ipo_id": "l-t-infotech-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 8,
+   "window_ipos": 31,
+   "high": 2
+  },
+  {
+   "ipo_id": "l-t-technology-services-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 31,
+   "high": 9
+  },
+  {
+   "ipo_id": "landmark-cars-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 75,
+   "window_ipos": 100,
+   "high": 14
+  },
+  {
+   "ipo_id": "latent-view-analytics-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 15,
+   "window_ipos": 74,
+   "high": 5
+  },
+  {
+   "ipo_id": "laurus-labs-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 31,
+   "high": 6
+  },
+  {
+   "ipo_id": "laxmi-dental-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 114,
+   "window_ipos": 235,
+   "high": 16
+  },
+  {
+   "ipo_id": "laxmi-india-finance-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 263,
+   "high": 9
+  },
+  {
+   "ipo_id": "laxmi-organic-industries-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 61,
+   "window_ipos": 74,
+   "high": 15
+  },
+  {
+   "ipo_id": "le-travenues-technology-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 92,
+   "window_ipos": 186,
+   "high": 11
+  },
+  {
+   "ipo_id": "lemon-tree-hotels-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 74,
+   "high": 13
+  },
+  {
+   "ipo_id": "life-insurance-corporation-of-india-lic-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 80,
+   "window_ipos": 100,
+   "high": 28
+  },
+  {
+   "ipo_id": "likhitha-infrastructure-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 59,
+   "window_ipos": 82,
+   "high": 4
+  },
+  {
+   "ipo_id": "m-b-engineering-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 266,
+   "high": 10
+  },
+  {
+   "ipo_id": "macrotech-developers-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 64,
+   "window_ipos": 74,
+   "high": 19
+  },
+  {
+   "ipo_id": "mahanagar-gas-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 52,
+   "window_ipos": 31,
+   "high": 11
+  },
+  {
+   "ipo_id": "mahindra-logistics-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 80,
+   "window_ipos": 44,
+   "high": 10
+  },
+  {
+   "ipo_id": "mamata-machinery-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 67,
+   "window_ipos": 234,
+   "high": 10
+  },
+  {
+   "ipo_id": "manba-finance-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 212,
+   "high": 12
+  },
+  {
+   "ipo_id": "mangal-electrical-industries-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 78,
+   "window_ipos": 276,
+   "high": 6
+  },
+  {
+   "ipo_id": "mankind-pharma-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 111,
+   "high": 11
+  },
+  {
+   "ipo_id": "mas-financial-services-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 44,
+   "high": 17
+  },
+  {
+   "ipo_id": "matrimony-com-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 44,
+   "high": 10
+  },
+  {
+   "ipo_id": "mazagon-dock-shipbuilders-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 71,
+   "window_ipos": 82,
+   "high": 7
+  },
+  {
+   "ipo_id": "medi-assist-healthcare-services-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 69,
+   "window_ipos": 153,
+   "high": 15
+  },
+  {
+   "ipo_id": "medplus-health-services-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 74,
+   "high": 9
+  },
+  {
+   "ipo_id": "mep-infrastructure-developers-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 68,
+   "window_ipos": 18,
+   "high": 15
+  },
+  {
+   "ipo_id": "metro-brands-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 1,
+   "window_ipos": 74,
+   "high": 0
+  },
+  {
+   "ipo_id": "metropolis-healthcare-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 89,
+   "high": 11
+  },
+  {
+   "ipo_id": "midwest-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 304,
+   "high": 15
+  },
+  {
+   "ipo_id": "mishra-dhatu-nigam-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 62,
+   "window_ipos": 74,
+   "high": 9
+  },
+  {
+   "ipo_id": "monte-carlo-fashions-2014",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 55,
+   "window_ipos": 17,
+   "high": 15
+  },
+  {
+   "ipo_id": "motisons-jewellers-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 1,
+   "window_ipos": 111,
+   "high": 1
+  },
+  {
+   "ipo_id": "mrs-bectors-food-specialities-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 52,
+   "window_ipos": 82,
+   "high": 12
+  },
+  {
+   "ipo_id": "mstc-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 60,
+   "window_ipos": 89,
+   "high": 7
+  },
+  {
+   "ipo_id": "mt-educare-2012",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 61,
+   "window_ipos": 10,
+   "high": 17
+  },
+  {
+   "ipo_id": "mtar-technologies-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 29,
+   "window_ipos": 74,
+   "high": 5
+  },
+  {
+   "ipo_id": "mukka-proteins-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 86,
+   "window_ipos": 167,
+   "high": 19
+  },
+  {
+   "ipo_id": "music-broadcast-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 56,
+   "window_ipos": 44,
+   "high": 9
+  },
+  {
+   "ipo_id": "muthoot-microfin-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 69,
+   "window_ipos": 111,
+   "high": 15
+  },
+  {
+   "ipo_id": "narayana-hrudayalaya-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 76,
+   "window_ipos": 18,
+   "high": 11
+  },
+  {
+   "ipo_id": "national-securities-depository-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 79,
+   "window_ipos": 264,
+   "high": 15
+  },
+  {
+   "ipo_id": "navkar-corporation-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 46,
+   "window_ipos": 18,
+   "high": 8
+  },
+  {
+   "ipo_id": "nazara-technologies-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 74,
+   "high": 10
+  },
+  {
+   "ipo_id": "neogen-chemicals-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 89,
+   "high": 11
+  },
+  {
+   "ipo_id": "netweb-technologies-india-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 87,
+   "window_ipos": 111,
+   "high": 10
+  },
+  {
+   "ipo_id": "newgen-software-technologies-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 2,
+   "window_ipos": 74,
+   "high": 1
+  },
+  {
+   "ipo_id": "niva-bupa-health-insurance-company-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 78,
+   "window_ipos": 224,
+   "high": 13
+  },
+  {
+   "ipo_id": "nova-agritech-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 88,
+   "window_ipos": 154,
+   "high": 6
+  },
+  {
+   "ipo_id": "ntpc-green-energy-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 96,
+   "window_ipos": 226,
+   "high": 15
+  },
+  {
+   "ipo_id": "nuvoco-vistas-corporation-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 74,
+   "high": 17
+  },
+  {
+   "ipo_id": "ola-electric-mobility-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 103,
+   "window_ipos": 193,
+   "high": 15
+  },
+  {
+   "ipo_id": "om-freight-forwarders-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 99,
+   "window_ipos": 296,
+   "high": 7
+  },
+  {
+   "ipo_id": "one-97-communications-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 80,
+   "window_ipos": 74,
+   "high": 13
+  },
+  {
+   "ipo_id": "one-mobikwik-systems-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 236,
+   "high": 9
+  },
+  {
+   "ipo_id": "orient-technologies-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 78,
+   "window_ipos": 198,
+   "high": 8
+  },
+  {
+   "ipo_id": "orkla-india-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 83,
+   "window_ipos": 305,
+   "high": 8
+  },
+  {
+   "ipo_id": "ortel-communications-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 61,
+   "window_ipos": 18,
+   "high": 15
+  },
+  {
+   "ipo_id": "oswal-pumps-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 81,
+   "window_ipos": 248,
+   "high": 12
+  },
+  {
+   "ipo_id": "p-n-gadgil-jewellers-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 209,
+   "high": 7
+  },
+  {
+   "ipo_id": "pace-digitek-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 296,
+   "high": 12
+  },
+  {
+   "ipo_id": "paradeep-phosphates-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 74,
+   "window_ipos": 100,
+   "high": 13
+  },
+  {
+   "ipo_id": "paras-defence-and-space-technologies-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 74,
+   "high": 16
+  },
+  {
+   "ipo_id": "patel-retail-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 18,
+   "window_ipos": 273,
+   "high": 8
+  },
+  {
+   "ipo_id": "pb-fintech-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 44,
+   "window_ipos": 74,
+   "high": 7
+  },
+  {
+   "ipo_id": "pc-jeweller-2012",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 55,
+   "window_ipos": 10,
+   "high": 15
+  },
+  {
+   "ipo_id": "pennar-engineered-building-systems-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 102,
+   "window_ipos": 18,
+   "high": 11
+  },
+  {
+   "ipo_id": "platinum-industries-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 165,
+   "high": 10
+  },
+  {
+   "ipo_id": "plaza-wires-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 73,
+   "window_ipos": 111,
+   "high": 9
+  },
+  {
+   "ipo_id": "pnb-housing-finance-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 56,
+   "window_ipos": 31,
+   "high": 22
+  },
+  {
+   "ipo_id": "pnc-infratech-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 18,
+   "high": 11
+  },
+  {
+   "ipo_id": "polycab-india-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 74,
+   "window_ipos": 89,
+   "high": 10
+  },
+  {
+   "ipo_id": "popular-vehicles-and-services-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 77,
+   "window_ipos": 171,
+   "high": 11
+  },
+  {
+   "ipo_id": "power-mech-projects-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 91,
+   "window_ipos": 18,
+   "high": 9
+  },
+  {
+   "ipo_id": "prabhat-dairy-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 46,
+   "window_ipos": 18,
+   "high": 7
+  },
+  {
+   "ipo_id": "precision-camshafts-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 61,
+   "window_ipos": 31,
+   "high": 10
+  },
+  {
+   "ipo_id": "premier-energies-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 100,
+   "window_ipos": 200,
+   "high": 11
+  },
+  {
+   "ipo_id": "prudent-corporate-advisory-services-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 100,
+   "high": 12
+  },
+  {
+   "ipo_id": "psp-projects-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 51,
+   "window_ipos": 44,
+   "high": 6
+  },
+  {
+   "ipo_id": "ptc-india-financial-services-2011",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 69,
+   "window_ipos": 4,
+   "high": 17
+  },
+  {
+   "ipo_id": "pyramid-technoplast-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 17,
+   "window_ipos": 111,
+   "high": 4
+  },
+  {
+   "ipo_id": "pyramid-technoplast-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 69,
+   "window_ipos": 201,
+   "high": 5
+  },
+  {
+   "ipo_id": "quadrant-future-tek-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 71,
+   "window_ipos": 244,
+   "high": 18
+  },
+  {
+   "ipo_id": "quality-power-electrical-equipments-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 66,
+   "window_ipos": 241,
+   "high": 5
+  },
+  {
+   "ipo_id": "quess-corp-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 31,
+   "high": 16
+  },
+  {
+   "ipo_id": "quick-heal-technologies-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 10,
+   "window_ipos": 31,
+   "high": 1
+  },
+  {
+   "ipo_id": "r-k-swamy-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 63,
+   "window_ipos": 168,
+   "high": 10
+  },
+  {
+   "ipo_id": "radiant-cash-management-services-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 56,
+   "window_ipos": 100,
+   "high": 8
+  },
+  {
+   "ipo_id": "rail-vikas-nigam-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 47,
+   "window_ipos": 89,
+   "high": 12
+  },
+  {
+   "ipo_id": "railtel-corporation-of-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 74,
+   "window_ipos": 74,
+   "high": 7
+  },
+  {
+   "ipo_id": "rashi-peripherals-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 84,
+   "window_ipos": 157,
+   "high": 12
+  },
+  {
+   "ipo_id": "rategain-travel-technologies-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 83,
+   "window_ipos": 74,
+   "high": 20
+  },
+  {
+   "ipo_id": "ratnaveer-precision-engineering-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 85,
+   "window_ipos": 111,
+   "high": 13
+  },
+  {
+   "ipo_id": "rbl-bank-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 95,
+   "window_ipos": 31,
+   "high": 29
+  },
+  {
+   "ipo_id": "rbz-jewellers-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 79,
+   "window_ipos": 111,
+   "high": 18
+  },
+  {
+   "ipo_id": "regaal-resources-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 60,
+   "window_ipos": 272,
+   "high": 5
+  },
+  {
+   "ipo_id": "reliance-nippon-life-asset-management-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 56,
+   "window_ipos": 44,
+   "high": 6
+  },
+  {
+   "ipo_id": "rishabh-instruments-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 87,
+   "window_ipos": 111,
+   "high": 12
+  },
+  {
+   "ipo_id": "rites-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 55,
+   "window_ipos": 74,
+   "high": 9
+  },
+  {
+   "ipo_id": "rolex-rings-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 45,
+   "window_ipos": 74,
+   "high": 10
+  },
+  {
+   "ipo_id": "route-mobile-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 82,
+   "window_ipos": 82,
+   "high": 10
+  },
+  {
+   "ipo_id": "rubicon-research-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 90,
+   "window_ipos": 301,
+   "high": 9
+  },
+  {
+   "ipo_id": "s-chand-and-company-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 44,
+   "high": 7
+  },
+  {
+   "ipo_id": "s-h-kelkar-company-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 17,
+   "window_ipos": 18,
+   "high": 2
+  },
+  {
+   "ipo_id": "s-j-s-enterprises-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 74,
+   "high": 15
+  },
+  {
+   "ipo_id": "saatvik-green-energy-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 71,
+   "window_ipos": 285,
+   "high": 4
+  },
+  {
+   "ipo_id": "sadbhav-infrastructure-project-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 68,
+   "window_ipos": 18,
+   "high": 12
+  },
+  {
+   "ipo_id": "sagility-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 66,
+   "window_ipos": 222,
+   "high": 7
+  },
+  {
+   "ipo_id": "sah-polymers-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 69,
+   "window_ipos": 111,
+   "high": 14
+  },
+  {
+   "ipo_id": "sai-life-sciences-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 76,
+   "window_ipos": 230,
+   "high": 11
+  },
+  {
+   "ipo_id": "sai-silks-kalamandir-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 69,
+   "window_ipos": 111,
+   "high": 10
+  },
+  {
+   "ipo_id": "sambhv-steel-tubes-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 85,
+   "window_ipos": 253,
+   "high": 8
+  },
+  {
+   "ipo_id": "sanathan-textiles-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 49,
+   "window_ipos": 235,
+   "high": 2
+  },
+  {
+   "ipo_id": "sandhar-technologies-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 74,
+   "high": 16
+  },
+  {
+   "ipo_id": "sansera-engineering-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 77,
+   "window_ipos": 74,
+   "high": 11
+  },
+  {
+   "ipo_id": "sanstar-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 85,
+   "window_ipos": 191,
+   "high": 20
+  },
+  {
+   "ipo_id": "sapphire-foods-india-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 74,
+   "high": 17
+  },
+  {
+   "ipo_id": "saraswati-saree-depot-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 75,
+   "window_ipos": 197,
+   "high": 8
+  },
+  {
+   "ipo_id": "sbfc-finance-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 111,
+   "high": 13
+  },
+  {
+   "ipo_id": "sbi-cards-and-payment-services-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 73,
+   "window_ipos": 82,
+   "high": 14
+  },
+  {
+   "ipo_id": "sbi-life-insurance-company-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 39,
+   "window_ipos": 44,
+   "high": 4
+  },
+  {
+   "ipo_id": "schloss-bangalore-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 100,
+   "window_ipos": 245,
+   "high": 22
+  },
+  {
+   "ipo_id": "scoda-tubes-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 92,
+   "window_ipos": 247,
+   "high": 9
+  },
+  {
+   "ipo_id": "security-and-intelligence-services-india-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 68,
+   "window_ipos": 44,
+   "high": 19
+  },
+  {
+   "ipo_id": "senco-gold-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 73,
+   "window_ipos": 111,
+   "high": 14
+  },
+  {
+   "ipo_id": "senores-pharmaceuticals-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 94,
+   "window_ipos": 240,
+   "high": 4
+  },
+  {
+   "ipo_id": "seshaasai-technologies-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 78,
+   "window_ipos": 288,
+   "high": 3
+  },
+  {
+   "ipo_id": "shalby-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 44,
+   "high": 17
+  },
+  {
+   "ipo_id": "shankara-building-products-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 44,
+   "high": 11
+  },
+  {
+   "ipo_id": "shanti-gold-international-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 86,
+   "window_ipos": 259,
+   "high": 10
+  },
+  {
+   "ipo_id": "sharda-cropchem-2014",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 9,
+   "window_ipos": 17,
+   "high": 1
+  },
+  {
+   "ipo_id": "sheela-foam-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 31,
+   "high": 10
+  },
+  {
+   "ipo_id": "shemaroo-entertainment-2014",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 12,
+   "window_ipos": 17,
+   "high": 3
+  },
+  {
+   "ipo_id": "shree-tirupati-balajee-agro-trading-company-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 91,
+   "window_ipos": 207,
+   "high": 8
+  },
+  {
+   "ipo_id": "shreeji-shipping-global-limited-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 271,
+   "high": 9
+  },
+  {
+   "ipo_id": "shringar-house-of-mangalsutra-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 81,
+   "window_ipos": 279,
+   "high": 7
+  },
+  {
+   "ipo_id": "shriram-properties-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 74,
+   "high": 16
+  },
+  {
+   "ipo_id": "shyam-metalics-and-energy-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 73,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "sigachi-industries-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 74,
+   "high": 9
+  },
+  {
+   "ipo_id": "signatureglobal-india-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 79,
+   "window_ipos": 111,
+   "high": 12
+  },
+  {
+   "ipo_id": "smartworks-coworking-spaces-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 77,
+   "window_ipos": 257,
+   "high": 17
+  },
+  {
+   "ipo_id": "snowman-logistics-2014",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 17,
+   "high": 13
+  },
+  {
+   "ipo_id": "solarworld-energy-solutions-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 74,
+   "window_ipos": 290,
+   "high": 7
+  },
+  {
+   "ipo_id": "sona-blw-precision-forgings-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 40,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "spandana-sphoorty-financial-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 40,
+   "window_ipos": 89,
+   "high": 9
+  },
+  {
+   "ipo_id": "speciality-restaurants-2012",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 72,
+   "window_ipos": 10,
+   "high": 9
+  },
+  {
+   "ipo_id": "srm-contractors-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 79,
+   "window_ipos": 173,
+   "high": 6
+  },
+  {
+   "ipo_id": "stallion-india-fluorochemicals-2025",
+   "slice": "train",
+   "source": "new",
+   "risks": 77,
+   "window_ipos": 236,
+   "high": 17
+  },
+  {
+   "ipo_id": "standard-glass-lining-technology-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 88,
+   "window_ipos": 245,
+   "high": 9
+  },
+  {
+   "ipo_id": "stanley-lifestyles-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 187,
+   "high": 7
+  },
+  {
+   "ipo_id": "star-health-and-allied-insurance-company-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 82,
+   "window_ipos": 74,
+   "high": 17
+  },
+  {
+   "ipo_id": "sterling-and-wilson-solar-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 58,
+   "window_ipos": 89,
+   "high": 9
+  },
+  {
+   "ipo_id": "stove-kraft-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 81,
+   "window_ipos": 74,
+   "high": 10
+  },
+  {
+   "ipo_id": "supriya-lifescience-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 57,
+   "window_ipos": 74,
+   "high": 3
+  },
+  {
+   "ipo_id": "suraj-estate-developers-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 19,
+   "window_ipos": 111,
+   "high": 6
+  },
+  {
+   "ipo_id": "suraksha-diagnostic-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 70,
+   "window_ipos": 228,
+   "high": 12
+  },
+  {
+   "ipo_id": "suryoday-small-finance-bank-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 85,
+   "window_ipos": 74,
+   "high": 18
+  },
+  {
+   "ipo_id": "swiggy-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 84,
+   "window_ipos": 221,
+   "high": 4
+  },
+  {
+   "ipo_id": "syngene-international-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 86,
+   "window_ipos": 18,
+   "high": 8
+  },
+  {
+   "ipo_id": "syrma-sgs-technology-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 1,
+   "window_ipos": 100,
+   "high": 1
+  },
+  {
+   "ipo_id": "tamilnad-mercantile-bank-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 52,
+   "window_ipos": 100,
+   "high": 14
+  },
+  {
+   "ipo_id": "tarsons-products-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 59,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "tata-technologies-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 66,
+   "window_ipos": 111,
+   "high": 8
+  },
+  {
+   "ipo_id": "tatva-chintan-pharma-chem-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 83,
+   "window_ipos": 74,
+   "high": 11
+  },
+  {
+   "ipo_id": "tbo-tek-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 86,
+   "window_ipos": 178,
+   "high": 11
+  },
+  {
+   "ipo_id": "tcns-clothing-co-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 74,
+   "high": 11
+  },
+  {
+   "ipo_id": "td-power-systems-2011",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 57,
+   "window_ipos": 4,
+   "high": 11
+  },
+  {
+   "ipo_id": "tega-industries-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 79,
+   "window_ipos": 74,
+   "high": 12
+  },
+  {
+   "ipo_id": "tejas-networks-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 52,
+   "window_ipos": 44,
+   "high": 7
+  },
+  {
+   "ipo_id": "the-new-india-assurance-company-2017",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 102,
+   "window_ipos": 44,
+   "high": 20
+  },
+  {
+   "ipo_id": "thyrocare-technologies-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 70,
+   "window_ipos": 31,
+   "high": 3
+  },
+  {
+   "ipo_id": "tolins-tyres-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 96,
+   "window_ipos": 205,
+   "high": 11
+  },
+  {
+   "ipo_id": "tracxn-technologies-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 77,
+   "window_ipos": 100,
+   "high": 12
+  },
+  {
+   "ipo_id": "transrail-lighting-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 71,
+   "window_ipos": 233,
+   "high": 10
+  },
+  {
+   "ipo_id": "travel-food-services-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 93,
+   "window_ipos": 256,
+   "high": 18
+  },
+  {
+   "ipo_id": "tree-house-education-accessories-2011",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 12,
+   "window_ipos": 4,
+   "high": 5
+  },
+  {
+   "ipo_id": "tribhovandas-bhimji-zaveri-2012",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 31,
+   "window_ipos": 10,
+   "high": 7
+  },
+  {
+   "ipo_id": "trualt-bioenergy-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 84,
+   "window_ipos": 295,
+   "high": 12
+  },
+  {
+   "ipo_id": "tvs-supply-chain-solutions-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 6,
+   "window_ipos": 111,
+   "high": 1
+  },
+  {
+   "ipo_id": "udayshivakumar-infra-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 73,
+   "window_ipos": 111,
+   "high": 11
+  },
+  {
+   "ipo_id": "ufo-moviez-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 63,
+   "window_ipos": 18,
+   "high": 14
+  },
+  {
+   "ipo_id": "ujjivan-financial-services-2016",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 59,
+   "window_ipos": 31,
+   "high": 11
+  },
+  {
+   "ipo_id": "ujjivan-small-finance-bank-2019",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 77,
+   "window_ipos": 89,
+   "high": 15
+  },
+  {
+   "ipo_id": "uma-exports-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 53,
+   "window_ipos": 100,
+   "high": 19
+  },
+  {
+   "ipo_id": "unicommerce-esolutions-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 76,
+   "window_ipos": 195,
+   "high": 3
+  },
+  {
+   "ipo_id": "unimech-aerospace-and-manufacturing-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 96,
+   "window_ipos": 241,
+   "high": 16
+  },
+  {
+   "ipo_id": "uniparts-india-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 79,
+   "window_ipos": 100,
+   "high": 17
+  },
+  {
+   "ipo_id": "updater-services-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 89,
+   "window_ipos": 111,
+   "high": 17
+  },
+  {
+   "ipo_id": "urban-company-2025",
+   "slice": "dev",
+   "source": "showcase",
+   "risks": 74,
+   "window_ipos": 280,
+   "high": 11
+  },
+  {
+   "ipo_id": "uti-asset-management-company-2020",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 82,
+   "high": 26
+  },
+  {
+   "ipo_id": "utkarsh-small-finance-bank-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 88,
+   "window_ipos": 111,
+   "high": 21
+  },
+  {
+   "ipo_id": "valiant-laboratories-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 62,
+   "window_ipos": 111,
+   "high": 10
+  },
+  {
+   "ipo_id": "varroc-engineering-2018",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 3,
+   "window_ipos": 74,
+   "high": 1
+  },
+  {
+   "ipo_id": "vaswani-industries-2011",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 34,
+   "window_ipos": 4,
+   "high": 5
+  },
+  {
+   "ipo_id": "vedant-fashions-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 65,
+   "window_ipos": 100,
+   "high": 10
+  },
+  {
+   "ipo_id": "ventive-hospitality-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 9,
+   "window_ipos": 236,
+   "high": 2
+  },
+  {
+   "ipo_id": "venus-pipes-tubes-2022",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 80,
+   "window_ipos": 100,
+   "high": 13
+  },
+  {
+   "ipo_id": "vibhor-steel-tubes-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 75,
+   "window_ipos": 161,
+   "high": 5
+  },
+  {
+   "ipo_id": "vijaya-diagnostic-centre-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 58,
+   "window_ipos": 74,
+   "high": 8
+  },
+  {
+   "ipo_id": "vikram-solar-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 94,
+   "window_ipos": 274,
+   "high": 15
+  },
+  {
+   "ipo_id": "vikran-engineering-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 82,
+   "window_ipos": 277,
+   "high": 17
+  },
+  {
+   "ipo_id": "vishal-mega-mart-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 60,
+   "window_ipos": 229,
+   "high": 8
+  },
+  {
+   "ipo_id": "vishnu-prakash-r-punglia-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 81,
+   "window_ipos": 111,
+   "high": 10
+  },
+  {
+   "ipo_id": "vms-tmt-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 84,
+   "window_ipos": 283,
+   "high": 17
+  },
+  {
+   "ipo_id": "vodafone-idea-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 55,
+   "window_ipos": 175,
+   "high": 5
+  },
+  {
+   "ipo_id": "vraj-iron-and-steel-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 65,
+   "window_ipos": 188,
+   "high": 13
+  },
+  {
+   "ipo_id": "vrl-logistics-2015",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 18,
+   "high": 9
+  },
+  {
+   "ipo_id": "waaree-energies-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 92,
+   "window_ipos": 218,
+   "high": 16
+  },
+  {
+   "ipo_id": "western-carriers-india-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 64,
+   "window_ipos": 210,
+   "high": 11
+  },
+  {
+   "ipo_id": "wework-india-management-2025",
+   "slice": "dev",
+   "source": "new",
+   "risks": 85,
+   "window_ipos": 300,
+   "high": 21
+  },
+  {
+   "ipo_id": "windlas-biotech-2021",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 81,
+   "window_ipos": 74,
+   "high": 15
+  },
+  {
+   "ipo_id": "wonderla-holidays-2014",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 78,
+   "window_ipos": 17,
+   "high": 7
+  },
+  {
+   "ipo_id": "yatharth-hospital-and-trauma-care-services-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 1,
+   "window_ipos": 111,
+   "high": 0
+  },
+  {
+   "ipo_id": "yatra-online-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 91,
+   "window_ipos": 111,
+   "high": 10
+  },
+  {
+   "ipo_id": "zaggle-prepaid-ocean-services-2023",
+   "slice": "train",
+   "source": "corpus",
+   "risks": 67,
+   "window_ipos": 111,
+   "high": 10
+  },
+  {
+   "ipo_id": "zinka-logistics-solutions-2024",
+   "slice": "train",
+   "source": "new",
+   "risks": 73,
+   "window_ipos": 225,
+   "high": 11
+  }
+ ]
+}

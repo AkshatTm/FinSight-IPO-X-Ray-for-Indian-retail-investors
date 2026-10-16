@@ -17,6 +17,9 @@ facts since B2.6a: FinSight answers them with the computed risk level and its re
 safe?", "is it a good IPO?" and "should I apply?" are still refused (the level is then shown as
 facts next to the refusal, B05 §7).
 
+"What are the red flags?" is answered since C3.7: the document's own risks with their pages and
+the no-advice note, never a buy/apply verdict. "Green flags" stay an opinion request.
+
 Questions that merely sound evaluative ("is there pending litigation", "what are the risks",
 "minimum shares to apply for", "what does GMP mean") are facts and are not blocked. A
 how-to question ("how do I apply") is procedural and passes unless another rule fires.
@@ -47,6 +50,18 @@ def normalize_question(text: str) -> str:
     )
     text = unicodedata.normalize("NFC", text)
     return " ".join(text.split())
+
+
+_RED_FLAG = re.compile(r"\bred[- ]?flags?\b|रेड\s*फ्?लैग", re.IGNORECASE)
+
+
+def is_red_flag_question(question: str) -> bool:
+    """Whether the question asks about red flags (English, Hindi or Hinglish spelling).
+
+    Since C3.7 (Akshat's decision) such a question is answered from the document with its page
+    and the no-advice note; "is it a red flag, should I skip it" is still refused as a decision.
+    """
+    return bool(_RED_FLAG.search(normalize_question(question)))
 
 
 @dataclass(frozen=True)
@@ -193,7 +208,7 @@ RULES: list[tuple[str, str]] = [
         "rating",
         r"\b(?:fair|good|reasonable|right|expensive|cheap|decent|attractive|too (?:high|low|much|costly)) (?:price|value|pricing)\b|\bpriced (?:fairly|well|right|too)\b",
     ),
-    ("rating", r"\bred flags?\b|\bgreen flags?\b"),
+    ("rating", r"\bgreen flags?\b"),  # "red flags" are facts since C3.7, see is_red_flag_question
     (
         "rating",
         r"\bis (?:it|this(?: ipo| company)?|the ipo|the company|the issue) (?:a )?(?:good|bad|safe|great|fine|decent|a (?:buy|sell))\b",

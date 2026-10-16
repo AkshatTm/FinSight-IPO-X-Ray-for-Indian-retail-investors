@@ -37,7 +37,7 @@ flowchart LR
 | API + worker | `finsight.api`, `finsight.jobs` | `dev_light`, `full` | One process; the upload job runs on a background thread |
 | Worker by hand | `python -m finsight.jobs run \| simplify \| sweep` | any | Same stages without the API |
 
-B-ADR-16 removed Google Cloud (Cloud Run, Cloud Storage, the GPU job) because the credit ran out. Nothing is hosted: the product runs on the laptop. Supabase sign-in/Postgres and a Vercel front end remain optional and free.
+B-ADR-16 removed runtime Google Cloud code (Cloud Run, Cloud Storage, GPU job) and the product runs on the laptop. A Google Cloud free trial is active for C5.1 deploy only, after a budget alert and Akshat's explicit "go" (C-ADR-10). Supabase sign-in/Postgres and a Vercel front end remain optional.
 
 ## Level 3: backend components
 
@@ -94,13 +94,13 @@ sequenceDiagram
     A-->>U: {status: "exists", doc_id}
   else new file
     A->>D: size and quota checks (3 per user, 10 in total per IST day), count the upload
-    A->>S: signed upload URL (GCS PUT, or the API's own POST route locally)
+    A->>S: upload route from local storage backend (POST /api/uploads/{doc_id}/file)
     A-->>U: {status: "upload", doc_id, upload_url}
     U->>S: PUT the PDF
     U->>A: POST /api/uploads/{doc_id}/complete
     A->>S: re-hash the file (422 hash_mismatch if it differs)
     A->>D: create the job
-    A->>W: launch (503 worker_unavailable if Cloud Run refuses)
+    A->>W: launch background thread (503 worker_unavailable on launcher failure)
     A-->>U: {doc_id, job_id, status: "queued"}
     U->>A: GET /api/docs/{doc_id}/events (SSE, Last-Event-ID to resume)
     loop each stage

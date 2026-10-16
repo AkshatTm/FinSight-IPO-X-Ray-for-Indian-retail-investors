@@ -142,3 +142,29 @@ def test_a_rejected_answer_is_sent_as_not_found_without_verdicts() -> None:
     answer = next(e for n, e in events if n == "answer")
     assert "could not find" in answer.text
     assert "verdict" not in names(events)
+
+
+def test_rerank_pool_is_capped_only_on_cpu() -> None:
+    from finsight.chat.orchestrator import rerank_pool
+
+    assert rerank_pool(20, "cpu") == 10
+    assert rerank_pool(20, "cuda") == 20
+    assert rerank_pool(20, None) == 20  # no reranker: BM25 pool unchanged
+    assert rerank_pool(6, "cpu") == 6
+
+
+def test_red_flag_question_is_answered_with_the_no_advice_note_after_the_text() -> None:
+    from finsight.guard import SEBI_NOTE
+
+    c = chat(FakeLLM("The document lists a pending SEBI proceeding [1]."))
+    events = list(c.events("a", "What are the red flags in this IPO?"))
+    assert "guard" not in names(events)
+    answer = next(e for n, e in events if n == "answer")
+    assert answer.text.startswith("The document lists a pending SEBI proceeding [1].")
+    assert answer.text.endswith(SEBI_NOTE["en"])
+    assert answer.citations[0].n == 1  # the citation still points at its place in the text
+
+
+def test_red_flag_question_with_a_verdict_request_is_still_refused() -> None:
+    events = list(chat(FakeLLM("x")).events("a", "Red flags? So should I apply?"))
+    assert names(events).count("guard") == 1

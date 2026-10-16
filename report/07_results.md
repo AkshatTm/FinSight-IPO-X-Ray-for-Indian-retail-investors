@@ -123,15 +123,15 @@ Cloud Run CPU deployment is not measured yet (E23). Whole-system RAM in use peak
 | ID | Question | Result files |
 | --- | --- | --- |
 | E13 | Are risks split correctly? | `b/segmentation.json` |
-| E14 | Are red-flag inputs extracted correctly? | not run yet |
-| E15 | Do red-flag statuses agree with hand-computed ones? | not run yet |
-| E16 | How good is the category classifier? | not run yet |
+| E14 | Are red-flag inputs extracted correctly? | `b/summary_extraction.json` |
+| E15 | Do red-flag statuses agree with hand-computed ones? | `b/redflags.json` |
+| E16 | How good is the category classifier? | `b/classifier_base.json`, `b/classifier_tfidf.json` |
 | E17 | Does the seriousness rule make sense? | not run yet |
 | E18 | Are rewrites faithful? | not run yet |
 | E19 | Are rewrites easier to read? | not run yet |
 | E20 | Do rewrites keep numbers and certainty? | not run yet |
 | E21 | Does the risk level relate to real outcomes? | not run yet |
-| E22 | Is "unusual" meaningful? | not run yet |
+| E22 | Is "unusual" meaningful? | `b/novelty.json` |
 | E23 | Speed and robustness on unseen PDFs | not run yet |
 | E24 | Cost | not run yet |
 | E8r | Does the guard still behave after allowing risk-level questions? | not run yet |
@@ -151,3 +151,41 @@ What each experiment must report, when it runs (B04 §3):
 - **E21** (risk level against outcomes): a correlation check only, reported with bootstrap intervals; it is
   not a forecast and is not shown as one.
 - **E22–E24** (novelty threshold, cloud speed, cost per upload).
+
+## 7.10 FinSight Bench v1 (C4.1) — `c4/bench_summary.json`
+
+> Generated from `eval_results/c4/` by `scripts/docs_gen.py` (`uv run poe docs-gen`); no number here is typed
+> by hand. Seven test-slice IPOs, every system given the same frozen passages and prompt text (C-ADR-24).
+> Every figure is a **single run**; brackets are 95 % IPO-cluster bootstrap intervals (7 documents, so they
+> are wide). Disclosures (contamination, Task B structure, no PDF for frontier apps) are listed in
+> `bench/v1/manifest.yaml`.
+
+<!-- generated:bench start -->
+
+| System | A: value match (NVM) | A: page agreement | B: red-flag status | C: correct (answerable) | C: abstains (unanswerable) | G: refuses advice | D: rewrite passes checks | C: median s / question |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| rules_v1 | 0.72 [0.64, 0.82] (n 156) | 0.71 [0.51, 0.86] (n 113) | 0.70 [0.58, 0.82] (n 91) | 0.33 [0.24, 0.39] (n 49) | 0.86 [0.76, 0.95] (n 21) | 1.00 [1.00, 1.00] (n 21) | — | 12.89 |
+| student | 0.34 [0.28, 0.40] (n 156) | 0.27 [0.18, 0.34] (n 49) | 0.47 [0.43, 0.53] (n 91) | 0.49 [0.39, 0.61] (n 49) | 0.33 [0.19, 0.48] (n 21) | 0.43 [0.24, 0.57] (n 21) | 0.89 [0.77, 0.97] (n 35) | 5.86 |
+
+Not run yet: teacher, opus, opus_api, chatgpt_go.
+
+Running, not scored until complete: base (23/225 prompts).
+
+Paired differences (same items, IPO-cluster bootstrap):
+
+- student-vs-rules_v1: A_nvm -0.39 [-0.51, -0.26] worse; B_status -0.23 [-0.39, -0.06] worse; C_correct -0.04 [-0.13, +0.07] on par; G_pass -0.57 [-0.76, -0.43] worse
+
+Scorer files changed since the freeze: scripts/bench_score.py, src/finsight/bench/score.py.
+
+Scorer changes made after the freeze (when, and what they touch):
+
+- scripts/summary_eval.py: main gained the opt-in gold v3.1 convention (off here; v3 keys); before any run.
+- finsight/bench/score.py: gold_in_context / citation_has_value also accept the gold's printed digits (3+) in table text, since tables print bare numbers with the unit in the header; made after reading the first rules_v1 Task C scores (diagnostics only: correctness unchanged).
+- finsight/bench/answers.py: Task A replies shaped {field id: value} or {field id: {status, value, unit, page}} are read (value-only ones get no unit or page) instead of scoring as unparseable; made after reading the student's first reply, before any student score; the fields are counted as n_flat_format_fields.
+- scripts/bench_score.py: the counts above, and the error-analysis picks use a sha256 order of item ids instead of sorted ids (all picks were the first IPO); no metric changes.
+
+Task A fields read from replies keyed by field id (not a fields list): student 112.
+
+Every number is a single run (one answer per prompt, temperature 0).
+
+<!-- generated:bench end -->
