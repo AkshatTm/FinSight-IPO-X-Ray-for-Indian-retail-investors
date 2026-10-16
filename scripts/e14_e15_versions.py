@@ -1,4 +1,4 @@
-"""E14 / E15 side by side: frozen v1, the wiring-only run and v2, split into dev and test IPOs.
+"""E14 / E15 side by side: frozen v1, the wiring-only run, v2 and v2 on gold v3.1, by IPO slice.
 
     uv run python scripts/e14_e15_versions.py [--out eval_results/c/e14_e15_versions.json]
 
@@ -25,11 +25,16 @@ import redflag_eval  # noqa: E402
 import summary_eval  # noqa: E402
 
 B = ROOT / "eval_results" / "b"
-E14 = {"v1 (frozen)": B / "summary_extraction.json", "v2": B / "summary_extraction_v2.json"}
+E14 = {
+    "v1 (frozen)": B / "summary_extraction.json",
+    "v2": B / "summary_extraction_v2.json",
+    "v2 on gold v3.1": B / "summary_extraction_v2_on_v31.json",
+}
 E15 = {
     "v1 (frozen)": B / "redflags.json",
     "v1 + offer-fact wiring": B / "redflags_v1_wired.json",
     "v2": B / "redflags_v2.json",
+    "v2 on gold v3.1": B / "redflags_v2_on_v31.json",
 }
 
 
@@ -73,13 +78,12 @@ def main(argv: list[str] | None = None) -> int:
                 f"| {name} | {sl} | {s['accuracy']} | {s['n_rows']} | {s['serious_disagreements']} |"
             )
     keys = sorted(result["e14"]["v2"]["all"]["per_key"])
-    lines += ["", "| E14 key | v1 | v2 |", "|---|---|---|"]
+    lines += ["", "| E14 key | v1 | v2 | v2 on v3.1 |", "|---|---|---|---|"]
     for k in keys:
-        v1 = result["e14"]["v1 (frozen)"]["all"]["per_key"].get(k, {}).get("accuracy")
-        v2 = result["e14"]["v2"]["all"]["per_key"][k]["accuracy"]
-        lines.append(f"| {k} | {v1} | {v2} |")
+        vals = [result["e14"][n]["all"]["per_key"].get(k, {}).get("accuracy") for n in E14]
+        lines.append(f"| {k} | " + " | ".join(str(v) for v in vals) + " |")
     checks = sorted(result["e15"]["v2"]["all"]["per_check"])
-    lines += ["", "| E15 check | v1 | wired | v2 |", "|---|---|---|---|"]
+    lines += ["", "| E15 check | v1 | wired | v2 | v2 on v3.1 |", "|---|---|---|---|---|"]
     for c in checks:
         vals = [result["e15"][n]["all"]["per_check"][c]["accuracy"] for n in E15]
         lines.append(f"| {c} | " + " | ".join(str(v) for v in vals) + " |")

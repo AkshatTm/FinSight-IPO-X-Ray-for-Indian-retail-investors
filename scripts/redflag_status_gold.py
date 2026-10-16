@@ -40,12 +40,16 @@ def doc_ids_by_ipo() -> dict[str, dict[str, str]]:
     }
 
 
-def unverified(rows: Iterable[Mapping[str, Any]]) -> list[str]:
-    """``ipo_id:key:period`` of every row a person has not verified."""
+def unverified(rows: Iterable[Mapping[str, Any]], pending_ok: bool = False) -> list[str]:
+    """``ipo_id:key:period`` of every row a person has not verified.
+
+    ``pending_ok`` (gold v3.1) lets rows marked ``needs_akshat_verify`` through.
+    """
     return [
         f"{r['ipo_id']}:{r['key']}:{r['period']}"
         for r in rows
         if VERIFIED not in str(r.get("label_source") or "")
+        and not (pending_ok and r.get("needs_akshat_verify"))
     ]
 
 
@@ -60,6 +64,11 @@ def status_rows(
     out: list[dict[str, Any]] = []
     for ipo_id, ipo_rows in sorted(by_ipo.items()):
         ids = docs.get(ipo_id, {})
+        pending = (
+            "+gold_rows_pending_verify"
+            if any(r.get("needs_akshat_verify") for r in ipo_rows)
+            else ""
+        )
         doc_id = ids.get("rhp") or ids.get("prospectus") or ipo_id
         for flag in evaluate(inputs_from_gold(doc_id, ipo_rows, ids)).flags:
             out.append(
@@ -71,6 +80,7 @@ def status_rows(
                     "numbers_used": flag.numbers_used,
                     "thresholds_version": version,
                     "label_source": "computed_from_gold_v3"
+                    + pending
                     + ("_unverified_draft" if draft else ""),
                     "spot_checked_by_akshat": None,
                 }
@@ -83,6 +93,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--gold", type=Path, default=GOLD)
     p.add_argument("--out", type=Path, default=OUT)
     p.add_argument("--allow-unverified", action="store_true")
+    p.add_argument(
+        "--pending-ok", action="store_true",
+        help="gold v3.1: rows marked needs_akshat_verify are used (the status rows say so)",
+    )  # fmt: skip
     args = p.parse_args(argv)
     if not args.gold.exists():
         print(f"{args.gold} not found: fill and verify gold v3 first (B04 §2).", file=sys.stderr)
@@ -92,7 +106,7 @@ def main(argv: list[str] | None = None) -> int:
         for line in args.gold.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
-    missing = unverified(rows)
+    missing = unverified(rows, args.pending_ok)
     if missing and not args.allow_unverified:
         print(
             f"{len(missing)} gold v3 rows are not verified yet, e.g. {missing[:3]}", file=sys.stderr

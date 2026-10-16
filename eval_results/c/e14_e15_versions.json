@@ -561,6 +561,293 @@
           "claude_code_prefill+akshat_verified": 7
         }
       }
+    },
+    "v2 on gold v3.1": {
+      "all": {
+        "n_rows": 249,
+        "n_out_of_scope": 30,
+        "n_unscorable": 1,
+        "nvm": 0.798,
+        "n_valued": 198,
+        "status_accuracy_on_blanks": 0.725,
+        "n_blanks": 51,
+        "page_agreement": 0.752,
+        "n_pages_compared": 161,
+        "per_key": {
+          "auditor_remarks": {
+            "n": 10,
+            "accuracy": 0.9
+          },
+          "criminal_cases_any": {
+            "n": 10,
+            "accuracy": 0.7
+          },
+          "customer_top10_pct": {
+            "n": 10,
+            "accuracy": 0.9
+          },
+          "customer_top1_pct": {
+            "n": 10,
+            "accuracy": 1.0
+          },
+          "general_purposes_pct_of_fresh": {
+            "n": 10,
+            "accuracy": 0.4
+          },
+          "is_financial_company": {
+            "n": 10,
+            "accuracy": 0.9
+          },
+          "issuer_pe": {
+            "n": 10,
+            "accuracy": 0.5
+          },
+          "litigation_amount_total": {
+            "n": 10,
+            "accuracy": 0.7
+          },
+          "net_worth": {
+            "n": 10,
+            "accuracy": 0.9
+          },
+          "operating_cash_flow": {
+            "n": 30,
+            "accuracy": 0.8
+          },
+          "peer_pe_list": {
+            "n": 9,
+            "accuracy": 0.556
+          },
+          "pledged_promoter_pct": {
+            "n": 10,
+            "accuracy": 0.8
+          },
+          "profit_after_tax": {
+            "n": 30,
+            "accuracy": 0.933
+          },
+          "promoter_holding_post_pct": {
+            "n": 10,
+            "accuracy": 0.7
+          },
+          "revenue": {
+            "n": 30,
+            "accuracy": 0.933
+          },
+          "rpt_total": {
+            "n": 10,
+            "accuracy": 1.0
+          },
+          "total_borrowings": {
+            "n": 10,
+            "accuracy": 0.7
+          },
+          "waca_promoters": {
+            "n": 10,
+            "accuracy": 0.5
+          },
+          "waca_selling_shareholders": {
+            "n": 10,
+            "accuracy": 0.4
+          }
+        },
+        "label_sources": {
+          "claude_chat_prefill+akshat_verified": 233,
+          "claude_code_prefill+akshat_verified": 10,
+          "claude_chat_prefill+akshat_verified+claude_code_fix": 3,
+          "claude_code_fix": 3
+        }
+      },
+      "dev": {
+        "n_rows": 74,
+        "n_out_of_scope": 9,
+        "n_unscorable": 1,
+        "nvm": 0.902,
+        "n_valued": 61,
+        "status_accuracy_on_blanks": 1.0,
+        "n_blanks": 13,
+        "page_agreement": 0.891,
+        "n_pages_compared": 55,
+        "per_key": {
+          "auditor_remarks": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "criminal_cases_any": {
+            "n": 3,
+            "accuracy": 0.667
+          },
+          "customer_top10_pct": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "customer_top1_pct": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "general_purposes_pct_of_fresh": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "is_financial_company": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "issuer_pe": {
+            "n": 3,
+            "accuracy": 0.667
+          },
+          "litigation_amount_total": {
+            "n": 3,
+            "accuracy": 0.333
+          },
+          "net_worth": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "operating_cash_flow": {
+            "n": 9,
+            "accuracy": 1.0
+          },
+          "peer_pe_list": {
+            "n": 2,
+            "accuracy": 1.0
+          },
+          "pledged_promoter_pct": {
+            "n": 3,
+            "accuracy": 0.667
+          },
+          "profit_after_tax": {
+            "n": 9,
+            "accuracy": 1.0
+          },
+          "promoter_holding_post_pct": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "revenue": {
+            "n": 9,
+            "accuracy": 1.0
+          },
+          "rpt_total": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "total_borrowings": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "waca_promoters": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "waca_selling_shareholders": {
+            "n": 3,
+            "accuracy": 0.667
+          }
+        },
+        "label_sources": {
+          "claude_chat_prefill+akshat_verified": 69,
+          "claude_code_prefill+akshat_verified": 3,
+          "claude_chat_prefill+akshat_verified+claude_code_fix": 1,
+          "claude_code_fix": 1
+        }
+      },
+      "test": {
+        "n_rows": 175,
+        "n_out_of_scope": 21,
+        "n_unscorable": 0,
+        "nvm": 0.752,
+        "n_valued": 137,
+        "status_accuracy_on_blanks": 0.632,
+        "n_blanks": 38,
+        "page_agreement": 0.679,
+        "n_pages_compared": 106,
+        "per_key": {
+          "auditor_remarks": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "criminal_cases_any": {
+            "n": 7,
+            "accuracy": 0.714
+          },
+          "customer_top10_pct": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "customer_top1_pct": {
+            "n": 7,
+            "accuracy": 1.0
+          },
+          "general_purposes_pct_of_fresh": {
+            "n": 7,
+            "accuracy": 0.143
+          },
+          "is_financial_company": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "issuer_pe": {
+            "n": 7,
+            "accuracy": 0.429
+          },
+          "litigation_amount_total": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "net_worth": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "operating_cash_flow": {
+            "n": 21,
+            "accuracy": 0.714
+          },
+          "peer_pe_list": {
+            "n": 7,
+            "accuracy": 0.429
+          },
+          "pledged_promoter_pct": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "profit_after_tax": {
+            "n": 21,
+            "accuracy": 0.905
+          },
+          "promoter_holding_post_pct": {
+            "n": 7,
+            "accuracy": 0.571
+          },
+          "revenue": {
+            "n": 21,
+            "accuracy": 0.905
+          },
+          "rpt_total": {
+            "n": 7,
+            "accuracy": 1.0
+          },
+          "total_borrowings": {
+            "n": 7,
+            "accuracy": 0.571
+          },
+          "waca_promoters": {
+            "n": 7,
+            "accuracy": 0.286
+          },
+          "waca_selling_shareholders": {
+            "n": 7,
+            "accuracy": 0.286
+          }
+        },
+        "label_sources": {
+          "claude_chat_prefill+akshat_verified": 164,
+          "claude_code_prefill+akshat_verified": 7,
+          "claude_chat_prefill+akshat_verified+claude_code_fix": 2,
+          "claude_code_fix": 2
+        }
+      }
     }
   },
   "e15": {
@@ -1319,6 +1606,270 @@
           "RF06": {
             "n": 7,
             "accuracy": 0.714
+          },
+          "RF07": {
+            "n": 7,
+            "accuracy": 0.571
+          },
+          "RF08": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "RF09": {
+            "n": 7,
+            "accuracy": 1.0
+          },
+          "RF10": {
+            "n": 7,
+            "accuracy": 0.857
+          },
+          "RF11": {
+            "n": 7,
+            "accuracy": 0.714
+          },
+          "RF12": {
+            "n": 7,
+            "accuracy": 0.571
+          },
+          "RF13": {
+            "n": 7,
+            "accuracy": 0.857
+          }
+        }
+      }
+    },
+    "v2 on gold v3.1": {
+      "all": {
+        "n_rows": 130,
+        "n_ipos": 10,
+        "accuracy": 0.738,
+        "accuracy_on_valued_gold": 0.675,
+        "n_valued": 83,
+        "serious_disagreements": 1,
+        "confusion": {
+          "concern": {
+            "concern": 14,
+            "ok": 1,
+            "not_available": 6
+          },
+          "not_applicable": {
+            "not_applicable": 5,
+            "ok": 1,
+            "concern": 1
+          },
+          "not_available": {
+            "not_available": 35,
+            "ok": 3,
+            "watch": 1,
+            "concern": 1
+          },
+          "ok": {
+            "ok": 35,
+            "watch": 6,
+            "not_available": 10
+          },
+          "watch": {
+            "watch": 7,
+            "not_available": 3,
+            "ok": 1
+          }
+        },
+        "per_check": {
+          "RF01": {
+            "n": 10,
+            "accuracy": 1.0
+          },
+          "RF02": {
+            "n": 10,
+            "accuracy": 0.8
+          },
+          "RF03": {
+            "n": 10,
+            "accuracy": 0.7
+          },
+          "RF04": {
+            "n": 10,
+            "accuracy": 0.6
+          },
+          "RF05": {
+            "n": 10,
+            "accuracy": 0.5
+          },
+          "RF06": {
+            "n": 10,
+            "accuracy": 0.5
+          },
+          "RF07": {
+            "n": 10,
+            "accuracy": 0.7
+          },
+          "RF08": {
+            "n": 10,
+            "accuracy": 0.8
+          },
+          "RF09": {
+            "n": 10,
+            "accuracy": 1.0
+          },
+          "RF10": {
+            "n": 10,
+            "accuracy": 0.9
+          },
+          "RF11": {
+            "n": 10,
+            "accuracy": 0.7
+          },
+          "RF12": {
+            "n": 10,
+            "accuracy": 0.5
+          },
+          "RF13": {
+            "n": 10,
+            "accuracy": 0.9
+          }
+        }
+      },
+      "dev": {
+        "n_rows": 39,
+        "n_ipos": 3,
+        "accuracy": 0.872,
+        "accuracy_on_valued_gold": 0.84,
+        "n_valued": 25,
+        "serious_disagreements": 0,
+        "confusion": {
+          "concern": {
+            "concern": 6,
+            "not_available": 1
+          },
+          "not_applicable": {
+            "not_applicable": 2
+          },
+          "not_available": {
+            "not_available": 11,
+            "ok": 1
+          },
+          "ok": {
+            "ok": 13,
+            "watch": 3
+          },
+          "watch": {
+            "watch": 2
+          }
+        },
+        "per_check": {
+          "RF01": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF02": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF03": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF04": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF05": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF06": {
+            "n": 3,
+            "accuracy": 0.667
+          },
+          "RF07": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF08": {
+            "n": 3,
+            "accuracy": 0.667
+          },
+          "RF09": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF10": {
+            "n": 3,
+            "accuracy": 1.0
+          },
+          "RF11": {
+            "n": 3,
+            "accuracy": 0.667
+          },
+          "RF12": {
+            "n": 3,
+            "accuracy": 0.333
+          },
+          "RF13": {
+            "n": 3,
+            "accuracy": 1.0
+          }
+        }
+      },
+      "test": {
+        "n_rows": 91,
+        "n_ipos": 7,
+        "accuracy": 0.681,
+        "accuracy_on_valued_gold": 0.603,
+        "n_valued": 58,
+        "serious_disagreements": 1,
+        "confusion": {
+          "concern": {
+            "ok": 1,
+            "concern": 8,
+            "not_available": 5
+          },
+          "not_applicable": {
+            "not_applicable": 3,
+            "ok": 1,
+            "concern": 1
+          },
+          "not_available": {
+            "not_available": 24,
+            "ok": 2,
+            "watch": 1,
+            "concern": 1
+          },
+          "ok": {
+            "ok": 22,
+            "not_available": 10,
+            "watch": 3
+          },
+          "watch": {
+            "watch": 5,
+            "not_available": 3,
+            "ok": 1
+          }
+        },
+        "per_check": {
+          "RF01": {
+            "n": 7,
+            "accuracy": 1.0
+          },
+          "RF02": {
+            "n": 7,
+            "accuracy": 0.714
+          },
+          "RF03": {
+            "n": 7,
+            "accuracy": 0.571
+          },
+          "RF04": {
+            "n": 7,
+            "accuracy": 0.429
+          },
+          "RF05": {
+            "n": 7,
+            "accuracy": 0.286
+          },
+          "RF06": {
+            "n": 7,
+            "accuracy": 0.429
           },
           "RF07": {
             "n": 7,

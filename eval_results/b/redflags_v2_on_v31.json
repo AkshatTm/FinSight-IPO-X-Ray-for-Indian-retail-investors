@@ -1,0 +1,1169 @@
+{
+  "experiment": "E15 red-flag statuses",
+  "slice": "all",
+  "final": true,
+  "draft": false,
+  "written_by": "scripts/redflag_eval.py",
+  "written_utc": "2026-10-16T10:54:06Z",
+  "summary": {
+    "n_rows": 130,
+    "n_ipos": 10,
+    "accuracy": 0.738,
+    "accuracy_on_valued_gold": 0.675,
+    "n_valued": 83,
+    "serious_disagreements": 1,
+    "confusion": {
+      "concern": {
+        "concern": 14,
+        "ok": 1,
+        "not_available": 6
+      },
+      "not_applicable": {
+        "not_applicable": 5,
+        "ok": 1,
+        "concern": 1
+      },
+      "not_available": {
+        "not_available": 35,
+        "ok": 3,
+        "watch": 1,
+        "concern": 1
+      },
+      "ok": {
+        "ok": 35,
+        "watch": 6,
+        "not_available": 10
+      },
+      "watch": {
+        "watch": 7,
+        "not_available": 3,
+        "ok": 1
+      }
+    },
+    "per_check": {
+      "RF01": {
+        "n": 10,
+        "accuracy": 1.0
+      },
+      "RF02": {
+        "n": 10,
+        "accuracy": 0.8
+      },
+      "RF03": {
+        "n": 10,
+        "accuracy": 0.7
+      },
+      "RF04": {
+        "n": 10,
+        "accuracy": 0.6
+      },
+      "RF05": {
+        "n": 10,
+        "accuracy": 0.5
+      },
+      "RF06": {
+        "n": 10,
+        "accuracy": 0.5
+      },
+      "RF07": {
+        "n": 10,
+        "accuracy": 0.7
+      },
+      "RF08": {
+        "n": 10,
+        "accuracy": 0.8
+      },
+      "RF09": {
+        "n": 10,
+        "accuracy": 1.0
+      },
+      "RF10": {
+        "n": 10,
+        "accuracy": 0.9
+      },
+      "RF11": {
+        "n": 10,
+        "accuracy": 0.7
+      },
+      "RF12": {
+        "n": 10,
+        "accuracy": 0.5
+      },
+      "RF13": {
+        "n": 10,
+        "accuracy": 0.9
+      }
+    }
+  },
+  "severe_overrides": {
+    "ather-energy-2025": [
+      "regulator_order"
+    ],
+    "groww-2025": [
+      "default_or_recall"
+    ],
+    "hdb-financial-services-2025": [
+      "default_or_recall",
+      "regulator_order",
+      "fraud"
+    ],
+    "hexaware-technologies-2025": [],
+    "lenskart-2025": [
+      "fraud"
+    ],
+    "lg-electronics-india-2025": [],
+    "meesho-2025": [],
+    "physicswallah-2025": [
+      "going_concern",
+      "qualified_audit"
+    ],
+    "tata-capital-2025": [
+      "default_or_recall",
+      "regulator_order",
+      "fraud"
+    ],
+    "urban-company-2025": []
+  },
+  "rows": [
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF01",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF02",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF03",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF04",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF05",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF06",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF07",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF08",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF11",
+      "gold": "not_applicable",
+      "pred": "not_applicable",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "watch",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "ather-energy-2025",
+      "rf": "RF13",
+      "gold": "watch",
+      "pred": "watch",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF01",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF02",
+      "gold": "watch",
+      "pred": "watch",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF03",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF04",
+      "gold": "concern",
+      "pred": "ok",
+      "correct": false,
+      "serious": true
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF05",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF06",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF07",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF08",
+      "gold": "watch",
+      "pred": "watch",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF11",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "groww-2025",
+      "rf": "RF13",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF01",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF02",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF03",
+      "gold": "not_applicable",
+      "pred": "not_applicable",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF04",
+      "gold": "watch",
+      "pred": "watch",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF05",
+      "gold": "watch",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF06",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF07",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF08",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF10",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF11",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hdb-financial-services-2025",
+      "rf": "RF13",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF01",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF02",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF03",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF04",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF05",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF06",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF07",
+      "gold": "not_applicable",
+      "pred": "not_applicable",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF08",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF10",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF11",
+      "gold": "not_available",
+      "pred": "ok",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "hexaware-technologies-2025",
+      "rf": "RF13",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF01",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF02",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF03",
+      "gold": "not_available",
+      "pred": "ok",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF04",
+      "gold": "watch",
+      "pred": "ok",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF05",
+      "gold": "concern",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF06",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF07",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF08",
+      "gold": "watch",
+      "pred": "watch",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF11",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF12",
+      "gold": "not_available",
+      "pred": "watch",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lenskart-2025",
+      "rf": "RF13",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF01",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF02",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF03",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF04",
+      "gold": "concern",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF05",
+      "gold": "concern",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF06",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF07",
+      "gold": "not_applicable",
+      "pred": "ok",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF08",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF11",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "watch",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "lg-electronics-india-2025",
+      "rf": "RF13",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF01",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF02",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF03",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF04",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF05",
+      "gold": "concern",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF06",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF07",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF08",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF11",
+      "gold": "not_applicable",
+      "pred": "not_applicable",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "meesho-2025",
+      "rf": "RF13",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF01",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF02",
+      "gold": "not_available",
+      "pred": "ok",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF03",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF04",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF05",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF06",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF07",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF08",
+      "gold": "ok",
+      "pred": "watch",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF11",
+      "gold": "not_applicable",
+      "pred": "not_applicable",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF12",
+      "gold": "watch",
+      "pred": "watch",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "physicswallah-2025",
+      "rf": "RF13",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF01",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF02",
+      "gold": "concern",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF03",
+      "gold": "not_applicable",
+      "pred": "concern",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF04",
+      "gold": "watch",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF05",
+      "gold": "watch",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF06",
+      "gold": "not_available",
+      "pred": "concern",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF07",
+      "gold": "ok",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF08",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF11",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "watch",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "tata-capital-2025",
+      "rf": "RF13",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF01",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF02",
+      "gold": "concern",
+      "pred": "concern",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF03",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF04",
+      "gold": "watch",
+      "pred": "watch",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF05",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF06",
+      "gold": "concern",
+      "pred": "not_available",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF07",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF08",
+      "gold": "ok",
+      "pred": "watch",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF09",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF10",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF11",
+      "gold": "not_available",
+      "pred": "not_available",
+      "correct": true,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF12",
+      "gold": "ok",
+      "pred": "watch",
+      "correct": false,
+      "serious": false
+    },
+    {
+      "ipo_id": "urban-company-2025",
+      "rf": "RF13",
+      "gold": "ok",
+      "pred": "ok",
+      "correct": true,
+      "serious": false
+    }
+  ]
+}

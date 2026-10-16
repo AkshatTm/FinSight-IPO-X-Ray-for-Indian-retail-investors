@@ -165,7 +165,7 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
 
-    if args.stage == "index":
+    if getattr(args, "stage", None) == "index":
         embedder = BgeM3Embedder() if args.dense else None  # one model load for every IPO
         ipos = [get_demo_ipo(args.ipo)] if args.command == "build" else list_demo_ipos()
         for ipo in ipos:
