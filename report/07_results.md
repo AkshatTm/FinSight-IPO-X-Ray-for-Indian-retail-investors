@@ -151,3 +151,14 @@ What each experiment must report, when it runs (B04 §3):
 - **E21** (risk level against outcomes): a correlation check only, reported with bootstrap intervals; it is
   not a forecast and is not shown as one.
 - **E22–E24** (novelty threshold, cloud speed, cost per upload).
+
+## 7.10 FinSight Bench v1 (C4.1) — `c4/bench_summary.json`
+
+> Generated from `eval_results/c4/` by `scripts/docs_gen.py` (`uv run poe docs-gen`); no number here is typed
+> by hand. Seven test-slice IPOs, every system given the same frozen passages and prompt text (C-ADR-22).
+> Every figure is a **single run**; brackets are 95 % IPO-cluster bootstrap intervals (7 documents, so they
+> are wide). Disclosures (contamination, Task B structure, no PDF for frontier apps) are listed in
+> `bench/v1/manifest.yaml`.
+
+<!-- generated:bench start -->
+<!-- generated:bench end -->

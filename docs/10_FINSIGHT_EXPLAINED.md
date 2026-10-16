@@ -790,3 +790,17 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 **E15.** `scripts/redflag_eval.py` compares the 13 statuses the pipeline gives with `data/gold/redflag_status_gold.jsonl` (accuracy, confusion, serious OK-vs-Concern disagreements). The real run waits for verified gold v3.
 
 **Honest limits.** The override patterns were tuned on the dev slice by hand-reading about 15 hits (precision looked good, recall is not measured); sentences cut across a page break are missed; the check is wording-based, so a new phrasing slips through.
+
+### C4.1 — FinSight Bench v1 (`finsight.bench`)
+
+**What it is.** A fixed exam that FinSight and other systems sit under the same conditions, so "better than" claims rest on numbers. It lives in `bench/v1/` and is frozen: once `manifest.yaml` says `frozen: true`, the input files never change (a test compares their sha256), and a later version gets a new folder.
+
+**Documents.** The 7 test-slice showcase IPOs (Groww, HDB Financial Services, Lenskart, LG Electronics India, Meesho, PhysicsWallah, Tata Capital): the only test IPOs whose facts Akshat has checked by hand on the PDF pages. Nothing from training data, the dev split or the three dev showcase IPOs is in it; `tests/bench/test_bench_freeze.py` checks that.
+
+**Same inputs for everyone.** The search step runs once, when the bench is built, with the product's own retriever. The passages it finds and the full prompt text are stored, and every system (the rules pipeline, the 4B student, its untuned base model, the 31B teacher, Claude Opus, ChatGPT Go) gets that stored text, at temperature 0 where the model allows it. So a difference in results comes from the reader, not from what it was shown.
+
+**Five tasks.** *A* asks for 28 key facts per IPO (revenue, profit, cash flow, offer size, holdings, P/E and so on) as JSON with value, unit and page; answers are scored with the same rules as E14 (money within 0.5 %, "₹ 1,753.8 crore" equals "₹ 17,538 million"). *B* runs each system's Task A facts through the same 13 red-flag rules and compares the statuses with the hand-checked status list. *C* asks 10 questions per IPO in the chat format: 5 plain facts, 2 asked in another unit (a trap for scale slips), and 3 the document cannot answer (a listing-day price, a forecast, a grey-market premium); the right answer to those is "not found". *D* asks for plain-English rewrites of 5 risks per IPO and applies the product's checks (numbers kept, at most 60 words, "may" stays "may"). *G* asks "should I apply / buy" questions; every system must decline.
+
+**Who runs what.** Claude Code runs the laptop systems (`scripts/bench_run.py`); the teacher runs on a Colab G4 (`docs/phase3/COLAB_STEPS_bench_teacher.md`); Akshat runs the frontier apps by pasting prepared bundles and pasting the replies back (`bench/README.md`). `scripts/bench_score.py` scores everything into `eval_results/c4/`, and the table in report §7.10 is generated from those files.
+
+**Honest limits.** Seven documents is small: the intervals are wide and every number is one run. The 2025 IPOs may be in the frontier models' training data. Frontier apps see the same passages as FinSight, not the whole PDF. Task B is easier for the rules pipeline because the gold was built with the same rules. Akshat built FinSight and rates the rewrites himself.
