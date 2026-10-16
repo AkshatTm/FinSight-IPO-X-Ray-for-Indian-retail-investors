@@ -141,6 +141,25 @@ def test_parser_flags_unparseable_replies() -> None:
     assert not parsed.fields
 
 
+def test_flat_replies_are_read_value_only_and_flagged() -> None:
+    wanted = ["auditor_remarks@latest", "issuer_pe@final", "general_purposes_pct_of_fresh@final"]
+    reply = '{"auditor_remarks@latest": "No qualifications", "issuer_pe@final": "Not found", ' \
+        '"general_purposes_pct_of_fresh@final": "[●]"}'  # fmt: skip
+    parsed = parse_task_a(reply, wanted)
+    assert not parsed.unparseable
+    assert parsed.fields["auditor_remarks@latest"].status == "found"
+    assert parsed.fields["auditor_remarks@latest"].page is None
+    assert parsed.fields["issuer_pe@final"].status == "not_found"
+    assert parsed.fields["general_purposes_pct_of_fresh@final"].status == "placeholder"
+    assert parsed.problems[0].startswith("flat_format")
+    assert parse_task_a('{"other": 1}', wanted).unparseable
+    keyed = parse_task_a(
+        '{"issuer_pe@final": {"status": "found", "value": "45.2", "page": 12}}', wanted
+    )
+    assert keyed.fields["issuer_pe@final"].value == "45.2"
+    assert keyed.fields["issuer_pe@final"].page == 12
+
+
 def test_bad_status_is_flagged_not_guessed() -> None:
     parsed = parse_task_a('{"fields":[{"id":"a@b","status":"maybe","value":"1"}]}', ["a@b"])
     assert parsed.fields["a@b"].status == "not_found"
@@ -178,6 +197,16 @@ def test_question_correct_scale_and_abstain() -> None:
     nf = score_question("I could not find this in the document.", "answerable", gold, ps, PAT)
     assert nf["outcome"] == "abstained"
     assert not nf["correct"]
+
+
+def test_gold_in_a_table_row_counts_as_in_context() -> None:
+    gold = gold_amount_from_row({"value_raw": "17,538", "unit": "₹ million"})
+    table = [_p("Revenue from operations 15,789 12,304 17,538 17,809")]
+    r = score_question("It was ₹ 17,538 million [1].", "answerable", gold, table, PAT)
+    assert r["gold_in_context"]
+    assert r["citation_has_value"]
+    other = [_p("Revenue from operations 15,789 12,304 17,539")]
+    assert not score_question("x", "answerable", gold, other, PAT)["gold_in_context"]
 
 
 def test_loss_matches_bracketed_gold() -> None:

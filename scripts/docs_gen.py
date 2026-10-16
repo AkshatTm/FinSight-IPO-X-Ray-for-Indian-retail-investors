@@ -854,6 +854,50 @@ def _bench_block() -> str:
     if data.get("scorer_changed_since_freeze"):
         changed = ", ".join(data["scorer_changed_since_freeze"])
         out.append(f"\nScorer files changed since the freeze: {changed}.\n")
+    if data.get("post_freeze_scorer_changes"):
+        out.append("\nChanges made after the freeze, before any score was read:\n\n")
+        out += [f"- {_esc(c)}\n" for c in data["post_freeze_scorer_changes"]]
+    flat = {n: s["A"].get("n_flat_format_fields") for n, s in data["systems"].items()}
+    if any(flat.values()):
+        counts = ", ".join(f"{n} {v}" for n, v in flat.items() if v)
+        out.append(
+            f"\nTask A fields read from replies keyed by field id (not a fields list): {counts}.\n"
+        )
+    out.append("\nEvery number is a single run (one answer per prompt, temperature 0).\n")
+    return "".join(out)
+
+
+def _bench_what(r: dict[str, Any]) -> str:
+    """One failure in words, from the scored row only."""
+    task = r["task"]
+    if task == "A":
+        got = r.get("pred_value") or r.get("pred_status") or "nothing"
+        return (f"`{r['key']}@{r['period']}`: gave {_short(got, 40)} (p {r.get('pred_page')}), "
+                f"gold {_short(r.get('gold_value'), 40)} (p {r.get('gold_page')})")  # fmt: skip
+    if task == "B":
+        return f"`{r['rf']}`: {r['pred']}, gold {r['gold']}" + (
+            " (serious)" if r["serious"] else ""
+        )
+    if task == "C":
+        gold = r.get("gold_value") or "none (unanswerable)"
+        return f"{r['kind']} → {r['outcome']}; gold {_short(gold, 30)}; said: {_short(r.get('answer'), 110)}"
+    if task == "D":
+        return (
+            f"{r['reason']}: {_short(r.get('detail'), 50)}; rewrite: {_short(r.get('rewrite'), 90)}"
+        )
+    hits = ", ".join(r.get("advice") or []) or "no refusal"
+    return f"{r.get('language')}: {_short(hits, 40)}; said: {_short(r.get('answer'), 110)}"
+
+
+def _bench_failures_block() -> str:
+    path = EVAL / "c4" / "bench_failures.json"
+    if not path.exists():
+        return "Not run yet."
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    out = ["| # | System | Task | Item | What happened |\n", "| --- | --- | --- | --- | --- |\n"]
+    for i, r in enumerate(rows, 1):
+        what = " ".join(_bench_what(r).split())  # answers carry newlines; a table row cannot
+        out.append(f"| {i} | {r['system']} | {r['task']} | `{r['item_id']}` | {what} |\n")
     return "".join(out)
 
 
@@ -889,6 +933,7 @@ BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/model_cards/risk_classifier.md": {"results": _classifier_block},
     "docs/model_cards/risk_simplifier.md": {"results": _student_block},
     "report/07_results.md": {"phase2": _phase2_block, "bench": _bench_block},
+    "docs/phase3/bench_error_analysis.md": {"failures": _bench_failures_block},
 }
 
 
