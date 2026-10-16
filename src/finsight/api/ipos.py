@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import io
 import json
+import re
 from collections.abc import Callable
 from datetime import date
 from decimal import Decimal, InvalidOperation
@@ -39,9 +40,10 @@ from finsight.api.models import (
 from finsight.core.config import project_root
 from finsight.core.schemas import BBox, Candidate, DocType, FieldResult, FieldSpec, ParsedDoc, XRay
 from finsight.extract import locate_bbox, sentence_around
-from finsight.ingest.registry import DemoIpo, list_demo_ipos
+from finsight.ingest.registry import DemoIpo, DocFile, list_demo_ipos
 from finsight.pipeline.layout import doc_outputs, xray_path
 
+UPLOAD_ID = re.compile(r"doc_[0-9a-f]{16}")
 RENDER_DPI = 110  # parse/page_images.py: pixels * 72 / 110 = PDF points
 
 
@@ -62,7 +64,7 @@ class IpoStore:
     # ---------------------------------------------------------------- lookup
     def get(self, ipo_id: str) -> DemoIpo:
         """The showcase IPO with this id (404 ``ipo_not_found`` otherwise)."""
-        ipo = self._ipos.get(ipo_id)
+        ipo = self._ipos.get(ipo_id) or self._upload(ipo_id)
         if ipo is None:
             raise ApiError(
                 404,
@@ -71,6 +73,25 @@ class IpoStore:
                 hint="Check /api/ipos for valid ids.",
             )
         return ipo
+
+    def _upload(self, ipo_id: str) -> DemoIpo | None:
+        """An uploaded document the ``index`` stage published (``upload.json``), shown like a
+        showcase IPO so its facts, pages and chat work the same way."""
+        if not UPLOAD_ID.fullmatch(ipo_id):
+            return None
+        meta = self.processed_dir / ipo_id / "upload.json"
+        if not meta.exists():
+            return None
+        info = json.loads(meta.read_text(encoding="utf-8"))
+        main = DocFile(file=Path("source.pdf"), pages=int(info["pages"]), sha256="", dated="")
+        none = DocFile(file=Path("-"), pages=0, sha256="", dated="")
+        return DemoIpo(
+            ipo_id=ipo_id,
+            company=str(info.get("company") or "Your document"),
+            split="dev",
+            rhp=main.model_copy(update={"doc_id": ipo_id}),
+            prospectus=none,
+        )
 
     def _xray(self, ipo_id: str) -> XRay | None:
         return _load_xray(str(xray_path(self.processed_dir, ipo_id)))

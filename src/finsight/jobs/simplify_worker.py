@@ -8,12 +8,15 @@ so the report fills in while the queue drains.
 
 from __future__ import annotations
 
+import threading
 from collections.abc import Callable, Mapping, Sequence
 from typing import Any, Protocol
 
+from finsight.core.logging import get_logger
 from finsight.db import Database
 from finsight.storage import Storage, doc_key, get_json, put_json
 
+logger = get_logger("finsight.jobs.simplify")
 SIMPLIFIED = "simplified.json"
 Emit = Callable[[str, dict[str, Any]], int]
 
@@ -92,3 +95,57 @@ def run_queue(
         counts[status] = counts.get(status, 0) + 1
         done += 1
     return counts
+
+
+class SimplifyDrain:
+    """Drains the simplification queue of a document on a background thread of the API process.
+
+    ``kick`` after a job finishes (top-N queued) and after a click on "Explain in plain English".
+    One thread per document at a time; the student model is built on the first rewrite, so
+    nothing loads until a rewrite is wanted.
+    """
+
+    def __init__(
+        self,
+        db: Database,
+        storage: Storage,
+        make_simplifier: Callable[[], RiskSimplifier],
+    ) -> None:
+        self.db, self.storage, self._make = db, storage, make_simplifier
+        self._simplifier: RiskSimplifier | None = None
+        self._active: set[str] = set()
+        self._lock = threading.Lock()
+
+    def kick(self, doc_id: str) -> bool:
+        """Start draining ``doc_id`` unless a thread already is; True when one was started."""
+        with self._lock:
+            if doc_id in self._active:
+                return False
+            self._active.add(doc_id)
+        threading.Thread(
+            target=self._run, args=(doc_id,), name=f"simplify-{doc_id}", daemon=True
+        ).start()
+        return True
+
+    def _run(self, doc_id: str) -> None:
+        from finsight.core.schemas import Risk
+
+        try:
+            key = doc_key(doc_id, "risks.json")
+            risks = [Risk.model_validate(r) for r in get_json(self.storage, key)]
+            by_rid = {r.rid: (r.title, r.body) for r in risks}
+            if self._simplifier is None:
+                self._simplifier = self._make()
+            job = self.db.latest_job(doc_id)
+
+            def emit(event: str, data: dict[str, Any]) -> int:
+                return self.db.append_event(job.job_id, event, data) if job else 0
+
+            run_queue(self.db, self.storage, doc_id, by_rid, self._simplifier, emit)
+        except Exception:  # a failed drain leaves the queue as it is; the next click retries
+            logger.exception("simplify drain failed for %s", doc_id)
+        finally:
+            with self._lock:
+                self._active.discard(doc_id)
+            if self.db.waiting_rids(doc_id) and doc_id not in self._active:
+                self.kick(doc_id)

@@ -201,8 +201,11 @@ def _risks_split(ctx: JobContext) -> dict[str, Any]:
     return {"n_risks": len(risks)}
 
 
-def upload_stages() -> list[Stage]:
-    """Stages for an uploaded document, in order (B02 §3.1)."""
+def upload_stages(models: bool = True) -> list[Stage]:
+    """Stages for an uploaded document, in order (B02 §3.1); ``models`` adds the stages that
+    use the trained models and publish the workspace (C3.3)."""
+    from finsight.jobs.model_stages import model_stages
+
     return [
         Stage("validated", _validated, critical=True),
         Stage("detected", _detected, output=None, requires=("validated",), critical=True),
@@ -213,4 +216,5 @@ def upload_stages() -> list[Stage]:
         Stage("redflags", _redflags, output=REDFLAGS_FILE, requires=("financials",)),
         Stage("compare", _compare, output=COMPARE, requires=("financials",)),
         Stage("risks_split", _risks_split, output=RISKS_FILE, requires=("sections",)),
+        *(model_stages() if models else []),
     ]

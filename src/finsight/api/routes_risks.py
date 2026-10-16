@@ -184,6 +184,8 @@ def simplify_risk(doc_id: DocId, rid: Rid, state: UState, request: Request) -> S
     if risk.simple_status in ("ready", "rejected"):
         return SimplifyQueued(rid=rid, simple_status=risk.simple_status, position=-1)
     position = state.db.bump(doc_id, rid)
+    if state.drain is not None:
+        state.drain.kick(doc_id)
     return SimplifyQueued(rid=rid, simple_status="pending", position=position)
 
 

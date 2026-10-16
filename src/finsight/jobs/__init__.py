@@ -21,7 +21,13 @@ from finsight.jobs.runner import (
     StageTimeout,
     run_job,
 )
-from finsight.jobs.simplify_worker import SIMPLIFIED, auto_enqueue, load_simplified, run_queue
+from finsight.jobs.simplify_worker import (
+    SIMPLIFIED,
+    SimplifyDrain,
+    auto_enqueue,
+    load_simplified,
+    run_queue,
+)
 from finsight.reports import write_report
 from finsight.storage import Storage
 
@@ -31,7 +37,7 @@ def process_document(
 ) -> JobResult:
     """Run the upload pipeline for one document (the worker's entry point)."""
     ctx = JobContext(doc_id=doc_id, job_id=job_id, db=db, storage=storage, settings=settings)
-    result = run_job(ctx, upload_stages())
+    result = run_job(ctx, upload_stages(settings.jobs.model_stages))
     doc = db.get_doc(doc_id)
     if doc is not None and result.rejection is None:
         write_report(storage, doc, doc.companion_of)
@@ -48,6 +54,7 @@ __all__ = [
     "JobResult",
     "LaunchError",
     "Launcher",
+    "SimplifyDrain",
     "Stage",
     "StageRejected",
     "StageTimeout",
