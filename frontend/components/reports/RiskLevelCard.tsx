@@ -44,7 +44,7 @@ export function RiskLevelCard({ level, onReason }: { level: RiskLevel; onReason:
                         onReason(`#${anchorFor(r.source, r.id)}`);
                       }}
                     >
-                      {t("rl.reason", { label: r.label, points: r.points })}
+                      {r.source === "override" ? t("rl.override", { label: r.label }) : t("rl.reason", { label: r.label, points: r.points })}
                     </a>
                   </li>
                 ))}

@@ -5,6 +5,7 @@ import { useT } from "@/lib/useT";
 import { LabExtractor } from "./LabExtractor";
 import { LabFrame } from "./LabFrame";
 import { LabChecks, LabClassifier, LabNovelty, LabSegmentation } from "./LabPhase2";
+import { LabBench } from "./LabBench";
 import { LabRewrites, LabRiskLevelCheck, LabSpeedCost } from "./LabPhase2More";
 import { LabHindi, LabRetrieval } from "./LabRetrieval";
 import { LabVerifier, LabWeak } from "./LabVerifier";
@@ -79,6 +80,7 @@ function LabPhase2() {
       <LabNovelty data={b.novelty} />
       <LabRiskLevelCheck data={b.risklevel} />
       <LabSpeedCost latency={b.latency} cost={b.cost} />
+      <LabBench />
     </>
   );
 }

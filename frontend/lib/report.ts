@@ -95,7 +95,8 @@ export function topReasons(level: Pick<RiskLevel, "reasons">): RiskLevel["reason
 }
 
 /** Anchor ids used by reasons and pills ("#redflag-RF03", "#risk-r12"). */
-export const anchorFor = (source: "redflag" | "risk", id: string) => `${source}-${id}`;
+export const anchorFor = (source: "redflag" | "risk" | "override", id: string) =>
+  source === "override" ? `severe-${id}` : `${source}-${id}`;
 
 export type Tab = "overview" | "redflags" | "risks" | "compare";
 export const TABS: readonly Tab[] = ["overview", "redflags", "risks", "compare"];
@@ -103,7 +104,7 @@ export const TABS: readonly Tab[] = ["overview", "redflags", "risks", "compare"]
 /** Which tab an anchor lives on. */
 export function tabForHash(hash: string): Tab | null {
   const h = hash.replace(/^#/, "");
-  if (h.startsWith("redflag-")) return "redflags";
+  if (h.startsWith("redflag-") || h.startsWith("severe-")) return "redflags";
   if (h.startsWith("risk-")) return "risks";
   return (TABS as readonly string[]).includes(h) ? (h as Tab) : null;
 }

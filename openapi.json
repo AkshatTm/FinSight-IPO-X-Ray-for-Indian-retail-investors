@@ -1064,6 +1064,50 @@
         }
       }
     },
+    "/api/lab/c/bench": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Lab C Bench",
+        "description": "Model Lab, Phase 3: FinSight Bench v1 scores per system and task (C4.1).",
+        "operationId": "lab_c_bench_api_lab_c_bench_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Lab C Bench Api Lab C Bench Get"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/glossary": {
       "get": {
         "tags": [

@@ -21,12 +21,30 @@ export function RedFlagsTab({ docId, onShowPage }: { docId: string; onShowPage?:
   if (q.isError) return <ErrorBlock error={q.error} onRetry={() => void q.refetch()} />;
   const flags = sortFlags(q.data.flags ?? []);
   const shown = flags.filter((f) => flagMatches(f, filter));
+  const severe = q.data.severe_overrides ?? [];
   return (
     <section aria-labelledby="rf-title" className="space-y-5">
       <header>
         <h2 id="rf-title" className="text-xl font-semibold">{t("rf.title")}</h2>
         <p className="mt-1 text-sm text-muted">{t("rf.sub")}</p>
       </header>
+      {severe.length > 0 && (
+        <div className="rounded-[10px] border border-rule bg-surface-2 p-4" data-testid="severe-overrides">
+          <h3 className="font-semibold">{t("rf.severe.h")}</h3>
+          <p className="mt-1 text-sm text-muted">{t("rf.severe.sub")}</p>
+          <ul className="mt-3 space-y-3">
+            {severe.map((o) => (
+              <li key={o.id} id={anchorFor("override", o.id)} className="scroll-mt-24 text-sm">
+                <p className="font-medium">{o.title}</p>
+                <p className="mt-1">{o.sentence}</p>
+                {o.evidence?.page != null && (
+                  <span className="mt-1 inline-block rounded-full border border-rule px-2 text-xs text-muted">{t("rf.page", { p: o.evidence.page })}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div role="group" aria-label={t("rf.title")} className="flex flex-wrap gap-2">
         {FLAG_FILTERS.map((f) => (
           <button
@@ -101,4 +119,3 @@ function FlagCard({ flag, onShowPage }: { flag: RedFlag; onShowPage?: (page: num
     </li>
   );
 }
-

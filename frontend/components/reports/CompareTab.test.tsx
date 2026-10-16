@@ -26,7 +26,7 @@ describe("CompareView", () => {
     expect(screen.getByText("Basis for Offer Price, page 88")).toBeInTheDocument();
     expect(screen.getByText("Higher than 65% of past IPOs")).toBeInTheDocument();
     expect(screen.getByText("65.0%")).toBeInTheDocument();
-    expect(screen.getByText(/Provisional/)).toBeInTheDocument();
+    expect(screen.getByText(/not available for this comparison/)).toBeInTheDocument();
     expect(screen.queryByText(/past Indian IPOs\.$/)).not.toBeInTheDocument(); // corpus_n 0: no count line
   });
   it("shows the B05 empty states", () => {
