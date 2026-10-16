@@ -184,7 +184,8 @@ def main() -> int:
                 return fail("the frontend did not start (see the messages above).")
         say("\n" + "=" * 60)
         say("FinSight is running.")
-        say("  Open:   http://localhost:3000/upload   (upload your own RHP / prospectus PDF)")
+        if not a.no_frontend:
+            say("  Open:   http://localhost:3000/upload   (upload your own RHP / prospectus PDF)")
         say(f"  API:    http://127.0.0.1:{a.port}/docs")
         say("  Stop:   Ctrl+C")
         say("=" * 60)

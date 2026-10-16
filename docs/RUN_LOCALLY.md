@@ -31,7 +31,11 @@ new machine):
 * The Hugging Face cache must hold `BAAI/bge-m3` and `BAAI/bge-reranker-v2-m3` (they are
   downloaded on first use if you are online).
 
-## 2. Start it (one command)
+## 2. Start it (one click)
+
+Double-click **`start.bat`** in the repo folder (or run `start.bat` in a terminal). On `main` it
+first pulls the latest code; on any other branch it tells you to `git checkout main && git pull`.
+It then runs the same thing as:
 
 ```bash
 uv run poe app
