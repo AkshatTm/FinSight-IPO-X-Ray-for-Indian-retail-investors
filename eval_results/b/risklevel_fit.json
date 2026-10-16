@@ -1,0 +1,24 @@
+{
+ "thresholds": {
+  "low_below": 0.2857,
+  "high_from": 0.4167
+ },
+ "reference_quantiles": [
+  0.0,
+  0.125,
+  0.2114,
+  0.2778,
+  0.3125,
+  0.35,
+  0.3889,
+  0.4286,
+  0.4555,
+  0.5678,
+  0.75
+ ],
+ "corpus_n": 165,
+ "n_fit_ipos": 165,
+ "computed_on": "1a32ec6",
+ "window_years": 4,
+ "fitted_on": "train + dev IPOs only"
+}

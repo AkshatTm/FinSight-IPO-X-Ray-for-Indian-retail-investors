@@ -729,6 +729,16 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 2. *Why not add up related-party transactions yourself?* Rows overlap (the same payment can appear under a party and a category) and some are balances, not transactions; a total the document does not print would be a guess.
 3. *Why is the promoters' post-offer share often "placeholder"?* The RHP is filed before the price is fixed; the share depends on how many new shares are sold, so the RHP prints `[●]` and the Prospectus fills it in.
 
+### C2.8 Risk-level thresholds (scoring and fit)
+
+**What it is.** The risk level (low / medium / high) is a score between 0 and 1 cut at two thresholds. The thresholds are not chosen by hand: they are the bottom and top third of the scores of past IPOs, so "high" means "more disclosed risk than about two thirds of recent IPOs".
+
+**How the score is made.** Each red flag in Concern adds 2 points and each Watch adds 1; each of up to four serious risks that few past IPOs shared (novelty below 0.10) adds 1. The sum is divided by the most a document could earn given how many checks could be run. `scripts/score_reference_ipos.py` produces the inputs for every train and dev IPO (category from the classifier, novelty from that IPO's own four-year window, seriousness rule, red flags), `scripts/corpus_points.py scores` turns them into scores and `fit` writes the terciles into `configs/risklevel.yaml`.
+
+**Why only 165 IPOs.** Older IPOs (2009-2023) exist only as text, so they have no tables and no red flags; mixing them in would put two different scores on one scale. They are scored on risk points alone for E21.
+
+**Honest limits.** The risk-points-only score saturates (43 % of IPOs score the maximum), the thresholds come from one laptop run of the whole chain and no listing outcome is used anywhere in the fit.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

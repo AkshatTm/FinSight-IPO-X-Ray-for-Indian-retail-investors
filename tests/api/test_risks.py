@@ -163,7 +163,7 @@ def test_risk_level_endpoint_follows_the_behind_click_switch(
     build(state.storage, DOC)
     body = client.get(f"/api/docs/{DOC}/risk-level").json()
     assert body["level"] in ("low", "medium", "high")
-    assert body["provisional"] is True
+    assert body["provisional"] is False
     assert body["disclaimer_key"] == "risklevel.disclaimer"
     assert body["behind_click"] is False
     hidden = {**load_config(), "behind_click": True}
