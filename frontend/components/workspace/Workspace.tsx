@@ -38,6 +38,7 @@ function Header({ id }: { id: string }) {
   const r = price ? resolveField(price) : null;
   const priceText = r?.value?.kind === "money" && r.value.value_inr ? formatRupee(r.value.value_inr) : null;
 
+  const isUpload = /^doc_[0-9a-f]{16}$/.test(id);
   const item = (label: string, value: string | null) =>
     value ? (
       <div>
@@ -49,8 +50,8 @@ function Header({ id }: { id: string }) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3 pb-3">
       <div className="min-w-0">
-        <Link href="/ipos" className="inline-flex h-11 items-center gap-1 text-sm text-muted hover:text-text">
-          <ArrowLeft size={16} /> {t("ws.back")}
+        <Link href={isUpload ? `/reports/${id}` : "/ipos"} className="inline-flex h-11 items-center gap-1 text-sm text-muted hover:text-text">
+          <ArrowLeft size={16} /> {isUpload ? t("ws.backReport") : t("ws.back")}
         </Link>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">{ipo?.company ?? xray?.company ?? " "}</h1>

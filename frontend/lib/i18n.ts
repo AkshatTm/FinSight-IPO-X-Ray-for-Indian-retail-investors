@@ -312,6 +312,7 @@ export const STRINGS = d({
   "ws.tab.document": { en: "Document", hi: "दस्तावेज़" },
   "ws.tab.ask": { en: "Ask", hi: "पूछें" },
   "ws.back": { en: "All IPOs", hi: "सभी आईपीओ" },
+  "ws.backReport": { en: "Back to the report", hi: "रिपोर्ट पर वापस" },
   "ws.offerPrice": { en: "Offer price", hi: "ऑफ़र प्राइस" },
   "ws.issueSize": { en: "Issue size", hi: "इश्यू का आकार" },
   "ws.listed": { en: "Listed", hi: "सूचीबद्ध" },

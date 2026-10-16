@@ -167,7 +167,7 @@ def _risks_scored(ctx: JobContext) -> dict[str, Any]:
     finally:
         del embedder
         _release_gpu()
-    risks = score_risks(risks, cfg)
+    risks = score_risks(risks)
     put_json(ctx.storage, ctx.key(RISKS_FILE), RISKS.dump_python(risks, mode="json"))
     result = {
         "n_risks": len(risks),

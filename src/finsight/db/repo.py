@@ -295,13 +295,19 @@ class Database:
                         enqueued_at=utcnow(),
                     )
                 )
-            elif current.status == "queued":
+            elif current.status in ("queued", "failed"):  # a click retries a failed rewrite
                 conn.execute(
                     simplify_queue.update()
                     .where(simplify_queue.c.doc_id == doc_id, simplify_queue.c.rid == rid)
-                    .values(priority=front)
+                    .values(priority=front, status="queued")
                 )
         return self.queue_position(doc_id, rid)
+
+    def docs_with_queue(self) -> list[str]:
+        """Documents that still have risks waiting for a rewrite (resumed after a restart)."""
+        query = sa.select(simplify_queue.c.doc_id).where(simplify_queue.c.status == "queued")
+        with self.engine.connect() as conn:
+            return sorted({row.doc_id for row in conn.execute(query.distinct())})
 
     def queue(self, doc_id: str) -> list[str]:
         """Queued risk ids, front first."""

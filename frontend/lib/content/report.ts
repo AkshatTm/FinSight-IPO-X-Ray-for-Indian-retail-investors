@@ -34,6 +34,7 @@ export const REPORT = {
   "rep.share": en("Share"),
   "rep.copied": en("Link copied"), // builder draft
   "rep.ask": en("Ask"),
+  "rep.workspace": en("Facts, pages and Ask"),
   "rep.companion": en("Final prospectus also analysed → View"),
   "rep.pages": en("{n} pages"), // builder draft
   "tab.overview": en("Overview"),
