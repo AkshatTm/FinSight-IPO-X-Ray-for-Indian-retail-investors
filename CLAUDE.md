@@ -63,3 +63,23 @@ Phase 2 (new): storage · db · jobs · auth · summary · redflags · risks · 
 
 ## End of every part
 Tick boxes in `docs/phase3/C05_ROADMAP.md`, update `PROGRESS.md` ("Resume here" + ≤ 10 lines), append a Part C section to `docs/10_FINSIGHT_EXPLAINED.md` for any new module, write local follow-ups to `docs/AKSHAT_TODO.md`, include these in the PR.
+
+
+## Phase 4 (from 21 Oct 2026) — two-agent mode
+
+Phase 4 docs: `docs/phase4/`. Read `P4_PLAN.md`, `P4_PRODUCT_SPECS.md`, `P4_GIT_WORKFLOW.md`,
+`P4_HANDOFF_CONTRACT.md`, your own `P4_EXECUTION_PLAN_CC.md` and `PROGRESS_CC.md` at the start of every session,
+then `docs/phase4/comms/to_cc.md` for messages from ARGON.
+
+- A second agent, **ARGON** (Gemini 4 Argon in Antigravity), owns model training and PDF labelling in `ml/` and
+  `data/gold/{sod_fixtures,event_labels,top_risks,v4}`. Read its outputs; never edit them.
+- CC owns everything else, including integration, `main`, and `ml/handoff/`.
+- Work on branch `p4/cc`; push after every green run; never touch `p4/argon`. CC merges `p4/argon` into `p4/cc`
+  (`--no-ff`) and `p4/cc` into main by **PR with a merge commit** (`gh pr merge --merge`; no rebase-merge on Phase 4
+  branches, so CI runs and ARGON's SHAs survive), per `P4_GIT_WORKFLOW.md`; tell ARGON in `comms/to_argon.md`.
+- Exclusions: all test-slice IPOs + bench + demo + Bench v1 + Platform Bench stay out of any training data (C-ADR-02).
+- Commit prefix: `feat(CC-xx): ...` (task ids from `P4_PLAN.md`).
+- Phase 3 rules still apply (plan first, one module per session, never read PDFs/weights/raw data, tests are memory,
+  BLOCKED.md when stuck, never hand-edit outputs, no investment advice).
+- Use Opus for CC-05 (SOD engine) and CC-07 (red flags v2 / risk level v2); Sonnet otherwise.
+- End of session: update `PROGRESS_CC.md` (≤ 15 lines) and tell Akshat what to verify or run.

@@ -1,0 +1,7070 @@
+{
+  "counts": {
+    "dev": 52,
+    "excluded": 128,
+    "train": 499
+  },
+  "ipos": [
+    {
+      "close_year": null,
+      "company_key": "a one steel",
+      "doc_date": "2026-09-11",
+      "excluded": true,
+      "ipo_id": "a-one-steel-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "a2z maintenance engineering services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "a2z-maintenance-engineering-services-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "aadhar housing finance",
+      "doc_date": "2024-04-30",
+      "excluded": false,
+      "ipo_id": "aadhar-housing-finance-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "aanjaneya lifecare",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aanjaneya-lifecare-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "aastha spintex",
+      "doc_date": "2026-06-18",
+      "excluded": true,
+      "ipo_id": "aastha-spintex-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "aavas financiers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aavas-financiers-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "abans holdings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "abans-holdings-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "acevector",
+      "doc_date": "2026-09-21",
+      "excluded": true,
+      "ipo_id": "acevector-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "acme solar holdings",
+      "doc_date": "2024-10-29",
+      "excluded": false,
+      "ipo_id": "acme-solar-holdings-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "acropetal technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "acropetal-technologies-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "adani power",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "adani-power-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "adani wilmar",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "adani-wilmar-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "aditya birla sun life amc",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aditya-birla-sun-life-amc-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "aditya infotech",
+      "doc_date": "2025-07-23",
+      "excluded": false,
+      "ipo_id": "aditya-infotech-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "adlabs entertainment",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "adlabs-entertainment-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "adroit industries",
+      "doc_date": "2026-09-17",
+      "excluded": true,
+      "ipo_id": "adroit-industries-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "advance agrolife",
+      "doc_date": "2025-09-18",
+      "excluded": false,
+      "ipo_id": "advance-agrolife-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "advanced enzyme technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "advanced-enzyme-technologies-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "advit jewels",
+      "doc_date": "2026-06-09",
+      "excluded": true,
+      "ipo_id": "advit-jewels-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "aegis vopak terminals",
+      "doc_date": "2025-05-20",
+      "excluded": false,
+      "ipo_id": "aegis-vopak-terminals-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "aequs",
+      "doc_date": "2025-11-26",
+      "excluded": true,
+      "ipo_id": "aequs-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "aeroflex industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aeroflex-industries-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "aether industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aether-industries-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "afcons infrastructure",
+      "doc_date": "2024-10-18",
+      "excluded": false,
+      "ipo_id": "afcons-infrastructure-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "affle",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "affle-india-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "ags transact technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ags-transact-technologies-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ajax engineering",
+      "doc_date": "2025-02-04",
+      "excluded": false,
+      "ipo_id": "ajax-engineering-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "akme fintrade",
+      "doc_date": "2024-06-11",
+      "excluded": false,
+      "ipo_id": "akme-fintrade-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "akums drugs and pharmaceuticals",
+      "doc_date": "2024-07-24",
+      "excluded": false,
+      "ipo_id": "akums-drugs-and-pharmaceuticals-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "alkem laboratories",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "alkem-laboratories-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "all time plastics",
+      "doc_date": "2025-08-01",
+      "excluded": false,
+      "ipo_id": "all-time-plastics-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "alpine texworld",
+      "doc_date": "2026-07-08",
+      "excluded": true,
+      "ipo_id": "alpine-texworld-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "amagi media labs",
+      "doc_date": "2026-01-07",
+      "excluded": true,
+      "ipo_id": "amagi-media-labs-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "amber enterprises",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "amber-enterprises-india-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "ami organics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ami-organics-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "amir chand jagdish kumar exports",
+      "doc_date": "2026-03-28",
+      "excluded": true,
+      "ipo_id": "amir-chand-jagdish-kumar-exports-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "anand rathi wealth",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "anand-rathi-wealth-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "angel one",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "angel-one-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "anlon healthcare",
+      "doc_date": "2025-08-20",
+      "excluded": false,
+      "ipo_id": "anlon-healthcare-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "annu projects",
+      "doc_date": "2026-08-18",
+      "excluded": true,
+      "ipo_id": "annu-projects-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "anthem biosciences",
+      "doc_date": "2025-07-08",
+      "excluded": false,
+      "ipo_id": "anthem-biosciences-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "antony waste handling cell",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "antony-waste-handling-cell-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "anupam rasayan",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "anupam-rasayan-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "apeejay surrendra park hotels",
+      "doc_date": "2024-01-29",
+      "excluded": false,
+      "ipo_id": "apeejay-surrendra-park-hotels-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "apex frozen foods",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "apex-frozen-foods-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "aptus value housing finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aptus-value-housing-finance-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "aqua logistics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aqua-logistics-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "archean chemical industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "archean-chemical-industries-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ardee industries",
+      "doc_date": "2026-07-27",
+      "excluded": true,
+      "ipo_id": "ardee-industries-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "arisinfra solutions",
+      "doc_date": "2025-06-11",
+      "excluded": false,
+      "ipo_id": "arisinfra-solutions-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "arkade developers",
+      "doc_date": "2024-09-20",
+      "excluded": false,
+      "ipo_id": "arkade-developers-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "armee infotech",
+      "doc_date": "2026-09-16",
+      "excluded": true,
+      "ipo_id": "armee-infotech-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "arss infrastructure projects",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "arss-infrastructure-projects-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "ashoka buildcon",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ashoka-buildcon-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "ask automotive",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ask-automotive-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "asset reconstruction company",
+      "doc_date": "2026-09-01",
+      "excluded": true,
+      "ipo_id": "asset-reconstruction-company-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "astec lifesciences",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "astec-lifesciences-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "aster dm healthcare",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aster-dm-healthcare-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "aster silicates",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "aster-silicates-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "astron paper board mill",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "astron-paper-board-mill-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ather energy",
+      "doc_date": "2025-04-22",
+      "excluded": true,
+      "ipo_id": "ather-energy-2025",
+      "reasons": [
+        "showcase_demo"
+      ],
+      "slice": "dev",
+      "source": "showcase"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "au financiers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "au-financiers-india-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "augmont enterprises",
+      "doc_date": "2026-08-17",
+      "excluded": true,
+      "ipo_id": "augmont-enterprises-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "avalon technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "avalon-technologies-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "avenue supermarts",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "avenue-supermarts-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "awfis space solutions",
+      "doc_date": "2024-05-14",
+      "excluded": false,
+      "ipo_id": "awfis-space-solutions-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "aye finance",
+      "doc_date": "2026-02-03",
+      "excluded": true,
+      "ipo_id": "aye-finance-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "azad engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "azad-engineering-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "baazar style retail",
+      "doc_date": "2024-08-23",
+      "excluded": false,
+      "ipo_id": "baazar-style-retail-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "bajaj corp",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bajaj-corp-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "bajaj housing finance",
+      "doc_date": "2024-08-30",
+      "excluded": false,
+      "ipo_id": "bajaj-housing-finance-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "bandhan bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bandhan-bank-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "bansal wire industries",
+      "doc_date": "2024-06-27",
+      "excluded": false,
+      "ipo_id": "bansal-wire-industries-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "barbeque nation hospitality",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "barbeque-nation-hospitality-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "bedmutha industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bedmutha-industries-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "behari lal engineering",
+      "doc_date": "2026-08-06",
+      "excluded": true,
+      "ipo_id": "behari-lal-engineering-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "belrise industries",
+      "doc_date": "2025-05-15",
+      "excluded": false,
+      "ipo_id": "belrise-industries-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "bharat coking coal",
+      "doc_date": "2026-01-02",
+      "excluded": true,
+      "ipo_id": "bharat-coking-coal-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "bharat dynamics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bharat-dynamics-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "bharat road network",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bharat-road-network-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "bharat wire ropes",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bharat-wire-ropes-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "bharatiya global infomedia",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bharatiya-global-infomedia-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "bharti hexacom",
+      "doc_date": "2024-03-22",
+      "excluded": false,
+      "ipo_id": "bharti-hexacom-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "bharti infratel",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bharti-infratel-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "bikaji foods international",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bikaji-foods-international-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "bls e services",
+      "doc_date": "2024-01-23",
+      "excluded": false,
+      "ipo_id": "bls-e-services-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "blue jet healthcare",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "blue-jet-healthcare-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "bluestone jewellery and lifestyle",
+      "doc_date": "2025-08-04",
+      "excluded": false,
+      "ipo_id": "bluestone-jewellery-and-lifestyle-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "bmw ventures",
+      "doc_date": "2025-09-18",
+      "excluded": false,
+      "ipo_id": "bmw-ventures-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "borana weaves",
+      "doc_date": "2025-05-14",
+      "excluded": false,
+      "ipo_id": "borana-weaves-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "brainbees solutions",
+      "doc_date": "2024-07-30",
+      "excluded": false,
+      "ipo_id": "brainbees-solutions-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "brigade hotel ventures",
+      "doc_date": "2025-07-18",
+      "excluded": false,
+      "ipo_id": "brigade-hotel-ventures-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "brooks laboratories",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "brooks-laboratories-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "bse",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "bse-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "c e info systems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "c-e-info-systems-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "c mahendra exports",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "c-mahendra-exports-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "caliber mining and logistics",
+      "doc_date": "2026-07-13",
+      "excluded": true,
+      "ipo_id": "caliber-mining-and-logistics-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "campus activewear",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "campus-activewear-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "canara hsbc life insurance company",
+      "doc_date": "2025-10-04",
+      "excluded": false,
+      "ipo_id": "canara-hsbc-life-insurance-company-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "canara robeco asset management company",
+      "doc_date": "2025-10-03",
+      "excluded": false,
+      "ipo_id": "canara-robeco-asset-management-company-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "cantabil retail",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cantabil-retail-india-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "capacit e infraprojects",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "capacit-e-infraprojects-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "capillary technologies",
+      "doc_date": "2025-11-07",
+      "excluded": true,
+      "ipo_id": "capillary-technologies-india-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "capital small finance bank",
+      "doc_date": "2024-02-01",
+      "excluded": false,
+      "ipo_id": "capital-small-finance-bank-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "career point infosystems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "career-point-infosystems-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "carraro",
+      "doc_date": "2024-12-16",
+      "excluded": false,
+      "ipo_id": "carraro-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "cartrade tech",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cartrade-tech-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ceigall",
+      "doc_date": "2024-07-26",
+      "excluded": false,
+      "ipo_id": "ceigall-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "cello world",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cello-world-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "central mine planning design institute",
+      "doc_date": "2026-03-12",
+      "excluded": true,
+      "ipo_id": "central-mine-planning-design-institute-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "chalet hotels",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "chalet-hotels-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "chemcon speciality chemicals",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "chemcon-speciality-chemicals-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "chemplast sanmar",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "chemplast-sanmar-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "cl educate",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cl-educate-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "clean max enviro energy solutions",
+      "doc_date": "2026-02-16",
+      "excluded": true,
+      "ipo_id": "clean-max-enviro-energy-solutions-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "clean science and technology",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "clean-science-and-technology-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "cms info systems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cms-info-systems-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "coal",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "coal-india-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "cochin shipyard",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cochin-shipyard-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "coffee day enterprises",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "coffee-day-enterprises-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "commercial engineers body builders co",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "commercial-engineers-body-builders-co-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "concord biotech",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "concord-biotech-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "concord enviro systems",
+      "doc_date": "2024-12-14",
+      "excluded": false,
+      "ipo_id": "concord-enviro-systems-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "corona remedies",
+      "doc_date": "2025-12-02",
+      "excluded": true,
+      "ipo_id": "corona-remedies-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "cox and kings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cox-and-kings-india-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "craftsman automation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "craftsman-automation-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "credit analysis research",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "credit-analysis-research-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "credo brands marketing",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "credo-brands-marketing-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "crizac",
+      "doc_date": "2025-06-25",
+      "excluded": false,
+      "ipo_id": "crizac-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "csb bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "csb-bank-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "csm technologies",
+      "doc_date": "2026-06-17",
+      "excluded": true,
+      "ipo_id": "csm-technologies-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "cyient dlm",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "cyient-dlm-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "d b realty",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "d-b-realty-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "dam capital advisors",
+      "doc_date": "2024-12-14",
+      "excluded": false,
+      "ipo_id": "dam-capital-advisors-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "data patterns",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "data-patterns-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "dee development engineers",
+      "doc_date": "2024-06-11",
+      "excluded": false,
+      "ipo_id": "dee-development-engineers-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "deepa jewellers",
+      "doc_date": "2026-08-25",
+      "excluded": true,
+      "ipo_id": "deepa-jewellers-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "deepak builders and engineers",
+      "doc_date": "2024-10-12",
+      "excluded": false,
+      "ipo_id": "deepak-builders-and-engineers-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "delhivery",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "delhivery-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "denta water and infra solutions",
+      "doc_date": "2025-01-16",
+      "excluded": false,
+      "ipo_id": "denta-water-and-infra-solutions-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "dev accelerator",
+      "doc_date": "2025-09-02",
+      "excluded": false,
+      "ipo_id": "dev-accelerator-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "devyani international",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "devyani-international-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "dharmaj crop guard",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "dharmaj-crop-guard-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "dhoot transmission",
+      "doc_date": "2026-08-03",
+      "excluded": true,
+      "ipo_id": "dhoot-transmission-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "diffusion engineers",
+      "doc_date": "2024-09-20",
+      "excluded": false,
+      "ipo_id": "diffusion-engineers-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "dilip buildcon",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "dilip-buildcon-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "divgi torqtransfer systems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "divgi-torqtransfer-systems-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "dixon technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "dixon-technologies-india-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "dodla dairy",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "dodla-dairy-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "doms industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "doms-industries-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "dr agarwal s healthcare",
+      "doc_date": "2025-01-23",
+      "excluded": false,
+      "ipo_id": "dr-agarwal-s-healthcare-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "dr lal pathlabs",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "dr-lal-pathlabs-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "dreamfolks services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "dreamfolks-services-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "easy trip planners",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "easy-trip-planners-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ecos mobility and hospitality",
+      "doc_date": "2024-08-20",
+      "excluded": false,
+      "ipo_id": "ecos-india-mobility-and-hospitality-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "edserv softsystems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "edserv-softsystems-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "electronics mart",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "electronics-mart-india-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "electrosteel integrated",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "electrosteel-integrated-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "elin electronics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "elin-electronics-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ellenbarrie industrial gases",
+      "doc_date": "2025-06-18",
+      "excluded": false,
+      "ipo_id": "ellenbarrie-industrial-gases-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "emcure pharmaceuticals",
+      "doc_date": "2024-06-26",
+      "excluded": false,
+      "ipo_id": "emcure-pharmaceuticals-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "emmbi polyarns",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "emmbi-polyarns-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "emmvee photovoltaic power",
+      "doc_date": "2025-11-05",
+      "excluded": true,
+      "ipo_id": "emmvee-photovoltaic-power-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "ems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ems-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "emudhra",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "emudhra-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "endurance technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "endurance-technologies-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "entero healthcare solutions",
+      "doc_date": "2024-02-05",
+      "excluded": false,
+      "ipo_id": "entero-healthcare-solutions-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "enviro infra engineers",
+      "doc_date": "2024-11-16",
+      "excluded": false,
+      "ipo_id": "enviro-infra-engineers-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "epack durable",
+      "doc_date": "2024-01-12",
+      "excluded": false,
+      "ipo_id": "epack-durable-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "equitas holdings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "equitas-holdings-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "equitas small finance bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "equitas-small-finance-bank-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "eris lifesciences",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "eris-lifesciences-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "eros international media",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "eros-international-media-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "esaf small finance bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "esaf-small-finance-bank-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "esds software solution",
+      "doc_date": "2026-08-24",
+      "excluded": true,
+      "ipo_id": "esds-software-solution-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "ethos",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ethos-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "euro multivision",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "euro-multivision-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "euro pratik sales",
+      "doc_date": "2025-09-05",
+      "excluded": false,
+      "ipo_id": "euro-pratik-sales-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "excel infoways",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "excel-infoways-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "excelsoft technologies",
+      "doc_date": "2025-11-11",
+      "excluded": true,
+      "ipo_id": "excelsoft-technologies-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "exicom tele systems",
+      "doc_date": "2024-02-20",
+      "excluded": false,
+      "ipo_id": "exicom-tele-systems-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "exxaro tiles",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "exxaro-tiles-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "fabtech technologies",
+      "doc_date": "2025-09-22",
+      "excluded": false,
+      "ipo_id": "fabtech-technologies-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "fedbank financial services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "fedbank-financial-services-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "fine organic industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "fine-organic-industries-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "fino payments bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "fino-payments-bank-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "five star business finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "five-star-business-finance-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "flair writing industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "flair-writing-industries-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "flexituff international",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "flexituff-international-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "fractal analytics",
+      "doc_date": "2026-02-02",
+      "excluded": true,
+      "ipo_id": "fractal-analytics-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "fsn e commerce ventures",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "fsn-e-commerce-ventures-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "fujiyama power systems",
+      "doc_date": "2025-11-07",
+      "excluded": true,
+      "ipo_id": "fujiyama-power-systems-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "fusion micro finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "fusion-micro-finance-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "future supply chain solutions",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "future-supply-chain-solutions-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "g n a axles",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "g-n-a-axles-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "g r infraprojects",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "g-r-infraprojects-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "gaja alternative asset management",
+      "doc_date": "2026-08-12",
+      "excluded": true,
+      "ipo_id": "gaja-alternative-asset-management-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "gala precision engineering",
+      "doc_date": "2024-08-23",
+      "excluded": false,
+      "ipo_id": "gala-precision-engineering-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "galaxy surfactants",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "galaxy-surfactants-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "gandhar oil refinery",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "gandhar-oil-refinery-india-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ganesh consumer products",
+      "doc_date": "2025-09-16",
+      "excluded": false,
+      "ipo_id": "ganesh-consumer-products-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "garden reach shipbuilders engineers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "garden-reach-shipbuilders-engineers-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "garuda construction and engineering",
+      "doc_date": "2024-09-28",
+      "excluded": false,
+      "ipo_id": "garuda-construction-and-engineering-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "gem aromatics",
+      "doc_date": "2025-08-12",
+      "excluded": false,
+      "ipo_id": "gem-aromatics-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "general insurance corporation of",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "general-insurance-corporation-of-india-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "german green steel and power",
+      "doc_date": "2026-09-21",
+      "excluded": true,
+      "ipo_id": "german-green-steel-and-power-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "gk energy",
+      "doc_date": "2025-09-15",
+      "excluded": false,
+      "ipo_id": "gk-energy-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "gland pharma",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "gland-pharma-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "glass wall systems",
+      "doc_date": "2026-09-01",
+      "excluded": true,
+      "ipo_id": "glass-wall-systems-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "glenmark life sciences",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "glenmark-life-sciences-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "global health",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "global-health-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "global surfaces",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "global-surfaces-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "globe civil projects",
+      "doc_date": "2025-06-14",
+      "excluded": false,
+      "ipo_id": "globe-civil-projects-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "globus spirits",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "globus-spirits-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "glottis",
+      "doc_date": "2025-09-22",
+      "excluded": false,
+      "ipo_id": "glottis-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "gng electronics",
+      "doc_date": "2025-07-17",
+      "excluded": false,
+      "ipo_id": "gng-electronics-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "go digit general insurance",
+      "doc_date": "2024-05-08",
+      "excluded": false,
+      "ipo_id": "go-digit-general-insurance-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "go digit insurance",
+      "doc_date": "2024-05-17",
+      "excluded": false,
+      "ipo_id": "go-digit-insurance-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "go fashion",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "go-fashion-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "godavari biorefineries",
+      "doc_date": "2024-10-17",
+      "excluded": false,
+      "ipo_id": "godavari-biorefineries-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "godrej agrovet",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "godrej-agrovet-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "godrej properties",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "godrej-properties-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "goenka diamond jewels",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "goenka-diamond-jewels-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "gopal snacks",
+      "doc_date": "2024-02-28",
+      "excluded": false,
+      "ipo_id": "gopal-snacks-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "gpt healthcare",
+      "doc_date": "2024-02-15",
+      "excluded": false,
+      "ipo_id": "gpt-healthcare-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "gravita",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "gravita-india-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "billionbrains garage ventures",
+      "doc_date": "2025-10-29",
+      "excluded": true,
+      "ipo_id": "groww-2025",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "showcase"
+    },
+    {
+      "close_year": null,
+      "company_key": "gsp crop science",
+      "doc_date": "2026-03-10",
+      "excluded": true,
+      "ipo_id": "gsp-crop-science-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "gtpl hathway",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "gtpl-hathway-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "gujarat pipavav port gppl",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "gujarat-pipavav-port-ltd-gppl-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "h g infra engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "h-g-infra-engineering-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "happiest minds technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "happiest-minds-technologies-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "happy forgings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "happy-forgings-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "hariom pipe industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hariom-pipe-industries-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "harsha engineers international",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "harsha-engineers-international-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "hathway cable datacom",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hathway-cable-datacom-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "hdb financial services",
+      "doc_date": "2025-06-19",
+      "excluded": true,
+      "ipo_id": "hdb-financial-services-2025",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "showcase"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "hdfc asset management company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hdfc-asset-management-company-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "hdfc standard life insurance company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hdfc-standard-life-insurance-company-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "healthcare global enterprises",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "healthcare-global-enterprises-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "heranba industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "heranba-industries-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "hero motors",
+      "doc_date": "2026-09-09",
+      "excluded": true,
+      "ipo_id": "hero-motors-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "hexagon nutrition",
+      "doc_date": "2026-05-25",
+      "excluded": true,
+      "ipo_id": "hexagon-nutrition-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "hexaware technologies",
+      "doc_date": "2025-02-05",
+      "excluded": true,
+      "ipo_id": "hexaware-technologies-2025",
+      "reasons": [
+        "showcase_demo"
+      ],
+      "slice": "dev",
+      "source": "showcase"
+    },
+    {
+      "close_year": null,
+      "company_key": "highway infrastructure",
+      "doc_date": "2025-07-24",
+      "excluded": false,
+      "ipo_id": "highway-infrastructure-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "hindustan aeronautics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hindustan-aeronautics-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "hindustan media ventures",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hindustan-media-ventures-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "hma agro industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hma-agro-industries-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "home first finance company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "home-first-finance-company-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "honasa consumer",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "honasa-consumer-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "housing and urban development corporation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "housing-and-urban-development-corporation-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "hp adhesives",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hp-adhesives-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "hpl electric power",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "hpl-electric-power-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "hy tech engineers",
+      "doc_date": "2026-08-17",
+      "excluded": true,
+      "ipo_id": "hy-tech-engineers-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "hyundai motor",
+      "doc_date": "2024-10-08",
+      "excluded": false,
+      "ipo_id": "hyundai-motor-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "icici lombard general insurance company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "icici-lombard-general-insurance-company-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "icici prudential asset management company",
+      "doc_date": "2025-12-05",
+      "excluded": true,
+      "ipo_id": "icici-prudential-asset-management-company-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "icici prudential life insurance company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "icici-prudential-life-insurance-company-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "icici securities",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "icici-securities-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "ideaforge technology",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ideaforge-technology-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "ikio lighting",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ikio-lighting-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "indegene",
+      "doc_date": "2024-04-26",
+      "excluded": false,
+      "ipo_id": "indegene-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "pesticides",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "india-pesticides-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "shelter finance corporation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "india-shelter-finance-corporation-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "indiabulls power",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indiabulls-power-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "indiamart intermesh",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indiamart-intermesh-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "indian energy exchange",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indian-energy-exchange-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "indian railway finance corporation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indian-railway-finance-corporation-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "indian renewable energy development agency",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indian-renewable-energy-development-agency-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "indigo paints",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indigo-paints-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "indiqube spaces",
+      "doc_date": "2025-07-17",
+      "excluded": false,
+      "ipo_id": "indiqube-spaces-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "indo farm equipment",
+      "doc_date": "2024-12-20",
+      "excluded": false,
+      "ipo_id": "indo-farm-equipment-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "indo mim",
+      "doc_date": "2026-07-17",
+      "excluded": true,
+      "ipo_id": "indo-mim-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "indo thai securities",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indo-thai-securities-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "indogulf cropsciences",
+      "doc_date": "2025-06-21",
+      "excluded": false,
+      "ipo_id": "indogulf-cropsciences-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "indosolar",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indosolar-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "indostar capital finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "indostar-capital-finance-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "infibeam incorporation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "infibeam-incorporation-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "infinite computer solutions",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "infinite-computer-solutions-india-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "innova captab",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "innova-captab-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "innovision",
+      "doc_date": "2026-03-02",
+      "excluded": true,
+      "ipo_id": "innovision-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "inox green energy services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "inox-green-energy-services-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "inox",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "inox-india-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "inox wind",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "inox-wind-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "interarch building products",
+      "doc_date": "2024-08-12",
+      "excluded": false,
+      "ipo_id": "interarch-building-products-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "interglobe aviation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "interglobe-aviation-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "international gemmological institute",
+      "doc_date": "2024-12-06",
+      "excluded": false,
+      "ipo_id": "international-gemmological-institute-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "inventure growth securities",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "inventure-growth-securities-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "inventurus knowledge solutions",
+      "doc_date": "2024-12-05",
+      "excluded": false,
+      "ipo_id": "inventurus-knowledge-solutions-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "ircon international",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ircon-international-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "irctc",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "irctc-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "irm energy",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "irm-energy-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ivalue infosolutions",
+      "doc_date": "2025-09-13",
+      "excluded": false,
+      "ipo_id": "ivalue-infosolutions-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "j g chemicals",
+      "doc_date": "2024-02-27",
+      "excluded": false,
+      "ipo_id": "j-g-chemicals-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "jain resource recycling",
+      "doc_date": "2025-09-18",
+      "excluded": false,
+      "ipo_id": "jain-resource-recycling-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "jana small finance bank",
+      "doc_date": "2024-02-01",
+      "excluded": false,
+      "ipo_id": "jana-small-finance-bank-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "jaro institute of technology management and research",
+      "doc_date": "2025-09-17",
+      "excluded": false,
+      "ipo_id": "jaro-institute-of-technology-management-and-research-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "jaypee infratech",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "jaypee-infratech-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "jindal cotex",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "jindal-cotex-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "jindal supreme",
+      "doc_date": "2026-09-07",
+      "excluded": true,
+      "ipo_id": "jindal-supreme-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "jinkushal industries",
+      "doc_date": "2025-09-15",
+      "excluded": false,
+      "ipo_id": "jinkushal-industries-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "jnk",
+      "doc_date": "2024-04-15",
+      "excluded": false,
+      "ipo_id": "jnk-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "jsw cement",
+      "doc_date": "2025-08-01",
+      "excluded": false,
+      "ipo_id": "jsw-cement-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "jsw energy",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "jsw-energy-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "jsw infrastructure",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "jsw-infrastructure-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "jubilant foodworks",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "jubilant-foodworks-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "juniper green energy",
+      "doc_date": "2026-07-23",
+      "excluded": true,
+      "ipo_id": "juniper-green-energy-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "juniper hotels",
+      "doc_date": "2024-02-13",
+      "excluded": false,
+      "ipo_id": "juniper-hotels-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "jupiter life line hospitals",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "jupiter-life-line-hospitals-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2013,
+      "company_key": "just dial",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "just-dial-2013",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "jyoti cnc automation",
+      "doc_date": "2024-01-02",
+      "excluded": false,
+      "ipo_id": "jyoti-cnc-automation-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "kalpataru",
+      "doc_date": "2025-06-18",
+      "excluded": false,
+      "ipo_id": "kalpataru-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "kalyan jewellers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "kalyan-jewellers-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "karamtara engineering",
+      "doc_date": "2026-09-03",
+      "excluded": true,
+      "ipo_id": "karamtara-engineering-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "karda construction",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "karda-construction-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "kaynes technology",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "kaynes-technology-india-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "keystone realtors",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "keystone-realtors-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "kfin technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "kfin-technologies-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "khadim",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "khadim-india-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "knack packaging",
+      "doc_date": "2026-06-23",
+      "excluded": true,
+      "ipo_id": "knack-packaging-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "krishna institute of medical sciences",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "krishna-institute-of-medical-sciences-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "krn heat exchanger and refrigeration",
+      "doc_date": "2024-09-13",
+      "excluded": false,
+      "ipo_id": "krn-heat-exchanger-and-refrigeration-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "kronox lab sciences",
+      "doc_date": "2024-05-28",
+      "excluded": false,
+      "ipo_id": "kronox-lab-sciences-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "kross",
+      "doc_date": "2024-09-02",
+      "excluded": false,
+      "ipo_id": "kross-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "krsnaa diagnostics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "krsnaa-diagnostics-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "krystal integrated services",
+      "doc_date": "2024-03-04",
+      "excluded": false,
+      "ipo_id": "krystal-integrated-services-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "ksh international",
+      "doc_date": "2025-12-10",
+      "excluded": true,
+      "ipo_id": "ksh-international-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "kusumgar",
+      "doc_date": "2026-07-01",
+      "excluded": true,
+      "ipo_id": "kusumgar-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "l t finance holdings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "l-t-finance-holdings-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "l t infotech",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "l-t-infotech-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "l t technology services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "l-t-technology-services-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "lalithaa jewellery mart",
+      "doc_date": "2026-08-09",
+      "excluded": true,
+      "ipo_id": "lalithaa-jewellery-mart-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "landmark cars",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "landmark-cars-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "laser power and infra",
+      "doc_date": "2026-07-03",
+      "excluded": true,
+      "ipo_id": "laser-power-and-infra-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "latent view analytics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "latent-view-analytics-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "laurus labs",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "laurus-labs-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "laxmi dental",
+      "doc_date": "2025-01-07",
+      "excluded": false,
+      "ipo_id": "laxmi-dental-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "laxmi finance",
+      "doc_date": "2025-07-21",
+      "excluded": false,
+      "ipo_id": "laxmi-india-finance-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "laxmi organic industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "laxmi-organic-industries-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "lcc projects",
+      "doc_date": "2026-09-03",
+      "excluded": true,
+      "ipo_id": "lcc-projects-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "le travenues technology",
+      "doc_date": "2024-06-12",
+      "excluded": false,
+      "ipo_id": "le-travenues-technology-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "leap",
+      "doc_date": "2026-08-01",
+      "excluded": true,
+      "ipo_id": "leap-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "lemon tree hotels",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "lemon-tree-hotels-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "lenskart solutions",
+      "doc_date": "2025-10-25",
+      "excluded": true,
+      "ipo_id": "lenskart-2025",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "showcase"
+    },
+    {
+      "close_year": null,
+      "company_key": "lg electronics",
+      "doc_date": "2025-09-30",
+      "excluded": true,
+      "ipo_id": "lg-electronics-india-2025",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "showcase"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "life insurance corporation of lic",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "life-insurance-corporation-of-india-lic-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "likhitha infrastructure",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "likhitha-infrastructure-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "lohia corp",
+      "doc_date": "2026-07-17",
+      "excluded": true,
+      "ipo_id": "lohia-corp-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "lovable lingeries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "lovable-lingeries-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "lumino industries",
+      "doc_date": "2026-08-20",
+      "excluded": true,
+      "ipo_id": "lumino-industries-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "m and b switchgears",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "m-and-b-switchgears-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "m b engineering",
+      "doc_date": "2025-07-24",
+      "excluded": false,
+      "ipo_id": "m-b-engineering-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "macrotech developers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "macrotech-developers-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "mahanagar gas",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mahanagar-gas-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "mahindra holidays and resorts",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mahindra-holidays-and-resorts-india-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "mahindra logistics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mahindra-logistics-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "mamata machinery",
+      "doc_date": "2024-12-12",
+      "excluded": false,
+      "ipo_id": "mamata-machinery-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "man infraconstruction",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "man-infraconstruction-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "manba finance",
+      "doc_date": "2024-09-16",
+      "excluded": false,
+      "ipo_id": "manba-finance-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "mandhana industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mandhana-industries-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "mangal electrical industries",
+      "doc_date": "2025-08-13",
+      "excluded": false,
+      "ipo_id": "mangal-electrical-industries-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "manika plastech",
+      "doc_date": "2026-09-04",
+      "excluded": true,
+      "ipo_id": "manika-plastech-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "manipal health enterprises",
+      "doc_date": "2026-07-23",
+      "excluded": true,
+      "ipo_id": "manipal-health-enterprises-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "manipal payment and identity solutions",
+      "doc_date": "2026-09-03",
+      "excluded": true,
+      "ipo_id": "manipal-payment-and-identity-solutions-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "mankind pharma",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mankind-pharma-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "mas financial services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mas-financial-services-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "matrimony com",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "matrimony-com-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "mazagon dock shipbuilders",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mazagon-dock-shipbuilders-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "medi assist healthcare services",
+      "doc_date": "2024-01-09",
+      "excluded": false,
+      "ipo_id": "medi-assist-healthcare-services-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "medplus health services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "medplus-health-services-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "meesho",
+      "doc_date": "2025-11-27",
+      "excluded": true,
+      "ipo_id": "meesho-2025",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "showcase"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "mep infrastructure developers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mep-infrastructure-developers-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "metro brands",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "metro-brands-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "metropolis healthcare",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "metropolis-healthcare-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "microsec financial services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "microsec-financial-services-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "midwest",
+      "doc_date": "2025-10-09",
+      "excluded": false,
+      "ipo_id": "midwest-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "milky mist dairy food",
+      "doc_date": "2026-08-04",
+      "excluded": true,
+      "ipo_id": "milky-mist-dairy-food-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "mishra dhatu nigam",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mishra-dhatu-nigam-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "moil",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "moil-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "molbio diagnostics",
+      "doc_date": "2026-08-03",
+      "excluded": true,
+      "ipo_id": "molbio-diagnostics-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "moneyview",
+      "doc_date": "2026-09-20",
+      "excluded": true,
+      "ipo_id": "moneyview-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2014,
+      "company_key": "monte carlo fashions",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "monte-carlo-fashions-2014",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "motisons jewellers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "motisons-jewellers-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "mrs bectors food specialities",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mrs-bectors-food-specialities-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "mstc",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mstc-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "mt educare",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mt-educare-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "mtar technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "mtar-technologies-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "mukka proteins",
+      "doc_date": "2024-02-24",
+      "excluded": false,
+      "ipo_id": "mukka-proteins-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "music broadcast",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "music-broadcast-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "muthoot finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "muthoot-finance-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "muthoot microfin",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "muthoot-microfin-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "mv electrosystems",
+      "doc_date": "2026-07-23",
+      "excluded": true,
+      "ipo_id": "mv-electrosystems-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "narayana hrudayalaya",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "narayana-hrudayalaya-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "national buildings construction corporation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "national-buildings-construction-corporation-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "national securities depository",
+      "doc_date": "2025-07-23",
+      "excluded": false,
+      "ipo_id": "national-securities-depository-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "national stock exchange of",
+      "doc_date": "2026-09-10",
+      "excluded": true,
+      "ipo_id": "national-stock-exchange-of-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "navkar corporation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "navkar-corporation-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "nazara technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "nazara-technologies-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "neogen chemicals",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "neogen-chemicals-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "nephrocare health services",
+      "doc_date": "2025-12-02",
+      "excluded": true,
+      "ipo_id": "nephrocare-health-services-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "netweb technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "netweb-technologies-india-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "newgen software technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "newgen-software-technologies-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "nhpc",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "nhpc-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "nitesh estates",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "nitesh-estates-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "nityas gems and jewellery",
+      "doc_date": "2026-09-24",
+      "excluded": true,
+      "ipo_id": "nityas-gems-and-jewellery-india-2026",
+      "reasons": [
+        "demo_newest",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "niva bupa health insurance company",
+      "doc_date": "2024-10-31",
+      "excluded": false,
+      "ipo_id": "niva-bupa-health-insurance-company-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "nova agritech",
+      "doc_date": "2024-01-12",
+      "excluded": false,
+      "ipo_id": "nova-agritech-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "ntpc green energy",
+      "doc_date": "2024-11-12",
+      "excluded": false,
+      "ipo_id": "ntpc-green-energy-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "nuvoco vistas corporation",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "nuvoco-vistas-corporation-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "oberoi realty",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "oberoi-realty-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "oil",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "oil-india-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "ola electric mobility",
+      "doc_date": "2024-07-26",
+      "excluded": false,
+      "ipo_id": "ola-electric-mobility-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "om freight forwarders",
+      "doc_date": "2025-09-22",
+      "excluded": false,
+      "ipo_id": "om-freight-forwarders-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "om power transmission",
+      "doc_date": "2026-04-04",
+      "excluded": true,
+      "ipo_id": "om-power-transmission-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "omkar speciality chemicals",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "omkar-speciality-chemicals-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "omnitech engineering",
+      "doc_date": "2026-02-18",
+      "excluded": true,
+      "ipo_id": "omnitech-engineering-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "one 97 communications",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "one-97-communications-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "one mobikwik systems",
+      "doc_date": "2024-12-14",
+      "excluded": false,
+      "ipo_id": "one-mobikwik-systems-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "onelife capital advisors",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "onelife-capital-advisors-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "onemi technology solutions",
+      "doc_date": "2026-04-25",
+      "excluded": true,
+      "ipo_id": "onemi-technology-solutions-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "orient cables",
+      "doc_date": "2026-09-21",
+      "excluded": true,
+      "ipo_id": "orient-cables-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "orient green power company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "orient-green-power-company-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "orient technologies",
+      "doc_date": "2024-08-09",
+      "excluded": false,
+      "ipo_id": "orient-technologies-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "orkla",
+      "doc_date": "2025-10-23",
+      "excluded": false,
+      "ipo_id": "orkla-india-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "ortel communications",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ortel-communications-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "oswal pumps",
+      "doc_date": "2025-06-07",
+      "excluded": false,
+      "ipo_id": "oswal-pumps-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "p n gadgil jewellers",
+      "doc_date": "2024-09-04",
+      "excluded": false,
+      "ipo_id": "p-n-gadgil-jewellers-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "pace digitek",
+      "doc_date": "2025-09-22",
+      "excluded": false,
+      "ipo_id": "pace-digitek-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "paradeep phosphates",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "paradeep-phosphates-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "parag milk foods",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "parag-milk-foods-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "paramount printpackaging",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "paramount-printpackaging-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "paras defence and space technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "paras-defence-and-space-technologies-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "park medi world",
+      "doc_date": "2025-12-04",
+      "excluded": true,
+      "ipo_id": "park-medi-world-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "patel retail",
+      "doc_date": "2025-08-07",
+      "excluded": false,
+      "ipo_id": "patel-retail-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "pb fintech",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pb-fintech-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "pc jeweller",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pc-jeweller-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "pennar engineered building systems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pennar-engineered-building-systems-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "persistent systems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "persistent-systems-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "pg electroplast",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pg-electroplast-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "physicswallah",
+      "doc_date": "2025-11-04",
+      "excluded": true,
+      "ipo_id": "physicswallah-2025",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "showcase"
+    },
+    {
+      "close_year": null,
+      "company_key": "pine labs",
+      "doc_date": "2025-10-31",
+      "excluded": true,
+      "ipo_id": "pine-labs-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "pipavav shipyard",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pipavav-shipyard-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "platinum industries",
+      "doc_date": "2024-02-20",
+      "excluded": false,
+      "ipo_id": "platinum-industries-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "plaza wires",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "plaza-wires-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "pnb housing finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pnb-housing-finance-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "pnc infratech",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pnc-infratech-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "pngs reva diamond jewellery",
+      "doc_date": "2026-02-10",
+      "excluded": true,
+      "ipo_id": "pngs-reva-diamond-jewellery-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "polycab",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "polycab-india-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "popular vehicles and services",
+      "doc_date": "2024-03-04",
+      "excluded": false,
+      "ipo_id": "popular-vehicles-and-services-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "power mech projects",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "power-mech-projects-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "powerica",
+      "doc_date": "2026-03-17",
+      "excluded": true,
+      "ipo_id": "powerica-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "prabhat dairy",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "prabhat-dairy-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "pradip overseas",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pradip-overseas-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "prakash constrowell",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "prakash-constrowell-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "prakash steelage",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "prakash-steelage-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "pranav constructions",
+      "doc_date": "2026-08-31",
+      "excluded": true,
+      "ipo_id": "pranav-constructions-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "prasol chemicals",
+      "doc_date": "2026-09-02",
+      "excluded": true,
+      "ipo_id": "prasol-chemicals-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "prataap snacks",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "prataap-snacks-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "precision camshafts",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "precision-camshafts-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "premier energies",
+      "doc_date": "2024-08-20",
+      "excluded": false,
+      "ipo_id": "premier-energies-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "prince pipes and fittings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "prince-pipes-and-fittings-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "prudent corporate advisory services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "prudent-corporate-advisory-services-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "psp projects",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "psp-projects-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "ptc financial services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ptc-india-financial-services-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "punjab sind bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "punjab-sind-bank-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "purple style labs",
+      "doc_date": "2026-08-24",
+      "excluded": true,
+      "ipo_id": "purple-style-labs-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "pyramid technoplast",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "pyramid-technoplast-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "pyramid technoplast",
+      "doc_date": "2024-08-23",
+      "excluded": false,
+      "ipo_id": "pyramid-technoplast-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "quadrant future tek",
+      "doc_date": "2024-12-27",
+      "excluded": false,
+      "ipo_id": "quadrant-future-tek-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "quality power electrical equipments",
+      "doc_date": "2025-02-06",
+      "excluded": false,
+      "ipo_id": "quality-power-electrical-equipments-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "quess corp",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "quess-corp-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "quick heal technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "quick-heal-technologies-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "r k swamy",
+      "doc_date": "2024-02-26",
+      "excluded": false,
+      "ipo_id": "r-k-swamy-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "radiant cash management services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "radiant-cash-management-services-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "rail vikas nigam",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rail-vikas-nigam-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "railtel corporation of",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "railtel-corporation-of-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "rainbow children s medicare",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rainbow-children-s-medicare-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "raj oil mills",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "raj-oil-mills-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "rajputana stainless",
+      "doc_date": "2026-02-27",
+      "excluded": true,
+      "ipo_id": "rajputana-stainless-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "ramky infrastructure",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ramky-infrastructure-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "rashi peripherals",
+      "doc_date": "2024-01-29",
+      "excluded": false,
+      "ipo_id": "rashi-peripherals-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "rategain travel technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rategain-travel-technologies-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "ratnaveer precision engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ratnaveer-precision-engineering-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "ravi kumar distilleries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ravi-kumar-distilleries-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "rays of belief",
+      "doc_date": "2026-08-20",
+      "excluded": true,
+      "ipo_id": "rays-of-belief-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "rbl bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rbl-bank-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "rbz jewellers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rbz-jewellers-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "regaal resources",
+      "doc_date": "2025-08-06",
+      "excluded": false,
+      "ipo_id": "regaal-resources-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "reliance nippon life asset management",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "reliance-nippon-life-asset-management-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "rentomojo",
+      "doc_date": "2026-09-03",
+      "excluded": true,
+      "ipo_id": "rentomojo-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2013,
+      "company_key": "repco home finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "repco-home-finance-2013",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "rishabh instruments",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rishabh-instruments-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "rites",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rites-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "rolex rings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rolex-rings-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "route mobile",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "route-mobile-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "rpp infra projects",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rpp-infra-projects-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "rubicon research",
+      "doc_date": "2025-10-01",
+      "excluded": false,
+      "ipo_id": "rubicon-research-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "runwal enterprises",
+      "doc_date": "2026-09-21",
+      "excluded": true,
+      "ipo_id": "runwal-enterprises-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "rushil decor",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "rushil-decor-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "s chand and company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "s-chand-and-company-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "s h kelkar company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "s-h-kelkar-company-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "s j s enterprises",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "s-j-s-enterprises-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "saatvik green energy",
+      "doc_date": "2025-09-15",
+      "excluded": false,
+      "ipo_id": "saatvik-green-energy-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "sadbhav infrastructure project",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sadbhav-infrastructure-project-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sagility",
+      "doc_date": "2024-10-29",
+      "excluded": false,
+      "ipo_id": "sagility-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "sah polymers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sah-polymers-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sai life sciences",
+      "doc_date": "2024-12-05",
+      "excluded": false,
+      "ipo_id": "sai-life-sciences-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "sai parenteral s",
+      "doc_date": "2026-03-16",
+      "excluded": true,
+      "ipo_id": "sai-parenteral-s-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "sai silks kalamandir",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sai-silks-kalamandir-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "salasar techno engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "salasar-techno-engineering-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sambhv steel tubes",
+      "doc_date": "2025-06-19",
+      "excluded": false,
+      "ipo_id": "sambhv-steel-tubes-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "sanathan textiles",
+      "doc_date": "2024-12-13",
+      "excluded": false,
+      "ipo_id": "sanathan-textiles-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "sandhar technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sandhar-technologies-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "sanghvi forging engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sanghvi-forging-engineering-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "sansera engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sansera-engineering-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sanstar",
+      "doc_date": "2024-07-12",
+      "excluded": false,
+      "ipo_id": "sanstar-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "sapphire foods",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sapphire-foods-india-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "saraswati saree depot",
+      "doc_date": "2024-08-06",
+      "excluded": false,
+      "ipo_id": "saraswati-saree-depot-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "sbfc finance",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sbfc-finance-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "sbi cards and payment services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sbi-cards-and-payment-services-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sbi funds management",
+      "doc_date": "2026-07-08",
+      "excluded": true,
+      "ipo_id": "sbi-funds-management-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "sbi life insurance company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sbi-life-insurance-company-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "schloss bangalore",
+      "doc_date": "2025-05-20",
+      "excluded": false,
+      "ipo_id": "schloss-bangalore-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "scoda tubes",
+      "doc_date": "2025-05-22",
+      "excluded": false,
+      "ipo_id": "scoda-tubes-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "security and intelligence services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "security-and-intelligence-services-india-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sedemac mechatronics",
+      "doc_date": "2026-02-25",
+      "excluded": true,
+      "ipo_id": "sedemac-mechatronics-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "senco gold",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "senco-gold-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "senores pharmaceuticals",
+      "doc_date": "2024-12-15",
+      "excluded": false,
+      "ipo_id": "senores-pharmaceuticals-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "seshaasai technologies",
+      "doc_date": "2025-09-16",
+      "excluded": false,
+      "ipo_id": "seshaasai-technologies-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "shadowfax technologies",
+      "doc_date": "2026-01-13",
+      "excluded": true,
+      "ipo_id": "shadowfax-technologies-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "shah investor s home",
+      "doc_date": "2026-09-22",
+      "excluded": true,
+      "ipo_id": "shah-investor-s-home-2026",
+      "reasons": [
+        "demo_newest",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "shalby",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shalby-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "shankara building products",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shankara-building-products-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "shanti gold international",
+      "doc_date": "2025-07-17",
+      "excluded": false,
+      "ipo_id": "shanti-gold-international-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2014,
+      "company_key": "sharda cropchem",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sharda-cropchem-2014",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "sheela foam",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sheela-foam-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2014,
+      "company_key": "shemaroo entertainment",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shemaroo-entertainment-2014",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "shilpi cable technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shilpi-cable-technologies-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "shiprocket",
+      "doc_date": "2026-08-05",
+      "excluded": true,
+      "ipo_id": "shiprocket-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "shree ganesh jewellery house",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shree-ganesh-jewellery-house-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "shree pushkar chemicals and fertilisers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shree-pushkar-chemicals-and-fertilisers-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "shree ram twistex",
+      "doc_date": "2026-02-12",
+      "excluded": true,
+      "ipo_id": "shree-ram-twistex-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "shree tirupati balajee agro trading company",
+      "doc_date": "2024-08-31",
+      "excluded": false,
+      "ipo_id": "shree-tirupati-balajee-agro-trading-company-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "shreeji shipping global",
+      "doc_date": "2025-08-05",
+      "excluded": false,
+      "ipo_id": "shreeji-shipping-global-limited-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "shringar house of mangalsutra",
+      "doc_date": "2025-09-01",
+      "excluded": false,
+      "ipo_id": "shringar-house-of-mangalsutra-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "shriram properties",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shriram-properties-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "shyam metalics and energy",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "shyam-metalics-and-energy-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "sigachi industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sigachi-industries-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "signatureglobal",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "signatureglobal-india-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "sjvn satluj jal vidyut nigam",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sjvn-ltd-satluj-jal-vidyut-nigam-ltd-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "skyways air services",
+      "doc_date": "2026-08-11",
+      "excluded": true,
+      "ipo_id": "skyways-air-services-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "smartworks coworking spaces",
+      "doc_date": "2025-07-04",
+      "excluded": false,
+      "ipo_id": "smartworks-coworking-spaces-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2014,
+      "company_key": "snowman logistics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "snowman-logistics-2014",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "solarworld energy solutions",
+      "doc_date": "2025-09-17",
+      "excluded": false,
+      "ipo_id": "solarworld-energy-solutions-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "sona blw precision forgings",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sona-blw-precision-forgings-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sonaselection",
+      "doc_date": "2026-09-07",
+      "excluded": true,
+      "ipo_id": "sonaselection-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "spandana sphoorty financial",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "spandana-sphoorty-financial-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "speciality restaurants",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "speciality-restaurants-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "srit",
+      "doc_date": "2026-09-22",
+      "excluded": true,
+      "ipo_id": "srit-india-2026",
+      "reasons": [
+        "demo_newest",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "srm contractors",
+      "doc_date": "2024-03-16",
+      "excluded": false,
+      "ipo_id": "srm-contractors-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "ss retail",
+      "doc_date": "2026-09-08",
+      "excluded": true,
+      "ipo_id": "ss-retail-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "stallion fluorochemicals",
+      "doc_date": "2025-01-11",
+      "excluded": false,
+      "ipo_id": "stallion-india-fluorochemicals-2025",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "standard glass lining technology",
+      "doc_date": "2024-12-30",
+      "excluded": false,
+      "ipo_id": "standard-glass-lining-technology-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "stanley lifestyles",
+      "doc_date": "2024-06-13",
+      "excluded": false,
+      "ipo_id": "stanley-lifestyles-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "star health and allied insurance company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "star-health-and-allied-insurance-company-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "steamhouse",
+      "doc_date": "2026-09-03",
+      "excluded": true,
+      "ipo_id": "steamhouse-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "sterling and wilson solar",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sterling-and-wilson-solar-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "stove kraft",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "stove-kraft-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "studds accessories",
+      "doc_date": "2025-11-03",
+      "excluded": true,
+      "ipo_id": "studds-accessories-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "sudar garments",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "sudar-garments-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "sudeep pharma",
+      "doc_date": "2025-11-17",
+      "excluded": true,
+      "ipo_id": "sudeep-pharma-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "sunshine pictures",
+      "doc_date": "2026-08-10",
+      "excluded": true,
+      "ipo_id": "sunshine-pictures-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "supriya lifescience",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "supriya-lifescience-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "suraj estate developers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "suraj-estate-developers-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "suraksha diagnostic",
+      "doc_date": "2024-11-25",
+      "excluded": false,
+      "ipo_id": "suraksha-diagnostic-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "suryoday small finance bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "suryoday-small-finance-bank-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "swastika infra",
+      "doc_date": "2026-09-17",
+      "excluded": true,
+      "ipo_id": "swastika-infra-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "swiggy",
+      "doc_date": "2024-10-28",
+      "excluded": false,
+      "ipo_id": "swiggy-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "symbiotec pharmalab",
+      "doc_date": "2026-08-18",
+      "excluded": true,
+      "ipo_id": "symbiotec-pharmalab-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "syncom healthcare",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "syncom-healthcare-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "syngene international",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "syngene-international-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "syrma sgs technology",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "syrma-sgs-technology-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "taksheel solutions",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "taksheel-solutions-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "talwalkars better value fitness",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "talwalkars-better-value-fitness-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "tamilnad mercantile bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tamilnad-mercantile-bank-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "tara jewels",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tara-jewels-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "tarapur transformers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tarapur-transformers-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "tarsons products",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tarsons-products-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "tata capital",
+      "doc_date": "2025-09-26",
+      "excluded": true,
+      "ipo_id": "tata-capital-2025",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "showcase"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "tata technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tata-technologies-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "tatva chintan pharma chem",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tatva-chintan-pharma-chem-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "tbo tek",
+      "doc_date": "2024-04-28",
+      "excluded": false,
+      "ipo_id": "tbo-tek-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "tcns clothing co",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tcns-clothing-co-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "td power systems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "td-power-systems-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "technocraft ventures",
+      "doc_date": "2026-07-30",
+      "excluded": true,
+      "ipo_id": "technocraft-ventures-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "technofab engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "technofab-engineering-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "tecpro systems",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tecpro-systems-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "tega industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tega-industries-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "tejas networks",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tejas-networks-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "tempsens instruments",
+      "doc_date": "2026-08-14",
+      "excluded": true,
+      "ipo_id": "tempsens-instruments-india-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "texmo pipes products",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "texmo-pipes-products-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2017,
+      "company_key": "new assurance company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "the-new-india-assurance-company-2017",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2009,
+      "company_key": "thinksoft global services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "thinksoft-global-services-2009",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "thyrocare technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "thyrocare-technologies-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "timbor home",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "timbor-home-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "tolins tyres",
+      "doc_date": "2024-08-28",
+      "excluded": false,
+      "ipo_id": "tolins-tyres-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "tracxn technologies",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tracxn-technologies-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "transrail lighting",
+      "doc_date": "2024-12-10",
+      "excluded": false,
+      "ipo_id": "transrail-lighting-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "travel food services",
+      "doc_date": "2025-07-01",
+      "excluded": false,
+      "ipo_id": "travel-food-services-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "tree house education accessories",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tree-house-education-accessories-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "tribhovandas bhimji zaveri",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tribhovandas-bhimji-zaveri-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "trualt bioenergy",
+      "doc_date": "2025-09-19",
+      "excluded": false,
+      "ipo_id": "trualt-bioenergy-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "turtlemint fintech solutions",
+      "doc_date": "2026-06-15",
+      "excluded": true,
+      "ipo_id": "turtlemint-fintech-solutions-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "tvs supply chain solutions",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "tvs-supply-chain-solutions-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "udayshivakumar infra",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "udayshivakumar-infra-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "ufo moviez",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ufo-moviez-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "ujjivan financial services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ujjivan-financial-services-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "ujjivan small finance bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "ujjivan-small-finance-bank-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "uma exports",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "uma-exports-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "unicommerce esolutions",
+      "doc_date": "2024-07-30",
+      "excluded": false,
+      "ipo_id": "unicommerce-esolutions-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "unimech aerospace and manufacturing",
+      "doc_date": "2024-12-16",
+      "excluded": false,
+      "ipo_id": "unimech-aerospace-and-manufacturing-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "uniparts",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "uniparts-india-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "united bank of",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "united-bank-of-india-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "updater services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "updater-services-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "urban company",
+      "doc_date": "2025-09-02",
+      "excluded": true,
+      "ipo_id": "urban-company-2025",
+      "reasons": [
+        "showcase_demo"
+      ],
+      "slice": "dev",
+      "source": "showcase"
+    },
+    {
+      "close_year": 2020,
+      "company_key": "uti asset management company",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "uti-asset-management-company-2020",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "utkarsh small finance bank",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "utkarsh-small-finance-bank-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2013,
+      "company_key": "v mart retail",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "v-mart-retail-2013",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "valiant laboratories",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "valiant-laboratories-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "varmora granito",
+      "doc_date": "2026-09-16",
+      "excluded": true,
+      "ipo_id": "varmora-granito-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2018,
+      "company_key": "varroc engineering",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "varroc-engineering-2018",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2016,
+      "company_key": "varun beverages",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "varun-beverages-2016",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2010,
+      "company_key": "vascon engineers",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vascon-engineers-2010",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2011,
+      "company_key": "vaswani industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vaswani-industries-2011",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "vedant fashions",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vedant-fashions-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "veegaland developers",
+      "doc_date": "2026-08-31",
+      "excluded": true,
+      "ipo_id": "veegaland-developers-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "ventive hospitality",
+      "doc_date": "2024-12-14",
+      "excluded": false,
+      "ipo_id": "ventive-hospitality-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "venus pipes tubes",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "venus-pipes-tubes-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2022,
+      "company_key": "veranda learning solutions",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "veranda-learning-solutions-2022",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "vibhor steel tubes",
+      "doc_date": "2024-02-05",
+      "excluded": false,
+      "ipo_id": "vibhor-steel-tubes-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "vidya wires",
+      "doc_date": "2025-11-27",
+      "excluded": true,
+      "ipo_id": "vidya-wires-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "vijaya diagnostic centre",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vijaya-diagnostic-centre-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "vikram solar",
+      "doc_date": "2025-08-12",
+      "excluded": false,
+      "ipo_id": "vikram-solar-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "vikran engineering",
+      "doc_date": "2025-08-18",
+      "excluded": false,
+      "ipo_id": "vikran-engineering-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "vishal mega mart",
+      "doc_date": "2024-12-04",
+      "excluded": false,
+      "ipo_id": "vishal-mega-mart-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "vishnu prakash r punglia",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vishnu-prakash-r-punglia-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2019,
+      "company_key": "vishwaraj sugar industries",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vishwaraj-sugar-industries-2019",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2012,
+      "company_key": "vks projects",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vks-projects-2012",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "vms tmt",
+      "doc_date": "2025-09-10",
+      "excluded": false,
+      "ipo_id": "vms-tmt-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "vodafone idea",
+      "doc_date": "2024-04-08",
+      "excluded": false,
+      "ipo_id": "vodafone-idea-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "vraj iron and steel",
+      "doc_date": "2024-06-18",
+      "excluded": false,
+      "ipo_id": "vraj-iron-and-steel-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": 2015,
+      "company_key": "vrl logistics",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "vrl-logistics-2015",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "waaree energies",
+      "doc_date": "2024-10-14",
+      "excluded": false,
+      "ipo_id": "waaree-energies-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "wakefit innovations",
+      "doc_date": "2025-11-29",
+      "excluded": true,
+      "ipo_id": "wakefit-innovations-2025",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "waterways leisure tourism",
+      "doc_date": "2026-06-17",
+      "excluded": true,
+      "ipo_id": "waterways-leisure-tourism-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "western carriers",
+      "doc_date": "2024-09-07",
+      "excluded": false,
+      "ipo_id": "western-carriers-india-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": "wework management",
+      "doc_date": "2025-09-27",
+      "excluded": false,
+      "ipo_id": "wework-india-management-2025",
+      "reasons": [],
+      "slice": "dev",
+      "source": "new"
+    },
+    {
+      "close_year": 2021,
+      "company_key": "windlas biotech",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "windlas-biotech-2021",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2014,
+      "company_key": "wonderla holidays",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "wonderla-holidays-2014",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "xtranet technologies",
+      "doc_date": "2026-07-16",
+      "excluded": true,
+      "ipo_id": "xtranet-technologies-2026",
+      "reasons": [
+        "test_slice"
+      ],
+      "slice": "test",
+      "source": "new"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "yatharth hospital and trauma care services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "yatharth-hospital-and-trauma-care-services-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "yatra online",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "yatra-online-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": 2023,
+      "company_key": "zaggle prepaid ocean services",
+      "doc_date": null,
+      "excluded": false,
+      "ipo_id": "zaggle-prepaid-ocean-services-2023",
+      "reasons": [],
+      "slice": "train",
+      "source": "corpus"
+    },
+    {
+      "close_year": null,
+      "company_key": "zinka logistics solutions",
+      "doc_date": "2024-11-07",
+      "excluded": false,
+      "ipo_id": "zinka-logistics-solutions-2024",
+      "reasons": [],
+      "slice": "train",
+      "source": "new"
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "airfloa-rail-technology-2025",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "amtech-esters-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "aureate-tradde-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "gurunanak-agriculture-india-2025",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "h-r-hygiene-products-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "kanohar-electricals-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "priority-jewels-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "propshop-events-and-exhibitions-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "prostarm-info-systems-2025",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "speciality-medicines-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "taurian-mps-2025",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "vegorama-punjabi-angithi-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "vigor-plast-india-2025",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    },
+    {
+      "close_year": null,
+      "company_key": null,
+      "doc_date": null,
+      "excluded": true,
+      "ipo_id": "vinod-texworld-2026",
+      "reasons": [
+        "excluded_by_splits"
+      ],
+      "slice": "excluded",
+      "source": null
+    }
+  ],
+  "rule": "C-ADR-02 (strict): all test-slice IPOs, SME/unusable IPOs, demo + showcase IPOs, Bench v1 IPOs and Platform Bench IPOs never enter training data, thresholds, prompts or parser tuning.",
+  "train_cut": "2025-06-19",
+  "version": 1
+}

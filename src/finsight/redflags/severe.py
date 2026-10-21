@@ -150,6 +150,57 @@ def classify(sentence: str) -> list[str]:
     return kinds
 
 
+@dataclass(frozen=True)
+class SentenceMatch:
+    """One sentence a severe pattern matches, with what the rules decided (Phase 4 handoff).
+
+    ``decision`` is ``fired`` (the rules would raise the override), ``blocked_soft`` (a negation
+    or hedge word suppressed it) or ``blocked_no_debt`` (default / recall without a debt word).
+    """
+
+    page: int
+    sentence: str
+    kind: str
+    decision: str
+    before: tuple[str, ...]
+    after: tuple[str, ...]
+
+
+def matches(doc: ParsedDoc, sections: list[Section], context: int = 2) -> list[SentenceMatch]:
+    """Every scanned sentence that matches a severe pattern, fired or blocked, with context.
+
+    Same scan, patterns and gates as :func:`detect` (``fired`` rows are exactly the sentences
+    :func:`classify` accepts), so the labelled set shows what the rules decided on each sentence.
+    """
+    wanted = set(_scan_pages(doc, sections))
+    out: list[SentenceMatch] = []
+    for page in doc.pages:
+        if page.number not in wanted:
+            continue
+        sents = sentences_of(page.text)
+        for i, sentence in enumerate(sents):
+            for kind, rx in _PATTERNS.items():
+                if not rx.search(sentence):
+                    continue
+                if _SOFT.search(sentence):
+                    decision = "blocked_soft"
+                elif kind == "default_or_recall" and not _DEBT.search(sentence):
+                    decision = "blocked_no_debt"
+                else:
+                    decision = "fired"
+                out.append(
+                    SentenceMatch(
+                        page=page.number,
+                        sentence=sentence,
+                        kind=kind,
+                        decision=decision,
+                        before=tuple(sents[max(0, i - context) : i]),
+                        after=tuple(sents[i + 1 : i + 1 + context]),
+                    )
+                )
+    return out
+
+
 def detect(
     doc: ParsedDoc, sections: list[Section], doc_id: str | None = None
 ) -> list[SevereOverride]:

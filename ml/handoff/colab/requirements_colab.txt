@@ -1,0 +1,11 @@
+# pins from the product's uv.lock; torch and CUDA come from the Colab image
+transformers==5.17.0
+accelerate==1.15.0
+onnx==1.23.1
+onnxruntime==1.30.0
+pyarrow==25.0.1
+pandas==3.0.6
+scikit-learn==1.9.1
+pydantic==2.13.5
+numpy==2.4.6
+pyyaml==6.0.3

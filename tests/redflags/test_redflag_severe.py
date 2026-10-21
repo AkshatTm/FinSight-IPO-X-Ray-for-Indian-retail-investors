@@ -121,3 +121,22 @@ def test_any_override_forces_the_high_level_and_is_listed_first() -> None:
     assert forced.reasons[0].source == "override"
     assert forced.reasons[0].link == "#severe-default_or_recall"
     assert forced.score == plain.score  # points are not changed, only the level
+
+
+def test_matches_report_fired_and_blocked_sentences() -> None:
+    from finsight.redflags.severe import matches
+
+    doc = _doc(
+        "Intro sentence one. Our Subsidiary has defaulted on the repayment of its term loan. "
+        "Closing sentence. The Company has not defaulted on any loan. Later text here."
+    )
+    rows = matches(doc, [])
+    by_decision = {r.decision: r for r in rows}
+    assert by_decision["fired"].kind == "default_or_recall"
+    assert by_decision["fired"].before == ("Intro sentence one.",)
+    assert by_decision["fired"].after[0] == "Closing sentence."
+    assert by_decision["blocked_soft"].sentence.startswith("The Company has not defaulted")
+    # the fired rows are exactly what the rule engine accepts
+    assert [r.sentence for r in rows if r.decision == "fired"] == [
+        s for s in (r.sentence for r in rows) if classify(s)
+    ]
