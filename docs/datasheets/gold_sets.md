@@ -16,7 +16,7 @@ All in `data/gold/` (committed). Counts generated from the files:
 | `questions_dev.jsonl` | 50 | 3 | `ai_drafted_claude_chat` 20, `ai_drafted_claude_code` 30 |
 | `questions_test.jsonl` | 67 | 7 | `ai_drafted_claude_chat` 67 |
 | `weaklabel_audit.jsonl` | 50 | 46 | `ai_labelled_claude_chat_human_reviewed` 50 |
-| `gold_v3_template.jsonl` | 270 | 10 | `none yet` 270 |
+| `gold_v3_template.jsonl` | 280 | 10 | `none yet` 280 |
 
 Questions (dev + test) by language: en 65, hi 40, hinglish 12; review status: pending 117. Advice-guard set: 120 questions (en 56, hi 30, hinglish 34), 0 reviewed by Akshat.
 
