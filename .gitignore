@@ -62,3 +62,11 @@ data/store/
 data/finsight.db*
 # data/demo_cache/ is committed on purpose: recorded real chat streams for demo mode (run 2)
 /site/
+# local run logs
+api-run.log
+api-run.err.log
+frontend-run.log
+frontend-run.err.log
+# Platform Bench sheet holds broker text: never committed (only README.md and derived scores)
+data/platform_bench/*
+!data/platform_bench/README.md

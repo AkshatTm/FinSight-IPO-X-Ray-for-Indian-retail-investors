@@ -21,7 +21,8 @@ def test_every_ipo_has_the_same_rows() -> None:
 
 
 def test_all_13_red_flags_have_inputs() -> None:
-    flags = {f for r in _rows() for f in str(r["red_flags"]).split(",")}
+    # informational keys (waca_selling_shareholders, C-ADR-17) carry no red flag
+    flags = {f for r in _rows() for f in str(r["red_flags"]).split(",") if f}
     assert flags == {f"RF{i:02d}" for i in range(1, 14)}
 
 
