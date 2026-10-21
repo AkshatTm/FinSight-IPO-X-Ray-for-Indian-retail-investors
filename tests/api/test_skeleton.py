@@ -52,6 +52,9 @@ ROUTES = [
     ("GET", "/api/docs/{doc_id}/redflags"),
     # B3.5a (B06 §6)
     ("GET", "/api/admin/jobs"),
+    # CC-04 (cache v2)
+    ("DELETE", "/api/docs/{doc_id}"),
+    ("POST", "/api/docs/{doc_id}/reanalyse"),
 ]
 
 

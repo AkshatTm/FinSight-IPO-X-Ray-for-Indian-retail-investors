@@ -368,6 +368,12 @@ def _thumbnail(path: str, width: int) -> bytes:
     return out.getvalue()
 
 
+def clear_loader_caches() -> None:
+    """Forget cached document files (after a delete or re-analysis rewrote them)."""
+    for loader in (_load_xray, _load_parsed, _load_sections):
+        loader.cache_clear()
+
+
 @lru_cache(maxsize=16)
 def _load_xray(path: str) -> XRay | None:
     p = Path(path)

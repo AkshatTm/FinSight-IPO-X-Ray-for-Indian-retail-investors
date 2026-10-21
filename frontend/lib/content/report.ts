@@ -8,6 +8,31 @@ export const REPORT = {
   // Shown only when the UI is in Hindi; the English line is a builder draft.
   "rep.englishOnly": { en: "This risk report is in English only for now.", hi: "यह जोखिम रिपोर्ट अभी केवल अंग्रेज़ी में है।" },
 
+  // Cache v2 (CC-04): banners, Re-analyse and Delete. Builder drafts; the risk report is English only.
+  "cache.reanalysing": en("This report was made with an older version of FinSight, so it is being analysed again."),
+  "cache.degraded": en("Some parts of this report are incomplete."),
+  "cache.failed": en("This document could not be analysed."),
+  "cache.blocked": en("A newer analysis is available but can't run right now: {why}"),
+  "cache.without": en("Analyse without it"),
+  "cache.reanalyse": en("Re-analyse"),
+  "cache.delete": en("Delete"),
+  "cache.cancel": en("Cancel"),
+  "cache.deleted": en("Report deleted"),
+  "cache.confirmDelete.title": en("Delete this report?"),
+  "cache.confirmDelete.body": en("This removes the report, its page images and its search index. Upload the file again to analyse it from scratch."),
+  "cache.confirmDelete.go": en("Delete report"),
+  "cache.confirmRe.title": en("Analyse this document again?"),
+  "cache.confirmRe.body": en("The current report is cleared when the new analysis starts."),
+  "cache.confirmRe.go": en("Analyse again"),
+  "cache.reason.skipped": en("analysed without {model}."),
+  "cache.reason.missing": en("{model} is not available."),
+  "cache.reason.stage": en("the {stage} step did not finish."),
+  "cache.model.ollama": en("the plain-English writer"),
+  "cache.model.classifier": en("the risk classifier"),
+  "cache.model.embeddings": en("the similarity model"),
+  "cache.model.reranker": en("the answer reranker"),
+  "cache.refused": en("The analysis was not started."),
+
   // §5.6 Compare tab
   "cmp.title": en("How it compares"),
   "cmp.sub": en("With the listed companies the document names as peers, and with {n} past Indian IPOs."),

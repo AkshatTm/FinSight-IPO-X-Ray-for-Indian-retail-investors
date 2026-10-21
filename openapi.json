@@ -1373,7 +1373,7 @@
           "uploads"
         ],
         "summary": "Complete Upload",
-        "description": "Check the stored file's SHA-256 and size, then queue the processing job.",
+        "description": "Check the stored file's SHA-256 and size, then queue the processing job.\n\nA missing model refuses the job first (503 ``models_unavailable``; the file stays stored, so\nthe client may call this again with ``analyse_without``).",
         "operationId": "complete_upload_api_uploads__doc_id__complete_post",
         "parameters": [
           {
@@ -1403,6 +1403,23 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/CompleteBody"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1438,6 +1455,79 @@
       }
     },
     "/api/docs/{doc_id}": {
+      "delete": {
+        "tags": [
+          "docs"
+        ],
+        "summary": "Delete Doc",
+        "description": "Delete the analysis completely: stored files, indexes, page images, jobs and rows.\nUploading the same PDF again then analyses it from scratch.",
+        "operationId": "delete_doc_api_docs__doc_id__delete",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Delete Doc Api Docs  Doc Id  Delete"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      },
       "get": {
         "tags": [
           "docs"
@@ -1465,6 +1555,94 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DocDetail"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/docs/{doc_id}/reanalyse": {
+      "post": {
+        "tags": [
+          "docs"
+        ],
+        "summary": "Reanalyse Doc",
+        "description": "Force a new analysis of the stored PDF. A missing model refuses it (503\n``models_unavailable``) unless it is listed in ``analyse_without``.",
+        "operationId": "reanalyse_doc_api_docs__doc_id__reanalyse_post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ReanalyseBody"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
                 }
               }
             }
@@ -2393,6 +2571,66 @@
         ],
         "title": "Body_voice_api_voice_post"
       },
+      "CacheInfo": {
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "fresh",
+              "stale_version",
+              "stale_models",
+              "legacy"
+            ],
+            "title": "State"
+          },
+          "analysis_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "complete",
+                  "degraded",
+                  "failed"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Status"
+          },
+          "degraded_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Degraded Reasons",
+            "default": []
+          },
+          "reanalysing": {
+            "type": "boolean",
+            "title": "Reanalysing",
+            "default": false
+          },
+          "blocked": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked"
+          }
+        },
+        "type": "object",
+        "required": [
+          "state"
+        ],
+        "title": "CacheInfo",
+        "description": "Is the stored analysis current (CC-04)? ``reanalysing`` is true when opening a stale\nanalysis just started a re-run; ``blocked`` says why a stale one was kept as it is."
+      },
       "CategoryCount": {
         "properties": {
           "category": {
@@ -2800,6 +3038,27 @@
         "title": "ComparePercentile",
         "description": "Where one metric of this IPO falls among past IPOs (0-100)."
       },
+      "CompleteBody": {
+        "properties": {
+          "analyse_without": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "ollama",
+                "classifier",
+                "embeddings",
+                "reranker"
+              ]
+            },
+            "type": "array",
+            "title": "Analyse Without",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "CompleteBody",
+        "description": "Optional body of ``complete``: models to analyse without when they are not running."
+      },
       "Count": {
         "description": "A whole-number count, such as a number of equity shares.",
         "properties": {
@@ -2870,6 +3129,16 @@
               }
             ],
             "title": "Companion Doc Id"
+          },
+          "cache": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CacheInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -2992,6 +3261,58 @@
               }
             ],
             "title": "Rejection"
+          },
+          "pipeline_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pipeline Version"
+          },
+          "fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fingerprint"
+          },
+          "analysis_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "complete",
+                  "degraded",
+                  "failed"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Status"
+          },
+          "degraded_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Degraded Reasons"
+          },
+          "skipped_models": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Skipped Models"
           }
         },
         "type": "object",
@@ -3028,7 +3349,9 @@
               "upload_not_started",
               "risk_not_found",
               "worker_unavailable",
-              "forbidden"
+              "forbidden",
+              "models_unavailable",
+              "doc_busy"
             ],
             "title": "Code"
           },
@@ -3495,6 +3818,31 @@
         "title": "Job",
         "description": "One processing run of a document (B02 §5)."
       },
+      "JobStarted": {
+        "properties": {
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "const": "queued",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc_id",
+          "job_id",
+          "status"
+        ],
+        "title": "JobStarted",
+        "description": "A re-analysis that was queued."
+      },
       "ListValue": {
         "properties": {
           "kind": {
@@ -3657,6 +4005,22 @@
           "status": {
             "type": "string",
             "title": "Status"
+          },
+          "analysis_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "complete",
+                  "degraded",
+                  "failed"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Status"
           }
         },
         "type": "object",
@@ -4008,6 +4372,27 @@
         ],
         "title": "Range",
         "type": "object"
+      },
+      "ReanalyseBody": {
+        "properties": {
+          "analyse_without": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "ollama",
+                "classifier",
+                "embeddings",
+                "reranker"
+              ]
+            },
+            "type": "array",
+            "title": "Analyse Without",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "ReanalyseBody",
+        "description": "``POST /api/docs/{doc_id}/reanalyse``: which missing models to analyse without."
       },
       "RedFlag": {
         "properties": {

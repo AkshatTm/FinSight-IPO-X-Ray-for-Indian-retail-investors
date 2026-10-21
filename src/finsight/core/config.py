@@ -192,6 +192,9 @@ class Settings(BaseSettings):
     )
 
     profile: str = DEFAULT_PROFILE
+    # Bump in configs/config.yaml whenever extraction, red-flag or risk-level logic changes: stored
+    # analyses made with another version are re-run on open (CC-04, part of the cache key).
+    pipeline_version: str = "0"
     root: Path = Path(".")
     paths: Paths = Field(default_factory=Paths)
     llm: LLMConfig = Field(default_factory=LLMConfig)
@@ -253,6 +256,8 @@ def load_settings(profile: str | None = None, config_path: Path | None = None) -
     for key in SHARED_BLOCKS:  # top-level blocks apply to every profile; a profile may override
         if key in raw:
             chosen_values[key] = {**raw[key], **chosen_values.get(key, {})}
+    if "pipeline_version" in raw:
+        chosen_values.setdefault("pipeline_version", str(raw["pipeline_version"]))
     settings = Settings(root=root, paths=paths, **chosen_values)
     settings.profile = chosen  # the argument wins over FINSIGHT_PROFILE picked up from the env
     kill = os.environ.get("UPLOADS_ENABLED")

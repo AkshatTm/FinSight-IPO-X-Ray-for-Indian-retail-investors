@@ -476,6 +476,9 @@ export interface paths {
         /**
          * Complete Upload
          * @description Check the stored file's SHA-256 and size, then queue the processing job.
+         *
+         *     A missing model refuses the job first (503 ``models_unavailable``; the file stays stored, so
+         *     the client may call this again with ``analyse_without``).
          */
         post: operations["complete_upload_api_uploads__doc_id__complete_post"];
         delete?: never;
@@ -498,6 +501,32 @@ export interface paths {
         get: operations["get_doc_api_docs__doc_id__get"];
         put?: never;
         post?: never;
+        /**
+         * Delete Doc
+         * @description Delete the analysis completely: stored files, indexes, page images, jobs and rows.
+         *     Uploading the same PDF again then analyses it from scratch.
+         */
+        delete: operations["delete_doc_api_docs__doc_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/docs/{doc_id}/reanalyse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reanalyse Doc
+         * @description Force a new analysis of the stored PDF. A missing model refuses it (503
+         *     ``models_unavailable``) unless it is listed in ``analyse_without``.
+         */
+        post: operations["reanalyse_doc_api_docs__doc_id__reanalyse_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -768,6 +797,32 @@ export interface components {
             language: string;
         };
         /**
+         * CacheInfo
+         * @description Is the stored analysis current (CC-04)? ``reanalysing`` is true when opening a stale
+         *     analysis just started a re-run; ``blocked`` says why a stale one was kept as it is.
+         */
+        CacheInfo: {
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "fresh" | "stale_version" | "stale_models" | "legacy";
+            /** Analysis Status */
+            analysis_status?: ("complete" | "degraded" | "failed") | null;
+            /**
+             * Degraded Reasons
+             * @default []
+             */
+            degraded_reasons: string[];
+            /**
+             * Reanalysing
+             * @default false
+             */
+            reanalysing: boolean;
+            /** Blocked */
+            blocked?: string | null;
+        };
+        /**
          * CategoryCount
          * @description How many risks fall in one category (the filter chips).
          */
@@ -892,6 +947,17 @@ export interface components {
             corpus_n: number;
         };
         /**
+         * CompleteBody
+         * @description Optional body of ``complete``: models to analyse without when they are not running.
+         */
+        CompleteBody: {
+            /**
+             * Analyse Without
+             * @default []
+             */
+            analyse_without: ("ollama" | "classifier" | "embeddings" | "reranker")[];
+        };
+        /**
          * Count
          * @description A whole-number count, such as a number of equity shares.
          */
@@ -923,6 +989,7 @@ export interface components {
             stages: components["schemas"]["StageState"][];
             /** Companion Doc Id */
             companion_doc_id?: string | null;
+            cache?: components["schemas"]["CacheInfo"] | null;
         };
         /**
          * DocRecord
@@ -964,6 +1031,16 @@ export interface components {
             status: "uploading" | "processing" | "ready" | "partial" | "failed";
             /** Rejection */
             rejection?: ("scanned" | "password" | "too_large" | "too_many_pages" | "not_offer_document" | "hash_mismatch") | null;
+            /** Pipeline Version */
+            pipeline_version?: string | null;
+            /** Fingerprint */
+            fingerprint?: string | null;
+            /** Analysis Status */
+            analysis_status?: ("complete" | "degraded" | "failed") | null;
+            /** Degraded Reasons */
+            degraded_reasons?: string[];
+            /** Skipped Models */
+            skipped_models?: string[];
         };
         /**
          * ErrorBody
@@ -974,7 +1051,7 @@ export interface components {
              * Code
              * @enum {string}
              */
-            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started" | "risk_not_found" | "worker_unavailable" | "forbidden";
+            code: "ipo_not_found" | "not_available" | "page_out_of_range" | "llm_unavailable" | "models_warming_up" | "asr_failed" | "audio_too_long" | "rate_limited" | "validation_error" | "internal_error" | "unauthorized" | "quota_exceeded" | "global_quota_exceeded" | "uploads_disabled" | "hash_mismatch" | "too_large" | "doc_not_found" | "upload_not_started" | "risk_not_found" | "worker_unavailable" | "forbidden" | "models_unavailable" | "doc_busy";
             /** Message */
             message: string;
             /** Hint */
@@ -1154,6 +1231,21 @@ export interface components {
             finished_at?: string | null;
         };
         /**
+         * JobStarted
+         * @description A re-analysis that was queued.
+         */
+        JobStarted: {
+            /** Doc Id */
+            doc_id: string;
+            /** Job Id */
+            job_id: string;
+            /**
+             * Status
+             * @constant
+             */
+            status: "queued";
+        };
+        /**
          * ListValue
          * @description A field value that is a list of strings.
          */
@@ -1223,6 +1315,8 @@ export interface components {
             created_at: string;
             /** Status */
             status: string;
+            /** Analysis Status */
+            analysis_status?: ("complete" | "degraded" | "failed") | null;
         };
         /**
          * NearestExample
@@ -1368,6 +1462,17 @@ export interface components {
             high: components["schemas"]["Money"];
             /** Raw */
             raw: string;
+        };
+        /**
+         * ReanalyseBody
+         * @description ``POST /api/docs/{doc_id}/reanalyse``: which missing models to analyse without.
+         */
+        ReanalyseBody: {
+            /**
+             * Analyse Without
+             * @default []
+             */
+            analyse_without: ("ollama" | "classifier" | "embeddings" | "reranker")[];
         };
         /**
          * RedFlag
@@ -3170,7 +3275,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CompleteBody"] | null;
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -3219,6 +3328,96 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DocDetail"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_doc_api_docs__doc_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    reanalyse_doc_api_docs__doc_id__reanalyse_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ReanalyseBody"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
                 };
             };
             /** @description Client Error */

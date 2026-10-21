@@ -114,8 +114,13 @@ class JobResult:
     rejection: RejectionCode | None = None
 
 
-def run_job(ctx: JobContext, stages: Sequence[Stage]) -> JobResult:
-    """Run ``stages`` for ``ctx.doc_id`` and return the final status (also stored and emitted)."""
+def run_job(
+    ctx: JobContext, stages: Sequence[Stage], skip: dict[str, str] | None = None
+) -> JobResult:
+    """Run ``stages`` for ``ctx.doc_id`` and return the final status (also stored and emitted).
+
+    ``skip`` maps a stage name to the model the user chose to analyse without; such a stage is
+    not run and counts as failed, so the result is ``partial`` (and later ``degraded``)."""
     db = ctx.db
     db.update_job(ctx.job_id, status="running", started_at=utcnow())
     failed: list[str] = []
@@ -134,6 +139,17 @@ def run_job(ctx: JobContext, stages: Sequence[Stage]) -> JobResult:
             )
             continue
         db.update_job(ctx.job_id, stage=stage.name)
+        if skip and stage.name in skip:
+            failed.append(stage.name)
+            ctx.emit(
+                "stage",
+                {
+                    "stage": stage.name,
+                    "status": "failed",
+                    "detail": {"skipped_model": skip[stage.name]},
+                },
+            )
+            continue
         if stage.output and ctx.storage.exists(ctx.key(stage.output)):
             ctx.emit("stage", {"stage": stage.name, "status": "end", "detail": {"cached": True}})
             _ready(ctx, stage.name)
