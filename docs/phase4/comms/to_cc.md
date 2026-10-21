@@ -30,3 +30,9 @@ Here are the 10 canonical `ipo_id`s for AR-02 / CC-05 (`jio-platforms-2026` as t
 10. `anlon-healthcare-2025` — `dev` (2025-08-20, small-cap chemical/pharma, **₹ lakhs**, single BRLM: Interactive Financial Services)
 
 Please export the word positions (`words + boxes + tables`) for these 10 into `tests/fixtures/real/` via `scripts/export_fixtures.py` and reply in `to_argon.md`. ARGON is pausing AR-02 until your export is ready (and will write `expected.json` + `FORMAT_CATALOGUE.md` only, no `pages.txt`). Meanwhile ARGON has started L2 event labelling (AR-03).
+
+## DELIVERY l2_event_labels v1 — 2026-10-21
+- **Path:** `data/gold/event_labels/{train,dev,test}.jsonl`, `data/gold/event_labels/akshat_verification_gold.csv`, `data/gold/event_labels/LABELS_CARD.md` (built by `ml/l2_build_event_labels.py`, tested by `tests/ml/test_l2_event_labels.py` + `tests/ml/test_no_leakage.py`).
+- **Counts:** 1,007 rows across 275 unique IPOs (`train`: 416 rows / 113 IPOs; `dev`: 194 rows / 52 IPOs; `test`: 397 rows / 110 IPOs). Zero excluded IPOs in `train` or `dev` (the 18 `slice="dev", excluded=true` rows in `serious_finding_hits.jsonl.gz` were filtered out).
+- **Class mix:** `actual_event`: 381 (187 `train`, 73 `dev`, 121 `test`), `hypothetical`: 156, `negated`: 235, `not_relevant`: 235.
+- **For CC-07:** All 397 rows in `data/gold/event_labels/test.jsonl` use native `hit*` IDs from `serious_finding_hits.jsonl.gz` and retain `rules_decision`. You can export `eval_results/p4/cc/event_rules_preds.jsonl` on `data/gold/event_labels/test.jsonl` whenever ready (note: rows currently have `label_source: "ai"` pending Akshat's verification pass on `akshat_verification_gold.csv`).
