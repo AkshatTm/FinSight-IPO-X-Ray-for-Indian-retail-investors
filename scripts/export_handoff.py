@@ -490,6 +490,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, default=ROOT / "ml" / "handoff")
     ap.add_argument("--only", default=",".join(STEPS), help=f"comma list of {STEPS}")
     ap.add_argument("--upload", action="store_true", help="push big files + the pack to HF")
+    ap.add_argument(
+        "--hf-revision", help="reuse this HF commit for the big files (skip their upload)"
+    )
     args = ap.parse_args(argv)
     pack = Pack(args.data_root, args.out)
     for step in [s for s in STEPS if s in args.only.split(",")]:
@@ -497,7 +500,7 @@ def main(argv: list[str] | None = None) -> int:
         getattr(pack, f"step_{step}")()
     if args.upload:
         print("== upload", flush=True)
-        rev = pack.upload_large()
+        rev = args.hf_revision or pack.upload_large()
         pack.step_manifest(rev)
         pack.step_readme()
         pack.upload_pack()

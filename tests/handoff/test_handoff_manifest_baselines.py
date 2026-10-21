@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.handoff import build_baselines, build_manifest, manifest
+from finsight.handoff import build_baselines, build_manifest, manifest, write_manifest
 
 
 def test_files_over_the_limit_go_to_hf_and_are_gitignored(
@@ -29,6 +29,13 @@ def test_files_over_the_limit_go_to_hf_and_are_gitignored(
     }
     assert len(rows["small.txt"]["sha256"]) == 64
     assert "/sub/big.bin" in (tmp_path / ".gitignore").read_text(encoding="utf-8")
+
+
+def test_manifest_does_not_list_itself(tmp_path: Path) -> None:
+    (tmp_path / "a.txt").write_text("x", encoding="utf-8")
+    write_manifest(build_manifest(tmp_path, "o/r", "p", None), tmp_path / "MANIFEST.json")
+    again = build_manifest(tmp_path, "o/r", "p", None)
+    assert [f["path"] for f in again["files"]] == ["a.txt"]
 
 
 def test_baselines_copy_numbers_from_the_sources() -> None:

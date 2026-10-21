@@ -1,0 +1,99 @@
+{
+  "bank": {
+    "dropped_excluded": 244,
+    "model": 18541,
+    "no_category": 0,
+    "no_text": 107,
+    "rows": 29433,
+    "scored_ipos": 440,
+    "teacher": 10892
+  },
+  "bench": {
+    "files": 14
+  },
+  "classifier": {
+    "dev": {
+      "dropped_excluded": 0,
+      "label_source": "ai",
+      "rows": 1060
+    },
+    "test": {
+      "dropped_excluded": 0,
+      "label_source": "human_verified_ai",
+      "rows": 150
+    },
+    "train": {
+      "dropped_excluded": 0,
+      "label_source": "ai",
+      "rows": 9832
+    }
+  },
+  "colab": {
+    "pins": 10
+  },
+  "eval": {
+    "severe_recall": 0.5575
+  },
+  "five": {
+    "ipos": 437,
+    "rows": 2147
+  },
+  "gold": {
+    "files": [
+      "gold150.jsonl",
+      "simplify_gold50_sheet.csv",
+      "simplify_gold50_ratings.csv",
+      "gold_v3_summary.jsonl",
+      "gold_v3_1_summary.jsonl",
+      "redflag_status_gold.jsonl"
+    ]
+  },
+  "hits": {
+    "by_decision": {
+      "blocked_no_debt": 18,
+      "blocked_soft": 2469,
+      "fired": 314
+    },
+    "docs_read": 275,
+    "docs_without_parse": 0,
+    "rows": 2801
+  },
+  "manifest": {
+    "files": 35,
+    "hf_files": [
+      "classifier_train.jsonl.gz",
+      "risk_bank.parquet",
+      "student_v1_train.jsonl.gz"
+    ],
+    "hf_revision": "a285902d91a5557cf6d6d7cf23a9e266410d6c3d"
+  },
+  "selection": {
+    "excluded": 128,
+    "platform_ids": 1
+  },
+  "student": {
+    "dev": {
+      "dropped_excluded": 0,
+      "rows": 529
+    },
+    "train": {
+      "dropped_excluded": 0,
+      "rows": 10362
+    }
+  },
+  "templates": {
+    "chat": "generate.prompts.build_prompt (rules en/hi)",
+    "rewrite": "student-v1"
+  },
+  "upload_large": {
+    "files": [
+      "phase4/handoff/data/classifier_train.jsonl.gz",
+      "phase4/handoff/data/risk_bank.parquet",
+      "phase4/handoff/data/student_v1_train.jsonl.gz"
+    ],
+    "revision": "a285902d91a5557cf6d6d7cf23a9e266410d6c3d"
+  },
+  "upload_pack": {
+    "commit": "af028c61cde3f0aee6e52fc40593ac47b2a7aa1b"
+  }
+}

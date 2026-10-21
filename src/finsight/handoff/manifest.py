@@ -29,7 +29,11 @@ def build_manifest(
     """Describe every file under ``data_dir`` and write ``data_dir/.gitignore`` for HF files."""
     files: list[dict[str, Any]] = []
     ignore: list[str] = []
-    for path in sorted(p for p in data_dir.rglob("*") if p.is_file() and p.name != ".gitignore"):
+    for path in sorted(
+        p
+        for p in data_dir.rglob("*")
+        if p.is_file() and p.name not in (".gitignore", "MANIFEST.json")
+    ):
         rel = path.relative_to(data_dir).as_posix()
         size = path.stat().st_size
         where = "git" if size <= GIT_LIMIT_BYTES else "hf"

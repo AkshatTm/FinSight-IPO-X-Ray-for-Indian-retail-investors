@@ -1,0 +1,156 @@
+version: v1
+frozen: true
+frozen_utc: '2026-10-16T11:14:50Z'
+built_from_git_sha: c6c143ea620a120b0832c2e5c0c9ba518c35fe2e
+ipos:
+- groww-2025
+- hdb-financial-services-2025
+- lenskart-2025
+- lg-electronics-india-2025
+- meesho-2025
+- physicswallah-2025
+- tata-capital-2025
+slice: bench
+tasks:
+  A:
+    items: 196
+    prompts: 99
+    what: key facts (gold v3)
+  B:
+    items: 91
+    prompts: 0
+    what: 13 red-flag statuses from each system's Task A answers
+  C:
+    items: 70
+    prompts: 70
+    what: 5 answerable + 2 scale-trap + 3 unanswerable questions per IPO
+  D:
+    items: 35
+    prompts: 35
+    what: plain-English rewrites of 5 risks per IPO
+  G:
+    items: 21
+    prompts: 21
+    what: advice probes every system must refuse
+systems:
+  rules_v1:
+    what: 'FinSight pipeline at this commit: rules (summary + red-flag engine) for A/B; product chat (guard,
+      qwen3.5:2b, post-processing, verifier) for C/G; Task D not run (the product''s rewriter is the student)'
+    runner: scripts/bench_run.py --system rules_v1
+    tasks:
+    - A
+    - B
+    - C
+    - G
+  student:
+    what: finsight-student:q4 (Qwen3-4B-Instruct-2507 + LoRA r=16, GGUF Q4_K_M) in Ollama
+    runner: scripts/bench_run.py --system student
+    tasks:
+    - A
+    - B
+    - C
+    - D
+    - G
+  base:
+    what: qwen3:4b-instruct-2507-q4_K_M in Ollama (the student's base, no fine-tuning)
+    runner: scripts/bench_run.py --system base
+    tasks:
+    - A
+    - B
+    - C
+    - D
+    - G
+  teacher:
+    what: google/gemma-4-31B-it (C-ADR-05) with vLLM on a Colab G4, bf16
+    runner: scripts/bench_vllm_job.py (Colab; docs/phase3/COLAB_STEPS_bench_teacher.md)
+    tasks:
+    - A
+    - B
+    - C
+    - D
+    - G
+  opus:
+    what: Claude Opus (claude.ai app, memory and web search off, new chat per bundle; or the API at temperature
+      0); evaluation only, never in the product
+    runner: scripts/bench_frontier.py export|import|api --system opus
+    tasks:
+    - A
+    - B
+    - C
+    - D
+    - G
+  chatgpt_go:
+    what: ChatGPT on the Go plan (app, memory and web search off, new chat per bundle); evaluation only,
+      never in the product
+    runner: scripts/bench_frontier.py export|import --system chatgpt_go
+    tasks:
+    - A
+    - B
+    - C
+    - D
+    - G
+run_settings:
+  temperature: 0
+  seed: 2026
+  max_tokens:
+    A: 700
+    C: 300
+    D: 160
+    G: 300
+  num_ctx_local: 4096
+  product_chat_num_ctx: 2048
+  think: false
+  runs_per_system: 1
+redflags_version: b01-initial-1
+retrieval:
+  profile: full
+  dense: true
+  rerank: true
+  rerank_pool: 20
+  final_top_k: 5
+  abstain_thresholds:
+    hybrid+rerank: -4.402
+  reranker_device: cuda
+  task_a_budget_chars: 6000
+  chat_budget_chars: 4044
+  task_a_passages_considered: 8
+disclosures:
+- 'Bench documents are the 7 test-slice showcase IPOs (all 2025): the only test IPOs whose gold is verified
+  by Akshat. The 4 newest 2026 IPOs of C04 §2 need gold v4 first (bench v2).'
+- 2025 IPOs may be in frontier models' training data (contamination helps them on facts).
+- 'No bench-dev: error analysis on bench items is descriptive; any fix it motivates is disclosed as test-informed
+  (C04 §7).'
+- Every system gets the same retrieved passages and prompt text; frontier models do not get the PDF (C04
+  §1 ladder not used), so the bench compares readers of the same context.
+- Task B is computed by the same rule engine from each system's Task A answers, so it measures extraction
+  for every system; rules/v1's statuses come from the engine the gold was built with (structurally easier
+  for FinSight).
+- Task C keys are gold v3 values (verified); questions and the 3 unanswerable ones per IPO were written
+  by Claude Code from templates, not by Akshat.
+- Single run per system (temperature 0 for local and teacher; app defaults for frontier apps).
+- Akshat built FinSight and is the single rater in C4.4.
+- scripts/summary_eval.py changed on main (gold v3.1 convention option, C-ADR-22) after the freeze and
+  before any scoring; its default v3 rules, which the bench uses, are unchanged, and its hash was re-recorded.
+- Keys are gold v3 (every row Akshat-verified); gold v3.1 (C-ADR-22) landed after the build and still
+  has rows waiting for his check.
+frozen_files:
+  inputs/prompts.jsonl.gz: e0e736c3583bfec1fbe3a0dd2fa62be834cefc9415840205e3ea9c376ca0e10f
+  items/task_a.jsonl: 89547f36191a864b871dbd01d9f54c544623c84e73c8cbf40ac3a8ae79baf00f
+  items/task_c.jsonl: f3850eddaa14f5de94c16733c2901253e9345102b0b41fd83aba4db7fcc775b9
+  items/task_d.jsonl: 792ee2ef7b64cc1fe0b4b3c5a1720abd089a1dedd4d92a4927278d900ed1812b
+  items/task_g.jsonl: d838290038f682d3bb9d0fc86f79bd02b68a9b2422684fb23c5d01210d901685
+  keys/task_a.jsonl: 1fe52ff9e695cecdb3c0ec8f81d7999ee7c1f5b73a962ec4b9ac5f8aa216f41b
+  keys/task_b.jsonl: 0d3787d7756347b6b3b9da8a8d2000cffde89c7c8092fca7a8e61748bcc91ac8
+  keys/task_c.jsonl: 5b09ed12a4d49f92b639f293b5bbb291ff3a116fe1e23cdad1d23304c0b61d9a
+  pinned/forbidden_phrases.yaml: 9ec71ae8db7969c3c5d58ed3cd50f000c3dd83d42111227e58cc0da32eca705a
+  pinned/redflags.yaml: 7d25b44facc037d112e6bd7556e0669005bf9280812a064a684bf027e77b8ac9
+  prompts/task_a.md: f8c8f90ac8326641499b06afeda56ad4b61a053e5627acde671eba92efa0737f
+  prompts/task_c.md: be7b41365ed853934a337bdaee7c9d5cece3badadaa0faed69021737f07c1fbb
+  prompts/task_d.md: 2b05c685abe521dc40e1d30fb458bba9425d78d68625f48b02b6192e23b723a7
+  scoring.yaml: 2ac8ea0283bfd396eb056efa56b9670c00f9b79fac36cb57cd67a48cec3654ca
+scorer_sha256:
+  scripts/summary_eval.py: b6eb5fccb2f031eddd6de53a5821d129b27cd791648090f6734d2bd8bcf86088
+  scripts/redflag_eval.py: 46961857ecd4505a6bd9b119c5e8a135d8caa3ba7ed8a781636477feb32d3815
+  scripts/bench_score.py: 8fc21dbddead9b8ca635715214289567450e0e8b2ea4151674b4df3f366a6689
+  src/finsight/bench/score.py: d0f5ee83a04698cb491d2d7c35753837ad4816a2a3df00660c09be2d04486198
+  configs/forbidden_phrases.yaml: 9ec71ae8db7969c3c5d58ed3cd50f000c3dd83d42111227e58cc0da32eca705a
