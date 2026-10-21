@@ -1,0 +1,801 @@
+{
+  "ipos": {
+    "a-one-steel-2026": {
+      "company_key": "a one steel",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "aastha-spintex-2026": {
+      "company_key": "aastha spintex",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "acevector-2026": {
+      "company_key": "acevector",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "adroit-industries-2026": {
+      "company_key": "adroit industries",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "advit-jewels-2026": {
+      "company_key": "advit jewels",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "aequs-2025": {
+      "company_key": "aequs",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "airfloa-rail-technology-2025": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "alpine-texworld-2026": {
+      "company_key": "alpine texworld",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "amagi-media-labs-2026": {
+      "company_key": "amagi media labs",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "amir-chand-jagdish-kumar-exports-2026": {
+      "company_key": "amir chand jagdish kumar exports",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "amtech-esters-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "annu-projects-2026": {
+      "company_key": "annu projects",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "ardee-industries-2026": {
+      "company_key": "ardee industries",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "armee-infotech-2026": {
+      "company_key": "armee infotech",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "asset-reconstruction-company-india-2026": {
+      "company_key": "asset reconstruction company",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "ather-energy-2025": {
+      "company_key": "ather energy",
+      "reasons": [
+        "showcase_demo"
+      ]
+    },
+    "augmont-enterprises-2026": {
+      "company_key": "augmont enterprises",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "aureate-tradde-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "aye-finance-2026": {
+      "company_key": "aye finance",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "behari-lal-engineering-2026": {
+      "company_key": "behari lal engineering",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "bharat-coking-coal-2026": {
+      "company_key": "bharat coking coal",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "caliber-mining-and-logistics-2026": {
+      "company_key": "caliber mining and logistics",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "capillary-technologies-india-2025": {
+      "company_key": "capillary technologies",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "central-mine-planning-design-institute-2026": {
+      "company_key": "central mine planning design institute",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "clean-max-enviro-energy-solutions-2026": {
+      "company_key": "clean max enviro energy solutions",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "corona-remedies-2025": {
+      "company_key": "corona remedies",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "csm-technologies-2026": {
+      "company_key": "csm technologies",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "deepa-jewellers-2026": {
+      "company_key": "deepa jewellers",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "dhoot-transmission-2026": {
+      "company_key": "dhoot transmission",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "emmvee-photovoltaic-power-2025": {
+      "company_key": "emmvee photovoltaic power",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "esds-software-solution-2026": {
+      "company_key": "esds software solution",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "excelsoft-technologies-2025": {
+      "company_key": "excelsoft technologies",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "fractal-analytics-2026": {
+      "company_key": "fractal analytics",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "fujiyama-power-systems-2025": {
+      "company_key": "fujiyama power systems",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "gaja-alternative-asset-management-2026": {
+      "company_key": "gaja alternative asset management",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "german-green-steel-and-power-2026": {
+      "company_key": "german green steel and power",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "glass-wall-systems-india-2026": {
+      "company_key": "glass wall systems",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "groww-2025": {
+      "company_key": "billionbrains garage ventures",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ]
+    },
+    "gsp-crop-science-2026": {
+      "company_key": "gsp crop science",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "gurunanak-agriculture-india-2025": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "h-r-hygiene-products-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "hdb-financial-services-2025": {
+      "company_key": "hdb financial services",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ]
+    },
+    "hero-motors-2026": {
+      "company_key": "hero motors",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "hexagon-nutrition-2026": {
+      "company_key": "hexagon nutrition",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "hexaware-technologies-2025": {
+      "company_key": "hexaware technologies",
+      "reasons": [
+        "showcase_demo"
+      ]
+    },
+    "hy-tech-engineers-2026": {
+      "company_key": "hy tech engineers",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "icici-prudential-asset-management-company-2025": {
+      "company_key": "icici prudential asset management company",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "indo-mim-2026": {
+      "company_key": "indo mim",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "innovision-2026": {
+      "company_key": "innovision",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "jindal-supreme-india-2026": {
+      "company_key": "jindal supreme",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "jio-platforms-2026": {
+      "company_key": null,
+      "reasons": [
+        "platform_bench"
+      ]
+    },
+    "juniper-green-energy-2026": {
+      "company_key": "juniper green energy",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "kanohar-electricals-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "karamtara-engineering-2026": {
+      "company_key": "karamtara engineering",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "knack-packaging-2026": {
+      "company_key": "knack packaging",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "ksh-international-2025": {
+      "company_key": "ksh international",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "kusumgar-2026": {
+      "company_key": "kusumgar",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "lalithaa-jewellery-mart-2026": {
+      "company_key": "lalithaa jewellery mart",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "laser-power-and-infra-2026": {
+      "company_key": "laser power and infra",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "lcc-projects-2026": {
+      "company_key": "lcc projects",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "leap-india-2026": {
+      "company_key": "leap",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "lenskart-2025": {
+      "company_key": "lenskart solutions",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ]
+    },
+    "lg-electronics-india-2025": {
+      "company_key": "lg electronics",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ]
+    },
+    "lohia-corp-2026": {
+      "company_key": "lohia corp",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "lumino-industries-2026": {
+      "company_key": "lumino industries",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "manika-plastech-2026": {
+      "company_key": "manika plastech",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "manipal-health-enterprises-2026": {
+      "company_key": "manipal health enterprises",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "manipal-payment-and-identity-solutions-2026": {
+      "company_key": "manipal payment and identity solutions",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "meesho-2025": {
+      "company_key": "meesho",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ]
+    },
+    "milky-mist-dairy-food-2026": {
+      "company_key": "milky mist dairy food",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "molbio-diagnostics-2026": {
+      "company_key": "molbio diagnostics",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "moneyview-2026": {
+      "company_key": "moneyview",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "mv-electrosystems-2026": {
+      "company_key": "mv electrosystems",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "national-stock-exchange-of-india-2026": {
+      "company_key": "national stock exchange of",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "nephrocare-health-services-2025": {
+      "company_key": "nephrocare health services",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "nityas-gems-and-jewellery-india-2026": {
+      "company_key": "nityas gems and jewellery",
+      "reasons": [
+        "demo_newest",
+        "test_slice"
+      ]
+    },
+    "om-power-transmission-2026": {
+      "company_key": "om power transmission",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "omnitech-engineering-2026": {
+      "company_key": "omnitech engineering",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "onemi-technology-solutions-2026": {
+      "company_key": "onemi technology solutions",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "orient-cables-india-2026": {
+      "company_key": "orient cables",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "park-medi-world-2025": {
+      "company_key": "park medi world",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "physicswallah-2025": {
+      "company_key": "physicswallah",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ]
+    },
+    "pine-labs-2025": {
+      "company_key": "pine labs",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "pngs-reva-diamond-jewellery-2026": {
+      "company_key": "pngs reva diamond jewellery",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "powerica-2026": {
+      "company_key": "powerica",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "pranav-constructions-2026": {
+      "company_key": "pranav constructions",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "prasol-chemicals-2026": {
+      "company_key": "prasol chemicals",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "priority-jewels-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "propshop-events-and-exhibitions-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "prostarm-info-systems-2025": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "purple-style-labs-2026": {
+      "company_key": "purple style labs",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "rajputana-stainless-2026": {
+      "company_key": "rajputana stainless",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "rays-of-belief-2026": {
+      "company_key": "rays of belief",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "rentomojo-2026": {
+      "company_key": "rentomojo",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "runwal-enterprises-2026": {
+      "company_key": "runwal enterprises",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "sai-parenteral-s-2026": {
+      "company_key": "sai parenteral s",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "sbi-funds-management-2026": {
+      "company_key": "sbi funds management",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "sedemac-mechatronics-2026": {
+      "company_key": "sedemac mechatronics",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "shadowfax-technologies-2026": {
+      "company_key": "shadowfax technologies",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "shah-investor-s-home-2026": {
+      "company_key": "shah investor s home",
+      "reasons": [
+        "demo_newest",
+        "test_slice"
+      ]
+    },
+    "shiprocket-2026": {
+      "company_key": "shiprocket",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "shree-ram-twistex-2026": {
+      "company_key": "shree ram twistex",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "skyways-air-services-2026": {
+      "company_key": "skyways air services",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "sonaselection-india-2026": {
+      "company_key": "sonaselection",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "speciality-medicines-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "srit-india-2026": {
+      "company_key": "srit",
+      "reasons": [
+        "demo_newest",
+        "test_slice"
+      ]
+    },
+    "ss-retail-2026": {
+      "company_key": "ss retail",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "steamhouse-india-2026": {
+      "company_key": "steamhouse",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "studds-accessories-2025": {
+      "company_key": "studds accessories",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "sudeep-pharma-2025": {
+      "company_key": "sudeep pharma",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "sunshine-pictures-2026": {
+      "company_key": "sunshine pictures",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "swastika-infra-2026": {
+      "company_key": "swastika infra",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "symbiotec-pharmalab-2026": {
+      "company_key": "symbiotec pharmalab",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "tata-capital-2025": {
+      "company_key": "tata capital",
+      "reasons": [
+        "bench",
+        "bench_v1",
+        "showcase_demo",
+        "test_slice"
+      ]
+    },
+    "taurian-mps-2025": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "technocraft-ventures-2026": {
+      "company_key": "technocraft ventures",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "tempsens-instruments-india-2026": {
+      "company_key": "tempsens instruments",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "turtlemint-fintech-solutions-2026": {
+      "company_key": "turtlemint fintech solutions",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "urban-company-2025": {
+      "company_key": "urban company",
+      "reasons": [
+        "showcase_demo"
+      ]
+    },
+    "varmora-granito-2026": {
+      "company_key": "varmora granito",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "veegaland-developers-2026": {
+      "company_key": "veegaland developers",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "vegorama-punjabi-angithi-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "vidya-wires-2025": {
+      "company_key": "vidya wires",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "vigor-plast-india-2025": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "vinod-texworld-2026": {
+      "company_key": null,
+      "reasons": [
+        "excluded_by_splits"
+      ]
+    },
+    "wakefit-innovations-2025": {
+      "company_key": "wakefit innovations",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "waterways-leisure-tourism-2026": {
+      "company_key": "waterways leisure tourism",
+      "reasons": [
+        "test_slice"
+      ]
+    },
+    "xtranet-technologies-2026": {
+      "company_key": "xtranet technologies",
+      "reasons": [
+        "test_slice"
+      ]
+    }
+  },
+  "n": 128,
+  "platform_bench_sheet_ids": {
+    "jio-platforms-2026": "jio_platforms_2026"
+  },
+  "rule": "C-ADR-02 (strict): all test-slice IPOs, SME/unusable IPOs, demo + showcase IPOs, Bench v1 IPOs and Platform Bench IPOs never enter training data, thresholds, prompts or parser tuning."
+}

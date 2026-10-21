@@ -1,0 +1,250 @@
+{
+  "guardrail_category": {
+    "dev_macro_f1_mean": 0.8923,
+    "dev_macro_f1_sd": 0.0062,
+    "gold150_label_source": "human:akshat (gold-150, test-slice IPOs)",
+    "gold150_test_macro_f1_mean": 0.8986,
+    "max_drop": 0.01,
+    "seeds": [
+      13,
+      42,
+      2026
+    ],
+    "split": "dev",
+    "what": "10-way risk category macro-F1; must not regress (drop <= 0.01)."
+  },
+  "m1_chat_bench_v1": {
+    "abstention_on_unanswerable": {
+      "high": 0.476,
+      "low": 0.19,
+      "mean": 0.333,
+      "n": 21,
+      "n_ipos": 7
+    },
+    "correct_on_answerable": {
+      "high": 0.612,
+      "low": 0.388,
+      "mean": 0.49,
+      "n": 49,
+      "n_ipos": 7
+    },
+    "hallucinated_number_on_unanswerable": {
+      "high": 0.476,
+      "low": 0.19,
+      "mean": 0.333,
+      "n": 21,
+      "n_ipos": 7
+    },
+    "n_ipos": 7,
+    "rules_v1_task_a": {
+      "coverage": {
+        "high": 0.837,
+        "low": 0.729,
+        "mean": 0.782,
+        "n": 156,
+        "n_ipos": 7
+      },
+      "latency": {
+        "median_s": 2.94,
+        "n": 99,
+        "p90_s": 4.56,
+        "total_s": 319.3
+      },
+      "n_flat_format_fields": 0,
+      "n_missing": 0,
+      "n_unparseable_fields": 0,
+      "nvm": {
+        "high": 0.816,
+        "low": 0.636,
+        "mean": 0.724,
+        "n": 156,
+        "n_ipos": 7
+      },
+      "page_agreement": {
+        "high": 0.861,
+        "low": 0.513,
+        "mean": 0.708,
+        "n": 113,
+        "n_ipos": 7
+      },
+      "scale_error_rate": {
+        "high": 0.0,
+        "low": 0.0,
+        "mean": 0.0,
+        "n": 156,
+        "n_ipos": 7
+      },
+      "status_accuracy_on_blanks": {
+        "high": 0.8,
+        "low": 0.478,
+        "mean": 0.6,
+        "n": 40,
+        "n_ipos": 7
+      }
+    },
+    "student_task_a": {
+      "coverage": {
+        "high": 0.896,
+        "low": 0.775,
+        "mean": 0.846,
+        "n": 156,
+        "n_ipos": 7
+      },
+      "latency": {
+        "median_s": 16.02,
+        "n": 99,
+        "p90_s": 37.03,
+        "total_s": 1850.2
+      },
+      "n_flat_format_fields": 112,
+      "n_missing": 0,
+      "n_unparseable_fields": 3,
+      "nvm": {
+        "high": 0.395,
+        "low": 0.282,
+        "mean": 0.34,
+        "n": 156,
+        "n_ipos": 7
+      },
+      "page_agreement": {
+        "high": 0.339,
+        "low": 0.178,
+        "mean": 0.265,
+        "n": 49,
+        "n_ipos": 7
+      },
+      "scale_error_rate": {
+        "high": 0.186,
+        "low": 0.0,
+        "mean": 0.077,
+        "n": 156,
+        "n_ipos": 7
+      },
+      "status_accuracy_on_blanks": {
+        "high": 0.656,
+        "low": 0.385,
+        "mean": 0.5,
+        "n": 40,
+        "n_ipos": 7
+      }
+    },
+    "student_task_b": {
+      "n_missing": 0,
+      "serious_disagreements": 0,
+      "status_accuracy": {
+        "high": 0.527,
+        "low": 0.429,
+        "mean": 0.473,
+        "n": 91,
+        "n_ipos": 7
+      }
+    },
+    "target": {
+      "correct_answerable_min": 0.49,
+      "hallucinated_max": 0.1
+    },
+    "verified_share": {
+      "high": 0.785,
+      "low": 0.444,
+      "mean": 0.616,
+      "n": 48,
+      "n_ipos": 7
+    },
+    "what": "Bench v1 Task C (chat questions on 7 test-slice showcase IPOs; frozen retrieved passages), finsight-student:q4. Single run."
+  },
+  "m1_rewrite_gold50": {
+    "faithful_yes_ci95": [
+      0.8116,
+      0.9685
+    ],
+    "faithful_yes_share": 0.92,
+    "mean_words": 43.2,
+    "must_not_regress": {
+      "faithful_min": 0.92,
+      "plain_min": 4.5,
+      "post_check_min": 49
+    },
+    "plain_english_mean": 4.64,
+    "post_check_n": 50,
+    "post_check_pass": 49,
+    "readability_fkgl_drop": 8.47,
+    "what": "Risk rewrite on gold-50 (test slice), human blind rating by Akshat."
+  },
+  "m2_five_things": {
+    "baseline": "importance rank (five_things_selection.jsonl)",
+    "ndcg7": null
+  },
+  "m3_event_rules": {
+    "baseline": "rules_v1 (finsight.redflags.severe)",
+    "primary": null
+  },
+  "m4_severity": {
+    "band_macro_f1_mean": 0.7617,
+    "band_mae_mean": 0.1862,
+    "by_seed": {
+      "13": {
+        "macro_f1": 0.7492751825357562,
+        "mae": 0.19811320754716982,
+        "severe_precision": 0.46153846153846156,
+        "severe_recall": 0.6206896551724138,
+        "within_1": 0.9971698113207547
+      },
+      "2026": {
+        "macro_f1": 0.7649829670286019,
+        "mae": 0.17641509433962263,
+        "severe_precision": 0.5918367346938775,
+        "severe_recall": 0.5,
+        "within_1": 0.9981132075471698
+      },
+      "42": {
+        "macro_f1": 0.7708524070255636,
+        "mae": 0.18396226415094338,
+        "severe_precision": 0.64,
+        "severe_recall": 0.5517241379310345,
+        "within_1": 0.9962264150943396
+      }
+    },
+    "caveat": "Severe support is small (about 58 dev rows), so the recall is noisy.",
+    "n_dev": 1060,
+    "seeds": [
+      13,
+      42,
+      2026
+    ],
+    "severe_precision_mean": 0.5645,
+    "severe_recall_mean": 0.5575,
+    "severe_support_dev": 58,
+    "split": "dev (IPO-disjoint from train), label_source ai (teacher) bands",
+    "target": {
+      "severe_recall_min": 0.7
+    },
+    "what": "Seriousness band head (bands 1-4, 4 = severe; levels 4 and 5 merged) of microsoft/deberta-v3-base. 'Severe recall' is the recall of band 4."
+  },
+  "note": "All numbers are copied from the result files in `sources`; none are typed by hand. Single run unless a seed list is given. Teacher labels for the classifier are AI labels; gold-150 and gold-50 ratings are human (Akshat).",
+  "sources": {
+    "bench_summary": {
+      "path": "eval_results/c4/bench_summary.json",
+      "sha256": "6fe459bdf9d94a09334e0441b954440cd39bba31824e1ef63e2db7122aff0481"
+    },
+    "classifier_base": {
+      "path": "eval_results/b/classifier_base.json",
+      "sha256": "111905cf1e68e04b3f2305e34b93e4bdd64784152602fa6f17ef5e60d7ee705d"
+    },
+    "metrics_band_42": {
+      "path": "Users/Lenovo/AKSHAT/PROJECTS/PROMPT BASED/FinSight-IPO-X-Ray-for-Indian-retail-investors/models/risk_classifier/metrics-band-42.json",
+      "sha256": "a5da2b064f104a9ffe327ee0d57ce3349a1a330b2c7e45e9658c436d56e69728"
+    },
+    "simplify_gold50": {
+      "path": "eval_results/c/simplify_gold50.json",
+      "sha256": "7cb0b0c3ad9b82225dbeef5d4e5a90829f4b2d35939ef58c1e574723d001106a"
+    },
+    "student_eval": {
+      "path": "eval_results/c/student_eval.json",
+      "sha256": "541b41ba1bfb38601ac0aa800477669c95241a98c97033e6014eb200b85852e5"
+    },
+    "student_vs_base_gold50": {
+      "path": "eval_results/c/student_vs_base_gold50.json",
+      "sha256": "c898163a03e13fdf9ce5ad1a4b7d9747d53d8f1744dcfc0380eaca073ad89046"
+    }
+  }
+}

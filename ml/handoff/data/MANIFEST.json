@@ -1,0 +1,235 @@
+{
+  "files": [
+    {
+      "bytes": 264695,
+      "path": "bench_v1/inputs/prompts.jsonl.gz",
+      "sha256": "e0e736c3583bfec1fbe3a0dd2fa62be834cefc9415840205e3ea9c376ca0e10f",
+      "where": "git"
+    },
+    {
+      "bytes": 43582,
+      "path": "bench_v1/items/task_a.jsonl",
+      "sha256": "89547f36191a864b871dbd01d9f54c544623c84e73c8cbf40ac3a8ae79baf00f",
+      "where": "git"
+    },
+    {
+      "bytes": 18490,
+      "path": "bench_v1/items/task_c.jsonl",
+      "sha256": "f3850eddaa14f5de94c16733c2901253e9345102b0b41fd83aba4db7fcc775b9",
+      "where": "git"
+    },
+    {
+      "bytes": 52962,
+      "path": "bench_v1/items/task_d.jsonl",
+      "sha256": "792ee2ef7b64cc1fe0b4b3c5a1720abd089a1dedd4d92a4927278d900ed1812b",
+      "where": "git"
+    },
+    {
+      "bytes": 5257,
+      "path": "bench_v1/items/task_g.jsonl",
+      "sha256": "d838290038f682d3bb9d0fc86f79bd02b68a9b2422684fb23c5d01210d901685",
+      "where": "git"
+    },
+    {
+      "bytes": 110747,
+      "path": "bench_v1/keys/task_a.jsonl",
+      "sha256": "1fe52ff9e695cecdb3c0ec8f81d7999ee7c1f5b73a962ec4b9ac5f8aa216f41b",
+      "where": "git"
+    },
+    {
+      "bytes": 26575,
+      "path": "bench_v1/keys/task_b.jsonl",
+      "sha256": "0d3787d7756347b6b3b9da8a8d2000cffde89c7c8092fca7a8e61748bcc91ac8",
+      "where": "git"
+    },
+    {
+      "bytes": 22352,
+      "path": "bench_v1/keys/task_c.jsonl",
+      "sha256": "5b09ed12a4d49f92b639f293b5bbb291ff3a116fe1e23cdad1d23304c0b61d9a",
+      "where": "git"
+    },
+    {
+      "bytes": 5918,
+      "path": "bench_v1/manifest.yaml",
+      "sha256": "3779b9e615e6bc7175d5c50a152825d622e62c8340381818dd45991a89d7ee51",
+      "where": "git"
+    },
+    {
+      "bytes": 1459,
+      "path": "bench_v1/prompts/task_a.md",
+      "sha256": "f8c8f90ac8326641499b06afeda56ad4b61a053e5627acde671eba92efa0737f",
+      "where": "git"
+    },
+    {
+      "bytes": 1467,
+      "path": "bench_v1/prompts/task_c.md",
+      "sha256": "be7b41365ed853934a337bdaee7c9d5cece3badadaa0faed69021737f07c1fbb",
+      "where": "git"
+    },
+    {
+      "bytes": 513,
+      "path": "bench_v1/prompts/task_d.md",
+      "sha256": "2b05c685abe521dc40e1d30fb458bba9425d78d68625f48b02b6192e23b723a7",
+      "where": "git"
+    },
+    {
+      "bytes": 138,
+      "path": "bench_v1/README.md",
+      "sha256": "43f3260e0d1f56f93fd0ddb08e328a827920c2ce6057c0392ebabcdf80437501",
+      "where": "git"
+    },
+    {
+      "bytes": 3423,
+      "path": "bench_v1/scoring.yaml",
+      "sha256": "2ac8ea0283bfd396eb056efa56b9670c00f9b79fac36cb57cd67a48cec3654ca",
+      "where": "git"
+    },
+    {
+      "bytes": 577157,
+      "path": "classifier_dev.jsonl.gz",
+      "sha256": "8c867b9fa6beaf61429bb8dff93c5fc9fe9039efb4e20981529a072464ac29aa",
+      "where": "git"
+    },
+    {
+      "bytes": 177,
+      "path": "classifier_labels.json",
+      "sha256": "ddf607eb4e8392ef44dbbe4eebcf259663dfa6d936209a2b89e122420e8b1d07",
+      "where": "git"
+    },
+    {
+      "bytes": 84658,
+      "path": "classifier_test.jsonl.gz",
+      "sha256": "e79d021718912e7f493e9e462038eaf66f7c1827c21cbbce94b9b3ca035e2518",
+      "where": "git"
+    },
+    {
+      "bytes": 5138945,
+      "hf": {
+        "path": "phase4/handoff/data/classifier_train.jsonl.gz",
+        "repo": "AkshatTm/finsight-gpu-jobs",
+        "revision": "a285902d91a5557cf6d6d7cf23a9e266410d6c3d",
+        "type": "dataset"
+      },
+      "path": "classifier_train.jsonl.gz",
+      "sha256": "c3d769af2f60a5577571c6ce5b3e7e874c71b9b0400e5215c5cb3d8fad198737",
+      "where": "hf"
+    },
+    {
+      "bytes": 17494,
+      "path": "excluded_ipos.json",
+      "sha256": "fa368158c853db3cd83e7d7c9453ef8c34affaa75799192db4d34264d3176d76",
+      "where": "git"
+    },
+    {
+      "bytes": 177844,
+      "path": "five_things_selection.jsonl.gz",
+      "sha256": "36ed49026ac7552be49131d04e0c13d209bdc280183c3e1c176171e8e63bf3bf",
+      "where": "git"
+    },
+    {
+      "bytes": 317225,
+      "path": "gold/gold150.jsonl",
+      "sha256": "84d5d498fb73eb038cf09b3847d8345128dff2e3b080c6bc6179debb296e5a6b",
+      "where": "git"
+    },
+    {
+      "bytes": 145375,
+      "path": "gold/gold_v3_1_summary.jsonl",
+      "sha256": "3fa2d421781dd6d66572f3fc0d50d4321ececd8a4a54964f1fd484976472e2aa",
+      "where": "git"
+    },
+    {
+      "bytes": 143288,
+      "path": "gold/gold_v3_summary.jsonl",
+      "sha256": "a0065f096e0d3059f6b7fd91f5be3e7aa5b82ece65e48280e9157e5a8a7312ea",
+      "where": "git"
+    },
+    {
+      "bytes": 296,
+      "path": "gold/README.md",
+      "sha256": "2deba3e0a76fa979bfdf15c6190b85320682ea9e6f91cfd7db4946c074e34afa",
+      "where": "git"
+    },
+    {
+      "bytes": 37767,
+      "path": "gold/redflag_status_gold.jsonl",
+      "sha256": "8157f026b63f49a2467c0c403d2cd6c5054ae4bff6ef4798ddd594b89fb1ef52",
+      "where": "git"
+    },
+    {
+      "bytes": 5047,
+      "path": "gold/simplify_gold50_ratings.csv",
+      "sha256": "2850d851b4100b3909271755abc8d848667bcad2bff7cb85123853295e2179af",
+      "where": "git"
+    },
+    {
+      "bytes": 352168,
+      "path": "gold/simplify_gold50_sheet.csv",
+      "sha256": "a8dfd8511c4eea1198c7f5eb50ad4c69456ad49a2c7fe79beb81c85cb97c1324",
+      "where": "git"
+    },
+    {
+      "bytes": 21255911,
+      "hf": {
+        "path": "phase4/handoff/data/risk_bank.parquet",
+        "repo": "AkshatTm/finsight-gpu-jobs",
+        "revision": "a285902d91a5557cf6d6d7cf23a9e266410d6c3d",
+        "type": "dataset"
+      },
+      "path": "risk_bank.parquet",
+      "sha256": "274218ae3f99fcc6b853e456fa8489447c8c24b0883e45a5e35d0cf58e0b9863",
+      "where": "hf"
+    },
+    {
+      "bytes": 641594,
+      "path": "serious_finding_hits.jsonl.gz",
+      "sha256": "693d40880ef17c95f75bb2d3d423ec8b375fe3e78fd12123c0f97d467e4e223b",
+      "where": "git"
+    },
+    {
+      "bytes": 172442,
+      "path": "splits_by_ipo.json",
+      "sha256": "cbcea8c87cc009fec3b7b0d4139dddde571703cd4369dfadc0291a017266d30d",
+      "where": "git"
+    },
+    {
+      "bytes": 1361,
+      "path": "student_chat_template.txt",
+      "sha256": "2005fbaf05c3f027b902fcd6233add45e245c7b61c9bf1e745149a48a19ca8bf",
+      "where": "git"
+    },
+    {
+      "bytes": 3482,
+      "path": "student_chat_template_hi.txt",
+      "sha256": "56377cd60d81a59b400f47a819752674a9b4ef550b439d43b0a75f4659beab02",
+      "where": "git"
+    },
+    {
+      "bytes": 459,
+      "path": "student_prompt_template.txt",
+      "sha256": "383e245d49e195e109827ec0c1f7ed051c4021c78212905aa10eae2f3bc017fd",
+      "where": "git"
+    },
+    {
+      "bytes": 334588,
+      "path": "student_v1_dev.jsonl.gz",
+      "sha256": "95bed4054427da5f3e7748e02e238252bec6881b3405b7bc3e33c138b2f04544",
+      "where": "git"
+    },
+    {
+      "bytes": 6317385,
+      "hf": {
+        "path": "phase4/handoff/data/student_v1_train.jsonl.gz",
+        "repo": "AkshatTm/finsight-gpu-jobs",
+        "revision": "a285902d91a5557cf6d6d7cf23a9e266410d6c3d",
+        "type": "dataset"
+      },
+      "path": "student_v1_train.jsonl.gz",
+      "sha256": "8d986bb6311a5a048422457b639772d5b19a7a9ac094244b336fd868f4202fd5",
+      "where": "hf"
+    }
+  ],
+  "hf_prefix": "phase4/handoff/data",
+  "hf_repo": "AkshatTm/finsight-gpu-jobs",
+  "hf_revision": "a285902d91a5557cf6d6d7cf23a9e266410d6c3d"
+}

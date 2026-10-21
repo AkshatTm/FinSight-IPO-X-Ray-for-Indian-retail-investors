@@ -739,6 +739,16 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 
 **Honest limits.** The risk-points-only score saturates (43 % of IPOs score the maximum), the thresholds come from one laptop run of the whole chain and no listing outcome is used anywhere in the fit.
 
+### P4 CC-02 — The handoff pack (`finsight.handoff`, `ml/handoff/`)
+
+**What it is.** Phase 4 has two agents. ARGON trains models and labels PDFs; it must not explore the product repo. This package builds one folder, `ml/handoff/`, with everything ARGON needs: the frozen IPO split and the exclusion list, the risk bank, the classifier and student training sets, the two frozen student prompts, every sentence the severe-finding rules matched, what the "Five things" card picked, the Bench v1 files, the baselines to beat, and a stand-alone copy of the number normaliser.
+
+**The exclusion rule.** `excluded_ipos.json` holds every test-slice IPO, the SME ones, demo and showcase IPOs, Bench v1 and Platform Bench IPOs (Jio included). A test (`tests/ml/test_no_leakage.py`) fails if any of them shows up in a training file.
+
+**Baselines are read, not re-run.** `eval/baselines.json` copies each number from a saved result file and records the file's sha256. Severity is the seriousness band head (bands 1-4, 4 = severe): severe-band recall 0.5575 on 58 dev rows, which is noisy; the category macro-F1 (0.8923) is kept separate as a guardrail.
+
+**Big files.** Anything over 4.5 MB goes to the private Hugging Face dataset repo; `MANIFEST.json` lists the sha256 so the Colab setup cell can check each download.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

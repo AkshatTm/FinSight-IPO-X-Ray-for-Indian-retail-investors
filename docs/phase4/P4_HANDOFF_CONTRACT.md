@@ -17,21 +17,24 @@ ml/handoff/
 │   ├── project_summary.md    # 1 page: what FinSight is, pipeline, where each model plugs in
 │   ├── phase3_models.md      # what exists today per model: architecture, data, hyper-params, scores, ADR refs
 │   └── interfaces.md         # exact Python signatures + pydantic schemas the deliveries must satisfy (copy of section C)
-├── data/                     # frozen exports: gzip files ≤ 5 MB are committed; larger ones live in the private HF dataset repo (README: repo id, revision, SHA256 per file; Akshat puts an HF read token in Colab secrets)
+├── data/                     # frozen exports: gzip files ≤ 4.5 MB are committed; larger ones live in the private HF dataset repo (README: repo id, revision, SHA256 per file; Akshat puts an HF read token in Colab secrets)
 │   ├── splits_by_ipo.json    # train/dev/test IPO ids used in phase 3 — ARGON must reuse them
 │   ├── excluded_ipos.json    # ALL 110 test-slice IPOs + SME-excluded + demo + Bench v1 + Platform Bench (incl. Jio): NEVER in any training set
-│   ├── risk_bank.parquet     # 29,677 risk factors, train+dev only (ipo_id, section, text, page, category, severity, label_source)
-│   ├── classifier_train.jsonl / classifier_dev.jsonl / classifier_test.jsonl
-│   ├── student_v1_train.jsonl / student_v1_dev.jsonl  # existing teacher-generated SFT data (10,892 kept rows → 10,307 train / 527 dev chat rows)
+│   ├── risk_bank.parquet     # 29,677 risk factors, train+dev only (ipo_id, title, text, page, category, severity_band, label_source; section is empty, see README gaps)
+│   ├── classifier_train.jsonl.gz / classifier_dev.jsonl.gz / classifier_test.jsonl.gz   # test = gold-150, EVAL ONLY
+│   ├── student_v1_train.jsonl.gz / student_v1_dev.jsonl.gz  # existing teacher-generated SFT data (10,891 clean pairs → 10,362 train / 529 dev)
 │   ├── student_prompt_template.txt  # EXACT risk-rewrite template the app uses — must not change
-│   ├── student_chat_template.txt    # EXACT chat-answer template (build_prompt) — M1's primary target — must not change
-│   ├── serious_finding_hits.jsonl  # every sentence the current red-flag rules matched as a "serious finding" on all parsed RHPs, with page + 2 sentences context
-│   ├── five_things_selection.jsonl # what the current "Five things to know" picked per IPO + the method used (baseline for M2)
-│   ├── bench_v1/             # FinSight Bench v1 prompts + scorer entry point
+│   ├── student_chat_template.txt (+ _hi.txt)  # EXACT chat-answer template (build_prompt) — M1's primary target — must not change
+│   ├── serious_finding_hits.jsonl.gz  # every sentence a severe pattern matched on the parsed 2024+ documents, with rules_decision (fired / blocked_soft / blocked_no_debt), page, 2 sentences of context each side
+│   ├── five_things_selection.jsonl.gz # what the current "Five things to know" picked per IPO + the method used (baseline for M2)
+│   ├── bench_v1/             # FinSight Bench v1 items, keys, prompts, stored retrieval (EVAL ONLY)
+│   ├── MANIFEST.json         # size, sha256 and location (git / HF) of every file in data/
 │   └── gold/                 # gold-50 (simplification), gold-150 (risk categories), gold v3 (10 IPOs)
 ├── eval/
-│   ├── run_bench.py          # thin wrapper: evaluate a candidate student GGUF on Bench v1 Task A/B/C
-│   ├── run_classifier_eval.py # macro-F1, per-class recall, 3-seed aggregation
+│   ├── run_bench.py          # thin wrapper (laptop, product repo): evaluate a student candidate on Bench v1 Tasks A and C
+│   ├── run_classifier_eval.py # macro-F1 / severe-band recall, 3-seed aggregation, verdict vs baselines.json
+│   ├── numkeep.py            # M1 number-keeping filter
+│   ├── vendor/finsight_lite/ # stand-alone copy of the product normaliser + metrics (no product import)
 │   └── baselines.json        # every current number ARGON must beat (see section D)
 └── colab/
     ├── setup_cell.py         # mount Drive, install pinned deps, set seeds, checkpoint dir convention
