@@ -54,7 +54,7 @@ one-line reason. Use the RHP's own "Summary of risk factors"/top-10 risks sectio
 ## M1 — Student v2 (chat + plain-English rewrites)
 - **Two frozen prompt templates** (both in `ml/handoff/data/`): `student_chat_template.txt` (chat answers, `generate/prompts.py: build_prompt`) and `student_prompt_template.txt` (risk rewrite, `risks/simplify.py: student_prompt`, `student-v1`). **Chat is M1's primary target** (that is where the 0.333 comes from); the rewrite side must not regress (gold-50 gates below).
 - **Problem:** 0.333 hallucinated numbers on unanswerable questions (Bench v1 Task C); weaker than rules on Task A.
-- **Base:** same 4B base as student v1 (Qwen3-4B-Instruct-2507, LoRA r=16; 10,307 train / 527 dev chat rows; see `phase3_models.md`), LoRA → merged → GGUF q4_K_M. Serving stays 4B (16 GB laptop).
+- **Base:** same 4B base as student v1 (Qwen3-4B-Instruct-2507, LoRA r=16; 10,362 train / 529 dev rewrite pairs (exact counts in ml/handoff/README.md); see `phase3_models.md`), LoRA → merged → GGUF q4_K_M. Serving stays 4B (16 GB laptop).
 - **Data (teacher = Gemma-4-31B-it on G4, as in phase 3):**
   1. Keep the v1 SFT set (10,892 rows).
   2. +~2,000 **unanswerable** examples: question whose answer is not in the given passages → target = the app's exact "not found in the document" response. Mix: near-miss passages (same section, different metric), wrong period, wrong entity.

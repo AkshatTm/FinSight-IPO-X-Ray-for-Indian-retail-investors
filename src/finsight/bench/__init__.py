@@ -35,6 +35,7 @@ from finsight.bench.manifest import (
     sha256,
     unlisted_inputs,
 )
+from finsight.bench.platform import normalize_ipo_id, read_ipo_ids
 from finsight.bench.prompts import (
     CHAT_BUDGET_CHARS,
     TASK_A_BUDGET_CHARS,
@@ -83,10 +84,12 @@ __all__ = [
     "load",
     "mcnemar_exact",
     "metric",
+    "normalize_ipo_id",
     "paired",
     "parse_task_a",
     "per_ipo",
     "pick_rewrites",
+    "read_ipo_ids",
     "refused",
     "rewrite_prompt",
     "score_guard",
