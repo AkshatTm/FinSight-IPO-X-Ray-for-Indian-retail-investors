@@ -28,6 +28,8 @@ from finsight.redflags import REDFLAGS_FILE
 from finsight.redflags import build as build_redflags
 from finsight.storage import put_json
 from finsight.summary import PEER_SECTIONS, SUMMARY_FILE, extract_summary
+from finsight.summary.sod import SOD_FILE
+from finsight.summary.sod import build as build_sod
 
 SOURCE = "source.pdf"
 PARSED = "parsed.json"
@@ -187,6 +189,17 @@ def _redflags(ctx: JobContext) -> dict[str, Any]:
     }
 
 
+def _sod(ctx: JobContext) -> dict[str, Any]:
+    """``sod.json`` (CC-06): financial rows, ratios, promoter holding and strengths."""
+    result = build_sod(ctx.storage, ctx.doc_id)
+    return {
+        "ready": True,
+        "has_sod": result.has_sod,
+        "ratios": sum(r.status != "not_available" for r in result.derived),
+        "strengths": len(result.strengths),
+    }
+
+
 def _risks_split(ctx: JobContext) -> dict[str, Any]:
     parsed, sections = _parsed_doc(ctx), _sections(ctx)
     # Bold table headers must not start a risk, so the Risk Factors tables are found first.
@@ -215,6 +228,7 @@ def upload_stages(models: bool = True) -> list[Stage]:
         Stage("financials", _financials, output=SUMMARY_FILE, requires=("sections",)),
         Stage("redflags", _redflags, output=REDFLAGS_FILE, requires=("financials",)),
         Stage("compare", _compare, output=COMPARE, requires=("financials",)),
+        Stage("sod", _sod, output=SOD_FILE, requires=("financials",)),
         Stage("risks_split", _risks_split, output=RISKS_FILE, requires=("sections",)),
         *(model_stages() if models else []),
     ]

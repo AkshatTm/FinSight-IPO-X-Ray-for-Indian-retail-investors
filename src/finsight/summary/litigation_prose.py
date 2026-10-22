@@ -49,10 +49,10 @@ _CRIMINAL = re.compile(
     re.IGNORECASE,
 )
 _OTHER_KIND = re.compile(
-    r"^(?:\(?[a-z0-9]{1,4}[.)]\s*)?(?:outstanding\s+)?(?:actions?\s+(?:taken\s+)?by|civil|"
+    r"^(?=.*\b(?:proceedings|litigations?|actions?|authorities|claims?|matters|cases)\b)"
+    r"(?:\(?[a-z0-9]{1,4}[.)]\s*)?(?:outstanding\s+)?(?:actions?\s+(?:taken\s+)?by|civil|"
     r"material\s+(?:civil\s+)?(?:litigation|proceedings)|tax|disciplinary|other\s+(?:pending|"
-    r"material|outstanding)|statutory|regulatory|pending\s+actions|claims?\s+(?:against|by))\b"
-    r"(?=.*\b(?:proceedings|litigations?|actions?|authorities|claims?|matters|cases)\b)",
+    r"material|outstanding)|statutory|regulatory|pending\s+actions|claims?\s+(?:against|by))\b",
     re.IGNORECASE,
 )  # a heading names a kind of case; a wrapped line such as "civil in nature." does not
 _NIL = re.compile(r"^(?:nil|none|not\s+applicable)\.?$|^there\s+(?:are|is)\s+no\b", re.IGNORECASE)
@@ -123,13 +123,16 @@ class _Scan:
     blocks: list[_Block] = field(default_factory=list)
 
 
+_PARTY_NAMES = (
+    ("group compan", "group companies"), ("subsidiar", "subsidiaries"), ("promoter", "promoters"),
+    ("director", "directors"), ("key managerial", "key managerial personnel"),
+    ("senior management", "senior management"),
+)  # fmt: skip
+
+
 def _party(text: str) -> str:
     p = text.lower()
-    for key in ("group compan", "subsidiar", "promoter", "director", "key managerial",
-                "senior management"):  # fmt: skip
-        if key in p:
-            return key.replace("compan", "companies").replace("subsidiar", "subsidiaries")
-    return "company"
+    return next((name for key, name in _PARTY_NAMES if key in p), "company")
 
 
 def criminal_from_sections(

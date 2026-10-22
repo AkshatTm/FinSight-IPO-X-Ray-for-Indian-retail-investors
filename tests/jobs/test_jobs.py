@@ -245,7 +245,8 @@ def test_upload_pipeline_parses_finds_sections_and_splits_risks(
         if e.data.get("detail") == {"cached": True}
     ]
     assert cached == [
-        "parsed", "sections", "facts", "financials", "redflags", "compare", "risks_split"
+        "parsed", "sections", "facts", "financials", "redflags", "compare", "sod",
+        "risks_split",
     ]  # fmt: skip
 
 

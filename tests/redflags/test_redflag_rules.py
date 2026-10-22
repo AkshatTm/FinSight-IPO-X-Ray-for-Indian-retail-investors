@@ -293,3 +293,12 @@ def test_formatting_helpers() -> None:
     assert num(Decimal("2.50"), 2) == "2.5"
     assert num(Decimal("33.35")) == "33.4"
     assert num(Decimal("40")) == "40"
+
+
+def test_rf04_a_pure_fresh_issue_is_ok_before_the_price_is_set() -> None:
+    # Jio (CC-05b): fresh amount "[●]", offer for sale stated "Not applicable" (zero).
+    zero = Money(value_inr=Decimal(0), currency="INR", raw="Not applicable", precision=0)
+    got = run(ofs_amount=zero, fresh_blank=True)["RF04"]
+    assert got[0] == "ok"
+    assert "no offer for sale" in got[1]
+    assert status("RF04", fresh_blank=True) == "not_available"  # OFS unknown: no guess
