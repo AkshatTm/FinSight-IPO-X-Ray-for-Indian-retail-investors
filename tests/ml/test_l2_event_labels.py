@@ -31,6 +31,7 @@ def test_l2_files_exist_and_schema_valid() -> None:
         "dev.jsonl",
         "test.jsonl",
         "akshat_verification_gold.csv",
+        "BAND_AND_LABEL_GUIDE.md",
         "LABELS_CARD.md",
     )
     for fname in expected_files:
@@ -99,3 +100,14 @@ def test_l2_verification_csv_covers_all_actual_events() -> None:
     csv_ids = {r["id"] for r in csv_rows}
     assert actual_ids.issubset(csv_ids), "Verification CSV must contain 100% of actual_event rows"
     assert len(csv_rows) == len(actual_ids) + 100
+
+    # 1. All actual_event rows must come first in the CSV
+    first_n_labels = {r["label"] for r in csv_rows[: len(actual_ids)]}
+    assert first_n_labels == {"actual_event"}
+
+    # 2. severity_band_1_to_4 must be completely blank (no pre-filled values)
+    for r in csv_rows:
+        assert r["severity_band_1_to_4"] == ""
+        assert int(r["rhp_page"]) >= 1
+        assert bool(r["quote_25w"])
+        assert len(r["quote_25w"].split()) <= 25
