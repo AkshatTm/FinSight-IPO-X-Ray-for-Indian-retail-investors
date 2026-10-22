@@ -15,6 +15,7 @@ Size: ~15 MB of 20 MB, no file over 5 MB, no PDFs or weights (checked by `tests/
 | `corpus_stats.json` | Copy of `eval_results/corpus_stats.json` |
 | `samples/parsed_*.json.gz`, `samples/xray_*.json.gz` | Shape samples for 2 IPOs (parsed truncated to the first 12 pages) |
 | `fake_training/risks_20.jsonl` | 20 **synthetic** risks with category + plain rewrite (`label_source: synthetic`) for notebook smoke tests |
+| `sod/<ipo_id>/rhp.pages.json.gz` | **P4 SOD fixtures (AR-02 / CC-05):** only the Summary of the Offer Document pages of 10 RHPs, same payload as above with `kept = {"summary": [...]}` and `sod_source` (`sod_section`, or `introduction_run:...` when the RHP has no SOD heading — Jio). `sod/index.json` lists PDF/printed page ranges. Load with `loader.load_doc(id, root=loader.SOD)`. Written by `export_fixtures.py --sod ...`. Jio is the one test-slice (excluded) doc, a disclosed parser-diagnosis exception |
 | `loader.py` | `load_doc`, `load_sections`, `kept_pages`, `load_tables`, `corpus_risk_factors`, `fake_risks`, `RF_SOURCES` |
 
 IPOs: the 10 showcase IPOs of `configs/demo_ipos.yaml`. In a loaded `ParsedDoc`, `pages` holds only the exported pages; `Page.number` is the real PDF page, so use `page_map(doc)`.
