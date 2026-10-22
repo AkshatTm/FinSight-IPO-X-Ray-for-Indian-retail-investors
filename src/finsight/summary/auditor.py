@@ -66,7 +66,7 @@ def _text(page: Page) -> str:
 
 def summary_statement(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
     """The Summary's statement on auditor qualifications not given effect to, as printed."""
-    for page in _pages(doc, summary_pages(sections)):
+    for page in _pages(doc, summary_pages(sections, "auditor")):
         text = _text(page)
         m = _HEADING.search(text)
         if m is None:

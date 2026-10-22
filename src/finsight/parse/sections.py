@@ -30,8 +30,8 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
         ("definitions", r"DEFINITIONS AND ABBREVIATIONS"),
         (
             "summary",
-            r"(?:SUMMARY OF (THE OFFER DOCUMENT|THIS (RED HERRING )?PROSPECTUS)"
-            r"|OFFER DOCUMENT SUMMARY)",
+            r"(?:SUMMARY OF (?:THE )?((?:OFFER|ISSUE) DOCUMENT|THIS (RED HERRING )?PROSPECTUS)"
+            r"|(?:OFFER|ISSUE) (?:DOCUMENT SUMMARY|SUMMARY DOCUMENT))",
         ),
         ("risk_factors", r"RISK FACTORS?"),
         ("the_offer", r"THE (OFFER|ISSUE)"),
@@ -62,8 +62,9 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
 _TOC_HEAD = re.compile(r"^(TABLE OF CONTENTS|CONTENTS)$", re.MULTILINE | re.IGNORECASE)
 _TOC_LINE = re.compile(r"^(?P<title>.*?)\s*\.{4,}\s*(?P<page>\d{1,4})\s*$")
 _PART = re.compile(r"^SECTION\s*[-–]?\s*[IVXLC]+\s*[:\-–]?\s*", re.IGNORECASE)
-# Part headers that are also a section in their own right ("SECTION II: RISK FACTORS").
-_PART_SECTIONS = {"risk_factors"}
+# Part headers that are also a section in their own right ("SECTION II: RISK FACTORS",
+# "SECTION II - SUMMARY OF THE OFFER DOCUMENT": dropping it hid the SOD of many RHPs, CC-05b).
+_PART_SECTIONS = {"risk_factors", "summary"}
 HEADING_LINES = 8  # a heading must be within the first lines of the page text
 NEAR = 3  # pages either side of the TOC page to look for the heading
 

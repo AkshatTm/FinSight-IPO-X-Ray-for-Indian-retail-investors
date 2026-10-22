@@ -80,7 +80,7 @@ def extract_litigation(
     doc: ParsedDoc, sections: list[Section], doc_id: str
 ) -> dict[str, SummaryValue]:
     """``{"criminal_cases": …, "amount_total": …}``; empty when no litigation table was read."""
-    tables = _tables(_pages(doc, summary_pages(sections)))
+    tables = _tables(_pages(doc, summary_pages(sections, "litigation")))
     if not tables:
         tables = _tables(_pages(doc, _section_pages(sections, "outstanding_litigation", 15)))
     if not tables:

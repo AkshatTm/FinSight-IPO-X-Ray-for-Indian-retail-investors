@@ -39,7 +39,15 @@ from finsight.summary.financials import (
     find_row,
     summary_pages,
 )
-from finsight.summary.layout import Line, is_placeholder, lines_of, read_tables, union_bbox, unit_of
+from finsight.summary.layout import (
+    GridTable,
+    Line,
+    is_placeholder,
+    lines_of,
+    read_tables,
+    union_bbox,
+    unit_of,
+)
 
 _GCP = re.compile(r"general\s+corporate\s+purposes?", re.IGNORECASE)
 # The row label, not a sentence such as "... towards general corporate purposes shall not exceed".
@@ -139,7 +147,7 @@ def _base(lines: list[Line], i: int, unit: str | None) -> tuple[str, Money] | No
 
 def general_purposes(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
     """General corporate purposes as a share of the fresh issue (%), or its placeholder."""
-    pages = _pages(doc, summary_pages(sections)) + _pages(
+    pages = _pages(doc, summary_pages(sections, "objects")) + _pages(
         doc, _section_pages(sections, "objects_of_the_offer", 30)
     )
     for page in pages:
@@ -157,11 +165,25 @@ def general_purposes(doc: ParsedDoc, sections: list[Section], doc_id: str) -> Su
     return None
 
 
+_RPT_TOTAL_NAMED = RowRule(
+    re.compile(r"^total\s+(?:of\s+)?related[\s-]+party\s+transactions?\b", re.IGNORECASE),
+    re.compile(_RATIO + r"|revenue|income", re.IGNORECASE),
+)
+_BARE_TOTAL = re.compile(r"^total\b", re.IGNORECASE)
+
+
+def _bare_totals(table: GridTable) -> int:
+    """How many rows of the table are labelled just "Total" (one per transaction type in an
+    RPT summary printed by type, e.g. Jio p.80)."""
+    return sum(1 for r in table.rows if _BARE_TOTAL.match(r.label.strip()))
+
+
 def related_party_total(
     doc: ParsedDoc, sections: list[Section], doc_id: str
 ) -> SummaryValue | None:
     """A printed total of related-party transactions, latest full fiscal year, from the Summary."""
-    pages = _pages(doc, summary_pages(sections))
+    pages = _pages(doc, summary_pages(sections, "rpt"))
+    by_type: int | None = None  # page of a table printed by transaction type (no overall total)
     for k, page in enumerate(pages):
         if not _RPT.search(page.text):
             continue
@@ -173,14 +195,21 @@ def related_party_total(
             ):
                 break
             for table in read_tables(p):
-                row = find_row(table, [_RPT_TOTAL])
+                row = find_row(table, [_RPT_TOTAL_NAMED]) or find_row(table, [_RPT_TOTAL])
                 if row is None:
                     continue
+                if not _RPT_TOTAL_NAMED.pattern.search(row.label) and _bare_totals(table) > 1:
+                    by_type = by_type or p.number  # one "Total" per type: summing them mixes
+                    continue  # sales, purchases and advances, so no overall figure is made up
                 ranked = _ranked(table)
                 col = ranked.column("latest")
                 if col is None:
                     continue
                 if (v := _value("rpt_total", "latest", table, row, col, doc_id)) is not None:
                     return v
-        return None
+        break
+    if by_type is not None:
+        why = "[not found: related-party transactions are printed by type, with no overall total]"
+        ev = PageEvidence(doc_id=doc_id, page=by_type, sentence=why)
+        return SummaryValue(key="rpt_total", evidence=ev, status="not_found")
     return None

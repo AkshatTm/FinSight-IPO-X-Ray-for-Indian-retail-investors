@@ -144,7 +144,7 @@ def _promoter_rows(tables: list[AnchoredTable]) -> list[tuple[AnchoredTable, Anc
 
 def promoter_post(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
     """Promoter and Promoter Group post-offer shareholding (%), from the Summary table."""
-    tables = _post_tables(_pages(doc, summary_pages(sections)))
+    tables = _post_tables(_pages(doc, summary_pages(sections, "holdings")))
     if not tables:
         return None
     rows = _promoter_rows(tables)
@@ -209,7 +209,7 @@ def pledged(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValu
             key="pledged_promoter_pct", value=Percent(value=pct, raw=cell.text), period="latest",
             evidence=ev, status="found" if pct > 0 else "stated_zero",
         )  # fmt: skip
-    return _none_pledged(pages + _pages(doc, summary_pages(sections)), doc_id)
+    return _none_pledged(pages + _pages(doc, summary_pages(sections, "holdings")), doc_id)
 
 
 def _none_pledged(pages: list[Page], doc_id: str) -> SummaryValue | None:
@@ -241,7 +241,7 @@ _LEFT_OUT = re.compile(r"negligible|n\.?\s?a\.?|not applicable|[●•]", re.IGN
 
 def _aca_tables(doc: ParsedDoc, sections: list[Section]) -> list[AnchoredTable]:
     """The average-cost-of-acquisition table under its Summary heading, and its run-on page."""
-    pages = _pages(doc, summary_pages(sections))
+    pages = _pages(doc, summary_pages(sections, "waca"))
     for k, page in enumerate(pages):
         if not _ACA_HEADING.search(" ".join(page.text.split())):
             continue

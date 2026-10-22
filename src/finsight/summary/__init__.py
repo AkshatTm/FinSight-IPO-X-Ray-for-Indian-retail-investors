@@ -32,6 +32,7 @@ from finsight.summary.financials import (
 from finsight.summary.holdings import Holdings, extract_holdings
 from finsight.summary.layout import GridTable, read_tables
 from finsight.summary.litigation import extract_litigation
+from finsight.summary.locate import has_sod, reader_pages, scan_start, source_of
 from finsight.summary.objects import general_purposes, related_party_total
 from finsight.summary.peers import extract_peers
 from finsight.summary.periods import PERIOD_KEYS, Period, parse_period, rank_years
@@ -142,8 +143,12 @@ __all__ = [
     "clean_label",
     "extract_financials",
     "extract_summary",
+    "has_sod",
     "parse_period",
     "rank_years",
     "read_tables",
+    "reader_pages",
+    "scan_start",
+    "source_of",
     "values_by_source",
 ]

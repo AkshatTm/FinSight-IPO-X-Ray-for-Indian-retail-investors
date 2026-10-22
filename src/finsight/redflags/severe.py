@@ -16,6 +16,7 @@ import re
 from dataclasses import dataclass
 
 from finsight.core.schemas import PageEvidence, ParsedDoc, Section, SevereOverride
+from finsight.summary import scan_start
 
 # Sections of boilerplate that mention these words as definitions or eligibility declarations.
 SKIP_SECTIONS = frozenset(
@@ -30,7 +31,6 @@ SKIP_SECTIONS = frozenset(
         "declaration",
     }
 )
-_SKIP_BEFORE = "summary"  # nothing before the Summary (cover, definitions, forward-looking) counts
 
 # A sentence with one of these states no fact: negations and hedges.
 _SOFT = re.compile(
@@ -119,7 +119,7 @@ class _Hit:
 
 def _scan_pages(doc: ParsedDoc, sections: list[Section]) -> list[int]:
     """Pages from the Summary onwards, minus the boilerplate sections."""
-    first = next((s.start_page for s in sections if s.id == _SKIP_BEFORE), 1)
+    first = scan_start(sections)  # the SOD, else Risk Factors (an RHP without a SOD: Jio)
     skip: set[int] = set()
     for s in sections:
         if s.id in SKIP_SECTIONS:

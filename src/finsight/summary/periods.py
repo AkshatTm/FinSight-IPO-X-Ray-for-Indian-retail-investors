@@ -102,6 +102,57 @@ def trailing_as_stub(periods: list[Period]) -> list[Period]:
     ]
 
 
+def _unbleed(periods: list[Period]) -> list[Period]:
+    """A part-year label with no end date, next to part-year columns that print theirs, is the
+    neighbour's header bleeding over a bare year (Jio p.80: "For the three months periods
+    2026" beside "... ended June 30, 2026"). It becomes the bare year it sits on, which ranks
+    only through ``_fiscal_run`` (a centred "Fiscal" header next to it)."""
+    if not any(p.kind == "stub" and p.month for p in periods):
+        return periods
+    return [
+        Period(kind="year", year=p.year, label=str(p.year), explicit=False)
+        if p.kind == "stub" and p.clear_stub and p.month is None and p.year is not None
+        and not _FULL.search(p.label)
+        else p
+        for p in periods
+    ]  # fmt: skip
+
+
+def _bare_year(p: Period) -> bool:
+    return p.kind == "year" and not p.explicit and p.month is None and p.year is not None
+
+
+def _fiscal_run(periods: list[Period]) -> set[int]:
+    """Bare-year columns that share a "Fiscal" header centred over them (Jio p.76: "2026 |
+    Fiscal 2025 | 2024"). The header word lands on the middle column only, so the bare years
+    count as fiscal years when they flank one "Fiscal YYYY" / "FY" column on **both** sides
+    and the years step by exactly one across the run. A bare year on one side only (Hexaware:
+    "2023 | For the Financial Year 2022 | ... 2021", each fiscal column labelled) stays
+    ambiguous and is not ranked."""
+    out: set[int] = set()
+    for i, p in enumerate(periods):
+        if not (p.kind == "year" and p.explicit and p.month is None and p.year is not None
+                and _FY_WORDS.search(p.label)):  # fmt: skip
+            continue
+        sides: list[list[int]] = []
+        steps: list[int] = []
+        for step in (-1, 1):
+            run: list[int] = []
+            j, prev, direction = i + step, p, 0
+            while 0 <= j < len(periods) and _bare_year(periods[j]):
+                diff = (periods[j].year or 0) - (prev.year or 0)
+                if abs(diff) != 1 or (direction and diff != direction):
+                    break
+                direction = diff
+                run.append(j)
+                prev, j = periods[j], j + step
+            sides.append(run)
+            steps.append(direction)
+        if sides[0] and sides[1] and steps[0] == -steps[1]:  # one run, monotonic across p
+            out.update(sides[0] + sides[1])
+    return out
+
+
 def rank_years(periods: list[Period]) -> dict[int, str]:
     """Column index → "latest" / "latest-1" / "latest-2" for full-year columns with a year.
 
@@ -116,7 +167,7 @@ def rank_years(periods: list[Period]) -> dict[int, str]:
     itself a part-year period ("nine months"): either would shift "latest" onto an older column.
     Ranked years are consecutive; ranking stops at the first gap.
     """
-    periods = trailing_as_stub(periods)
+    periods = _unbleed(trailing_as_stub(periods))
     year_months: set[str | None] = {
         p.month for p in periods if p.kind == "year" and p.explicit and p.month
     }
@@ -127,9 +178,10 @@ def rank_years(periods: list[Period]) -> dict[int, str]:
     if any(p.kind == "year" and p.year is None for p in periods):
         return {}  # a year column whose year was not read: any ranking could be shifted
     any_stub = any(p.kind == "stub" for p in periods)
+    fiscal_run = _fiscal_run(periods)
     seen: dict[int, int] = {}
     for i, p in enumerate(periods):
-        if not p.explicit and p.month is None and any_stub:
+        if not p.explicit and p.month is None and any_stub and i not in fiscal_run:
             continue  # a bare "2025" next to part-year columns could be either
         if not p.explicit and p.month is not None and year_months and p.month not in year_months:
             continue
