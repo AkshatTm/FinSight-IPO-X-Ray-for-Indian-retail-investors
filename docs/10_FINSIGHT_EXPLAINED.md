@@ -759,7 +759,7 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 
 **Other fixes.** Derived equity (share capital + other equity) and borrowings (current + non-current); a cover table whose offer-for-sale column says "Not applicable" is a stated zero, so a pure fresh issue is RF04 "ok" before the price is set; promoter holding before the offer; RPT printed only by transaction type gives "not found", not a per-type total; the auditor's "no qualification" statement is also read from the restated statements; and "in case of" / "upon the occurrence of" now hedge a sentence, which removed Jio's p.40 false serious finding.
 
-**Guard.** On gold v3, E14 rose from 0.769 to 0.774 and E15 held at 0.769. Decided checks across the 289 RHPs rose from 1,561 to 1,704. The test slice and gold v3 were used only as this pass/fail guard (C-ADR-02).
+**Guard.** On gold v3, E14 rose from 0.769 to 0.774 and E15 held at 0.769. Decided checks across the 289 RHPs rose from 1,561 to 1,714. The test slice and gold v3 were used only as this pass/fail guard (C-ADR-02).
 
 ### P4 CC-06 — `sod.json`: financial rows, ratios, strengths (`summary/derived.py`, `summary/strengths.py`, `summary/sod.py`)
 
