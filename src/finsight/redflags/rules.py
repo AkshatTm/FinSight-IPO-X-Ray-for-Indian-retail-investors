@@ -287,7 +287,17 @@ def rf08(x: RedFlagInputs, c: Mapping[str, Any], na: str) -> Result:
     else:
         pct = None
     n, any_case = x.criminal_cases, x.criminal_any
+    ev = x.evidence.get("criminal_cases_any")
+    counted = bool(ev and ev.sentence and "counted from sections" in ev.sentence)
     if n is not None and n > 0:
+        if counted:  # no summary table: numbered items under the chapter's headings (CC-05b)
+            return Result(
+                "watch",
+                f"About {n} criminal case(s) involve the company, its group, promoters or "
+                "directors (counted from the litigation chapter's sections, approximate).",
+                {"n": str(n), "method": "counted from sections"},
+                ["criminal_cases_any"],
+            )
         return Result(
             "watch",
             f"There are {n} criminal case(s) involving the company, promoters or directors.",

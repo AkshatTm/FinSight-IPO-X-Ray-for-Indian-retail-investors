@@ -19,6 +19,7 @@ from finsight.normalize import parse_amount
 from finsight.summary.anchored import AnchoredTable, Cell, cell_box, read_anchored
 from finsight.summary.financials import _pages, _section_pages, summary_pages
 from finsight.summary.layout import is_nil, is_placeholder, unit_of
+from finsight.summary.litigation_prose import criminal_from_sections
 
 _HINT = re.compile(r"criminal", re.IGNORECASE)
 _AMOUNT_HEADER = r"aggregate|amount"
@@ -79,12 +80,17 @@ def _evidence(
 def extract_litigation(
     doc: ParsedDoc, sections: list[Section], doc_id: str
 ) -> dict[str, SummaryValue]:
-    """``{"criminal_cases": …, "amount_total": …}``; empty when no litigation table was read."""
+    """``{"criminal_cases": …, "amount_total": …}``; empty when nothing was read.
+
+    Without a litigation table, the criminal cases are counted from the chapter's sub-headings
+    (``litigation_prose``, approximate and labelled so); no amount is read from prose.
+    """
     tables = _tables(_pages(doc, summary_pages(sections, "litigation")))
     if not tables:
         tables = _tables(_pages(doc, _section_pages(sections, "outstanding_litigation", 15)))
     if not tables:
-        return {}
+        counted = criminal_from_sections(doc, sections, doc_id)
+        return {"criminal_cases": counted} if counted is not None else {}
     return {
         "criminal_cases": _criminal(tables, doc_id),
         "amount_total": _amount(tables, doc_id),

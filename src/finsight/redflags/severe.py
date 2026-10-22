@@ -35,7 +35,8 @@ SKIP_SECTIONS = frozenset(
 # A sentence with one of these states no fact: negations and hedges.
 _SOFT = re.compile(
     r"\b(?:no|not|nor|neither|never|none|nil|without|unless|whether|cannot|may|might|could|would|"
-    r"if|should|in\s+the\s+event|risk\s+of|assurance|potential(?:ly)?|likely|unqualified|"
+    r"if|should|in\s+the\s+event|in\s+(?:the\s+)?case\s+of|upon\s+(?:the\s+)?occurrence|"
+    r"in\s+the\s+eventuality|risk\s+of|assurance|potential(?:ly)?|likely|unqualified|"
     r"such\s+as|for\s+example|means|defined|refers?\s+to|prescribe[sd]?|penal|vulnerable|"
     r"right\s+to|entitled|take\s+possession|events?\s+of\s+default|"
     r"reversed|waived|withdrawn|set\s+aside|quashed|stayed|policy|policies)\b",
