@@ -20,6 +20,7 @@ from finsight.summary.layout import Line, lines_of, union_bbox
 CELL_GAP = 6.0  # words closer than this form one cell ("USD 2 million", "[ ● ] #")
 HEADER_GAP = 14.0  # header lines are at most this far apart
 HEADER_LINES = 18  # the header band is at most this many lines
+TALL_ABOVE, TALL_LINES = 15, 45  # ``read_anchored(tall=True)``: the SEBI shareholding pattern
 DATA_GAP = 50.0  # data lines further apart than this end the table (a page number below)
 HEADER_PAD = 8.0  # header words this far beside a column still name it
 CONTINUATION_LINES = 12  # a run-on table restarts within the first lines of the next page
@@ -183,6 +184,7 @@ def read_anchored(
     require: tuple[str, ...] = (),
     min_cells: int = 2,
     after: float | None = None,
+    tall: bool = False,
 ) -> AnchoredTable | None:
     """The table whose header band contains ``start`` (and every ``require`` pattern).
 
@@ -192,6 +194,9 @@ def read_anchored(
         require: Patterns the header band text must also match.
         min_cells: Value cells a line needs to start the data rows.
         after: Only header lines below this top edge (the table under a known heading).
+        tall: A header band of up to ``TALL_LINES`` lines, ``TALL_ABOVE`` of them above the hit
+            (SEBI's shareholding pattern, Table I: ~30 header lines of split words such as
+            "encumbere" / "d"). Off by default: a tall band would swallow prose elsewhere.
     """
     pat = re.compile(start, re.IGNORECASE) if isinstance(start, str) else start
     needs = [re.compile(r, re.IGNORECASE) for r in require]
@@ -199,7 +204,7 @@ def read_anchored(
     for i, line in enumerate(lines):
         if (after is not None and line.top <= after) or not pat.search(line.text):
             continue
-        table = _read_from(page, lines, i, needs, min_cells)
+        table = _read_from(page, lines, i, needs, min_cells, tall)
         if table is not None:
             return table
     return None
@@ -225,20 +230,26 @@ def read_continuation(page: Page, table: AnchoredTable, min_cells: int = 2) -> A
 
 
 def _read_from(
-    page: Page, lines: list[Line], hit: int, needs: list[re.Pattern[str]], min_cells: int
+    page: Page,
+    lines: list[Line],
+    hit: int,
+    needs: list[re.Pattern[str]],
+    min_cells: int,
+    tall: bool = False,
 ) -> AnchoredTable | None:
     # Header band: up to 3 lines above the hit that sit close and are not prose, then down to
     # the first line with enough value cells.
+    above, below = (TALL_ABOVE, TALL_LINES) if tall else (3, HEADER_LINES)
     first = hit
     while (
         first > 0
-        and hit - first < 3
+        and hit - first < above
         and lines[first].top - lines[first - 1].top <= HEADER_GAP
         and not _running_text(lines[first - 1], page.width)
     ):
         first -= 1
     data_start = None
-    for j in range(hit + 1, min(len(lines), hit + HEADER_LINES)):
+    for j in range(hit + 1, min(len(lines), hit + below)):
         _, cells = split_line(lines[j])
         if _value_cells(cells) >= min_cells:
             data_start = j

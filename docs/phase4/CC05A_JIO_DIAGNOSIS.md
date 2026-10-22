@@ -1,7 +1,13 @@
-# CC-05a — Jio red-flag diagnosis (diagnosis only, no fixes)
+# CC-05a — Jio red-flag diagnosis (fixed in CC-05b + CC-06, see the result below)
 
 **Test-informed:** Jio (`jio-platforms-2026`, upload `doc_72480c2e249eb8da`, 591 pp.) is in `excluded_ipos.json`. It is the one disclosed parser-diagnosis exception (P4_PLAN §2). Nothing here tunes a threshold.
 Method: re-ran `summary.extract_summary` + `redflags.evaluate` on the stored parse with current code (same result as the stored `redflags.json`, so it isn't a stale cache), then probed the pages each reader needs.
+
+## Result after CC-05b + CC-06
+**Jio: 7 of 13 checks are decided from the RHP alone** (was 1/13): RF01 ok (PAT ₹300,527 mn), RF02 ok, RF03 ok (D/E 0.21), RF04 ok (fresh issue only), RF08 watch (about 27 criminal cases, counted from sections, approximate), RF12 ok, RF13 ok. Pinned by `tests/summary/test_sod_jio.py` (`@local`).
+- **Still undecided:** RF09: Jio prints RPT by transaction type only, with no overall total, so it is "not found" with that reason. The per-party sums were not added, to avoid mixing transaction types. RF10: not disclosed. RF05/06/07/11: they need the price band; without a band they will show `PENDING_PRICE`; with ₹1,065–1,119 entered, Jio could reach at most 11/13 (not measured yet; done in CC-07).
+- **Serious findings:** p.40 is gone (the "in case of" hedge). Only p.472 (SEBI order on the Promoter) remains, left for the C-ADR-26 rule in CC-07.
+- RF06 now reads pre-offer 66.43%; the post-offer value is a placeholder until the Prospectus.
 
 ## Root cause
 **Jio's RHP has no "Summary of the Offer Document".** The TOC goes Risk Factors (30–71) → Section III Introduction: The Issue (72–73), Summary Financial Information (74–78), Summary of Contingent Liabilities (79), Summary of RPT (80–86). Six readers only look at the SOD (`summary_pages`). When there's no SOD, `summary_pages` falls back to the 40 pages before Risk Factors, which for Jio means pp. 1–29: cover, definitions, conventions. They find nothing there.

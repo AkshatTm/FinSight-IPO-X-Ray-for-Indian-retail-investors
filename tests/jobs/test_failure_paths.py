@@ -34,6 +34,7 @@ GRAPH: dict[str, tuple[tuple[str, ...], bool]] = {
     "risk_level": (("redflags", "risks_scored"), False),
     "index": (("parsed",), False),
     "compare": (("financials",), False),
+    "sod": (("financials",), False),
 }
 
 
@@ -159,6 +160,7 @@ def test_real_upload_stages_follow_the_b02_graph() -> None:
         ("financials", False),
         ("redflags", False),
         ("compare", False),
+        ("sod", False),
         ("risks_split", False),
     ]
     assert all(s.requires == GRAPH[s.name][0] for s in stages)

@@ -56,10 +56,23 @@ def test_stated_facts_are_caught(sentence: str, kind: str) -> None:
         "The auditors issued an unqualified opinion on the financial statements.",
         "If SEBI passes an order against us, our business may be affected.",
         "Neither our Company nor our Directors have been classified as fraud.",
+        # Jio p.40 (CC-05a): a loan covenant's condition, not an event.
+        "Covenants under our debt agreements require us to obtain consents in certain situations, "
+        "including declaring or paying any dividend in case of delay or default in the repayment "
+        "of facilities availed.",
+        "In the case of a default in repayment of the facilities, the lenders shall act.",
+        "Upon the occurrence of a default in the repayment of the loan, the lender may recall it.",
     ],
 )
 def test_negated_and_hedged_sentences_are_not(sentence: str) -> None:
     assert classify(sentence) == []
+
+
+def test_a_stated_default_with_case_words_elsewhere_still_counts() -> None:
+    # "in case" only hedges as "in (the) case of"; a stated default is still caught.
+    assert "default_or_recall" in classify(
+        "Our subsidiary has defaulted in the repayment of a term loan to a bank in Fiscal 2024."
+    )
 
 
 def test_detect_returns_the_first_hit_per_kind_with_its_page_and_sentence() -> None:

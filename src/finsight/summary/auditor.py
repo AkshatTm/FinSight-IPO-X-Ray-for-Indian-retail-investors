@@ -66,7 +66,7 @@ def _text(page: Page) -> str:
 
 def summary_statement(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
     """The Summary's statement on auditor qualifications not given effect to, as printed."""
-    for page in _pages(doc, summary_pages(sections)):
+    for page in _pages(doc, summary_pages(sections, "auditor")):
         text = _text(page)
         m = _HEADING.search(text)
         if m is None:
@@ -82,6 +82,28 @@ def summary_statement(doc: ParsedDoc, sections: list[Section], doc_id: str) -> S
         return SummaryValue(
             key="auditor_remarks", value=sentence, period="latest", evidence=ev, status="found"
         )
+    return None
+
+
+_NO_QUALIFICATION = re.compile(
+    r"there\s+(?:are|is|were|have\s+been)\s+no\s+(?:audit\s+)?qualifications?\b[^.]{0,240}\.",
+    re.IGNORECASE,
+)
+RESTATED_PAGES = 150  # the statement sits in the restated annexure, often on its last pages
+
+
+def restated_statement(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
+    """An explicit "There are no audit qualification(s) ..." sentence in the Restated Financial
+    Information (Jio p.430: the statement of adjustments). Used when the Summary prints none."""
+    numbers = _section_pages(sections, "restated_financial_information", RESTATED_PAGES)
+    for page in reversed(_pages(doc, numbers)):  # the annexure is at the end
+        if m := _NO_QUALIFICATION.search(_text(page)):
+            sentence = " ".join(m.group(0).split())
+            ev = PageEvidence(doc_id=doc_id, page=page.number, sentence=sentence)
+            return SummaryValue(
+                key="auditor_remarks", value=sentence, period="latest", evidence=ev,
+                status="found",
+            )  # fmt: skip
     return None
 
 
@@ -120,9 +142,11 @@ def _remark(doc_id: str, page: int, sentence: str) -> SummaryValue:
 def extract_auditor_remarks(
     doc: ParsedDoc, sections: list[Section], doc_id: str, report_pages: list[int] | None = None
 ) -> list[SummaryValue]:
-    """The Summary statement first, then remarks from the examination report pages."""
+    """The Summary statement first (else the restated annexure's "no qualification" sentence),
+    then remarks from the examination report pages."""
     remarks = []
-    if (first := summary_statement(doc, sections, doc_id)) is not None:
+    first = summary_statement(doc, sections, doc_id) or restated_statement(doc, sections, doc_id)
+    if first is not None:
         remarks.append(first)
     remarks.extend(report_remarks(doc, report_pages or [], doc_id))
     return remarks

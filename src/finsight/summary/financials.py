@@ -34,6 +34,7 @@ from finsight.summary.layout import (
     union_bbox,
     unit_of,
 )
+from finsight.summary.locate import Purpose, reader_pages, section_pages
 from finsight.summary.periods import PERIOD_KEYS, parse_period, rank_years
 
 YEARLY = ("revenue", "profit_after_tax", "operating_cash_flow")
@@ -225,37 +226,70 @@ def _role(period: str) -> str:
     return SECONDARY if period == "stub" else PRIMARY
 
 
-def _sum_borrowings(t: _Ranked, doc_id: str, period: str = "latest") -> SummaryValue | None:
-    """Total borrowings from one "Borrowings" row, or current + non-current rows of one table."""
+def _sum_rows(
+    key: str, t: _Ranked, rows: list[Row], doc_id: str, period: str = "latest"
+) -> SummaryValue | None:
+    """The sum of two printed rows of one table (current + non-current borrowings, or equity
+    share capital + other equity), marked as computed in its evidence; ``None`` when either is
+    missing or a placeholder."""
     col = t.column(period)
     if col is None:
         return None
     label, role = t.period_label(period), _role(period)
-    single = find_row(t.table, [_BORROWINGS])
-    if single is not None:
-        return _value("total_borrowings", label, t.table, single, col, doc_id, role)
+    parts = [_value(key, label, t.table, r, col, doc_id, role) for r in rows]
+    if any(v is None or v.evidence is None or not isinstance(v.value, Money) for v in parts):
+        return None
+    monies = [v.value for v in parts if v is not None and isinstance(v.value, Money)]
+    if any(m.value_inr is None for m in monies):
+        return None
+    total = Money(
+        value_inr=sum((m.value_inr for m in monies if m.value_inr is not None), Decimal(0)),
+        currency="INR", raw=" + ".join(m.raw for m in monies), scale_word=monies[0].scale_word,
+        precision=max(m.precision for m in monies),
+    )  # fmt: skip
+    sentences = "; ".join(v.evidence.sentence or "" for v in parts if v and v.evidence)
+    first = parts[0]
+    if first is None or first.evidence is None:
+        return None
+    note = f"[computed: sum of {len(rows)} printed rows] {sentences}"
+    ev = first.evidence.model_copy(update={"sentence": note, "bbox": None})
+    return SummaryValue(key=key, value=total, period=label, evidence=ev, status="found")
+
+
+def _sum_borrowings(t: _Ranked, doc_id: str, period: str = "latest") -> SummaryValue | None:
+    """Total borrowings from one "Borrowings" row, or current + non-current rows of one table.
+
+    A full balance sheet (Jio p.75) prints "Borrowings" twice, under non-current and under
+    current liabilities: exactly two such rows are summed; three or more are not guessed at.
+    """
+    col = t.column(period)
+    if col is None:
+        return None
+    label, role = t.period_label(period), _role(period)
+    bare = [r for r in t.table.rows if any(_BORROWINGS.match(clean_label(x)) for x in r.labels())]
+    if len(bare) == 1:
+        return _value("total_borrowings", label, t.table, bare[0], col, doc_id, role)
+    if len(bare) == 2:
+        return _sum_rows("total_borrowings", t, bare, doc_id, period)
+    if bare:
+        return None
     cur, non = find_row(t.table, [_CURRENT]), find_row(t.table, [_NON_CURRENT])
     if cur is None or non is None:
         return None
-    a = _value("total_borrowings", label, t.table, cur, col, doc_id, role)
-    b = _value("total_borrowings", label, t.table, non, col, doc_id, role)
-    if a is None or b is None or a.evidence is None or b.evidence is None:
+    return _sum_rows("total_borrowings", t, [cur, non], doc_id, period)
+
+
+_SHARE_CAPITAL = _rule(r"^equity share capital\b", _RATIO)
+_OTHER_EQUITY = _rule(r"^other equity\b", _RATIO + r"|non[\s-]*controlling")
+
+
+def _sum_net_worth(t: _Ranked, doc_id: str, period: str = "latest") -> SummaryValue | None:
+    """Net worth as equity share capital + other equity, when the table prints both rows but no
+    "Net worth" / "Total equity" row (Jio p.75). Non-controlling interest is left out."""
+    cap, other = find_row(t.table, [_SHARE_CAPITAL]), find_row(t.table, [_OTHER_EQUITY])
+    if cap is None or other is None or cap is other:
         return None
-    ma, mb = a.value, b.value
-    if not (isinstance(ma, Money) and isinstance(mb, Money)):
-        return None  # a placeholder in either row
-    if ma.value_inr is None or mb.value_inr is None:
-        return None
-    total = Money(
-        value_inr=ma.value_inr + mb.value_inr, currency="INR", raw=f"{ma.raw} + {mb.raw}",
-        scale_word=ma.scale_word, precision=max(ma.precision, mb.precision),
-    )  # fmt: skip
-    ev = a.evidence.model_copy(
-        update={"sentence": f"{a.evidence.sentence}; {b.evidence.sentence}", "bbox": None}
-    )
-    return SummaryValue(
-        key="total_borrowings", value=total, period=label, evidence=ev, status="found"
-    )
+    return _sum_rows("net_worth", t, [cap, other], doc_id, period)
 
 
 # ------------------------------------------------------------------------- pages
@@ -265,28 +299,17 @@ def _pages(doc: ParsedDoc, numbers: Iterable[int]) -> list[Page]:
 
 
 def _section_pages(sections: list[Section], section_id: str, limit: int = 40) -> list[int]:
-    for s in sections:
-        if s.id == section_id:
-            return list(range(s.start_page, min(s.end_page, s.start_page + limit - 1) + 1))
-    return []
+    return section_pages(sections, section_id, limit)
 
 
-SUMMARY_WINDOW = 40  # pages scanned before Risk Factors when no Summary section was detected
+def summary_pages(sections: list[Section], purpose: Purpose | None = None) -> list[int]:
+    """Pages of the Summary of the Offer Document, or its stand-ins (``locate.reader_pages``).
 
-
-def summary_pages(sections: list[Section]) -> list[int]:
-    """Pages of the Summary of the Offer Document.
-
-    When the section was not detected, the pages just before Risk Factors (where ICDR puts the
-    summary) are scanned instead; the best-scoring table there must still show two of the
-    summary rows to be used.
+    When the section was not detected, the reader's stand-in chapter and then the pages just
+    before Risk Factors (where ICDR puts the summary) are scanned; the best-scoring table there
+    must still show two of the summary rows to be used.
     """
-    if pages := _section_pages(sections, "summary"):
-        return pages
-    rf = next((s.start_page for s in sections if s.id == "risk_factors"), None)
-    if rf is None:
-        return list(range(1, SUMMARY_WINDOW + 1))
-    return list(range(max(1, rf - SUMMARY_WINDOW), rf))
+    return reader_pages(sections, purpose)
 
 
 def _same_columns(a: GridTable, b: GridTable) -> bool:
@@ -412,12 +435,13 @@ def extract_financials(
         _fill(key, summary + sfi, doc_id, found[key])
         if financial and FINANCIAL_RULES[key]:
             _fill(key, summary + sfi, doc_id, found[key], FINANCIAL_RULES[key])
-    borrowings = found["total_borrowings"]
-    for t in summary:
-        if "latest" not in borrowings and (v := _sum_borrowings(t, doc_id)):
-            borrowings["latest"] = v
-            if s := _sum_borrowings(t, doc_id, "stub"):
-                borrowings["stub"] = s
+    for key, derive in (("total_borrowings", _sum_borrowings), ("net_worth", _sum_net_worth)):
+        point_values = found[key]
+        for t in summary + sfi:  # the SOD table first, then the Summary Financial Information
+            if "latest" not in point_values and (v := derive(t, doc_id)):
+                point_values["latest"] = v
+                if stub := derive(t, doc_id, "stub"):
+                    point_values["stub"] = stub
     _fill("operating_cash_flow", summary + sfi + cash, doc_id, found["operating_cash_flow"])
     unit = summary[0].table.unit if summary else next((t.table.unit for t in sfi), None)
 

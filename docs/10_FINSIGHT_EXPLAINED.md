@@ -749,6 +749,28 @@ Stages pass results through `ctx.scratch`. On a retry the cached ones are skippe
 
 **Big files.** Anything over 4.5 MB goes to the private Hugging Face dataset repo; `MANIFEST.json` lists the sha256 so the Colab setup cell can check each download.
 
+### P4 CC-05b — RHPs without a Summary of the Offer Document (`summary/locate.py`, `summary/litigation_prose.py`)
+
+**The problem.** Jio's RHP has no "Summary of the Offer Document" (SOD). The summary readers read only the SOD, so 12 of 13 red-flag checks came back "Not available". The sweep over all 289 parsed RHPs showed 133 with no SOD detected. Many of those did have one, but the TOC printed it as a part header ("SECTION II - SUMMARY OF THE OFFER DOCUMENT") and the parser dropped part headers.
+
+**What changed.** (1) The part header now counts as the summary section, and more title variants are recognised. (2) When there is no SOD, each reader looks in the chapter the SOD would have summarised: Capital Structure for promoter holding, WACA and pledges; Outstanding Litigation for court cases; the Summary of Related Party Transactions for RPT; Objects of the Offer for general purposes. It then still scans the 40 pages before Risk Factors (`reader_pages`, `source_of`). (3) TOC page numbers are *printed* numbers. They are mapped to PDF pages from the page footers. When fewer than half the TOC headings are found that way (an SME RHP whose only footers belong to an annexure), the offset that most TOC headings agree on is used instead (`parse.sections.toc_pdf_pages`).
+
+**Litigation without a table.** Jio's chapter is organised by party, then by kind of case. `criminal_from_sections` counts the numbered items under each "Criminal proceedings …" heading, with "Nil" counting as zero. The result is labelled "counted from sections (approximate)": one item can describe several cases. A section with text but no numbered items gives no number, only "at least N" when other sections could be counted. With no criminal heading at all, no count is given ("Not available beats a wrong number").
+
+**Other fixes.** Derived equity (share capital + other equity) and borrowings (current + non-current); a cover table whose offer-for-sale column says "Not applicable" is a stated zero, so a pure fresh issue is RF04 "ok" before the price is set; promoter holding before the offer; RPT printed only by transaction type gives "not found", not a per-type total; the auditor's "no qualification" statement is also read from the restated statements; and "in case of" / "upon the occurrence of" now hedge a sentence, which removed Jio's p.40 false serious finding.
+
+**Guard.** On gold v3, E14 rose from 0.769 to 0.774 and E15 held at 0.769. Decided checks across the 289 RHPs rose from 1,561 to 1,714. The test slice and gold v3 were used only as this pass/fail guard (C-ADR-02).
+
+### P4 CC-06 — `sod.json`: financial rows, ratios, strengths (`summary/derived.py`, `summary/strengths.py`, `summary/sod.py`)
+
+**Financial rows.** From the same restated summary table, `extract_rows` reads equity share capital, total income, EPS basic and diluted, and NAV per share for three fiscal years plus the newest stub. Per-share rows are plain rupees: the table's "₹ in million" is not applied to them.
+
+**Ratios in code, with their formula.** Revenue growth year on year, PAT margin, debt to equity and cash from operations. Each ratio carries its formula string, its inputs (with raw text and page) and its pages, ready for a hover tooltip. A missing input or a non-positive base gives `not_available` with the reason ("previous year's revenue is not positive"), never a guessed number.
+
+**Strengths.** The bold item headings under "Our (Competitive) Strengths" in Our Business, up to the strategies heading, each with the first sentence under it and its page. They are the company's own claims and are shown as such; nothing is rewritten.
+
+**`SODResult`.** One object per upload: `has_sod`, where each reader read (`sod`, `fallback:<sections>`, `window`), financials, ratios, promoter holding before and after, litigation, RPT, auditor remarks, strengths and `price_band` (always empty here: the band is announced after the RHP and is set on the upload in CC-07). The `sod` upload stage writes it to `sod.json`; `pipeline_version` 4.1 invalidates older caches.
+
 ## Part D — Viva drill (answer aloud without notes)
 
 1. **What problem does FinSight solve, for whom?** Retail IPO applicants can't read 500-page RHPs; chatbots mis-scale Indian numbers and don't cite pages.

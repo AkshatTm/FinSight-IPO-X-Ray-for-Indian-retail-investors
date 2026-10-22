@@ -116,8 +116,9 @@ def test_newer_vague_period_column_blocks_ranking() -> None:
     assert rank_years([parse_period(h) for h in headers]) == {}
 
 
-def test_bare_year_next_to_stubs_blocks_ranking() -> None:
-    # Orkla (dev): a lone "2025" between quarter columns and "Fiscal 2024".
+def test_centred_fiscal_header_ranks_the_bare_years_beside_it() -> None:
+    # Orkla (dev) and Jio: "Fiscal" is centred over three columns, so it lands on the middle one
+    # only ("2025 | Fiscal 2024 | 2023"). Orkla's text says "in Fiscals 2025, 2024 and 2023".
     headers = [
         "For the Three months period ended June 30, 2025",
         "For the Three months period ended June 30, 2024",
@@ -125,6 +126,26 @@ def test_bare_year_next_to_stubs_blocks_ranking() -> None:
         "Fiscal 2024",
         "2023",
     ]
+    assert rank_years([parse_period(h) for h in headers]) == {
+        2: "latest", 3: "latest-1", 4: "latest-2",
+    }  # fmt: skip
+
+
+def test_bare_year_on_one_side_of_labelled_fiscal_columns_blocks_ranking() -> None:
+    # Hexaware: each fiscal column is labelled, one bare "2023" sits beside the twelve-month
+    # columns. The "Fiscal" header is not centred over it, so nothing is ranked.
+    headers = [
+        "For the twelve months ended September 30, 2024",
+        "For the twelve months ended September 30, 2023",
+        "2023",
+        "For the Financial Year 2022",
+        "For the Financial Year 2021",
+    ]
+    assert rank_years([parse_period(h) for h in headers]) == {}
+
+
+def test_bare_years_with_a_gap_are_not_joined_to_the_fiscal_column() -> None:
+    headers = ["Three months ended June 30, 2026", "2026", "Fiscal 2024", "2023"]
     assert rank_years([parse_period(h) for h in headers]) == {}
 
 

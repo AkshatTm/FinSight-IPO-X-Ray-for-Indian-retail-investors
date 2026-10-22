@@ -1,7 +1,7 @@
 # Profiles from 02_ARCHITECTURE.md section 8. Pick one with FINSIGHT_PROFILE (default dev_light).
 # Any value can be overridden by env vars: FINSIGHT_LLM__MODEL=qwen3.5:2b, DEMO_MODE=1, ...
 # Cache key part (CC-04): bump when extraction, red-flag or risk-level logic changes.
-pipeline_version: "4.0"
+pipeline_version: "4.1"
 
 paths:
   data_dir: data

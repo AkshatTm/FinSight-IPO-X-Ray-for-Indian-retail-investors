@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import re
 import statistics
+from collections import Counter
 from dataclasses import dataclass
 from typing import Literal
 
@@ -30,8 +31,8 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
         ("definitions", r"DEFINITIONS AND ABBREVIATIONS"),
         (
             "summary",
-            r"(?:SUMMARY OF (THE OFFER DOCUMENT|THIS (RED HERRING )?PROSPECTUS)"
-            r"|OFFER DOCUMENT SUMMARY)",
+            r"(?:SUMMARY OF (?:THE )?((?:OFFER|ISSUE) DOCUMENT|THIS (RED HERRING )?PROSPECTUS)"
+            r"|(?:OFFER|ISSUE) (?:DOCUMENT SUMMARY|SUMMARY DOCUMENT))",
         ),
         ("risk_factors", r"RISK FACTORS?"),
         ("the_offer", r"THE (OFFER|ISSUE)"),
@@ -47,7 +48,7 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
         ("management_s_discussion_and_analysis", r"MANAGEMENT S DISCUSSION AND ANALYSIS.*"),
         (
             "summary_financial_information",
-            r"SUMMARY (OF )?(RESTATED )?(CONSOLIDATED )?FINANCIAL (INFORMATION|STATEMENTS)",
+            r"SUMMARY (OF )?(OUR )?(RESTATED )?(CONSOLIDATED )?FINANCIAL (INFORMATION|STATEMENTS)",
         ),
         (
             "restated_financial_information",
@@ -62,10 +63,14 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
 _TOC_HEAD = re.compile(r"^(TABLE OF CONTENTS|CONTENTS)$", re.MULTILINE | re.IGNORECASE)
 _TOC_LINE = re.compile(r"^(?P<title>.*?)\s*\.{4,}\s*(?P<page>\d{1,4})\s*$")
 _PART = re.compile(r"^SECTION\s*[-–]?\s*[IVXLC]+\s*[:\-–]?\s*", re.IGNORECASE)
-# Part headers that are also a section in their own right ("SECTION II: RISK FACTORS").
-_PART_SECTIONS = {"risk_factors"}
+# Part headers that are also a section in their own right ("SECTION II: RISK FACTORS",
+# "SECTION II - SUMMARY OF THE OFFER DOCUMENT": dropping it hid the SOD of many RHPs, CC-05b).
+_PART_SECTIONS = {"risk_factors", "summary"}
 HEADING_LINES = 8  # a heading must be within the first lines of the page text
 NEAR = 3  # pages either side of the TOC page to look for the heading
+# Heading-voted offset (CC-05b): when the footers mislead, TOC titles vote for the offset.
+MAX_VOTERS, MIN_VOTES = 25, 3
+VOTE_BEFORE, VOTE_AFTER = 10, 120  # pages scanned before / after a title's printed page
 
 
 _FFFD = chr(0xFFFD)  # glyphs the PDF font could not map (dot leaders and dashes in some RHPs)
@@ -236,14 +241,54 @@ _FALLBACK_TITLES = {
 }
 
 
+def _near_heading(doc: ParsedDoc, title: str, page: int) -> bool:
+    return _scan_for(doc, title, range(page - NEAR, page + NEAR + 1)) is not None
+
+
+def voted_shift(doc: ParsedDoc, entries: list[TocEntry], after: int) -> int | None:
+    """The printed→PDF offset most TOC headings agree on, found by scanning for each heading.
+
+    Used when the footer numbers are too few or misleading (an SME RHP whose only printed
+    numbers are an annexure's own): each TOC title votes for (first page with its heading −
+    printed page); the most common offset wins if at least ``MIN_VOTES`` titles agree.
+    """
+    votes: Counter[int] = Counter()
+    for e in entries[:MAX_VOTERS]:
+        lo = max(after + 1, e.printed_page - VOTE_BEFORE)
+        n = _scan_for(doc, e.title, range(lo, min(doc.n_pages, e.printed_page + VOTE_AFTER) + 1))
+        if n is not None:
+            votes[n - e.printed_page] += 1
+    if not votes:
+        return None
+    shift, count = votes.most_common(1)[0]
+    return shift if count >= MIN_VOTES else None
+
+
+def toc_pdf_pages(doc: ParsedDoc, entries: list[TocEntry], after: int) -> list[int]:
+    """PDF page per TOC entry: footer numbers first (``printed_to_pdf``); when under that
+    mapping fewer than half the headings are found near their page, the heading-voted offset
+    is used instead if it finds more of them."""
+    mapped = [printed_to_pdf(doc, e.printed_page) for e in entries]
+    hits = sum(_near_heading(doc, e.title, p) for e, p in zip(entries, mapped, strict=True))
+    if not entries or hits * 2 >= len(entries):
+        return mapped
+    shift = voted_shift(doc, entries, after)
+    if shift is None:
+        return mapped
+    voted = [min(max(e.printed_page + shift, 1), doc.n_pages) for e in entries]
+    better = sum(_near_heading(doc, e.title, p) for e, p in zip(entries, voted, strict=True))
+    return voted if better > hits else mapped
+
+
 def find_sections(doc: ParsedDoc) -> list[Section]:
     """All sections found, sorted by start page, each ending where the next begins."""
     toc_pages = find_toc_pages(doc)
     after = max(toc_pages) if toc_pages else 2
     lines = [ln for n in toc_pages for ln in doc.pages[n - 1].text.splitlines()]
     found: dict[str, _Found] = {}
-    for entry in parse_toc_lines(lines):
-        hit = _locate(doc, entry.title, printed_to_pdf(doc, entry.printed_page), after)
+    entries = parse_toc_lines(lines)
+    for entry, pdf_page in zip(entries, toc_pdf_pages(doc, entries, after), strict=True):
+        hit = _locate(doc, entry.title, pdf_page, after)
         if hit and hit.id not in found:
             found[hit.id] = hit
     for sid, title in _FALLBACK_TITLES.items():

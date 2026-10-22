@@ -285,3 +285,18 @@ def test_initials_do_not_end_the_promoter_list() -> None:  # audit miss, ADR-041
     ]
     text = "PROMOTERS OF OUR COMPANY: A. VELLAYAN AND ASHA RANI. DETAILS OF THE OFFER"
     assert best("promoters", text).value.items == ["A. VELLAYAN", "ASHA RANI"]
+
+
+# CC-05b: Jio's cover "Details of the Issue" table — the offer-for-sale column says none.
+JIO_STYLE_COVER = (
+    "DETAILS OF THE ISSUE\nType Fresh Issue size Offer for Sale size Total Issue size\n"
+    "Fresh Issue Up to 270,000,000 Equity Shares of face value of ₹10 each aggregating up to "
+    "₹[●] million Not applicable Up to 270,000,000 Equity Shares aggregating up to ₹[●] million"
+)
+
+
+def test_a_not_applicable_offer_for_sale_column_is_a_stated_zero() -> None:
+    got = best("ofs_amount", JIO_STYLE_COVER)
+    assert got.value.value_inr == 0
+    assert got.value.raw == "Not applicable"
+    assert isinstance(best("fresh_issue_size", JIO_STYLE_COVER).value, Placeholder)
