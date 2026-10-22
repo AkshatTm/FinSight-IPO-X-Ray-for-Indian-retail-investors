@@ -278,3 +278,70 @@ def test_part_header_with_unmapped_glyphs_around_the_numeral() -> None:
         f"SECTION {BAD} II {BAD} RISK FACTORS " + "." * 40 + " 29",
     ]
     assert [(e.title, e.printed_page) for e in parse_toc_lines(lines)] == [("RISK FACTORS", 29)]
+
+
+# --- CC-05b: printed→PDF offset voted from headings when the footers mislead -------------------
+def _misleading_footer_doc() -> ParsedDoc:
+    """TOC on PDF page 3; printed page k is PDF page k + 5, but the only printed footers are an
+    annexure's own "1", "2", "3" on PDF pages 36-38 (median offset +35, wrong)."""
+    toc = "\n".join([
+        "TABLE OF CONTENTS",
+        "SECTION II: SUMMARY OF THE OFFER DOCUMENT ............ 4",
+        "SECTION III: RISK FACTORS ............................ 8",
+        "THE OFFER ............................................ 12",
+        "CAPITAL STRUCTURE .................................... 14",
+        "OBJECTS OF THE OFFER ................................. 18",
+    ])  # fmt: skip
+    headings = {
+        9: "SECTION II: SUMMARY OF THE OFFER DOCUMENT\nThe following is a summary",
+        13: "SECTION III: RISK FACTORS\nAn investment in equity",
+        17: "THE OFFER\nThe table below",
+        19: "CAPITAL STRUCTURE\nShare capital",
+        23: "OBJECTS OF THE OFFER\nThe Net Proceeds",
+    }
+    pages = []
+    for n in range(1, 41):
+        text = toc if n == 3 else headings.get(n, f"body text of page {n}")
+        printed = str(n - 35) if 36 <= n <= 38 else None
+        pages.append(_page(n, text, printed))
+    return ParsedDoc(
+        ipo_id="sme-2025", doc_type="rhp", source_path="x.pdf",
+        n_pages=len(pages), pages=pages, sha256="0" * 64,
+    )  # fmt: skip
+
+
+def test_misleading_footers_are_overruled_by_the_offset_the_headings_agree_on() -> None:
+    from finsight.parse.sections import toc_pdf_pages, voted_shift
+
+    doc = _misleading_footer_doc()
+    entries = parse_toc_lines(doc.pages[2].text.splitlines())
+    assert [e.printed_page for e in entries] == [4, 8, 12, 14, 18]
+    assert printed_to_pdf(doc, 4) == 39  # the footer median (+35) is wrong here
+    assert voted_shift(doc, entries, after=3) == 5
+    assert toc_pdf_pages(doc, entries, after=3) == [9, 13, 17, 19, 23]
+    sections = {s.id: s for s in find_sections(doc)}
+    assert (sections["summary"].start_page, sections["summary"].end_page) == (9, 12)
+    assert sections["risk_factors"].start_page == 13
+    assert sections["summary"].confidence >= 0.9
+
+
+def test_footer_mapping_is_kept_when_it_finds_the_headings() -> None:
+    from finsight.parse.sections import toc_pdf_pages
+
+    doc = _doc()  # footers right, offset +3
+    entries = parse_toc_lines(TOC.splitlines())
+    assert toc_pdf_pages(doc, entries, after=3) == [4, 6, 7, 9, 10]
+
+
+def test_sod_part_header_in_the_toc_is_a_summary_section() -> None:
+    lines = [
+        "SECTION II - SUMMARY OF THE OFFER DOCUMENT ............. 16",
+        "SECTION III - RISK FACTORS ............................. 34",
+    ]
+    assert [(e.title, e.printed_page) for e in parse_toc_lines(lines)] == [
+        ("SUMMARY OF THE OFFER DOCUMENT", 16),
+        ("RISK FACTORS", 34),
+    ]
+    for title in ("SUMMARY OF OFFER DOCUMENT", "SUMMARY OF THE ISSUE DOCUMENT",
+                  "ISSUE DOCUMENT SUMMARY", "OFFER SUMMARY DOCUMENT"):  # fmt: skip
+        assert canonical_id(title) == "summary"
