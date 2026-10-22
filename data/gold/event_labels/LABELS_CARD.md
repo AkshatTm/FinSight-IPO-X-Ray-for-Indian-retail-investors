@@ -49,6 +49,7 @@ Generated deterministically by `ml/l2_build_event_labels.py` (Task **AR-03**, fo
    - **Regulator penalty orders (`regulator_order`):** Blocked when the sentence stated *"had **not** complied with Regulation... and BSE/RBI/SEBI imposed a penalty"* or cited *"adjudication order bearing **no.** ..."* (matching `\bno\b`).
    - **Qualified/Disclaimer of audit opinions (`qualified_audit`):** Basis for Qualified Opinion paragraphs containing *"was **not** operating effectively which **could**..."* or *"did **not** observe"* were blocked by `"not"`/`"could"`.
 
-## 5. Akshat Verification Sheet (`akshat_verification_gold.csv`)
-- Contains **481 rows**: **100% of `actual_event` rows (381 rows)** + **100 random rows** from `hypothetical`, `negated`, and `not_relevant` (`seed=42`).
-- For `train`-split `actual_event` rows (187 rows), `severity_band_1_to_4` is pre-filled with `4` so Akshat can verify both the event label and the severity band (1–4) in one pass for **M4 Severity v2** (per P-3).
+## 5. Akshat Verification Sheet (`akshat_verification_gold.csv` & `BAND_AND_LABEL_GUIDE.md`)
+- Contains **481 rows**, sorted so **all 381 `actual_event` rows come first** (`train` rows 1–187, then `dev`, then `test`), followed by **100 random rows** from `hypothetical`, `negated`, and `not_relevant` (`seed=42`).
+- Includes `rhp_page` and `quote_25w` (≤ 25-word RHP quote) directly alongside `label`, `verified_label`, and `severity_band_1_to_4` so verification can be done without opening PDFs.
+- `severity_band_1_to_4` is **completely blank** so pre-filled values do not bias verification; see `BAND_AND_LABEL_GUIDE.md` for band 1–4 definitions and one real example per band from the handoff pack.
