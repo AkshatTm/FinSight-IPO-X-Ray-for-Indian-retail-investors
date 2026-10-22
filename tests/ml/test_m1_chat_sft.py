@@ -205,10 +205,15 @@ def test_m1_teacher_gen_notebook_structure() -> None:
     assert "13.07 G4 units" in header_src
 
     all_code = "\n".join("".join(c["source"]) for c in cells if c["cell_type"] == "code")
+    for c in cells:
+        if c["cell_type"] == "code":
+            ast.parse("".join(c["source"]))
     assert 'JOB = "m1_teacher_gen"' in all_code
     assert "DEBUG = True" in all_code
     assert "SEEDS = [13, 42, 2026]" in all_code
     assert "RESUME = True" in all_code
     assert 'HF_REVISION = "a285902d91a5557cf6d6d7cf23a9e266410d6c3d"' in all_code
+    assert 'HF_PACK_REVISION = "af028c61cde3f0aee6e52fc40593ac47b2a7aa1b"' in all_code
+    assert "git clone" not in all_code
     assert "numkeep.py" in all_code
     assert "excluded_ipos.json" in all_code
