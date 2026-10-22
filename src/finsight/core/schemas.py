@@ -531,6 +531,8 @@ RejectionCode = Literal[
     "scanned", "password", "too_large", "too_many_pages", "not_offer_document", "hash_mismatch"
 ]
 DocStatus = Literal["uploading", "processing", "ready", "partial", "failed"]
+# How trustworthy the stored analysis is (CC-04): a degraded one is never served as complete.
+AnalysisStatus = Literal["complete", "degraded", "failed"]
 
 
 class PageEvidence(BaseModel):
@@ -560,6 +562,13 @@ class DocRecord(BaseModel):
     created_at: datetime
     status: DocStatus = "processing"
     rejection: RejectionCode | None = None
+    # Cache v2 (CC-04). ``pipeline_version`` and ``fingerprint`` are what the analysis was made
+    # with; ``None`` means a legacy row, which counts as stale.
+    pipeline_version: str | None = None
+    fingerprint: str | None = None
+    analysis_status: AnalysisStatus | None = None
+    degraded_reasons: list[str] = Field(default_factory=list)
+    skipped_models: list[str] = Field(default_factory=list)  # "analyse without X", as ticked
 
 
 JobStatus = Literal["queued", "running", "done", "failed"]

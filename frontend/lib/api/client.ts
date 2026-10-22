@@ -24,7 +24,7 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 /** JSON request with an optional bearer token (the Supabase access token for upload routes). */
-export async function apiSend<T>(method: "POST" | "PUT", path: string, body?: unknown, token?: string | null): Promise<T> {
+export async function apiSend<T>(method: "POST" | "PUT" | "DELETE", path: string, body?: unknown, token?: string | null): Promise<T> {
   const headers: Record<string, string> = { Accept: "application/json" };
   if (body !== undefined) headers["Content-Type"] = "application/json";
   if (token) headers.Authorization = `Bearer ${token}`;

@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
 import { apiGet, type Schemas } from "@/lib/api/client";
+import { CacheBar } from "./CacheBar";
 import { ProcessingScreen } from "./ProcessingScreen";
 import { ReportView } from "./ReportView";
 
@@ -15,6 +16,7 @@ import { ReportView } from "./ReportView";
 export function ReportPage({ docId }: { docId: string }) {
   const qc = useQueryClient();
   const [showReport, setShowReport] = useState(false);
+  const [reanalysing, setReanalysing] = useState(false);
   const q = useQuery({
     queryKey: ["doc", docId],
     queryFn: () => apiGet<Schemas["DocDetail"]>(`/api/docs/${docId}`),
@@ -43,18 +45,39 @@ export function ReportPage({ docId }: { docId: string }) {
   if (q.isError) return <div className="mx-auto mt-12 max-w-2xl"><ErrorBlock error={q.error} onRetry={() => void q.refetch()} /></div>;
 
   const doc = q.data.doc;
+  const stale = reanalysing || !!q.data.cache?.reanalysing;
+  const bar = (
+    <CacheBar
+      doc={doc}
+      cache={q.data.cache}
+      reanalysing={stale && doc.status === "processing"}
+      onRestarted={() => {
+        setShowReport(false);
+        setReanalysing(true);
+      }}
+    />
+  );
   if (!showReport && (doc.status === "processing" || doc.status === "failed")) {
     return (
-      <ProcessingScreen
-        doc={doc}
-        onSeeReady={() => {
-          setShowReport(true);
-          void qc.invalidateQueries({ queryKey: ["doc", docId] });
-        }}
-      />
+      <>
+        {bar}
+        <ProcessingScreen
+          key={q.data.job_id ?? "none"}
+          doc={doc}
+          onSeeReady={() => {
+            setShowReport(true);
+            void qc.invalidateQueries({ queryKey: ["doc", docId] });
+          }}
+        />
+      </>
     );
   }
 
   const workspaceReady = q.data.stages.some((s) => s.stage === "index" && s.status === "done");
-  return <ReportView doc={doc} workspaceReady={workspaceReady} />;
+  return (
+    <>
+      {bar}
+      <ReportView doc={doc} workspaceReady={workspaceReady} />
+    </>
+  );
 }

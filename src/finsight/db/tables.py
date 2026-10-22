@@ -31,6 +31,12 @@ docs = sa.Table(
     sa.Column("created_at", TS, nullable=False),
     sa.Column("status", sa.String(16), nullable=False),
     sa.Column("rejection", sa.String(32), nullable=True),
+    # Cache v2 (CC-04, migration 0002)
+    sa.Column("pipeline_version", sa.String(32), nullable=True),
+    sa.Column("fingerprint", sa.String(64), nullable=True),
+    sa.Column("analysis_status", sa.String(16), nullable=True),
+    sa.Column("degraded_reasons", sa.JSON, nullable=False, default=list, server_default="[]"),
+    sa.Column("skipped_models", sa.JSON, nullable=False, default=list, server_default="[]"),
 )
 
 jobs = sa.Table(

@@ -30,6 +30,9 @@ ErrorCode = Literal[
     "risk_not_found",
     "worker_unavailable",
     "forbidden",
+    # Cache v2 (CC-04)
+    "models_unavailable",
+    "doc_busy",
 ]
 
 

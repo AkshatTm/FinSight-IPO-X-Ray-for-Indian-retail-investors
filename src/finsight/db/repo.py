@@ -19,6 +19,7 @@ from finsight.db.tables import (
     jobs,
     metadata,
     simplify_queue,
+    traces,
     uploads,
     users,
 )
@@ -66,6 +67,23 @@ class Database:
     def create_all(self) -> None:
         """Create missing tables (tests and the laptop; cloud databases use Alembic)."""
         metadata.create_all(self.engine)
+        self._add_missing_columns()
+
+    def _add_missing_columns(self) -> None:
+        """Bring a laptop database made before a column existed up to date (``create_all`` only
+        makes missing tables; Postgres uses Alembic)."""
+        inspector = sa.inspect(self.engine)
+        for table in metadata.sorted_tables:
+            have = {c["name"] for c in inspector.get_columns(table.name)}
+            for column in table.columns:
+                if column.name in have:
+                    continue
+                ddl = column.type.compile(self.engine.dialect)
+                default = " DEFAULT '[]'" if isinstance(column.type, sa.JSON) else ""
+                null = " NOT NULL" if not column.nullable and default else ""
+                alter = f'ALTER TABLE {table.name} ADD COLUMN "{column.name}" {ddl}{default}{null}'
+                with self.engine.begin() as conn:
+                    conn.execute(sa.text(alter))
 
     # ------------------------------------------------------------------ users
     def upsert_user(self, user_id: str, email: str | None, now: datetime | None = None) -> None:
@@ -110,6 +128,12 @@ class Database:
         with self.engine.connect() as conn:
             return [self._doc(row) for row in conn.execute(query).mappings()]
 
+    def all_docs(self) -> list[DocRecord]:
+        """Every document row (the purge script), oldest first."""
+        with self.engine.connect() as conn:
+            rows = conn.execute(sa.select(docs).order_by(docs.c.created_at)).mappings()
+            return [self._doc(row) for row in rows]
+
     def expired_docs(self, before: datetime) -> list[str]:
         """Non-showcase documents created before ``before`` (the retention sweep)."""
         query = sa.select(docs.c.doc_id).where(
@@ -118,6 +142,11 @@ class Database:
         with self.engine.connect() as conn:
             return [row.doc_id for row in conn.execute(query)]
 
+    def clear_queue(self, doc_id: str) -> None:
+        """Drop a document's pending plain-English rewrites (re-analysis, delete)."""
+        with self.engine.begin() as conn:
+            conn.execute(simplify_queue.delete().where(simplify_queue.c.doc_id == doc_id))
+
     def delete_doc_rows(self, doc_id: str) -> None:
         """Delete a document's rows except ``uploads`` (quota counts survive retention)."""
         with self.engine.begin() as conn:
@@ -125,6 +154,7 @@ class Database:
             conn.execute(job_events.delete().where(job_events.c.job_id.in_(job_ids)))
             conn.execute(jobs.delete().where(jobs.c.doc_id == doc_id))
             conn.execute(simplify_queue.delete().where(simplify_queue.c.doc_id == doc_id))
+            conn.execute(traces.delete().where(traces.c.doc_id == doc_id))
             conn.execute(docs.delete().where(docs.c.doc_id == doc_id))
 
     @staticmethod

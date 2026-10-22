@@ -70,3 +70,5 @@ frontend-run.err.log
 # Platform Bench sheet holds broker text: never committed (only README.md and derived scores)
 data/platform_bench/*
 !data/platform_bench/README.md
+# Weight-hash memo for the cache key (CC-04): rebuilt on demand
+data/cache/
