@@ -41,9 +41,9 @@ export async function sha256Hex(file: Blob): Promise<string> {
 /** init → send the bytes (POST to the API) → complete. */
 export async function uploadDocument(
   file: File,
-  opts: { token: string | null; maxMb: number; onPhase?: (p: UploadPhase) => void },
+  opts: { token: string | null; maxMb: number; onPhase?: (p: UploadPhase) => void; analyseWithout?: boolean },
 ): Promise<UploadOutcome> {
-  const { token, maxMb, onPhase } = opts;
+  const { token, maxMb, onPhase, analyseWithout } = opts;
   if (file.size > maxMb * 1024 * 1024) throw new UploadError("too_large");
   try {
     onPhase?.("hashing");
@@ -69,7 +69,10 @@ export async function uploadDocument(
     }
     if (!sent.ok) throw new UploadError("hash_mismatch");
     onPhase?.("finishing");
-    const done = await apiSend<Schemas["UploadComplete"]>("POST", `/api/uploads/${init.doc_id}/complete`, undefined, token);
+    const done = await apiSend<Schemas["UploadComplete"]>("POST", `/api/uploads/${init.doc_id}/complete`,
+      analyseWithout ? { analyse_without: ["ollama", "classifier", "embeddings", "reranker"] } : undefined,
+      token,
+    );
     return { kind: "started", docId: done.doc_id, jobId: done.job_id };
   } catch (e) {
     if (e instanceof UploadError) throw e;

@@ -19,7 +19,7 @@ from finsight.api.uploads_state import CurrentUser, UState
 from finsight.core.ids import make_doc_id
 from finsight.core.schemas import DocRecord
 from finsight.db import utcnow
-from finsight.jobs import SOURCE, LaunchError, UploadBlocked, check_upload_allowed
+from finsight.jobs import SOURCE, LaunchError, UploadBlocked, check_upload_allowed, run_preflight
 from finsight.storage import doc_key
 
 router = APIRouter(
@@ -173,10 +173,30 @@ async def upload_file(
     return {"doc_id": doc_id, "status": "stored"}
 
 
+class CompleteBody(BaseModel):
+    """Optional body of ``complete``: models to analyse without when they are not running."""
+
+    analyse_without: list[Literal["ollama", "classifier", "embeddings", "reranker"]] = []
+
+
 @router.post("/{doc_id}/complete")
-def complete_upload(doc_id: DocId, state: UState, user: CurrentUser) -> UploadComplete:
-    """Check the stored file's SHA-256 and size, then queue the processing job."""
+def complete_upload(
+    doc_id: DocId, state: UState, user: CurrentUser, body: CompleteBody | None = None
+) -> UploadComplete:
+    """Check the stored file's SHA-256 and size, then queue the processing job.
+
+    A missing model refuses the job first (503 ``models_unavailable``; the file stays stored, so
+    the client may call this again with ``analyse_without``)."""
     doc = _pending(state, doc_id, user.id)
+    skip = list(body.analyse_without) if body else []
+    pre = run_preflight(state.settings, skip)
+    if not pre.ok:
+        raise ApiError(
+            503,
+            "models_unavailable",
+            pre.message(),
+            hint="Start the missing model, or analyse without it.",
+        )
     key = doc_key(doc_id, SOURCE)
     if not state.storage.exists(key):
         raise ApiError(409, "upload_not_started", "The file has not arrived yet. Please try again.")
@@ -192,7 +212,7 @@ def complete_upload(doc_id: DocId, state: UState, user: CurrentUser) -> UploadCo
         raise ApiError(
             422, "hash_mismatch", "The upload didn't finish correctly. Please try again."
         )
-    state.db.update_doc(doc_id, status="processing")
+    state.db.update_doc(doc_id, status="processing", skipped_models=skip)
     job = state.db.create_job(doc_id)
     state.db.append_event(job.job_id, "stage", {"stage": "received", "status": "end"})
     try:

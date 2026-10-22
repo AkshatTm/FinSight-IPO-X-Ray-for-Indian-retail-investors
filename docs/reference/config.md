@@ -8,6 +8,7 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 
 | Key | Type | Default | Environment variable |
 | --- | --- | --- | --- |
+| `pipeline_version` | str | `0` | `FINSIGHT_PIPELINE_VERSION` |
 | `paths.data_dir` | Path | `data` | `FINSIGHT_PATHS__DATA_DIR` |
 | `paths.processed_dir` | Path | `data/processed` | `FINSIGHT_PATHS__PROCESSED_DIR` |
 | `paths.models_dir` | Path | `models` | `FINSIGHT_PATHS__MODELS_DIR` |

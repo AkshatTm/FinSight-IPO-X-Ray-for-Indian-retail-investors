@@ -23,10 +23,17 @@ Checks: auth, `UPLOADS_ENABLED` (503 `uploads_disabled`), quota (429 `quota_exce
 Raw PDF bytes.
 
 ### `POST /api/uploads/{doc_id}/complete`
+Optional body `{analyse_without?: [...]}` (CC-04). Preflight first: a missing model (Ollama + `finsight-student` tag, ONNX classifier, bge-m3, reranker) refuses with `503 models_unavailable` and the stored file stays, so the client can call `complete` again with `analyse_without`.
 → `{doc_id, job_id, status: "queued"}`. **Recomputes SHA-256 on the server** (mismatch → 422 `hash_mismatch`, file deleted) and re-checks the size (422 `too_large`), then queues the job. `409 upload_not_started` if `init` was not called or the file has not arrived. `503 worker_unavailable` if the worker job could not be started (Cloud Run launch failed): the job and document are marked failed and a `done` event is written, so the processing screen ends. The PDF is validated by the worker, never in the API process (B02 §11): `scanned | password | too_many_pages | not_offer_document` arrive as the `validated` stage failure (`detail.reason`) and as `doc.rejection`, with `doc.status = "failed"`.
 
 ### `GET /api/docs/{doc_id}`
-`DocRecord` + `{stages: [{stage, status, started_at, finished_at, detail}], companion_doc_id?}`.
+`DocRecord` + `{stages: [{stage, status, started_at, finished_at, detail}], companion_doc_id?, cache}`. `cache` (CC-04) = `{state: fresh | stale_version | stale_models | legacy, analysis_status, degraded_reasons[], reanalysing, blocked?}`. Opening a finished analysis whose `pipeline_version` or models fingerprint no longer matches re-runs it at once (`reanalysing: true`, the document goes back to `processing`); when a model is down the old analysis is kept and `blocked` says why. `DocRecord` also carries `pipeline_version`, `fingerprint`, `analysis_status` (`complete | degraded | failed`), `degraded_reasons[]` and `skipped_models[]`. A degraded report is never served with a long `Cache-Control`.
+
+### `DELETE /api/docs/{doc_id}` (CC-04)
+Deletes the analysis completely: stored files, the published workspace (pages, words, tables, BM25 index, page images), simplification queue, jobs and rows. The `uploads` rows stay (daily quota). Only the uploader or an admin; showcase documents `403 forbidden`; `409 doc_busy` while processing. → `{deleted: doc_id}`.
+
+### `POST /api/docs/{doc_id}/reanalyse` (CC-04)
+Body `{analyse_without?: ["ollama" | "classifier" | "embeddings" | "reranker"]}`. Clears the old analysis (keeps the PDF) and queues a new job → `{doc_id, job_id, status: "queued"}`. A missing model refuses it with `503 models_unavailable` (message names the model) unless it is listed in `analyse_without`; the result is then `degraded`. Same permissions and `409 doc_busy` as delete.
 
 ### `GET /api/docs/{doc_id}/events` → `text/event-stream`
 Events in order (each `data:` is JSON):

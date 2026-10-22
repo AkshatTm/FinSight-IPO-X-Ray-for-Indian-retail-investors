@@ -86,6 +86,11 @@ function finalDoc(m: MockDoc): Doc {
     doc_type: detail?.doc_type ?? null,
     pages: detail?.pages ?? null,
     company: detail?.company ?? null,
+    pipeline_version: "4.0",
+    fingerprint: "mock",
+    analysis_status: last.status === "partial" ? "degraded" : last.status === "ready" ? "complete" : "failed",
+    degraded_reasons: last.status === "partial" ? ["stage_failed:redflags"] : [],
+    skipped_models: [],
   };
 }
 
@@ -148,6 +153,15 @@ export const uploadHandlers = [
       },
     });
     return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache" } });
+  }),
+  http.delete("/api/docs/:docId", ({ params }) => {
+    docs.delete(String(params.docId));
+    return HttpResponse.json({ deleted: String(params.docId) });
+  }),
+  http.post("/api/docs/:docId/reanalyse", ({ params }) => {
+    const m = docs.get(String(params.docId));
+    if (m) m.doc = { ...m.doc, status: "processing", analysis_status: null, degraded_reasons: [] };
+    return HttpResponse.json({ doc_id: String(params.docId), job_id: `job2_${String(params.docId)}`, status: "queued" });
   }),
   http.get("/api/me/uploads", ({ request }) => {
     if (!request.headers.get("Authorization")) return err(401, "unauthorized", "Please sign in.");

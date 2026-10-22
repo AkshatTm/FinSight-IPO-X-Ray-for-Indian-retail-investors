@@ -19,6 +19,11 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `created_at` | `datetime` | required |
 | `status` | `Literal['uploading', 'processing', 'ready', 'partial', 'failed']` | `processing` |
 | `rejection` | `Optional[Literal['scanned', 'password', 'too_large', 'too_many_pages', 'not_offer_document', 'hash_mismatch']]` | — |
+| `pipeline_version` | `str \| None` | — |
+| `fingerprint` | `str \| None` | — |
+| `analysis_status` | `Optional[Literal['complete', 'degraded', 'failed']]` | — |
+| `degraded_reasons` | `list[str]` | `[]` |
+| `skipped_models` | `list[str]` | `[]` |
 
 ## Job (`Job`)
 

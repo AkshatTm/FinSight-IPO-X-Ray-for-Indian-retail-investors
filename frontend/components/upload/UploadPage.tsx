@@ -20,16 +20,21 @@ export function UploadPage() {
   const toast = useToast((s) => s.show);
   const [phase, setPhase] = useState<UploadPhase | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [refusal, setRefusal] = useState<string | null>(null);
+  const [lastFile, setLastFile] = useState<File | null>(null);
   const paused = !limits.enabled || error === "uploads_disabled";
 
-  const onFile = async (file: File) => {
+  const onFile = async (file: File, analyseWithout = false) => {
     setError(null);
+    setRefusal(null);
+    setLastFile(file);
     try {
-      const out = await uploadDocument(file, { token, maxMb: limits.max_mb, onPhase: setPhase });
+      const out = await uploadDocument(file, { token, maxMb: limits.max_mb, onPhase: setPhase, analyseWithout });
       if (out.kind === "exists") toast(t("up.duplicate"));
       router.push(`/reports/${out.docId}`);
     } catch (e) {
       setError(e instanceof UploadError ? e.code : "internal_error");
+      if (e instanceof UploadError && e.code === "models_unavailable") setRefusal(e.message);
       setPhase(null);
     }
   };
@@ -37,9 +42,11 @@ export function UploadPage() {
   const rejection = error ? rejectionFor(error) : null;
   const message = rejection
     ? t(`rej.${rejection}` as StringKey, { max_mb: limits.max_mb })
-    : error && error !== "uploads_disabled"
-      ? t("err.internal_error")
-      : null;
+    : refusal
+      ? refusal
+      : error && error !== "uploads_disabled"
+        ? t("err.internal_error")
+        : null;
 
   return (
     <div className="mx-auto max-w-2xl py-12 md:py-16">
@@ -58,6 +65,15 @@ export function UploadPage() {
       {message && (
         <p role="alert" data-testid="rejection" className="mt-4 rounded-[8px] border border-rule bg-surface-2 p-4 text-sm">
           {message}
+          {refusal && lastFile && (
+            <button
+              type="button"
+              onClick={() => void onFile(lastFile, true)}
+              className="mt-3 block rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface"
+            >
+              {t("cache.without")}
+            </button>
+          )}
         </p>
       )}
 
