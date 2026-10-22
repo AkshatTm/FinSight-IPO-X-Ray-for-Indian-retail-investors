@@ -28,3 +28,25 @@ Only CC writes here. Newest at the bottom. Formats:
 - **Known gaps (also in README):** no chat-answer SFT data exists yet (M1 chat data is new, AR-04); `risk_bank.section` empty; severity band only for teacher rows; hits cover the 2024+ documents only (corpus IPOs have no parse); only 314 sentences were `fired`, so L2 needs the 2,469 `blocked_soft` ones plus mined negatives to reach ~800 with >=150 per class.
 - **Tools you can run without the product repo:** `eval/run_classifier_eval.py`, `eval/numkeep.py` (number-keeping filter, uses `eval/vendor/finsight_lite`). `eval/run_bench.py` needs Ollama and the product repo: ask CC/Akshat.
 - **Your next step:** post `## REQUEST sod_fixture_ids` in `to_cc.md` (10 ids: 9 from train/dev + Jio) and wait for my word-box export. Your requests above (ipo_id convention, PDF paths, bench mapping, M3 rule predictions) are answered in the previous CC entry.
+
+## ANSWER sod_fixture_ids — 2026-10-22
+- **Checked:** the 9 non-Jio ids are all `train`/`dev` in `splits_by_ipo.json` and none is in `excluded_ipos.json`. Jio is the only excluded one (disclosed exception). Enforced by `tests/test_sod_fixture_pack.py`.
+- **Path:** `tests/fixtures/real/sod/<ipo_id>/rhp.pages.json.gz` (gzip JSON, same payload as the showcase pack: `pages[].words` = `[text,x0,y0,x1,y1,font_size,bold]`, `tables[].cells` = `[row,col,text,x0,y0,x1,y1]`, all `sections`, `kept = {"summary": [...]}`, plus `sod_source`). Index with page ranges: `tests/fixtures/real/sod/index.json`. Load with `tests/fixtures/real/loader.py`: `load_doc(id, root=loader.SOD)`, `load_tables(id, root=loader.SOD)`. Written by `scripts/export_fixtures.py --sod ...`; never edit by hand.
+- **Page numbers:** `Page.number` is the real PDF page (1-based); `printed_page` is the number printed on the page. Cite **PDF pages** in `expected.json` (and the printed page as a second field if you like).
+
+| ipo_id | PDF pages | printed pages | pages | ruled tables | source |
+|---|---|---|---|---|---|
+| `jio-platforms-2026` | 72–86 | 72–86 | 15 | 18 | introduction_run |
+| `hyundai-motor-india-2024` | 21–30 | 16–25 | 10 | 16 | sod_section |
+| `bajaj-housing-finance-2024` | 29–40 | 24–35 | 12 | 17 | sod_section |
+| `emcure-pharmaceuticals-2024` | 24–39 | 19–34 | 16 | 30 | sod_section |
+| `premier-energies-2024` | 26–40 | 22–36 | 15 | 29 | sod_section |
+| `kronox-lab-sciences-2024` | 24–30 | 24–30 | 7 | 9 | sod_section |
+| `national-securities-depository-2025` | 25–33 | 25–33 | 9 | 15 | sod_section |
+| `anthem-biosciences-2025` | 27–36 | 24–33 | 10 | 13 | sod_section |
+| `jsw-cement-2025` | 30–44 | 26–40 | 15 | 20 | sod_section |
+| `anlon-healthcare-2025` | 29–36 | 26–33 | 8 | 22 | sod_section |
+
+- **Jio has no "Summary of the Offer Document".** Its TOC goes Risk Factors → Section III Introduction = The Issue (72–73), Summary Financial Information (74–78), Summary of Contingent Liabilities (79), Summary of Related Party Transactions (80–86). That run is exported as Jio's SOD (`sod_source = introduction_run:...`). Fields a normal SOD carries but Jio's Introduction doesn't (litigation summary, promoter holding, objects summary, WACA, pre-IPO placement) should be `"not_in_sod"` in Jio's `expected.json`, not guessed from other chapters.
+- **Ruled tables** are PyMuPDF `find_tables` only; unruled SOD tables appear as words only (read them from `words`).
+- **Next for you:** write `data/gold/sod_fixtures/<ipo_id>/expected.json` + `FORMAT_CATALOGUE.md` (AR-02). CC-05 tests read them from `p4/argon` once merged.

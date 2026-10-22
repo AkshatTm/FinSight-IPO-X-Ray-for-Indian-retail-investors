@@ -145,6 +145,91 @@ def export_doc(ipo_id: str, doc_type: str, source: str, pdf: Path) -> None:
     _dump(OUT / ipo_id / f"{doc_type}.pages.json.gz", payload)
 
 
+# ------------------------------------------------------------------------- SOD fixtures (P4 AR-02)
+SOD_OUT = OUT / "sod"
+SOD_SECTION = "summary"  # "Summary of the Offer Document" in parse.sections
+
+
+def _sod_doc_dir(ipo_id: str, data_root: Path, overrides: dict[str, Path]) -> tuple[Path, Path]:
+    """(folder holding parsed.json, PDF) for one IPO: an explicit override, the batch store
+    (keyed by the PDF's sha256) or ``data/processed/<ipo_id>``."""
+    import hashlib
+
+    from finsight.core.ids import make_doc_id
+
+    if ipo_id in overrides:
+        base = overrides[ipo_id]
+        return base, base / "source.pdf"
+    raw_dir = data_root / "data" / "raw"
+    pdf = next(
+        (p for p in (raw_dir / "offer_docs" / f"{ipo_id}.pdf", raw_dir / "rhp" / f"{ipo_id}.pdf")
+         if p.exists()),
+        None,
+    )  # fmt: skip
+    if pdf is None:
+        raise SystemExit(f"{ipo_id}: no PDF under data/raw/offer_docs or data/raw/rhp")
+    proc = data_root / "data" / "processed"
+    doc_id = make_doc_id(hashlib.sha256(pdf.read_bytes()).hexdigest())
+    base = proc / "batch" / "store" / "docs" / doc_id
+    if not (base / "parsed.json").exists():
+        base = proc / ipo_id
+    if not (base / "parsed.json").exists():
+        raise SystemExit(f"{ipo_id}: no parsed.json (run the batch parse first)")
+    return base, pdf
+
+
+def export_sod(ipo_id: str, data_root: Path, overrides: dict[str, Path]) -> dict[str, Any]:
+    """Word boxes + ruled tables of the Summary of the Offer Document pages only.
+
+    Same payload as ``export_doc`` (so ``loader.load_doc(..., root=SOD)`` reads it), with
+    ``kept = {"summary": [...]}``. Returns the page range for the ``to_argon.md`` answer.
+    """
+    base, pdf = _sod_doc_dir(ipo_id, data_root, overrides)
+    doc = ParsedDoc.model_validate_json((base / "parsed.json").read_bytes())
+    sections = find_sections(doc)
+    sod = next((s for s in sections if s.id == SOD_SECTION), None)
+    if sod is not None:
+        start, end, method, source = sod.start_page, sod.end_page, sod.method, "sod_section"
+    else:
+        # Some RHPs (Jio) have no SOD; their "Introduction" holds The Issue and the summary_*
+        # sections (financials, contingent liabilities, RPT). Export that run instead.
+        run: list[Section] = []
+        for s in sections:
+            if s.id == "the_offer" or (run and s.id.startswith("summary_")):
+                run.append(s)
+            elif run:
+                break
+        if not run:
+            raise SystemExit(f"{ipo_id}: no SOD and no Introduction run (The Offer + summary_*)")
+        start, end, method = run[0].start_page, run[-1].end_page, run[0].method
+        source = "introduction_run:" + ",".join(s.id for s in run)
+    kept = {SOD_SECTION: list(range(start, end + 1))}
+    tables = _tables(pdf, doc, kept) if pdf.exists() else []
+    payload = {
+        "ipo_id": ipo_id,
+        "doc_type": "rhp",
+        "source": base.name,
+        "n_pages": doc.n_pages,
+        "sha256": doc.sha256,
+        "sections": [s.model_dump() for s in sections],
+        "kept": kept,
+        "sod_source": source,
+        "pages": [_page_dict(doc.pages[n - 1]) for n in kept[SOD_SECTION]],
+        "tables": tables,
+    }
+    _dump(SOD_OUT / ipo_id / "rhp.pages.json.gz", payload)
+    printed = [doc.pages[n - 1].printed_page for n in kept[SOD_SECTION]]
+    return {
+        "ipo_id": ipo_id,
+        "pdf_pages": [start, end],
+        "printed_pages": [printed[0], printed[-1]],
+        "n_pages": len(kept[SOD_SECTION]),
+        "n_tables": len(tables),
+        "method": method,
+        "sod_source": source,
+    }
+
+
 # ------------------------------------------------------------------------- corpus
 def _risk_text(path: Path) -> tuple[str, str] | None:
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -289,7 +374,23 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ipo", action="append", help="only these IPO ids")
     ap.add_argument("--skip-corpus", action="store_true")
+    ap.add_argument("--sod", nargs="+", metavar="IPO_ID",
+                    help="only export the Summary of the Offer Document pages of these IPOs")  # fmt: skip
+    ap.add_argument("--sod-doc", action="append", default=[], metavar="IPO_ID=DIR",
+                    help="parsed-doc folder for an upload (e.g. a data/store/docs/<doc_id>)")  # fmt: skip
+    ap.add_argument("--data-root", type=Path, default=ROOT,
+                    help="checkout holding data/raw and data/processed (a worktree has none)")  # fmt: skip
     args = ap.parse_args()
+    if args.sod:
+        overrides = {k: Path(v) for k, v in (s.split("=", 1) for s in args.sod_doc)}
+        index = [export_sod(i, args.data_root, overrides) for i in args.sod]
+        (SOD_OUT / "index.json").write_text(
+            json.dumps(index, indent=1) + "\n", encoding="utf-8", newline="\n"
+        )
+        for row in index:
+            print(row)
+        check_sizes()
+        return
     cfg = yaml.safe_load((ROOT / "configs" / "demo_ipos.yaml").read_text(encoding="utf-8"))
     ipos = [i["ipo_id"] for i in cfg["ipos"] if not args.ipo or i["ipo_id"] in args.ipo]
     for ipo_id in ipos:

@@ -15,6 +15,7 @@ from typing import Any
 from finsight.core.schemas import Page, ParsedDoc, Section, Table, TableCell, Word
 
 ROOT = Path(__file__).resolve().parent
+SOD = ROOT / "sod"  # Summary of the Offer Document pages of the P4 SOD fixtures (AR-02)
 
 
 def _read(path: Path) -> Any:
@@ -22,12 +23,12 @@ def _read(path: Path) -> Any:
         return json.loads(fh.read().decode("utf-8"))
 
 
-def ipo_ids() -> list[str]:
-    return sorted(p.name for p in ROOT.iterdir() if (p / "rhp.pages.json.gz").exists())
+def ipo_ids(root: Path = ROOT) -> list[str]:
+    return sorted(p.name for p in root.iterdir() if (p / "rhp.pages.json.gz").exists())
 
 
-def raw(ipo_id: str, doc_type: str = "rhp") -> dict[str, Any]:
-    return _read(ROOT / ipo_id / f"{doc_type}.pages.json.gz")
+def raw(ipo_id: str, doc_type: str = "rhp", root: Path = ROOT) -> dict[str, Any]:
+    return _read(root / ipo_id / f"{doc_type}.pages.json.gz")
 
 
 def _page(d: dict[str, Any]) -> Page:
@@ -39,28 +40,28 @@ def _page(d: dict[str, Any]) -> Page:
                 height=d["height"], words=words, text=d["text"], is_scanned=False)  # fmt: skip
 
 
-def load_doc(ipo_id: str, doc_type: str = "rhp") -> ParsedDoc:
-    d = raw(ipo_id, doc_type)
+def load_doc(ipo_id: str, doc_type: str = "rhp", root: Path = ROOT) -> ParsedDoc:
+    d = raw(ipo_id, doc_type, root)
     return ParsedDoc(ipo_id=ipo_id, doc_type=doc_type, source_path="fixture", n_pages=d["n_pages"],
                      pages=[_page(p) for p in d["pages"]], sha256=d["sha256"])  # fmt: skip
 
 
-def load_sections(ipo_id: str, doc_type: str = "rhp") -> list[Section]:
-    return [Section(**s) for s in raw(ipo_id, doc_type)["sections"]]
+def load_sections(ipo_id: str, doc_type: str = "rhp", root: Path = ROOT) -> list[Section]:
+    return [Section(**s) for s in raw(ipo_id, doc_type, root)["sections"]]
 
 
-def kept_pages(ipo_id: str, doc_type: str = "rhp") -> dict[str, list[int]]:
+def kept_pages(ipo_id: str, doc_type: str = "rhp", root: Path = ROOT) -> dict[str, list[int]]:
     """Label (section id, ``cash_flows``, ``auditors_report``) -> exported PDF pages."""
-    return raw(ipo_id, doc_type)["kept"]
+    return raw(ipo_id, doc_type, root)["kept"]
 
 
 def page_map(doc: ParsedDoc) -> dict[int, Page]:
     return {p.number: p for p in doc.pages}
 
 
-def load_tables(ipo_id: str, doc_type: str = "rhp") -> list[Table]:
+def load_tables(ipo_id: str, doc_type: str = "rhp", root: Path = ROOT) -> list[Table]:
     out = []
-    for t in raw(ipo_id, doc_type)["tables"]:
+    for t in raw(ipo_id, doc_type, root)["tables"]:
         cells = [
             TableCell(
                 row=c[0], col=c[1], text=c[2], bbox=(c[3], c[4], c[5], c[6]), page=t["pages"][0]

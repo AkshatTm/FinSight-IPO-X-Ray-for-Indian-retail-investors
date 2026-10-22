@@ -1,0 +1,152 @@
+[
+ {
+  "ipo_id": "jio-platforms-2026",
+  "pdf_pages": [
+   72,
+   86
+  ],
+  "printed_pages": [
+   "72",
+   "86"
+  ],
+  "n_pages": 15,
+  "n_tables": 18,
+  "method": "toc",
+  "sod_source": "introduction_run:the_offer,summary_financial_information,summary_of_contingent_liabilities,summary_of_related_party_transactions"
+ },
+ {
+  "ipo_id": "hyundai-motor-india-2024",
+  "pdf_pages": [
+   21,
+   30
+  ],
+  "printed_pages": [
+   "16",
+   "25"
+  ],
+  "n_pages": 10,
+  "n_tables": 16,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "bajaj-housing-finance-2024",
+  "pdf_pages": [
+   29,
+   40
+  ],
+  "printed_pages": [
+   "24",
+   "35"
+  ],
+  "n_pages": 12,
+  "n_tables": 17,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "emcure-pharmaceuticals-2024",
+  "pdf_pages": [
+   24,
+   39
+  ],
+  "printed_pages": [
+   "19",
+   "34"
+  ],
+  "n_pages": 16,
+  "n_tables": 30,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "premier-energies-2024",
+  "pdf_pages": [
+   26,
+   40
+  ],
+  "printed_pages": [
+   "22",
+   "36"
+  ],
+  "n_pages": 15,
+  "n_tables": 29,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "kronox-lab-sciences-2024",
+  "pdf_pages": [
+   24,
+   30
+  ],
+  "printed_pages": [
+   "24",
+   "30"
+  ],
+  "n_pages": 7,
+  "n_tables": 9,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "national-securities-depository-2025",
+  "pdf_pages": [
+   25,
+   33
+  ],
+  "printed_pages": [
+   "25",
+   "33"
+  ],
+  "n_pages": 9,
+  "n_tables": 15,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "anthem-biosciences-2025",
+  "pdf_pages": [
+   27,
+   36
+  ],
+  "printed_pages": [
+   "24",
+   "33"
+  ],
+  "n_pages": 10,
+  "n_tables": 13,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "jsw-cement-2025",
+  "pdf_pages": [
+   30,
+   44
+  ],
+  "printed_pages": [
+   "26",
+   "40"
+  ],
+  "n_pages": 15,
+  "n_tables": 20,
+  "method": "toc",
+  "sod_source": "sod_section"
+ },
+ {
+  "ipo_id": "anlon-healthcare-2025",
+  "pdf_pages": [
+   29,
+   36
+  ],
+  "printed_pages": [
+   "26",
+   "33"
+  ],
+  "n_pages": 8,
+  "n_tables": 22,
+  "method": "toc",
+  "sod_source": "sod_section"
+ }
+]
