@@ -1,10 +1,11 @@
 # PROGRESS — CC (Phase 4)
 <!-- ≤15 lines, overwrite each session. Newest state only. -->
 Date: 2026-10-22
-Done: CC-01, CC-02, CC-04 (merged). SOD fixtures exported for ARGON's 10 ids → `tests/fixtures/real/sod/` (PR #255, CI green, **awaiting Akshat's merge**; answer in `comms/to_argon.md`). Bench candidates: `data/platform_bench/candidates.csv` (gitignored, 102 rows). CC-05a Jio diagnosis written: `docs/phase4/CC05A_JIO_DIAGNOSIS.md`.
-Key finding: Jio's RHP has **no SOD**; 6 readers read only the SOD and fall back to pp. 1–29. p.40 "default" is a hypothetical the hedge filter missed ("in case of"); p.472 is a real SEBI penalty on the Promoter (RIL, ₹3 mn), and ARGON labels such sentences `actual_event`, so M3 won't clear it (needs an entity/materiality rule in CC-07).
-In progress: nothing. STOPPED after the diagnosis for Akshat's review (no fixes made).
-Next: Akshat decides (1) does "until the price is set" count toward G2's ≥10/13 (RHP-only Jio can reach 7–8 decided), (2) p.472 policy (issuer vs promoter/group, materiality, set aside). Then CC-05 on Opus: SOD-less fallback (Introduction run + chapter readers), fixes sized in the diagnosis table.
-Blocked: none. CC-03 waits until Akshat has filled ≥5 Platform Bench IPOs.
-Notes: CC works in worktree `../FinSight-cc`. Batch parses live in the main checkout's `data/processed/batch/store/docs/<doc_id>/` (use `--data-root`). Showcase IPOs are not deletable through the API (403).
-Gates: G0 [~] G1 [ ] G2 [ ] G3 [ ]
+Done: CC-01, CC-02, CC-04, SOD fixture export (#255) merged. **CC-05b + CC-06** on `p4/cc` (PR to main pending): SOD-less fallback (`summary/locate.py`), SOD part-header TOC fix, heading-voted TOC offset, RF01/03/04/06/08/09/12/13 reader fixes, litigation counted from sections, "in case of" hedge, `sod.json` (financial rows, ratios, strengths, `price_band` slot), `pipeline_version` 4.1.
+Jio: 7/13 decided from the RHP (was 1/13); p.40 false serious finding gone; p.472 left for C-ADR-26.
+Guard: E14 0.769 → 0.774, E15 0.769 → 0.769; decided checks over 289 RHPs 1,561 → 1,704; 4 docs lost one check (listed in the PR; 2 verified corrections).
+In progress: nothing.
+Next: CC-07 (Opus): `price_band` API + small UI, `PENDING_PRICE` status for RF05/06/07/11, C-ADR-26 regulator rule, rewire the checks on `sod.json`; then measure Jio with the band.
+Blocked: ARGON's `data/gold/sod_fixtures/*/expected.json` (AR-02). `tests/summary/test_sod_fixtures.py` skips until it lands (gate ≥8/10). CC-03 waits until Akshat has filled ≥5 Platform Bench IPOs.
+Notes: CC works in worktree `../FinSight-cc`. Batch parses live in the main checkout's `data/processed/batch/store/docs/<doc_id>/` (use `--data-root`). Sweep: `scripts/p4_decided_counts.py`.
+Gates: G0 [~] G1 [ ] (waits on AR-02) G2 [ ] G3 [ ]

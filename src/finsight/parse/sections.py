@@ -48,7 +48,7 @@ _CANONICAL: list[tuple[str, re.Pattern[str]]] = [
         ("management_s_discussion_and_analysis", r"MANAGEMENT S DISCUSSION AND ANALYSIS.*"),
         (
             "summary_financial_information",
-            r"SUMMARY (OF )?(RESTATED )?(CONSOLIDATED )?FINANCIAL (INFORMATION|STATEMENTS)",
+            r"SUMMARY (OF )?(OUR )?(RESTATED )?(CONSOLIDATED )?FINANCIAL (INFORMATION|STATEMENTS)",
         ),
         (
             "restated_financial_information",

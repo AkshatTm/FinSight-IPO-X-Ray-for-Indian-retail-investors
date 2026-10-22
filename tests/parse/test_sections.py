@@ -87,6 +87,7 @@ def test_parse_toc_lines_joins_wrapped_titles_and_skips_parts() -> None:
         ("SUMMARY OF THIS RED HERRING PROSPECTUS", "summary"),
         ("SUMMARY OF THE OFFER DOCUMENT", "summary"),
         ("SUMMARY OF THIS PROSPECTUS", "summary"),
+        ("SUMMARY OF OUR FINANCIAL INFORMATION", "summary_financial_information"),
         ("OFFER DOCUMENT SUMMARY", "summary"),
         ("OUR PROMOTERS AND PROMOTER GROUP", "our_promoters"),
         ("BASIS FOR OFFER PRICE", "basis_for_offer_price"),
