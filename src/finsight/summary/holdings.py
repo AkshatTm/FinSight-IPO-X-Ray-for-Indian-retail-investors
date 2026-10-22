@@ -38,9 +38,10 @@ from finsight.summary.anchored import (
 )
 from finsight.summary.financials import _pages, _section_pages, summary_pages
 from finsight.summary.layout import is_nil, is_placeholder, lines_of
+from finsight.summary.locate import has_sod
 
-_POST = re.compile(r"post-?\s?offer", re.IGNORECASE)
-_PRE = r"pre-?\s?offer"
+_POST = re.compile(r"post-?\s?(?:offer|issue)", re.IGNORECASE)  # "post-Issue": Jio, fresh-only
+_PRE = r"pre-?\s?(?:offer|issue)"
 _PROMOTER = re.compile(r"promoter", re.IGNORECASE)
 _OTHER = re.compile(
     r"selling|public|investor|\btop\s*\d+|\bother|additional|shareholders?\b|employee",
@@ -87,7 +88,19 @@ def _percent(cell: Cell) -> Decimal | None:
         return None
 
 
-def _post_tables(pages: list[Page]) -> list[AnchoredTable]:
+_AGGREGATE_HEADING = re.compile(
+    r"aggregate\s+pre-?\s?(?:offer|issue)\s+and\s+post-?\s?(?:offer|issue)\s+shareholding",
+    re.IGNORECASE,
+)
+
+
+def _post_tables(pages: list[Page], anchored: bool = False) -> list[AnchoredTable]:
+    """The pre/post-offer shareholding table and its run-on pages.
+
+    ``anchored`` (no SOD: the pages are Capital Structure, which holds other pre/post tables,
+    e.g. the promoter's lock-in) starts only at the page under the "aggregate pre-Issue and
+    post-Issue shareholding" heading, and reads the table below that heading.
+    """
     found: list[AnchoredTable] = []
     for page in pages:
         if found and page.number != found[-1].page + 1:
@@ -96,7 +109,16 @@ def _post_tables(pages: list[Page]) -> list[AnchoredTable]:
             if found:
                 break
             continue
-        table = read_anchored(page, _POST, require=(_PRE,), min_cells=4)
+        after = None
+        if anchored and not found:
+            heading = next(
+                (ln.top for ln in lines_of(page.words) if _AGGREGATE_HEADING.search(ln.text)),
+                None,
+            )
+            if heading is None and not _AGGREGATE_HEADING.search(" ".join(page.text.split())):
+                continue
+            after = heading
+        table = read_anchored(page, _POST, require=(_PRE,), min_cells=4, after=after)
         if table is None or table.column("post", r"%|percent") is None:
             if found:
                 break
@@ -118,13 +140,33 @@ def _heading(row: AnchoredRow) -> str | None:
     return None
 
 
-def _promoter_rows(tables: list[AnchoredTable]) -> list[tuple[AnchoredTable, AnchoredRow, int]]:
-    """(table, row, post column) for the rows under a promoter heading."""
-    zone = bool(re.search(r"promoters?\W*$", tables[0].header_text, re.IGNORECASE))
+def _share_column(t: AnchoredTable, which: str) -> int | None:
+    """The post-offer % column (rightmost: the upper price band when both are printed), or the
+    pre-offer % column (leftmost)."""
+    if which == "post":
+        return t.column("post", r"%|percent", rightmost=True)
+    # Pre: the last % column before the first post-offer column (the left columns' merged
+    # header text often says "pre-Issue" too, over the names and share counts).
+    first_post = t.column("post")
+    pct = [k for k, c in enumerate(t.columns) if re.search(r"%|percent", c.header, re.IGNORECASE)]
+    before = [k for k in pct if first_post is None or k < first_post]
+    return before[-1] if before else None
+
+
+def _promoter_rows(
+    tables: list[AnchoredTable], which: str = "post"
+) -> list[tuple[AnchoredTable, AnchoredRow, int]]:
+    """(table, row, share column) for the rows under a promoter heading.
+
+    The heading may be the last header-band words, before the first holder's name wraps
+    onto the data rows (Jio p.109: "... (in %) Promoter Reliance | Industries | Limited")."""
+    zone = bool(
+        re.search(r"promoters?\W*(?:[A-Za-z]+\W*){0,2}$", tables[0].header_text, re.IGNORECASE)
+    )
     group = ""
     out: list[tuple[AnchoredTable, AnchoredRow, int]] = []
     for t in tables:
-        col = t.column("post", r"%|percent", rightmost=True)
+        col = _share_column(t, which)
         if col is None:
             continue
         for row in t.rows:
@@ -136,6 +178,9 @@ def _promoter_rows(tables: list[AnchoredTable]) -> list[tuple[AnchoredTable, Anc
                     zone = True
                 elif _OTHER.search(text):
                     zone = False
+            if _OTHER.search(row.label) and not _PROMOTER.search(row.label):
+                zone = False  # "Additional top 10 Shareholders" printed with stray cells ("10")
+                continue
             if heading or not zone or col not in row.cells:
                 continue
             out.append((t, row, col))
@@ -144,35 +189,47 @@ def _promoter_rows(tables: list[AnchoredTable]) -> list[tuple[AnchoredTable, Anc
 
 def promoter_post(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
     """Promoter and Promoter Group post-offer shareholding (%), from the Summary table."""
-    tables = _post_tables(_pages(doc, summary_pages(sections, "holdings")))
+    return _promoter_share(doc, sections, doc_id, "post")
+
+
+def promoter_pre(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
+    """Promoter and Promoter Group pre-offer shareholding (%), from the same table (CC-06)."""
+    return _promoter_share(doc, sections, doc_id, "pre")
+
+
+def _promoter_share(
+    doc: ParsedDoc, sections: list[Section], doc_id: str, which: str
+) -> SummaryValue | None:
+    key, period = f"promoter_holding_{which}_pct", f"{which}-offer"
+    tables = _post_tables(
+        _pages(doc, summary_pages(sections, "holdings")), anchored=not has_sod(sections)
+    )
     if not tables:
         return None
-    rows = _promoter_rows(tables)
+    rows = _promoter_rows(tables, which)
     totals = [r for r in rows if _TOTAL.search(r[1].label)]
     use = totals or rows
     if not use:
         return None
     t0, r0, c0 = use[0]
     parts = [f"{r.label or 'row'}: {r.cells[c].text}" for _, r, c in use]
-    head = f"[post-offer shareholding (%), {'total rows' if totals else f'sum of {len(use)} rows'}]"
+    how = "total rows" if totals else f"sum of {len(use)} rows"
+    head = f"[{which}-offer shareholding (%), {how}]"
     ev = PageEvidence(
         doc_id=doc_id, page=t0.page, bbox=cell_box(r0, r0.cells[c0]),
         sentence="; ".join([head, *parts])[:600],
     )  # fmt: skip
     if any(is_placeholder(_clean(r.cells[c].text)) for _, r, c in use):
-        return SummaryValue(key="promoter_holding_post_pct", evidence=ev, status="placeholder")
+        return SummaryValue(key=key, evidence=ev, status="placeholder")
     values = [_percent(r.cells[c]) for _, r, c in use]
     if any(v is None for v in values):
-        return SummaryValue(key="promoter_holding_post_pct", status="not_found")
+        return SummaryValue(key=key, status="not_found")
     total = sum((v for v in values if v is not None), Decimal(0))
     if total > 100:  # a share-count column read as "%" (C3.7b), or non-promoter rows added up
-        return SummaryValue(key="promoter_holding_post_pct", status="not_found")
+        return SummaryValue(key=key, status="not_found")
     value = Percent(value=total, raw=f"{total}%")
     status = "found" if total > 0 else "stated_zero"
-    return SummaryValue(
-        key="promoter_holding_post_pct", value=value, period="post-offer", evidence=ev,
-        status=status,
-    )  # fmt: skip
+    return SummaryValue(key=key, value=value, period=period, evidence=ev, status=status)
 
 
 def pledged(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValue | None:
@@ -182,6 +239,10 @@ def pledged(doc: ParsedDoc, sections: list[Section], doc_id: str) -> SummaryValu
         if not (_PLEDGE_HINT.search(page.text) and re.search(r"\(A\)", page.text)):
             continue
         table = read_anchored(page, _PLEDGE_HINT, require=(r"shareholder",), min_cells=4)
+        if table is None:  # SEBI Table I with a ~30-line header of split words (Jio p.107)
+            table = read_anchored(
+                page, _PLEDGE_HINT, require=(r"shareholder",), min_cells=4, tall=True
+            )
         if table is None:
             continue
         col = table.column(r"encumbered|pledged", r"%|\(b\)")

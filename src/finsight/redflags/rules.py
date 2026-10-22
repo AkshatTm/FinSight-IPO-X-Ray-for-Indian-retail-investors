@@ -176,6 +176,17 @@ def _fresh_ofs(x: RedFlagInputs) -> tuple[Decimal, Decimal] | None:
 
 def rf04(x: RedFlagInputs, c: Mapping[str, Any], na: str) -> Result:
     split = _fresh_ofs(x)
+    no_ofs = x.ofs_amount is not None and x.ofs_amount.value_inr == 0  # stated: "Not applicable"
+    if split is None and no_ofs and x.fresh_blank:
+        # A pure fresh issue: the amount waits for the price, but the split does not.
+        used = {"fresh_pct": "100", "ofs_pct": "0"}
+        return Result(
+            "ok",
+            "All of the money goes to the company: there is no offer for sale (the amount is set "
+            "with the price).",
+            used,
+            ["fresh_issue_amount", "ofs_amount"],
+        )
     if split is None and (x.fresh_blank or x.ofs_blank):
         return Result(
             "not_available",

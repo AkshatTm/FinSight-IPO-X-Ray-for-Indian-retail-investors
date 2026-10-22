@@ -13,6 +13,7 @@ from __future__ import annotations
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
+from decimal import Decimal
 
 from finsight.core.schemas import (
     Candidate,
@@ -44,7 +45,18 @@ _OFS = re.compile(
     r"offer\s+for\s+sale\s+of\s+(?:up\s+to\s+)?(?P<n>\[\s*[●•]\s*\]|\d[\d,]*)\s+(?:equity\s+)?shares",
     _CI,
 )
-_FRESH = re.compile(rf"fresh\s+issue\s+of\s+(?:up\s+to\s+)?(?=\[|\d|{_AMT})", _CI)
+_FRESH = re.compile(
+    rf"fresh\s+issue\s+(?:of\s+(?:up\s+to\s+)?|up\s+to\s+)(?=\[|\d|{_AMT})",  # prose or table cell
+    _CI,
+)
+# The cover's "Details of the Issue" table (Jio): "Fresh Issue | Up to 270,000,000 Equity Shares
+# ... aggregating up to ₹[●] million | Not applicable | ..." — the cell after the fresh-issue
+# cell is the offer-for-sale column, which here states there is none.
+_OFS_NONE = re.compile(
+    rf"fresh\s+issue\s+up\s+to\s+[\d,]+\s+equity\s+shares.{{0,320}}?aggregating\s+up\s+to\s+"
+    rf"{_AMT}\s+(?P<none>not\s+applicable|nil)\b",
+    _CI,
+)
 
 
 @dataclass
@@ -115,6 +127,10 @@ def ofs_amount(text: str) -> list[Hit]:
     hit = _first_aggregate(
         _after(text, re.compile(_OFS.pattern.split(r"\s+(?:equity")[0], _CI), 300, _STOP_OFS)
     )
+    if hit is None and (m := _OFS_NONE.search(text)):
+        # A stated zero ("Not applicable" in the offer-for-sale column), never a guess.
+        zero = Money(value_inr=Decimal(0), currency="INR", raw=m["none"], precision=0)
+        hit = Hit(m["none"], zero)
     return [hit] if hit else []
 
 
