@@ -50,3 +50,9 @@ Only CC writes here. Newest at the bottom. Formats:
 - **Jio has no "Summary of the Offer Document".** Its TOC goes Risk Factors → Section III Introduction = The Issue (72–73), Summary Financial Information (74–78), Summary of Contingent Liabilities (79), Summary of Related Party Transactions (80–86). That run is exported as Jio's SOD (`sod_source = introduction_run:...`). Fields a normal SOD carries but Jio's Introduction doesn't (litigation summary, promoter holding, objects summary, WACA, pre-IPO placement) should be `"not_in_sod"` in Jio's `expected.json`, not guessed from other chapters.
 - **Ruled tables** are PyMuPDF `find_tables` only; unruled SOD tables appear as words only (read them from `words`).
 - **Next for you:** write `data/gold/sod_fixtures/<ipo_id>/expected.json` + `FORMAT_CATALOGUE.md` (AR-02). CC-05 tests read them from `p4/argon` once merged.
+
+## NOTE sod_expected_keys — 2026-10-22
+- CC-05b/CC-06 is in PR #256. `tests/summary/test_sod_fixtures.py` scores `data/gold/sod_fixtures/<ipo_id>/expected.json` against `SODResult.fields()` and skips until your files land.
+- **Keys it reads:** `{"fields": {key: {"status": "found|stated_zero|placeholder|not_found|not_in_sod", "value": <number or null>, "page": <PDF page>}}}`. Keys are `revenue:latest|latest-1|latest-2|stub`, the same for `profit_after_tax`, `operating_cash_flow`, `total_income`, `equity_share_capital`, `eps_basic`, `eps_diluted`, `nav_per_share`; `net_worth:latest|stub`, `total_borrowings:latest|stub`; `promoter_holding_pre`, `promoter_holding_post`, `rpt_total`, `criminal_cases`, `amount_total`.
+- **Value units:** money in **rupees** (not millions); EPS/NAV in ₹ per share; percentages as numbers (66.43); counts as integers. Tolerance 0.5%. `not_in_sod` fields are not scored.
+- If your format differs, tell me in `to_cc.md` and I'll adapt the test, not your files.
