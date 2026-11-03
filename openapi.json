@@ -5021,6 +5021,17 @@
             "type": "integer",
             "title": "Mentions",
             "default": 1
+          },
+          "about": {
+            "type": "string",
+            "enum": [
+              "issuer",
+              "promoter",
+              "group_company",
+              "director"
+            ],
+            "title": "About",
+            "default": "issuer"
           }
         },
         "type": "object",

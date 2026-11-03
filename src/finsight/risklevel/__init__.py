@@ -131,6 +131,9 @@ def compute(
         pts["max_risk_points"]
     )
     score = round(points / max_points, 4) if max_points else 0.0
+    # C-ADR-26: only events about the issuer force the high level; an order on the promoter or a
+    # group company stays a finding in redflags.json.
+    overrides = [o for o in overrides if o.about == "issuer"]
     for o in overrides:
         reasons.append(
             RiskLevelReason(

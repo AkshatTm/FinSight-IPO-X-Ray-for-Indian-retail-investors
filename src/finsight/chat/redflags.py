@@ -39,7 +39,9 @@ def redflags_passage(ipo_id: str, flags: RedFlags) -> Passage | None:
         if f.status != "ok" and f.evidence and page == 1:
             page = f.evidence[0].page
     for o in flags.severe_overrides:
-        lines.append(f"- Severe: {o.title}: {o.sentence}")
+        subject = o.about.replace("_", " ")
+        who = "" if o.about == "issuer" else f" (about the {subject}, not the company)"
+        lines.append(f"- Severe{who}: {o.title}: {o.sentence}")
         if o.evidence:
             page = o.evidence.page
     if not lines:

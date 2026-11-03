@@ -412,6 +412,9 @@ class SevereOverride(BaseModel):
     evidence: PageEvidence
     rule: str = ""
     mentions: int = 1
+    # C-ADR-26: whom the event is about. Only ``issuer`` (the company or its subsidiaries) forces
+    # the high level; an order on the promoter, a group company or a director is shown only.
+    about: Literal["issuer", "promoter", "group_company", "director"] = "issuer"
 
 
 class RedFlags(BaseModel):
