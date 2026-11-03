@@ -194,74 +194,90 @@ a.btn:active {
     transform: translateY(6px);
   }
 }
-/* X-ray scan on the landing hero: a saffron line sweeps the page, callouts pop as it passes. */
-.xray-line {
+/* Landing hero: words rise in one after another, the last two glow saffron. */
+.hero-word {
+  animation: hero-rise 700ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+}
+.hero-lit {
+  color: var(--stamp);
+  text-shadow: 0 0 32px rgba(226, 89, 27, 0.45);
+}
+.hero-grain {
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* X-ray lens: a magnified, film-toned copy of the page inside a saffron ring. */
+.lens {
+  border: 2px solid var(--stamp);
+  box-shadow:
+    0 0 0 6px rgba(226, 89, 27, 0.18),
+    0 0 40px 6px rgba(226, 89, 27, 0.45),
+    inset 0 0 30px rgba(0, 0, 0, 0.6);
+  will-change: transform;
+  z-index: 5;
+}
+.lens::after {
+  content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 3px;
-  background: var(--stamp);
-  box-shadow: 0 0 18px 4px rgba(226, 89, 27, 0.55);
-  animation: xray-scan var(--cycle) cubic-bezier(0.45, 0, 0.35, 1) infinite;
+  inset: 0;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.22), transparent 38%),
+    repeating-linear-gradient(0deg, rgba(226, 89, 27, 0.07) 0 1px, transparent 1px 4px);
 }
-.xray-trail {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 90px;
-  margin-top: -90px;
-  background: linear-gradient(to top, rgba(226, 89, 27, 0.28), transparent);
-  animation: xray-scan var(--cycle) cubic-bezier(0.45, 0, 0.35, 1) infinite;
+.lens-film {
+  filter: invert(1) sepia(1) saturate(2.6) hue-rotate(-18deg) brightness(0.95) contrast(1.15);
 }
-@keyframes xray-scan {
-  0% {
-    top: 0;
-    opacity: 0;
+.lens-box {
+  outline: 2px solid var(--stamp);
+  background: rgba(255, 196, 140, 0.18);
+  box-shadow: 0 0 14px 2px rgba(226, 89, 27, 0.8);
+  animation: lens-box 1.6s ease-in-out infinite;
+}
+@keyframes lens-box {
+  50% {
+    box-shadow: 0 0 22px 5px rgba(226, 89, 27, 0.95);
   }
-  4% {
-    opacity: 1;
-  }
-  72% {
-    top: 100%;
-    opacity: 1;
-  }
-  76%,
+}
+.lens-ping {
+  box-shadow: 0 0 0 0 rgba(226, 89, 27, 0.7);
+  animation: lens-ping 1.8s ease-out infinite;
+}
+@keyframes lens-ping {
+  70%,
   100% {
-    top: 100%;
-    opacity: 0;
+    box-shadow: 0 0 0 14px rgba(226, 89, 27, 0);
   }
 }
-.xray-callout {
-  animation: xray-pop var(--cycle) var(--ease-out) infinite;
-  animation-delay: var(--d);
-  animation-fill-mode: backwards;
+.lens-callout {
+  animation: lens-callout 260ms var(--ease-out) both;
 }
-@keyframes xray-pop {
-  0% {
+@keyframes lens-callout {
+  from {
     opacity: 0;
-    transform: translateY(8px) scale(0.96);
+    transform: translateY(8px) scale(0.97);
   }
-  6%,
-  84% {
-    opacity: 1;
-    transform: none;
-  }
-  94%,
-  100% {
-    opacity: 0;
-    transform: none;
+}
+@media (hover: none) {
+  .lens-page {
+    cursor: auto;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .xray-line,
-  .xray-trail {
-    display: none;
-  }
-  .xray-callout {
+  .hero-word,
+  .lens-box,
+  .lens-ping,
+  .lens-callout {
     animation: none;
-    opacity: 1;
   }
 }
 
