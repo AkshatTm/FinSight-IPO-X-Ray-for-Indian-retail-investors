@@ -10,12 +10,13 @@ import { tabForHash, TABS, type ReportOverview, type Tab } from "@/lib/report";
 import { useT } from "@/lib/useT";
 import { CompareTab } from "./CompareTab";
 import { DocTypeBadge } from "./DocTypeBadge";
+import { FinancialsTab } from "./FinancialsTab";
 import { OverviewTab } from "./OverviewTab";
 import { RedFlagsTab } from "./RedFlagsTab";
 import { RisksTab } from "./RisksTab";
 
 /**
- * The finished report (B05 §5): sticky header and the tabs Overview · Red flags · Risks · Compare.
+ * The finished report (B05 §5): sticky header and the tabs Overview, Financials, Red flags, Risks, Compare.
  * A hash such as "#redflag-RF03" or "#risk-r12" opens its tab and scrolls to the card. Facts and
  * Document stay on the showcase pages until uploads have them (B06 aliases).
  */
@@ -54,20 +55,20 @@ export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocR
   };
 
   return (
-    <div className="mx-auto max-w-[1120px] py-8">
-      <header className="sticky top-0 z-20 -mx-4 border-b border-rule bg-bg/95 px-4 pb-3 pt-2 backdrop-blur">
+    <div className="mx-auto max-w-[1120px] pb-10 pt-6">
+      <header className="sticky top-14 z-20 -mx-4 border-b border-rule bg-bg px-4 pb-0 pt-2">
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-[2rem] font-semibold leading-tight tracking-tight">{doc.company ?? t("proc.yourDoc")}</h1>
+          <h1 className="font-serif text-3xl font-semibold leading-tight tracking-tight">{doc.company ?? t("proc.yourDoc")}</h1>
           {doc.doc_type && <DocTypeBadge type={doc.doc_type} />}
         </div>
         <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
           {doc.pages && <span>{t("rep.pages", { n: doc.pages })}</span>}
           <span>{t("rep.analysed", { date: formatDate(doc.created_at) })}</span>
-          <button type="button" onClick={() => void share()} className="rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface-2">
+          <button type="button" onClick={() => void share()} className="text-stamp underline underline-offset-4">
             {copied ? t("rep.copied") : t("rep.share")}
           </button>
           {workspaceReady && (
-            <Link href={`/ipos/${doc.doc_id}`} className="rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface-2">
+            <Link href={`/ipos/${doc.doc_id}`} className="text-stamp underline underline-offset-4">
               {t("rep.workspace")}
             </Link>
           )}
@@ -77,7 +78,7 @@ export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocR
             </Link>
           )}
         </div>
-        <nav role="tablist" aria-label={doc.company ?? "report"} className="-mb-3 mt-3 flex gap-1 overflow-x-auto">
+        <nav role="tablist" aria-label={doc.company ?? "report"} className="mt-3 flex gap-1 overflow-x-auto">
           {TABS.map((id) => (
             <button
               key={id}
@@ -102,6 +103,7 @@ export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocR
       <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} className="mt-6">
         {report.isError && <ErrorBlock error={report.error} onRetry={() => void report.refetch()} />}
         {tab === "overview" && report.data && <OverviewTab docId={doc.doc_id} report={report.data} onGo={go} />}
+        {tab === "financials" && report.data && <FinancialsTab report={report.data} />}
         {tab === "redflags" && <RedFlagsTab docId={doc.doc_id} />}
         {tab === "risks" && <RisksTab docId={doc.doc_id} focus={focus} />}
         {tab === "compare" && <CompareTab docId={doc.doc_id} />}

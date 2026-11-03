@@ -1,6 +1,5 @@
 "use client";
 
-import { BookOpenText, FileText, Prohibit, Scales, TrendUp, Files } from "@phosphor-icons/react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { MarkIcon, type MarkState } from "@/components/facts/VerdictMark";
@@ -8,13 +7,18 @@ import { Rich } from "@/components/ui/Rich";
 import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
-export function Section({ id, heading, children }: { id?: string; heading: string; children: ReactNode }) {
+/** Heading in the left column, content on the right. On phones it stacks. */
+export function Section({ id, heading, children, wide }: { id?: string; heading: string; children: ReactNode; wide?: boolean }) {
   return (
-    <section id={id} aria-labelledby={`${id ?? heading}-h`} className="border-t border-rule py-14 md:py-20">
-      <h2 id={`${id ?? heading}-h`} className="text-[1.75rem] font-semibold leading-tight tracking-tight md:text-[2.25rem]">
+    <section
+      id={id}
+      aria-labelledby={`${id ?? heading}-h`}
+      className={`grid gap-x-12 gap-y-6 border-t border-rule py-12 md:py-16 ${wide ? "" : "md:grid-cols-[minmax(0,5fr)_minmax(0,8fr)]"}`}
+    >
+      <h2 id={`${id ?? heading}-h`} className="font-serif text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
         {heading}
       </h2>
-      {children}
+      <div className="min-w-0 [&>*:first-child]:mt-0">{children}</div>
     </section>
   );
 }
@@ -22,21 +26,22 @@ export function Section({ id, heading, children }: { id?: string; heading: strin
 export function NewToIpos() {
   const { t } = useT();
   const items = [
-    { icon: <FileText size={28} />, h: "land.new.1.h", b: "land.new.1.b" },
-    { icon: <BookOpenText size={28} />, h: "land.new.2.h", b: "land.new.2.b" },
-    { icon: <Files size={28} />, h: "land.new.3.h", b: "land.new.3.b" },
+    { h: "land.new.1.h", b: "land.new.1.b" },
+    { h: "land.new.2.h", b: "land.new.2.b" },
+    { h: "land.new.3.h", b: "land.new.3.b" },
   ] as const;
   return (
     <Section id="new" heading={t("land.new.h")}>
-      <div className="mt-10 grid gap-10 md:grid-cols-3">
+      <dl className="divide-y divide-rule">
         {items.map((i) => (
-          <div key={i.h}>
-            <span className="text-stamp" aria-hidden>{i.icon}</span>
-            <h3 className="mt-3 text-lg font-semibold">{t(i.h)}</h3>
-            <p className="mt-2 text-muted"><Rich text={t(i.b)} /></p>
+          <div key={i.h} className="py-5 first:pt-0 last:pb-0">
+            <dt className="font-semibold">{t(i.h)}</dt>
+            <dd className="mt-1.5 max-w-[62ch] text-muted">
+              <Rich text={t(i.b)} />
+            </dd>
           </div>
         ))}
-      </div>
+      </dl>
     </Section>
   );
 }
@@ -45,7 +50,7 @@ export function Chatbot() {
   const { t } = useT();
   return (
     <Section id="chatbot" heading={t("land.bot.h")}>
-      <p className="mt-4 max-w-2xl text-lg text-muted">{t("land.bot.b")}</p>
+      <p className="max-w-[62ch] text-lg text-muted">{t("land.bot.b")}</p>
       <div className="mt-8 max-w-xl overflow-hidden rounded-[10px] border border-rule bg-surface">
         <dl>
           <div className="border-b border-rule p-4">
@@ -59,7 +64,9 @@ export function Chatbot() {
         </dl>
       </div>
       <p className="mt-5 flex max-w-xl items-start gap-2">
-        <span className="mt-0.5"><MarkIcon state="contradicted" size={20} /></span>
+        <span className="mt-0.5">
+          <MarkIcon state="contradicted" size={20} />
+        </span>
         <span>
           <strong className="font-semibold text-[var(--bad)]">{t("land.bot.verdictHead")}</strong> {t("land.bot.verdict")}
         </span>
@@ -79,25 +86,28 @@ export function Steps() {
   const steps = [1, 2, 3] as const;
   return (
     <Section id="steps" heading={t("land.steps.h")}>
-      <ol className="relative mt-10 grid gap-10 md:grid-cols-3">
-        <span aria-hidden className="absolute left-4 right-4 top-4 hidden h-px bg-rule md:block" />
+      <ol className="divide-y divide-rule">
         {steps.map((n) => (
-          <li key={n} className="relative">
-            <span className="relative grid h-8 w-8 place-items-center rounded-full border border-rule bg-bg font-mono text-sm">{n}</span>
-            <h3 className="mt-4 text-lg font-semibold">{t(`land.steps.${n}.h` as StringKey)}</h3>
-            <p className="mt-2 text-muted">{t(`land.steps.${n}.b` as StringKey)}</p>
-            {n === 3 && (
-              <ul className="mt-4 space-y-2 text-sm">
-                {marks.map((m) => (
-                  <li key={m.s} className="flex items-start gap-2">
-                    <span className="mt-0.5"><MarkIcon state={m.s} size={16} /></span>
-                    <span>
-                      <strong className="font-semibold">{t(`verdict.${m.s}`)}</strong> – {t(m.k)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <li key={n} className="grid grid-cols-[2rem_1fr] gap-x-3 py-5 first:pt-0 last:pb-0">
+            <span className="pt-0.5 font-serif text-xl text-muted">{n}</span>
+            <div>
+              <h3 className="font-semibold">{t(`land.steps.${n}.h` as StringKey)}</h3>
+              <p className="mt-1.5 max-w-[62ch] text-muted">{t(`land.steps.${n}.b` as StringKey)}</p>
+              {n === 3 && (
+                <ul className="mt-4 space-y-2 text-sm">
+                  {marks.map((m) => (
+                    <li key={m.s} className="flex items-start gap-2">
+                      <span className="mt-0.5">
+                        <MarkIcon state={m.s} size={16} />
+                      </span>
+                      <span>
+                        <strong className="font-semibold">{t(`verdict.${m.s}`)}</strong>: {t(m.k)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </li>
         ))}
       </ol>
@@ -111,36 +121,31 @@ export function WhatYouGet() {
   const blocks = [1, 2, 3, 4] as const;
   return (
     <Section id="get" heading={t("land.get.h")}>
-      <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+      <dl className="divide-y divide-rule">
         {blocks.map((n) => (
-          <li key={n}>
-            <h3 className="text-lg font-semibold">{t(`land.get.${n}.h` as StringKey)}</h3>
-            <p className="mt-2 text-muted">{t(`land.get.${n}.b` as StringKey)}</p>
-          </li>
+          <div key={n} className="py-5 first:pt-0 last:pb-0">
+            <dt className="font-semibold">{t(`land.get.${n}.h` as StringKey)}</dt>
+            <dd className="mt-1.5 max-w-[62ch] text-muted">{t(`land.get.${n}.b` as StringKey)}</dd>
+          </div>
         ))}
-      </ul>
+      </dl>
     </Section>
   );
 }
 
 export function WontDo() {
   const { t } = useT();
-  const rows = [
-    { icon: <Scales size={22} />, k: "land.no.1" },
-    { icon: <TrendUp size={22} />, k: "land.no.2" },
-    { icon: <Prohibit size={22} />, k: "land.no.3" },
-  ] as const;
+  const rows = ["land.no.1", "land.no.2", "land.no.3"] as const;
   return (
     <Section id="wont" heading={t("land.no.h")}>
-      <ul className="mt-8 space-y-4">
-        {rows.map((r) => (
-          <li key={r.k} className="flex items-center gap-3 text-lg">
-            <span className="text-muted" aria-hidden>{r.icon}</span>
-            {t(r.k)}
-          </li>
+      <ul className="max-w-[62ch] space-y-2 text-lg">
+        {rows.map((k) => (
+          <li key={k}>{t(k)}</li>
         ))}
       </ul>
-      <p className="mt-6 max-w-2xl text-muted"><Rich text={t("land.no.p")} /></p>
+      <p className="mt-6 max-w-[62ch] text-muted">
+        <Rich text={t("land.no.p")} />
+      </p>
     </Section>
   );
 }
@@ -148,11 +153,11 @@ export function WontDo() {
 export function FinalCta() {
   const { t } = useT();
   return (
-    <section className="border-t border-rule py-16 md:py-24">
-      <h2 className="max-w-2xl text-[1.75rem] font-semibold leading-tight tracking-tight md:text-[2.25rem]">{t("land.final.h")}</h2>
+    <section className="border-t border-rule py-14 md:py-20">
+      <h2 className="max-w-2xl font-serif text-2xl font-semibold leading-tight tracking-tight md:text-3xl">{t("land.final.h")}</h2>
       <Link
         href="/ipos"
-        className="mt-8 inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg transition-transform duration-150 active:scale-[0.97]"
+        className="mt-6 inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg active:scale-[0.97]"
       >
         {t("land.final.cta")}
       </Link>

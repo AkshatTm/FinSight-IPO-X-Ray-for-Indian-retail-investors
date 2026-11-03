@@ -27,8 +27,8 @@ export function MiniDemo() {
   const view = h ?? { ipoId: DEMO_IPO, doc: "rhp" as const, page: 3, kind: "source" as const, nonce: 0 };
 
   return (
-    <Section id="demo" heading={t("land.demo.h")}>
-      <p className="mt-4 max-w-2xl text-lg text-muted">{t("land.demo.b")}</p>
+    <Section id="demo" heading={t("land.demo.h")} wide>
+      <p className="max-w-[62ch] text-lg text-muted">{t("land.demo.b")}</p>
       {xray.error || ipo.error ? (
         <div className="mt-8">
           <ErrorBlock error={xray.error ?? ipo.error} onRetry={() => void (xray.refetch(), ipo.refetch())} />

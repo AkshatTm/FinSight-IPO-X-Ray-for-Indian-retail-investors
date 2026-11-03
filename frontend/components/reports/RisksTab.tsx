@@ -22,6 +22,7 @@ export function RisksTab({ docId, focus, onAsk }: { docId: string; focus?: strin
   const [search, setSearch] = useState("");
   const [q, setQ] = useState("");
   const [unusualOnly, setUnusualOnly] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const id = setTimeout(() => setQ(search.trim()), 250);
@@ -48,11 +49,15 @@ export function RisksTab({ docId, focus, onAsk }: { docId: string; focus?: strin
   if (list.isError) return <ErrorBlock error={list.error} onRetry={() => void list.refetch()} />;
   const page = list.data;
   const queued = new Set(page.queued ?? []);
+  const TOP = 7;
+  const filtered = !!category || !!q || unusualOnly;
+  const collapsed = !showAll && !filtered && sort === "importance" && page.risks.length > TOP;
+  const visible = collapsed ? page.risks.slice(0, TOP) : page.risks;
 
   return (
     <section aria-labelledby="rk-title" className="space-y-5">
       <header>
-        <h2 id="rk-title" className="text-xl font-semibold">{t("rk.title")}</h2>
+        <h2 id="rk-title" className="font-serif text-xl font-semibold tracking-tight">{t("rk.title")}</h2>
         <p className="mt-1 text-sm text-muted">{t("rk.sub", { n: page.n_total })}</p>
       </header>
 
@@ -65,7 +70,7 @@ export function RisksTab({ docId, focus, onAsk }: { docId: string; focus?: strin
               role="radio"
               aria-checked={sort === s.id}
               onClick={() => setSort(s.id)}
-              className={`rounded-full border px-3 py-1 text-sm ${sort === s.id ? "border-stamp bg-stamp/10 font-medium" : "border-rule hover:bg-surface-2"}`}
+              className={`rounded-[6px] border px-3 py-1 text-sm ${sort === s.id ? "border-stamp bg-stamp/10 font-medium" : "border-rule hover:bg-surface-2"}`}
             >
               {t(s.key)}
             </button>
@@ -77,7 +82,7 @@ export function RisksTab({ docId, focus, onAsk }: { docId: string; focus?: strin
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t("rk.search")}
           aria-label={t("rk.search")}
-          className="min-w-[200px] flex-1 rounded-full border border-rule bg-surface px-4 py-1.5 text-sm"
+          className="min-w-[200px] flex-1 rounded-[6px] border border-rule bg-surface px-3 py-1.5 text-sm"
         />
         <label className="inline-flex items-center gap-2 text-sm">
           <input type="checkbox" checked={unusualOnly} onChange={(e) => setUnusualOnly(e.target.checked)} />
@@ -96,7 +101,7 @@ export function RisksTab({ docId, focus, onAsk }: { docId: string; focus?: strin
               type="button"
               aria-pressed={on}
               onClick={() => setCategory(on ? "" : g.category)}
-              className={`rounded-full border px-3 py-1 text-xs ${on ? "border-stamp bg-stamp/10 font-medium" : "border-rule hover:bg-surface-2"}`}
+              className={`rounded-[6px] border px-2.5 py-1 text-xs ${on ? "border-stamp bg-stamp/10 font-medium" : "border-rule hover:bg-surface-2"}`}
             >
               {t(key)} <span className="text-muted">{g.count}</span>
             </button>
@@ -107,11 +112,19 @@ export function RisksTab({ docId, focus, onAsk }: { docId: string; focus?: strin
       {page.risks.length === 0 ? (
         <p className="text-sm text-muted">{t("rk.none")}</p>
       ) : (
-        <ul className="space-y-3">
-          {page.risks.map((r) => (
-            <RiskCard key={r.rid} docId={docId} risk={r} queued={queued.has(r.rid)} onAsk={onAsk} />
-          ))}
-        </ul>
+        <>
+          {collapsed && <p className="text-sm text-muted">{t("rk.top", { n: TOP })}</p>}
+          <ul className="divide-y divide-rule border-y border-rule">
+            {visible.map((r) => (
+              <RiskCard key={r.rid} docId={docId} risk={r} queued={queued.has(r.rid)} onAsk={onAsk} />
+            ))}
+          </ul>
+          {(collapsed || showAll) && page.risks.length > TOP && !filtered && sort === "importance" && (
+            <button type="button" onClick={() => setShowAll(!showAll)} className="rounded-[6px] border border-rule px-4 py-2 text-sm font-medium hover:bg-surface-2">
+              {showAll ? t("rk.showTop", { n: TOP }) : t("rk.showAll", { n: page.n_total })}
+            </button>
+          )}
+        </>
       )}
       <p className="text-xs text-muted">{t("rk.footnote")}</p>
     </section>
@@ -131,11 +144,11 @@ function RiskCard({ docId, risk, queued, onAsk }: { docId: string; risk: Risk; q
   const figures = (risk.numbers ?? []).map((n) => ("raw" in n ? n.raw : "")).filter(Boolean);
   const pages = risk.page_start === risk.page_end ? `${risk.page_start}` : `${risk.page_start}–${risk.page_end}`;
   return (
-    <li id={anchorFor("risk", risk.rid)} className="scroll-mt-24 rounded-[10px] border border-rule bg-surface p-4">
+    <li id={anchorFor("risk", risk.rid)} className="scroll-mt-40 py-5">
       <div className="flex flex-wrap items-center gap-2 text-xs">
-        {cat && <span className="rounded-full bg-surface-2 px-2 py-0.5">{t(cat)}</span>}
+        {cat && <span className="rounded-[4px] bg-surface-2 px-2 py-0.5">{t(cat)}</span>}
         {risk.seriousness && <span className="text-muted">{t(`rk.sev.${risk.seriousness}`)}</span>}
-        {unusual && <span className={`rounded-full px-2 py-0.5 ${unusual.key === "rk.unusual" ? "bg-stamp/15 font-medium" : "bg-surface-2"}`}>{t(unusual.key, { x: unusual.x })}</span>}
+        {unusual && <span className={`rounded-[4px] px-2 py-0.5 ${unusual.key === "rk.unusual" ? "bg-stamp/15 font-medium" : "bg-surface-2"}`}>{t(unusual.key, { x: unusual.x })}</span>}
       </div>
 
       <div className="mt-2">
@@ -147,7 +160,7 @@ function RiskCard({ docId, risk, queued, onAsk }: { docId: string; risk: Risk; q
           </div>
         )}
         {state === "not_queued" && (
-          <button type="button" className="rounded-full border border-rule px-3 py-1 text-sm hover:bg-surface-2" onClick={() => explain.mutate()}>
+          <button type="button" className="rounded-[6px] border border-rule px-3 py-1 text-sm hover:bg-surface-2" onClick={() => explain.mutate()}>
             {t("rk.explain")}
           </button>
         )}

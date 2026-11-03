@@ -1555,6 +1555,10 @@ export interface components {
             offer_line_params?: {
                 [key: string]: unknown;
             } | null;
+            /** Sod */
+            sod?: {
+                [key: string]: unknown;
+            } | null;
         };
         /**
          * Risk
@@ -1618,7 +1622,9 @@ export interface components {
             /** Score */
             score: number;
             /** Percentile */
-            percentile: number;
+            percentile: number | null;
+            /** Percentile Note */
+            percentile_note?: string | null;
             /** Checks Available */
             checks_available: number;
             /** Reasons */
@@ -1723,6 +1729,12 @@ export interface components {
              * @default 1
              */
             mentions: number;
+            /**
+             * About
+             * @default issuer
+             * @enum {string}
+             */
+            about: "issuer" | "promoter" | "group_company" | "director";
         };
         /**
          * SimplifyQueued

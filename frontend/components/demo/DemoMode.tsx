@@ -3,7 +3,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { GlassSurface } from "@/components/glass/GlassSurface";
 import { apiGet } from "@/lib/api/client";
 import type { components } from "@/lib/api/types";
 import { useChat } from "@/lib/chatStore";
@@ -109,9 +108,9 @@ export function DemoMode() {
   if (!demo) return null;
   return (
     <div className="pointer-events-none fixed bottom-4 left-4 z-40" role="status" aria-live="polite">
-      <GlassSurface mode="css" cornerRadius={12} padding="10px 14px" className="text-sm">
+      <div className="rounded-[10px] border border-rule bg-surface px-3.5 py-2.5 text-sm shadow-[var(--shadow-float)]">
         {t("demo.step", { n: step })}
-      </GlassSurface>
+      </div>
     </div>
   );
 }

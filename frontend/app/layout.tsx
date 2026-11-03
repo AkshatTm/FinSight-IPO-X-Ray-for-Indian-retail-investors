@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Devanagari } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Serif_4 } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { AppShell } from "@/components/shell/AppShell";
 import "./globals.css";
@@ -9,10 +9,10 @@ const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
-const plexDeva = IBM_Plex_Sans_Devanagari({
-  variable: "--font-plex-deva",
-  subsets: ["devanagari"],
-  weight: ["400", "500", "600"],
+const serif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+  weight: ["400", "600"],
 });
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
@@ -23,11 +23,11 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: { default: "FinSight", template: "%s · FinSight" },
   description:
-    "FinSight reads an IPO's offer document, pulls out the numbers that matter, and shows the exact page each one came from.",
+    "Read the fine print of an IPO. FinSight finds the risks in an offer document and shows the page each one came from.",
 };
 
 // Runs before first paint so there is no flash of the wrong theme.
-const THEME_SCRIPT = `try{var s=JSON.parse(localStorage.getItem("fs_ui")||"null");var t=s&&s.state&&s.state.theme;if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}`;
+const THEME_SCRIPT = `try{var s=JSON.parse(localStorage.getItem("fs_ui")||"null");var t=s&&s.state&&s.state.theme;if(!t){t="light"}document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       data-theme="light"
       suppressHydrationWarning
-      className={`${plexSans.variable} ${plexDeva.variable} ${plexMono.variable} h-full`}
+      className={`${plexSans.variable} ${serif.variable} ${plexMono.variable} h-full`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />

@@ -72,7 +72,7 @@ export function CacheBar({
   const busy = doc.status === "processing";
   const reasons = (doc.analysis_status === "degraded" || doc.analysis_status === "failed" ? doc.degraded_reasons : []) ?? [];
   const box = "mt-4 rounded-[8px] border border-rule bg-surface-2 p-3 text-sm";
-  const button = "rounded-full border border-rule px-3 py-0.5 text-sm text-text hover:bg-surface-2 disabled:opacity-50";
+  const button = "rounded-[6px] border border-rule px-3 py-1 text-sm text-text hover:bg-surface-2 disabled:opacity-50";
 
   return (
     <div className="mx-auto max-w-[1120px]" data-testid="cache-bar">

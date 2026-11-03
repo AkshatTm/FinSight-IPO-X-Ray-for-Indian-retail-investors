@@ -98,8 +98,8 @@ export function topReasons(level: Pick<RiskLevel, "reasons">): RiskLevel["reason
 export const anchorFor = (source: "redflag" | "risk" | "override", id: string) =>
   source === "override" ? `severe-${id}` : `${source}-${id}`;
 
-export type Tab = "overview" | "redflags" | "risks" | "compare";
-export const TABS: readonly Tab[] = ["overview", "redflags", "risks", "compare"];
+export type Tab = "overview" | "financials" | "redflags" | "risks" | "compare";
+export const TABS: readonly Tab[] = ["overview", "financials", "redflags", "risks", "compare"];
 
 /** Which tab an anchor lives on. */
 export function tabForHash(hash: string): Tab | null {

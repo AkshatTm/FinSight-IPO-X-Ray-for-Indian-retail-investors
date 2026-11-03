@@ -1,34 +1,35 @@
 @import "tailwindcss";
 
-/* Tokens: docs/03_UI_UX_DESIGN.md section 2.1. Verdict colours are reserved for verdicts. */
+/* Tokens. One accent (ink blue); --ok, --query, --bad are for verdicts and risk only.
+   Paper is warm, text is near-black ink, rules are quiet. */
 :root {
-  --bg: #f5f7fa;
-  --surface: #ffffff;
-  --surface-2: #edf0f5;
-  --rule: #d5dbe5;
-  --text: #18202e;
-  --text-muted: #5a6578;
-  --stamp: #4b4fd1;
-  --ok: #1b8a5a;
-  --query: #b7791f;
-  --bad: #c53030;
-  --shadow-float: 0 8px 24px rgba(24, 32, 46, 0.12);
+  --bg: #f7f5f0;
+  --surface: #fdfcf9;
+  --surface-2: #efece4;
+  --rule: #dfdacf;
+  --text: #1c1b18;
+  --text-muted: #5f5c54;
+  --stamp: #23507d;
+  --ok: #2b7a4b;
+  --query: #a2650d;
+  --bad: #b0352d;
+  --shadow-float: 0 6px 20px rgba(28, 27, 24, 0.1);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg: #151a23;
-  --surface: #1c2330;
-  --surface-2: #232c3b;
-  --rule: #2f394a;
-  --text: #e9ecf1;
-  --text-muted: #98a2b3;
-  --stamp: #8d90f2;
-  --ok: #3ccb8b;
-  --query: #e9a84a;
-  --bad: #f07070;
-  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --bg: #15171a;
+  --surface: #1c1f23;
+  --surface-2: #24282d;
+  --rule: #31363c;
+  --text: #ebe9e4;
+  --text-muted: #9d9a92;
+  --stamp: #8db3dd;
+  --ok: #4cc58a;
+  --query: #e3a548;
+  --bad: #ee7b72;
+  --shadow-float: 0 6px 20px rgba(0, 0, 0, 0.4);
   color-scheme: dark;
 }
 
@@ -45,10 +46,12 @@
   --color-ok: var(--ok);
   --color-query: var(--query);
   --color-bad: var(--bad);
-  --font-sans: var(--font-plex-sans), var(--font-plex-deva), system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
+  --font-serif: var(--font-source-serif), Georgia, serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
   --radius-control: 6px;
   --radius-panel: 10px;
+  /* One type scale. */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -71,19 +74,41 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.6;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
 
-:lang(hi) {
-  line-height: 1.7;
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p,
+li {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--stamp) 22%, transparent);
 }
 
 :focus-visible {
   outline: 2px solid var(--stamp);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* Quiet scrollbars that follow the palette. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+
+/* Money and counts line up in columns. */
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1;
 }
 
 /* Buttons: press feedback, specific properties only. */
@@ -99,26 +124,6 @@ a.btn {
 button:active:not(:disabled),
 a.btn:active {
   transform: scale(0.97);
-}
-
-/* Glass bar (nav). Text sits on a mostly opaque surface so contrast stays above 4.5:1. */
-.glass-css {
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid var(--rule);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, white 35%, transparent), var(--shadow-float);
-}
-
-/* Landing lens: clear glass (no blur, the text under it stays sharp), edge light and a soft shadow.
-   The liquid-glass-react element positions itself fixed and cannot be pinned over an image (ADR-050). */
-.lens-css {
-  border-radius: 16px;
-  border: 1px solid color-mix(in srgb, white 70%, var(--rule));
-  background: linear-gradient(135deg, color-mix(in srgb, white 38%, transparent), color-mix(in srgb, white 6%, transparent));
-  -webkit-backdrop-filter: saturate(160%) contrast(1.08);
-  backdrop-filter: saturate(160%) contrast(1.08);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, white 80%, transparent), inset 0 -8px 16px color-mix(in srgb, var(--stamp) 10%, transparent), 0 10px 28px rgba(24, 32, 46, 0.18);
 }
 
 /* Highlight box animates in (spec 7.4): scale 0.98 -> 1, 180 ms, ease-out. */
@@ -149,6 +154,16 @@ a.btn:active {
   from {
     opacity: 0;
     transform: translateY(8px);
+  }
+}
+/* Page content settles in once on load. Not used on frequent actions. */
+.rise-in {
+  animation: rise-in 320ms var(--ease-out) both;
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 /* Leader line: draws in 180 ms, fades after 900 ms. */
