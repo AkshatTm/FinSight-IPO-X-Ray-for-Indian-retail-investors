@@ -66,7 +66,7 @@ export function OverviewTab({ docId, report, onGo }: { docId: string; report: Re
         <p className="text-xs text-muted">{t("ov.footer")}</p>
       </div>
 
-      <aside className="lg:col-start-2 lg:row-start-1">
+      <aside className="order-first lg:order-none lg:col-start-2 lg:row-start-1">
         <div className="lg:sticky lg:top-40">
           {level.data ? <RiskLevelCard level={level.data} onReason={onGo} /> : <NotReady text={level.isError ? t("ov.noRiskLevel") : null} />}
         </div>

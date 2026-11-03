@@ -45,7 +45,7 @@ export function KeyFacts({ report, sod, unit }: { report: ReportOverview; sod: S
             <dt className="text-muted">{r.label}</dt>
             <dd className="num text-right font-medium">
               {r.value}
-              {r.page ? <span className="ml-2 text-xs font-normal text-muted">{t("ov.page", { p: r.page })}</span> : null}
+              {r.page ? <span className="ml-2 whitespace-nowrap text-xs font-normal text-muted">{t("ov.page", { p: r.page })}</span> : null}
             </dd>
           </div>
         ))}
