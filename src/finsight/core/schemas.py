@@ -328,7 +328,10 @@ RiskCategory = Literal[
 ]
 SimpleStatus = Literal["pending", "ready", "rejected", "failed"]
 Seriousness = Literal["high", "medium", "low"]
-Status3 = Literal["ok", "watch", "concern", "not_available", "not_applicable"]
+# ``pending_price`` (CC-07): the check needs the price, which an RHP prints as [●], and no price
+# band has been set on the upload. Undecided like ``not_available``, but with a known cure.
+Status3 = Literal["ok", "watch", "concern", "not_available", "not_applicable", "pending_price"]
+UNDECIDED: frozenset[str] = frozenset({"not_available", "not_applicable", "pending_price"})
 Level = Literal["low", "medium", "high"]
 
 
@@ -384,6 +387,32 @@ class FinancialSummary(BaseModel):
     peers: list[Peer] = Field(default_factory=list)
     auditor_remarks: list[SummaryValue] = Field(default_factory=list)
     is_financial_company: bool = False
+    promoter_holding_pre: SummaryValue | None = None  # CC-07: post-issue % from share counts
+    offer: OfferStructure | None = None  # CC-07: what the price band turns into numbers
+
+
+class OfferStructure(BaseModel):
+    """Share counts and objects amounts that, with a price, give the price-dependent inputs.
+
+    ``fresh_shares`` is set when the fresh issue is printed as a number of shares ("up to
+    270,000,000 Equity Shares"); an issue printed as a rupee amount leaves it ``None``.
+    ``named_objects`` is the sum of the objects-table rows other than general corporate purposes
+    (and Gross / Net Proceeds / Total), when every one of them prints an amount.
+    """
+
+    shares_pre_issue: SummaryValue | None = None
+    fresh_shares: SummaryValue | None = None
+    named_objects: SummaryValue | None = None
+    gcp_placeholder: bool = False  # the GCP row prints [●]
+
+
+class PriceBand(BaseModel):
+    """The announced price band (₹ per share); set on an upload, never read from the RHP."""
+
+    low: DecimalStr
+    high: DecimalStr
+    source: Literal["user", "announcement"]
+    ref: str | None = None  # page or URL of the announcement
 
 
 class RedFlag(BaseModel):
