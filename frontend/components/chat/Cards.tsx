@@ -9,7 +9,7 @@ import { useT } from "@/lib/useT";
 import { docLabel } from "./common";
 
 const card = "rounded-[10px] border p-4 text-sm";
-const chip = "h-11 rounded-full border border-rule px-4 text-left hover:border-stamp";
+const chip = "min-h-11 rounded-[8px] border border-rule px-3 text-left hover:border-stamp";
 
 function Facts({ ipoId, facts }: { ipoId: string; facts: Schemas["FactSummary"][] }) {
   const setHighlight = useUi((s) => s.setHighlight);
@@ -25,7 +25,7 @@ function Facts({ ipoId, facts }: { ipoId: string; facts: Schemas["FactSummary"][
             <span className="text-muted">{f.label_en}</span>
             <span className="flex items-center gap-2">
               <span className="font-medium">{f.display}</span>
-              <span className="rounded-full border border-rule px-2 py-0.5 text-xs text-muted">{docLabel(f.doc, f.page)}</span>
+              <span className="rounded-[4px] border border-rule px-1.5 py-0.5 text-xs text-muted">{docLabel(f.doc, f.page)}</span>
             </span>
           </button>
         </li>

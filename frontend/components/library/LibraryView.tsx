@@ -1,6 +1,7 @@
 "use client";
 
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
@@ -73,7 +74,7 @@ export function LibraryView() {
   return (
     <div className="py-10 md:py-14">
       <header className="mb-8 max-w-2xl">
-        <h1 className="text-3xl font-semibold tracking-tight">{t("lib.title")}</h1>
+        <h1 className="font-serif text-3xl font-semibold tracking-tight">{t("lib.title")}</h1>
         {data && <p className="mt-2 text-muted">{t("lib.sub", { n: data.length })}</p>}
       </header>
 
@@ -114,7 +115,7 @@ export function LibraryView() {
             type="button"
             aria-pressed={filter === f}
             onClick={() => setFilter(f)}
-            className={`h-11 rounded-full border px-4 text-sm ${
+            className={`h-10 rounded-[6px] border px-4 text-sm ${
               filter === f ? "border-stamp bg-stamp/10 font-medium text-text" : "border-rule text-muted hover:text-text"
             }`}
           >
@@ -140,7 +141,8 @@ export function LibraryView() {
           ))}
         </div>
       ) : rows.length === 0 ? (
-        <div className="py-12">
+        <div className="grid items-center gap-8 py-12 md:grid-cols-[minmax(0,1fr)_280px]">
+          <div>
           <p className="max-w-xl text-lg">{t("lib.empty", { query })}</p>
           <button
             type="button"
@@ -152,6 +154,8 @@ export function LibraryView() {
           >
             {t("lib.clear")}
           </button>
+          </div>
+          <Image src="/images/empty-state.webp" alt="A blank sheet of paper and a pencil on a clean desk." width={800} height={600} sizes="280px" className="hidden aspect-[4/3] w-full rounded-[6px] border border-rule object-cover md:block" />
         </div>
       ) : (
         <ul className="border-t border-rule">

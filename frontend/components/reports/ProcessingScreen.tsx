@@ -78,7 +78,7 @@ export function ProcessingScreen({ doc, onSeeReady }: { doc: Schemas["DocRecord"
 
   return (
     <div className="mx-auto max-w-2xl py-12">
-      <h1 className="text-[2rem] font-semibold leading-tight tracking-tight">{t("proc.title", { company })}</h1>
+      <h1 className="font-serif text-[2rem] font-semibold leading-tight tracking-tight">{t("proc.title", { company })}</h1>
       <p className="mt-2 text-muted">{t("proc.sub")}</p>
       {type === "drhp" && <p className="mt-4 rounded-[8px] border border-rule bg-surface-2 p-3 text-sm">{t("proc.drhp")}</p>}
       {view.ready.includes("facts") && (

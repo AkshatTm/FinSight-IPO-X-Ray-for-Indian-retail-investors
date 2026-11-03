@@ -9,7 +9,7 @@ export function Notice({ kind, onReload }: { kind: "404" | "500"; onReload?: () 
   const btn = "mt-8 inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg transition-transform duration-150 active:scale-[0.97]";
   return (
     <div className="py-20 md:py-28">
-      <h1 className="max-w-2xl text-[2.25rem] font-semibold leading-tight tracking-tight">
+      <h1 className="font-serif max-w-2xl text-[2.25rem] font-semibold leading-tight tracking-tight">
         {kind === "404" ? t("nf.title") : t("err500.title")}
       </h1>
       <p className="mt-4 max-w-xl text-lg text-muted">{kind === "404" ? t("nf.body") : t("err500.body")}</p>

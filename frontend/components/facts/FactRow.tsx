@@ -190,7 +190,7 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
             <span className="flex flex-wrap items-center justify-between gap-2">
               {mark ? <VerdictMark state={mark} /> : <span />}
               {showChip && (
-                <span className="rounded-full border border-rule px-2 py-0.5 text-xs text-muted">{chip}</span>
+                <span className="rounded-[4px] border border-rule px-1.5 py-0.5 text-xs text-muted">{chip}</span>
               )}
             </span>
             {r.filledInProspectus && <span className="text-xs text-muted">{t("facts.filled")}</span>}

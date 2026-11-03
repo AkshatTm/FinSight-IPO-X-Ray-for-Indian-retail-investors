@@ -50,7 +50,7 @@ export function UploadPage() {
 
   return (
     <div className="mx-auto max-w-2xl py-12 md:py-16">
-      <h1 className="text-[2rem] font-semibold leading-tight tracking-tight">{t("up.title")}</h1>
+      <h1 className="font-serif text-[2rem] font-semibold leading-tight tracking-tight">{t("up.title")}</h1>
       <p className="mt-3 text-lg text-muted">{t("up.sub")}</p>
 
       <div className="mt-8">
@@ -69,7 +69,7 @@ export function UploadPage() {
             <button
               type="button"
               onClick={() => void onFile(lastFile, true)}
-              className="mt-3 block rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface"
+              className="mt-3 block rounded-[6px] border border-rule px-3 py-1 text-text hover:bg-surface"
             >
               {t("cache.without")}
             </button>

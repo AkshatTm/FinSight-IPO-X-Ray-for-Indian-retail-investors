@@ -24,7 +24,7 @@ export function Lab() {
 
   return (
     <div className="py-12 md:py-16">
-      <h1 className="text-[2.25rem] font-semibold leading-tight tracking-tight md:text-[3rem]">{t("lab.title")}</h1>
+      <h1 className="font-serif text-3xl font-semibold leading-tight tracking-tight md:text-[2.5rem]">{t("lab.title")}</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted">{t("lab.intro")}</p>
       {loading ? (
         <div aria-hidden className="mt-12 space-y-4">

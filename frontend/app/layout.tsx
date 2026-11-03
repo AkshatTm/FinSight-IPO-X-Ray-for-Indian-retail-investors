@@ -21,6 +21,13 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  openGraph: {
+    title: "FinSight",
+    description: "Read the fine print of an IPO. FinSight finds the risks in an offer document and shows the page each one came from.",
+    images: [{ url: "/images/og.webp", width: 1200, height: 630, alt: "Stacks of printed prospectuses on a desk with a city skyline at dawn behind them." }],
+    type: "website",
+  },
+  twitter: { card: "summary_large_image", images: ["/images/og.webp"] },
   title: { default: "FinSight", template: "%s · FinSight" },
   description:
     "Read the fine print of an IPO. FinSight finds the risks in an offer document and shows the page each one came from.",

@@ -172,7 +172,7 @@ function RiskCard({ docId, risk, queued, onAsk }: { docId: string; risk: Risk; q
         <div className="mt-2 max-h-[18rem] overflow-y-auto">
           <p className="font-semibold">{risk.title}</p>
           <p className="mt-1 whitespace-pre-line">{risk.body}</p>
-          <span className="mt-2 inline-block rounded-full border border-rule px-2 text-xs text-muted">{t("rf.page", { p: pages })}</span>
+          <span className="mt-2 inline-block rounded-[4px] border border-rule px-1.5 text-xs text-muted">{t("rf.page", { p: pages })}</span>
         </div>
       </details>
 
@@ -191,7 +191,7 @@ function RiskCard({ docId, risk, queued, onAsk }: { docId: string; risk: Risk; q
       )}
 
       {onAsk && (
-        <button type="button" className="mt-3 rounded-full border border-rule px-3 py-1 text-sm hover:bg-surface-2" onClick={() => onAsk(risk)}>
+        <button type="button" className="mt-3 rounded-[6px] border border-rule px-3 py-1 text-sm hover:bg-surface-2" onClick={() => onAsk(risk)}>
           {t("rk.askAbout")}
         </button>
       )}

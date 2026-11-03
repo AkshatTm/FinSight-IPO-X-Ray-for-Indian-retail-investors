@@ -29,7 +29,7 @@ export function MyUploads() {
 
   return (
     <div className="mx-auto max-w-[1120px] py-12">
-      <h1 className="text-[2rem] font-semibold leading-tight tracking-tight">{t("me.title")}</h1>
+      <h1 className="font-serif text-[2rem] font-semibold leading-tight tracking-tight">{t("me.title")}</h1>
       {ready && !user && (
         <button type="button" onClick={() => void signIn("/me/uploads")} className={`${btn} mt-6`}>
           {t("up.signInButton")}
