@@ -1,17 +1,17 @@
 "use client";
 
 import { ApiError } from "@/lib/api/client";
-import { errorMessage } from "@/lib/i18n";
+import { errorMessage } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
 /** Generic error block, shown inside the failing panel, never full page (spec 4.4). */
 export function ErrorBlock({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const code = error instanceof ApiError ? error.code : undefined;
   return (
     <div role="alert" className="rounded-[10px] border border-rule bg-surface p-5">
       <h2 className="text-lg font-semibold">{t("error.title")}</h2>
-      <p className="mt-1 text-muted">{errorMessage(code, lang)}</p>
+      <p className="mt-1 text-muted">{errorMessage(code)}</p>
       {onRetry && (
         <button
           type="button"

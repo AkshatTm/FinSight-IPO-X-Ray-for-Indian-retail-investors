@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
 import { apiGet } from "@/lib/api/client";
 import { metricValue, orderPeers, peerCell, roundPercentile, sourcePage, type CompareData, type Metric } from "@/lib/compare";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useUi } from "@/lib/store";
 import { useT } from "@/lib/useT";
 
@@ -27,7 +27,7 @@ export function CompareTab({ docId }: { docId: string }) {
 }
 
 export function CompareView({ data }: { data: CompareData }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const unit = useUi((s) => s.unit);
   const peers = orderPeers(data.peers ?? []);
   const bars = data.percentiles ?? [];
@@ -35,7 +35,6 @@ export function CompareView({ data }: { data: CompareData }) {
   const corpusN = bars[0]?.corpus_n ?? 0;
   return (
     <section aria-labelledby="cmp-title" className="space-y-8">
-      {lang === "hi" && <p className="rounded-[8px] border border-rule bg-surface-2 p-3 text-sm">{t("rep.englishOnly")}</p>}
       <header>
         <h2 id="cmp-title" className="text-xl font-semibold">{t("cmp.title")}</h2>
         {corpusN > 0 && <p className="mt-1 text-sm text-muted">{t("cmp.sub", { n: corpusN })}</p>}

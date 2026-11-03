@@ -11,7 +11,7 @@ describe("Composer", () => {
     render(<Composer ipoId="x" disabled={false} onSend={onSend} />);
     const box = screen.getByPlaceholderText("Ask a question");
     await userEvent.type(box, "Who are the promoters?{Enter}");
-    expect(onSend).toHaveBeenCalledWith("Who are the promoters?", false);
+    expect(onSend).toHaveBeenCalledWith("Who are the promoters?");
     expect(box).toHaveValue("");
     await userEvent.type(box, "a{Shift>}{Enter}{/Shift}b");
     expect(box).toHaveValue("a\nb");

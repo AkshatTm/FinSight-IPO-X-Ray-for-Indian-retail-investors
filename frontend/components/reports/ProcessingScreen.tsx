@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useReducer, useState } from "react";
 import type { Schemas } from "@/lib/api/client";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { applyJobEvent, EMPTY_JOB, followJob, ROWS, rowState, type JobEvent, type JobView } from "@/lib/jobs";
 import { rejectionFor } from "@/lib/upload";
 import { useT } from "@/lib/useT";

@@ -8,7 +8,7 @@ import { apiGet } from "@/lib/api/client";
 import type { components } from "@/lib/api/types";
 import { useChat } from "@/lib/chatStore";
 import {
-  DEMO_AUDIO, DEMO_IPO, DEMO_QUESTIONS, firstContradicted, isDemoSearch, isTypingTarget,
+  DEMO_IPO, DEMO_QUESTIONS, firstContradicted, isDemoSearch, isTypingTarget,
   stepForKey, trickQuestion, type DemoStep,
 } from "@/lib/demo";
 import { useUi } from "@/lib/store";
@@ -67,7 +67,7 @@ export function DemoMode() {
         (await waitFor<HTMLButtonElement>('[data-field="fresh_issue_size"] button'))?.click();
       } else if (n === 3) {
         await workspace();
-        await chat.ask(DEMO_IPO, DEMO_QUESTIONS.money, "en", "chip");
+        await chat.ask(DEMO_IPO, DEMO_QUESTIONS.money, "chip");
       } else if (n === 4) {
         await workspace();
         const qs = await client.fetchQuery({
@@ -76,25 +76,15 @@ export function DemoMode() {
         });
         const q = trickQuestion(qs);
         if (!q) return;
-        await chat.ask(DEMO_IPO, q, "en", "chip");
+        await chat.ask(DEMO_IPO, q, "chip");
         const turn = useChat.getState().turns[DEMO_IPO]?.at(-1);
         const index = firstContradicted(turn);
         if (turn && index !== null) chat.openEvidence({ ipoId: DEMO_IPO, turnId: turn.id, index });
       } else if (n === 5) {
         await workspace();
-        // The recorded Hindi question goes through the real speech recognition; the transcript lands in
-        // the question box and is not sent until the presenter does it (voice never auto-sends).
-        const clip = await (await fetch(DEMO_AUDIO)).blob();
-        void new Audio(URL.createObjectURL(clip)).play().catch(() => {});
-        const body = new FormData();
-        body.append("audio", clip, "hi_q02.m4a");
-        body.append("language", "hi");
-        const res = await fetch("/api/voice", { method: "POST", body });
-        const text = res.ok ? (((await res.json()) as { transcript?: string }).transcript ?? "").trim() : "";
-        if (text) chat.setDraft(DEMO_IPO, text, true);
       } else if (n === 6) {
         await workspace();
-        await chat.ask(DEMO_IPO, DEMO_QUESTIONS.advice, "en", "chip");
+        await chat.ask(DEMO_IPO, DEMO_QUESTIONS.advice, "chip");
       } else {
         router.push("/lab?demo=1");
       }

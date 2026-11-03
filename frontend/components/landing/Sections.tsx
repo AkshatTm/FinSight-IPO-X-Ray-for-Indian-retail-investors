@@ -2,11 +2,10 @@
 
 import { BookOpenText, FileText, Prohibit, Scales, TrendUp, Files } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { MarkIcon, type MarkState } from "@/components/facts/VerdictMark";
 import { Rich } from "@/components/ui/Rich";
-import type { StringKey } from "@/lib/i18n";
-import answer from "@/lib/content/landing_answer.json";
+import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
 export function Section({ id, heading, children }: { id?: string; heading: string; children: ReactNode }) {
@@ -120,51 +119,6 @@ export function WhatYouGet() {
           </li>
         ))}
       </ul>
-    </Section>
-  );
-}
-
-export function AskLang() {
-  const { t } = useT();
-  const audio = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const toggle = () => {
-    if (!audio.current) {
-      audio.current = new Audio("/demo/hi_q02.m4a");
-      audio.current.onended = () => setPlaying(false);
-    }
-    if (playing) {
-      audio.current.pause();
-      audio.current.currentTime = 0;
-      setPlaying(false);
-    } else {
-      void audio.current.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-    }
-  };
-  return (
-    <Section id="lang" heading={t("land.lang.h")}>
-      <p className="mt-4 max-w-2xl text-lg text-muted">{t("land.lang.b")}</p>
-      <div className="mt-8 max-w-xl">
-        <p lang="hi" className="ml-auto w-fit max-w-full rounded-[10px] bg-stamp/10 px-4 py-3 text-lg">{t("land.lang.q")}</p>
-        <div className="mt-3 rounded-[10px] border border-rule bg-surface p-4">
-          <p lang="hi" className="text-lg leading-relaxed">{answer.answer}</p>
-          <ul className="mt-3 flex flex-wrap gap-2 text-sm">
-            {answer.passages.map((p) => (
-              <li key={p.n} className="rounded-[6px] border border-rule px-2 py-1 font-mono">
-                [{p.n}] {t(p.doc === "rhp" ? "doc.rhpShort" : "doc.prospectusShort")} p.{p.page_start}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <p className="mt-3 text-sm text-muted">{t("land.lang.cap")}</p>
-        <button
-          type="button"
-          onClick={toggle}
-          className="mt-3 inline-flex h-11 items-center rounded-[6px] border border-rule px-4 text-sm hover:border-stamp active:scale-[0.97]"
-        >
-          {playing ? t("land.lang.stop") : t("land.lang.play")}
-        </button>
-      </div>
     </Section>
   );
 }

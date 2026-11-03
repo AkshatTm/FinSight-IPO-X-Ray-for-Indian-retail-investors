@@ -20,7 +20,7 @@ import { RisksTab } from "./RisksTab";
  * Document stay on the showcase pages until uploads have them (B06 aliases).
  */
 export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocRecord"]; workspaceReady?: boolean }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   // Mounted on the client only (after the document query), so the hash can seed the state.
   const [tab, setTab] = useState<Tab>(() => tabForHash(window.location.hash) ?? "overview");
   const [focus, setFocus] = useState<string | null>(() => window.location.hash || null);
@@ -62,7 +62,7 @@ export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocR
         </div>
         <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
           {doc.pages && <span>{t("rep.pages", { n: doc.pages })}</span>}
-          <span>{t("rep.analysed", { date: formatDate(doc.created_at, lang) })}</span>
+          <span>{t("rep.analysed", { date: formatDate(doc.created_at) })}</span>
           <button type="button" onClick={() => void share()} className="rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface-2">
             {copied ? t("rep.copied") : t("rep.share")}
           </button>
@@ -98,7 +98,6 @@ export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocR
         </nav>
       </header>
       {doc.doc_type === "drhp" && <p className="mt-4 max-w-2xl rounded-[8px] border border-rule bg-surface-2 p-3 text-sm">{t("proc.drhp")}</p>}
-      {lang === "hi" && tab !== "compare" && <p className="mt-4 rounded-[8px] border border-rule bg-surface-2 p-3 text-sm">{t("rep.englishOnly")}</p>}
 
       <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} className="mt-6">
         {report.isError && <ErrorBlock error={report.error} onRetry={() => void report.refetch()} />}

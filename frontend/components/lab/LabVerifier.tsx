@@ -1,6 +1,6 @@
 "use client";
 
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { verifierStats, weakStats } from "@/lib/lab";
 import { useT } from "@/lib/useT";
 import { LabFrame, Note, Stat } from "./LabFrame";

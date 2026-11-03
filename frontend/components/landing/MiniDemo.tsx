@@ -16,7 +16,7 @@ const ROWS = ["fresh_issue_size", "offer_price", "total_issue_size", "face_value
 
 /** Compact, read-only copy of the workspace: four facts and one page (spec 5.6). Own highlight state. */
 export function MiniDemo() {
-  const { t, lang } = useT();
+  const { t } = useT();
   const xray = useXray(DEMO_IPO);
   const ipo = useIpo(DEMO_IPO);
   const [h, setH] = useState<Highlight | null>(null);
@@ -41,8 +41,8 @@ export function MiniDemo() {
               : rows.map((f) => {
                   const r = resolveField(f);
                   const c = FIELD_CONTENT[f.field_id];
-                  const label = c ? pick(c.label, lang) : lang === "hi" ? f.label_hi : f.label_en;
-                  const value = r.value ? (scalarText(f.field_id, r.value, "crore", lang, t("facts.perShare")) ?? "") : "";
+                  const label = c ? pick(c.label) : f.label_en;
+                  const value = r.value ? (scalarText(f.field_id, r.value, "crore", t("facts.perShare")) ?? "") : "";
                   const active = h?.page === r.page && h?.doc === r.doc && h.ipoId === DEMO_IPO && h.bbox === r.bbox;
                   return (
                     <li key={f.field_id} className="border-b border-rule last:border-b-0">

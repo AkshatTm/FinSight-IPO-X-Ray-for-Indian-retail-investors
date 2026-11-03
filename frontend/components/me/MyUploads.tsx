@@ -6,7 +6,7 @@ import { DocTypeBadge } from "@/components/reports/DocTypeBadge";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
 import { apiGet, type Schemas } from "@/lib/api/client";
 import { useAuth } from "@/lib/auth/supabase";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
 const STATUS: Record<string, StringKey> = {
@@ -18,7 +18,7 @@ const STATUS: Record<string, StringKey> = {
 
 /** /me/uploads (B05 §6.2). */
 export function MyUploads() {
-  const { t, lang } = useT();
+  const { t } = useT();
   const { user, token, ready, signIn } = useAuth();
   const q = useQuery({
     queryKey: ["me-uploads", user?.id],
@@ -59,7 +59,7 @@ export function MyUploads() {
               <tr key={u.doc_id}>
                 <td className="py-3">{u.company ?? t("proc.yourDoc")}</td>
                 <td className="py-3">{u.doc_type ? <DocTypeBadge type={u.doc_type} /> : null}</td>
-                <td className="py-3 tabular-nums">{new Date(u.created_at).toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
+                <td className="py-3 tabular-nums">{new Date(u.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
                 <td className="py-3">{STATUS[u.status] ? t(STATUS[u.status]) : u.status}</td>
                 <td className="py-3 text-right">
                   <Link href={`/reports/${u.doc_id}`} className="text-stamp underline underline-offset-2">{t("me.open")}</Link>

@@ -7,7 +7,7 @@ import { LabFrame } from "./LabFrame";
 import { LabChecks, LabClassifier, LabNovelty, LabSegmentation } from "./LabPhase2";
 import { LabBench } from "./LabBench";
 import { LabRewrites, LabRiskLevelCheck, LabSpeedCost } from "./LabPhase2More";
-import { LabHindi, LabRetrieval } from "./LabRetrieval";
+import { LabRetrieval } from "./LabRetrieval";
 import { LabVerifier, LabWeak } from "./LabVerifier";
 
 const REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors";
@@ -19,9 +19,8 @@ export function Lab() {
   const weak = useLab("weaklabels");
   const verifier = useLab("verifier");
   const retrieval = useLab("retrieval");
-  const asr = useLab("asr");
   const frontier = useLab("frontier");
-  const loading = [ladder, weak, verifier, retrieval, asr].every((q) => q.isPending);
+  const loading = [ladder, weak, verifier, retrieval].every((q) => q.isPending);
 
   return (
     <div className="py-12 md:py-16">
@@ -43,7 +42,6 @@ export function Lab() {
               <p className="text-muted">{t("lab.missing")}</p>
             </LabFrame>
           )}
-          <LabHindi asr={asr.data} retrieval={retrieval.data} />
           <LabPhase2 />
         </>
       )}

@@ -11,7 +11,7 @@ import { docLabel } from "./common";
 
 /** Right-side drawer (full-screen sheet on phones) for one checked number (spec 7.6). */
 export function EvidenceDrawer({ ipoId }: { ipoId: string }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const layout = useLayout();
   const ref = useChat((s) => s.evidence);
   const turns = useChat((s) => s.turns[ipoId]);
@@ -24,7 +24,7 @@ export function EvidenceDrawer({ ipoId }: { ipoId: string }) {
   if (!open || !turn || !v) return null;
 
   const ev = v.evidence;
-  const cmp = comparison(v, lang);
+  const cmp = comparison(v);
   const passage = [...(turn.retrieval?.passages ?? []), ...(turn.retrieval?.dropped ?? [])].find((p) => p.id === ev?.passage_id);
   const needle = ev?.value && "raw" in ev.value ? ev.value.raw : "";
   const at = passage && needle ? passage.snippet.indexOf(needle) : -1;
@@ -56,12 +56,12 @@ export function EvidenceDrawer({ ipoId }: { ipoId: string }) {
         </table>
 
         <h3 className="mt-5 text-sm font-semibold">{t("ev.reason")}</h3>
-        <p className="mt-1 text-sm">{reasonText(v, lang)}</p>
+        <p className="mt-1 text-sm">{reasonText(v)}</p>
 
         {ev && (
           <>
             <h3 className="mt-5 text-sm font-semibold">{t("ev.source")}</h3>
-            <p className="mt-1 text-sm text-muted">{t("ev.sourceLine", { doc: docLabel(ev.doc, ev.page, lang).split(" ")[0], page: ev.page })}</p>
+            <p className="mt-1 text-sm text-muted">{t("ev.sourceLine", { doc: docLabel(ev.doc, ev.page).split(" ")[0], page: ev.page })}</p>
             {passage && (
               <p className="mt-2 line-clamp-6 rounded-[6px] bg-surface-2 p-3 font-mono text-xs leading-relaxed">
                 {at >= 0 ? (

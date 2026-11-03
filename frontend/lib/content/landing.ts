@@ -1,165 +1,90 @@
 // Landing page copy, docs/12_FRONTEND_SPEC.md section 5 (verbatim), with the Phase 2 changes from
-// docs/phase2/B05_UI_SPEC.md §2 (English verbatim; B05 gives no Hindi, so the Hindi of those lines
-// is a builder draft listed in docs/AKSHAT_TODO.md). Hindi marked [HI review] in the
+
+
 // spec is listed in docs/AKSHAT_TODO.md. `[[id|text]]` marks a glossary term (see components/ui/Rich.tsx).
-type Entry = { en: string; hi: string };
+type Entry = string;
 
 export const LANDING = {
   // 5.2 hero
-  "land.h1": { en: "Read the fine print. All 500 pages of it.", hi: "बारीक़ शर्तें पढ़िए। पूरे 500 पन्ने।" },
-  "land.sub": {
-    en: "Upload any IPO offer document. FinSight finds the risks, explains them in plain English, and shows you the exact page each one came from.",
-    hi: "कोई भी आईपीओ ऑफ़र दस्तावेज़ अपलोड करें। FinSight जोखिम ढूँढता है, उन्हें आसान भाषा में समझाता है, और हर एक किस पन्ने से आया है, वह भी दिखाता है।",
-  },
-  "land.cta": { en: "Analyse an IPO document", hi: "आईपीओ दस्तावेज़ का विश्लेषण करें" },
-  "land.sample": { en: "Explore a sample report", hi: "एक नमूना रिपोर्ट देखें" },
-  "land.how": { en: "How it works", hi: "यह कैसे काम करता है" },
-  "land.free": {
-    en: "Free. Sign in with Google to upload. Runs on open-source models.",
-    hi: "मुफ़्त। अपलोड करने के लिए Google से साइन इन करें। ओपन-सोर्स मॉडल पर चलता है।",
-  },
-  "land.lens.alt": {
-    en: "Cover page of a Red Herring Prospectus with the fresh issue amount highlighted and marked as matching the document.",
-    hi: "रेड हेरिंग प्रॉस्पेक्टस का कवर पेज, जिसमें फ्रेश इश्यू की रकम पर निशान है और वह दस्तावेज़ से मेल खाती दिखती है।",
-  },
-  "land.lens.tag": { en: "Fresh issue · ₹26,260 million · page 3", hi: "फ्रेश इश्यू · ₹26,260 मिलियन · पन्ना 3" },
+  "land.h1": "Read the fine print. All 500 pages of it.",
+  "land.sub": "Upload any IPO offer document. FinSight finds the risks, explains them in plain English, and shows you the exact page each one came from.",
+  "land.cta": "Analyse an IPO document",
+  "land.sample": "Explore a sample report",
+  "land.how": "How it works",
+  "land.free": "Free. Sign in with Google to upload. Runs on open-source models.",
+  "land.lens.alt": "Cover page of a Red Herring Prospectus with the fresh issue amount highlighted and marked as matching the document.",
+  "land.lens.tag": "Fresh issue · ₹26,260 million · page 3",
 
   // 5.3 new to IPOs
-  "land.new.h": { en: "New to IPOs? Start here.", hi: "आईपीओ में नए हैं? यहाँ से शुरू करें।" },
-  "land.new.1.h": { en: "What is an IPO?", hi: "आईपीओ क्या है?" },
-  "land.new.1.b": {
-    en: "When a company sells its shares to the public for the first time, that's an [[ipo|IPO]] (initial public offering). Anyone with a [[demat|demat account]] can apply for shares.",
-    hi: "जब कोई कंपनी पहली बार अपने शेयर आम लोगों को बेचती है, उसे [[ipo|आईपीओ]] कहते हैं। जिसके पास [[demat|डीमैट खाता]] है, वह शेयरों के लिए आवेदन कर सकता है।",
-  },
-  "land.new.2.h": { en: "What is the RHP?", hi: "आरएचपी क्या है?" },
-  "land.new.2.b": {
-    en: "Before the IPO opens, the company publishes a Red Herring Prospectus ([[rhp|RHP]]). It's the official document with the details: how much money is being raised, who is selling shares, and what the money will be used for.",
-    hi: "आईपीओ खुलने से पहले कंपनी रेड हेरिंग प्रॉस्पेक्टस ([[rhp|RHP]]) जारी करती है। यह आधिकारिक दस्तावेज़ है जिसमें पूरी जानकारी होती है: कितना पैसा जुटाया जा रहा है, कौन शेयर बेच रहा है, और पैसा किस काम में लगेगा।",
-  },
-  "land.new.3.h": { en: "Why does nobody read it?", hi: "इसे कोई पढ़ता क्यों नहीं?" },
-  "land.new.3.b": {
-    en: "It's usually 500 to 1,000 pages of legal language. The important numbers are spread across the cover, the offer section and a few tables.",
-    hi: "यह आमतौर पर 500 से 1,000 पन्नों का कानूनी भाषा वाला दस्तावेज़ होता है। ज़रूरी आंकड़े कवर पेज, ऑफ़र वाले हिस्से और कुछ तालिकाओं में बिखरे होते हैं।",
-  },
+  "land.new.h": "New to IPOs? Start here.",
+  "land.new.1.h": "What is an IPO?",
+  "land.new.1.b": "When a company sells its shares to the public for the first time, that's an [[ipo|IPO]] (initial public offering). Anyone with a [[demat|demat account]] can apply for shares.",
+  "land.new.2.h": "What is the RHP?",
+  "land.new.2.b": "Before the IPO opens, the company publishes a Red Herring Prospectus ([[rhp|RHP]]). It's the official document with the details: how much money is being raised, who is selling shares, and what the money will be used for.",
+  "land.new.3.h": "Why does nobody read it?",
+  "land.new.3.b": "It's usually 500 to 1,000 pages of legal language. The important numbers are spread across the cover, the offer section and a few tables.",
 
   // 5.4 chatbot
-  "land.bot.h": { en: "Why not just ask a chatbot?", hi: "किसी चैटबॉट से ही क्यों न पूछ लें?" },
-  "land.bot.b": {
-    en: "General chatbots can be helpful, but with Indian offer documents they often run into two problems. They can mix up lakh, crore and million, and they rarely show which page a number came from. When it's your money, \"probably right\" isn't good enough.",
-    hi: "आम चैटबॉट मददगार हो सकते हैं, पर भारतीय ऑफ़र दस्तावेज़ों के साथ अक्सर दो दिक्कतें आती हैं। वे लाख, करोड़ और मिलियन में गड़बड़ कर सकते हैं, और शायद ही बताते हैं कि आंकड़ा किस पन्ने से आया। जब बात आपके पैसे की हो, तो \"शायद सही\" काफ़ी नहीं है।",
-  },
-  "land.bot.row1": { en: "A typical chatbot answer", hi: "एक आम चैटबॉट का जवाब" },
-  "land.bot.row1v": { en: "\"The fresh issue is ₹800 lakh.\"", hi: "\"फ्रेश इश्यू ₹800 लाख है।\"" },
-  "land.bot.row2": { en: "What the document says (page 3)", hi: "दस्तावेज़ में क्या लिखा है (पन्ना 3)" },
-  "land.bot.row2v": { en: "\"₹800 crore\"", hi: "\"₹800 करोड़\"" },
-  "land.bot.verdictHead": { en: "Doesn't match.", hi: "मेल नहीं खाता।" },
-  "land.bot.verdict": {
-    en: "₹800 lakh is ₹8 crore. The document says ₹800 crore. That's 100 times more.",
-    hi: "₹800 लाख यानी ₹8 करोड़। दस्तावेज़ में ₹800 करोड़ लिखा है। यह 100 गुना ज़्यादा है।",
-  },
-  "land.bot.caption": {
-    en: "Illustrative example. FinSight's own comparison with general chatbots is in the Model Lab.",
-    hi: "यह एक उदाहरण है। आम चैटबॉट से FinSight की तुलना मॉडल लैब में है।",
-  },
+  "land.bot.h": "Why not just ask a chatbot?",
+  "land.bot.b": "General chatbots can be helpful, but with Indian offer documents they often run into two problems. They can mix up lakh, crore and million, and they rarely show which page a number came from. When it's your money, \"probably right\" isn't good enough.",
+  "land.bot.row1": "A typical chatbot answer",
+  "land.bot.row1v": "\"The fresh issue is ₹800 lakh.\"",
+  "land.bot.row2": "What the document says (page 3)",
+  "land.bot.row2v": "\"₹800 crore\"",
+  "land.bot.verdictHead": "Doesn't match.",
+  "land.bot.verdict": "₹800 lakh is ₹8 crore. The document says ₹800 crore. That's 100 times more.",
+  "land.bot.caption": "Illustrative example. FinSight's own comparison with general chatbots is in the Model Lab.",
 
   // 5.5 how it works
-  "land.steps.h": { en: "How FinSight works", hi: "FinSight कैसे काम करता है" },
-  "land.steps.1.h": { en: "It reads the whole document.", hi: "यह पूरा दस्तावेज़ पढ़ता है।" },
-  "land.steps.1.b": {
-    en: "Every page, including the tables, from the RHP and the final prospectus.",
-    hi: "हर पन्ना, तालिकाओं समेत, आरएचपी और फ़ाइनल प्रॉस्पेक्टस दोनों से।",
-  },
-  "land.steps.2.h": { en: "It pulls out the key facts.", hi: "यह मुख्य तथ्य निकालता है।" },
-  "land.steps.2.b": {
-    en: "Issue size, price, who is selling, what the money is for. Each fact links to its page.",
-    hi: "इश्यू का आकार, कीमत, कौन बेच रहा है, पैसा किस काम में लगेगा। हर तथ्य उसके पन्ने से जुड़ा होता है।",
-  },
-  "land.steps.3.h": { en: "It checks every number in its answers.", hi: "यह अपने हर उत्तर का हर आंकड़ा जाँचता है।" },
-  "land.steps.3.b": {
-    en: "Ask a question, and each number in the reply gets a mark.",
-    hi: "सवाल पूछिए, और जवाब के हर आंकड़े पर एक निशान लगेगा।",
-  },
-  "land.marks.verified": { en: "the same number is in the document.", hi: "वही आंकड़ा दस्तावेज़ में है।" },
-  "land.marks.unverifiable": { en: "the number isn't in the pages used.", hi: "यह आंकड़ा इस्तेमाल किए गए पन्नों में नहीं है।" },
-  "land.marks.contradicted": { en: "the document says something different.", hi: "दस्तावेज़ में कुछ और लिखा है।" },
+  "land.steps.h": "How FinSight works",
+  "land.steps.1.h": "It reads the whole document.",
+  "land.steps.1.b": "Every page, including the tables, from the RHP and the final prospectus.",
+  "land.steps.2.h": "It pulls out the key facts.",
+  "land.steps.2.b": "Issue size, price, who is selling, what the money is for. Each fact links to its page.",
+  "land.steps.3.h": "It checks every number in its answers.",
+  "land.steps.3.b": "Ask a question, and each number in the reply gets a mark.",
+  "land.marks.verified": "the same number is in the document.",
+  "land.marks.unverifiable": "the number isn't in the pages used.",
+  "land.marks.contradicted": "the document says something different.",
 
   // 5.6 mini demo
   // B05 §2: "What you get", after "How FinSight works"
-  "land.get.h": { en: "What you get", hi: "आपको क्या मिलता है" },
-  "land.get.1.h": { en: "The key facts.", hi: "मुख्य तथ्य।" },
-  "land.get.1.b": {
-    en: "Issue size, price, who is selling, what the money is for. Each linked to its page.",
-    hi: "इश्यू का आकार, कीमत, कौन बेच रहा है, पैसा किस काम में लगेगा। हर एक उसके पन्ने से जुड़ा।",
-  },
-  "land.get.2.h": { en: "Red flags.", hi: "चेतावनी संकेत।" },
-  "land.get.2.b": {
-    en: "13 checks, like losses, cash burn, debt, and how cheaply insiders bought their shares. Each marked OK, Watch or Concern.",
-    hi: "13 जाँचें, जैसे घाटा, नकदी का खर्च, कर्ज़, और अंदरूनी लोगों ने अपने शेयर कितने सस्ते में ख़रीदे। हर एक पर ठीक, ध्यान दें या चिंता का निशान।",
-  },
-  "land.get.3.h": { en: "Every risk, in plain English.", hi: "हर जोखिम, आसान भाषा में।" },
-  "land.get.3.b": {
-    en: "Companies list dozens of risks in legal language. FinSight rewrites each one in simple words and shows the unusual ones first.",
-    hi: "कंपनियाँ दर्जनों जोखिम कानूनी भाषा में लिखती हैं। FinSight हर एक को आसान शब्दों में लिखता है और असामान्य जोखिम पहले दिखाता है।",
-  },
-  "land.get.4.h": { en: "A risk level.", hi: "एक जोखिम स्तर।" },
-  "land.get.4.b": {
-    en: "Low, Medium or High, compared with past Indian IPOs, with the reasons listed.",
-    hi: "कम, मध्यम या ऊँचा, पिछले भारतीय आईपीओ से तुलना करके, कारणों के साथ।",
-  },
+  "land.get.h": "What you get",
+  "land.get.1.h": "The key facts.",
+  "land.get.1.b": "Issue size, price, who is selling, what the money is for. Each linked to its page.",
+  "land.get.2.h": "Red flags.",
+  "land.get.2.b": "13 checks, like losses, cash burn, debt, and how cheaply insiders bought their shares. Each marked OK, Watch or Concern.",
+  "land.get.3.h": "Every risk, in plain English.",
+  "land.get.3.b": "Companies list dozens of risks in legal language. FinSight rewrites each one in simple words and shows the unusual ones first.",
+  "land.get.4.h": "A risk level.",
+  "land.get.4.b": "Low, Medium or High, compared with past Indian IPOs, with the reasons listed.",
 
-  "land.demo.h": { en: "Try it here", hi: "यहीं आज़माएँ" },
-  "land.demo.b": {
-    en: "Click a fact. FinSight jumps to the page and highlights where it came from.",
-    hi: "किसी तथ्य पर क्लिक करें। FinSight उस पन्ने पर जाकर दिखाएगा कि यह कहाँ से आया।",
-  },
-  "land.demo.open": { en: "Open the full workspace", hi: "पूरा वर्कस्पेस खोलें" },
+  "land.demo.h": "Try it here",
+  "land.demo.b": "Click a fact. FinSight jumps to the page and highlights where it came from.",
+  "land.demo.open": "Open the full workspace",
 
   // 5.7 languages
-  "land.lang.h": { en: "Ask in English or Hindi", hi: "अंग्रेज़ी या हिंदी में पूछें" },
-  "land.lang.b": {
-    en: "Type a question, or press the mic and ask in Hindi. You'll see the words FinSight heard before it answers, so you can fix them.",
-    hi: "सवाल लिखिए, या माइक दबाकर हिंदी में पूछिए। जवाब देने से पहले आपको दिखेगा कि FinSight ने क्या सुना, ताकि आप उसे ठीक कर सकें।",
-  },
-  "land.lang.q": { en: "लेंसकार्ट के प्रमोटर कौन हैं?", hi: "लेंसकार्ट के प्रमोटर कौन हैं?" },
-  "land.lang.cap": {
-    en: "The answer above was recorded from the Lenskart workspace for the question “प्रमोटर कौन हैं?” and is shown exactly as the model wrote it. The Hindi is imperfect: the names are spelled out in both scripts and the first sentence is wrong to say they are not given. The passages it cites say who the promoters are.",
-    hi: "ऊपर का उत्तर लेंसकार्ट वर्कस्पेस में “प्रमोटर कौन हैं?” पूछने पर रिकॉर्ड हुआ था और ठीक वैसा ही दिखाया गया है जैसा मॉडल ने लिखा। हिंदी अधूरी है: नाम दोनों लिपियों में लिखे हैं और पहला वाक्य गलत कहता है कि नाम नहीं दिए गए। जिन अंशों का हवाला है, उनमें प्रमोटरों के नाम दिए हैं।",
-  },
-  "land.lang.play": { en: "Play the example", hi: "उदाहरण सुनें" },
-  "land.lang.stop": { en: "Stop", hi: "रोकें" },
 
   // 5.8 limits
-  "land.no.h": { en: "What FinSight won't do", hi: "FinSight क्या नहीं करेगा" },
-  "land.no.1": { en: "It won't tell you whether to apply or buy.", hi: "यह नहीं बताएगा कि आपको आवेदन या ख़रीद करना चाहिए या नहीं।" },
-  "land.no.2": { en: "It won't predict listing prices or profits.", hi: "यह लिस्टिंग कीमत या मुनाफ़े का अनुमान नहीं लगाएगा।" },
-  "land.no.3": {
-    en: "Its risk level describes what the document discloses. It is not a recommendation.",
-    hi: "इसका जोखिम स्तर बताता है कि दस्तावेज़ में क्या बताया गया है। यह कोई सिफ़ारिश नहीं है।",
-  },
-  "land.no.p": {
-    en: "In India, investment advice can only come from advisers registered with [[sebi|SEBI]]. FinSight sticks to what the documents say.",
-    hi: "भारत में निवेश सलाह केवल [[sebi|सेबी]] में पंजीकृत सलाहकार ही दे सकते हैं। FinSight केवल वही बताता है जो दस्तावेज़ों में लिखा है।",
-  },
+  "land.no.h": "What FinSight won't do",
+  "land.no.1": "It won't tell you whether to apply or buy.",
+  "land.no.2": "It won't predict listing prices or profits.",
+  "land.no.3": "Its risk level describes what the document discloses. It is not a recommendation.",
+  "land.no.p": "In India, investment advice can only come from advisers registered with [[sebi|SEBI]]. FinSight sticks to what the documents say.",
 
   // 5.9 stats
-  "land.open.h": { en: "Built in the open", hi: "खुले तरीके से बनाया गया" },
-  "land.open.b": {
-    en: "Every number below comes from tests you can rerun from the source code.",
-    hi: "नीचे दिया हर आंकड़ा उन टेस्ट से आया है जिन्हें आप सोर्स कोड से दोबारा चला सकते हैं।",
-  },
-  "land.stat.ipos": { en: "IPOs read", hi: "आईपीओ पढ़े गए" },
-  "land.stat.pages": { en: "pages processed", hi: "पन्ने पढ़े गए" },
-  "land.stat.detect": { en: "of planted number errors caught", hi: "जानबूझकर डाली गई गलतियों में से पकड़ी गईं" },
-  "land.stat.risks": { en: "risks explained", hi: "जोखिम समझाए गए" },
-  "land.stat.corpus": { en: "past IPOs used for comparison", hi: "तुलना के लिए इस्तेमाल हुए पिछले आईपीओ" },
-  "land.stat.robust": {
-    en: "accuracy of our model when the cover page is hidden",
-    hi: "कवर पेज छिपाने पर हमारे मॉडल की सटीकता",
-  },
-  "land.open.lab": { en: "See the full results", hi: "पूरे नतीजे देखें" },
-  "land.open.code": { en: "Read the code on GitHub", hi: "GitHub पर कोड पढ़ें" },
+  "land.open.h": "Built in the open",
+  "land.open.b": "Every number below comes from tests you can rerun from the source code.",
+  "land.stat.ipos": "IPOs read",
+  "land.stat.pages": "pages processed",
+  "land.stat.detect": "of planted number errors caught",
+  "land.stat.risks": "risks explained",
+  "land.stat.corpus": "past IPOs used for comparison",
+  "land.stat.robust": "accuracy of our model when the cover page is hidden",
+  "land.open.lab": "See the full results",
+  "land.open.code": "Read the code on GitHub",
 
   // 5.10 final
-  "land.final.h": { en: "Pick an IPO and see what's inside.", hi: "कोई आईपीओ चुनें और देखें कि उसमें क्या है।" },
-  "land.final.cta": { en: "Browse IPOs", hi: "आईपीओ देखें" },
+  "land.final.h": "Pick an IPO and see what's inside.",
+  "land.final.cta": "Browse IPOs",
 } satisfies Record<string, Entry>;

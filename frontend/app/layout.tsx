@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 // Runs before first paint so there is no flash of the wrong theme.
-const THEME_SCRIPT = `try{var s=JSON.parse(localStorage.getItem("fs_ui")||"null");var t=s&&s.state&&s.state.theme;if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t;var l=s&&s.state&&s.state.lang;if(l==="hi")document.documentElement.lang="hi"}catch(e){}`;
+const THEME_SCRIPT = `try{var s=JSON.parse(localStorage.getItem("fs_ui")||"null");var t=s&&s.state&&s.state.theme;if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

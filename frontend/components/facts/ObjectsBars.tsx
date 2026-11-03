@@ -8,14 +8,14 @@ import { parseObjectsTable, resolveField, type XField } from "@/lib/xray";
 
 /** Objects of the offer as horizontal bars, longest first; `[●]` rows last with a dashed bar (7.3.5). */
 export function ObjectsBars({ ipoId, field }: { ipoId: string; field: XField }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const unit = useUi((s) => s.unit);
   const setHighlight = useUi((s) => s.setHighlight);
   const r = resolveField(field);
   const content = FIELD_CONTENT.objects_of_offer;
 
   if (r.notInDocument || r.value?.kind !== "table") {
-    return <p className="text-sm text-muted">{pick(content.notInDocument!, lang)}</p>;
+    return <p className="text-sm text-muted">{pick(content.notInDocument!)}</p>;
   }
   const rows = parseObjectsTable(r.value);
   const known = rows.filter((x) => x.inr !== null).sort((a, b) => Number(b.inr) - Number(a.inr));
@@ -37,7 +37,7 @@ export function ObjectsBars({ ipoId, field }: { ipoId: string; field: XField }) 
             <span className="flex items-baseline justify-between gap-3 text-sm">
               <span>{row.label}</span>
               <span className="shrink-0 font-medium">
-                {row.inr !== null ? formatMoney(row.inr, unit, lang) : t("objects.notSet")}
+                {row.inr !== null ? formatMoney(row.inr, unit) : t("objects.notSet")}
               </span>
             </span>
             <span className="mt-1 block h-1.5 w-full rounded-full bg-surface-2">

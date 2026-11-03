@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FIELD_CONTENT, pick } from "@/lib/content/fields";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { heatmap, ladderRows, ladderSize, ladderTakeaway, pct, type Cell } from "@/lib/lab";
 import { useT } from "@/lib/useT";
 import { LabFrame, Note } from "./LabFrame";
@@ -44,9 +44,9 @@ function Examples({
   onClose: () => void;
   name: (k: string) => string;
 }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const list = heat.rows.find((r) => r.key === sel.rung)?.examples[sel.field] ?? [];
-  const fact = FIELD_CONTENT[sel.field] ? pick(FIELD_CONTENT[sel.field].label, lang) : sel.field;
+  const fact = FIELD_CONTENT[sel.field] ? pick(FIELD_CONTENT[sel.field].label) : sel.field;
   return (
     <div className="mt-4 rounded-[10px] border border-rule bg-surface p-4" role="region" aria-live="polite">
       <div className="flex items-start justify-between gap-3">
@@ -82,7 +82,7 @@ function Examples({
 }
 
 export function LabExtractor({ data }: { data: unknown }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const rows = ladderRows(data);
   const take = ladderTakeaway(data);
   const size = ladderSize(data);
@@ -149,7 +149,7 @@ export function LabExtractor({ data }: { data: unknown }) {
               <tbody>
                 {heat.fields.map((f) => (
                   <tr key={f} className="border-b border-rule last:border-0">
-                    <th scope="row" className="p-3 font-medium">{FIELD_CONTENT[f] ? pick(FIELD_CONTENT[f].label, lang) : f}</th>
+                    <th scope="row" className="p-3 font-medium">{FIELD_CONTENT[f] ? pick(FIELD_CONTENT[f].label) : f}</th>
                     {heat.rows.map((r) => {
                       const v = r.cells[f];
                       const bg = v === null ? undefined : { background: `color-mix(in srgb, var(--stamp) ${Math.round(v * 38)}%, var(--surface))` };
@@ -164,7 +164,7 @@ export function LabExtractor({ data }: { data: unknown }) {
                               type="button"
                               disabled={!has}
                               aria-pressed={on}
-                              aria-label={`${known.has(r.key) ? t(label(r.key)) : r.key}, ${FIELD_CONTENT[f] ? pick(FIELD_CONTENT[f].label, lang) : f}: ${pct(v)}%`}
+                              aria-label={`${known.has(r.key) ? t(label(r.key)) : r.key}, ${FIELD_CONTENT[f] ? pick(FIELD_CONTENT[f].label) : f}: ${pct(v)}%`}
                               onClick={() => setSel(on ? null : { rung: r.key, field: f })}
                               className={`block min-h-11 w-full p-3 text-left disabled:cursor-default ${on ? "outline outline-2 -outline-offset-2 outline-[var(--stamp)]" : ""}`}
                             >

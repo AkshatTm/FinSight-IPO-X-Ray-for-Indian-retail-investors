@@ -102,7 +102,7 @@ function Mark({ v, text, shown, turn, onOpen }: { v: Verdict; text: string; show
 }
 
 export function AnswerText({ turn }: { turn: Turn }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const reduced = useReducedMotion();
   const openEvidence = useChat((s) => s.openEvidence);
   const setHighlight = useUi((s) => s.setHighlight);
@@ -115,7 +115,7 @@ export function AnswerText({ turn }: { turn: Turn }) {
   const passages = turn.retrieval?.passages ?? [];
 
   return (
-    <p className="whitespace-pre-wrap" lang={turn.language === "hi" ? "hi" : "en"}>
+    <p className="whitespace-pre-wrap">
       {segs.map((s, i) => {
         if (s.type === "text") return <span key={i}>{s.text}</span>;
         if (s.type === "number") {
@@ -140,7 +140,7 @@ export function AnswerText({ turn }: { turn: Turn }) {
             </button>
             {p && (
               <span role="tooltip" className="pointer-events-none absolute bottom-full left-0 z-20 mb-1 hidden w-64 rounded-[10px] border border-rule bg-surface p-2 text-xs shadow-[var(--shadow-float)] group-focus-within:block group-hover:block">
-                <span className="mb-1 block font-medium">{docLabel(p.doc, p.page_start, lang)}</span>
+                <span className="mb-1 block font-medium">{docLabel(p.doc, p.page_start)}</span>
                 <span className="line-clamp-3 block text-muted">{p.snippet}</span>
               </span>
             )}

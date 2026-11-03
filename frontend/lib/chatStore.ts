@@ -3,7 +3,6 @@
 import { create } from "zustand";
 import { ApiError } from "@/lib/api/client";
 import { applyEvent, newTurn, type Turn } from "@/lib/chat";
-import type { Lang } from "@/lib/format";
 import { streamChat } from "@/lib/sse";
 
 export interface EvidenceRef {
@@ -16,9 +15,9 @@ interface ChatState {
   turns: Record<string, Turn[]>;
   evidence: EvidenceRef | null;
   /** Unsent composer text per IPO; survives tab switches. */
-  drafts: Record<string, { text: string; voice: boolean }>;
-  setDraft: (ipoId: string, text: string, voice?: boolean) => void;
-  ask: (ipoId: string, question: string, language: Lang, source?: "typed" | "voice" | "chip") => Promise<void>;
+  drafts: Record<string, { text: string }>;
+  setDraft: (ipoId: string, text: string) => void;
+  ask: (ipoId: string, question: string, source?: "typed" | "chip") => Promise<void>;
   openEvidence: (e: EvidenceRef) => void;
   closeEvidence: () => void;
   reset: (ipoId: string) => void;
@@ -34,20 +33,20 @@ export const useChat = create<ChatState>()((set, get) => {
     turns: {},
     evidence: null,
     drafts: {},
-    setDraft: (ipoId, text, voice = false) => set((s) => ({ drafts: { ...s.drafts, [ipoId]: { text, voice } } })),
+    setDraft: (ipoId, text) => set((s) => ({ drafts: { ...s.drafts, [ipoId]: { text } } })),
     openEvidence: (evidence) => set({ evidence }),
     closeEvidence: () => set({ evidence: null }),
     reset: (ipoId) => set((s) => ({ turns: { ...s.turns, [ipoId]: [] }, evidence: null })),
 
-    async ask(ipoId, question, language, source = "typed") {
+    async ask(ipoId, question, source = "typed") {
       const q = question.trim();
       if (!q) return;
       if ((get().turns[ipoId] ?? []).some((t) => t.status === "streaming")) return;
       const id = `t${++counter}`;
-      set((s) => ({ turns: { ...s.turns, [ipoId]: [...(s.turns[ipoId] ?? []), newTurn(id, ipoId, q, language)] } }));
+      set((s) => ({ turns: { ...s.turns, [ipoId]: [...(s.turns[ipoId] ?? []), newTurn(id, ipoId, q)] } }));
       try {
         const demo = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("demo") === "1";
-        for await (const ev of streamChat({ ipo_id: ipoId, question: q, language, source, demo })) {
+        for await (const ev of streamChat({ ipo_id: ipoId, question: q, language: "en", source, demo })) {
           patch(ipoId, id, (t) => applyEvent(t, ev));
         }
         patch(ipoId, id, (t) =>

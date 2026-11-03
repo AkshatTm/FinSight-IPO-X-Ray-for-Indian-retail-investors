@@ -15,6 +15,6 @@ describe("parseRich", () => {
     ]);
   });
   it("handles a term at the very start and end", () => {
-    expect(parseRich("[[sebi|सेबी]]")).toEqual([{ text: "सेबी", term: "sebi" }]);
+    expect(parseRich("[[sebi|SEBI]]")).toEqual([{ text: "SEBI", term: "sebi" }]);
   });
 });

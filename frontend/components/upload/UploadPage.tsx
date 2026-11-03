@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth/supabase";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useToast } from "@/lib/toast";
 import { rejectionFor, uploadDocument, UploadError, type UploadPhase } from "@/lib/upload";
 import { useT } from "@/lib/useT";

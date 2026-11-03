@@ -3,7 +3,7 @@
 import { CaretLeft, CaretRight, DotsThree } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import type { Schemas } from "@/lib/api/client";
-import { STRINGS, type StringKey } from "@/lib/i18n";
+import { STRINGS, type StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 import type { Zoom } from "./PageViewer";
 import type { DocKind } from "@/lib/doc";

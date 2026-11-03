@@ -6,16 +6,16 @@ import { useUi } from "@/lib/store";
 import { useT } from "@/lib/useT";
 import { Drawer } from "./Drawer";
 
-/** Searchable list of terms in the current language; opens scrolled to the clicked term (spec 7.8). */
+/** Searchable list of terms opens scrolled to the clicked term (spec 7.8). */
 export function GlossaryDrawer() {
-  const { t, lang } = useT();
+  const { t } = useT();
   const { open, term } = useUi((s) => s.glossary);
   const close = useUi((s) => s.closeGlossary);
   const [q, setQ] = useState("");
   const target = useRef<HTMLLIElement | null>(null);
 
   const needle = q.trim().toLowerCase();
-  const rows = GLOSSARY.filter((g) => !needle || `${g.title[lang]} ${g.title.en} ${g.short[lang]}`.toLowerCase().includes(needle));
+  const rows = GLOSSARY.filter((g) => !needle || `${g.title} ${g.short}`.toLowerCase().includes(needle));
 
   useEffect(() => {
     if (open) target.current?.scrollIntoView({ block: "start" });
@@ -44,8 +44,8 @@ export function GlossaryDrawer() {
               ref={g.id === term ? target : undefined}
               className={`border-b border-rule py-3 ${g.id === term ? "bg-stamp/5" : ""}`}
             >
-              <h3 className="font-semibold" lang={lang === "hi" ? "hi" : "en"}>{g.title[lang]}</h3>
-              <p className="mt-1 text-sm text-muted" lang={lang === "hi" ? "hi" : "en"}>{g.short[lang]}</p>
+              <h3 className="font-semibold">{g.title}</h3>
+              <p className="mt-1 text-sm text-muted">{g.short}</p>
             </li>
           ))}
         </ul>

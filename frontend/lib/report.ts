@@ -1,5 +1,5 @@
 import type { Schemas } from "@/lib/api/client";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 
 export type RedFlag = Schemas["RedFlag"];
 export type FlagStatus = RedFlag["status"];

@@ -1,12 +1,10 @@
 // Risk report copy: docs/phase2/B05_UI_SPEC.md §5 (English verbatim). The risk report is English
-// only (B05 "Language"), so `hi` repeats the English, except the Hindi note shown at the top of
+
 // these tabs. Lines marked "builder draft" are not in B05 and are listed in docs/AKSHAT_TODO.md.
-type Entry = { en: string; hi: string };
-const en = (text: string): Entry => ({ en: text, hi: text });
+type Entry = string;
+const en = (text: string): Entry => text;
 
 export const REPORT = {
-  // Shown only when the UI is in Hindi; the English line is a builder draft.
-  "rep.englishOnly": { en: "This risk report is in English only for now.", hi: "यह जोखिम रिपोर्ट अभी केवल अंग्रेज़ी में है।" },
 
   // Cache v2 (CC-04): banners, Re-analyse and Delete. Builder drafts; the risk report is English only.
   "cache.reanalysing": en("This report was made with an older version of FinSight, so it is being analysed again."),

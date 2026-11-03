@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { apiGet } from "@/lib/api/client";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { anchorFor, categoryKey, flagTitleKey, offerLine, statusKey, type OfferLineParams, type ReportOverview, type RiskLevel, type RisksPage } from "@/lib/report";
 import { useT } from "@/lib/useT";
 import { RiskLevelCard } from "./RiskLevelCard";

@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { apiGet, type Schemas } from "@/lib/api/client";
-import { STRINGS, type StringKey } from "@/lib/i18n";
+import { STRINGS, type StringKey } from "@/lib/copy";
 import { SAMPLE_REPORT_DOC_ID } from "@/lib/showcase";
 import { useT } from "@/lib/useT";
 

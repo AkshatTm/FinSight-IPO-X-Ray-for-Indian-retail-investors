@@ -28,7 +28,7 @@ function StageLine({ turn }: { turn: Turn }) {
 }
 
 export function TurnView({ turn, suggestions }: { turn: Turn; suggestions: string[] }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const toast = useToast((s) => s.show);
 
   const copy = async () => {
@@ -51,7 +51,7 @@ export function TurnView({ turn, suggestions }: { turn: Turn; suggestions: strin
       <AnswerText turn={turn} />
       {turn.answer && turn.final && (
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-rule pt-2 text-sm">
-          <p className="text-muted">{meterText(turn.verdicts, lang)}</p>
+          <p className="text-muted">{meterText(turn.verdicts)}</p>
           <button type="button" onClick={copy} className="h-11 rounded-[6px] px-3 text-stamp hover:bg-surface-2">
             {t("ask.copy")}
           </button>
@@ -63,7 +63,7 @@ export function TurnView({ turn, suggestions }: { turn: Turn; suggestions: strin
   return (
     <article className="space-y-3" aria-label={turn.question}>
       <div className="flex justify-end">
-        <p className="max-w-[85%] rounded-[10px] bg-stamp/10 px-3 py-2" lang={turn.language === "hi" ? "hi" : "en"}>
+        <p className="max-w-[85%] rounded-[10px] bg-stamp/10 px-3 py-2">
           <span className="sr-only-keep">{t("ask.you")}: </span>
           {turn.question}
         </p>

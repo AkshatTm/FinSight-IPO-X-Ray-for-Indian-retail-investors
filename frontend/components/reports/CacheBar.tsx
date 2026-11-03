@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ApiError, apiSend, type Schemas } from "@/lib/api/client";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useToast } from "@/lib/toast";
 import { useT } from "@/lib/useT";
 

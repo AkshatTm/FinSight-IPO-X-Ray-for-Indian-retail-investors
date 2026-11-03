@@ -3,9 +3,8 @@
 import { useEffect, useRef } from "react";
 import { useSuggested } from "@/lib/api/hooks";
 import { useChat } from "@/lib/chatStore";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
-import { answerLanguage } from "@/lib/voice";
 import { Composer } from "./Composer";
 import { EvidenceDrawer } from "./EvidenceDrawer";
 import { TurnView } from "./TurnView";
@@ -13,7 +12,7 @@ import { TurnView } from "./TurnView";
 const FALLBACK: StringKey[] = ["ask.chip.money", "ask.chip.use", "ask.chip.promoters", "ask.chip.price", "ask.chip.ofs"];
 
 export function AskPane({ ipoId, company }: { ipoId: string; company: string }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const turns = useChat((s) => s.turns[ipoId]) ?? [];
   const ask = useChat((s) => s.ask);
   const { data } = useSuggested(ipoId);
@@ -45,7 +44,7 @@ export function AskPane({ ipoId, company }: { ipoId: string; company: string }) 
                 <button
                   key={q}
                   type="button"
-                  onClick={() => void ask(ipoId, q, lang, "chip")}
+                  onClick={() => void ask(ipoId, q, "chip")}
                   className="min-h-11 rounded-[10px] border border-rule bg-surface px-3 py-2 text-left text-sm hover:border-stamp"
                 >
                   {q}
@@ -60,7 +59,7 @@ export function AskPane({ ipoId, company }: { ipoId: string; company: string }) 
       <Composer
         ipoId={ipoId}
         disabled={streaming}
-        onSend={(q, voice) => void ask(ipoId, q, voice ? answerLanguage(q, lang) : lang, voice ? "voice" : "typed")}
+        onSend={(q) => void ask(ipoId, q, "typed")}
       />
       <EvidenceDrawer ipoId={ipoId} />
     </section>

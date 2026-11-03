@@ -1,7 +1,7 @@
 "use client";
 
 import { Rich } from "@/components/ui/Rich";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
 const REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors";
@@ -34,7 +34,7 @@ export function About() {
         </Block>
         <Block h={t("about.limits.h")}>
           <ul className="list-disc space-y-2 pl-5">
-            {([1, 2, 3, 4, 5, 6, 7, 8] as const).map((n) => (
+            {([1, 2, 4, 5, 6, 7, 8] as const).map((n) => (
               <li key={n}>{t(`about.limits.${n}` as StringKey)}</li>
             ))}
           </ul>

@@ -11,11 +11,11 @@ import { useT } from "@/lib/useT";
  * into the glossary drawer (spec 4.5). Enter opens, Esc closes.
  */
 export function GlossaryTerm({ id, children, icon = false }: { id: string; children?: ReactNode; icon?: boolean }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const openGlossary = useUi((s) => s.openGlossary);
   const [open, setOpen] = useState(false);
   const pop = useId();
-  const g = glossaryText(id, lang);
+  const g = glossaryText(id);
   if (!g) return <>{children}</>;
   return (
     <span className={icon ? "relative inline-flex" : "relative inline-block"} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>

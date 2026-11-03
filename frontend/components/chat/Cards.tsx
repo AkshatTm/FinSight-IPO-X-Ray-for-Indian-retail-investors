@@ -1,7 +1,7 @@
 "use client";
 
 import type { Schemas } from "@/lib/api/client";
-import { errorMessage } from "@/lib/i18n";
+import { errorMessage } from "@/lib/copy";
 import { useChat } from "@/lib/chatStore";
 import { guardKind, type Turn } from "@/lib/chat";
 import { useUi } from "@/lib/store";
@@ -12,7 +12,6 @@ const card = "rounded-[10px] border p-4 text-sm";
 const chip = "h-11 rounded-full border border-rule px-4 text-left hover:border-stamp";
 
 function Facts({ ipoId, facts }: { ipoId: string; facts: Schemas["FactSummary"][] }) {
-  const { lang } = useT();
   const setHighlight = useUi((s) => s.setHighlight);
   return (
     <ul className="mt-3 divide-y divide-rule border-y border-rule">
@@ -23,10 +22,10 @@ function Facts({ ipoId, facts }: { ipoId: string; facts: Schemas["FactSummary"][
             onClick={() => setHighlight({ ipoId, doc: f.doc, page: f.page, bbox: null, kind: "source" })}
             className="flex min-h-11 w-full items-center justify-between gap-3 px-1 py-2 text-left hover:bg-surface-2"
           >
-            <span className="text-muted">{lang === "hi" ? f.label_hi : f.label_en}</span>
+            <span className="text-muted">{f.label_en}</span>
             <span className="flex items-center gap-2">
               <span className="font-medium">{f.display}</span>
-              <span className="rounded-full border border-rule px-2 py-0.5 text-xs text-muted">{docLabel(f.doc, f.page, lang)}</span>
+              <span className="rounded-full border border-rule px-2 py-0.5 text-xs text-muted">{docLabel(f.doc, f.page)}</span>
             </span>
           </button>
         </li>
@@ -37,7 +36,7 @@ function Facts({ ipoId, facts }: { ipoId: string; facts: Schemas["FactSummary"][
 
 /** Advice, forecast and privacy cards (spec 13.3). Never implies a decision. */
 export function GuardCard({ turn }: { turn: Turn }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const ask = useChat((s) => s.ask);
   const openGlossary = useUi((s) => s.openGlossary);
   const g = turn.guard!;
@@ -58,10 +57,10 @@ export function GuardCard({ turn }: { turn: Turn }) {
       )}
       {kind === "forecast" && (
         <div className="mt-3 flex flex-wrap gap-2">
-          <button type="button" className={chip} onClick={() => ask(turn.ipoId, t("guard.forecast.chipMoney"), lang, "chip")}>
+          <button type="button" className={chip} onClick={() => ask(turn.ipoId, t("guard.forecast.chipMoney"), "chip")}>
             {t("guard.forecast.chipMoney")}
           </button>
-          <button type="button" className={chip} onClick={() => ask(turn.ipoId, t("ask.pastRevenue"), lang, "chip")}>
+          <button type="button" className={chip} onClick={() => ask(turn.ipoId, t("ask.pastRevenue"), "chip")}>
             {t("guard.forecast.chipPast")}
           </button>
         </div>
@@ -71,7 +70,7 @@ export function GuardCard({ turn }: { turn: Turn }) {
 }
 
 export function AbstainCard({ turn, suggestions }: { turn: Turn; suggestions: string[] }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const ask = useChat((s) => s.ask);
   const setHighlight = useUi((s) => s.setHighlight);
   const p = turn.abstain?.closest_passage ?? null;
@@ -81,7 +80,7 @@ export function AbstainCard({ turn, suggestions }: { turn: Turn; suggestions: st
       <p className="mt-1 text-muted">{t("abstain.body")}</p>
       {p && (
         <div className="mt-3 rounded-[6px] bg-surface-2 p-3">
-          <p className="mb-1 font-medium">{docLabel(p.doc, p.page_start, lang)}</p>
+          <p className="mb-1 font-medium">{docLabel(p.doc, p.page_start)}</p>
           <p className="line-clamp-3 text-muted">{p.snippet}</p>
           <button
             type="button"
@@ -97,7 +96,7 @@ export function AbstainCard({ turn, suggestions }: { turn: Turn; suggestions: st
           <p className="mt-3 text-muted">{t("abstain.tryDifferent")}</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {suggestions.slice(0, 3).map((q) => (
-              <button key={q} type="button" className={chip} onClick={() => ask(turn.ipoId, q, lang, "chip")}>
+              <button key={q} type="button" className={chip} onClick={() => ask(turn.ipoId, q, "chip")}>
                 {q}
               </button>
             ))}
@@ -109,13 +108,13 @@ export function AbstainCard({ turn, suggestions }: { turn: Turn; suggestions: st
 }
 
 export function ErrorCard({ turn }: { turn: Turn }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const ask = useChat((s) => s.ask);
   return (
     <div className={`${card} border-rule bg-surface`} role="alert">
       <h3 className="text-base font-semibold">{t("error.title")}</h3>
-      <p className="mt-1 text-muted">{errorMessage(turn.error?.code, lang)}</p>
-      <button type="button" className={`${chip} mt-3`} onClick={() => ask(turn.ipoId, turn.question, turn.language, "typed")}>
+      <p className="mt-1 text-muted">{errorMessage(turn.error?.code)}</p>
+      <button type="button" className={`${chip} mt-3`} onClick={() => ask(turn.ipoId, turn.question, "typed")}>
         {t("error.retry")}
       </button>
     </div>

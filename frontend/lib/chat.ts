@@ -1,6 +1,6 @@
 import type { Schemas } from "@/lib/api/client";
-import { formatMoney, type Lang } from "@/lib/format";
-import { t as translate, type StringKey } from "@/lib/i18n";
+import { formatMoney } from "@/lib/format";
+import { t as translate, type StringKey } from "@/lib/copy";
 import type { ChatEvent } from "@/lib/sse";
 import type { DocKind } from "@/lib/doc";
 
@@ -12,7 +12,6 @@ export interface Turn {
   id: string;
   ipoId: string;
   question: string;
-  language: Lang;
   status: "streaming" | "done" | "error";
   stage: { name: StageName; startedAt: number } | null;
   guard: S["GuardEvent"] | null;
@@ -26,9 +25,9 @@ export interface Turn {
   error: { code: string; message?: string } | null;
 }
 
-export function newTurn(id: string, ipoId: string, question: string, language: Lang): Turn {
+export function newTurn(id: string, ipoId: string, question: string): Turn {
   return {
-    id, ipoId, question, language,
+    id, ipoId, question,
     status: "streaming", stage: null, guard: null, retrieval: null, abstain: null,
     streamed: "", answer: null, verdicts: [], final: null, error: null,
   };
@@ -84,12 +83,12 @@ export function meter(verdicts: Verdict[]): Meter {
 }
 
 /** Footer wording (spec 13.2). */
-export function meterText(verdicts: Verdict[], lang: Lang): string {
+export function meterText(verdicts: Verdict[]): string {
   const m = meter(verdicts);
-  if (m.n === 0) return translate("meter.none", lang);
-  if (m.c > 0) return translate("meter.bad", lang, { c: m.c });
-  if (m.u > 0) return translate("meter.some", lang, { v: m.v, n: m.n, u: m.u });
-  return translate("meter.all", lang, { n: m.n });
+  if (m.n === 0) return translate("meter.none");
+  if (m.c > 0) return translate("meter.bad", { c: m.c });
+  if (m.u > 0) return translate("meter.some", { v: m.v, n: m.n, u: m.u });
+  return translate("meter.all", { n: m.n });
 }
 
 export type Segment =
@@ -121,8 +120,8 @@ export function segmentAnswer(text: string, verdicts: Verdict[], citations: S["C
   return out;
 }
 
-const crore = (v: Schemas["Money"] | null | undefined, lang: Lang) =>
-  v && v.value_inr != null ? formatMoney(v.value_inr, "crore", lang) : "";
+const crore = (v: Schemas["Money"] | null | undefined) =>
+  v && v.value_inr != null ? formatMoney(v.value_inr, "crore") : "";
 
 type AnyVal = Verdict["answer_value"];
 const raw = (v: AnyVal | null | undefined) => (v && "raw" in v ? v.raw : "");
@@ -136,29 +135,25 @@ export function factorText(a: number, b: number): string {
   return r.toLocaleString("en-IN");
 }
 
-const DOC_NAME: Record<DocKind, Record<Lang, string>> = {
-  rhp: { en: "RHP", hi: "आरएचपी" },
-  drhp: { en: "DRHP", hi: "डीआरएचपी" },
-  prospectus: { en: "Prospectus", hi: "प्रॉस्पेक्टस" },
-};
+const DOC_NAME: Record<DocKind, string> = { rhp: "RHP", drhp: "DRHP", prospectus: "Prospectus" };
 
 /** Reason text for the evidence drawer from the section 13.1 templates; API reason as the fallback. */
-export function reasonText(v: Verdict, lang: Lang): string {
+export function reasonText(v: Verdict): string {
   const ev = v.evidence;
-  const doc = ev ? DOC_NAME[ev.doc][lang] : "";
+  const doc = ev ? DOC_NAME[ev.doc] : "";
   const page = ev?.page ?? "";
   const key = `reason.${v.reason_code}` as StringKey;
   switch (v.reason_code) {
     case "verified":
     case "not_found":
     case "placeholder":
-      return translate(key, lang, { doc, page });
+      return translate(key, { doc, page });
     case "scale_mismatch": {
       const a = money(v.answer_value);
       const b = money(ev?.value as AnyVal);
       if (!a || !b || a.value_inr == null || b.value_inr == null) return v.reason;
-      return translate(key, lang, {
-        a: a.raw, a_crore: crore(a, lang), b: b.raw, b_crore: crore(b, lang),
+      return translate(key, {
+        a: a.raw, a_crore: crore(a), b: b.raw, b_crore: crore(b),
         factor: factorText(Number(a.value_inr), Number(b.value_inr)),
       });
     }
@@ -174,11 +169,11 @@ export interface ComparisonRow {
 }
 
 /** Side-by-side values for the evidence drawer: as written, in crore, in million. */
-export function comparison(v: Verdict, lang: Lang): ComparisonRow {
+export function comparison(v: Verdict): ComparisonRow {
   const a = money(v.answer_value);
   const b = money(v.evidence?.value as AnyVal);
   const conv = (unit: "crore" | "million"): [string, string] | null =>
-    a?.value_inr != null && b?.value_inr != null ? [formatMoney(a.value_inr, unit, lang), formatMoney(b.value_inr, unit, lang)] : null;
+    a?.value_inr != null && b?.value_inr != null ? [formatMoney(a.value_inr, unit), formatMoney(b.value_inr, unit)] : null;
   return { asWritten: [raw(v.answer_value), raw(v.evidence?.value as AnyVal)], crore: conv("crore"), million: conv("million") };
 }
 
@@ -187,6 +182,6 @@ export function copyText(turn: Turn): string {
   if (!turn.answer) return "";
   const refs = (turn.retrieval?.passages ?? [])
     .filter((p) => turn.answer!.citations.some((c) => c.n === p.n))
-    .map((p) => `[${p.n}] ${DOC_NAME[p.doc].en} p.${p.page_start}`);
+    .map((p) => `[${p.n}] ${DOC_NAME[p.doc]} p.${p.page_start}`);
   return refs.length ? `${turn.answer.text}\n\n${refs.join("\n")}` : turn.answer.text;
 }

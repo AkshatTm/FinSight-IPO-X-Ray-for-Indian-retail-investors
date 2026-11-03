@@ -46,7 +46,7 @@ function PassageRows({ rows, dim }: { rows: Passage[]; dim?: boolean }) {
 }
 
 function Body({ turn }: { turn: Turn }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const { data: trace, isPending } = useTrace(turn.final?.trace_id, true);
   const timings = Object.entries(turn.final?.timings_ms ?? {});
   const max = Math.max(1, ...timings.map(([, ms]) => ms));
@@ -129,7 +129,7 @@ function Body({ turn }: { turn: Turn }) {
                     <tr key={v.index} className="border-t border-rule">
                       <td className={td}>{v.index + 1}</td>
                       <td className={`${td} font-mono`}>{answer.slice(v.answer_char_span[0], v.answer_char_span[1]) || ("raw" in a ? a.raw : "")}</td>
-                      <td className={`${td} font-mono`}>{a.kind === "money" && a.value_inr ? formatMoney(a.value_inr, "full", lang) : "—"}</td>
+                      <td className={`${td} font-mono`}>{a.kind === "money" && a.value_inr ? formatMoney(a.value_inr, "full") : "—"}</td>
                       <td className={`${td} font-mono`}>{ev && "raw" in ev ? ev.raw : "—"}</td>
                       <td className={`${td} font-mono text-xs`}>{v.reason_code}</td>
                       <td className={td}><VerdictMark state={v.status} /></td>

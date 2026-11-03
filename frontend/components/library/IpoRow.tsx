@@ -42,7 +42,7 @@ function Preview({ id }: { id: string }) {
 }
 
 export function IpoRow({ ipo }: { ipo: Ipo }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const qc = useQueryClient();
   const [peek, setPeek] = useState(false);
 
@@ -71,12 +71,12 @@ export function IpoRow({ ipo }: { ipo: Ipo }) {
           {ipo.sector && <p className="text-sm text-muted">{ipo.sector}</p>}
         </div>
         <p className="text-sm text-muted">
-          {ipo.listing_date ? t("lib.listed", { month: formatMonthYear(ipo.listing_date, lang) }) : ""}
+          {ipo.listing_date ? t("lib.listed", { month: formatMonthYear(ipo.listing_date) }) : ""}
         </p>
         <div>
           <p className="text-xs text-muted">{t("lib.issueSize")}</p>
           <p className="font-medium">
-            {ipo.issue_size_inr ? formatMoney(ipo.issue_size_inr, "crore", lang) : t("lib.notSet")}
+            {ipo.issue_size_inr ? formatMoney(ipo.issue_size_inr, "crore") : t("lib.notSet")}
           </p>
         </div>
         <FreshOfsBar ipo={ipo} />

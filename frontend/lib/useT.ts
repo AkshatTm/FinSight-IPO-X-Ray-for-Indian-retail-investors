@@ -1,15 +1,8 @@
 "use client";
 
-import { useCallback } from "react";
-import { t as translate, type StringKey } from "@/lib/i18n";
-import { useUi } from "@/lib/store";
+import { t, type StringKey } from "@/lib/copy";
 
-/** `const { t, lang } = useT()`; strings come from lib/i18n.ts only. */
+/** `const { t } = useT()`; strings come from lib/copy.ts only. */
 export function useT() {
-  const lang = useUi((s) => s.lang);
-  const t = useCallback(
-    (key: StringKey, vars?: Record<string, string | number>) => translate(key, lang, vars),
-    [lang],
-  );
-  return { t, lang };
+  return { t: (key: StringKey, vars?: Record<string, string | number>) => t(key, vars) };
 }

@@ -5,11 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GlassSurface } from "@/components/glass/GlassSurface";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 import { AuthMenu } from "./AuthMenu";
 import { HealthDot } from "./HealthDot";
-import { LangToggle, ThemeToggle } from "./Toggles";
+import { ThemeToggle } from "./Toggles";
 
 const LINKS: { href: string; key: StringKey }[] = [
   { href: "/ipos", key: "nav.ipos" },
@@ -71,7 +71,6 @@ export function NavBar() {
               </Link>
             )}
             <AuthMenu />
-            <LangToggle />
             <span className="hidden md:inline-flex">
               <ThemeToggle />
             </span>
