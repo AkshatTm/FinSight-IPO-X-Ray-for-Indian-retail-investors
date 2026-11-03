@@ -98,8 +98,13 @@ def main() -> int:
                 print(f"{head}: error {type(exc).__name__}: {exc}", flush=True)
                 failed.append(str(pdf))
                 continue
+            d: dict = {}  # type: ignore[type-arg]
+            for _ in range(60):  # the job's "done" event can come just before the row says ready
+                d = (get(client, f"/api/docs/{doc_id}") or {}).get("doc", {})
+                if d.get("status") not in ("processing", "uploading"):
+                    break
+                time.sleep(2)
             secs = time.perf_counter() - t0
-            d = (get(client, f"/api/docs/{doc_id}") or {}).get("doc", {})
             status, analysis = d.get("status"), d.get("analysis_status")
             company = d.get("company") or ""
             print(f"{head}: {status}/{analysis} in {secs:.0f}s  {company}  ({doc_id})", flush=True)
