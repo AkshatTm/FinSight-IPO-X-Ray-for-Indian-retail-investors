@@ -17,6 +17,7 @@ from pydantic import BaseModel
 from finsight.api.errors import ApiError, ErrorResponse
 from finsight.api.routes_docs import _doc
 from finsight.api.uploads_state import UState
+from finsight.compare import with_issuer_name
 from finsight.core.schemas import (
     Compare,
     RedFlags,
@@ -204,11 +205,11 @@ def get_risk_level(doc_id: DocId, state: UState) -> RiskLevel:
 @router.get("/docs/{doc_id}/compare", tags=["risks"])
 def get_compare(doc_id: DocId, state: UState) -> Compare:
     """Listed peers from the document and percentiles among past IPOs (B05 §5.6)."""
-    _doc(state, doc_id)
+    doc = _doc(state, doc_id)
     key = doc_key(doc_id, "compare.json")
     if not state.storage.exists(key):
         raise ApiError(404, "not_available", "The comparison for this report isn't ready yet.")
-    return Compare.model_validate(get_json(state.storage, key))
+    return with_issuer_name(Compare.model_validate(get_json(state.storage, key)), doc.company)
 
 
 @router.get("/docs/{doc_id}/redflags", tags=["risks"])

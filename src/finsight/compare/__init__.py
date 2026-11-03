@@ -236,6 +236,22 @@ def compare(
     )
 
 
+_GENERIC_ISSUER = re.compile(r"^\s*(?:our|the)\s+company\s*$|^\s*(?:the\s+)?issuer\s*$", re.I)
+
+
+def with_issuer_name(result: Compare, company: str | None) -> Compare:
+    """The issuer's peer row named after the company when the table calls it "The Company"."""
+    if not company or not company.strip():
+        return result
+    peers = [
+        p.model_copy(update={"name": company.strip()})
+        if p.is_issuer and _GENERIC_ISSUER.match(p.name)
+        else p
+        for p in result.peers
+    ]
+    return result.model_copy(update={"peers": peers})
+
+
 def build(
     storage: Storage,
     doc_id: str,
@@ -262,4 +278,5 @@ __all__ = [
     "peer_median_pe",
     "peers_from_table",
     "percentiles",
+    "with_issuer_name",
 ]

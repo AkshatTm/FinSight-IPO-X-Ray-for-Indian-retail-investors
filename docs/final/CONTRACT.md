@@ -135,3 +135,9 @@ From Step 3 the API is English-only. A stray `lang` query/body parameter is acce
 - New field `about`: `issuer` | `promoter` | `group_company` | `director`.
 - Only `issuer` findings force High. Show the others as findings with a label such as
   "About the promoter, not the company"; they do not set the level.
+
+## Compare (`GET /api/docs/{doc_id}/compare`)
+- The issuer peer row printed as "The Company" / "Our Company" / "Issuer" is now returned with the
+  company's name (applied when served, so old analyses are fixed too).
+- **Frontend to do (Sonnet):** `frontend/lib/compare.ts` `peerCell` prints `₹-3.30` for a loss;
+  print `−₹3.30` (U+2212 minus before the rupee sign). Same for any other money formatter.
