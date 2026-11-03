@@ -22,7 +22,6 @@ from finsight.api.models import HealthResponse, ModelStatus
 from finsight.chat import ChatOrchestrator, TraceStore
 from finsight.core.config import Settings, get_settings
 from finsight.generate.llm_backend import DEFAULT_HOST
-from finsight.voice import AsrManager, FasterWhisperBackend
 
 OLLAMA_PS = f"{DEFAULT_HOST}/api/ps"  # a status probe only: no model is called from here
 
@@ -60,7 +59,6 @@ class ModelManager:
         s = self.settings
         llm = _ollama_loaded(s.llm.model)
         built = self.state._chat is not None
-        asr = self.state._asr
         if s.demo_mode:
             status = "ok"  # recorded answers need no model
         elif llm is None:
@@ -75,11 +73,6 @@ class ModelManager:
                 "llm": ModelStatus(name=s.llm.model, loaded=bool(llm)),
                 "dense": ModelStatus(loaded=bool(s.retrieve.dense and built)),
                 "reranker": ModelStatus(loaded=bool(s.retrieve.rerank and built)),
-                "asr": ModelStatus(
-                    name=s.voice.asr if s.voice.asr != "off" else None,
-                    loaded=bool(asr and asr.backend.loaded),
-                    lazy=True,
-                ),
             },
             version=__version__,
             git_sha=_git_sha(s.root),
@@ -95,7 +88,6 @@ class AppState:
     traces: TraceStore
     demo: DemoCache
     _chat: ChatOrchestrator | None = None
-    _asr: AsrManager | None = None
     _lock: threading.Lock = field(default_factory=threading.Lock)
     models: ModelManager = field(init=False)
 
@@ -109,20 +101,6 @@ class AppState:
                 self._chat = ChatOrchestrator.from_settings(self.settings.profile)
                 self._chat.traces = self.traces  # one trace database for the whole app
             return self._chat
-
-    def asr(self) -> AsrManager | None:
-        """None when the profile has voice switched off."""
-        with self._lock:
-            name = self.settings.voice.asr
-            if name == "off":
-                return None
-            if self._asr is None:
-                model = name.removeprefix("faster-whisper-")
-                self._asr = AsrManager(
-                    FasterWhisperBackend(model), self.settings.voice.idle_unload_s
-                )
-                self._asr.start()
-            return self._asr
 
 
 @lru_cache(maxsize=1)

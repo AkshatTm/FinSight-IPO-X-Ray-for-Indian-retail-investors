@@ -49,6 +49,7 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `top_risks` | `list[dict[str, Any]] \| None` | — |
 | `redflags_summary` | `list[dict[str, Any]] \| None` | — |
 | `offer_line_params` | `dict[str, Any] \| None` | — |
+| `sod` | `dict[str, Any] \| None` | — |
 
 ## Financial summary (`FinancialSummary`, `summary.json`)
 
@@ -139,7 +140,8 @@ What the pipeline stores for each document (`docs/<doc_id>/` in storage) and wha
 | `points` | `int` | required |
 | `max_points` | `int` | required |
 | `score` | `float` | required |
-| `percentile` | `float` | required |
+| `percentile` | `float \| None` | required |
+| `percentile_note` | `str \| None` | — |
 | `checks_available` | `int` | required |
 | `reasons` | `list[RiskLevelReason]` | required |
 | `thresholds` | `dict[str, float]` | required |

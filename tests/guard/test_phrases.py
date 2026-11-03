@@ -10,15 +10,17 @@ import pytest
 from finsight.guard import find_forbidden, is_clean
 
 ROOT = Path(__file__).resolve().parents[2]
-STRING = re.compile(r'\b(en|hi): "((?:\\.|[^"\\])*)"')
+# English-only copy (final): `"key.name": "text"`; the older `en: "text"` form is still read.
+STRING = re.compile(r'(?:\b(en|hi)|"([\w.\-]+)"):\s*"((?:\\.|[^"\\])*)"')
 
 
 def ui_strings() -> list[tuple[str, str]]:
-    files = [ROOT / "frontend/lib/i18n.ts", *sorted((ROOT / "frontend/lib/content").glob("*.ts"))]
+    files = [ROOT / "frontend/lib/copy.ts", *sorted((ROOT / "frontend/lib/content").glob("*.ts"))]
     out = []
     for path in files:
         for match in STRING.finditer(path.read_text(encoding="utf-8")):
-            out.append((f"{path.name}:{match.group(1)}", match.group(2).replace('\\"', '"')))
+            key = match.group(1) or match.group(2)
+            out.append((f"{path.name}:{key}", match.group(3).replace('\\"', '"')))
     return out
 
 

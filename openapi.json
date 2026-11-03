@@ -583,58 +583,6 @@
         }
       }
     },
-    "/api/voice": {
-      "post": {
-        "tags": [
-          "chat"
-        ],
-        "summary": "Voice",
-        "description": "Transcribe a short spoken question (at most 20 s).",
-        "operationId": "voice_api_voice_post",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/Body_voice_api_voice_post"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VoiceResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "Client Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "5XX": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/traces/{trace_id}": {
       "get": {
         "tags": [
@@ -952,50 +900,6 @@
         }
       }
     },
-    "/api/lab/asr": {
-      "get": {
-        "tags": [
-          "lab"
-        ],
-        "summary": "Lab Asr",
-        "description": "Model Lab: speech recognition results.",
-        "operationId": "lab_asr_api_lab_asr_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Lab Asr Api Lab Asr Get"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "Client Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "5XX": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/lab/b/{name}": {
       "get": {
         "tags": [
@@ -1114,7 +1018,7 @@
           "content"
         ],
         "summary": "Glossary",
-        "description": "Glossary terms in the chosen language (English where Hindi is missing).",
+        "description": "Glossary terms, in English (a stray ``lang`` is accepted and ignored).",
         "operationId": "glossary_api_glossary_get",
         "parameters": [
           {
@@ -1122,12 +1026,14 @@
             "in": "query",
             "required": false,
             "schema": {
-              "enum": [
-                "en",
-                "hi"
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
               ],
-              "type": "string",
-              "default": "en",
               "title": "Lang"
             }
           }
@@ -2551,26 +2457,6 @@
         "title": "BidClosedInfo",
         "description": "\"Bid/offer closed on\" as printed on the Prospectus cover (read by the extract stage)."
       },
-      "Body_voice_api_voice_post": {
-        "properties": {
-          "audio": {
-            "type": "string",
-            "contentMediaType": "application/octet-stream",
-            "title": "Audio",
-            "description": "webm/opus or wav, at most 20 s."
-          },
-          "language": {
-            "type": "string",
-            "title": "Language",
-            "default": "hi"
-          }
-        },
-        "type": "object",
-        "required": [
-          "audio"
-        ],
-        "title": "Body_voice_api_voice_post"
-      },
       "CacheInfo": {
         "properties": {
           "state": {
@@ -2680,23 +2566,26 @@
             "title": "Question"
           },
           "language": {
-            "type": "string",
-            "enum": [
-              "en",
-              "hi"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
             ],
-            "title": "Language",
-            "default": "en"
+            "title": "Language"
           },
           "source": {
-            "type": "string",
-            "enum": [
-              "typed",
-              "voice",
-              "chip"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
             ],
-            "title": "Source",
-            "default": "typed"
+            "title": "Source"
           },
           "demo": {
             "type": "boolean",
@@ -2710,7 +2599,7 @@
           "question"
         ],
         "title": "ChatRequest",
-        "description": "``POST /api/chat`` body: the IPO, the question and its language."
+        "description": "``POST /api/chat`` body: the IPO and the question. Answers are English only.\n\n``language`` and ``source`` are accepted from old clients and ignored, so they never 422."
       },
       "CheckResult": {
         "properties": {
@@ -5467,35 +5356,6 @@
         ],
         "title": "UploadLimits",
         "description": "What the upload page shows before anyone uploads (B05 §3)."
-      },
-      "VoiceResponse": {
-        "properties": {
-          "transcript": {
-            "type": "string",
-            "title": "Transcript"
-          },
-          "language": {
-            "type": "string",
-            "title": "Language"
-          },
-          "asr_model": {
-            "type": "string",
-            "title": "Asr Model"
-          },
-          "ms": {
-            "type": "integer",
-            "title": "Ms"
-          }
-        },
-        "type": "object",
-        "required": [
-          "transcript",
-          "language",
-          "asr_model",
-          "ms"
-        ],
-        "title": "VoiceResponse",
-        "description": "``POST /api/voice``: the transcript and the ASR model used."
       },
       "XRayField": {
         "properties": {

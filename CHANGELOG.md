@@ -2,7 +2,22 @@
 
 All notable changes to FinSight. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/). Each release is a git tag; the phase gates (`docs/gates/`) record the evidence behind it.
 
-## [Unreleased] — Phase 2
+## [Unreleased] — final (v1.1)
+
+### Removed
+
+- Hindi and voice. `src/finsight/voice/` (faster-whisper ASR), `POST /api/voice`, `GET /api/lab/asr`, the voice config, the `asr` dependency group and `scripts/asr_bakeoff.py`. The API is English-only: chat always answers in English, the glossary and question chips are English, and a stray `language` / `lang` / `source` is accepted and ignored (no 422). `data/gold` Hindi files and `eval_results/asr.json` stay as history. The Hindi prompt template in `generate/` is no longer reachable from the API.
+- Phase 4 model work (M1–M5, Platform Bench, gold v4): no model was trained; the product keeps the Phase 3 models.
+
+### Changed
+
+- The report response carries `sod` (financial rows, ratios, strengths, promoter holding pre/post, price band); see `docs/final/CONTRACT.md`.
+- A severe finding forces risk level High only when it is about the issuer; orders on the promoter, a group company or a director are shown as findings (C-ADR-26).
+- The "riskier than X% of past IPOs" percentile is hidden (`null` + note) because it tracked document length (C-ADR-28).
+- Compare names the issuer row after the company instead of "The Company".
+- `pipeline_version` 4.2.
+
+## Phase 2
 
 ### Removed
 

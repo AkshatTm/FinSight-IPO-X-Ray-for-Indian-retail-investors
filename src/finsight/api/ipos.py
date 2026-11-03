@@ -305,6 +305,8 @@ class IpoStore:
         fresh = _money_inr(self._xray(ipo_id), "fresh_issue_size")
         out: list[SuggestedQuestion] = []
         for q in _config("suggested_questions.yaml")["questions"]:
+            if q.get("language", "en") != "en":
+                continue  # final: English only
             text: str = q["text"]
             if "{fresh_lakh}" in text:
                 number = _crore_number(fresh)

@@ -6,13 +6,10 @@ document generated from them feeds the frontend's TypeScript types.
 
 from __future__ import annotations
 
-import tempfile
-import time
 from collections.abc import Iterator
-from pathlib import Path
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import Response, StreamingResponse
 
 from finsight.api import content
@@ -28,7 +25,6 @@ from finsight.api.models import (
     LabPayload,
     PageWords,
     SuggestedQuestion,
-    VoiceResponse,
     XRayResponse,
 )
 from finsight.api.state import AppState, get_state
@@ -42,8 +38,7 @@ router = APIRouter(
 Doc = Annotated[DocType, Query(description="Which document: the RHP or the final Prospectus.")]
 State = Annotated[AppState, Depends(get_state)]
 MAX_QUESTION = 300
-MAX_AUDIO_BYTES = 4_000_000
-MAX_AUDIO_S = 20.5  # the client stops at 20 s; the half second absorbs encoder padding
+ENGLISH: Language = "en"  # final: English only
 
 
 @router.get("/health", tags=["system"])
@@ -142,63 +137,17 @@ def chat(body: ChatRequest, state: State) -> Response:
         raise ApiError(
             422, "validation_error", f"The question must be 1 to {MAX_QUESTION} characters."
         )
-    recorded = state.demo.has(body.ipo_id, question, body.language)
+    recorded = state.demo.has(body.ipo_id, question, ENGLISH)
     if recorded and (body.demo or state.settings.demo_mode):
-        events = state.demo.replay(body.ipo_id, question, body.language)
+        events = state.demo.replay(body.ipo_id, question, ENGLISH)
     elif body.demo:
         events = _error_stream("internal_error", "No recorded answer for this question.")
     else:
-        events = state.chat().events(body.ipo_id, question, body.language)
+        events = state.chat().events(body.ipo_id, question, ENGLISH)
     return StreamingResponse(
         sse(events),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
-    )
-
-
-@router.post("/voice", tags=["chat"])
-def voice(
-    state: State,
-    audio: Annotated[UploadFile, File(description="webm/opus or wav, at most 20 s.")],
-    language: Annotated[str, Form()] = "hi",
-) -> VoiceResponse:
-    """Transcribe a short spoken question (at most 20 s)."""
-    asr = state.asr()
-    if asr is None:
-        raise ApiError(
-            503,
-            "asr_failed",
-            "Voice input is switched off in this profile.",
-            hint="Type the question instead.",
-        )
-    data = audio.file.read(MAX_AUDIO_BYTES + 1)
-    if not data:
-        raise ApiError(422, "asr_failed", "The audio file is empty.")
-    if len(data) > MAX_AUDIO_BYTES:
-        raise ApiError(
-            413, "audio_too_long", "That recording is too long.", hint="Keep it under 20 seconds."
-        )
-    suffix = Path(audio.filename or "").suffix or ".webm"
-    started = time.perf_counter()
-    with tempfile.TemporaryDirectory() as tmp:
-        path = Path(tmp) / f"question{suffix}"
-        path.write_bytes(data)
-        try:
-            result = asr.transcribe(path, language)
-        except Exception as exc:  # decoder and model errors: one friendly code, details in the log
-            raise ApiError(
-                422,
-                "asr_failed",
-                "Could not understand the audio.",
-                hint="Try again in a quieter place, or type the question.",
-            ) from exc
-    if result.duration_s > MAX_AUDIO_S:
-        raise ApiError(413, "audio_too_long", "That recording is longer than 20 seconds.")
-    return VoiceResponse(
-        transcript=result.text,
-        language=result.language,
-        asr_model=result.model,
-        ms=int((time.perf_counter() - started) * 1000),
     )
 
 
@@ -247,12 +196,6 @@ def lab_retrieval(state: State) -> LabPayload:
     return content.lab(state.settings.paths.eval_dir, "retrieval")
 
 
-@router.get("/lab/asr", tags=["lab"])
-def lab_asr(state: State) -> LabPayload:
-    """Model Lab: speech recognition results."""
-    return content.lab(state.settings.paths.eval_dir, "asr")
-
-
 LabBName = Literal[
     "segmentation", "summary", "redflags", "classifier", "seriousness", "simplify",
     "readability", "novelty", "risklevel", "latency", "cost",
@@ -272,6 +215,6 @@ def lab_c_bench(state: State) -> LabPayload:
 
 
 @router.get("/glossary", tags=["content"])
-def glossary(lang: Language = "en") -> list[GlossaryEntry]:
-    """Glossary terms in the chosen language (English where Hindi is missing)."""
-    return content.glossary(lang)
+def glossary(lang: str | None = None) -> list[GlossaryEntry]:
+    """Glossary terms, in English (a stray ``lang`` is accepted and ignored)."""
+    return content.glossary(ENGLISH)
