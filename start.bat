@@ -2,7 +2,8 @@
 rem FinSight one-click launcher. Double-click for the menu, or run with an action:
 rem   start.bat start | stop | restart | status
 rem Start: Ollama (:11434, kept if already running), then the API (:8000) and the web app
-rem (:3000), each in its own window ("FinSight Ollama", "FinSight API", "FinSight Web").
+rem (:3000), each in its own minimised window ("FinSight Ollama", "FinSight API",
+rem "FinSight Web"), then opens the app in %BROWSER% (Edge by default).
 rem Whatever already listens on :8000 or :3000 is stopped first, so they always start there.
 rem Stop: kills only FinSight's processes (by port, by those window titles, and Ollama itself).
 rem It never kills node.exe or python.exe in general.
@@ -13,6 +14,9 @@ set "MODEL=finsight-student:q4"
 set "API_URL=http://127.0.0.1:8000/api/health"
 set "WEB_URL=http://127.0.0.1:3000/"
 set "OLLAMA_URL=http://127.0.0.1:11434/api/tags"
+rem The browser the app opens in (not the default one, so your own browser is left alone).
+rem Use any exe name on PATH or a full path; "default" opens the system default browser.
+set "BROWSER=msedge"
 
 rem Settings the API and the web app inherit from this window.
 set "FINSIGHT_PROFILE=local"
@@ -77,20 +81,23 @@ call :freewait 3000
 echo Checking Python packages ...
 uv sync --inexact --group ml --group onnx -q || (echo Package install failed. & exit /b 1)
 echo Starting the API on :8000 ...
-start "FinSight API" /D "%ROOT%" cmd /k "title FinSight API && uv run python -m uvicorn finsight.api.app:app --port 8000 --timeout-keep-alive 30"
+start "FinSight API" /MIN /D "%ROOT%" cmd /k "title FinSight API && uv run python -m uvicorn finsight.api.app:app --port 8000 --timeout-keep-alive 30"
 
 if not exist "%ROOT%frontend\node_modules" (
   echo Installing the frontend packages, first run only ...
   pushd "%ROOT%frontend" && pnpm install --frozen-lockfile & popd
 )
 echo Starting the web app on :3000 ...
-start "FinSight Web" /D "%ROOT%frontend" cmd /k "title FinSight Web && pnpm dev --port 3000"
+start "FinSight Web" /MIN /D "%ROOT%frontend" cmd /k "title FinSight Web && pnpm dev --port 3000"
 
 call :wait "%API_URL%" 120 API || exit /b 1
 call :wait "%WEB_URL%" 180 "Web app" || exit /b 1
 echo.
 echo FinSight is running: http://localhost:3000
-start "" http://localhost:3000
+echo The three FinSight windows are minimised in the taskbar; closing them stops the app.
+if /i "%BROWSER%"=="default" (start "" http://localhost:3000) else (
+  start "" "%BROWSER%" http://localhost:3000 2>nul || start "" http://localhost:3000
+)
 exit /b 0
 
 rem ----------------------------------------------------------------- stop

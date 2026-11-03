@@ -30,8 +30,11 @@ All runs are single runs unless the row says seeds. Test-slice documents were sc
 | Jio risk level | Low (was High, forced by the promoter order) | re-measured today | `.../report` |
 | Bench v1 Task B (rules), status accuracy | 0.703 [0.582, 0.824] | carried | `bench_summary.json` |
 
-Not measured: how many of the 6 showcase IPOs with a severe finding would still be forced High
-under C-ADR-26 (today's E15 file lists findings by kind only).
+**C-ADR-26 on the 10 showcase IPOs** (re-measured today, rules only, 46 s, `eval_results/final/severe_about.jsonl`):
+forced High **6 / 10 before → 4 / 10 now**. Ather Energy (SEBI order, p.360) and Lenskart (fraud
+case, p.955) drop out: the subject is a director. Groww, HDB Financial, PhysicsWallah and Tata
+Capital stay High on findings about the company itself. The `about` labels are the rule's output,
+not checked by a person; 8 of the 10 are test-slice IPOs, described here, never tuned on.
 
 ## Risk classifier and seriousness
 
