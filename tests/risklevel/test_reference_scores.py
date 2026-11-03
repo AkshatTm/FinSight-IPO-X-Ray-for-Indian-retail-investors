@@ -109,6 +109,7 @@ def test_apply_fit_rewrites_the_config_and_keeps_comments() -> None:
 
 def test_compute_uses_window_scores_when_given() -> None:
     cfg = dict(load_config())
+    cfg["show_percentile"] = True
     cfg["reference_quantiles"] = [0.0, 0.5, 1.0]
     stored = compute([], [], cfg)
     assert stored.corpus_n == int(cfg["corpus_n"])

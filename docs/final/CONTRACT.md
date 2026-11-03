@@ -125,3 +125,13 @@ re-analysed or newly uploaded IPO has it.
 ## English only
 From Step 3 the API is English-only. A stray `lang` query/body parameter is accepted and ignored
 (no 422). Voice/ASR routes are removed; the frontend must not call them.
+
+## Risk level (`risk_level` in the report)
+- `percentile` is now **`null`** (C-ADR-28) and `percentile_note` carries the reason. Hide any
+  "riskier than X% of past IPOs" line; keep `level` (low / medium / high) and the disclaimer.
+- `forced_by` lists only severe findings **about the issuer** (C-ADR-26).
+
+## Severe findings (`redflags.json` `severe_overrides[]`)
+- New field `about`: `issuer` | `promoter` | `group_company` | `director`.
+- Only `issuer` findings force High. Show the others as findings with a label such as
+  "About the promoter, not the company"; they do not set the level.

@@ -4805,8 +4805,26 @@
             "title": "Score"
           },
           "percentile": {
-            "type": "number",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Percentile"
+          },
+          "percentile_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percentile Note"
           },
           "checks_available": {
             "type": "integer",
