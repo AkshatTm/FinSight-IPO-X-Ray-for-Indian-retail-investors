@@ -44,8 +44,13 @@ export function DocumentPane({ ipoId, detail }: Props) {
   const [zoom, setZoom] = useState<Zoom>("fit");
   const [thumbs, setThumbs] = useState(false);
 
-  const cur = view && view.ipoId === ipoId ? view : { ipoId, doc: "rhp" as const, page: 1 };
   const hasProspectus = !!detail.prospectus_pages;
+  // An upload is one document kept in the RHP slot, even when it is a final prospectus or DRHP,
+  // so a fact found "in the Prospectus" must open that one document.
+  const slot = (d: DocKind): DocKind => (hasProspectus ? d : "rhp");
+  const raw = view && view.ipoId === ipoId ? view : { ipoId, doc: "rhp" as const, page: 1 };
+  const cur = { ...raw, doc: slot(raw.doc) };
+  const shown = highlight ? { ...highlight, doc: slot(highlight.doc) } : null;
   const total = cur.doc === "prospectus" ? (detail.prospectus_pages ?? detail.rhp_pages) : detail.rhp_pages;
   const go = (n: number) => setView({ ipoId, doc: cur.doc, page: Math.min(total, Math.max(1, n)) });
 
@@ -89,7 +94,7 @@ export function DocumentPane({ ipoId, detail }: Props) {
         total={total}
         pageSize={detail.page_size}
         zoom={zoom}
-        highlight={highlight}
+        highlight={shown}
         label={t("doc.pageImageAlt", { doc: docName, n: cur.page })}
       />
       {thumbs && <Thumbnails ipoId={ipoId} doc={cur.doc} page={cur.page} total={total} onPage={go} />}
