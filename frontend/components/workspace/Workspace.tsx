@@ -54,7 +54,7 @@ function Header({ id }: { id: string }) {
           <ArrowLeft size={16} /> {isUpload ? t("ws.backReport") : t("ws.back")}
         </Link>
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="font-serif text-xl font-semibold tracking-tight sm:text-2xl">{ipo?.company ?? xray?.company ?? " "}</h1>
+          <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">{ipo?.company ?? xray?.company ?? " "}</h1>
           {ipo?.sector && <span className="hidden rounded-[4px] border border-rule px-2 py-0.5 text-sm text-muted sm:inline">{ipo.sector}</span>}
         </div>
       </div>

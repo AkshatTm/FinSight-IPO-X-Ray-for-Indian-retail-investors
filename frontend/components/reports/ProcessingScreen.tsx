@@ -69,7 +69,7 @@ export function ProcessingScreen({ doc, onSeeReady }: { doc: Schemas["DocRecord"
         <p role="alert" data-testid="rejection" className="rounded-[8px] border border-rule bg-surface-2 p-4">
           {t(`rej.${rejection}` as StringKey, { max_mb: 50 })}
         </p>
-        <Link href="/upload" className="btn mt-6 inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg">
+        <Link href="/upload" className="btn mt-6 inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-on-accent">
           {t("proc.tryAnother")}
         </Link>
       </div>
@@ -78,11 +78,11 @@ export function ProcessingScreen({ doc, onSeeReady }: { doc: Schemas["DocRecord"
 
   return (
     <div className="mx-auto max-w-2xl py-12">
-      <h1 className="font-serif text-[2rem] font-semibold leading-tight tracking-tight">{t("proc.title", { company })}</h1>
+      <h1 className="text-[2rem] font-semibold leading-tight tracking-tight">{t("proc.title", { company })}</h1>
       <p className="mt-2 text-muted">{t("proc.sub")}</p>
       {type === "drhp" && <p className="mt-4 rounded-[8px] border border-rule bg-surface-2 p-3 text-sm">{t("proc.drhp")}</p>}
       {view.ready.includes("facts") && (
-        <button type="button" onClick={onSeeReady} className="btn mt-6 inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-bg">
+        <button type="button" onClick={onSeeReady} className="btn mt-6 inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-on-accent">
           {t("proc.seeReady")}
         </button>
       )}

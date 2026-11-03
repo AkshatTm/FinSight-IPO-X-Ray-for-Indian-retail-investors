@@ -43,7 +43,7 @@ export function GlossaryTerm({ id, children, icon = false }: { id: string; child
           <span className="block">{g.short}</span>
           <button
             type="button"
-            className="mt-2 inline-flex h-11 items-center text-stamp underline underline-offset-2"
+            className="mt-2 inline-flex h-11 items-center text-accent-ink underline underline-offset-2"
             onClick={() => {
               setOpen(false);
               openGlossary(id);

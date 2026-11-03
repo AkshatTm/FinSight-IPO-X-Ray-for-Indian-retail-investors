@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Drawer } from "@/components/ui/Drawer";
-import { anchorFor, LEVELS, topReasons, type RiskLevel } from "@/lib/report";
+import { RiskGauge } from "./ReportCharts";
+import { anchorFor, topReasons, type RiskLevel } from "@/lib/report";
 import { useT } from "@/lib/useT";
-
-const LEVEL_COLOUR = { low: "bg-ok", medium: "bg-query", high: "bg-bad" } as const;
 
 /**
  * Risk level card (B05 §5.3). The disclaimer is always shown and has no close control; with
@@ -16,24 +15,16 @@ export function RiskLevelCard({ level, onReason }: { level: RiskLevel; onReason:
   const { t } = useT();
   const [shown, setShown] = useState(!level.behind_click);
   const [how, setHow] = useState(false);
-  const active = LEVELS.indexOf(level.level);
   const n = level.corpus_n;
   const percentile = level.percentile;
   return (
-    <section aria-labelledby="rl-title" className="rounded-[10px] border border-rule bg-surface p-5">
+    <section aria-labelledby="rl-title" className="rounded-[16px] border border-rule bg-surface p-6 shadow-[var(--shadow-card)]">
       {shown ? (
         <>
-          <h2 id="rl-title" className="font-serif text-2xl font-semibold tracking-tight">
+          <h2 id="rl-title" className="text-2xl font-bold tracking-tight">
             {t("rl.title", { level: t(`rl.${level.level}`) })}
           </h2>
-          <ol className="mt-4 grid grid-cols-3 gap-1.5" aria-label={t("rl.title", { level: t(`rl.${level.level}`) })}>
-            {LEVELS.map((l, i) => (
-              <li key={l} aria-current={i === active ? "step" : undefined}>
-                <span className={`block h-1.5 rounded-full ${i === active ? LEVEL_COLOUR[l] : "bg-surface-2"}`} />
-                <span className={`mt-1.5 block text-xs ${i === active ? "font-semibold text-text" : "text-muted"}`}>{t(`rl.${l}`)}</span>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-4"><RiskGauge level={level} /></div>
           {percentile != null && n > 0 ? (
             <p className="mt-4 text-sm">{t("rl.line", { p: Math.round(percentile), n })}</p>
           ) : (
@@ -71,7 +62,7 @@ export function RiskLevelCard({ level, onReason }: { level: RiskLevel; onReason:
         </>
       )}
       <p className="mt-5 text-xs leading-relaxed text-muted" data-testid="risk-disclaimer">{t("rl.disclaimer")}</p>
-      <button type="button" className="mt-3 text-sm text-stamp underline underline-offset-4" onClick={() => setHow(true)}>
+      <button type="button" className="mt-3 text-sm text-accent-ink underline underline-offset-4" onClick={() => setHow(true)}>
         {t("rl.how")}
       </button>
       {how && (

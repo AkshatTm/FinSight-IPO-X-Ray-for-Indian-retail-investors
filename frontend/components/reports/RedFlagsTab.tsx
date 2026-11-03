@@ -7,6 +7,7 @@ import { apiGet, type Schemas } from "@/lib/api/client";
 import { anchorFor, FLAG_FILTERS, filterKey, flagMatches, flagSentence, flagTitleKey, sortFlags, statusKey, type FlagFilter, type RedFlag } from "@/lib/report";
 import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
+import { FlagGrid } from "./ReportCharts";
 import { StatusIcon } from "./StatusIcon";
 
 /** Red flags tab (B05 §5.4): filter chips and one card per check. */
@@ -26,7 +27,7 @@ export function RedFlagsTab({ docId, onShowPage }: { docId: string; onShowPage?:
   return (
     <section aria-labelledby="rf-title" className="space-y-5">
       <header>
-        <h2 id="rf-title" className="font-serif text-xl font-semibold tracking-tight">{t("rf.title")}</h2>
+        <h2 id="rf-title" className="text-xl font-semibold tracking-tight">{t("rf.title")}</h2>
         <p className="mt-1 text-sm text-muted">{t("rf.sub")}</p>
       </header>
       {severe.length > 0 && (
@@ -60,6 +61,7 @@ export function RedFlagsTab({ docId, onShowPage }: { docId: string; onShowPage?:
           </button>
         ))}
       </div>
+      <FlagGrid flags={flags.map((f) => ({ id: f.id, status: f.status }))} />
       <FlagGroups flags={shown} all={flags} filter={filter} onShowPage={onShowPage} />
     </section>
   );

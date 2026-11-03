@@ -55,10 +55,10 @@ export function OpenStats() {
         </dl>
       )}
       <p className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
-        <Link href="/lab" className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+        <Link href="/lab" className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
           {t("land.open.lab")}
         </Link>
-        <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+        <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
           {t("land.open.code")}
         </a>
       </p>

@@ -52,7 +52,7 @@ export function TurnView({ turn, suggestions }: { turn: Turn; suggestions: strin
       {turn.answer && turn.final && (
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-rule pt-2 text-sm">
           <p className="text-muted">{meterText(turn.verdicts)}</p>
-          <button type="button" onClick={copy} className="h-11 rounded-[6px] px-3 text-stamp hover:bg-surface-2">
+          <button type="button" onClick={copy} className="h-11 rounded-[6px] px-3 text-accent-ink hover:bg-surface-2">
             {t("ask.copy")}
           </button>
         </div>

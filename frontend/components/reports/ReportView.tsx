@@ -58,17 +58,17 @@ export function ReportView({ doc, workspaceReady = false }: { doc: Schemas["DocR
     <div className="mx-auto max-w-[1120px] pb-10 pt-6">
       <header className="sticky top-14 z-20 -mx-4 border-b border-rule bg-bg px-4 pb-0 pt-2">
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="font-serif text-3xl font-semibold leading-tight tracking-tight">{doc.company ?? t("proc.yourDoc")}</h1>
+          <h1 className="text-3xl font-semibold leading-tight tracking-tight">{doc.company ?? t("proc.yourDoc")}</h1>
           {doc.doc_type && <DocTypeBadge type={doc.doc_type} />}
         </div>
         <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
           {doc.pages && <span>{t("rep.pages", { n: doc.pages })}</span>}
           <span>{t("rep.analysed", { date: formatDate(doc.created_at) })}</span>
-          <button type="button" onClick={() => void share()} className="text-stamp underline underline-offset-4">
+          <button type="button" onClick={() => void share()} className="text-accent-ink underline underline-offset-4">
             {copied ? t("rep.copied") : t("rep.share")}
           </button>
           {workspaceReady && (
-            <Link href={`/ipos/${doc.doc_id}`} className="text-stamp underline underline-offset-4">
+            <Link href={`/ipos/${doc.doc_id}`} className="text-accent-ink underline underline-offset-4">
               {t("rep.workspace")}
             </Link>
           )}

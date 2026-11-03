@@ -22,7 +22,7 @@ describe("CompareView", () => {
     const rows = screen.getAllByRole("row");
     expect(within(rows[1]).getByText("Acme Widgets Limited")).toBeInTheDocument();
     expect(within(rows[1]).getByText("This IPO")).toBeInTheDocument();
-    expect(screen.getByText("Return on net worth")).toBeInTheDocument();
+    expect(screen.getAllByText("Return on net worth").length).toBeGreaterThan(0);
     expect(screen.getByText("Basis for Offer Price, page 88")).toBeInTheDocument();
     expect(screen.getByText("Higher than 65% of past IPOs")).toBeInTheDocument();
     expect(screen.getByText("65.0%")).toBeInTheDocument();

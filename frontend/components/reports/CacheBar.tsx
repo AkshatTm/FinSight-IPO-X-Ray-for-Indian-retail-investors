@@ -121,7 +121,7 @@ export function CacheBar({
           <div className="mt-3 flex gap-2">
             <button
               type="button"
-              className="rounded-[6px] bg-stamp px-4 py-1.5 text-sm font-medium text-bg disabled:opacity-50"
+              className="rounded-[6px] bg-stamp px-4 py-1.5 text-sm font-medium text-on-accent disabled:opacity-50"
               disabled={restart.isPending || remove.isPending}
               onClick={() => (confirm === "delete" ? remove.mutate() : restart.mutate(false))}
             >

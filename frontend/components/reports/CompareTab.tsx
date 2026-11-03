@@ -7,6 +7,7 @@ import { metricValue, orderPeers, peerCell, roundPercentile, sourcePage, type Co
 import type { StringKey } from "@/lib/copy";
 import { useUi } from "@/lib/store";
 import { useT } from "@/lib/useT";
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const COLUMNS = [
   { kind: "pe", label: "cmp.colPe", tip: "cmp.tipPe" },
@@ -44,6 +45,35 @@ function FixedFields({ issuer }: { issuer: Peer | null }) {
   );
 }
 
+/** One metric across the issuer and its listed peers. The issuer is saffron; a missing figure leaves no bar. */
+function PeerBars({ peers, kind, title }: { peers: Peer[]; kind: "pe" | "ronw" | "eps" | "nav"; title: string }) {
+  const { t } = useT();
+  const rows = peers.map((p) => ({ name: p.name.replace(/ (Limited|Ltd\.?)$/i, ""), v: p[kind] != null && Number.isFinite(Number(p[kind])) ? Number(p[kind]) : null, issuer: p.is_issuer === true }));
+  if (rows.filter((r) => r.v !== null).length < 2) return null;
+  const unit = kind === "ronw" ? "%" : kind === "pe" ? "×" : "₹";
+  return (
+    <section aria-label={title} className="rounded-[16px] border border-rule bg-surface p-5 shadow-[var(--shadow-card)]">
+      <h3 className="text-lg font-semibold">{title}</h3>
+      <div className="mt-2" style={{ height: rows.length * 34 + 30 }} role="img" aria-label={title}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={rows} layout="vertical" margin={{ top: 0, right: 44, bottom: 0, left: 0 }} barSize={18}>
+            <XAxis type="number" tick={{ fontSize: 14, fill: "var(--text-muted)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}${unit === "₹" ? "" : unit}`} />
+            <YAxis type="category" dataKey="name" width={150} tick={{ fontSize: 14, fill: "var(--text)" }} axisLine={false} tickLine={false} />
+            <Tooltip cursor={{ fill: "var(--surface-2)" }} contentStyle={{ background: "var(--surface)", border: "1px solid var(--rule)", borderRadius: 10, fontSize: 14 }} formatter={(v) => (unit === "₹" ? `₹${Number(v).toFixed(2)}` : `${Number(v).toFixed(1)}${unit}`)} />
+            <Bar dataKey="v" name={title} radius={[0, 6, 6, 0]} label={{ position: "right", fontSize: 14, fill: "var(--text)", formatter: (v: unknown) => (typeof v === "number" ? (unit === "₹" ? v.toFixed(0) : v.toFixed(1)) : "") }}>
+              {rows.map((r) => (
+                <Cell key={r.name} fill={r.issuer ? "var(--chart-1)" : "var(--chart-3)"} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <p className="text-sm text-muted">{r_note(t)}</p>
+    </section>
+  );
+}
+const r_note = (t: (k: StringKey) => string) => t("cmp.chart.sub");
+
 export function CompareView({ data }: { data: CompareData }) {
   const { t } = useT();
   const unit = useUi((s) => s.unit);
@@ -54,7 +84,7 @@ export function CompareView({ data }: { data: CompareData }) {
   return (
     <section aria-labelledby="cmp-title" className="space-y-8">
       <header>
-        <h2 id="cmp-title" className="font-serif text-xl font-semibold tracking-tight">{t("cmp.title")}</h2>
+        <h2 id="cmp-title" className="text-xl font-semibold tracking-tight">{t("cmp.title")}</h2>
         {corpusN > 0 && <p className="mt-1 text-sm text-muted">{t("cmp.sub", { n: corpusN })}</p>}
         {data.provisional && <p className="mt-1 text-sm text-muted">{t("cmp.provisional")}</p>}
       </header>
@@ -93,6 +123,10 @@ export function CompareView({ data }: { data: CompareData }) {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+            <PeerBars peers={peers} kind="pe" title={t("cmp.colPe")} />
+            <PeerBars peers={peers} kind="ronw" title={t("cmp.colRonw")} />
           </div>
           {page !== null && <p className="mt-2 text-xs text-muted">{t("cmp.source", { p: page })}</p>}
         </div>

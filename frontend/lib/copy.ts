@@ -63,6 +63,10 @@ export const STRINGS = d({
   "evidence.title.contradicted": "This number doesn't match",
 
   // 3 units (7.3.3)
+  "lib.chart.h": "How big each IPO is",
+  "lib.chart.sub": "Issue size in ₹ crore, split into new shares from the company and shares sold by existing holders.",
+  "lib.fresh.name": "Fresh issue",
+  "lib.ofs.name": "Offer for sale",
   "unit.crore": "₹ crore",
   "unit.million": "₹ million",
   "unit.lakh": "₹ lakh",

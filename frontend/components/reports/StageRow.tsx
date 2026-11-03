@@ -7,8 +7,8 @@ import { useT } from "@/lib/useT";
 
 const ICON = {
   waiting: <Circle size={20} aria-hidden className="text-muted" />,
-  running: <CircleNotch size={20} aria-hidden className="animate-spin text-stamp motion-reduce:animate-none" />,
-  done: <CheckCircle size={20} weight="fill" aria-hidden className="text-stamp" />,
+  running: <CircleNotch size={20} aria-hidden className="animate-spin text-accent-ink motion-reduce:animate-none" />,
+  done: <CheckCircle size={20} weight="fill" aria-hidden className="text-accent-ink" />,
   failed: <WarningCircle size={20} aria-hidden className="text-muted" />,
 };
 
@@ -48,7 +48,7 @@ export function StageRow({
           <div className="mt-0.5 text-sm">
             <span>{t("proc.failed")}</span>{" "}
             {reason && (
-              <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="text-stamp underline underline-offset-2">
+              <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="text-accent-ink underline underline-offset-2">
                 {t("proc.details")}
               </button>
             )}

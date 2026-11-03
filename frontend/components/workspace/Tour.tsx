@@ -89,7 +89,7 @@ export function Tour({ ready }: { ready: boolean }) {
             type="button"
             autoFocus
             onClick={() => (last ? finish() : setStep(step + 1))}
-            className="h-11 rounded-[6px] bg-stamp px-4 text-sm font-medium text-bg"
+            className="h-11 rounded-[6px] bg-stamp px-4 text-sm font-medium text-on-accent"
           >
             {last ? t("tour.done") : t("tour.next")}
           </button>

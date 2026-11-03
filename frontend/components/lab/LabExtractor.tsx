@@ -51,7 +51,7 @@ function Examples({
     <div className="mt-4 rounded-[10px] border border-rule bg-surface p-4" role="region" aria-live="polite">
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-semibold">{t("lab.fields.examples", { method: name(sel.rung), fact })}</h3>
-        <button type="button" onClick={onClose} className="h-11 shrink-0 px-2 text-sm text-stamp underline underline-offset-2">
+        <button type="button" onClick={onClose} className="h-11 shrink-0 px-2 text-sm text-accent-ink underline underline-offset-2">
           {t("lab.fields.close")}
         </button>
       </div>

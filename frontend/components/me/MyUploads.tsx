@@ -25,11 +25,11 @@ export function MyUploads() {
     enabled: !!user,
     queryFn: () => apiGet<Schemas["MyUpload"][]>("/api/me/uploads", token ? { headers: { Authorization: `Bearer ${token}` } } : undefined),
   });
-  const btn = "btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-bg";
+  const btn = "btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-on-accent";
 
   return (
     <div className="mx-auto max-w-[1120px] py-12">
-      <h1 className="font-serif text-[2rem] font-semibold leading-tight tracking-tight">{t("me.title")}</h1>
+      <h1 className="text-[2rem] font-semibold leading-tight tracking-tight">{t("me.title")}</h1>
       {ready && !user && (
         <button type="button" onClick={() => void signIn("/me/uploads")} className={`${btn} mt-6`}>
           {t("up.signInButton")}
@@ -62,7 +62,7 @@ export function MyUploads() {
                 <td className="py-3 tabular-nums">{new Date(u.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
                 <td className="py-3">{STATUS[u.status] ? t(STATUS[u.status]) : u.status}</td>
                 <td className="py-3 text-right">
-                  <Link href={`/reports/${u.doc_id}`} className="text-stamp underline underline-offset-2">{t("me.open")}</Link>
+                  <Link href={`/reports/${u.doc_id}`} className="text-accent-ink underline underline-offset-2">{t("me.open")}</Link>
                 </td>
               </tr>
             ))}

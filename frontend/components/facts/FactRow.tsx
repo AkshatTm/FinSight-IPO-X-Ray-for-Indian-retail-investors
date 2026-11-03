@@ -214,7 +214,7 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="ml-2 h-11 px-2 text-sm text-stamp underline underline-offset-2"
+          className="ml-2 h-11 px-2 text-sm text-accent-ink underline underline-offset-2"
         >
           {expanded ? t("facts.less") : t("facts.more", { n: r.value.items.length - 3 })}
         </button>

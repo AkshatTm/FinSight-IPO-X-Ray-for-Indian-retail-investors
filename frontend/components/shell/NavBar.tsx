@@ -19,7 +19,7 @@ const LINKS: { href: string; key: StringKey }[] = [
 
 function Wordmark() {
   return (
-    <Link href="/" className="flex h-14 items-center font-serif text-xl font-semibold tracking-tight text-text">
+    <Link href="/" className="flex h-14 items-center text-xl font-semibold tracking-tight text-text">
       FinSight
     </Link>
   );
@@ -64,7 +64,7 @@ export function NavBar() {
             {path !== "/upload" && (
               <Link
                 href="/upload"
-                className="btn hidden h-11 items-center rounded-[6px] bg-stamp px-4 text-sm font-medium text-bg md:inline-flex"
+                className="btn hidden h-11 items-center rounded-[6px] bg-stamp px-4 text-sm font-medium text-on-accent md:inline-flex"
               >
                 {t("nav.analyse")}
               </Link>
@@ -92,7 +92,7 @@ export function NavBar() {
           <div className="flex items-center justify-between border-t border-rule pt-2">
             <ThemeToggle />
             {path !== "/upload" && (
-              <Link href="/upload" className="btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-4 text-sm font-medium text-bg">
+              <Link href="/upload" className="btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-4 text-sm font-medium text-on-accent">
                 {t("nav.analyse")}
               </Link>
             )}

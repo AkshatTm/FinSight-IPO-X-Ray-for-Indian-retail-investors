@@ -81,7 +81,7 @@ export function MiniDemo() {
         </div>
       )}
       <p className="mt-6">
-        <Link href={`/ipos/${DEMO_IPO}`} className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+        <Link href={`/ipos/${DEMO_IPO}`} className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
           {t("land.demo.open")}
         </Link>
       </p>

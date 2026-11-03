@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { UnitToggle } from "@/components/workspace/UnitToggle";
 import type { StringKey } from "@/lib/copy";
 import type { Unit } from "@/lib/format";
@@ -11,6 +10,7 @@ import type { ReportOverview } from "@/lib/report";
 import { parseSod } from "@/lib/sod";
 import { useT } from "@/lib/useT";
 import { SectionTitle } from "./OverviewParts";
+import { FinChart } from "./ReportCharts";
 
 // Row order and kind. Per-share rows are in rupees and ignore the unit toggle.
 const ROWS: { key: string; perShare?: boolean }[] = [
@@ -48,11 +48,9 @@ export function FinancialsTab({ report }: { report: ReportOverview }) {
         </div>
         <UnitToggle />
       </header>
+      <FinChart sod={sod} unit={unit} />
       <FinTable sod={sod} unit={unit} />
-      <div className="grid gap-x-12 gap-y-10 lg:grid-cols-2">
-        <Ratios sod={sod} facts={report.facts_summary} unit={unit} />
-        <Bars sod={sod} unit={unit} />
-      </div>
+      <Ratios sod={sod} facts={report.facts_summary} unit={unit} />
     </section>
   );
 }
@@ -141,50 +139,6 @@ function Ratios({ sod, facts, unit }: { sod: Sod; facts: unknown; unit: Unit }) 
           </div>
         ))}
       </dl>
-    </section>
-  );
-}
-
-/** Revenue and profit for the last three years as plain horizontal bars. Hidden unless two years have values. */
-function Bars({ sod, unit }: { sod: Sod; unit: Unit }) {
-  const { t } = useT();
-  const [metric, setMetric] = useState<"revenue" | "profit_after_tax">("revenue");
-  const labels = fyLabels(sod);
-  const { fy } = byPeriod(sod.financials[metric]);
-  const pts = FY_ORDER.map((p) => ({ p, c: cell(fy[p] ?? null, unit) })).filter((x) => x.c.n !== null);
-  const max = Math.max(...pts.map((x) => Math.abs(x.c.n ?? 0)), 1);
-  if (!sod.financials.revenue || pts.length < 2) return null;
-  return (
-    <section aria-labelledby="fin-chart">
-      <SectionTitle id="fin-chart">{t("fin.chart")}</SectionTitle>
-      <div role="radiogroup" aria-label={t("fin.chart")} className="mt-3 flex gap-4 text-sm">
-        {(["revenue", "profit_after_tax"] as const).map((m) => (
-          <button
-            key={m}
-            type="button"
-            role="radio"
-            aria-checked={metric === m}
-            onClick={() => setMetric(m)}
-            className={`pb-1 ${metric === m ? "border-b-2 border-stamp font-medium" : "border-b-2 border-transparent text-muted hover:text-text"}`}
-          >
-            {t(`fin.row.${m}` as StringKey)}
-          </button>
-        ))}
-      </div>
-      <ul className="mt-4 space-y-3">
-        {pts.map(({ p, c }) => (
-          <li key={p} className="grid grid-cols-[4.5rem_1fr_auto] items-center gap-3 text-sm">
-            <span className="text-muted">{labels[p]}</span>
-            <span className="block h-3 rounded-[2px] bg-surface-2">
-              <span
-                className="block h-3 rounded-[2px] bg-stamp"
-                style={{ width: `${Math.max(1, (Math.abs(c.n ?? 0) / max) * 100)}%`, transition: "width 240ms var(--ease-out)" }}
-              />
-            </span>
-            <span className="num text-right">{c.text}</span>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }

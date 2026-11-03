@@ -134,7 +134,7 @@ export function AnswerText({ turn }: { turn: Turn }) {
               type="button"
               aria-label={t("cite.jump", { n: s.n })}
               onClick={() => p && setHighlight({ ipoId: turn.ipoId, doc: p.doc, page: p.page_start, bbox: null, kind: "source" })}
-              className="mx-0.5 rounded-[4px] border border-rule bg-surface-2 px-1 text-xs font-medium text-stamp hover:border-stamp"
+              className="mx-0.5 rounded-[4px] border border-rule bg-surface-2 px-1 text-xs font-medium text-accent-ink hover:border-stamp"
             >
               {s.text}
             </button>

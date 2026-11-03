@@ -49,7 +49,7 @@ export function GuardCard({ turn }: { turn: Turn }) {
         <>
           <Facts ipoId={turn.ipoId} facts={g.facts} />
           <p className="mt-3">
-            <button type="button" className="inline-flex h-11 items-center text-stamp underline underline-offset-2" onClick={() => openGlossary("sebi")}>
+            <button type="button" className="inline-flex h-11 items-center text-accent-ink underline underline-offset-2" onClick={() => openGlossary("sebi")}>
               {t("guard.advice.sebi")}
             </button>
           </p>
@@ -85,7 +85,7 @@ export function AbstainCard({ turn, suggestions }: { turn: Turn; suggestions: st
           <button
             type="button"
             onClick={() => setHighlight({ ipoId: turn.ipoId, doc: p.doc, page: p.page_start, bbox: null, kind: "source" })}
-            className="mt-2 h-11 text-stamp underline underline-offset-2"
+            className="mt-2 h-11 text-accent-ink underline underline-offset-2"
           >
             {t("common.showInDocument")}
           </button>

@@ -70,7 +70,7 @@ export function Composer({ ipoId, disabled, onSend }: Props) {
         <button
           type="submit"
           disabled={disabled || !text.trim()}
-          className="h-11 rounded-[6px] bg-stamp px-5 text-sm font-medium text-bg disabled:opacity-40"
+          className="h-11 rounded-[6px] bg-stamp px-5 text-sm font-medium text-on-accent disabled:opacity-40"
         >
           {t("ask.send")}
         </button>

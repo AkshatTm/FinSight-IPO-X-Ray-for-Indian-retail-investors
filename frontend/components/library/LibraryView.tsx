@@ -4,6 +4,7 @@ import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, useSyncExternalStore } from "react";
+import { LibraryChart } from "./LibraryChart";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
 import { useIpos } from "@/lib/api/hooks";
 import { filterSortIpos, type FilterKey, type SortKey } from "@/lib/library";
@@ -43,7 +44,7 @@ function FirstVisitHint() {
     <div className="mb-6 flex items-start justify-between gap-3 rounded-[10px] border border-rule bg-surface px-4 py-3 text-sm">
       <p>
         {t("lib.hint")}{" "}
-        <Link href="/ipos/ather-energy-2025" onClick={dismissHint} className="text-stamp underline underline-offset-2">
+        <Link href="/ipos/ather-energy-2025" onClick={dismissHint} className="text-accent-ink underline underline-offset-2">
           {t("lib.hintLink")}
         </Link>
       </p>
@@ -74,11 +75,12 @@ export function LibraryView() {
   return (
     <div className="py-10 md:py-14">
       <header className="mb-8 max-w-2xl">
-        <h1 className="font-serif text-3xl font-semibold tracking-tight">{t("lib.title")}</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">{t("lib.title")}</h1>
         {data && <p className="mt-2 text-muted">{t("lib.sub", { n: data.length })}</p>}
       </header>
 
       <FirstVisitHint />
+      {data && <LibraryChart ipos={data} />}
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <label className="relative min-w-[16rem] flex-1">

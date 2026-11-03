@@ -7,6 +7,7 @@ import { parseSod } from "@/lib/sod";
 import { useUi } from "@/lib/store";
 import { useT } from "@/lib/useT";
 import { FlagsGlance, KeyFacts, PromoterHolding, SectionTitle, Strengths } from "./OverviewParts";
+import { ProceedsSplit } from "./ReportCharts";
 import { RiskLevelCard } from "./RiskLevelCard";
 
 /** Overview: key facts and promoter holding on the left; the risk level with its reasons beside them. */
@@ -31,6 +32,7 @@ export function OverviewTab({ docId, report, onGo }: { docId: string; report: Re
     <div className="grid gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div className="min-w-0 space-y-10 lg:col-start-1 lg:row-start-1">
         <KeyFacts report={report} sod={sod} unit={unit} />
+        <ProceedsSplit fresh={toNum((report.offer_line_params as { fresh_crore?: string } | null)?.fresh_crore)} ofs={toNum((report.offer_line_params as { ofs_crore?: string } | null)?.ofs_crore)} />
         <PromoterHolding sod={sod} />
 
         <section aria-labelledby="ov-five">
@@ -44,7 +46,7 @@ export function OverviewTab({ docId, report, onGo }: { docId: string; report: Re
                     <p className="max-w-[68ch]">{r.simple_status === "ready" && r.simple ? r.simple : r.title}</p>
                     <p className="mt-1.5 flex flex-wrap items-center gap-x-3 text-xs text-muted">
                       {cat && <span>{t(cat)}</span>}
-                      <button type="button" className="text-stamp underline underline-offset-4" onClick={() => onGo(`#${anchorFor("risk", r.rid)}`)}>
+                      <button type="button" className="text-accent-ink underline underline-offset-4" onClick={() => onGo(`#${anchorFor("risk", r.rid)}`)}>
                         {t("ov.readMore")}
                       </button>
                     </p>
@@ -74,6 +76,8 @@ export function OverviewTab({ docId, report, onGo }: { docId: string; report: Re
     </div>
   );
 }
+
+const toNum = (x: string | null | undefined) => (x != null && x !== "" && Number.isFinite(Number(x)) ? Number(x) : null);
 
 export function NotReady({ text }: { text?: string | null }) {
   const { t } = useT();

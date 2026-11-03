@@ -50,7 +50,7 @@ export function UploadPage() {
 
   return (
     <div className="mx-auto max-w-2xl py-12 md:py-16">
-      <h1 className="font-serif text-[2rem] font-semibold leading-tight tracking-tight">{t("up.title")}</h1>
+      <h1 className="text-[2rem] font-semibold leading-tight tracking-tight">{t("up.title")}</h1>
       <p className="mt-3 text-lg text-muted">{t("up.sub")}</p>
 
       <div className="mt-8">
@@ -80,7 +80,7 @@ export function UploadPage() {
       {paused ? (
         <p className="mt-6 text-sm">
           {t("up.paused")}{" "}
-          <Link href="/ipos" className="text-stamp underline underline-offset-2">
+          <Link href="/ipos" className="text-accent-ink underline underline-offset-2">
             {t("nav.ipos")}
           </Link>
         </p>
@@ -89,7 +89,7 @@ export function UploadPage() {
           <button
             type="button"
             onClick={() => void signIn("/upload")}
-            className="btn inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg"
+            className="btn inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-on-accent"
           >
             {t("up.signInButton")}
           </button>

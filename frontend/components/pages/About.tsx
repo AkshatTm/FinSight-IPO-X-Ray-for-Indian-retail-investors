@@ -19,12 +19,12 @@ export function About() {
   const { t } = useT();
   return (
     <div className="py-12 md:py-16">
-      <h1 className="font-serif text-3xl font-semibold leading-tight tracking-tight md:text-[2.5rem]">{t("about.title")}</h1>
+      <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-[2.5rem]">{t("about.title")}</h1>
       <div className="mt-8">
         <Block h={t("about.who.h")}>
           <p>{t("about.who.b")}</p>
           <p>
-            <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+            <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
               {t("about.who.link")}
             </a>
           </p>

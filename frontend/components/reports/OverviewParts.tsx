@@ -3,14 +3,14 @@
 import type { StringKey } from "@/lib/copy";
 import { DOC_SHORT_KEY } from "@/lib/doc";
 import type { Unit } from "@/lib/format";
-import { anchorFor, flagTitleKey, offerLine, statusKey, type FlagStatus, type OfferLineParams, type ReportOverview } from "@/lib/report";
+import { offerLine, type FlagStatus, type OfferLineParams, type ReportOverview } from "@/lib/report";
 import { byPeriod, cell, type Sod } from "@/lib/sod";
 import { useT } from "@/lib/useT";
-import { StatusIcon } from "./StatusIcon";
+import { FlagGrid, ShareholdingChart } from "./ReportCharts";
 
 export function SectionTitle({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <h2 id={id} className="font-serif text-xl font-semibold tracking-tight">
+    <h2 id={id} className="text-xl font-semibold tracking-tight">
       {children}
     </h2>
   );
@@ -84,74 +84,30 @@ export function PromoterHolding({ sod }: { sod: Sod | null }) {
   return (
     <section aria-labelledby="ov-promoter">
       <SectionTitle id="ov-promoter">{t("ov.promoter")}</SectionTitle>
-      <div className="mt-3 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+      <div className="mt-3 flex flex-wrap items-baseline gap-x-8 gap-y-1">
         <p>
           <span className="block text-sm text-muted">{t("ov.promoterPre")}</span>
-          <span className="num font-serif text-3xl font-semibold">{pre.text ?? t("fin.notStated")}</span>
+          <span className="num text-3xl font-bold">{pre.text ?? t("fin.notStated")}</span>
         </p>
         <span aria-hidden className="text-2xl text-muted">→</span>
         <p>
           <span className="block text-sm text-muted">{t("ov.promoterPost")}</span>
-          {post.text ? (
-            <span className="num font-serif text-3xl font-semibold">{post.text}</span>
-          ) : (
-            <span className="text-muted">{t("ov.promoterPostNone")}</span>
-          )}
+          {post.text ? <span className="num text-3xl font-bold">{post.text}</span> : <span className="text-base text-muted">{t("ov.promoterPostNone")}</span>}
         </p>
       </div>
+      <div className="mt-3"><ShareholdingChart pre={pre.n} post={post.n} /></div>
       {pre.page ? <p className="mt-2 text-xs text-muted">{t("ov.page", { p: pre.page })}</p> : null}
     </section>
   );
 }
 
-const ALL_FLAGS = Array.from({ length: 13 }, (_, i) => `RF${String(i + 1).padStart(2, "0")}`);
-
 /** Red flags in three clearly separate groups: decided, not available, pending (not calculated). */
 export function FlagsGlance({ flags, onGo }: { flags: { id: string; status: FlagStatus }[]; onGo: (hash: string) => void }) {
   const { t } = useT();
-  const known = new Map(flags.map((f) => [f.id, f.status]));
-  const decided = flags.filter((f) => f.status === "ok" || f.status === "watch" || f.status === "concern");
-  const na = flags.filter((f) => f.status === "not_available" || f.status === "not_applicable");
-  const pending = flags.length === 0 ? [] : ALL_FLAGS.filter((id) => !known.has(id));
-  const title = (id: string) => (flagTitleKey(id) ? t(flagTitleKey(id) as StringKey) : id);
-  const group = (heading: string, hint: string | null, body: React.ReactNode) => (
-    <div className="py-3 first:pt-0 last:pb-0">
-      <h3 className="text-sm font-semibold">{heading}</h3>
-      {hint && <p className="text-xs text-muted">{hint}</p>}
-      <div className="mt-2">{body}</div>
-    </div>
-  );
   if (flags.length === 0) return <p className="mt-3 text-sm text-muted">{t("rep.notReady")}</p>;
   return (
-    <div className="mt-3 divide-y divide-rule border-y border-rule py-3">
-      {decided.length > 0 &&
-        group(
-          t("ov.flagsDecided"),
-          null,
-          <ul className="grid gap-x-8 gap-y-1.5 sm:grid-cols-2">
-            {decided.map((f) => (
-              <li key={f.id}>
-                <button type="button" onClick={() => onGo(`#${anchorFor("redflag", f.id)}`)} className="flex w-full items-center gap-2 text-left text-sm hover:text-stamp">
-                  <StatusIcon status={f.status} size={16} />
-                  <span className="min-w-0 flex-1">{title(f.id)}</span>
-                  <span className="text-xs text-muted">{t(statusKey(f.status))}</span>
-                </button>
-              </li>
-            ))}
-          </ul>,
-        )}
-      {na.length > 0 &&
-        group(
-          t("ov.flagsNA"),
-          t("ov.flagsNAHint"),
-          <p className="text-sm text-muted">{na.map((f) => title(f.id)).join(", ")}</p>,
-        )}
-      {pending.length > 0 &&
-        group(
-          t("ov.flagsPending"),
-          t("ov.flagsPendingHint"),
-          <p className="text-sm text-muted">{pending.map(title).join(", ")}</p>,
-        )}
+    <div className="mt-3">
+      <FlagGrid flags={flags} onGo={onGo} />
     </div>
   );
 }
