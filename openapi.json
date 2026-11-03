@@ -4566,6 +4566,18 @@
               }
             ],
             "title": "Offer Line Params"
+          },
+          "sod": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sod"
           }
         },
         "type": "object",
