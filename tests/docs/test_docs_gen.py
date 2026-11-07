@@ -41,15 +41,16 @@ def test_provisional_configs_are_flagged_on_their_pages() -> None:
 
 
 def test_adr_index_has_every_decision() -> None:
+    # Each log owns one prefix; 09_DECISIONS.md also repeats short B-/C-ADR summaries.
     headings = [
         line
-        for rel in (
-            "docs/09_DECISIONS.md",
-            "docs/phase2/B08_DECISIONS.md",
-            "docs/phase3/C_DECISIONS.md",
+        for rel, prefix in (
+            ("docs/09_DECISIONS.md", "ADR-"),
+            ("docs/phase2/B08_DECISIONS.md", "B-ADR-"),
+            ("docs/phase3/C_DECISIONS.md", "C-ADR-"),
         )
         for line in (ROOT / rel).read_text(encoding="utf-8").splitlines()
-        if docs_gen.ADR_HEADING.match(line)
+        if (m := docs_gen.ADR_HEADING.match(line)) and m.group(1).startswith(prefix)
     ]
     rows = [
         line
@@ -103,14 +104,14 @@ def test_mkdocs_nav_points_at_files_that_exist() -> None:
         assert f'"{page}": "{source}"' in hooks
 
 
-def test_glossary_has_every_term_with_its_hindi() -> None:
+def test_glossary_has_every_term() -> None:
     page = docs_gen.glossary_page()
     finance = yaml.safe_load((ROOT / "configs" / "glossary.yaml").read_text(encoding="utf-8"))
     ml = yaml.safe_load((ROOT / "configs" / "glossary_ml.yaml").read_text(encoding="utf-8"))
     for term in finance["terms"]:
         assert f"| {term['title']['en']} |" in page
-        assert term["title"]["hi"] in page
-    for term in ml["terms"]:
+        assert term["title"]["hi"] not in page  # English-only since v1.1
+    for term in ml["terms"] + ml["report_terms"]:
         assert f"| {term['term']} |" in page
 
 

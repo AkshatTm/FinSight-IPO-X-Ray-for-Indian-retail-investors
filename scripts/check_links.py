@@ -2,8 +2,10 @@
 
 Every ``[text](target)`` and ``![alt](target)`` whose target is a relative path must point at a
 file or folder that exists (the ``#anchor`` part is not checked). External links (``http``,
-``mailto``) are not fetched. Files in ``docs/archive/`` are skipped: they are kept exactly as they
-were when archived, so their old relative links are expected to break.
+``mailto``) are not fetched, except links into this repository on GitHub
+(``.../blob/main/<path>`` or ``.../tree/main/<path>``), which are checked against the working tree
+because the docs site uses them for files outside ``docs/``. Files in ``docs/archive/`` are
+skipped: they are kept exactly as they were when archived, so their old relative links may break.
 
     uv run python scripts/check_links.py            # every tracked .md file
     uv run python scripts/check_links.py README.md docs/index.md
@@ -22,6 +24,10 @@ SKIP_PREFIXES = ("docs/archive/", "data/", "models/", "ml/handoff/data/", ".pyte
 LINK = re.compile(r"!?\[[^\]\n]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 FENCE = re.compile(r"^\s*(```|~~~)")
 INLINE_CODE = re.compile(r"`[^`\n]*`")
+REPO_URL = re.compile(
+    r"^https://github\.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/"
+    r"(?:blob|tree)/main/(.+)$"
+)
 
 
 def tracked_markdown() -> list[str]:
@@ -44,6 +50,11 @@ def dead_links(rel: str) -> list[tuple[int, str]]:
         if in_fence:
             continue
         for target in LINK.findall(INLINE_CODE.sub("", line)):
+            repo = REPO_URL.match(target)
+            if repo:
+                if not (ROOT / unquote(repo.group(1).split("#", 1)[0])).exists():
+                    bad.append((n, target))
+                continue
             if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.I) or target.startswith(("#", "/")):
                 continue
             file_part = unquote(target.split("#", 1)[0].split("?", 1)[0])

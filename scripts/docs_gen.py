@@ -207,7 +207,7 @@ def compare_page() -> str:
     return "".join(lines)
 
 
-ADR_HEADING = re.compile(r"^### ((?:[BC]-)?ADR-\d+[a-z]?) (.+?)(?: — (.+))?$")
+ADR_HEADING = re.compile(r"^#{2,3} ((?:[BC]-)?ADR-\d+[a-z]?) (.+?)(?: — (.+))?$")
 
 
 def adr_page() -> str:
@@ -218,16 +218,22 @@ def adr_page() -> str:
         ),
         "# Design decisions (ADR index)\n\n",
     ]
-    for title, rel, link in (
-        ("Phase 1", "docs/09_DECISIONS.md", "../09_DECISIONS.md"),
-        ("Phase 2", "docs/phase2/B08_DECISIONS.md", "../phase2/B08_DECISIONS.md"),
-        ("Phase 3", "docs/phase3/C_DECISIONS.md", "../phase3/C_DECISIONS.md"),
+    # Each log owns one prefix; 09_DECISIONS.md also repeats short B-/C-ADR summaries.
+    for title, rel, link, prefix in (
+        ("Phase 1", "docs/09_DECISIONS.md", "../09_DECISIONS.md", "ADR-"),
+        ("Phase 2", "docs/phase2/B08_DECISIONS.md", "../phase2/B08_DECISIONS.md", "B-ADR-"),
+        (
+            "Phase 3, Phase 4 and final",
+            "docs/phase3/C_DECISIONS.md",
+            "../phase3/C_DECISIONS.md",
+            "C-ADR-",
+        ),
     ):
         lines.append(f"## {title}\n\nFull text: [{Path(rel).name}]({link}).\n\n")
         lines.append("| ID | Decision | Status |\n| --- | --- | --- |\n")
         for line in (ROOT / rel).read_text(encoding="utf-8").splitlines():
             m = ADR_HEADING.match(line)
-            if m:
+            if m and m.group(1).startswith(prefix):
                 adr, name, status = m.groups()
                 lines.append(f"| {adr} | {_esc(name)} | {status or '—'} |\n")
         lines.append("\n")
@@ -260,21 +266,326 @@ def cli_page() -> str:
 
 
 def glossary_page() -> str:
-    """Finance terms (English and Hindi, as the app shows them) and the ML terms of the docs."""
+    """Finance terms as the app's glossary drawer shows them, report terms and the ML terms."""
     finance = _yaml("glossary.yaml")["terms"]
-    ml = _yaml("glossary_ml.yaml")["terms"]
+    docs_terms = _yaml("glossary_ml.yaml")
     lines = [
         HEADER.format(source="configs/glossary.yaml and configs/glossary_ml.yaml"),
         "# Glossary\n\n",
-        "The finance terms are the ones the app explains (UI spec §14), with the Hindi the app "
-        "shows. The ML terms explain words used on the evaluation and model pages.\n\n",
-        "## Finance terms\n\n| Term | Meaning | हिंदी |\n| --- | --- | --- |\n",
+        "Plain-English meanings of the words FinSight uses. The first table is the list the app's "
+        "glossary drawer shows (`GET /api/glossary`); the second covers words on the report pages; "
+        "the third explains words used on the evaluation and model pages.\n\n",
+        "## IPO terms (the app's glossary)\n\n| Term | Meaning |\n| --- | --- |\n",
     ]
-    for t in finance:
-        hi = f"**{t['title']['hi']}**: {t['body']['hi']}"
-        lines.append(f"| {_esc(t['title']['en'])} | {_esc(t['body']['en'])} | {_esc(hi)} |\n")
+    lines += [f"| {_esc(t['title']['en'])} | {_esc(t['body']['en'])} |\n" for t in finance]
+    lines.append("\n## Report terms\n\n| Term | Meaning |\n| --- | --- |\n")
+    lines += [f"| {_esc(t['term'])} | {_esc(t['body'])} |\n" for t in docs_terms["report_terms"]]
     lines.append("\n## ML and evaluation terms\n\n| Term | Meaning |\n| --- | --- |\n")
-    lines += [f"| {_esc(t['term'])} | {_esc(t['body'])} |\n" for t in ml]
+    lines += [f"| {_esc(t['term'])} | {_esc(t['body'])} |\n" for t in docs_terms["terms"]]
+    return "".join(lines)
+
+
+CONFIG_KEY = re.compile(r"^(\s*)([A-Za-z0-9_./-]+):(?:\s+(.*))?$")
+CONFIG_SKIP = {"splits.yaml": "written by `python -m finsight.splits build`; never edited by hand"}
+# Meaning of keys whose YAML file has no comment for them: (file, key regex) -> text. Values are
+# never typed here; they come from the file.
+CONFIG_NOTES: list[tuple[str, str, str]] = [
+    (
+        "category_remap.yaml",
+        r"version",
+        "Version of the remap rules, stored with the cleaned labels.",
+    ),
+    (
+        "category_remap.yaml",
+        r"rules",
+        "Remap rules: `name`, `target` category, `patterns`, optional `subject_only` and `exclude`.",
+    ),
+    (
+        "compare.yaml",
+        r"provisional",
+        "True while any metric has too few past IPOs; the tab says so.",
+    ),
+    ("compare.yaml", r"computed_on", "Date and commit of the run that wrote this file."),
+    ("compare.yaml", r"window_years", "Years of past IPOs in the reference window."),
+    ("compare.yaml", r"corpus_n", "Past IPOs in the window."),
+    ("compare.yaml", r"metric_n(\..+)?", "Past IPOs that had a value for each metric."),
+    (
+        "compare.yaml",
+        r"reference_quantiles(\..+)?",
+        "Values at percentiles 0, 10, …, 100 of each metric among past IPOs.",
+    ),
+    (
+        "config.yaml",
+        r"paths(\..+)?",
+        "Folders the app reads and writes, relative to the repository root.",
+    ),
+    (
+        "config.yaml",
+        r"uploads\.enabled",
+        "Accept uploads at all (`UPLOADS_ENABLED=false` also turns them off).",
+    ),
+    ("config.yaml", r"uploads\.max_mb", "Largest PDF accepted, in MB."),
+    ("config.yaml", r"uploads\.max_pages", "Most pages accepted."),
+    (
+        "config.yaml",
+        r"uploads\.per_user_per_day",
+        "Uploads per user per day (IST); `start.bat` raises it to 1000.",
+    ),
+    (
+        "config.yaml",
+        r"uploads\.global_per_day",
+        "Uploads per day for everyone together; `start.bat` raises it to 1000.",
+    ),
+    (
+        "config.yaml",
+        r"uploads\.retention_days",
+        "Days an upload is kept before `jobs sweep` deletes it; `start.bat` sets 3650.",
+    ),
+    (
+        "config.yaml",
+        r"uploads\.scanned_min_median_chars",
+        "A PDF whose median page has fewer characters is refused as a scan.",
+    ),
+    ("config.yaml", r"profiles", "Named settings bundles; pick one with `FINSIGHT_PROFILE`."),
+    (
+        "config.yaml",
+        r"profiles\.dev_light",
+        "Coding profile: smallest chat model, no dense index or reranker.",
+    ),
+    ("config.yaml", r"profiles\.full", "Phase 1 laptop profile (hybrid retrieval and reranker)."),
+    (
+        "config.yaml",
+        r"profiles\.local",
+        "The laptop app (`start.bat`): the student model, BM25 + reranker.",
+    ),
+    (
+        "config.yaml",
+        r"profiles\.deploy_cpu",
+        "Dormant CPU-hosting profile (ADR-022); never deployed.",
+    ),
+    (
+        "config.yaml",
+        r"profiles\.\w+\.llm",
+        "Chat and rewrite model: backend, model tag and context length.",
+    ),
+    (
+        "config.yaml",
+        r"profiles\.\w+\.retrieve",
+        "Retrieval: dense index, reranker and how many passages it reranks.",
+    ),
+    ("config.yaml", r"profiles\.\w+\.verify", "Number checker options (`nli` stays off)."),
+    (
+        "config.yaml",
+        r"profiles\.\w+\.demo_mode",
+        "Replay recorded chat answers instead of calling the model.",
+    ),
+    (
+        "demo_ipos.yaml",
+        r"ipos",
+        "The 10 showcase IPOs: id, split, company, and RHP / Prospectus files with page count and SHA-256.",
+    ),
+    (
+        "fields.yaml",
+        r"fields",
+        "One entry per fact-sheet field: id, labels, type, document, sections, questions, extractor.",
+    ),
+    (
+        "forbidden_phrases.yaml",
+        r"allow",
+        "Fixed lines removed before matching, so disclaimers pass.",
+    ),
+    (
+        "forbidden_phrases.yaml",
+        r"patterns",
+        "Case-insensitive regexes for advice-style phrases; a match blocks the text.",
+    ),
+    ("glossary.yaml", r"terms", "Terms in the app's glossary drawer (`GET /api/glossary`)."),
+    ("glossary_ml.yaml", r"terms", "ML and evaluation terms for the docs glossary."),
+    (
+        "glossary_ml.yaml",
+        r"report_terms",
+        "Report words for the docs glossary that the app drawer does not list.",
+    ),
+    ("hedges.yaml", r"lm_uncertainty", "Single hedge words counted in a risk factor."),
+    ("hedges.yaml", r"own", "Hedge phrases from Indian offer documents, matched whole."),
+    ("ipo_meta.yaml", r"ipos(\..+)?", "Sector and listing date of each showcase IPO."),
+    ("redflags.yaml", r"version", "Rule version, stored in every `redflags.json`."),
+    (
+        "redflags.yaml",
+        r"default_missing",
+        "Sentence shown when a check's inputs are not in the document.",
+    ),
+    ("redflags.yaml", r"checks", "The 13 checks, RF01–RF13."),
+    ("redflags.yaml", r"checks\.RF\d+", "One check."),
+    ("redflags.yaml", r"checks\.RF\d+\.title", "Name shown on the card."),
+    ("redflags.yaml", r"checks\.RF\d+\.rule", 'The "How this check works" text.'),
+    ("redflags.yaml", r"checks\.RF\d+\.\w+", "Threshold used by the rule text above."),
+    ("reference.yaml", r"window_years", 'Years before a document that count as "past IPOs".'),
+    ("risklevel.yaml", r"provisional", "False once the thresholds were fitted (C-ADR-25)."),
+    ("risklevel.yaml", r"window_years", "Years of past IPOs in the reference window."),
+    ("risklevel.yaml", r"computed_on", "Commit of the fit."),
+    ("risklevel.yaml", r"corpus_n", "Past IPOs the thresholds were fitted on."),
+    (
+        "risklevel.yaml",
+        r"points",
+        "Points per Concern, per Watch and per rare serious risk, and the cap on risk points.",
+    ),
+    (
+        "risklevel.yaml",
+        r"thresholds",
+        "Score share below `low_below` is Low; at or above `high_from` is High.",
+    ),
+    (
+        "risklevel.yaml",
+        r"reference_quantiles",
+        "Reference scores; used only if `show_percentile` is true.",
+    ),
+    ("risks.yaml", r"novelty", 'How "unusual" is measured against past risks.'),
+    ("risks.yaml", r"hedging", "When a risk is noted as written cautiously."),
+    ("risks.yaml", r"seriousness", "Rule-based seriousness score of a risk."),
+    ("risks.yaml", r"seriousness\.base\.\w+", "Base points for a risk in this category."),
+    ("risks.yaml", r"seriousness\.unknown_category", "Base points when the category is unknown."),
+    (
+        "risks.yaml",
+        r"seriousness\.boilerplate_novelty",
+        "Above this similarity to past risks, a risk loses a point as boilerplate.",
+    ),
+    ("risks.yaml", r"seriousness\.medium_at", "Score at which a risk is medium."),
+    ("risks.yaml", r"seriousness\.unknown_novelty", "Novelty used when the bank cannot be read."),
+    ("risks.yaml", r"teacher\.max_words", "Longest risk (title + body) sent to the teacher."),
+    ("risks.yaml", r"teacher\.recent_weight", "Sampling weight of risks from recent IPOs."),
+    ("risks.yaml", r"teacher\.seed", "Random seed of the sample."),
+    ("splits.yaml", r"version", "Split file version."),
+    ("splits.yaml", r"frozen", "True: the split changes only by a new C-ADR."),
+    ("splits.yaml", r"rule", "Split rule (`strict` time split)."),
+    ("splits.yaml", r"train_cut", "Documents dated after this are never training data."),
+    ("splits.yaml", r"rules", "Shares used to build the split."),
+    ("splits.yaml", r"changed_by_adr", "Decisions that changed the frozen split."),
+    ("splits.yaml", r"counts", "Documents per slice."),
+    ("splits.yaml", r"ipos", "Every IPO with its slice."),
+    ("splits.yaml", r"excluded", "IPOs left out, with the reason."),
+    ("splits.yaml", r"demo", "Newest IPOs kept for the demo only."),
+    ("splits.yaml", r"bench", "The 7 FinSight Bench v1 IPOs."),
+    ("splits.yaml", r"bench_dev", "Bench development IPOs (none)."),
+    (
+        "suggested_questions.yaml",
+        r"questions",
+        "Question chips under the chat (the `language: hi` entry is not shown since v1.1).",
+    ),
+]
+
+
+def _config_note(name: str, key: str) -> str:
+    for file, pattern, text in CONFIG_NOTES:
+        if file == name and re.fullmatch(pattern, key):
+            return text
+    return ""
+
+
+def _split_comment(text: str) -> tuple[str, str]:
+    """Split ``value  # comment`` outside quotes."""
+    quote = ""
+    for i, ch in enumerate(text):
+        if ch in "\"'" and not quote:
+            quote = ch
+        elif ch == quote:
+            quote = ""
+        elif ch == "#" and not quote and (i == 0 or text[i - 1].isspace()):
+            return text[:i].strip(), text[i + 1 :].strip()
+    return text.strip(), ""
+
+
+def _lookup(data: object, path: list[str]) -> tuple[bool, object]:
+    node = data
+    for key in path:
+        if not isinstance(node, dict) or key not in node:
+            return False, None
+        node = node[key]
+    return True, node
+
+
+def _config_value(value: object) -> str:
+    if isinstance(value, dict):
+        return "*(section)*"
+    if isinstance(value, list):
+        if len(value) <= 6 and all(not isinstance(v, dict | list) for v in value):
+            return _cell(", ".join(str(v) for v in value))
+        return f"*list, {len(value)} entries*"
+    return _cell(value)
+
+
+def _config_rows(name: str) -> tuple[str, list[tuple[str, str, str]]]:
+    """The leading comment of one YAML file and ``(key, value, meaning)`` per mapping key."""
+    text = (ROOT / "configs" / name).read_text(encoding="utf-8")
+    data = yaml.safe_load(text)
+    header: list[str] = []
+    rows: list[tuple[str, str, str]] = []
+    stack: list[tuple[int, str]] = []
+    pending: list[str] = []
+    skip_below: int | None = None
+    started = False
+    for raw in text.splitlines():
+        stripped = raw.strip()
+        if stripped.startswith("#"):
+            (pending if started else header).append(stripped.lstrip("#").strip())
+            continue
+        if not stripped:
+            started = started or bool(header)
+            pending = []
+            continue
+        started = True
+        indent = len(raw) - len(raw.lstrip())
+        if skip_below is not None and indent > skip_below:
+            continue
+        skip_below = None
+        m = CONFIG_KEY.match(raw)
+        if not m or stripped.startswith("- "):
+            pending = []
+            continue
+        while stack and stack[-1][0] >= indent:
+            stack.pop()
+        key = m.group(2)
+        path = [k for _, k in stack] + [key]
+        found, value = _lookup(data, path)
+        inline, comment = _split_comment(m.group(3) or "")
+        meaning = comment or " ".join(pending) or _config_note(name, ".".join(path))
+        pending = []
+        if not found:
+            continue
+        shown = _cell(inline) if inline.startswith(("{", "[")) else _config_value(value)
+        rows.append((".".join(path), shown, meaning))
+        if isinstance(value, dict) and not inline:
+            stack.append((indent, key))
+        else:
+            skip_below = indent
+    return " ".join(header), rows
+
+
+def configs_page() -> str:
+    """Every key of every ``configs/*.yaml`` file with its committed value and its comment."""
+    lines = [
+        HEADER.format(source="configs/*.yaml (values and comments)"),
+        "# Configuration files\n\n",
+        "Every key in every file under `configs/`, with the committed value and the comment written "
+        "next to it in the file (empty when the file has none). Lists are summarised by length. "
+        "Application settings and their environment variables are on "
+        "[Settings and environment variables](config.md).\n\n",
+    ]
+    for path in sorted((ROOT / "configs").glob("*.yaml")):
+        header, rows = _config_rows(path.name)
+        lines.append(f"## `{path.name}`\n\n")
+        if header:
+            lines.append(f"{_esc(header)}\n\n")
+        if path.name in CONFIG_SKIP:
+            lines.append(f"Keys not listed: the file is {CONFIG_SKIP[path.name]}.\n\n")
+            rows = [r for r in rows if r[0].count(".") == 0]
+        lines.append("| Key | Value | Meaning |\n| --- | --- | --- |\n")
+        lines += [f"| `{k}` | {v} | {_esc(m)} |\n" for k, v, m in rows]
+        lines.append("\n")
+    lines.append(
+        "## `ipo_universe.csv`\n\nNot a setting: the list of recent RHPs (2021–2026) behind the "
+        "Phase 3 corpus, written by `scripts/build_ipo_universe.py`. See [Data](../data/index.md).\n"
+    )
     return "".join(lines)
 
 
@@ -962,6 +1273,7 @@ def fill_blocks(text: str, blocks: dict[str, Callable[[], str]]) -> str:
 
 PAGES: dict[str, Callable[[], str]] = {
     "docs/reference/config.md": config_page,
+    "docs/reference/configs.md": configs_page,
     "docs/reference/risklevel.md": risklevel_page,
     "docs/reference/compare.md": compare_page,
     "docs/reference/redflags.md": redflags_page,
