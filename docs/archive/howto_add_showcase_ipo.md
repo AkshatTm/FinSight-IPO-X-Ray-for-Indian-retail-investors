@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): merged into docs/operations/index.md.
+
 # Add a showcase IPO
 
 Showcase IPOs are the prebuilt reports in the library. Each has an RHP and its final Prospectus.

@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # COLAB_STEPS_<job> template (copy, rename, fill the <> parts)
 
 **Job:** <what it does> · **GPU:** <T4 | L4 | A100-40GB | A100-80GB | H100> · **Expected:** <hours> ≈ <units> units (rates: T4 ~1.07, L4 ~1.54, A100 ~6.77 units/h; H100 not measured; `docs/phase3/C03_TRAINING.md` §4) · **Notebook:** `notebooks/colab/<file>.ipynb`

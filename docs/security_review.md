@@ -1,3 +1,5 @@
+> **Historical record (project).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # Security review (B3.5a)
 
 A review of the Phase 2 API, storage, jobs and auth code against the checklist in B02 §11, done in

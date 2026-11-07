@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): says Kaggle QLoRA served by vLLM; the real run was LoRA on a Colab G4, served as GGUF. Recipe: docs/model_cards/risk_simplifier.md.
+
 # Retrain the simplifier (Kaggle)
 
 The simplifier rewrites each risk factor in plain English. It is a small student model (Qwen3-4B-Instruct-2507, QLoRA) trained on the teacher's filtered rewrites, then exported as GGUF Q4_K_M for llama.cpp on the CPU worker. The merged fp16 weights (`merged/`) can serve the optional GPU job with vLLM; the AWQ export B03 §5 mentions is not in the notebook yet and is only needed if the L4 runs short of memory.

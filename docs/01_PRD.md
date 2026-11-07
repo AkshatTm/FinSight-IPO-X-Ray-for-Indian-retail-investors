@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # 01 — Product Requirements Document (PRD)
 
 > **Big Phase 2:** new features (upload any offer document, red flags, plain-English risk report, risk level, comparisons) are specified in `docs/phase2/B01_PRD.md`, which wins where the two disagree.

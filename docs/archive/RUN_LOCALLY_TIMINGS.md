@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): one smoke run (Seshaasai RHP); the v1.1 timings are in eval_results/final/FINAL_SCORECARD.md.
+
 # Local app timings (smoke test, one run)
 
 `uv run python scripts/smoke_local.py --fresh` on the laptop (RTX 2050 4 GB, 16 GB RAM, nothing

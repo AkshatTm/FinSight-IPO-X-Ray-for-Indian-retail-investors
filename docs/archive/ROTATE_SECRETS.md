@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): secrets for hosting that never existed; see SECURITY.md.
+
 # Rotate secrets
 
 **When to use:** a secret may have leaked (pasted into chat, a log, a commit, a screenshot), someone who had it leaves, or as routine every few months.

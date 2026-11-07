@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): replaced by docs/getting-started/install.md and run.md.
+
 # Run FinSight locally in 10 minutes
 
 By the end you will have the API and the website running on your machine, first on mock data and then on the real API. Nothing here needs a GPU, a cloud account or any PDF.

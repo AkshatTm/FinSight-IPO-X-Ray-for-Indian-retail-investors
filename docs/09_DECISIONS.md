@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # 09 — Decision Log (ADRs)
 
 > **Big Phase 2:** B-ADR-01..16 are summarised at the end of this log (full text in `docs/phase2/B08_DECISIONS.md`). ADR-005 is narrowed by B-ADR-03; ADR-022 is superseded as the primary deployment by B-ADR-04, itself superseded by B-ADR-16 (local-only).

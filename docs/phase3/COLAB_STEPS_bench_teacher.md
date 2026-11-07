@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # COLAB_STEPS_bench_teacher — the teacher on the frozen bench (C4.1)
 
 **Job:** `google/gemma-4-31B-it` (C-ADR-05) answers every frozen bench prompt (`bench/v1/inputs/prompts.jsonl.gz`, 224 prompts: Tasks A, C, D, G) with vLLM, greedy (temperature 0, seed 2026), thinking off, each prompt unchanged as one user turn. **Evaluation only:** the bench IPOs are test-slice and never train or tune anything (C-ADR-02). **GPU:** G4 (the model is bf16, ~62 GB). **Expected:** model load ~5–8 min plus ~5–10 min of generation ≈ 2–3 units.

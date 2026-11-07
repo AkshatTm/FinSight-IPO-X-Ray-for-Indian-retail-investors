@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): merged into docs/development/index.md.
+
 # Add a new X-Ray field
 
 An X-Ray field is one fact on the fact sheet (for example the fresh issue size). Rules read it first; the fine-tuned QA model cross-checks it (ADR-018).

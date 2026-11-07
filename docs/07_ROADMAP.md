@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # 07 — Roadmap: Phases, Sub-phases, Gates
 
 > **Big Phase 2:** Phase 1 sub-phases below are closed history. Current work: `docs/phase2/B07_ROADMAP.md` (sub-phases B0.1 …, gates BG0–BG3) with details in `docs/phase2/B_EXECUTION_PLAN.md`.

@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # 06 — API Contract
 
 > **Big Phase 2:** auth, uploads, job events, report parts and `/api/lab/b/*` are in `docs/phase2/B06_API_CONTRACT.md`, which wins on new payloads; `/api/ipos/{id}/…` stays as an alias of `/api/docs/{doc_id}/…`.

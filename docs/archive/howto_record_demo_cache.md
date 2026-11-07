@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): the demo cache was recorded with Hindi questions and the old qwen3.5 profile; not used by the v1.1 app.
+
 # Record the demo cache
 
 Demo mode replays **real** chat answers recorded earlier, so the showcase works even when no model is loaded. Recordings are never edited; a stream that ended in an error is not stored.

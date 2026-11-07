@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # 02 — Architecture
 
 > **Big Phase 2:** upload pipeline, jobs, storage/db adapters, new packages, schemas and CPU-first hosting are in `docs/phase2/B02_ARCHITECTURE.md`, which wins where the two disagree. §8 profiles gain `cloud` and `cloud_gpu`; ADR-022's deployment is now the fallback (B-ADR-04).

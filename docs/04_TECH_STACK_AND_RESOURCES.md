@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # 04 — Tech Stack, Environment and Resources
 
 **Version policy:** this doc names tools and model IDs; exact versions are pinned in `uv.lock` and `pnpm-lock.yaml`, not here. Before adopting any library, Claude Code checks its current docs/changelog (things move fast) and records non-obvious choices in `09_DECISIONS.md`.

@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): says ONNX int8 on a CPU worker; the shipped model is ONNX fp32 on the laptop. Recipe: docs/model_cards/risk_classifier.md.
+
 # Retrain the risk classifier (Kaggle)
 
 The risk category classifier sorts each risk factor into one of ten categories. It is fine-tuned on teacher labels on Kaggle and served as ONNX int8 on the CPU worker. Training never runs on the laptop or in a cloud session.

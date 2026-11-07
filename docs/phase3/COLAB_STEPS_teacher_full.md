@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # COLAB_STEPS_teacher_full — the teacher over the training risks (C2.3)
 
 **Job:** the chosen teacher, **`google/gemma-4-31B-it` (bf16)** (C-ADR-05), labels and rewrites the 12,000 `train` + `dev` risks. **GPU:** **G4** (RTX PRO 6000 Blackwell, 96 GB, ~8.9 units/h); bf16 Gemma needs ~66 GiB, so an A100-40GB or L4 cannot run it. **Expected:** ~1 h ≈ 8–9 units: ~5 min model download + load, then ~270 risks/min (bake-off rate) → ~45 min for 12,000. **Notebook:** `notebooks/colab/c2_teacher.ipynb` (same notebook as the bake-off; `TEACHER_PICK` defaults to Gemma).

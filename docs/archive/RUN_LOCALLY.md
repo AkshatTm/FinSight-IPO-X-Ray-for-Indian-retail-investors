@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): superseded by docs/getting-started/ (this page still describes Hindi, voice and `poe app`).
+
 # Run FinSight on your own laptop
 
 Upload any IPO offer document (RHP, DRHP or final prospectus, as a **text PDF**) in the browser

@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): merged into docs/development/add-redflag-check.md.
+
 # Add a red-flag check
 
 A red-flag check turns one or two numbers from the financial summary into OK / Watch / Concern / Not available / Not applicable, with one plain sentence and the pages behind it (B01 §5). The scope is fixed at 13 checks (B01); a new check needs Akshat's approval first.

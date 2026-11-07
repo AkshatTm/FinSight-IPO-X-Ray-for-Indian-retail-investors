@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): Supabase/Secret Manager restore; the app uses local SQLite, see docs/operations/index.md.
+
 # Restore the database
 
 **When to use:** a bad migration, accidental deletion, or a Supabase project that was paused or lost.

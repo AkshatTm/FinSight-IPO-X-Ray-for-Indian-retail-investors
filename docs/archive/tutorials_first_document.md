@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): replaced by docs/getting-started/first-upload.md (this page says the upload pipeline only validates).
+
 # Analyse your first IPO document
 
 This tutorial follows one offer document through FinSight on your laptop: first a showcase IPO built with the offline pipeline, then the same kind of file uploaded through the website. It assumes you finished [Run FinSight locally](run_locally.md).

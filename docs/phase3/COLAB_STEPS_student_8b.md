@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # COLAB_STEPS_student_8b — the 8B student variant (C2.5)
 
 **Status:** prepared, **not started** (waits for Akshat's "go"). **Job:** LoRA on `Qwen/Qwen3-8B` (Apache-2.0, hybrid thinking, so the notebook renders the chat template with `enable_thinking=False`) on the same `train.jsonl` / `dev.jsonl` as the 4B, then GGUF Q4_K_M. **GPU:** G4 (bf16, batch 16×1). **Expected:** about 2× the 4B's 1 h 10 m, so roughly 2–2.5 h, ≈ 20–22 units at ~8.9 units/h (the 4B session used 11.5 units in total); record the real figure. **Notebook:** `notebooks/colab/c2_student.ipynb`, presets `student_8b_smoke` and `student_8b` (own job folder `student_8b`, own private repo `AkshatTm/finsight-student-8b`; the 4B outputs are untouched).

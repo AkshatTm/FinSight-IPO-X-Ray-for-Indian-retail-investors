@@ -1,3 +1,5 @@
+> **Historical record (Phase 4).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # CC-05a — Jio red-flag diagnosis (fixed in CC-05b + CC-06, see the result below)
 
 **Test-informed:** Jio (`jio-platforms-2026`, upload `doc_72480c2e249eb8da`, 591 pp.) is in `excluded_ipos.json`. It is the one disclosed parser-diagnosis exception (P4_PLAN §2). Nothing here tunes a threshold.

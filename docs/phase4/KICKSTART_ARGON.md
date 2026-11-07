@@ -1,3 +1,5 @@
+> **Historical record (Phase 4).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # Kickstarter — ARGON (paste as the first message of a new Antigravity conversation)
 
 Settings: model **Gemini 4 Argon**, workspace = the FinSight repo folder, **not Turbo** for the first sessions

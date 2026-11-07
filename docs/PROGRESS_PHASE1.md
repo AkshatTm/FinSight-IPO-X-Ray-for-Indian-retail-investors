@@ -1,3 +1,5 @@
+> **Historical record (project).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # PROGRESS — Phase 1 archive (moved from PROGRESS.md on 3 Oct 2026, unchanged)
 
 - 2 Oct — Overnight run 2 done (see docs/MORNING_REPORT.md): P5.3 BiLSTM-CRF (3 seeds; test NVM 0.49 / 0.28, far below fine-tuned QA 0.74 / 0.85), P5.4 MuRIL guard (blocks 4/9 factual on the held-out part; keyword stays default), P5.5 NLI on name claims (near chance, off), P5.7 latency (dev_light 3.5 s, full 32 s median), E7 full run (numbers ✅ dev 0.76, test 0.69; one run), real Hindi answer on the landing, boxes/sentences/thumbnails/bid-closed date in API, deploy prep (not deployed), report drafts + README. Kaggle GPU (T4): BiLSTM 1 smoke + 3 seeds, MuRIL 1 smoke + 3 seeds, all within the weekly quota (about 6 h in total, estimated from the logs).

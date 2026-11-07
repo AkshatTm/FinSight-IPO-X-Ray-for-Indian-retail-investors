@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): a one-off session report from Phase 2.
+
 # Morning report
 
 ## Overnight cloud run 1 (3–4 Oct 2026)

@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): cloud deployment was never done; it was cut with Phase 4 (B-ADR-16).
+
 # Deploy steps (P6.1 and P6.2), click by click
 
 Everything here is prepared but **not done**: no account was created and nothing was uploaded.

@@ -1,3 +1,5 @@
+> **Historical record (project).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # BG0 — Setup gate (Mon 5 Oct 2026)
 
 Checked by the overnight cloud run; items marked 👤/💻 need Akshat or a local session.

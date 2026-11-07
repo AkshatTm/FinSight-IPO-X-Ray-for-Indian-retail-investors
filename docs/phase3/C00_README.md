@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # C00 — Phase 3 (Big Phase 3): read me first
 
 Phase 3 turns FinSight from "code that is written" into "models that are trained, measured, and shown to beat general chatbots where it matters". Put this folder at `docs/phase3/` in the repo.

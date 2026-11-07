@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # C_EXECUTION_PLAN — Phase 3, part by part (no dates)
 
 Detail for every part in `C05_ROADMAP.md`: issue, branch, model, files, tests, planned commits, hand-work, and "done when". Order and gates come from C05; this file says **how**. If this file and C05 disagree, C05 wins and this file gets fixed in the same PR.
