@@ -1,86 +1,95 @@
 # Troubleshooting
 
-The fifteen problems most likely to stop you, with the fix. Each one names what you see first.
+Each entry starts with what you see.
 
-## Laptop
+## Starting
 
-### 1. The laptop runs out of memory or freezes
+### Ollama is not running, or chat says the model is unavailable
 
-**You see:** the API or a pipeline build slows to a crawl; Windows starts paging.
-**Fix:** use `FINSIGHT_PROFILE=dev_light` while coding (the 0.8B chat model, no dense index, no reranker, no speech model). Close other heavy apps before `full`. Never run two model jobs at once, and stop Ollama (`ollama stop <model>`) before a GPU-heavy offline job.
+**You see:** the health dot is not green, `GET /api/health` says `degraded`, the upload page offers
+**Analyse without** *the plain-English writer*, or chat answers with `llm_unavailable`.
+**Fix:** start FinSight with `start.bat` (it starts Ollama), or run `ollama serve`. Check that the model
+exists with `ollama list`; if `finsight-student:q4` is missing, put the GGUF in `models/student/` and run
+`uv run python scripts/run_app.py --no-frontend` once to create it ([Install](install.md#3-model-files)).
 
-### 2. Chat says the model is unavailable
+### Port 8000 or 3000 is busy
 
-**You see:** a chat error or an empty answer; the API log mentions Ollama.
-**Fix:** start Ollama (`ollama serve`) and pull the profile's model: `ollama pull qwen3.5:0.8b` for `dev_light`, `qwen3.5:2b` for `full`. Check with `ollama list`.
+**You see:** "port … is still in use" in the launcher, or the API window says the address is in use.
+**Fix:** `start.bat` stops whatever listens on 8000 and 3000 before it starts. If a process does not
+stop within 20 s, the launcher prints its PID: close that program (`taskkill /PID <pid> /T /F`) and
+choose **Restart**. The docs site (`uv run poe docs`) also uses port 8000; stop one of them.
 
-### 3. CUDA out of memory, or PyTorch does not see the GPU
+### "uv / pnpm / Ollama is not installed"
 
-**You see:** `CUDA out of memory` or `torch.cuda.is_available()` is `False`.
-**Fix:** the RTX 2050 has 4 GB, enough for inference only. Install the GPU build with `uv sync --group ml`, stop Ollama first, and keep batch size 1 for offline scoring. Training never runs on the laptop: it runs on Kaggle.
+**Fix:** install it from the link the launcher prints ([Install](install.md#1-tools)), open a new
+terminal so `PATH` is updated, and start again.
 
-### 4. A test or command suddenly cannot import a package
+### A test or the API cannot import `fitz` or `onnxruntime`
 
-**You see:** `ModuleNotFoundError` for `onnxruntime`, `mkdocs` or similar after a `uv sync`.
-**Fix:** `uv sync` keeps only the groups you name. Sync every group you need in one command, for example `uv sync --group docs --group onnx`.
+**You see:** `ModuleNotFoundError` after a `uv sync`.
+**Fix:** `uv sync` without `--inexact` removes the groups you did not name. Run
+`uv sync --inexact --group ml --group onnx` (add `--group docs` for this site).
 
-### 5. A freshness test fails after a code change
+### The first start is slow
 
-**You see:** `test_committed_pages_are_current`, the notebook test or the OpenAPI check fails in CI.
-**Fix:** regenerate, never hand-edit: `uv run poe docs-gen`, `uv run poe gen-openapi` then `cd frontend && pnpm gen:api`, and the notebook makers in `scripts/make_*_notebook.py`. Commit the results with the change.
+**Fix:** expected once. `pnpm install`, the first Next.js compile and the first `uv sync` of the `ml`
+group (CUDA PyTorch) take minutes. Later starts take seconds plus the model load.
 
-### 6. The website shows nothing or errors on every page
+## While analysing
 
-**You see:** failed requests to `/api/...` in the browser console.
-**Fix:** start the API (`uv run poe api`, port 8000) or run the site on mocks with `NEXT_PUBLIC_USE_MOCKS=1 pnpm dev`. If the API runs elsewhere, set `FINSIGHT_API_ORIGIN`.
+### Cold start: the first answer or the first analysis is slow
 
-## Uploads
+**You see:** the first chat answer after a start takes much longer than the next ones.
+**Fix:** expected. The reranker and the embeddings load on first use and are released again after;
+`start.bat` preloads only the student. Ask a second question to see the normal speed.
 
-### 7. An upload is refused
+### The upload is refused
 
-**You see:** a message with a code. `too_large` (over 50 MB) or `too_many_pages` (over 1,500): the file is too big. `scanned`: the PDF has no text layer. `password`: it is protected. `not_offer_document`: it is not an RHP, DRHP or Prospectus. `quota_exceeded` / `global_quota_exceeded`: today's limits (3 per person, 10 in total, reset at midnight IST). `uploads_disabled`: the kill switch `UPLOADS_ENABLED=false` is set.
-**Fix:** these are by design; the limits live under `uploads` in `configs/config.yaml`.
+**You see:** a message with a code. `too_large` (over 50 MB) or `too_many_pages` (over 1,500);
+`scanned` (no text layer); `password` (protected PDF); `not_offer_document` (not an RHP, DRHP or
+prospectus). `quota_exceeded` and `uploads_disabled` should not appear with `start.bat`, which raises
+the daily limits to 1,000.
+**Fix:** use the text PDF from SEBI or the exchange. Limits are under `uploads` in
+[configs/config.yaml](../reference/configs.md#configyaml).
 
-### 8. An upload stays on "Processing" or fails at a stage
+### The report says some parts are incomplete (degraded)
 
-**You see:** the progress screen stops, or a `done` event with a failed stage.
-**Fix:** read the job's events (`GET /api/docs/{doc_id}/events`) and the worker log, filtered by `doc_id` and `job_id`. A failed stage shows ⚠️ on its part of the report; the other stages still finish. `worker_unavailable` (503) means the worker thread could not start: look at the API log.
+**You see:** a banner "Some parts of this report are incomplete" with the reasons ("analysed without
+the risk classifier", "the risks_scored step did not finish").
+**Fix:** start the missing model (usually Ollama) and click **Re-analyse**. A degraded report is never
+cached as complete, so it is also re-run when opened after the model is back.
 
-### 9. `hash_mismatch` after uploading
+### "This report was made with an older version of FinSight"
 
-**You see:** 422 when the upload completes.
-**Fix:** the file in storage differs from the hash the browser sent, usually an interrupted upload. Upload again. If it repeats on Cloud Storage, check the bucket's CORS settings allow `PUT` from the site.
+**Fix:** nothing to do: the report is analysed again because its `pipeline_version` differs from 4.2
+([cache key](../architecture/pipeline.md#cache-key-and-pipeline-version)).
 
-## Kaggle and Colab
+### The analysis stops at a stage
 
-### 10. Kaggle notebook has no GPU or cannot reach the internet
+**You see:** a red mark on one stage on the Analysing page.
+**Fix:** the other stages still finish and the report opens with the parts that exist. The reason is in
+the *FinSight API* window (it logs `doc_id`, `job_id` and `stage`) and in the job's events
+(`GET /api/docs/{doc_id}/events`). Fix the cause and click **Re-analyse**, or delete and upload again.
 
-**You see:** `torch.cuda.is_available()` is `False`, or downloads fail in the notebook.
-**Fix:** phone-verify the Kaggle account, then turn on GPU and Internet in the notebook settings. The weekly GPU quota (about 30 hours) resets on Saturday; run the `SMOKE = True` version first so a broken run costs minutes, not hours.
+### The machine runs out of memory
 
-### 11. `kaggle` CLI says 401 or 403
+**Fix:** close browsers and other apps; do not run benchmark or training jobs at the same time. Stop
+other Ollama models with `ollama stop <name>`. For coding without the models, use
+`FINSIGHT_PROFILE=dev_light`.
 
-**You see:** `401 Unauthorized` on `kaggle kernels push` or `datasets create`.
-**Fix:** the token belongs in `~/.kaggle/kaggle.json` (never in the repository or a chat). Download a fresh one from Kaggle settings if it was regenerated, and accept the competition or model terms in the browser when the error names one.
+### The page stays on "Analysing" or is blank
 
-### 12. Colab disconnects mid-run
+**Fix:** reload. Check that <http://127.0.0.1:8000/api/health> answers; if not, look at the
+*FinSight API* window for the error and restart from the launcher.
 
-**You see:** the runtime resets and the outputs are gone.
-**Fix:** follow the Colab steps ([teacher](phase2/COLAB_STEPS_teacher.md), [student](phase2/COLAB_STEPS_student.md)): with Drive mounted and `OUT_DIR` on Drive, checkpoints survive a disconnect and a rerun resumes from them. Keep the tab open; Colab stops idle sessions.
+## Training lanes
 
-## Hosting
+### Kaggle CLI says 401 or 403, or the notebook has no GPU
 
-### 13. The first request after a quiet period is slow
+**Fix:** the token belongs in `~/.kaggle/kaggle.json`, never in the repository. Phone-verify the account
+for GPU access and accept the model's terms in the browser when the error names them.
 
-**You see:** the site waits several seconds, then works.
-**Fix:** expected. The API scales to zero (`minScale: "0"`) so nothing costs money while idle; the first request starts a container. For a demo, open the site a minute early. Raising the minimum to 1 costs money and needs Akshat's "go".
+### Colab disconnects mid-run
 
-### 14. Google sign-in fails or loops
-
-**You see:** the sign-in popup returns to the site signed out, or Supabase shows `redirect_uri_mismatch`.
-**Fix:** in Supabase, add the site URL (and `http://localhost:3000` for development) to the allowed redirect URLs; in Google Cloud, the OAuth client's redirect URI must be the Supabase callback URL. Check `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` on Vercel. Without them the site runs with auth off and one local user.
-
-### 15. The database is unreachable after a quiet week
-
-**You see:** API errors mentioning the database; the Supabase dashboard says the project is paused.
-**Fix:** free Supabase projects pause after a week without activity. Restore the project from the dashboard (data is kept), wait for it to start, then retry. See [Restore the database](runbooks/RESTORE_DB.md) if data is missing.
+**Fix:** the Colab notebooks checkpoint to Google Drive and resume; rerun the same cell. See
+[Training lanes](../operations/training-lanes.md).

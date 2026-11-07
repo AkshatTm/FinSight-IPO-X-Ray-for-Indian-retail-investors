@@ -1,27 +1,36 @@
-# FinSight docs site (B09 §2). Build: `uv sync --group docs` then `uv run poe docs-build`.
-# Reference pages under docs/reference/ and docs/adr/ are generated (`uv run poe docs-gen`).
+# FinSight docs site. Build: `uv sync --group docs` then `uv run poe docs-build` (strict).
+# Pages marked "Generated" are written by `uv run poe docs-gen` from configs/, eval_results/ and the
+# decision logs; CI fails when they are stale. Planning records (Phases 1–4) are not published here:
+# they stay on GitHub with a "historical record" banner and docs/history.md links to them.
 site_name: FinSight
-site_description: IPO X-Ray for Indian retail investors
+site_description: IPO X-Ray for Indian retail investors (v1.1)
+site_url: https://akshattm.github.io/FinSight-IPO-X-Ray-for-Indian-retail-investors/
 repo_url: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors
 edit_uri: edit/main/docs/
 docs_dir: docs
-strict: false
+strict: true
 
-# Session working files (prompts, logs, to-do lists) stay on GitHub only.
 exclude_docs: |
   templates/
-  screenshots/
+  archive/
   gates/
-  07_ROADMAP.md
-  11_CLAUDE_CODE_PROMPTS.md
-  AKSHAT_TODO.md
+  final/
+  phase4/
+  screenshots/*
+  !screenshots/final/
+  phase2/*
+  !phase2/B08_DECISIONS.md
+  !phase2/datasheets/
+  phase3/*
+  !phase3/C_DECISIONS.md
+  !phase3/bench_error_analysis.md
+  /0[0-8]_*.md
+  /1[0-2]_*.md
   EXECUTION_PLAN.md
-  MORNING_REPORT.md
+  AKSHAT_TODO.md
   PROGRESS_PHASE1.md
   PROGRESS_PHASE2.md
-  phase2/B10_PROMPTS.md
-  phase3/C06_AKSHAT_CHECKLIST.md
-  phase3/C07_PROMPTS.md
+  security_review.md
 
 theme:
   name: material
@@ -67,80 +76,80 @@ hooks:
   - scripts/mkdocs_hooks.py
 
 validation:
+  nav:
+    omitted_files: info
   links:
-    # The planning docs link to code files outside docs/; those links work on GitHub.
-    not_found: info
-    unrecognized_links: info
+    not_found: warn
+    unrecognized_links: warn
+    anchors: warn
 
 nav:
   - Home: index.md
-  - Tutorials:
-      - Run FinSight locally: tutorials/run_locally.md
-      - Analyse your first IPO document: tutorials/first_document.md
-  - How-to guides:
-      - Add a showcase IPO: howto/add_showcase_ipo.md
-      - Add an X-Ray field: howto/add_xray_field.md
-      - Add a red-flag check: howto/add_redflag_check.md
-      - Retrain the risk classifier: howto/retrain_classifier.md
-      - Retrain the simplifier: howto/retrain_simplifier.md
-      - Record the demo cache: howto/record_demo_cache.md
-      - Troubleshooting: troubleshooting.md
-  - Reference:
-      - API: reference/api.md
-      - Python packages: reference/python.md
-      - Configuration and environment variables: reference/config.md
-      - Data formats: reference/data_formats.md
-      - Red-flag checks: reference/redflags.md
-      - Risk level: reference/risklevel.md
-      - Compare reference: reference/compare.md
-      - Commands: reference/cli.md
-      - API contract (B06): phase2/B06_API_CONTRACT.md
-      - Glossary: glossary.md
-  - Explanation:
-      - Architecture: architecture/index.md
-      - Architecture design (Phase 2): phase2/B02_ARCHITECTURE.md
-      - Architecture design (Phase 1): 02_ARCHITECTURE.md
-      - Models and training: phase2/B03_MODELS_AND_TRAINING.md
-      - Data and evaluation plan: phase2/B04_DATA_AND_EVALUATION.md
-      - Evaluation and results: evaluation.md
-      - UI spec: phase2/B05_UI_SPEC.md
-      - Design decisions (ADR index): adr/index.md
-      - FinSight explained: 10_FINSIGHT_EXPLAINED.md
-  - Models and data:
-      - Model cards: model_cards/index.md
-      - QA extractor: model_cards/extractor_qa.md
-      - BiLSTM-CRF: model_cards/bilstm_crf.md
-      - Advice guard (MuRIL): model_cards/guard_muril.md
-      - Risk classifier: model_cards/risk_classifier.md
+  - Getting started:
+      - Install: getting-started/install.md
+      - Run FinSight (start.bat): getting-started/run.md
+      - Your first upload: getting-started/first-upload.md
+      - Troubleshooting: getting-started/troubleshooting.md
+  - User guide:
+      - Pages and tabs: user-guide/index.md
+      - Reading the results: user-guide/reading-results.md
+  - Architecture:
+      - System overview: architecture/index.md
+      - Pipeline stages: architecture/pipeline.md
+      - Storage and database: architecture/storage.md
+      - Jobs and the runner: architecture/jobs.md
+      - Frontend: architecture/frontend.md
+  - Data:
+      - Corpus, splits and licences: data/index.md
       - Datasheets: datasheets/index.md
       - Training corpus: datasheets/corpus.md
-      - Newest IPOs (draft): datasheets/new_ipos.md
-      - Risk bank (draft): datasheets/risk_bank.md
+      - Recent RHPs (2024–2026): datasheets/new_ipos.md
+      - Risk bank: datasheets/risk_bank.md
       - Weak labels: datasheets/weak_labels.md
       - Gold sets: datasheets/gold_sets.md
       - Teacher outputs: phase2/datasheets/teacher_outputs.md
-  - Operations:
-      - Rotate secrets: runbooks/ROTATE_SECRETS.md
-      - Restore the database: runbooks/RESTORE_DB.md
-      - Hosting setup: phase2/HOSTING_SETUP_STEPS.md
-  - Phase 3:
-      - Overview: phase3/C00_README.md
-      - Strategy: phase3/C01_STRATEGY.md
-      - Data and time split: phase3/C02_DATA.md
-      - Training and compute: phase3/C03_TRAINING.md
-      - FinSight Bench: phase3/C04_BENCHMARK.md
-      - Roadmap: phase3/C05_ROADMAP.md
-      - Execution plan: phase3/C_EXECUTION_PLAN.md
-      - Docs authority: phase3/C09_DOCS_AUTHORITY.md
-      - Deployment: phase3/C08_DEPLOY.md
-      - Decisions (C-ADRs): phase3/C_DECISIONS.md
-  - Project:
-      - Requirements (Phase 2): phase2/B01_PRD.md
-      - Roadmap (Phase 2, history): phase2/B07_ROADMAP.md
-      - Changelog: changelog.md
+  - Models:
+      - Overview: model_cards/index.md
+      - Field extractor (v1, v2 ablation): model_cards/extractor_qa.md
+      - Risk classifier (base vs large): model_cards/risk_classifier.md
+      - Plain-English student (4B): model_cards/risk_simplifier.md
+      - Reranker and retrieval: model_cards/reranker.md
+      - Advice guard (MuRIL, not shipped): model_cards/guard_muril.md
+      - BiLSTM-CRF (baseline): model_cards/bilstm_crf.md
+  - Evaluation:
+      - Results and experiments: evaluation.md
+      - FinSight Bench v1: evaluation/bench.md
+      - Bench error analysis: phase3/bench_error_analysis.md
+      - Reproduce the numbers: evaluation/reproduce.md
+  - API reference:
+      - Guide with curl: reference/api-guide.md
+      - OpenAPI reference: reference/api.md
+      - Data formats: reference/data_formats.md
+      - Python packages: reference/python.md
+  - Configuration:
+      - Settings and environment variables: reference/config.md
+      - Configuration files: reference/configs.md
+      - Red-flag checks: reference/redflags.md
+      - Risk level: reference/risklevel.md
+      - Compare: reference/compare.md
+  - Development:
+      - Developer guide: development/index.md
+      - Add a red-flag check: development/add-redflag-check.md
+      - Add or replace a model: development/add-model.md
+      - Commands: reference/cli.md
       - Contributing: contributing.md
-      - Security policy: security.md
-      - Security review (B3.5a): security_review.md
+  - Operations:
+      - Run, back up, restore: operations/index.md
+      - Training lanes and compute: operations/training-lanes.md
+  - Decisions:
+      - ADR index: adr/index.md
+      - Phase 1 (ADR): 09_DECISIONS.md
+      - Phase 2 (B-ADR): phase2/B08_DECISIONS.md
+      - Phase 3, 4 and final (C-ADR): phase3/C_DECISIONS.md
+  - Project history:
+      - Timeline: history.md
+      - Changelog: changelog.md
+      - Security: security.md
       - Privacy: privacy.md
-      - Documentation standards: phase2/B09_DOCUMENTATION_STANDARDS.md
-      - Git workflow: 08_GIT_WORKFLOW.md
+  - Glossary: glossary.md
+  - FAQ: faq.md

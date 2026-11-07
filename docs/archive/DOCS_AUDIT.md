@@ -23,7 +23,7 @@ search); the decisions and findings were made by reading the files.
 | Results table = Phase 1 ladder/E7 only | README | headline numbers are `eval_results/final/FINAL_SCORECARD.md` |
 | Chat model `qwen3.5:2b` (profile `full`) | README, tutorials, troubleshooting | the app runs profile `local`: `finsight-student:q4` through Ollama (`start.bat`, `configs/config.yaml`) |
 | `uv run poe app`, Ctrl+C to stop; start.bat does `git pull` on main | RUN_LOCALLY.md | `start.bat` menu (start/stop/restart/status), minimised windows, `stop.bat` (commit `ea702fa`, `fa193f7`) |
-| "Upload pipeline only validates the file; later stages added part by part" | tutorials/first_document.md | 15 stages from `received` to `index` (`src/finsight/jobs/pipeline.py`, `model_stages.py`) |
+| "Upload pipeline only validates the file; later stages added part by part" | tutorials/first_document.md | 14 stages from `validated` to `index`, after the `received` event (`src/finsight/jobs/pipeline.py`, `model_stages.py`) |
 | "This site is the B4.1 skeleton … added Mon 26 Oct" | docs/index.md | finished |
 | Classifier "ONNX int8" | model_cards/index.md, howto/retrain_classifier.md | ONNX **fp32** shipped; int8 rejected (`eval_results/c/classifier_onnx_int8_attempt.json`) |
 | Simplifier trained on Kaggle (QLoRA), served by vLLM on an L4 | howto/retrain_simplifier.md | LoRA on a Colab G4, GGUF Q4_K_M in Ollama (model card, `student_train_metrics.json`) |

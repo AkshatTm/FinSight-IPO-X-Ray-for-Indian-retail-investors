@@ -583,7 +583,7 @@ def configs_page() -> str:
         lines += [f"| `{k}` | {v} | {_esc(m)} |\n" for k, v, m in rows]
         lines.append("\n")
     lines.append(
-        "## `ipo_universe.csv`\n\nNot a setting: the list of recent RHPs (2021–2026) behind the "
+        "## `ipo_universe.csv`\n\nNot a setting: the list of recent RHPs (2024–2026) behind the "
         "Phase 3 corpus, written by `scripts/build_ipo_universe.py`. See [Data](../data/index.md).\n"
     )
     return "".join(lines)

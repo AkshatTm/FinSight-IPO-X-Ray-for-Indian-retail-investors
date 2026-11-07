@@ -310,4 +310,4 @@ Suggested questions per IPO (06: /suggested-questions). {fresh_lakh} is the fres
 
 ## `ipo_universe.csv`
 
-Not a setting: the list of recent RHPs (2021–2026) behind the Phase 3 corpus, written by `scripts/build_ipo_universe.py`. See [Data](../data/index.md).
+Not a setting: the list of recent RHPs (2024–2026) behind the Phase 3 corpus, written by `scripts/build_ipo_universe.py`. See [Data](../data/index.md).
