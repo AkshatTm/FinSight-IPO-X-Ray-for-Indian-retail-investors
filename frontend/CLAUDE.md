@@ -1,5 +1,7 @@
 # FinSight frontend — Claude Code instructions
 
+**Current state (v1.1):** English only (`lib/i18n.ts` and the Hindi copy are gone; copy lives in `lib/content/`), the Charcoal & Saffron design, real API by default. Current docs: `../docs/architecture/frontend.md`.
+
 Spec: `../docs/12_FRONTEND_SPEC.md` is the authority for everything on screen (copy verbatim, EN + HI in `lib/i18n.ts`). `../docs/03_UI_UX_DESIGN.md` §2 owns tokens. Backend contract: `../docs/06_API_CONTRACT.md` incl. the SSE event table.
 
 ## Commands

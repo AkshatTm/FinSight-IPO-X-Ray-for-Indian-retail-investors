@@ -197,3 +197,7 @@ Configuration · Development · Operations · Decisions · Project history · Gl
 | `report/08_error_analysis.md` | 62 | keep | Hindi 12, voice/ASR 1, old LLM 1 | course report drafts for v1.0 (describe Hindi + voice as built then) |
 | `report/11_reproducibility.md` | 46 | keep | voice/ASR 2 | course report drafts for v1.0 (describe Hindi + voice as built then) |
 | `report/README.md` | 56 | keep | Hindi 1, voice/ASR 2 | course report drafts for v1.0 (describe Hindi + voice as built then) |
+
+## Later moves (12 Nov 2026)
+
+- `DESIGN.md` → `docs/archive/DESIGN_seed.md` and `PRODUCT.md` → `docs/archive/PRODUCT_seed.md`: design-skill seed files from Phase 1 (old palette, Hindi chat); no live page links them.

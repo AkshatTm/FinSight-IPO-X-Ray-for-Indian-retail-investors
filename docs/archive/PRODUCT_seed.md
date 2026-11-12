@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): seed for the impeccable design skill from Phase 1; it describes Hindi chat, removed in v1.1. Current product: the README and `docs/index.md`.
+
 # Product (seed for the impeccable skill; sources: docs/01_PRD.md, 03_UI_UX_DESIGN.md, 12_FRONTEND_SPEC.md)
 
 **Product:** FinSight, an IPO X-Ray for Indian retail investors. It reads an IPO offer document (RHP and final prospectus), shows a cited fact sheet, and answers questions in English and Hindi with every number checked against the pages (matches / couldn't check / doesn't match).

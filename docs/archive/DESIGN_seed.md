@@ -1,3 +1,5 @@
+> **Archived in the v1.1 docs audit** ([DOCS_AUDIT.md](DOCS_AUDIT.md)): seed for the impeccable design skill from Phase 1 (old palette, before the Charcoal & Saffron redesign); the current design lives in `frontend/app/globals.css`.
+
 # Design (seed for the impeccable skill; authority: docs/12_FRONTEND_SPEC.md, tokens in docs/03_UI_UX_DESIGN.md section 2)
 
 **Concept:** tick and tie. Auditors mark a figure once they have traced it to its source; FinSight does that for a 500-page prospectus. The document is the hero; the UI is an instrument laid over it.
