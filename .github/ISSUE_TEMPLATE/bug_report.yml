@@ -1,0 +1,43 @@
+name: Bug report
+description: Something in FinSight does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not attach offer-document PDFs or anything personal. Security problems go through the Security tab, not an issue.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. start.bat start
+        2. Upload ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or error text
+      description: From the FinSight API window or the browser console. Remove any tokens.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Git tag or commit, and the pipeline_version shown in the report if relevant.
+      placeholder: v1.1, pipeline 4.2
+  - type: input
+    id: machine
+    attributes:
+      label: Machine
+      description: OS, RAM, GPU (or none).
+      placeholder: Windows 11, 16 GB, RTX 2050 4 GB

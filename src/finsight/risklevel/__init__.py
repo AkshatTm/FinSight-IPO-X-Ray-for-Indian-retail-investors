@@ -34,6 +34,12 @@ RISKLEVEL_FILE = "risklevel.json"
 UNAVAILABLE = ("not_available", "not_applicable")
 
 
+PERCENTILE_NOTE = (
+    "Not shown: longer offer documents list more risks, so a comparison with past IPOs would "
+    "mostly reflect document length."
+)
+
+
 @lru_cache(maxsize=4)
 def load_config(path: Path | None = None) -> dict[str, Any]:
     """The risk-level settings (``configs/risklevel.yaml``)."""
@@ -131,6 +137,9 @@ def compute(
         pts["max_risk_points"]
     )
     score = round(points / max_points, 4) if max_points else 0.0
+    # C-ADR-26: only events about the issuer force the high level; an order on the promoter or a
+    # group company stays a finding in redflags.json.
+    overrides = [o for o in overrides if o.about == "issuer"]
     for o in overrides:
         reasons.append(
             RiskLevelReason(
@@ -138,13 +147,15 @@ def compute(
             )
         )
     reasons.sort(key=lambda x: (x.source != "override", -x.points, x.source != "redflag", x.id))
+    show_pct = bool(c.get("show_percentile", True))  # off: length bias, C-ADR-28
     return RiskLevel(
         level="high" if overrides else level_for(score, c["thresholds"]),
         forced_by=[o.id for o in overrides],
         points=points,
         max_points=max_points,
         score=score,
-        percentile=percentile(score, quantiles),
+        percentile=percentile(score, quantiles) if show_pct else None,
+        percentile_note=None if show_pct else str(c.get("percentile_note") or PERCENTILE_NOTE),
         checks_available=len(available),
         reasons=reasons,
         thresholds={k: float(v) for k, v in c["thresholds"].items()},

@@ -1,3 +1,5 @@
+> **Historical record (Phase 2).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # B06 — API Contract additions (Big Phase 2)
 
 Base path `/api`. Conventions from `06_API_CONTRACT.md` apply (snake_case, money as decimal strings, 1-indexed pages, error envelope). Every new response is a pydantic model; `openapi.json` is regenerated and the frontend types regenerated in the same PR.

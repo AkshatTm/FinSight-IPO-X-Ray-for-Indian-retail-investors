@@ -186,22 +186,16 @@ class SuggestedQuestion(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    """``POST /api/chat`` body: the IPO, the question and its language."""
+    """``POST /api/chat`` body: the IPO and the question. Answers are English only.
+
+    ``language`` and ``source`` are accepted from old clients and ignored, so they never 422.
+    """
 
     ipo_id: str
     question: str
-    language: Language = "en"
-    source: Literal["typed", "voice", "chip"] = "typed"
+    language: str | None = None  # ignored: English only (final)
+    source: str | None = None  # ignored (was typed / voice / chip)
     demo: bool = False
-
-
-class VoiceResponse(BaseModel):
-    """``POST /api/voice``: the transcript and the ASR model used."""
-
-    transcript: str
-    language: str
-    asr_model: str
-    ms: int
 
 
 class GlossaryEntry(BaseModel):

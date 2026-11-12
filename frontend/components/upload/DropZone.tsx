@@ -38,7 +38,7 @@ export function DropZone({ disabled, busy, maxMb, onFile }: { disabled: boolean;
           type="button"
           disabled={off}
           onClick={() => input.current?.click()}
-          className="font-semibold text-stamp underline underline-offset-2 disabled:cursor-not-allowed"
+          className="font-semibold text-accent-ink underline underline-offset-2 disabled:cursor-not-allowed"
         >
           {t("up.choose")}
         </button>

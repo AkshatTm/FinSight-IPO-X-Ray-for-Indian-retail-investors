@@ -67,6 +67,8 @@ Tick boxes in `docs/phase3/C05_ROADMAP.md`, update `PROGRESS.md` ("Resume here" 
 
 ## Phase 4 (from 21 Oct 2026) — two-agent mode
 
+**Current state (v1.1):** Phase 4 is closed and v1.1 is the final version (English only, `pipeline_version` 4.2, launcher `start.bat` / `stop.bat`). No Phase 4 model was trained; ARGON is inactive. Current docs: `docs/index.md`; what Phase 4 cut: `docs/history.md`.
+
 Phase 4 docs: `docs/phase4/`. Read `P4_PLAN.md`, `P4_PRODUCT_SPECS.md`, `P4_GIT_WORKFLOW.md`,
 `P4_HANDOFF_CONTRACT.md`, your own `P4_EXECUTION_PLAN_CC.md` and `PROGRESS_CC.md` at the start of every session,
 then `docs/phase4/comms/to_cc.md` for messages from ARGON.

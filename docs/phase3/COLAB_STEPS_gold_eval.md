@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # COLAB_STEPS_gold_eval — teacher answers on the test-slice gold sets (C2.4, C2.5)
 
 **Job:** the teacher (`google/gemma-4-31B-it`) and the bake-off runner-up (`Qwen/Qwen3.8-27B-FP8`) answer the 200 gold risks: gold-150 (15 risks × 10 test IPOs) and gold-50 (5 risks × 10 other test IPOs), sampled by `uv run python scripts/gold_sets.py sample` (manifest `data/manifests/gold_eval_risks.json`, kind `eval`). **Evaluation only:** nothing here trains or tunes a model (C-ADR-02). **GPU:** G4, run right after `teacher_full` in the same session (both models are cached on the VM disk only if the runtime stayed up). **Expected:** ~10 min ≈ 1.5 units (two model loads + 200 risks each).

@@ -175,3 +175,18 @@ def test_empty_compare() -> None:
     assert result.percentiles == []
     assert result.peer_median_pe is None
     assert Peer(name="x").evidence is None
+
+
+def test_issuer_row_called_the_company_gets_the_company_name() -> None:
+    from finsight.compare import compare, with_issuer_name
+    from finsight.core.schemas import Peer
+
+    peers = [
+        Peer(name="The Company", eps=Decimal("33.63"), is_issuer=True),
+        Peer(name="Bharti Airtel Limited", pe=Decimal("40.71")),
+    ]
+    result = with_issuer_name(compare(peers, {}), "Jio Platforms Limited")
+    assert [p.name for p in result.peers] == ["Jio Platforms Limited", "Bharti Airtel Limited"]
+    named = [Peer(name="Acme Limited", is_issuer=True)]
+    assert with_issuer_name(compare(named, {}), "Acme").peers[0].name == "Acme Limited"
+    assert with_issuer_name(compare(peers, {}), None).peers[0].name == "The Company"

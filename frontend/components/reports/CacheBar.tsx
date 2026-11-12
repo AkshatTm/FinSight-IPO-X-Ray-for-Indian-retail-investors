@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ApiError, apiSend, type Schemas } from "@/lib/api/client";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useToast } from "@/lib/toast";
 import { useT } from "@/lib/useT";
 
@@ -72,7 +72,7 @@ export function CacheBar({
   const busy = doc.status === "processing";
   const reasons = (doc.analysis_status === "degraded" || doc.analysis_status === "failed" ? doc.degraded_reasons : []) ?? [];
   const box = "mt-4 rounded-[8px] border border-rule bg-surface-2 p-3 text-sm";
-  const button = "rounded-full border border-rule px-3 py-0.5 text-sm text-text hover:bg-surface-2 disabled:opacity-50";
+  const button = "rounded-[6px] border border-rule px-3 py-1 text-sm text-text hover:bg-surface-2 disabled:opacity-50";
 
   return (
     <div className="mx-auto max-w-[1120px]" data-testid="cache-bar">
@@ -121,7 +121,7 @@ export function CacheBar({
           <div className="mt-3 flex gap-2">
             <button
               type="button"
-              className="rounded-[6px] bg-stamp px-4 py-1.5 text-sm font-medium text-bg disabled:opacity-50"
+              className="rounded-[6px] bg-stamp px-4 py-1.5 text-sm font-medium text-on-accent disabled:opacity-50"
               disabled={restart.isPending || remove.isPending}
               onClick={() => (confirm === "delete" ? remove.mutate() : restart.mutate(false))}
             >

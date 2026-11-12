@@ -25,12 +25,12 @@ describe("resolveField", () => {
 describe("scalarText", () => {
   it("formats money in the chosen unit and per-share prices without a unit", () => {
     const m = { kind: "money" as const, value_inr: "26260000000", currency: "INR" as const, raw: "x", scale_word: null, precision: 2 };
-    expect(scalarText("fresh_issue_size", m, "crore", "en", "per share")).toBe("₹2,626.00 crore");
-    expect(scalarText("fresh_issue_size", m, "million", "hi", "प्रति शेयर")).toBe("₹26,260.00 मिलियन");
-    expect(scalarText("face_value", { ...m, value_inr: "1" }, "crore", "en", "per share")).toBe("₹1");
+    expect(scalarText("fresh_issue_size", m, "crore", "per share")).toBe("₹2,626.00 crore");
+    expect(scalarText("fresh_issue_size", m, "million", "per share")).toBe("₹26,260.00 million");
+    expect(scalarText("face_value", { ...m, value_inr: "1" }, "crore", "per share")).toBe("₹1");
   });
   it("formats share counts with Indian grouping", () => {
-    expect(scalarText("ofs_shares", { kind: "count", value: 11051746, raw: "11,051,746", unit: "shares" }, "crore", "en", "")).toBe("1,10,51,746 shares");
+    expect(scalarText("ofs_shares", { kind: "count", value: 11051746, raw: "11,051,746", unit: "shares" }, "crore", "")).toBe("1,10,51,746 shares");
   });
 });
 

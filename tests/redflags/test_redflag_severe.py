@@ -136,6 +136,60 @@ def test_any_override_forces_the_high_level_and_is_listed_first() -> None:
     assert forced.score == plain.score  # points are not changed, only the level
 
 
+_SUMMARY = [Section(id="summary", title="S", start_page=1, end_page=2, method="toc",
+                    confidence=1.0)]  # fmt: skip
+
+# Jio p.472 (C-ADR-26): a real SEBI order, but on RIL, the Promoter, named only in the heading.
+_JIO_472 = (
+    "Disciplinary actions including penalties imposed by SEBI or stock exchanges against RIL, the "
+    "Promoter in the last five financial years. Outstanding litigation involving RIL, the "
+    "Promoter. The Adjudicating Officer of Securities and Exchange Board of India passed an order "
+    "on June 20, 2022, imposing a penalty of ₹3 million. The Securities Appellate Tribunal "
+    "dismissed RIL's appeal against the above SEBI order."
+)
+
+
+def test_a_regulator_order_on_the_promoter_is_shown_but_does_not_force_high() -> None:
+    overrides = detect_severe(_doc(_JIO_472), _SUMMARY, "d")
+    assert [(o.id, o.about) for o in overrides] == [("regulator_order", "promoter")]
+    level = compute([], [], overrides=overrides)
+    assert level.level != "high"
+    assert level.forced_by == []
+    assert all(r.source != "override" for r in level.reasons)
+
+
+def test_an_issuer_mention_after_a_promoter_one_forces_high() -> None:
+    doc = _doc(_JIO_472, "Litigation involving our Company. SEBI passed an order against our "
+                         "Company on June 1, 2024.")  # fmt: skip
+    overrides = detect_severe(doc, _SUMMARY, "d")
+    assert [(o.id, o.about, o.evidence.page, o.mentions) for o in overrides] == [
+        ("regulator_order", "issuer", 2, 2)
+    ]
+    assert compute([], [], overrides=overrides).level == "high"
+
+
+def test_group_company_and_director_subjects() -> None:
+    from finsight.redflags.severe import about
+
+    heading = ["Litigation involving our Group Companies"]
+    assert about("SEBI imposed a penalty on JSW Ispat.", heading) == "group_company"
+    assert about("SEBI passed an order against one of our Directors.", []) == "director"
+    assert about("SEBI fined our Company and our Promoter.", []) == "issuer"
+    assert about("The Company's Promoter was fined by SEBI.", []) == "promoter"
+    assert about("SEBI passed an order.", []) == "issuer"  # no subject in reach: stays strict
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "SEBI has not passed any order against our Company or our Promoter.",  # negated
+        "If SEBI passes an order against our Company, our business could suffer.",  # hypothetical
+    ],
+)
+def test_negated_or_hypothetical_orders_are_no_finding(text: str) -> None:
+    assert detect_severe(_doc(text), _SUMMARY, "d") == []
+
+
 def test_matches_report_fired_and_blocked_sentences() -> None:
     from finsight.redflags.severe import matches
 

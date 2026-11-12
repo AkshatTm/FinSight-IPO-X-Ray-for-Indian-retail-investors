@@ -19,7 +19,6 @@ ROUTES = [
     ("GET", "/api/ipos/{id}/pages/{n}/words"),
     ("GET", "/api/ipos/{id}/suggested-questions"),
     ("POST", "/api/chat"),
-    ("POST", "/api/voice"),
     ("GET", "/api/traces/{trace_id}"),
     ("GET", "/api/lab/ladder"),
     ("GET", "/api/lab/fields"),
@@ -29,7 +28,6 @@ ROUTES = [
     ("GET", "/api/lab/c/bench"),  # C3.6 (FinSight Bench scores)
     ("GET", "/api/lab/frontier"),
     ("GET", "/api/lab/retrieval"),
-    ("GET", "/api/lab/asr"),
     ("GET", "/api/glossary"),
     # Phase 2: B06 §2-3 (B1.2)
     ("GET", "/api/uploads/limits"),

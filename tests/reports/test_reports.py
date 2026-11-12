@@ -25,6 +25,13 @@ def test_missing_parts_are_null(tmp_path: Path) -> None:
     assert report.risk_level is None
     assert report.top_risks is None
     assert report.redflags_summary is None
+    assert report.sod is None
+
+
+def test_sod_json_is_served_in_the_report(tmp_path: Path) -> None:
+    storage = LocalStorage(tmp_path)
+    put_json(storage, doc_key("doc_a", "sod.json"), {"doc_id": "doc_a", "has_sod": True})
+    assert assemble(storage, DOC).sod == {"doc_id": "doc_a", "has_sod": True}
 
 
 def test_parts_are_read_and_top_five_risks_ranked(tmp_path: Path) -> None:

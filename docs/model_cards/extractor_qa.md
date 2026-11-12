@@ -1,4 +1,22 @@
-# Fine-tuned QA extractor
+---
+license: cc-by-nc-sa-4.0
+base_model: deepset/deberta-v3-base-squad2
+library_name: transformers
+pipeline_tag: question-answering
+language: [en]
+tags: [finance, ipo, india, extractive-qa, weak-supervision]
+datasets: [sohomghosh/Indian_IPO_datasets]
+metrics: [exact_match, f1, nvm]
+---
+
+# Field extractor (fine-tuned QA, v1; v2 ablation)
+
+!!! info "Status in v1.1"
+    **v1 (seed 2026) is the shipped extractor**, used only when the 10 showcase IPOs are built offline
+    (`python -m finsight.pipeline build --stage qa`), as a cross-check on the rules. Uploads do not run
+    it: the upload `facts` stage uses the rules and table extractors only (`finsight.extract.upload_xray`).
+    **v2** is a reported ablation and is not used (see below). Licence: trained on the CC BY-NC-SA 4.0
+    corpus, so non-commercial; the weights are not published.
 
 - **Base model:** `deepset/deberta-v3-base-squad2` (CC BY 4.0), fine-tuned on FinSight weak labels
 - **Owner:** Akshat · **Notebook:** `notebooks/01_finetune_extractor.ipynb` (Kaggle, 2 GPUs)
@@ -94,10 +112,18 @@ v3 dev rows: 2471 questions from IPOs neither version trained on (the labels the
 
 The dev labels are rule-derived, so the dev comparison shows that v2 follows the rules better on new documents, not that its values are more often right; the gold ladder is the check against human-verified values and is a reporting row (test-informed, single gold version). Seeds are 13, 42 and 2026; the weights stay in `models/extractor_v2/` and are not committed.
 
+## Variants not adopted
+
+| Variant | Result | Why not adopted | Source |
+| --- | --- | --- | --- |
+| Extractor v2 (+2024+ cover seeds, 3 seeds) | dev F1 0.974 vs v1 0.949 on rule-derived labels; gold ladder test full NVM 0.696 vs v1 0.738 | better agreement with the rules, not better against human-checked values; test row is test-informed | `eval_results/c/extractor_v2/`, table above |
+| Pretrained QA, no fine-tuning (Rung 2) | test full NVM 0.36 | far below the fine-tuned model | `ladder_table.json` |
+| BiLSTM-CRF (Rung 4) | test full NVM 0.49 | below the fine-tuned model; kept as a baseline | [BiLSTM-CRF card](bilstm_crf.md) |
+
 ## Ethical considerations
 
 The model reads public offer documents only; it sees no personal data beyond names printed in them (promoters, managers). Wrong values could mislead an investor, so every value carries its page and a ✅/⚠️/❌ check, and the app never turns a value into advice.
 
 ## How to use and reproduce
 
-`finsight.extract` loads the weights from `models/extractor/seed-<n>` (the best epoch of each Kaggle run; weights are never committed). To reproduce: build the weak labels (`python -m finsight.weaklabel`), run `notebooks/01_finetune_extractor.ipynb` on Kaggle (the Kaggle steps are the same as in [Retrain the risk classifier](../howto/retrain_classifier.md)), score the gold set with `uv run python -m finsight.evaluate.run_gold`, then rebuild the table with `uv run python -m finsight.evaluate.ladder`.
+`finsight.extract` loads the weights from `models/extractor/seed-<n>` (the best epoch of each Kaggle run; weights are never committed). To reproduce: build the weak labels (`python -m finsight.weaklabel`), run `notebooks/01_finetune_extractor.ipynb` on Kaggle (Kaggle steps: [Training lanes](../operations/training-lanes.md#kaggle)), score the gold set with `uv run python -m finsight.evaluate.run_gold`, then rebuild the table with `uv run python -m finsight.evaluate.ladder`.

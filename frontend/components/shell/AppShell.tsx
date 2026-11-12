@@ -12,7 +12,9 @@ import { NavBar } from "./NavBar";
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useT();
   // The workspace (/ipos/<id>) uses the full width for three panes.
-  const wide = /^\/ipos\/[^/]+/.test(usePathname());
+  const path = usePathname();
+  const wide = /^\/ipos\/[^/]+/.test(path);
+  const home = path === "/";
   return (
     <>
       <a
@@ -23,7 +25,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <NavBar />
       <ColdStartBanner />
-      <main id="main" className={`mx-auto w-full flex-1 px-4 md:px-6 ${wide ? "max-w-[1760px]" : "max-w-[1120px]"}`}>
+      <main id="main" className={home ? "w-full flex-1" : `mx-auto w-full flex-1 px-4 md:px-6 ${wide ? "max-w-[1760px]" : "max-w-[1120px]"}`}>
         {children}
       </main>
       <Footer />

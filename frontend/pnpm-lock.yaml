@@ -181,9 +181,6 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      liquid-glass-react:
-        specifier: ^1.1.1
-        version: 1.1.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       motion:
         specifier: ^13.4.6
         version: 13.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -2477,12 +2474,6 @@ packages:
   lightningcss@1.33.0:
     resolution: {integrity: sha512-WkUDrojuJs0xkgGf2udWxa3yGBRxPtxUkB79i6aCZLRgc7PM8fZe9TosfPDcvEpQZbuFASnHYmRLBLUbmLOIIA==}
     engines: {node: '>= 12.0.0'}
-
-  liquid-glass-react@1.1.1:
-    resolution: {integrity: sha512-pKzaktaMAEztd93wpWcz2Z5Z9qdLJUNJdMX+n00Ca4XsnrLTQ5xJzm/+GQXZUeuFXe/PQ8ziVMZO6531PyaFJw==}
-    peerDependencies:
-      react: '>=19'
-      react-dom: '>=19'
 
   locate-path@6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
@@ -5522,11 +5513,6 @@ snapshots:
       lightningcss-linux-x64-musl: 1.33.0
       lightningcss-win32-arm64-msvc: 1.33.0
       lightningcss-win32-x64-msvc: 1.33.0
-
-  liquid-glass-react@1.1.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
-    dependencies:
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
 
   locate-path@6.0.0:
     dependencies:

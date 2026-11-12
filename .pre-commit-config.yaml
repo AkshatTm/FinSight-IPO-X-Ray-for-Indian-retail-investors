@@ -6,6 +6,7 @@ repos:
       - id: trailing-whitespace
       - id: mixed-line-ending
         args: [--fix=lf]
+        exclude: \.bat$  # batch files stay CRLF (.gitattributes): cmd misreads labels with LF
       - id: check-yaml
         exclude: ^(frontend/pnpm-lock.yaml|mkdocs.yml)$  # pnpm 12 multi-document lockfile; mkdocs uses python tags
       - id: check-merge-conflict

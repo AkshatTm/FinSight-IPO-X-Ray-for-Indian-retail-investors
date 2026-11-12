@@ -1,14 +1,18 @@
 # PROGRESS (newest first; "Resume here" on top; ≤ 10 log lines; Phase 2 log: docs/PROGRESS_PHASE2.md, Phase 1: docs/PROGRESS_PHASE1.md)
 
 ## Resume here
-- **Phase:** Phase 3, gate-driven, local code (C-ADR-01, C-ADR-10). Plan: `docs/phase3/C05_ROADMAP.md` + `docs/phase3/C_EXECUTION_PLAN.md`.
-- **Last done (local app week):** upload any RHP in the browser and get the full product on the laptop. `uv run poe app` starts Ollama check, API :8000 and frontend :3000; C3.3 stages (`jobs/model_stages.py`), RF04 `[●]` fix, red-flag chat pin, severe overrides in the UI, Lab Bench, stream proxy fixes; `scripts/smoke_local.py` 20/20 on two non-gold RHPs. Guide: `docs/RUN_LOCALLY.md`.
-- **Flags:** single-seed, laptop timings (`docs/RUN_LOCALLY_TIMINGS.md`); chat uses the student (`finsight-student:q4`) for answers too; Hindi voice not tested (needs a mic); frontend mocks not regenerated; showcase reports are built on demand with `scripts/build_showcase.py`.
-- **Next:** `docs/AKSHAT_TODO.md` "Local app week" (try it, pick the demo IPOs), then the deferred "Next week" list (E17, E21, E8r, bench runs, gold v3.1, E7), then C3.5 leftovers and C3.8 sweep.
-- **Units (Colab Pro):** 147.28 left after the C2.4 large run (154.98 before, 7.7 used; 171.38 before the 8B, 16.4 used; logged in `eval_results/c/compute_log.jsonl`).
-- **Open files / failing tests:** none new (fast suite green apart from the regenerated docs page).
+- **Phase:** final session (v1.1). Phase 4 is **closed**: no model was trained, so CC-03/CC-10 (Platform Bench), CC-09 (model integration), M1–M5, gold v4 and CC-07 were cut; the product keeps the Phase 3 models. Unfinished CC-07 price-band schema work is on `origin/p4/cc` (not needed: `PriceBand` already lives in `summary/sod.py`).
+- **Released:** v1.1 on `main` (tag `v1.1`, GitHub Release). Docs rewritten on `docs/v1.1`: README, docs site (`uv run poe docs-build`), model cards, CHANGELOG, policies, issue templates, CITATION.cff; audit in `docs/archive/DOCS_AUDIT.md`.
+- **Branch history:** `final` (tag `v1.1-pre` = main before it), then `docs/v1.1`. Rules for the two sessions: `docs/final/RULES.md`; API shape for the frontend: `docs/final/CONTRACT.md`.
+- **Done on `final`:** report serves `sod`; C-ADR-26 (only issuer events force High; Jio High → Low); C-ADR-28 (percentile hidden, length bias); Compare names the issuer; pipeline_version 4.2; Hindi + voice removed (English-only API, stray `lang` ignored); stale/blank analyses purged (backup `data/backup_2026-11-03/`); `scripts/preload.py`.
+- **Numbers:** `eval_results/final/FINAL_SCORECARD.md` (E14 0.774 / E15 0.769 re-measured; the rest carried and marked).
+- **Leftovers:** Hindi prompt code in `generate/` and eval scripts is unreachable but not deleted; refit of the risk-level reference normalised by risk-factor count; C-ADR-26 does not judge materiality or "set aside"; showcase reports need `scripts/build_showcase.py`.
+- **Next:** none planned. Open questions for Akshat: make the HF dataset `AkshatTm/finsight-gpu-jobs` private if that was not intended; the scorecard's "2021–2026" universe label (the CSV says 2024–2026).
+- **Open files / failing tests:** none (fast suite green).
 
 ## Log
+- Docs v1.1: README, 14-section docs site (strict build), HF-format model cards, verified API guide, CHANGELOG / CONTRIBUTING / SECURITY / PRIVACY / NOTICE / CITATION, stale pages archived; merged with the `final` branch into main.
+- Final session: Phase 4 closed (no trained model); `final` branch with sod in the report, C-ADR-26/28, English-only API, purge + preload, final scorecard.
 - C2.8 fit done (E21 open): `score_reference_ipos.py` scored 440 train+dev IPOs (classifier seed 42 on the laptop GPU, ~10 min after 25 min classification); thresholds 0.2857 / 0.4167 from 165 full documents, `provisional: false` (C-ADR-25). E21 waits for `data/gold/outcomes.csv`; points-only scores saturate (43 % at 1.0). No Colab units used.
 - BIR backfill 48 links -> 40 files: files are named by `mapping_key` and a second live PDF in the same row is skipped (11 rows have 2+ direct PDF links).
 - C3.7/C3.7b/C3.4 done: E14 v2 NVM 0.769 (v1 0.682 frozen), E15 v2 0.762 (v1 0.646; wiring alone 0.731); stale sections.json was the main cause; retrieval 32 s not reproduced (9.6 s, CPU reranker 26-45 s); Compare reference n=40 issue size only (provisional); upload pipeline gains facts + compare stages (#239 #240 #241).

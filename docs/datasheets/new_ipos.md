@@ -1,4 +1,4 @@
-# Datasheet: newest IPO offer documents (2024 onward) — draft
+# Datasheet: recent IPO offer documents (2024–2026)
 
 ## Motivation
 

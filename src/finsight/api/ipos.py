@@ -96,6 +96,12 @@ class IpoStore:
             prospectus=none,
         )
 
+    @staticmethod
+    def _slot(ipo_id: str, doc: DocType) -> DocType:
+        """The file slot that holds ``doc``. An upload has one document, stored as ``rhp`` even
+        when it is a final prospectus or DRHP, so every doc type maps to that slot."""
+        return "rhp" if UPLOAD_ID.fullmatch(ipo_id) else doc
+
     def _xray(self, ipo_id: str) -> XRay | None:
         return _load_xray(str(xray_path(self.processed_dir, ipo_id)))
 
@@ -160,7 +166,7 @@ class IpoStore:
             id=ipo_id,
             company=ipo.company,
             rhp_pages=ipo.rhp.pages,
-            prospectus_pages=ipo.prospectus.pages,
+            prospectus_pages=ipo.prospectus.pages or None,
             page_size=self._page_size(ipo_id),
             sections=sections,
         )
@@ -177,6 +183,7 @@ class IpoStore:
     def page_path(self, ipo_id: str, n: int, doc: DocType) -> Path:
         """The rendered page file (404 ``page_out_of_range`` for a bad page)."""
         ipo = self.get(ipo_id)
+        doc = self._slot(ipo_id, doc)
         total = (ipo.rhp if doc == "rhp" else ipo.prospectus).pages
         path = doc_outputs(self.processed_dir, ipo_id, doc).pages_dir / f"{n}.webp"
         if not 1 <= n <= total or not path.exists():
@@ -196,7 +203,8 @@ class IpoStore:
     def words(self, ipo_id: str, n: int, doc: DocType) -> PageWords:
         """The words and boxes of one page from the parsed document."""
         self.page_path(ipo_id, n, doc)  # validates the id and the page number
-        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, doc).parsed))
+        slot = self._slot(ipo_id, doc)
+        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, slot).parsed))
         if parsed is None or not 1 <= n <= len(parsed.pages):
             raise ApiError(404, "page_out_of_range", f"No words for page {n}.")
         page = parsed.pages[n - 1]
@@ -242,7 +250,8 @@ class IpoStore:
             return c.bbox
         if located:
             return None
-        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, c.doc_type).parsed))
+        slot = self._slot(ipo_id, c.doc_type)
+        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, slot).parsed))
         if parsed is None or not 1 <= c.page <= len(parsed.pages):
             return None
         return locate_bbox(parsed.pages[c.page - 1].words, c.raw)
@@ -255,7 +264,8 @@ class IpoStore:
             return None
         if c.sentence is not None and c.sentence_hit is not None:
             return SourceSentence(text=c.sentence, hit=c.sentence_hit)  # stored at build time
-        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, c.doc_type).parsed))
+        slot = self._slot(ipo_id, c.doc_type)
+        parsed = _load_parsed(str(doc_outputs(self.processed_dir, ipo_id, slot).parsed))
         if parsed is None or not 1 <= c.page <= len(parsed.pages):
             return None
         found = sentence_around(parsed.pages[c.page - 1].words, box)
@@ -305,6 +315,8 @@ class IpoStore:
         fresh = _money_inr(self._xray(ipo_id), "fresh_issue_size")
         out: list[SuggestedQuestion] = []
         for q in _config("suggested_questions.yaml")["questions"]:
+            if q.get("language", "en") != "en":
+                continue  # final: English only
             text: str = q["text"]
             if "{fresh_lakh}" in text:
                 number = _crore_number(fresh)

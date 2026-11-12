@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from PIL import Image
 
 from finsight.api.ipos import IpoStore
 from finsight.core.schemas import DocRecord, Page, ParsedDoc
@@ -62,6 +63,19 @@ def test_a_published_upload_opens_like_a_showcase_ipo(tmp_path: Path) -> None:
     for bad in ("doc_0123456789abcdeg", "../doc_0123456789abcdef", "unknown-ipo"):
         with pytest.raises(Exception, match="No IPO"):
             store.get(bad)
+
+
+def test_an_uploaded_prospectus_serves_its_pages_for_any_doc_type(tmp_path: Path) -> None:
+    """A final prospectus upload tags its facts ``prospectus`` but keeps one set of pages; a
+    fact click asks for the prospectus page and must get that page, not a 404."""
+    doc_id = "doc_0123456789abcdef"
+    (tmp_path / doc_id / "pages").mkdir(parents=True)
+    Image.new("RGB", (110, 110)).save(tmp_path / doc_id / "pages" / "1.webp")
+    meta = {"doc_id": doc_id, "company": "Acme Limited", "doc_type": "prospectus", "pages": 1}
+    (tmp_path / doc_id / "upload.json").write_text(json.dumps(meta), encoding="utf-8")
+    store = IpoStore(tmp_path, [])
+    assert store.page_path(doc_id, 1, "prospectus") == store.page_path(doc_id, 1, "rhp")
+    assert store.detail(doc_id).prospectus_pages is None  # the UI shows one document
 
 
 class _Rewrite:

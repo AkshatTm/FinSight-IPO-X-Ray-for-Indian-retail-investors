@@ -151,6 +151,45 @@ def classify(sentence: str) -> list[str]:
     return kinds
 
 
+# C-ADR-26: whom a severe sentence is about. The issuer markers win inside one sentence, so
+# "SEBI fined our Company and our Promoter" stays an issuer event. "the Company's Promoter" is
+# not an issuer marker (possessive).
+_ISSUER = re.compile(
+    r"\b(?:our|the)\s+Company\b(?!['’]s)|\bthe\s+Issuer\b"
+    r"|\b(?:our|its|the\s+Company['’]s)\s+(?:Material\s+|wholly[\s-]owned\s+)?Subsidiar(?:y|ies)\b",
+    re.IGNORECASE,
+)
+_OTHERS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("group_company", re.compile(r"\bGroup\s+Compan(?:y|ies)\b", re.IGNORECASE)),
+    ("promoter", re.compile(r"\bPromoters?\b(?:\s+Group\b)?", re.IGNORECASE)),
+    ("director", re.compile(r"\b(?:Directors?|Key\s+Managerial\s+Personnel)\b", re.IGNORECASE)),
+)
+_LOOKBACK = 12  # sentences before the hit (this page, then the previous page's tail)
+
+
+def _about_one(sentence: str) -> str | None:
+    if _ISSUER.search(sentence):
+        return "issuer"
+    for name, rx in _OTHERS:
+        if rx.search(sentence):
+            return name
+    return None
+
+
+def about(sentence: str, before: list[str]) -> str:
+    """Whom a severe sentence is about: ``issuer``, ``promoter``, ``group_company`` or ``director``.
+
+    The sentence itself decides first; otherwise the nearest earlier sentence that names a
+    subject (litigation chapters head each block "Litigation involving our Promoters"). With no
+    subject in reach the event counts as the issuer's, so the check never gets weaker by default.
+    """
+    for s in [sentence, *reversed(before[-_LOOKBACK:])]:
+        found = _about_one(s)
+        if found:
+            return found
+    return "issuer"
+
+
 @dataclass(frozen=True)
 class SentenceMatch:
     """One sentence a severe pattern matches, with what the rules decided (Phase 4 handoff).
@@ -205,7 +244,11 @@ def matches(doc: ParsedDoc, sections: list[Section], context: int = 2) -> list[S
 def detect(
     doc: ParsedDoc, sections: list[Section], doc_id: str | None = None
 ) -> list[SevereOverride]:
-    """The severe overrides one document triggers, one per kind (its first mention).
+    """The severe findings one document triggers, one per kind.
+
+    Per kind the first mention about the issuer is kept; when every mention is about the
+    promoter, a group company or a director, the first of those is kept with that ``about``
+    (shown, but it does not force the high level, C-ADR-26).
 
     Args:
         doc: The parsed offer document.
@@ -214,20 +257,27 @@ def detect(
     """
     did = doc_id or doc.ipo_id
     wanted = set(_scan_pages(doc, sections))
-    first: dict[str, _Hit] = {}
+    first: dict[str, tuple[_Hit, str]] = {}
     count: dict[str, int] = {}
+    tail: list[str] = []  # the previous scanned page's sentences, for the subject lookback
     for page in doc.pages:
         if page.number not in wanted:
             continue
-        for sentence in sentences_of(page.text):
+        sents = sentences_of(page.text)
+        for i, sentence in enumerate(sents):
             for kind in classify(sentence):
                 count[kind] = count.get(kind, 0) + 1
-                first.setdefault(kind, _Hit(page.number, sentence))
+                if kind in first and first[kind][1] == "issuer":
+                    continue
+                who = about(sentence, [*tail, *sents[:i]])
+                if kind not in first or who == "issuer":
+                    first[kind] = (_Hit(page.number, sentence), who)
+        tail = sents[-_LOOKBACK:]
     out: list[SevereOverride] = []
     for kind in _PATTERNS:
-        hit = first.get(kind)
-        if hit is None:
+        if kind not in first:
             continue
+        hit, who = first[kind]
         out.append(
             SevereOverride(
                 id=kind,
@@ -236,9 +286,15 @@ def detect(
                 evidence=PageEvidence(doc_id=did, page=hit.page, sentence=hit.sentence[:400]),
                 rule=RULES[kind],
                 mentions=count[kind],
+                about=who,
             )
         )
     return out
+
+
+def forcing(overrides: list[SevereOverride]) -> list[SevereOverride]:
+    """The findings that force the high level: events about the issuer only (C-ADR-26)."""
+    return [o for o in overrides if o.about == "issuer"]
 
 
 def with_auditor(

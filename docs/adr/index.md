@@ -62,34 +62,6 @@ Full text: [09_DECISIONS.md](../09_DECISIONS.md).
 | ADR-054 | API and extract changes found in run 1: stored boxes, source sentence, thumbnails, lab examples, bid-closed date | proposed (2 Oct 2026; needs Akshat review) |
 | ADR-054 | addendum (2 Oct 2026, bug fix) | the X-Ray route no longer opens the parsed documents |
 | ADR-022 | Deployment target: Space (Docker, CPU) plus Vercel, BM25 and a 4-bit GGUF | proposed (2 Oct 2026; needs Akshat review) |
-| B-ADR-01 | Reframe: from fact lookup to risk understanding | proposed |
-| B-ADR-02 | Risk level (Low/Medium/High) with reasons | proposed |
-| B-ADR-03 | Outcome data used only for validation (narrows ADR-005) | proposed |
-| B-ADR-04 | Hosting: Google Cloud Run + Supabase + GCS + Vercel; L4 GPU job optional | proposed (revised 3 Oct) |
-| B-ADR-05 | Google login for uploads; public read for reports | proposed |
-| B-ADR-06 | Open-weight models only (re-affirmed) | proposed |
-| B-ADR-07 | Teacher → student distillation for simplification | proposed |
-| B-ADR-08 | Classifier: base and large on Kaggle, pick by dev | proposed |
-| B-ADR-09 | Course framing update | proposed |
-| B-ADR-10 | Risk report English only | proposed |
-| B-ADR-11 | Risk level: normalised points over a 2018–2023 reference population | proposed |
-| B-ADR-12 | Kaggle-first training (Colab optional) | proposed |
-| B-ADR-13 | Forbidden phrases, not forbidden words | proposed |
-| B-ADR-14 | doc_id beside ipo_id; showcase primary doc = RHP with the Prospectus as companion | proposed |
-| B-ADR-15 | Committed real-section fixture pack (`tests/fixtures/real/`) | proposed |
-| B-ADR-16 | Local-only: Google Cloud removed | accepted (supersedes B-ADR-04; full text in `docs/phase2/B08_DECISIONS.md`) |
-| C-ADR-01 | Gate-driven plan, no dates | proposed |
-| C-ADR-02 | Strict time split | proposed |
-| C-ADR-03 | Rolling reference window | proposed |
-| C-ADR-04 | Colab for heavy jobs, Kaggle for small ones, laptop never trains | proposed |
-| C-ADR-05 | Teacher chosen by a blind bake-off (Qwen3-14B-AWQ vs Qwen3-32B-AWQ) | proposed |
-| C-ADR-06 | FinSight Bench pre-registered and frozen (`frozen_files`, pinned `redflags_version`) | proposed |
-| C-ADR-07 | Frontier systems: Claude Opus (Claude.ai paid plan) and ChatGPT Go, memory and search off | proposed |
-| C-ADR-08 | Offer-document downloader: official sources, polite, never re-hosted | proposed |
-| C-ADR-09 | SME IPOs excluded | proposed |
-| C-ADR-10 | Google Cloud trial used only at C5.1, after a budget alert and Akshat's "go" (corrects B-ADR-16's premise) | proposed |
-| C-ADR-11 | Bias rule: gold verified on the page, mixed hidden-source pre-fill | proposed |
-| C-ADR-12 | Kickoff scope: cuts 1–5, critical path and cut line (C05 §6) | accepted |
 | ADR-052 | addendum 2 (F7, 3 Oct) | lab routes, ACCEPTED with ADR-052 |
 
 ## Phase 2
@@ -115,9 +87,37 @@ Full text: [B08_DECISIONS.md](../phase2/B08_DECISIONS.md).
 | B-ADR-15 | Committed real-section fixture pack | proposed (3 Oct 2026) |
 | B-ADR-16 | Local-only: Google Cloud removed | accepted (4 Oct 2026) |
 
-## Phase 3
+## Phase 3, Phase 4 and final
 
 Full text: [C_DECISIONS.md](../phase3/C_DECISIONS.md).
 
 | ID | Decision | Status |
 | --- | --- | --- |
+| C-ADR-01 | Gate-driven plan, no dates | proposed |
+| C-ADR-02 | Strict time split | proposed |
+| C-ADR-03 | Rolling reference window | proposed |
+| C-ADR-04 | Compute: Colab for heavy jobs, Kaggle for small ones, laptop never trains | proposed |
+| C-ADR-05 | Teacher chosen by a blind bake-off | accepted (Akshat, with edits); winner Gemma-4-31B-it |
+| C-ADR-06 | FinSight Bench is pre-registered and frozen | proposed |
+| C-ADR-07 | Frontier systems | proposed |
+| C-ADR-08 | Downloader policy | proposed |
+| C-ADR-09 | SME IPOs excluded | proposed |
+| C-ADR-10 | Google Cloud trial used only at deploy | proposed |
+| C-ADR-11 | Bias rule for gold | proposed |
+| C-ADR-12 | Kickoff scope: cuts 1–5, critical path and cut line | accepted |
+| C-ADR-13 | Colab jobs exchange files through a private HF dataset repo | accepted (Akshat) |
+| C-ADR-14 | Novelty tau 0.71 from 60 rated pairs | proposed |
+| C-ADR-15 | Category remap v2 from the gold-150 review; classifier gets a band head and gold-150 as test | proposed |
+| C-ADR-16 | Financial values: last three full fiscal years, read from the page geometry | proposed |
+| C-ADR-17 | Other red-flag inputs: header-anchored tables, printed values only, computed values labelled | proposed |
+| C-ADR-18 | The 8B student is not adopted; the 4B stays the product model | proposed |
+| C-ADR-19 | Severe overrides: sentence-level facts force the high band | proposed |
+| C-ADR-20 | E14/E15 v2: stale sections re-detected, three reader fixes, v1 stays frozen | proposed |
+| C-ADR-21 | Compare reference over the rolling window; upload `facts` and `compare` stages | proposed |
+| C-ADR-22 | Gold v3.1: four convention fixes as a new file; E14/E15 reported on three bases | proposed |
+| C-ADR-23 | Red flags are allowed in chat; the answer carries the page and the no-advice note | proposed |
+| C-ADR-24 | Bench v1: 7 verified test IPOs, frozen retrieved inputs for every system | proposed |
+| C-ADR-25 | Risk-level thresholds fitted on the 165 full-document train + dev IPOs; E21 variant saturates | proposed |
+| C-ADR-27 | SOD engine: chapter stand-ins when there is no Summary, counted litigation, no per-type RPT total | proposed |
+| C-ADR-26 | A severe finding forces High only when it is about the issuer | proposed |
+| C-ADR-28 | Risk-level percentile hidden (null + note); Low / Medium / High kept | proposed |

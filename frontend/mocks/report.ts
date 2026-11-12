@@ -1,5 +1,6 @@
 import { delay, http, HttpResponse } from "msw";
 import type { Schemas } from "@/lib/api/client";
+import { MOCK_FACTS, MOCK_SOD } from "./sod";
 
 // Risk report parts on mocks (B3.1, B3.2). SYNTHETIC: company, numbers and risk text are made up
 // for the UI and come from no real document. Refresh from the fixture pack (B0.4,
@@ -122,10 +123,12 @@ export const RISK_LEVEL: Schemas["RiskLevel"] = {
 };
 
 function overview(doc: Schemas["DocRecord"]): Schemas["ReportOverview"] {
+  const old = doc.doc_id.includes("nosod");
   return {
     doc,
     companion_doc_id: null,
-    facts_summary: null,
+    facts_summary: old ? null : (MOCK_FACTS as unknown as Record<string, unknown>),
+    sod: old ? null : (MOCK_SOD as unknown as Record<string, unknown>),
     risk_level: RISK_LEVEL as unknown as Record<string, unknown>,
     top_risks: SAMPLE_RISKS.slice(0, 5) as unknown as Record<string, unknown>[],
     redflags_summary: REDFLAGS.flags!.map((f) => ({ id: f.id, status: f.status })),

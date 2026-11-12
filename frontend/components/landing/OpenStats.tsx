@@ -43,22 +43,22 @@ export function OpenStats() {
 
   return (
     <Section id="open" heading={t("land.open.h")}>
-      <p className="mt-4 max-w-2xl text-lg text-muted">{t("land.open.b")}</p>
+      <p className="max-w-[62ch] text-lg text-muted">{t("land.open.b")}</p>
       {stats.length > 0 && (
-        <dl className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+        <dl className="mt-6 divide-y divide-rule border-y border-rule">
           {stats.map((s) => (
-            <div key={s.label}>
-              <dd className="text-4xl font-semibold tabular-nums tracking-tight">{s.value}</dd>
-              <dt className="mt-2 text-muted">{s.label}</dt>
+            <div key={s.label} className="flex items-baseline justify-between gap-6 py-3">
+              <dt className="text-muted">{s.label}</dt>
+              <dd className="num text-xl font-semibold">{s.value}</dd>
             </div>
           ))}
         </dl>
       )}
-      <p className="mt-10 flex flex-wrap gap-x-8 gap-y-2">
-        <Link href="/lab" className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+      <p className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
+        <Link href="/lab" className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
           {t("land.open.lab")}
         </Link>
-        <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+        <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
           {t("land.open.code")}
         </a>
       </p>

@@ -16,7 +16,7 @@ const ROWS = ["fresh_issue_size", "offer_price", "total_issue_size", "face_value
 
 /** Compact, read-only copy of the workspace: four facts and one page (spec 5.6). Own highlight state. */
 export function MiniDemo() {
-  const { t, lang } = useT();
+  const { t } = useT();
   const xray = useXray(DEMO_IPO);
   const ipo = useIpo(DEMO_IPO);
   const [h, setH] = useState<Highlight | null>(null);
@@ -27,8 +27,8 @@ export function MiniDemo() {
   const view = h ?? { ipoId: DEMO_IPO, doc: "rhp" as const, page: 3, kind: "source" as const, nonce: 0 };
 
   return (
-    <Section id="demo" heading={t("land.demo.h")}>
-      <p className="mt-4 max-w-2xl text-lg text-muted">{t("land.demo.b")}</p>
+    <Section id="demo" heading={t("land.demo.h")} wide>
+      <p className="max-w-[62ch] text-lg text-muted">{t("land.demo.b")}</p>
       {xray.error || ipo.error ? (
         <div className="mt-8">
           <ErrorBlock error={xray.error ?? ipo.error} onRetry={() => void (xray.refetch(), ipo.refetch())} />
@@ -41,8 +41,8 @@ export function MiniDemo() {
               : rows.map((f) => {
                   const r = resolveField(f);
                   const c = FIELD_CONTENT[f.field_id];
-                  const label = c ? pick(c.label, lang) : lang === "hi" ? f.label_hi : f.label_en;
-                  const value = r.value ? (scalarText(f.field_id, r.value, "crore", lang, t("facts.perShare")) ?? "") : "";
+                  const label = c ? pick(c.label) : f.label_en;
+                  const value = r.value ? (scalarText(f.field_id, r.value, "crore", t("facts.perShare")) ?? "") : "";
                   const active = h?.page === r.page && h?.doc === r.doc && h.ipoId === DEMO_IPO && h.bbox === r.bbox;
                   return (
                     <li key={f.field_id} className="border-b border-rule last:border-b-0">
@@ -81,7 +81,7 @@ export function MiniDemo() {
         </div>
       )}
       <p className="mt-6">
-        <Link href={`/ipos/${DEMO_IPO}`} className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+        <Link href={`/ipos/${DEMO_IPO}`} className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
           {t("land.demo.open")}
         </Link>
       </p>

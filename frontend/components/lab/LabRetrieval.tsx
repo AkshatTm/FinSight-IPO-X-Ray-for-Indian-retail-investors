@@ -1,7 +1,7 @@
 "use client";
 
-import type { StringKey } from "@/lib/i18n";
-import { asrStats, pct, retrievalRows } from "@/lib/lab";
+import type { StringKey } from "@/lib/copy";
+import { pct, retrievalRows } from "@/lib/lab";
 import { useT } from "@/lib/useT";
 import { LabFrame, Note } from "./LabFrame";
 
@@ -32,33 +32,6 @@ export function LabRetrieval({ data }: { data: unknown }) {
         </table>
       </div>
       <Note>{t("lab.ret.note")}</Note>
-    </LabFrame>
-  );
-}
-
-export function LabHindi({ asr, retrieval }: { asr: unknown; retrieval: unknown }) {
-  const { t } = useT();
-  const a = asrStats(asr);
-  const hi = retrievalRows(retrieval).find((r) => r.key === "hybrid+rerank")?.hiRecall5 ?? null;
-  if (!a && hi === null) return null;
-  return (
-    <LabFrame id="hindi" heading={t("lab.hi.h")} shows={t("lab.hi.shows")}>
-      <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-        {a && (
-          <div>
-            <dd className="text-4xl font-semibold tabular-nums tracking-tight">{a.cer}%</dd>
-            <dt className="mt-2 text-muted">{t("lab.hi.cer", { n: a.clips })}</dt>
-            <p className="mt-1 text-sm text-muted">{t("lab.hi.refs")}</p>
-          </div>
-        )}
-        {hi !== null && (
-          <div>
-            <dd className="text-4xl font-semibold tabular-nums tracking-tight">{pct(hi)}%</dd>
-            <dt className="mt-2 text-muted">{t("lab.hi.retrieval")}</dt>
-          </div>
-        )}
-      </dl>
-      <Note>{t("lab.hi.line")}</Note>
     </LabFrame>
   );
 }

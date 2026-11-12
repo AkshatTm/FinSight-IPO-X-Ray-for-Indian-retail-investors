@@ -22,7 +22,6 @@ LAB_FILES = {
     "weaklabels": "weaklabel_stats.json",
     "frontier": "frontier.json",
     "retrieval": "retrieval.json",
-    "asr": "asr.json",
 }
 # Extra files merged into a payload under a key (06: weaklabels = stats + audit precision).
 LAB_EXTRAS = {"weaklabels": {"audit": "weaklabel_audit.json"}}

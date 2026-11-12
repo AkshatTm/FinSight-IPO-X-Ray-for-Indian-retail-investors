@@ -37,7 +37,7 @@ describe("demo helpers", () => {
     expect(trickQuestion(undefined)).toBeNull();
   });
   it("finds the first contradicted number", () => {
-    const t = newTurn("t1", "x", "q", "en");
+    const t = newTurn("t1", "x", "q");
     expect(firstContradicted(t)).toBeNull();
     const v = (index: number, status: string) => ({ index, status }) as unknown as Turn["verdicts"][number];
     t.verdicts = [v(0, "verified"), v(1, "contradicted"), v(2, "contradicted")];

@@ -1,3 +1,5 @@
+> **Historical record (Phase 2).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # B05 — UI Specification and Copy (Big Phase 2)
 
 **Precedence:** for anything new on screen, this file wins. For existing screens, `12_FRONTEND_SPEC.md` still applies except where changed here. Rule zero is unchanged: **use the copy verbatim**; missing copy follows `12_FRONTEND_SPEC.md` §1 and goes to `docs/AKSHAT_TODO.md`.

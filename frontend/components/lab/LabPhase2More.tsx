@@ -1,7 +1,7 @@
 "use client";
 
 import { formatPercent, formatRupee } from "@/lib/format";
-import { STRINGS, type StringKey } from "@/lib/i18n";
+import { STRINGS, type StringKey } from "@/lib/copy";
 import { outcomes, pct, rewrites, speedCost } from "@/lib/labB";
 import { useT } from "@/lib/useT";
 import { LabFrame, LabTable, Note, Stat } from "./LabFrame";

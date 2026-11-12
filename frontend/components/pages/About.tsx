@@ -1,7 +1,7 @@
 "use client";
 
 import { Rich } from "@/components/ui/Rich";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
 const REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors";
@@ -19,12 +19,12 @@ export function About() {
   const { t } = useT();
   return (
     <div className="py-12 md:py-16">
-      <h1 className="text-[2.25rem] font-semibold leading-tight tracking-tight md:text-[3rem]">{t("about.title")}</h1>
+      <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-[2.5rem]">{t("about.title")}</h1>
       <div className="mt-8">
         <Block h={t("about.who.h")}>
           <p>{t("about.who.b")}</p>
           <p>
-            <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-stamp underline underline-offset-4">
+            <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center text-accent-ink underline underline-offset-4">
               {t("about.who.link")}
             </a>
           </p>
@@ -34,7 +34,7 @@ export function About() {
         </Block>
         <Block h={t("about.limits.h")}>
           <ul className="list-disc space-y-2 pl-5">
-            {([1, 2, 3, 4, 5, 6, 7, 8] as const).map((n) => (
+            {([1, 2, 4, 5, 6, 7, 8] as const).map((n) => (
               <li key={n}>{t(`about.limits.${n}` as StringKey)}</li>
             ))}
           </ul>

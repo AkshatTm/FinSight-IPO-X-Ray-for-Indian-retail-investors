@@ -1,3 +1,5 @@
+> **Historical record (Phase 4).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # P4 execution plan — CC
 Status: **approved by Akshat (all six decisions yes, see §6).** Gates only, no dates (C-ADR-01); P4_PLAN keeps its own schedule.
 Baseline at kickstart: `uv run poe test` 2093 passed, 3 failed (docs page, 2× `test_gold_v3_template.py`).

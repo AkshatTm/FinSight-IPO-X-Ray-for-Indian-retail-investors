@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # COLAB_STEPS_student — the plain-English student (C2.5)
 
 **Job:** LoRA fine-tune of `Qwen/Qwen3-4B-Instruct-2507` on the filtered teacher rewrites, then a GGUF Q4_K_M. **GPU:** **G4** recommended (RTX PRO 6000 Blackwell, bf16, batch 16×1): ~0.5–0.8 h ≈ 5–7 units at ~8.9 units/h. An L4 also works (bf16, 2×8) but takes ~4–5 h for about the same units (~7). A T4 only for a smoke run (`PRECISION = "nf4"`). Record the real figure. **Notebook:** `notebooks/colab/c2_student.ipynb`. **Do not launch before CG2** (quality-100 at least 85 % "same meaning: yes").

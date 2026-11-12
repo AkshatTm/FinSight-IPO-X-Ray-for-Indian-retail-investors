@@ -40,7 +40,7 @@ terms:
   - term: GGUF
     body: The file format llama.cpp loads; the student runs from a Q4 GGUF on CPU.
   - term: ONNX
-    body: A portable model format; the category classifier runs as int8 ONNX without PyTorch.
+    body: A portable model format; the category classifier runs as fp32 ONNX without PyTorch (int8 was tried and rejected).
   - term: Macro-F1
     body: F1 computed per class and then averaged, so small classes count as much as large ones.
   - term: Spearman ρ
@@ -49,3 +49,42 @@ terms:
     body: Flesch–Kincaid grade level, a readability score; lower means easier to read.
   - term: Abstain
     body: The chat says it could not find the answer instead of guessing, when the best passage scores below a threshold.
+
+# Words on the report pages that the app's glossary drawer (configs/glossary.yaml) does not list.
+report_terms:
+  - term: SOD (Summary of the Offer Document)
+    body: The short chapter near the front of an RHP that sums up the offer, the financials, litigation and related-party dealings. FinSight reads it first; when a document has none, it reads the chapters the summary would have covered.
+  - term: Risk factor
+    body: One numbered risk the company lists in its "Risk Factors" chapter. A large RHP lists 50 to 100.
+  - term: WACA (weighted average cost of acquisition)
+    body: The average price the promoters and other selling shareholders paid for their shares. Compared with the offer price in the "What insiders paid" check.
+  - term: RoNW (return on net worth)
+    body: Profit after tax as a percentage of net worth (shareholders' funds). Higher means more profit per rupee the owners put in.
+  - term: NAV per share (net asset value)
+    body: Net worth divided by the number of shares; what each share is backed by on the balance sheet.
+  - term: EPS (earnings per share)
+    body: Profit after tax divided by the number of shares.
+  - term: P/E (price to earnings)
+    body: The share price divided by EPS. The document compares the issuer's P/E at the offer price with listed peers in its "Basis for Offer Price" chapter.
+  - term: PAT and PAT margin
+    body: Profit after tax, and profit after tax as a percentage of revenue.
+  - term: Debt to equity
+    body: Total borrowings divided by net worth. Above 1 means the company owes more than its owners have put in.
+  - term: Stub period
+    body: A part-year (for example, the first three or six months of the current year) reported next to the last three full fiscal years.
+  - term: Promoter holding (pre and post offer)
+    body: The share of the company the promoters own before the IPO and after it. "After" is often unknown until the price is set in the final prospectus.
+  - term: Red flag
+    body: One of 13 rule-based checks on numbers the document discloses. Each says OK, Watch, Concern, Not available (the document does not give the numbers) or Not applicable.
+  - term: Serious finding
+    body: A disclosed event such as a going-concern doubt, a regulator order or a qualified audit. One about the company itself sets the risk level to High; one about a promoter, director or group company is shown but does not (C-ADR-26).
+  - term: Risk level
+    body: Low, Medium or High, from red-flag and rare-risk points as a share of the points possible, compared with past Indian IPOs. A summary of what the document discloses, not advice or a prediction.
+  - term: Page citation
+    body: The page chip next to a number. Clicking it opens the document page the value was read from.
+  - term: Verified, unverifiable, contradicted (✅ ⚠️ ❌)
+    body: The marks on each number in a chat answer, from the number checker. ✅ the number is on the cited page, ⚠️ it could not be checked, ❌ the page says something else.
+  - term: Degraded report
+    body: A report where a stage did not finish or ran without one of its models. The report says what is missing; it is never cached as complete.
+  - term: Pipeline version
+    body: A version string (4.2 at v1.1) stored with every report. A report made by an older version is analysed again when it is opened.

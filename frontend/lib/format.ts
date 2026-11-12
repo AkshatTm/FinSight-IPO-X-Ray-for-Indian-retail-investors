@@ -3,15 +3,9 @@
 // decimal strings and BigInt so a document figure is never rounded by floating point.
 
 export type Unit = "crore" | "million" | "lakh" | "full";
-export type Lang = "en" | "hi";
 
-const UNIT_WORD_HI: Record<Exclude<Unit, "full">, string> = { crore: "करोड़", million: "मिलियन", lakh: "लाख" };
 const UNIT_SHIFT: Record<Exclude<Unit, "full">, number> = { crore: 7, million: 6, lakh: 5 };
 
-const HI_MONTHS = [
-  "जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून",
-  "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर",
-];
 const EN_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 /** Group an unsigned digit string as 1,23,45,678 (Indian) or 12,345,678 (Western). */
@@ -71,7 +65,7 @@ function shiftAndRound(d: Dec, places: number, dp: number): Dec {
   return { neg: d.neg, int: i.replace(/^0+(?=\d)/, ""), frac: f };
 }
 
-export function formatMoney(valueInr: string | number, unit: Unit, lang: Lang = "en"): string {
+export function formatMoney(valueInr: string | number, unit: Unit): string {
   const d = parseDecimal(valueInr);
   const sign = d.neg ? "-" : "";
   if (unit === "full") {
@@ -81,7 +75,7 @@ export function formatMoney(valueInr: string | number, unit: Unit, lang: Lang = 
   }
   const r = shiftAndRound(d, UNIT_SHIFT[unit], 2);
   const style = unit === "million" ? "western" : "indian";
-  return `${sign}₹${groupDigits(r.int, style)}.${r.frac} ${lang === "hi" ? UNIT_WORD_HI[unit] : unit}`;
+  return `${sign}₹${groupDigits(r.int, style)}.${r.frac} ${unit}`;
 }
 
 /** Rupees per share (face value, price). No unit word; keeps the printed precision. */
@@ -94,11 +88,9 @@ export function formatRupee(value: string | number): string {
 export function formatShares(
   count: string | number,
   mode: "indian" | "as-written",
-  lang: Lang = "en",
 ): string {
   const d = parseDecimal(count);
-  const word = lang === "hi" ? "शेयर" : "shares";
-  return `${groupDigits(d.int, mode === "as-written" ? "western" : "indian")} ${word}`;
+  return `${groupDigits(d.int, mode === "as-written" ? "western" : "indian")} shares`;
 }
 
 /** One decimal place, half up: 64 -> "64.0%". */
@@ -108,19 +100,19 @@ export function formatPercent(value: number): string {
   return `${d.neg ? "-" : ""}${r.int}.${r.frac}%`;
 }
 
-/** ISO date (YYYY-MM-DD...) to "12 Nov 2025" / "12 नवंबर 2025". No timezone shifts. */
-export function formatDate(iso: string, lang: Lang = "en"): string {
+/** ISO date (YYYY-MM-DD...) to "12 Nov 2025". No timezone shifts. */
+export function formatDate(iso: string): string {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
   if (!m) throw new Error(`formatDate: not an ISO date: ${iso}`);
   const month = Number(m[2]);
   if (month < 1 || month > 12) throw new Error(`formatDate: bad month: ${iso}`);
-  const name = (lang === "hi" ? HI_MONTHS : EN_MONTHS)[month - 1];
+  const name = EN_MONTHS[month - 1];
   return `${Number(m[3])} ${name} ${m[1]}`;
 }
 
-/** "Nov 2025" / "नवंबर 2025" for the Library "Listed" column. */
-export function formatMonthYear(iso: string, lang: Lang = "en"): string {
-  return formatDate(iso, lang).split(" ").slice(1).join(" ");
+/** "Nov 2025" for the Library "Listed" column. */
+export function formatMonthYear(iso: string): string {
+  return formatDate(iso).split(" ").slice(1).join(" ");
 }
 
 export function fractionPercent(part: string | number, whole: string | number): number | null {

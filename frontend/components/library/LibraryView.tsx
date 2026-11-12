@@ -1,8 +1,10 @@
 "use client";
 
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, useSyncExternalStore } from "react";
+import { LibraryChart } from "./LibraryChart";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
 import { useIpos } from "@/lib/api/hooks";
 import { filterSortIpos, type FilterKey, type SortKey } from "@/lib/library";
@@ -42,7 +44,7 @@ function FirstVisitHint() {
     <div className="mb-6 flex items-start justify-between gap-3 rounded-[10px] border border-rule bg-surface px-4 py-3 text-sm">
       <p>
         {t("lib.hint")}{" "}
-        <Link href="/ipos/ather-energy-2025" onClick={dismissHint} className="text-stamp underline underline-offset-2">
+        <Link href="/ipos/ather-energy-2025" onClick={dismissHint} className="text-accent-ink underline underline-offset-2">
           {t("lib.hintLink")}
         </Link>
       </p>
@@ -78,6 +80,7 @@ export function LibraryView() {
       </header>
 
       <FirstVisitHint />
+      {data && <LibraryChart ipos={data} />}
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <label className="relative min-w-[16rem] flex-1">
@@ -114,7 +117,7 @@ export function LibraryView() {
             type="button"
             aria-pressed={filter === f}
             onClick={() => setFilter(f)}
-            className={`h-11 rounded-full border px-4 text-sm ${
+            className={`h-10 rounded-[6px] border px-4 text-sm ${
               filter === f ? "border-stamp bg-stamp/10 font-medium text-text" : "border-rule text-muted hover:text-text"
             }`}
           >
@@ -140,7 +143,8 @@ export function LibraryView() {
           ))}
         </div>
       ) : rows.length === 0 ? (
-        <div className="py-12">
+        <div className="grid items-center gap-8 py-12 md:grid-cols-[minmax(0,1fr)_280px]">
+          <div>
           <p className="max-w-xl text-lg">{t("lib.empty", { query })}</p>
           <button
             type="button"
@@ -152,6 +156,8 @@ export function LibraryView() {
           >
             {t("lib.clear")}
           </button>
+          </div>
+          <Image src="/images/empty-state.webp" alt="A blank sheet of paper and a pencil on a clean desk." width={800} height={600} sizes="280px" className="hidden aspect-[4/3] w-full rounded-[6px] border border-rule object-cover md:block" />
         </div>
       ) : (
         <ul className="border-t border-rule">

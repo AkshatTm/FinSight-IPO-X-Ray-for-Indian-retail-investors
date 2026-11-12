@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # Claude Code prompts — kickoff and resume
 
 Paste **Prompt 1** once, in the first Claude Code session, started from the repo root (Opus). After that, start every new session with **Prompt 2**.

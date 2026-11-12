@@ -6,7 +6,6 @@ import { useState } from "react";
 import { CHECK_LABEL, EXTRACTOR_NAME, FIELD_CONTENT, pick } from "@/lib/content/fields";
 import { FIELD_TERM } from "@/lib/content/glossary";
 import { useWords } from "@/lib/api/hooks";
-import type { Lang } from "@/lib/format";
 import { useUi } from "@/lib/store";
 import { useT } from "@/lib/useT";
 import { needsPerShare, resolveField, scalarText, sentenceAround, type XField } from "@/lib/xray";
@@ -45,7 +44,7 @@ function Sentence({ ipoId, bbox, doc, page, exact }: { ipoId: string; bbox: Box 
   );
 }
 
-function Popover({ ipoId, f, doc, page, bbox, lang }: { ipoId: string; f: XField; doc: DocKind; page: number; bbox: Box | null; lang: Lang }) {
+function Popover({ ipoId, f, doc, page, bbox }: { ipoId: string; f: XField; doc: DocKind; page: number; bbox: Box | null }) {
   const { t } = useT();
   const model = f.extractor.startsWith("qa_");
   return (
@@ -61,7 +60,7 @@ function Popover({ ipoId, f, doc, page, bbox, lang }: { ipoId: string; f: XField
         </p>
       )}
       <p className="text-muted">
-        {t("pop.readBy")}: {pick(EXTRACTOR_NAME[f.extractor] ?? { en: f.extractor, hi: f.extractor }, lang)}
+        {t("pop.readBy")}: {pick(EXTRACTOR_NAME[f.extractor] ?? { en: f.extractor, hi: f.extractor })}
       </p>
       {model && (
         <div className="flex items-center gap-2 text-muted">
@@ -77,7 +76,7 @@ function Popover({ ipoId, f, doc, page, bbox, lang }: { ipoId: string; f: XField
           {f.checks.map((c) => (
             <li key={c.check} className="flex items-start gap-1.5">
               <MarkIcon state={c.status} size={14} />
-              <span>{CHECK_LABEL[c.check] ? pick(CHECK_LABEL[c.check], lang) : c.reason}</span>
+              <span>{CHECK_LABEL[c.check] ? pick(CHECK_LABEL[c.check]) : c.reason}</span>
             </li>
           ))}
         </ul>
@@ -93,7 +92,7 @@ interface Props {
 }
 
 export function FactRow({ ipoId, field: f, compare }: Props) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const unit = useUi((s) => s.unit);
   const setHighlight = useUi((s) => s.setHighlight);
   const [pinned, setPinned] = useState(false);
@@ -101,17 +100,17 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   const content = FIELD_CONTENT[f.field_id];
-  const label = content ? pick(content.label, lang) : lang === "hi" ? f.label_hi : f.label_en;
+  const label = content ? pick(content.label) : f.label_en;
   const r = resolveField(f);
   const isPlaceholderField = f.value?.kind === "placeholder";
 
   let valueNode: React.ReactNode = null;
   let valueText = "";
   if (r.notInDocument) {
-    valueText = content?.notInDocument ? pick(content.notInDocument, lang) : "";
+    valueText = content?.notInDocument ? pick(content.notInDocument) : "";
     valueNode = <span className="text-muted">{valueText}</span>;
   } else if (r.blank) {
-    valueText = content?.placeholder ? pick(content.placeholder, lang) : "[●]";
+    valueText = content?.placeholder ? pick(content.placeholder) : "[●]";
     valueNode = <span className="text-muted">{valueText}</span>;
   } else if (r.value?.kind === "list") {
     const items = r.value.items;
@@ -127,7 +126,7 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
       </span>
     );
   } else if (r.value) {
-    valueText = scalarText(f.field_id, r.value, unit, lang, t("facts.perShare")) ?? "";
+    valueText = scalarText(f.field_id, r.value, unit, t("facts.perShare")) ?? "";
     valueNode = (
       <span className="font-medium">
         {valueText}
@@ -191,7 +190,7 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
             <span className="flex flex-wrap items-center justify-between gap-2">
               {mark ? <VerdictMark state={mark} /> : <span />}
               {showChip && (
-                <span className="rounded-full border border-rule px-2 py-0.5 text-xs text-muted">{chip}</span>
+                <span className="rounded-[4px] border border-rule px-1.5 py-0.5 text-xs text-muted">{chip}</span>
               )}
             </span>
             {r.filledInProspectus && <span className="text-xs text-muted">{t("facts.filled")}</span>}
@@ -215,18 +214,18 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="ml-2 h-11 px-2 text-sm text-stamp underline underline-offset-2"
+          className="ml-2 h-11 px-2 text-sm text-accent-ink underline underline-offset-2"
         >
           {expanded ? t("facts.less") : t("facts.more", { n: r.value.items.length - 3 })}
         </button>
       )}
-      {content && <span className="sr-only-keep">{pick(content.tip, lang)}</span>}
-      {open && !r.notInDocument && <Popover ipoId={ipoId} f={f} doc={r.doc} page={r.page} bbox={r.bbox} lang={lang} />}
+      {content && <span className="sr-only-keep">{pick(content.tip)}</span>}
+      {open && !r.notInDocument && <Popover ipoId={ipoId} f={f} doc={r.doc} page={r.page} bbox={r.bbox} />}
       {compare && f.candidates.length > 0 && (
         <ul className="mb-2 ml-4 space-y-1 border-l-2 border-rule pl-3 text-sm">
-          {f.candidates.map((c) => (
-            <li key={c.extractor} className="flex items-center justify-between gap-2">
-              <span className="text-muted">{pick(EXTRACTOR_NAME[c.extractor] ?? { en: c.extractor, hi: c.extractor }, lang)}</span>
+          {f.candidates.map((c, i) => (
+            <li key={`${c.extractor}-${i}`}className="flex items-center justify-between gap-2">
+              <span className="text-muted">{pick(EXTRACTOR_NAME[c.extractor] ?? { en: c.extractor, hi: c.extractor })}</span>
               <span className="flex items-center gap-1.5">
                 <span className="font-mono text-xs">{c.raw}</span>
                 {c.gold_match != null && <MarkIcon state={c.gold_match ? "verified" : "contradicted"} size={14} />}

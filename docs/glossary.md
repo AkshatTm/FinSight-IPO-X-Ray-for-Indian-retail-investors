@@ -2,30 +2,53 @@
 
 # Glossary
 
-The finance terms are the ones the app explains (UI spec §14), with the Hindi the app shows. The ML terms explain words used on the evaluation and model pages.
+Plain-English meanings of the words FinSight uses. The first table is the list the app's glossary drawer shows (`GET /api/glossary`); the second covers words on the report pages; the third explains words used on the evaluation and model pages.
 
-## Finance terms
+## IPO terms (the app's glossary)
 
-| Term | Meaning | हिंदी |
-| --- | --- | --- |
-| IPO | When a company sells shares to the public for the first time. | **आईपीओ**: जब कोई कंपनी पहली बार आम लोगों को शेयर बेचती है। |
-| Demat account | An account that holds your shares electronically. You need one to apply in an IPO. | **डीमैट खाता**: एक खाता जिसमें आपके शेयर इलेक्ट्रॉनिक रूप में रहते हैं। आईपीओ में आवेदन के लिए यह ज़रूरी है। |
-| RHP (Red Herring Prospectus) | The offer document filed before the IPO opens. The price and some amounts are left blank. | **आरएचपी**: आईपीओ खुलने से पहले दाख़िल किया गया ऑफ़र दस्तावेज़। इसमें कीमत और कुछ रकम खाली छोड़ी जाती हैं। |
-| Prospectus (final) | The version filed after the price is fixed, with the blanks filled in. | **फ़ाइनल प्रॉस्पेक्टस**: कीमत तय होने के बाद दाख़िल किया गया संस्करण, जिसमें खाली जगहें भरी होती हैं। |
-| DRHP | The first draft filed with SEBI for review, before the RHP. | **डीआरएचपी**: आरएचपी से पहले सेबी को जाँच के लिए भेजा गया पहला मसौदा। |
-| SEBI | India's securities market regulator. It sets the rules for IPOs. | **सेबी**: भारत का प्रतिभूति बाज़ार नियामक। यह आईपीओ के नियम तय करता है। |
-| Fresh issue | New shares created by the company. The money goes to the company. | **फ्रेश इश्यू**: कंपनी द्वारा बनाए गए नए शेयर। पैसा कंपनी को मिलता है। |
-| Offer for sale (OFS) | Existing owners selling some of their shares. The money goes to them, not the company. | **ओएफएस**: मौजूदा मालिक अपने कुछ शेयर बेचते हैं। पैसा उन्हें मिलता है, कंपनी को नहीं। |
-| Price band | The range of prices within which you can bid. | **प्राइस बैंड**: कीमतों की वह सीमा जिसके भीतर आप बोली लगा सकते हैं। |
-| Offer price | The final price per share, set after bidding closes. | **ऑफ़र प्राइस**: बोली बंद होने के बाद तय की गई प्रति शेयर अंतिम कीमत। |
-| Face value | A fixed accounting value per share, like ₹1 or ₹10. It's not the price you pay. | **फेस वैल्यू**: प्रति शेयर एक तय लेखा मूल्य, जैसे ₹1 या ₹10। यह वह कीमत नहीं है जो आप देते हैं। |
-| Promoter | The person or company that controls the company. | **प्रमोटर**: वह व्यक्ति या कंपनी जो कंपनी को नियंत्रित करती है। |
-| Book running lead manager | A bank hired to manage the IPO. | **बुक रनिंग लीड मैनेजर**: आईपीओ संभालने के लिए नियुक्त बैंक। |
-| Registrar | The firm that processes applications and allots shares. | **रजिस्ट्रार**: वह फ़र्म जो आवेदन संभालती है और शेयर आवंटित करती है। |
-| Objects of the offer | What the company plans to do with the money from the fresh issue. | **ऑफ़र के उद्देश्य**: फ्रेश इश्यू से मिले पैसे से कंपनी क्या करने वाली है। |
-| Lakh, crore, million | 1 lakh = 1,00,000. 1 crore = 100 lakh. 1 million = 10 lakh. So ₹100 crore = ₹1,000 million. | **लाख, करोड़, मिलियन**: 1 लाख = 1,00,000। 1 करोड़ = 100 लाख। 1 मिलियन = 10 लाख। यानी ₹100 करोड़ = ₹1,000 मिलियन। |
-| [●] (blank) | A blank in the RHP for a value that isn't decided yet, usually the price. | **[●] (खाली)**: आरएचपी में किसी ऐसे मान के लिए खाली जगह जो अभी तय नहीं है, आमतौर पर कीमत। |
-| GMP | “Grey market premium”: unofficial trading talk before listing. It's not in the documents and FinSight doesn't track it. | **जीएमपी**: “ग्रे मार्केट प्रीमियम”: लिस्टिंग से पहले की अनौपचारिक चर्चा। यह दस्तावेज़ों में नहीं होता और FinSight इसे ट्रैक नहीं करता। |
+| Term | Meaning |
+| --- | --- |
+| IPO | When a company sells shares to the public for the first time. |
+| Demat account | An account that holds your shares electronically. You need one to apply in an IPO. |
+| RHP (Red Herring Prospectus) | The offer document filed before the IPO opens. The price and some amounts are left blank. |
+| Prospectus (final) | The version filed after the price is fixed, with the blanks filled in. |
+| DRHP | The first draft filed with SEBI for review, before the RHP. |
+| SEBI | India's securities market regulator. It sets the rules for IPOs. |
+| Fresh issue | New shares created by the company. The money goes to the company. |
+| Offer for sale (OFS) | Existing owners selling some of their shares. The money goes to them, not the company. |
+| Price band | The range of prices within which you can bid. |
+| Offer price | The final price per share, set after bidding closes. |
+| Face value | A fixed accounting value per share, like ₹1 or ₹10. It's not the price you pay. |
+| Promoter | The person or company that controls the company. |
+| Book running lead manager | A bank hired to manage the IPO. |
+| Registrar | The firm that processes applications and allots shares. |
+| Objects of the offer | What the company plans to do with the money from the fresh issue. |
+| Lakh, crore, million | 1 lakh = 1,00,000. 1 crore = 100 lakh. 1 million = 10 lakh. So ₹100 crore = ₹1,000 million. |
+| [●] (blank) | A blank in the RHP for a value that isn't decided yet, usually the price. |
+| GMP | “Grey market premium”: unofficial trading talk before listing. It's not in the documents and FinSight doesn't track it. |
+
+## Report terms
+
+| Term | Meaning |
+| --- | --- |
+| SOD (Summary of the Offer Document) | The short chapter near the front of an RHP that sums up the offer, the financials, litigation and related-party dealings. FinSight reads it first; when a document has none, it reads the chapters the summary would have covered. |
+| Risk factor | One numbered risk the company lists in its "Risk Factors" chapter. A large RHP lists 50 to 100. |
+| WACA (weighted average cost of acquisition) | The average price the promoters and other selling shareholders paid for their shares. Compared with the offer price in the "What insiders paid" check. |
+| RoNW (return on net worth) | Profit after tax as a percentage of net worth (shareholders' funds). Higher means more profit per rupee the owners put in. |
+| NAV per share (net asset value) | Net worth divided by the number of shares; what each share is backed by on the balance sheet. |
+| EPS (earnings per share) | Profit after tax divided by the number of shares. |
+| P/E (price to earnings) | The share price divided by EPS. The document compares the issuer's P/E at the offer price with listed peers in its "Basis for Offer Price" chapter. |
+| PAT and PAT margin | Profit after tax, and profit after tax as a percentage of revenue. |
+| Debt to equity | Total borrowings divided by net worth. Above 1 means the company owes more than its owners have put in. |
+| Stub period | A part-year (for example, the first three or six months of the current year) reported next to the last three full fiscal years. |
+| Promoter holding (pre and post offer) | The share of the company the promoters own before the IPO and after it. "After" is often unknown until the price is set in the final prospectus. |
+| Red flag | One of 13 rule-based checks on numbers the document discloses. Each says OK, Watch, Concern, Not available (the document does not give the numbers) or Not applicable. |
+| Serious finding | A disclosed event such as a going-concern doubt, a regulator order or a qualified audit. One about the company itself sets the risk level to High; one about a promoter, director or group company is shown but does not (C-ADR-26). |
+| Risk level | Low, Medium or High, from red-flag and rare-risk points as a share of the points possible, compared with past Indian IPOs. A summary of what the document discloses, not advice or a prediction. |
+| Page citation | The page chip next to a number. Clicking it opens the document page the value was read from. |
+| Verified, unverifiable, contradicted (✅ ⚠️ ❌) | The marks on each number in a chat answer, from the number checker. ✅ the number is on the cited page, ⚠️ it could not be checked, ❌ the page says something else. |
+| Degraded report | A report where a stage did not finish or ran without one of its models. The report says what is missing; it is never cached as complete. |
+| Pipeline version | A version string (4.2 at v1.1) stored with every report. A report made by an older version is analysed again when it is opened. |
 
 ## ML and evaluation terms
 
@@ -50,7 +73,7 @@ The finance terms are the ones the app explains (UI spec §14), with the Hindi t
 | QLoRA | Fine-tuning a quantised model by training small adapter matrices only, so it fits on one GPU. |
 | Quantisation (Q4, AWQ, int8) | Storing weights with fewer bits so a model needs less memory and runs faster, at a small cost in quality. |
 | GGUF | The file format llama.cpp loads; the student runs from a Q4 GGUF on CPU. |
-| ONNX | A portable model format; the category classifier runs as int8 ONNX without PyTorch. |
+| ONNX | A portable model format; the category classifier runs as fp32 ONNX without PyTorch (int8 was tried and rejected). |
 | Macro-F1 | F1 computed per class and then averaged, so small classes count as much as large ones. |
 | Spearman ρ | Rank correlation between two lists of scores, from -1 to 1. |
 | FKGL | Flesch–Kincaid grade level, a readability score; lower means easier to read. |

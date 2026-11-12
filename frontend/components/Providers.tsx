@@ -22,7 +22,6 @@ declare global {
 export function Providers({ children }: { children: ReactNode }) {
   const [client] = useState(makeClient);
   const [ready, setReady] = useState(!USE_MOCKS);
-  const lang = useUi((s) => s.lang);
   const theme = useUi((s) => s.theme);
 
   // Restore saved preferences after mount so server and first client render agree.
@@ -45,10 +44,6 @@ export function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" || USE_MOCKS) window.__fsUi = useUi;
   }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = lang === "hi" ? "hi" : "en";
-  }, [lang]);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

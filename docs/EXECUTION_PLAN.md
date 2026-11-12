@@ -1,3 +1,5 @@
+> **Historical record (project).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # EXECUTION PLAN — how each sub-phase gets built
 
 > **Big Phase 2:** the Phase 2 equivalent of this file is `docs/phase2/B_EXECUTION_PLAN.md`.

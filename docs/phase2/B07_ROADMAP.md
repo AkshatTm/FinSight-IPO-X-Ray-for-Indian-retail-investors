@@ -1,3 +1,5 @@
+> **Historical record (Phase 2).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # B07 — Roadmap (Big Phase 2)
 
 > **Superseded in part (4 Oct 2026, B-ADR-16):** Google Cloud (Cloud Run, Cloud Storage, GPU job, `deploy/gcp/`, `cloud` and `cloud_gpu` profiles) was removed when the credit ran out. The product runs locally. Read the Cloud Run, GCS, GPU and deploy parts below as history.

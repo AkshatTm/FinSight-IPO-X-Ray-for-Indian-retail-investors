@@ -1,6 +1,6 @@
 import type { Schemas } from "@/lib/api/client";
 import { PER_SHARE } from "@/lib/content/fields";
-import { formatMoney, formatPercent, formatRupee, formatShares, type Lang, type Unit } from "@/lib/format";
+import { formatMoney, formatPercent, formatRupee, formatShares, type Unit } from "@/lib/format";
 
 export type XField = Schemas["XRayField"];
 export type XValue = NonNullable<XField["value"]>;
@@ -42,15 +42,14 @@ export function scalarText(
   fieldId: string,
   v: XValue,
   unit: Unit,
-  lang: Lang,
   perShareWord: string,
 ): string | null {
   switch (v.kind) {
     case "money":
       if (v.value_inr == null) return v.raw;
-      return PER_SHARE.has(fieldId) ? formatRupee(v.value_inr) : formatMoney(v.value_inr, unit, lang);
+      return PER_SHARE.has(fieldId) ? formatRupee(v.value_inr) : formatMoney(v.value_inr, unit);
     case "count":
-      return fieldId === "ofs_shares" ? formatShares(v.value, "indian", lang) : String(v.value);
+      return fieldId === "ofs_shares" ? formatShares(v.value, "indian") : String(v.value);
     case "percent":
       return formatPercent(Number(v.value));
     case "range": {

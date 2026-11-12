@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # 03 — UI/UX Design
 
 **Goal:** someone who knows nothing about NLP should *see* FinSight work in 60 seconds: facts appear, a click lands on the exact words in the prospectus, a wrong number gets caught. The frontend is where the demo is won, so it gets the same care as the models.

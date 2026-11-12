@@ -6,7 +6,7 @@ import { DocTypeBadge } from "@/components/reports/DocTypeBadge";
 import { ErrorBlock } from "@/components/ui/ErrorBlock";
 import { apiGet, type Schemas } from "@/lib/api/client";
 import { useAuth } from "@/lib/auth/supabase";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
 const STATUS: Record<string, StringKey> = {
@@ -18,14 +18,14 @@ const STATUS: Record<string, StringKey> = {
 
 /** /me/uploads (B05 §6.2). */
 export function MyUploads() {
-  const { t, lang } = useT();
+  const { t } = useT();
   const { user, token, ready, signIn } = useAuth();
   const q = useQuery({
     queryKey: ["me-uploads", user?.id],
     enabled: !!user,
     queryFn: () => apiGet<Schemas["MyUpload"][]>("/api/me/uploads", token ? { headers: { Authorization: `Bearer ${token}` } } : undefined),
   });
-  const btn = "btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-bg";
+  const btn = "btn inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-on-accent";
 
   return (
     <div className="mx-auto max-w-[1120px] py-12">
@@ -59,10 +59,10 @@ export function MyUploads() {
               <tr key={u.doc_id}>
                 <td className="py-3">{u.company ?? t("proc.yourDoc")}</td>
                 <td className="py-3">{u.doc_type ? <DocTypeBadge type={u.doc_type} /> : null}</td>
-                <td className="py-3 tabular-nums">{new Date(u.created_at).toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
+                <td className="py-3 tabular-nums">{new Date(u.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
                 <td className="py-3">{STATUS[u.status] ? t(STATUS[u.status]) : u.status}</td>
                 <td className="py-3 text-right">
-                  <Link href={`/reports/${u.doc_id}`} className="text-stamp underline underline-offset-2">{t("me.open")}</Link>
+                  <Link href={`/reports/${u.doc_id}`} className="text-accent-ink underline underline-offset-2">{t("me.open")}</Link>
                 </td>
               </tr>
             ))}

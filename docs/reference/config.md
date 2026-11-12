@@ -22,8 +22,6 @@ Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, de
 | `retrieve.rerank_top_n` | int | `20` | `FINSIGHT_RETRIEVE__RERANK_TOP_N` |
 | `retrieve.final_top_k` | int | `5` | `FINSIGHT_RETRIEVE__FINAL_TOP_K` |
 | `retrieve.abstain_thresholds` | dict | `{}` | `FINSIGHT_RETRIEVE__ABSTAIN_THRESHOLDS` |
-| `voice.asr` | str | `off` | `FINSIGHT_VOICE__ASR` |
-| `voice.idle_unload_s` | int | `120` | `FINSIGHT_VOICE__IDLE_UNLOAD_S` |
 | `verify.nli` | bool | false | `FINSIGHT_VERIFY__NLI` |
 | `guard.backend` | Literal | `keyword` | `FINSIGHT_GUARD__BACKEND` |
 | `guard.threshold` | float | `0.5` | `FINSIGHT_GUARD__THRESHOLD` |
@@ -80,7 +78,6 @@ Values each profile sets (everything else keeps the default).
 | `llm.num_ctx` | `2048` |
 | `retrieve.dense` | false |
 | `retrieve.rerank` | false |
-| `voice.asr` | `off` |
 | `verify.nli` | false |
 | `demo_mode` | false |
 
@@ -94,7 +91,6 @@ Values each profile sets (everything else keeps the default).
 | `retrieve.dense` | true |
 | `retrieve.rerank` | true |
 | `retrieve.abstain_thresholds.hybrid+rerank` | `-4.402` |
-| `voice.asr` | `faster-whisper-large-v3-turbo` |
 | `verify.nli` | false |
 | `demo_mode` | false |
 
@@ -108,8 +104,6 @@ Values each profile sets (everything else keeps the default).
 | `retrieve.dense` | false |
 | `retrieve.rerank` | true |
 | `retrieve.rerank_top_n` | `20` |
-| `voice.asr` | `faster-whisper-medium` |
-| `voice.idle_unload_s` | `60` |
 | `verify.nli` | false |
 | `demo_mode` | false |
 
@@ -123,7 +117,6 @@ Values each profile sets (everything else keeps the default).
 | `retrieve.dense` | false |
 | `retrieve.rerank` | true |
 | `retrieve.rerank_top_n` | `10` |
-| `voice.asr` | `off` |
 | `verify.nli` | false |
 | `demo_mode` | true |
 

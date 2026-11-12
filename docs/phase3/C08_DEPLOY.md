@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # C08 — Deployment on Google Cloud (final stage, at C5.1)
 
 Deployment happens **after CG6 (feature freeze)**, at C5.1, on the Google Cloud free trial, and only with Akshat's explicit "go" (C-ADR-10). It is below the cut line (C05 §6). This file records the facts and the choices to make then.

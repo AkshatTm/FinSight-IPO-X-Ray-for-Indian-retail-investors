@@ -28,7 +28,7 @@ Names only; `.env.example` lists them. No secret ever goes in the frontend.
 
 | Variable | Meaning | When unset |
 | --- | --- | --- |
-| `FINSIGHT_API_ORIGIN` | Where Next.js rewrites `/api/*` (the Cloud Run API URL) | `http://localhost:8000` |
+| `FINSIGHT_API_ORIGIN` | Where Next.js rewrites `/api/*` (the local FastAPI service) | `http://localhost:8000` |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase project for Google sign-in | auth is "off": one local user |
 | `NEXT_PUBLIC_USE_MOCKS` | `1` serves every API call from `mocks/` | the real API is called |
 
@@ -38,7 +38,7 @@ Names only; `.env.example` lists them. No secret ever goes in the frontend.
 | --- | --- |
 | `app/` | Routes: `/`, `/ipos/[id]`, `/lab`, `/upload`, `/reports/[doc_id]`, `/me/uploads`, `/about`, `/how-it-works` |
 | `components/` | One folder per screen (`workspace`, `facts`, `chat`, `reports`, `upload`, …) plus shared `ui` and `shell` |
-| `lib/` | Pure logic with unit tests next to it (`report.ts` + `report.test.ts`), the API client and hooks (`lib/api`), and user-facing copy (`lib/content`, `lib/i18n.ts`) |
+| `lib/` | Pure logic with unit tests next to it (`report.ts` + `report.test.ts`), the API client and hooks (`lib/api`), and user-facing copy (`lib/content`) |
 | `mocks/` | MSW handlers and fixtures; `report.ts` holds **synthetic** report data until it is regenerated from the fixture pack |
 | `e2e/` | Playwright flows: demo, upload, report, and a real-backend workspace check |
 

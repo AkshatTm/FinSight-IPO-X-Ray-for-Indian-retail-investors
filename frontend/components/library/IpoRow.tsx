@@ -42,7 +42,7 @@ function Preview({ id }: { id: string }) {
 }
 
 export function IpoRow({ ipo }: { ipo: Ipo }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const qc = useQueryClient();
   const [peek, setPeek] = useState(false);
 
@@ -66,24 +66,29 @@ export function IpoRow({ ipo }: { ipo: Ipo }) {
         href={`/ipos/${ipo.id}`}
         className="grid gap-x-8 gap-y-3 rounded-[6px] px-2 py-5 hover:bg-surface-2 md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1.5fr)_5.5rem] md:items-center"
       >
-        <div className="min-w-0">
-          <h2 className="truncate text-xl font-semibold tracking-tight">{ipo.company}</h2>
-          {ipo.sector && <p className="text-sm text-muted">{ipo.sector}</p>}
+        <div className="flex min-w-0 items-center gap-3">
+          <span aria-hidden className="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] bg-band text-base font-bold text-on-band">
+            {ipo.company.split(/\s+/).filter((w) => !/^(limited|ltd\.?|india|private|pvt\.?)$/i.test(w)).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("")}
+          </span>
+          <div className="min-w-0">
+            <h2 className="truncate text-xl font-semibold tracking-tight">{ipo.company}</h2>
+            {ipo.sector && <p className="text-sm text-muted">{ipo.sector}</p>}
+          </div>
         </div>
         <p className="text-sm text-muted">
-          {ipo.listing_date ? t("lib.listed", { month: formatMonthYear(ipo.listing_date, lang) }) : ""}
+          {ipo.listing_date ? t("lib.listed", { month: formatMonthYear(ipo.listing_date) }) : ""}
         </p>
         <div>
           <p className="text-xs text-muted">{t("lib.issueSize")}</p>
           <p className="font-medium">
-            {ipo.issue_size_inr ? formatMoney(ipo.issue_size_inr, "crore", lang) : t("lib.notSet")}
+            {ipo.issue_size_inr ? formatMoney(ipo.issue_size_inr, "crore") : t("lib.notSet")}
           </p>
         </div>
         <FreshOfsBar ipo={ipo} />
         <p className="text-sm text-muted md:text-right">{t("lib.pages", { n: ipo.rhp_pages })}</p>
       </Link>
       {ipo.report_doc_id && (
-        <Link href={`/reports/${ipo.report_doc_id}`} className="absolute bottom-2 right-2 rounded-full border border-rule px-3 py-0.5 text-xs hover:bg-surface-2">
+        <Link href={`/reports/${ipo.report_doc_id}`} className="absolute bottom-2 right-2 rounded-[4px] border border-rule px-2 py-0.5 text-xs hover:bg-surface-2">
           {t("lib.report")}
         </Link>
       )}

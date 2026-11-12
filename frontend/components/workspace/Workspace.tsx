@@ -26,7 +26,7 @@ type Tab = "facts" | "document" | "ask";
 const headBtn = "h-11 rounded-[6px] border border-rule px-3 text-sm hover:bg-surface-2";
 
 function Header({ id }: { id: string }) {
-  const { t, lang } = useT();
+  const { t } = useT();
   const unit = useUi((s) => s.unit);
   const { data: ipos } = useIpos();
   const { data: xray } = useXray(id);
@@ -55,17 +55,17 @@ function Header({ id }: { id: string }) {
         </Link>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">{ipo?.company ?? xray?.company ?? " "}</h1>
-          {ipo?.sector && <span className="hidden rounded-full border border-rule px-3 py-0.5 text-sm text-muted sm:inline">{ipo.sector}</span>}
+          {ipo?.sector && <span className="hidden rounded-[4px] border border-rule px-2 py-0.5 text-sm text-muted sm:inline">{ipo.sector}</span>}
         </div>
       </div>
       <dl className="grid w-full grid-cols-3 gap-x-4 gap-y-2 text-sm sm:flex sm:w-auto sm:flex-wrap sm:gap-x-8">
         {item(t("ws.offerPrice"), priceText)}
-        {item(t("ws.issueSize"), ipo?.issue_size_inr ? formatMoney(ipo.issue_size_inr, unit, lang) : null)}
-        {item(t("ws.listed"), ipo?.listing_date ? formatDate(ipo.listing_date, lang) : null)}
+        {item(t("ws.issueSize"), ipo?.issue_size_inr ? formatMoney(ipo.issue_size_inr, unit) : null)}
+        {item(t("ws.listed"), ipo?.listing_date ? formatDate(ipo.listing_date) : null)}
         {xray?.bid_closed &&
           item(
             t("ws.bidClosed"),
-            t("ws.bidClosedValue", { date: formatDate(xray.bid_closed.closed_on, lang), page: xray.bid_closed.page }),
+            t("ws.bidClosedValue", { date: formatDate(xray.bid_closed.closed_on), page: xray.bid_closed.page }),
           )}
       </dl>
       <div className="flex max-w-full flex-wrap items-center gap-2">

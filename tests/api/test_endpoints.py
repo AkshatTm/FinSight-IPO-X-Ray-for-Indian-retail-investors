@@ -31,7 +31,6 @@ from finsight.core.schemas import (
     XRay,
 )
 from finsight.retrieve import Hit, SearchResult
-from finsight.voice import AsrManager, Transcript
 
 IPO = "ather-energy-2025"
 TEXT = "Fresh Issue of up to Rs. 26,260 million."
@@ -113,11 +112,6 @@ class FakeBackend:
 
     def unload(self) -> None:
         self.loaded = False
-
-    def transcribe_detailed(self, audio_path: Path, language: str = "hi") -> Transcript:
-        return Transcript(
-            text="पैसा कहाँ लगेगा", language=language, duration_s=4.0, seconds=0.1, model="fake"
-        )
 
 
 @pytest.fixture
@@ -245,17 +239,18 @@ def test_suggested_questions_include_the_scale_trick_from_the_xray(client: TestC
     assert {"normal", "trick", "advice"} <= set(kinds)
     trick = next(r for r in rows if r["kind"] == "trick")
     assert trick["text"] == "Is the fresh issue ₹2,626 lakh?"
-    assert any(r["language"] == "hi" for r in rows)
+    assert {r["language"] for r in rows} == {"en"}  # final: English only
     no_xray = client.get("/api/ipos/lenskart-2025/suggested-questions").json()
     assert "trick" not in [r["kind"] for r in no_xray]
 
 
-def test_glossary_in_both_languages(client: TestClient) -> None:
+def test_glossary_is_english_and_ignores_a_stray_lang(client: TestClient) -> None:
     en = client.get("/api/glossary").json()
-    hi = client.get("/api/glossary", params={"lang": "hi"}).json()
-    assert len(en) == len(hi) >= 17
+    hi = client.get("/api/glossary", params={"lang": "hi"})
+    assert hi.status_code == 200
+    assert hi.json() == en
+    assert len(en) >= 17
     assert next(g for g in en if g["term"] == "sebi")["title"] == "SEBI"
-    assert next(g for g in hi if g["term"] == "sebi")["title"] == "सेबी"
 
 
 def test_lab_serves_result_files_and_404s_when_missing(client: TestClient) -> None:
@@ -273,8 +268,7 @@ def test_weaklabels_payload_carries_the_audit_when_present(
     assert client.get("/api/lab/weaklabels").json() == {"n_ipos": 389}
     (eval_dir / "weaklabel_audit.json").write_text('{"precision": 0.9}', encoding="utf-8")
     assert client.get("/api/lab/weaklabels").json() == {"n_ipos": 389, "audit": {"precision": 0.9}}
-    (eval_dir / "asr.json").write_text('{"models": {}}', encoding="utf-8")
-    assert client.get("/api/lab/asr").status_code == 200
+    assert client.get("/api/lab/asr").status_code == 404  # voice removed (final)
     assert client.get("/api/lab/retrieval").status_code == 404
 
 
@@ -284,7 +278,7 @@ def test_health_degraded_without_ollama_and_ok_in_demo_mode(
     body = client.get("/api/health").json()
     assert body["status"] == "degraded"
     assert body["models"]["llm"]["loaded"] is False
-    assert body["models"]["asr"] == {"name": None, "loaded": False, "lazy": True}
+    assert "asr" not in body["models"]
     app_state.settings.demo_mode = True
     assert client.get("/api/health").json()["status"] == "ok"
 
@@ -352,32 +346,11 @@ def test_recorder_refuses_a_stream_without_final(app_state: AppState) -> None:
         app_state.demo.record(IPO, "q", "en", [("stage", StageEvent(name="guard", status="start"))])
 
 
-# ------------------------------------------------------------------------------------ voice
-def test_voice_is_off_in_the_light_profile(client: TestClient) -> None:
-    r = client.post("/api/voice", files={"audio": ("a.webm", b"abc")})
-    assert r.status_code == 503
-    assert r.json()["error"]["code"] == "asr_failed"
-
-
-def test_voice_transcribes_with_the_manager(client: TestClient, app_state: AppState) -> None:
-    app_state.settings.voice.asr = "faster-whisper-small"
-    app_state._asr = AsrManager(FakeBackend())  # type: ignore[arg-type]
-    r = client.post("/api/voice", files={"audio": ("a.webm", b"abc")}, data={"language": "hi"})
-    assert r.status_code == 200
-    body = r.json()
-    assert body["transcript"] == "पैसा कहाँ लगेगा"
-    assert body["asr_model"] == "fake"
-    assert set(body) == {"transcript", "language", "asr_model", "ms"}
-    assert client.get("/api/health").json()["models"]["asr"]["loaded"] is True
-
-
-def test_voice_rejects_empty_and_oversized_audio(client: TestClient, app_state: AppState) -> None:
-    app_state.settings.voice.asr = "faster-whisper-small"
-    app_state._asr = AsrManager(FakeBackend())  # type: ignore[arg-type]
-    assert client.post("/api/voice", files={"audio": ("a.webm", b"")}).status_code == 422
-    big = client.post("/api/voice", files={"audio": ("a.webm", b"x" * 4_000_001)})
-    assert big.status_code == 413
-    assert big.json()["error"]["code"] == "audio_too_long"
+def test_voice_route_is_gone_and_a_stray_language_is_ignored(client: TestClient) -> None:
+    assert client.post("/api/voice", files={"audio": ("a.webm", b"abc")}).status_code in (404, 405)
+    r = client.post("/api/chat", json={"ipo_id": "nope", "question": "q", "language": "hi",
+                                       "source": "voice"})  # fmt: skip
+    assert r.status_code != 422
 
 
 def test_phase2_lab_follows_the_b06_mapping(client: TestClient, app_state: AppState) -> None:

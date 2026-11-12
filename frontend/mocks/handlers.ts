@@ -49,9 +49,9 @@ export const handlers = [
     DETAILS[String(params.id)] ? HttpResponse.json(pageWords(Number(params.n))) : notFound(),
   ),
   http.post("/api/chat", async ({ request }) => {
-    const body = (await request.json()) as { ipo_id: string; question: string; language: "en" | "hi" };
+    const body = (await request.json()) as { ipo_id: string; question: string };
     if (!DETAILS[body.ipo_id]) return notFound();
-    const steps = scenario(body.question, body.language);
+    const steps = scenario(body.question);
     const enc = new TextEncoder();
     let i = 0;
     const stream = new ReadableStream<Uint8Array>({
@@ -78,15 +78,6 @@ export const handlers = [
   http.get("/api/lab/:name", () =>
     HttpResponse.json({ error: { code: "not_available", message: "No results yet." } }, { status: 404 }),
   ),
-  http.post("/api/voice", async () => {
-    await delay(900);
-    return HttpResponse.json({
-      transcript: "इस आईपीओ का पैसा कहाँ लगेगा?",
-      language: "hi",
-      asr_model: "mock",
-      ms: 900,
-    });
-  }),
   http.get("/api/traces/:id", ({ params }) =>
     HttpResponse.json({
       trace_id: String(params.id),

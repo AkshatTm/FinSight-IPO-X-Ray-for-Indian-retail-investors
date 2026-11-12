@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useReducer, useState } from "react";
 import type { Schemas } from "@/lib/api/client";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { applyJobEvent, EMPTY_JOB, followJob, ROWS, rowState, type JobEvent, type JobView } from "@/lib/jobs";
 import { rejectionFor } from "@/lib/upload";
 import { useT } from "@/lib/useT";
@@ -24,8 +24,12 @@ function doneText(t: ReturnType<typeof useT>["t"], key: string, v: JobView): str
     case "risks":
       return t("proc.risks.done", { n: String(d("risks_split").n_risks ?? "") });
     case "simplify": {
-      const p = v.progress.simplify ?? { done: 0, total: 15 };
-      return t("proc.simplify.done", { done: p.done, total: p.total });
+      // The stage only queues the rewrites; the background worker finishes them later and the backend
+      // sends no progress for it. Report what was queued, never a made-up "0 of 15".
+      const p = v.progress.simplify;
+      if (p && p.total > 0) return t("proc.simplify.done", { done: p.done, total: p.total });
+      const queued = Number(d("simplify").queued);
+      return queued > 0 ? t("proc.simplify.queued", { n: queued }) : t("proc.simplify.none");
     }
     default:
       return t(`proc.${key}.done` as StringKey);
@@ -69,7 +73,7 @@ export function ProcessingScreen({ doc, onSeeReady }: { doc: Schemas["DocRecord"
         <p role="alert" data-testid="rejection" className="rounded-[8px] border border-rule bg-surface-2 p-4">
           {t(`rej.${rejection}` as StringKey, { max_mb: 50 })}
         </p>
-        <Link href="/upload" className="btn mt-6 inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg">
+        <Link href="/upload" className="btn mt-6 inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-on-accent">
           {t("proc.tryAnother")}
         </Link>
       </div>
@@ -82,7 +86,7 @@ export function ProcessingScreen({ doc, onSeeReady }: { doc: Schemas["DocRecord"
       <p className="mt-2 text-muted">{t("proc.sub")}</p>
       {type === "drhp" && <p className="mt-4 rounded-[8px] border border-rule bg-surface-2 p-3 text-sm">{t("proc.drhp")}</p>}
       {view.ready.includes("facts") && (
-        <button type="button" onClick={onSeeReady} className="btn mt-6 inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-bg">
+        <button type="button" onClick={onSeeReady} className="btn mt-6 inline-flex h-11 items-center rounded-[6px] bg-stamp px-5 font-medium text-on-accent">
           {t("proc.seeReady")}
         </button>
       )}

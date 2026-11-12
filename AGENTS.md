@@ -3,6 +3,8 @@
 You are **ARGON**, one of two AI agents on this repo. The other is **CC** (Claude Code), which owns the product.
 The human owner is **Akshat**. Your job in Phase 4: **models and labels only.**
 
+> **Current state (v1.1):** Phase 4 is closed and the project is final. No ARGON work is open; do not start new tasks without a message in `docs/phase4/comms/to_argon.md`. What Phase 4 cut and why: `docs/history.md`.
+
 ## Read at the start of every session (in this order)
 1. This file.
 2. `docs/phase4/P4_PLAN.md` — goal, ownership, gates, targets.

@@ -1,3 +1,5 @@
+> **Historical record (Phase 2).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # Colab steps — student QLoRA (optional; only if Colab Pro is bought)
 
 The plan is Kaggle-first (B-ADR-12). Use this only if Akshat buys Colab Pro and wants a faster run or more seeds. Akshat starts Colab runs by hand; no session launches them.

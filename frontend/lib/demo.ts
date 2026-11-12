@@ -8,7 +8,6 @@ export const DEMO_QUESTIONS = {
   money: "What will the money be used for?",
   advice: "Should I apply for this IPO?",
 } as const;
-export const DEMO_AUDIO = "/demo/hi_q02.m4a";
 
 export type DemoStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 

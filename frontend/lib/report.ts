@@ -1,5 +1,5 @@
 import type { Schemas } from "@/lib/api/client";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 
 export type RedFlag = Schemas["RedFlag"];
 export type FlagStatus = RedFlag["status"];
@@ -98,8 +98,8 @@ export function topReasons(level: Pick<RiskLevel, "reasons">): RiskLevel["reason
 export const anchorFor = (source: "redflag" | "risk" | "override", id: string) =>
   source === "override" ? `severe-${id}` : `${source}-${id}`;
 
-export type Tab = "overview" | "redflags" | "risks" | "compare";
-export const TABS: readonly Tab[] = ["overview", "redflags", "risks", "compare"];
+export type Tab = "overview" | "financials" | "redflags" | "risks" | "compare";
+export const TABS: readonly Tab[] = ["overview", "financials", "redflags", "risks", "compare"];
 
 /** Which tab an anchor lives on. */
 export function tabForHash(hash: string): Tab | null {

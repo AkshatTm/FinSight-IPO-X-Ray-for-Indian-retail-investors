@@ -3,6 +3,17 @@ FinSight — licences and data notices
 Code
   MIT License (see LICENSE). Copyright (c) 2026 Akshat Tomar.
 
+Third-party models (downloaded from Hugging Face; each keeps its own licence)
+  Qwen/Qwen3-4B-Instruct-2507        Apache-2.0    base of the plain-English student (LoRA)
+  microsoft/deberta-v3-base          MIT           base of the risk classifier
+  deepset/deberta-v3-base-squad2     CC BY 4.0     base of the extractor QA model
+  BAAI/bge-reranker-v2-m3            Apache-2.0    chat reranker
+  BAAI/bge-m3                        MIT           novelty embeddings
+  google/muril-base-cased            Apache-2.0    guard classifier (trained, not shipped)
+  Gemma-4-31B-it (teacher)           Gemma terms   labels and rewrites of train-slice risks;
+                                                   outputs are used under Gemma's terms of use
+  Check each model's Hugging Face page for the full terms.
+
 Training data
   The Indian IPO datasets of Ghosh et al. (Hugging Face: sohomghosh/Indian_IPO_datasets)
   are licensed CC BY-NC-SA 4.0: non-commercial, share-alike, attribution required.
@@ -11,10 +22,12 @@ Training data
   same CC BY-NC-SA 4.0 terms. The dataset's Apply/Avoid ratings and listing-gain
   targets are never used.
 
-Models
-  Weights fine-tuned on that data inherit the CC BY-NC-SA 4.0 terms and are not
-  committed to this repository. Third-party base models keep their own licences
-  (see docs/04_TECH_STACK_AND_RESOURCES.md section 4).
+  configs/hedges.yaml counts a small subset of single words from the Loughran-McDonald
+  uncertainty category. The dictionary itself is not redistributed.
+
+Fine-tuned weights
+  Weights fine-tuned on CC BY-NC-SA data inherit those terms. No weights are committed to
+  this repository, and they are not released as a public model.
 
 Documents
   Red Herring Prospectuses and final Prospectuses are public regulatory filings

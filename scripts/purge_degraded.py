@@ -3,6 +3,7 @@ fingerprint, so it is analysed again from scratch the next time its PDF is uploa
 
     uv run python scripts/purge_degraded.py            # dry run: lists what would go
     uv run python scripts/purge_degraded.py --apply    # deletes (files, indexes, page images, rows)
+    uv run python scripts/purge_degraded.py --strict   # also empty and old-pipeline_version ones
 
 Showcase documents and anything still processing are never touched. Failed uploads that were
 rejected (scanned, password, ...) have nothing to purge but their row; they count as failed.
@@ -17,23 +18,57 @@ from finsight.core.config import Settings, get_settings
 from finsight.core.schemas import DocRecord
 from finsight.db import Database, make_database
 from finsight.jobs import delete_document
-from finsight.storage import Storage, make_storage
+from finsight.storage import Storage, doc_key, make_storage
 
 
-def reason(doc: DocRecord) -> str | None:
-    """Why this analysis should go, or ``None`` to keep it."""
-    if doc.is_showcase or doc.status in ("uploading", "processing"):
+def reason(
+    doc: DocRecord,
+    storage: Storage | None = None,
+    pipeline_version: str | None = None,
+    showcase: bool = False,
+) -> str | None:
+    """Why this analysis should go, or ``None`` to keep it.
+
+    With ``storage`` an analysis without facts (``xray.json``) or risks counts as empty; with
+    ``pipeline_version`` one made by another version counts as old. Showcase documents are kept
+    unless ``showcase``.
+    """
+    if doc.status in ("uploading", "processing") or (doc.is_showcase and not showcase):
         return None
-    if doc.analysis_status in ("degraded", "failed"):
-        return f"{doc.analysis_status}: {', '.join(doc.degraded_reasons) or 'no reason stored'}"
+    if doc.analysis_status in ("degraded", "failed") or doc.status == "failed":
+        why = ", ".join(doc.degraded_reasons) or "no reason stored"
+        return f"{doc.analysis_status or doc.status}: {why}"
+    if storage is not None:
+        missing = [
+            n for n in ("xray.json", "risks.json") if not storage.exists(doc_key(doc.doc_id, n))
+        ]
+        if missing:
+            return f"empty: no {', '.join(missing)}"
     if doc.fingerprint is None:
         return "unknown fingerprint (made before cache v2, or never finished)"
+    if pipeline_version is not None and doc.pipeline_version != pipeline_version:
+        return f"old pipeline_version {doc.pipeline_version} (now {pipeline_version})"
     return None
 
 
-def purge(db: Database, storage: Storage, settings: Settings, apply: bool) -> list[tuple[str, str]]:
-    """The ``(doc_id, reason)`` pairs found; deleted when ``apply``."""
-    found = [(d.doc_id, why) for d in db.all_docs() if (why := reason(d)) is not None]
+def purge(
+    db: Database,
+    storage: Storage,
+    settings: Settings,
+    apply: bool,
+    *,
+    strict: bool = False,
+    showcase: bool = False,
+) -> list[tuple[str, str]]:
+    """The ``(doc_id, reason)`` pairs found; deleted when ``apply``.
+
+    ``strict`` also counts empty analyses and other pipeline versions (final Step 4).
+    """
+    pv = settings.pipeline_version if strict else None
+    st = storage if strict else None
+    found = [
+        (d.doc_id, why) for d in db.all_docs() if (why := reason(d, st, pv, showcase)) is not None
+    ]
     if apply:
         for doc_id, _ in found:
             delete_document(db, storage, settings, doc_id)
@@ -44,9 +79,20 @@ def main(argv: list[str]) -> int:
     """Command-line entry point."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--apply", action="store_true", help="delete (default: dry run)")
+    parser.add_argument(
+        "--strict", action="store_true", help="also empty analyses and other pipeline versions"
+    )
+    parser.add_argument("--showcase", action="store_true", help="include showcase documents")
     args = parser.parse_args(argv)
     settings = get_settings()
-    found = purge(make_database(settings), make_storage(settings), settings, args.apply)
+    found = purge(
+        make_database(settings),
+        make_storage(settings),
+        settings,
+        args.apply,
+        strict=args.strict,
+        showcase=args.showcase,
+    )
     for doc_id, why in found:
         print(f"{'deleted' if args.apply else 'would delete'} {doc_id}: {why}")
     print(f"{len(found)} analyses {'deleted' if args.apply else 'found (dry run; use --apply)'}")

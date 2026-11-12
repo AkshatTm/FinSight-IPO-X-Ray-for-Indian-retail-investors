@@ -123,14 +123,14 @@ Cloud Run CPU deployment is not measured yet (E23). Whole-system RAM in use peak
 | ID | Question | Result files |
 | --- | --- | --- |
 | E13 | Are risks split correctly? | `b/segmentation.json` |
-| E14 | Are red-flag inputs extracted correctly? | `b/summary_extraction.json` |
-| E15 | Do red-flag statuses agree with hand-computed ones? | `b/redflags.json` |
-| E16 | How good is the category classifier? | `b/classifier_base.json`, `b/classifier_tfidf.json` |
+| E14 | Are red-flag inputs extracted correctly? | `b/summary_extraction.json`, `b/summary_extraction_v2.json`, `b/summary_extraction_v2_on_v31.json`, `c/e14_e15_versions.json`, `final/e14_today.json` |
+| E15 | Do red-flag statuses agree with hand-computed ones? | `b/redflags.json`, `b/redflags_v1_wired.json`, `b/redflags_v2.json`, `b/redflags_v2_on_v31.json`, `c/e14_e15_versions.json`, `final/e15_today.json` |
+| E16 | How good is the category classifier? | `b/classifier_base.json`, `b/classifier_tfidf.json`, `c/classifier_large.json`, `c/classifier_onnx_check.json` |
 | E17 | Does the seriousness rule make sense? | not run yet |
-| E18 | Are rewrites faithful? | not run yet |
-| E19 | Are rewrites easier to read? | not run yet |
-| E20 | Do rewrites keep numbers and certainty? | not run yet |
-| E21 | Does the risk level relate to real outcomes? | not run yet |
+| E18 | Are rewrites faithful? | `c/simplify_gold50.json`, `c/student_vs_base_gold50.json` |
+| E19 | Are rewrites easier to read? | `c/student_eval.json` |
+| E20 | Do rewrites keep numbers and certainty? | `c/student_eval.json`, `c/student_vs_base_gold50.json` |
+| E21 | Does the risk level relate to real outcomes? | `b/risklevel_fit.json`, `c/risklevel_scoring.json` |
 | E22 | Is "unusual" meaningful? | `b/novelty.json` |
 | E23 | Speed and robustness on unseen PDFs | not run yet |
 | E24 | Cost | not run yet |

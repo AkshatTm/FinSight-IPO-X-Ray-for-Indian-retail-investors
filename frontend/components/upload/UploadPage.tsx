@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth/supabase";
-import type { StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/copy";
 import { useToast } from "@/lib/toast";
 import { rejectionFor, uploadDocument, UploadError, type UploadPhase } from "@/lib/upload";
 import { useT } from "@/lib/useT";
@@ -69,7 +69,7 @@ export function UploadPage() {
             <button
               type="button"
               onClick={() => void onFile(lastFile, true)}
-              className="mt-3 block rounded-full border border-rule px-3 py-0.5 text-text hover:bg-surface"
+              className="mt-3 block rounded-[6px] border border-rule px-3 py-1 text-text hover:bg-surface"
             >
               {t("cache.without")}
             </button>
@@ -80,7 +80,7 @@ export function UploadPage() {
       {paused ? (
         <p className="mt-6 text-sm">
           {t("up.paused")}{" "}
-          <Link href="/ipos" className="text-stamp underline underline-offset-2">
+          <Link href="/ipos" className="text-accent-ink underline underline-offset-2">
             {t("nav.ipos")}
           </Link>
         </p>
@@ -89,7 +89,7 @@ export function UploadPage() {
           <button
             type="button"
             onClick={() => void signIn("/upload")}
-            className="btn inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-bg"
+            className="btn inline-flex h-12 items-center rounded-[6px] bg-stamp px-6 font-medium text-on-accent"
           >
             {t("up.signInButton")}
           </button>

@@ -6,7 +6,7 @@ import finsight
 
 PACKAGES = [
     "core", "ingest", "parse", "normalize", "extract", "weaklabel", "retrieve", "generate",
-    "verify", "guard", "voice", "chat", "evaluate", "api", "pipeline",
+    "verify", "guard", "chat", "evaluate", "api", "pipeline",
 ]  # fmt: skip
 
 

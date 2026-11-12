@@ -1,9 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import Link from "next/link";
 import { apiGet, type Schemas } from "@/lib/api/client";
-import { STRINGS, type StringKey } from "@/lib/i18n";
+import { STRINGS, type StringKey } from "@/lib/copy";
 import { SAMPLE_REPORT_DOC_ID } from "@/lib/showcase";
 import { useT } from "@/lib/useT";
 
@@ -24,32 +25,34 @@ const EXAMPLE: Record<string, { ipo: string; key: StringKey }> = {
 
 type Prefix = "p" | "q" | "r";
 
-function Flow({ prefix, count, heading, title }: { prefix: Prefix; count: number; heading: string; title?: (n: number) => string }) {
+function Flow({ prefix, count, heading, title, image }: { prefix: Prefix; count: number; heading: string; title?: (n: number) => string; image?: { src: string; alt: string } }) {
   const { t } = useT();
   const body = (n: number) => `how.${prefix}${n}.b`;
   const steps = Array.from({ length: count }, (_, i) => i + 1);
   return (
-    <section aria-label={heading} className="mt-12">
-      <h2 className="text-xl font-semibold">{heading}</h2>
-      <ol className={`mt-5 grid gap-3 sm:grid-cols-2 ${count > 6 ? "lg:grid-cols-4" : "lg:grid-flow-col lg:auto-cols-fr"}`}>
+    <section aria-label={heading} className="mt-12 grid gap-x-12 gap-y-5 border-t border-rule pt-8 md:grid-cols-[minmax(0,5fr)_minmax(0,8fr)]">
+      <div>
+        <h2 className="text-xl font-semibold tracking-tight">{heading}</h2>
+        {image && (
+          <Image src={image.src} alt={image.alt} width={800} height={600} sizes="(min-width: 768px) 360px, 100vw" className="mt-4 hidden aspect-[4/3] w-full max-w-[360px] rounded-[6px] border border-rule object-cover md:block" />
+        )}
+      </div>
+      <ol className="divide-y divide-rule">
         {steps.map((n) => (
-          <li key={n} className="relative rounded-[10px] border border-rule bg-surface p-4">
-            <span className="grid h-7 w-7 place-items-center rounded-full border border-rule font-mono text-xs">{n}</span>
-            <h3 className="mt-3 font-semibold">{title ? title(n) : t(`how.${prefix}${n}.h` as StringKey)}</h3>
-            {body(n) in STRINGS && <p className="mt-1 text-sm text-muted">{t(body(n) as StringKey)}</p>}
-            {EXAMPLE[`${prefix}${n}`] && (
-              <Link
-                href={`/ipos/${EXAMPLE[`${prefix}${n}`].ipo}`}
-                className="mt-3 inline-flex min-h-11 items-center text-sm text-stamp underline underline-offset-4"
-              >
-                {t(EXAMPLE[`${prefix}${n}`].key)}
-              </Link>
-            )}
-            {n < count && count <= 6 && (
-              <svg aria-hidden viewBox="0 0 24 24" className="absolute -right-[14px] top-1/2 z-10 hidden h-6 w-6 -translate-y-1/2 text-muted lg:block" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 12h10M13 8l4 4-4 4" />
-              </svg>
-            )}
+          <li key={n} className="grid grid-cols-[2rem_1fr] gap-x-3 py-4 first:pt-0 last:pb-0">
+            <span className="num pt-0.5 text-lg text-muted">{n}</span>
+            <div>
+              <h3 className="font-semibold">{title ? title(n) : t(`how.${prefix}${n}.h` as StringKey)}</h3>
+              {body(n) in STRINGS && <p className="mt-1 max-w-[62ch] text-muted">{t(body(n) as StringKey)}</p>}
+              {EXAMPLE[`${prefix}${n}`] && (
+                <Link
+                  href={`/ipos/${EXAMPLE[`${prefix}${n}`].ipo}`}
+                  className="mt-2 inline-flex min-h-11 items-center text-sm text-accent-ink underline underline-offset-4"
+                >
+                  {t(EXAMPLE[`${prefix}${n}`].key)}
+                </Link>
+              )}
+            </div>
           </li>
         ))}
       </ol>
@@ -69,21 +72,22 @@ function UploadFlow() {
   const n = level?.corpus_n ?? 0;
   const title = (step: number) =>
     step === 6 ? (n > 0 ? t("how.r6.h", { n: n.toLocaleString("en-US") }) : t("how.r6.h0")) : t(`how.r${step}.h` as StringKey);
-  return <Flow prefix="r" count={8} heading={t("how.row3")} title={title} />;
+  return <Flow prefix="r" count={8} heading={t("how.row3")} title={title} image={{ src: "/images/how-dawn.webp", alt: "A hazy city skyline across the water at sunrise." }} />;
 }
 
 export function HowItWorks() {
   const { t } = useT();
   return (
     <div className="py-12 md:py-16">
-      <h1 className="text-[2.25rem] font-semibold leading-tight tracking-tight md:text-[3rem]">{t("how.title")}</h1>
+      <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-[2.5rem]">{t("how.title")}</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted">{t("how.intro")}</p>
-      <Flow prefix="p" count={6} heading={t("how.row1")} />
-      <Flow prefix="q" count={5} heading={t("how.row2")} />
+      <Flow prefix="p" count={6} heading={t("how.row1")} image={{ src: "/images/how-documents.webp", alt: "A tall stack of printed offer documents with a blue paper clip on the top page." }} />
+      <Flow prefix="q" count={5} heading={t("how.row2")} image={{ src: "/images/how-ledger.webp", alt: "An open ledger with a brass magnifying glass resting on its ruled page." }} />
       <UploadFlow />
-      <section className="mt-16 max-w-2xl border-t border-rule pt-4">
+      <section className="mt-12 grid gap-x-12 border-t border-rule pt-8 md:grid-cols-[minmax(0,5fr)_minmax(0,8fr)]">
+        <span aria-hidden />
         {([1, 2, 3] as const).map((n) => (
-          <div key={n} className="border-b border-rule py-5">
+          <div key={n} className="border-b border-rule py-5 first:pt-0 md:col-start-2">
             <h2 className="font-semibold">{t(`how.faq${n}.q` as StringKey)}</h2>
             <p className="mt-2 text-muted">{t(`how.faq${n}.a` as StringKey)}</p>
           </div>

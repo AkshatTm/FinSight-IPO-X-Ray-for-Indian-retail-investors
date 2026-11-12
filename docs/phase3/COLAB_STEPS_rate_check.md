@@ -1,3 +1,5 @@
+> **Historical record (Phase 3).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # COLAB_STEPS_rate_check — vLLM smoke on the L4 (and optional re-check of rates)
 
 **Job:** confirm the vLLM pin with a small AWQ model, once. **GPU:** **L4** (any sm80+ GPU works: A100, H100; a T4 skips the vLLM test). **Expected:** ~10 minutes ≈ 0.3 units. **Notebook:** `notebooks/colab/c0_rate_check.ipynb`

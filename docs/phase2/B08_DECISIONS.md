@@ -1,3 +1,5 @@
+> **Historical record (Phase 2).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # B08 — Decisions for Big Phase 2 (B-ADRs)
 
 Status meanings as in `09_DECISIONS.md`. Claude Code adds these to `docs/09_DECISIONS.md` (prefixed **B-ADR**) in B0.2 as **proposed**; Akshat marks them accepted.

@@ -412,6 +412,9 @@ class SevereOverride(BaseModel):
     evidence: PageEvidence
     rule: str = ""
     mentions: int = 1
+    # C-ADR-26: whom the event is about. Only ``issuer`` (the company or its subsidiaries) forces
+    # the high level; an order on the promoter, a group company or a director is shown only.
+    about: Literal["issuer", "promoter", "group_company", "director"] = "issuer"
 
 
 class RedFlags(BaseModel):
@@ -440,7 +443,8 @@ class RiskLevel(BaseModel):
     points: int
     max_points: int
     score: float  # points / max_points
-    percentile: float  # share of reference IPOs with a lower score (0-100)
+    percentile: float | None  # share of reference IPOs with a lower score (0-100); None: hidden
+    percentile_note: str | None = None  # why the percentile is hidden (C-ADR-28)
     checks_available: int
     reasons: list[RiskLevelReason]
     thresholds: dict[str, float]

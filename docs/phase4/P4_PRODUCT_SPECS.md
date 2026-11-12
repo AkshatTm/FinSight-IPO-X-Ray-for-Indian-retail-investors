@@ -1,3 +1,5 @@
+> **Historical record (Phase 4).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # Phase 4 — Product specs (CC)
 
 CC keeps all phase 1–3 conventions (module contracts, pydantic at boundaries, tests per module, no reading PDFs/weights,

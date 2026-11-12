@@ -29,6 +29,7 @@ class ReportOverview(BaseModel):
     top_risks: list[dict[str, Any]] | None = None
     redflags_summary: list[dict[str, Any]] | None = None
     offer_line_params: dict[str, Any] | None = None
+    sod: dict[str, Any] | None = None  # sod.json (CC-06): financial rows, ratios, strengths
 
 
 def _read(storage: Storage, doc_id: str, name: str) -> Any:
@@ -64,6 +65,7 @@ def assemble(
         offer_line_params=(summary or {}).get("offer_line_params")
         if isinstance(summary, dict)
         else None,
+        sod=_read(storage, doc.doc_id, "sod.json"),
     )
 
 

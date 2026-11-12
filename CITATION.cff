@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use FinSight, please cite it as below."
+title: "FinSight: IPO X-Ray for Indian retail investors"
+abstract: >-
+  A local web app that reads an Indian IPO offer document (RHP, DRHP or prospectus) and
+  produces a cited fact sheet, red flags, plain-English risk factors, a risk level with
+  reasons, comparisons and a chat whose numbers are checked against the document.
+  Open-weight models only; not investment advice.
+type: software
+authors:
+  - family-names: Tomar
+    given-names: Akshat
+repository-code: "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors"
+license: MIT
+version: "1.1"
+date-released: "2026-11-07"
+keywords:
+  - IPO
+  - red herring prospectus
+  - document understanding
+  - retrieval-augmented generation
+  - India

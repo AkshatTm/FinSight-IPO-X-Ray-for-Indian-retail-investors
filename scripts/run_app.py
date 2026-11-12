@@ -63,7 +63,10 @@ def ensure_ollama() -> str | None:
         if exe is None:
             return "Ollama is not installed. Get it from https://ollama.com/download, then retry."
         say("Starting Ollama ...")
-        flags = 0x00000008 | 0x00000200 if os.name == "nt" else 0  # detached: outlives this script
+        # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP: a hidden console that outlives this script.
+        # Not DETACHED_PROCESS: without a console every model runner Ollama starts would open
+        # (and close) a terminal window of its own.
+        flags = 0x08000000 | 0x00000200 if os.name == "nt" else 0
         subprocess.Popen(
             [exe, "serve"],
             stdout=subprocess.DEVNULL,

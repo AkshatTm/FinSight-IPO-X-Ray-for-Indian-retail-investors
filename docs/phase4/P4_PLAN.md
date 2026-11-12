@@ -1,3 +1,5 @@
+> **Historical record (Phase 4).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # FinSight — Phase 4 Plan ("Beat the brokers")
 ### Wed 21 Oct → Sun 25 Oct 2026 · Two agents: Claude Code (CC) + Gemini 4 Argon in Antigravity (ARGON) · Owner: Akshat
 

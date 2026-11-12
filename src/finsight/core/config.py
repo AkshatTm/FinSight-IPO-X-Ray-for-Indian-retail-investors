@@ -72,13 +72,6 @@ class RetrieveConfig(BaseModel):
     abstain_thresholds: dict[str, float] = Field(default_factory=dict)
 
 
-class VoiceConfig(BaseModel):
-    """Speech recognition model (``off`` disables voice) and idle unload time."""
-
-    asr: str = "off"
-    idle_unload_s: int = 120
-
-
 class VerifyConfig(BaseModel):
     """Verifier switches (the optional NLI check)."""
 
@@ -199,7 +192,6 @@ class Settings(BaseSettings):
     paths: Paths = Field(default_factory=Paths)
     llm: LLMConfig = Field(default_factory=LLMConfig)
     retrieve: RetrieveConfig = Field(default_factory=RetrieveConfig)
-    voice: VoiceConfig = Field(default_factory=VoiceConfig)
     verify: VerifyConfig = Field(default_factory=VerifyConfig)
     guard: GuardConfig = Field(default_factory=GuardConfig)
     uploads: UploadsConfig = Field(default_factory=UploadsConfig)

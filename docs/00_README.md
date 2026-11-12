@@ -1,3 +1,5 @@
+> **Historical record (Phase 1).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+
 # FinSight — Documentation Index (read this first)
 
 > **Big Phase 2 (from 3 Oct 2026):** the Phase 2 docs live in `docs/phase2/` (start with `B00_README.md`, then `B07_ROADMAP.md` and `B_EXECUTION_PLAN.md`). Where they disagree with a numbered doc here, the Phase 2 doc wins (B00 precedence).

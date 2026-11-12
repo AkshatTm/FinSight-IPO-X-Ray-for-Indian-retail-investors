@@ -1,0 +1,10 @@
+{"ipo_id": "ather-energy-2025", "split": "dev", "findings": [["regulator_order", "director", 360]], "forced_high_before": true, "forced_high_now": false}
+{"ipo_id": "groww-2025", "split": "test", "findings": [["default_or_recall", "issuer", 63]], "forced_high_before": true, "forced_high_now": true}
+{"ipo_id": "hdb-financial-services-2025", "split": "test", "findings": [["default_or_recall", "issuer", 428], ["regulator_order", "issuer", 444], ["fraud", "issuer", 433]], "forced_high_before": true, "forced_high_now": true}
+{"ipo_id": "hexaware-technologies-2025", "split": "dev", "findings": [], "forced_high_before": false, "forced_high_now": false}
+{"ipo_id": "lenskart-2025", "split": "test", "findings": [["fraud", "director", 955]], "forced_high_before": true, "forced_high_now": false}
+{"ipo_id": "lg-electronics-india-2025", "split": "test", "findings": [], "forced_high_before": false, "forced_high_now": false}
+{"ipo_id": "meesho-2025", "split": "test", "findings": [], "forced_high_before": false, "forced_high_now": false}
+{"ipo_id": "physicswallah-2025", "split": "test", "findings": [["going_concern", "issuer", 76], ["qualified_audit", "issuer", 82]], "forced_high_before": true, "forced_high_now": true}
+{"ipo_id": "tata-capital-2025", "split": "test", "findings": [["default_or_recall", "issuer", 55], ["regulator_order", "director", 675], ["fraud", "issuer", 465]], "forced_high_before": true, "forced_high_now": true}
+{"ipo_id": "urban-company-2025", "split": "dev", "findings": [], "forced_high_before": false, "forced_high_now": false}
