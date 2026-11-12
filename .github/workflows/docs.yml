@@ -40,10 +40,14 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
+      - name: Links in every Markdown file resolve
+        run: uv run python scripts/check_links.py
+      - name: README results table is current
+        run: uv run python scripts/readme_results.py --check
       - name: Markdown lint on the site sources
         run: >-
-          npx -y markdownlint-cli2@0.23.3 docs/index.md docs/glossary.md docs/evaluation.md
-          docs/troubleshooting.md docs/security_review.md "docs/reference/*.md" "docs/adr/*.md" "docs/architecture/*.md"
-          "docs/tutorials/*.md" "docs/howto/*.md" "docs/model_cards/*.md" "docs/datasheets/*.md"
-          "docs/runbooks/*.md" CHANGELOG.md CONTRIBUTING.md SECURITY.md PRIVACY.md
-          CODE_OF_CONDUCT.md frontend/README.md
+          npx -y markdownlint-cli2@0.23.3 README.md docs/index.md docs/glossary.md docs/evaluation.md docs/faq.md
+          docs/history.md "docs/getting-started/*.md" "docs/user-guide/*.md" "docs/architecture/*.md"
+          "docs/data/*.md" "docs/evaluation/*.md" "docs/development/*.md" "docs/operations/*.md"
+          "docs/reference/*.md" "docs/adr/*.md" "docs/model_cards/*.md" "docs/datasheets/*.md"
+          CHANGELOG.md CONTRIBUTING.md SECURITY.md PRIVACY.md CODE_OF_CONDUCT.md frontend/README.md

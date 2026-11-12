@@ -1,35 +1,36 @@
 # Privacy
 
-FinSight explains public IPO offer documents. It is built to keep as little about you as possible. This page says, in plain English, what it keeps, for how long, and how to have it removed.
+FinSight explains public IPO offer documents, and it runs entirely on your own computer. This page says what it keeps, where, and how to delete it.
 
-## What FinSight stores
+## What FinSight stores, and where
 
-| What | Why | How long |
+Everything is in the `data/` folder of your copy of the repository. Nothing is sent to a server, and no paid or hosted AI service is called.
+
+| What | Where | How long |
 | --- | --- | --- |
-| Your account id and email, from Google sign-in through Supabase | To link your uploads to you and enforce the daily limit | Until you ask for deletion |
-| Documents you upload, and the reports made from them | To show you the report | 30 days after upload, then deleted automatically (files and records) |
-| A record that you uploaded a document today (account id, document id, time) | To keep the daily upload limit fair | Kept after the document is deleted, so the limit cannot be reset by deletion |
-| Chat traces: the question, the passages used and the answer, with timings | To find and fix wrong answers | No account id is stored with them |
-| Server logs (request, document and job ids, errors) | To keep the service running | Google Cloud's default log retention |
+| Documents you upload, and every result made from them | `data/store/docs/<doc_id>/` (the PDF and one JSON file per stage) | until you delete them; `start.bat` sets retention to 3,650 days |
+| Page images and the chat search index | `data/processed/<doc_id>/` | until the document is deleted |
+| One row per document and per job, upload counts | `data/finsight.db` (SQLite) | until deleted |
+| Chat traces: the question, the passages used, the answer and timings | `data/traces.sqlite` | until you delete the file |
+| Logs | the *FinSight API* window (not written to disk unless you redirect them) | until the window closes |
 
-Showcase IPOs (the public examples in the library) are kept permanently; they are public filings.
+There are no accounts on the laptop: every upload belongs to one local user. The code still contains an optional Supabase sign-in, which is off; with it off no email or account id is stored.
 
-## What FinSight never stores or does
+## What FinSight never does
 
-- No passwords: sign-in is Google's, through Supabase.
-- No payment details, phone numbers or addresses of users.
-- No tracking or advertising cookies; no data is sold or shared for marketing.
-- Uploaded documents are never used to train models.
-- Offer documents are public filings, so a report is not treated as secret: anyone with its link (the document id) can open it, and a file someone already uploaded is recognised by its hash and opens the same report. Who uploaded it is never shown.
+- Send your documents, questions or results anywhere. Models run locally (Ollama, ONNX Runtime, PyTorch); they are downloaded once from Hugging Face.
+- Use uploaded documents to train models.
+- Set tracking or advertising cookies.
 
 ## Personal details inside documents
 
-Offer documents print names of promoters and directors and business contact details. FinSight shows business contacts (registered office, registrar, lead managers, the compliance officer). The chat refuses questions asking for a private person's home address, personal phone or email, or identity numbers, before it looks anything up.
+Offer documents print the names of promoters and directors and business contact details. FinSight shows them as printed. The chat refuses questions asking for a private person's home address, personal phone or email, or identity numbers.
 
-## Asking for deletion
+## How to delete
 
-Open an issue on the GitHub repository titled "Deletion request", **without** your email or any personal detail in it; Akshat will reply with a private way to confirm the account and will delete your account record, uploads and reports within 30 days. Uploads are deleted after 30 days in any case.
+- One document: **Delete** on its report, `DELETE /api/docs/{doc_id}`, or `uv run python -m finsight.jobs forget <doc_id>`. This removes the PDF, the results, the page images, the search index and its rows.
+- Everything: stop the app (`stop.bat`) and delete `data/finsight.db`, `data/traces.sqlite`, `data/store/` and the `data/processed/doc_*` folders.
 
 ## Changes
 
-Changes to this page are recorded in the [changelog](CHANGELOG.md).
+Changes to this page are recorded in the [changelog](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/CHANGELOG.md).

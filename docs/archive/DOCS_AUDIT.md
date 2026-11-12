@@ -33,7 +33,7 @@ search); the decisions and findings were made by reading the files.
 | ADR index Phase 3 table empty | docs/adr/index.md | `docs_gen.py` matched only `###` headings; C_DECISIONS uses `##` (fixed) |
 | No Phase 4 decision/plan status | everywhere | Phase 4 closed: Platform Bench, M1–M5, gold v4, CC-07/09/10 cut (PROGRESS.md) |
 | CHANGELOG has no `[1.0]`; `[Unreleased]` = final | CHANGELOG.md | tags `v1.0`, `v1.1-pre` exist; v1.1 released from this branch |
-| `docs/final/CLEANUP.md` | asked for in the brief | **does not exist** on any branch; the HF repo `AkshatTm/finsight-weights-archive` README refers to it and currently holds only that README (checked 7 Nov) |
+| `docs/final/CLEANUP.md` | asked for in the brief | **does not exist** on any branch; the HF repo `AkshatTm/finsight-weights-archive` README refers to it and held only that README (checked 7 Nov). **Update 12 Nov:** CLEANUP.md was added in `9d80aa1` and the archive now holds the weights; the operations page links both |
 | Dead links reported only as INFO | mkdocs.yml `validation: not_found: info` | site pages now fail the strict build on a dead link; `scripts/check_links.py` checks every Markdown file |
 | `docs/screenshots/` excluded from the site | mkdocs.yml | `screenshots/final/` is published so the user guide can show it |
 

@@ -63,7 +63,7 @@ Profiles from 02_ARCHITECTURE.md section 8. Pick one with FINSIGHT_PROFILE (defa
 | `profiles.full.verify` | `{ nli: false }` | turns on with P5.5 |
 | `profiles.full.demo_mode` | false | Replay recorded chat answers instead of calling the model. |
 | `profiles.local` | *(section)* | The laptop app (`start.bat`): the student model, BM25 + reranker. |
-| `profiles.local.llm` | `{ backend: ollama, model: "finsight-student:q4", num_ctx: 2048 }` | The laptop app (docs/RUN_LOCALLY.md, `uv run poe app`): the C2.5 student answers and rewrites through Ollama, retrieval is BM25 plus the cross-encoder reranker (GPU when there is one, otherwise CPU with the pool capped at 10). |
+| `profiles.local.llm` | `{ backend: ollama, model: "finsight-student:q4", num_ctx: 2048 }` | The laptop app (docs/getting-started/run.md, start.bat or `uv run poe app`): the C2.5 student answers and rewrites through Ollama, retrieval is BM25 plus the cross-encoder reranker (GPU when there is one, otherwise CPU with the pool capped at 10). |
 | `profiles.local.retrieve` | `{ dense: false, rerank: true, rerank_top_n: 20 }` | Retrieval: dense index, reranker and how many passages it reranks. |
 | `profiles.local.verify` | `{ nli: false }` | Number checker options (`nli` stays off). |
 | `profiles.local.demo_mode` | false | Replay recorded chat answers instead of calling the model. |

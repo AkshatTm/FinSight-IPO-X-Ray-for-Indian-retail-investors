@@ -26,8 +26,19 @@ Questions (dev + test) by language: en 65, hi 40, hinglish 12; review status: pe
 - `questions_dev.jsonl`, `questions_test.jsonl`: chat questions with gold answers and evidence pages; some are unanswerable on purpose.
 - `weaklabel_audit.jsonl`: the 50-row audit of the weak labels (E1).
 - `advice_guard_set.csv`: advice and fact questions in English, Hindi and Hinglish (E8).
-- `gold_v3_template.jsonl`: the Phase 2 red-flag inputs template, to be filled in a local session.
-- The CSV sheets (`gold_verify_sheet.csv`, `hindi_fluency_sheet*.csv`, `asr_references.csv`) are the review sheets behind these files.
+- `gold_v3_template.jsonl`: the empty template of gold v3 (the labelled file is below).
+- The CSV sheets (`gold_verify_sheet.csv`, `hindi_fluency_sheet*.csv`, `asr_references.csv`) are the review sheets behind these files. The Hindi and speech files are Phase 1 history: the product is English-only since v1.1.
+
+### Phase 2 and 3 gold sets
+
+| File | What | Used by |
+| --- | --- | --- |
+| `gold_v3_labelled.jsonl`, `gold_v3_summary.jsonl`, `redflag_status_gold.jsonl` | Gold v3: 280 summary and red-flag input rows of the 10 showcase IPOs (195 with a value) and 130 red-flag statuses; AI pre-fill verified by Akshat on the page | E14, E15 |
+| `gold_v3_1_summary.jsonl`, `redflag_status_gold_v3_1.jsonl`, `gold_v3_1_changelog.md` | Gold v3.1: 11 of 280 rows changed by four convention fixes (C-ADR-22), each listed in the changelog; test-informed | E14 / E15 history rows |
+| `gold150.jsonl`, `gold150_ratings.csv` | Gold-150: 150 test-slice risk factors with category and seriousness band; model pre-fill, Akshat agreed with 132 and changed 18 (`eval_results/c/gold150_verification.json`) | classifier test |
+| `simplify_gold50_sheet.csv`, `simplify_gold50_ratings.csv` | Gold-50: 50 test-slice risks rewritten by base, student and teacher, rated blind and shuffled by Akshat | student evaluation (E18) |
+| `novelty_pairs.csv`, `novelty_ratings.csv` | 60 rated pairs of risks for the "same risk" threshold (C-ADR-14) | novelty tau 0.71 |
+| `event_labels/` | L2 event labels (Phase 4, AI labels, unused); card: `event_labels/LABELS_CARD.md` | nothing shipped |
 
 The [data formats reference](../reference/data_formats.md) lists every column.
 

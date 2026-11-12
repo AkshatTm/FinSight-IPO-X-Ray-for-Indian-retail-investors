@@ -34,3 +34,16 @@ def test_the_block_is_replaced_between_the_markers_only() -> None:
     out = mod.replace_block(readme, "NEW")
     assert out == f"before\n{mod.START}\nNEW\n{mod.END}\nafter\n"
     assert mod.replace_block(out, "NEW") == out  # idempotent
+
+
+def test_final_rows_link_their_files_and_skip_missing_ones(tmp_path: Path) -> None:
+    (tmp_path / "final").mkdir()
+    write(
+        tmp_path,
+        "final/e15_today.json",
+        {"summary": {"accuracy": 0.769, "n_ipos": 10, "n_rows": 130}},
+    )
+    text = mod.render_final(tmp_path)
+    assert "**0.769** (130 statuses)" in text
+    assert "eval_results/final/e15_today.json)" in text
+    assert "E14" not in text  # no file, no row

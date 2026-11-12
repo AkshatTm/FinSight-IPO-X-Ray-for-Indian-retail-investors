@@ -53,4 +53,4 @@ see the [API guide](../reference/api-guide.md)) and on the command line
 
 Everything stays on your machine: the PDF and every stage's output in `data/store/docs/<doc_id>/`, the
 document and job rows in the SQLite file `data/finsight.db`. See
-[Storage and database](../architecture/storage.md) and [PRIVACY](../privacy.md).
+[Storage and database](../architecture/storage.md) and [PRIVACY](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/PRIVACY.md).

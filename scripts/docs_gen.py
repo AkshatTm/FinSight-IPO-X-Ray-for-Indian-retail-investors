@@ -678,6 +678,27 @@ RESULT_ALIASES = {
 }
 
 
+# Result files written after the plan tables (Phase 3 and the final session), per experiment.
+EXTRA_RESULTS: dict[str, list[str]] = {
+    "E14": ["b/summary_extraction_v2*.json", "c/e14_e15_versions.json", "final/e14_today.json"],
+    "E15": ["b/redflags_v*.json", "c/e14_e15_versions.json", "final/e15_today.json"],
+    "E16": ["c/classifier_large.json", "c/classifier_onnx_check.json"],
+    "E18": ["c/simplify_gold50.json", "c/student_vs_base_gold50.json"],
+    "E19": ["c/student_eval.json"],
+    "E20": ["c/student_eval.json", "c/student_vs_base_gold50.json"],
+    "E21": ["b/risklevel_fit.json", "c/risklevel_scoring.json"],
+}
+# What happened to an experiment beyond its files.
+EXPERIMENT_NOTES: dict[str, str] = {
+    "E9": "frontier answers were not collected; FinSight Bench v1 compares rules and the student",
+    "E12": "speech input removed in v1.1 (English-only); the file is history",
+    "E21": "thresholds fitted (C-ADR-25); the outcome comparison waits for `data/gold/outcomes.csv`",
+    "E23": "cut: no hosting (B-ADR-16); laptop timings are in FINAL_SCORECARD",
+    "E24": "cut: no hosting, no cost",
+    "E7c": "cut: no `cloud` profile",
+}
+
+
 def _found(planned: str) -> list[str]:
     names = RESULT_ALIASES.get(planned) or [planned.removeprefix("eval_results/")]
     hits: list[str] = []
@@ -696,17 +717,39 @@ def experiments() -> list[dict[str, Any]]:
                 continue
             cells = [c.strip() for c in line.strip("|").split(" | ")]
             planned = re.findall(r"`([^`]+\.json[^`]*)`", cells[-1])
-            found = sorted({f for p in planned for f in _found(p)})
-            out.append({"id": cells[0], "question": cells[1], "planned": planned, "found": found})
+            found = {f for p in planned for f in _found(p)}
+            for pattern in EXTRA_RESULTS.get(cells[0], []):
+                found |= {
+                    Path(p).relative_to(EVAL).as_posix() for p in glob.glob(str(EVAL / pattern))
+                }
+            out.append(
+                {"id": cells[0], "question": cells[1], "planned": planned, "found": sorted(found)}
+            )
     return out
 
 
 def _registry_block() -> str:
-    rows = ["| ID | Question | Result files |\n| --- | --- | --- |\n"]
+    rows = ["| ID | Question | Result files | Note |\n| --- | --- | --- | --- |\n"]
     for e in experiments():
-        status = ", ".join(f"`{f}`" for f in e["found"]) if e["found"] else "not run yet"
-        rows.append(f"| {e['id']} | {_esc(e['question'])} | {status} |\n")
+        status = ", ".join(f"`{f}`" for f in e["found"]) if e["found"] else "no result file"
+        note = EXPERIMENT_NOTES.get(e["id"], "")
+        rows.append(f"| {e['id']} | {_esc(e['question'])} | {status} | {note} |\n")
     return "".join(rows)
+
+
+def _scorecard_block() -> str:
+    """The v1.1 scorecard tables, copied from ``eval_results/final/FINAL_SCORECARD.md``."""
+    text = (EVAL / "final" / "FINAL_SCORECARD.md").read_text(encoding="utf-8")
+    body = text.split("\n", 1)[1].strip()
+    body = body.split("\n## What changed since v1.0")[0].rstrip()
+    body = re.sub(r"^## ", "### ", body, flags=re.M)
+    return (
+        "Copied from [`eval_results/final/FINAL_SCORECARD.md`](https://github.com/AkshatTm/"
+        "FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/"
+        "FINAL_SCORECARD.md); file paths in the tables are relative to the repository root.\n\n"
+        + body
+        + "\n"
+    )
 
 
 def _phase2_block() -> str:
@@ -1217,6 +1260,7 @@ def _bench_failures_block() -> str:
 
 BLOCKS: dict[str, dict[str, Callable[[], str]]] = {
     "docs/evaluation.md": {
+        "scorecard": _scorecard_block,
         "results": _results_block,
         "registry": _registry_block,
         "notes": _notes_block,
