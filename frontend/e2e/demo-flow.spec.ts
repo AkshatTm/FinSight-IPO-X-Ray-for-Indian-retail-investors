@@ -38,8 +38,9 @@ test("demo mode: hotkeys 1 to 7", async ({ page }) => {
   await page.keyboard.press("Escape");
   await expect(drawer).toHaveCount(0);
 
+  // Step 5 was the voice question; voice was removed in v1.1, so it only keeps the workspace open.
   await press(page, "5");
-  await expect(page.locator("textarea")).not.toHaveValue("", { timeout: 60_000 });
+  await expect(page).toHaveURL(/\/ipos\/ather-energy-2025/);
 
   await press(page, "6");
   await expect(ask.getByText("I can't tell you whether to invest.")).toBeVisible({ timeout: 60_000 });
