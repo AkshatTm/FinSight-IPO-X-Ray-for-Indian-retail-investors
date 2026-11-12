@@ -2,7 +2,7 @@
 
 import pytest
 
-from finsight.guard import check_output
+from vidura.guard import check_output
 
 LEAKS = [
     # the three shapes the rated bake-off sheet showed (addresses here are invented)

@@ -181,7 +181,7 @@ def test_teacher_notebook_runs_end_to_end_with_fake_vllm(
 
     from real import loader
 
-    from finsight.risks import teacher
+    from vidura.risks import teacher
 
     mk = load("make_colab_notebooks", "scripts/make_colab_notebooks.py")
     nb = mk.teacher()

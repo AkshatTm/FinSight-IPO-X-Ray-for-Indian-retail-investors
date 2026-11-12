@@ -1,5 +1,5 @@
-from finsight.core.schemas import Candidate, Page, ParsedDoc, Table, TableCell, TableValue
-from finsight.extract import TableExtractor, get_field
+from vidura.core.schemas import Candidate, Page, ParsedDoc, Table, TableCell, TableValue
+from vidura.extract import TableExtractor, get_field
 
 
 def make_doc(n: int = 200) -> ParsedDoc:
@@ -86,7 +86,7 @@ def test_serial_number_column_and_footnote_marks_are_dropped() -> None:
 
 
 def test_pure_offer_for_sale_gives_no_objects_table() -> None:
-    from finsight.core.schemas import Page, Section
+    from vidura.core.schemas import Page, Section
 
     text = "Our Company will not receive any proceeds from the Offer"
     doc = make_doc().model_copy(

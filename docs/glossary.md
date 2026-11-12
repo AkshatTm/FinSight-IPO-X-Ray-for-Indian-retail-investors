@@ -2,7 +2,7 @@
 
 # Glossary
 
-Plain-English meanings of the words FinSight uses. The first table is the list the app's glossary drawer shows (`GET /api/glossary`); the second covers words on the report pages; the third explains words used on the evaluation and model pages.
+Plain-English meanings of the words Vidura uses. The first table is the list the app's glossary drawer shows (`GET /api/glossary`); the second covers words on the report pages; the third explains words used on the evaluation and model pages.
 
 ## IPO terms (the app's glossary)
 
@@ -25,13 +25,13 @@ Plain-English meanings of the words FinSight uses. The first table is the list t
 | Objects of the offer | What the company plans to do with the money from the fresh issue. |
 | Lakh, crore, million | 1 lakh = 1,00,000. 1 crore = 100 lakh. 1 million = 10 lakh. So ₹100 crore = ₹1,000 million. |
 | [●] (blank) | A blank in the RHP for a value that isn't decided yet, usually the price. |
-| GMP | “Grey market premium”: unofficial trading talk before listing. It's not in the documents and FinSight doesn't track it. |
+| GMP | “Grey market premium”: unofficial trading talk before listing. It's not in the documents and Vidura doesn't track it. |
 
 ## Report terms
 
 | Term | Meaning |
 | --- | --- |
-| SOD (Summary of the Offer Document) | The short chapter near the front of an RHP that sums up the offer, the financials, litigation and related-party dealings. FinSight reads it first; when a document has none, it reads the chapters the summary would have covered. |
+| SOD (Summary of the Offer Document) | The short chapter near the front of an RHP that sums up the offer, the financials, litigation and related-party dealings. Vidura reads it first; when a document has none, it reads the chapters the summary would have covered. |
 | Risk factor | One numbered risk the company lists in its "Risk Factors" chapter. A large RHP lists 50 to 100. |
 | WACA (weighted average cost of acquisition) | The average price the promoters and other selling shareholders paid for their shares. Compared with the offer price in the "What insiders paid" check. |
 | RoNW (return on net worth) | Profit after tax as a percentage of net worth (shareholders' funds). Higher means more profit per rupee the owners put in. |

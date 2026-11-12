@@ -25,8 +25,8 @@ def build_overlay(src: Path, dst: Path, ipo_ids: list[str]) -> dict[str, list[st
     """Copy parsed documents and write fresh sections; returns the section ids changed per file."""
     from pydantic import TypeAdapter
 
-    from finsight.core.schemas import ParsedDoc, Section
-    from finsight.parse import find_sections
+    from vidura.core.schemas import ParsedDoc, Section
+    from vidura.parse import find_sections
 
     adapter = TypeAdapter(list[Section])
     changed: dict[str, list[str]] = {}

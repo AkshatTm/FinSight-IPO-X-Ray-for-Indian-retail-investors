@@ -6,9 +6,9 @@ from decimal import Decimal
 
 import pytest
 
-from finsight.core.schemas import Money, Page, ParsedDoc, Section, Word
-from finsight.summary import clean_label, extract_summary, values_by_source
-from finsight.summary.financials import RULES, summary_pages
+from vidura.core.schemas import Money, Page, ParsedDoc, Section, Word
+from vidura.summary import clean_label, extract_summary, values_by_source
+from vidura.summary.financials import RULES, summary_pages
 
 COLS = (230.0, 310.0, 390.0)
 
@@ -134,8 +134,8 @@ def test_all_dash_row_in_a_numeric_column_is_a_stated_zero() -> None:
 
 
 def test_dash_with_no_figure_in_its_row_or_column_is_not_read() -> None:
-    from finsight.summary.financials import otherwise_numeric
-    from finsight.summary.layout import Column, GridTable, Row
+    from vidura.summary.financials import otherwise_numeric
+    from vidura.summary.layout import Column, GridTable, Row
 
     def cell(text: str) -> Word:
         return _w(text, 200, 100)

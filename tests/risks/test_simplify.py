@@ -4,9 +4,9 @@ from typing import Any
 
 import pytest
 
-from finsight.core.config import SimplifyConfig
-from finsight.generate import LLMUnavailable, ReasoningLeak
-from finsight.risks.simplify import (
+from vidura.core.config import SimplifyConfig
+from vidura.generate import LLMUnavailable, ReasoningLeak
+from vidura.risks.simplify import (
     PROMPT_VERSION,
     Simplifier,
     clean,

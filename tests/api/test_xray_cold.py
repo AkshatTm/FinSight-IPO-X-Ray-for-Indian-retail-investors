@@ -11,10 +11,10 @@ from pathlib import Path
 
 import pytest
 
-from finsight.api import ipos
-from finsight.api.ipos import IpoStore
-from finsight.core.schemas import Candidate, Page, ParsedDoc, Word
-from finsight.extract import fill_boxes
+from vidura.api import ipos
+from vidura.api.ipos import IpoStore
+from vidura.core.schemas import Candidate, Page, ParsedDoc, Word
+from vidura.extract import fill_boxes
 
 
 def word(t: str, x: float) -> Word:

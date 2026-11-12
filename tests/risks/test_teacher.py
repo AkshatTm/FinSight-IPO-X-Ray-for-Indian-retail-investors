@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from finsight.risks import (
+from vidura.risks import (
     CATEGORIES,
     OUTPUT_SCHEMA,
     ParseError,
@@ -15,7 +15,7 @@ from finsight.risks import (
     unmatched_numbers,
     word_count,
 )
-from finsight.risks.filters import MAX_WORDS, REASONS
+from vidura.risks.filters import MAX_WORDS, REASONS
 
 ORIGINAL = (
     "Title: We depend on a few customers\n\n"

@@ -36,7 +36,7 @@ def test_scores_match_squad_definitions() -> None:
 
 
 def test_v3_manifests_hold_only_train_and_dev_slice_ipos() -> None:
-    from finsight.splits import load_splits
+    from vidura.splits import load_splits
 
     slices = {e.ipo_id: e.slice for e in load_splits(ROOT / "configs" / "splits.yaml").ipos}
     for name, allowed in (("weaklabel_v3_train", {"train"}), ("weaklabel_v3_dev", {"dev"})):

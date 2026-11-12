@@ -1,4 +1,4 @@
-# FinSight in one page (for ARGON)
+# Vidura in one page (for ARGON)
 
 **What it is.** IPO X-Ray for Indian retail investors. Upload an offer document (RHP/Prospectus) and get cited facts, red flags,
 a plain-English risk report, a Low/Medium/High risk level with reasons, a comparison with past IPOs, and a chat that checks every
@@ -24,5 +24,5 @@ IPOs, demo, Bench v1, Platform Bench). Every label row carries `ipo_id` and `lab
 `model`). Numbers in `metrics.json` come only from committed scripts. CPU limits matter: the runtime is a 16 GB laptop and a CPU/GPU VM later.
 
 **Key terms.** RHP = Red Herring Prospectus. SOD = Summary of the Offer Document (a section near the front). WACA = weighted average
-cost of acquisition. Bench v1 = the frozen FinSight Bench (7 test-slice showcase IPOs; Tasks A facts, B red flags, C chat questions,
+cost of acquisition. Bench v1 = the frozen Vidura Bench (7 test-slice showcase IPOs; Tasks A facts, B red flags, C chat questions,
 D rewrites, G advice probes). Platform Bench (Phase 4) = Groww / Zerodha / AngelOne pages vs RHP gold, 30 IPOs.

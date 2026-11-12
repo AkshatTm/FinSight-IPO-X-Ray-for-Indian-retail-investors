@@ -1,6 +1,6 @@
 # Jobs and the runner
 
-`finsight.jobs` runs a document's [stages](pipeline.md) in order, records events, and keeps partial
+`vidura.jobs` runs a document's [stages](pipeline.md) in order, records events, and keeps partial
 results.
 
 ## How a job runs
@@ -40,10 +40,10 @@ rewrites one risk at a time with the student and saves each to `simplified.json`
 ## Command line
 
 ```bash
-uv run python -m finsight.jobs run <doc_id> <job_id>   # run an existing job row without the API
-uv run python -m finsight.jobs simplify <doc_id>       # rewrite the queued risks
-uv run python -m finsight.jobs forget <doc_id>         # delete an analysis so the next upload starts fresh
-uv run python -m finsight.jobs sweep                   # delete uploads past retention
+uv run python -m vidura.jobs run <doc_id> <job_id>   # run an existing job row without the API
+uv run python -m vidura.jobs simplify <doc_id>       # rewrite the queued risks
+uv run python -m vidura.jobs forget <doc_id>         # delete an analysis so the next upload starts fresh
+uv run python -m vidura.jobs sweep                   # delete uploads past retention
 ```
 
 Quotas (`jobs/quotas.py`) count uploads per user and per day in Indian Standard Time; `start.bat` raises

@@ -3,10 +3,10 @@ from pathlib import Path
 import numpy as np
 from pydantic import TypeAdapter
 
-from finsight.core.schemas import Page, ParsedDoc, Section, Table, TableCell, Word
-from finsight.pipeline.index_stage import run_index
-from finsight.pipeline.layout import doc_outputs
-from finsight.retrieve import IpoIndex, Retriever, index_dir
+from vidura.core.schemas import Page, ParsedDoc, Section, Table, TableCell, Word
+from vidura.pipeline.index_stage import run_index
+from vidura.pipeline.layout import doc_outputs
+from vidura.retrieve import IpoIndex, Retriever, index_dir
 
 IPO = "acme-2025"
 

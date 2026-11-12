@@ -10,9 +10,9 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import Money, Passage, Placeholder
-from finsight.verify import evidence_amounts, verify_answer
-from finsight.verify.table_evidence import table_amounts, table_scale
+from vidura.core.schemas import Money, Passage, Placeholder
+from vidura.verify import evidence_amounts, verify_answer
+from vidura.verify.table_evidence import table_amounts, table_scale
 
 SAMPLES = Path(__file__).parents[2] / "data" / "samples" / "table_passages.jsonl"
 TABLES = {

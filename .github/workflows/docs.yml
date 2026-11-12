@@ -33,10 +33,10 @@ jobs:
       - name: Build the site (strict)
         run: uv run poe docs-build
       - name: Docstring coverage floor (70 %)
-        run: uv run interrogate src/finsight
+        run: uv run interrogate src/vidura
       - name: Docstring coverage target (80 %, warn-only)
         continue-on-error: true
-        run: uv run interrogate src/finsight --fail-under 80
+        run: uv run interrogate src/vidura --fail-under 80
       - uses: actions/setup-node@v5
         with:
           node-version: "22"

@@ -16,7 +16,7 @@ Segmentation counts and the automatic checks (E13) are in `eval_results/b/segmen
 
 ## How novelty reads the bank
 
-Novelty of a risk = the share of distinct past companies, inside the **rolling 4-year window** before the document (`configs/reference.yaml`, `finsight.splits.reference_bank`), with a similar risk. Evaluation windows contain train and dev IPOs only; the product window contains every collected IPO. The issuer itself is always left out.
+Novelty of a risk = the share of distinct past companies, inside the **rolling 4-year window** before the document (`configs/reference.yaml`, `vidura.splits.reference_bank`), with a similar risk. Evaluation windows contain train and dev IPOs only; the product window contains every collected IPO. The issuer itself is always left out.
 
 ## Real build
 

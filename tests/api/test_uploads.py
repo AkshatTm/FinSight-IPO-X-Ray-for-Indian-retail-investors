@@ -10,12 +10,12 @@ import pytest
 from fastapi.testclient import TestClient
 from make_fixture_pdf import build_offer_pdf
 
-from finsight.api.app import create_app
-from finsight.api.uploads_state import UploadState, get_upload_state
-from finsight.core.config import AuthConfig, load_settings
-from finsight.db import Database
-from finsight.jobs import InlineLauncher, process_document
-from finsight.storage import LocalStorage
+from vidura.api.app import create_app
+from vidura.api.uploads_state import UploadState, get_upload_state
+from vidura.core.config import AuthConfig, load_settings
+from vidura.db import Database
+from vidura.jobs import InlineLauncher, process_document
+from vidura.storage import LocalStorage
 
 
 @pytest.fixture
@@ -260,7 +260,7 @@ def test_limits_follow_the_config(client: TestClient, state: UploadState) -> Non
 def test_worker_launch_failure_is_a_503_and_a_failed_job(
     client: TestClient, state: UploadState, tmp_path: Path
 ) -> None:
-    from finsight.jobs import LaunchError
+    from vidura.jobs import LaunchError
 
     class Down:
         def launch(self, doc_id: str, job_id: str) -> None:

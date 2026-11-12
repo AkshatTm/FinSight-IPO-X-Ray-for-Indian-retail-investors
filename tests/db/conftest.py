@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 import sqlalchemy as sa
 
-from finsight.db import Database, metadata
+from vidura.db import Database, metadata
 
 PG_URL = os.environ.get("FINSIGHT_TEST_PG_URL")
 

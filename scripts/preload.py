@@ -28,8 +28,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from smoke_local import follow_job, get, upload  # noqa: E402
 
-from finsight.core.config import get_settings  # noqa: E402
-from finsight.core.ids import make_doc_id  # noqa: E402
+from vidura.core.config import get_settings  # noqa: E402
+from vidura.core.ids import make_doc_id  # noqa: E402
 
 LOG = ROOT / "data" / "preload_log.csv"
 

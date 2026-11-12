@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from finsight.core.schemas import Page, ParsedDoc, Section, Table, TableCell, Word
+from vidura.core.schemas import Page, ParsedDoc, Section, Table, TableCell, Word
 
 ROOT = Path(__file__).resolve().parent
 SOD = ROOT / "sod"  # Summary of the Offer Document pages of the P4 SOD fixtures (AR-02)

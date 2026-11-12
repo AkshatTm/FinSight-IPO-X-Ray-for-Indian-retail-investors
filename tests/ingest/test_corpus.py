@@ -5,7 +5,7 @@ from pathlib import Path
 import openpyxl
 import pytest
 
-from finsight.ingest.corpus import (
+from vidura.ingest.corpus import (
     CorpusDoc,
     build_corpus,
     corpus_stats,
@@ -169,7 +169,7 @@ def test_corpus_stats(tmp_path: Path) -> None:
     not Path("data/processed/corpus").exists(), reason="corpus not built (P1.5 hand-work)"
 )
 def test_real_corpus_has_no_demo_or_gold_ipo() -> None:
-    from finsight.ingest.exclusion import excluded_names, is_excluded
+    from vidura.ingest.exclusion import excluded_names, is_excluded
 
     names = excluded_names(Path("data/gold/excluded_ipos.txt"))
     for path in Path("data/processed/corpus").glob("*.json"):

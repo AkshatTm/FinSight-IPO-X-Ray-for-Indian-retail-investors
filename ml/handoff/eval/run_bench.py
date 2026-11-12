@@ -1,4 +1,4 @@
-"""Evaluate a student candidate on FinSight Bench v1 Tasks A / C (runs on the LAPTOP, not Colab).
+"""Evaluate a student candidate on Vidura Bench v1 Tasks A / C (runs on the LAPTOP, not Colab).
 
 Bench v1 is frozen and needs Ollama, so this wrapper runs in the product repo checkout (CC or
 Akshat runs it; ARGON asks in ``comms/to_cc.md``). Steps for a candidate Ollama tag ``TAG``

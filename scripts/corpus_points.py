@@ -10,7 +10,7 @@ novelty, written by the upload pipeline once the C2 models are wired in, C3.3) a
 score). ``--points-only`` writes ``points_only_scores.csv`` for every scored IPO: the variant for
 the corpus years, which have no tables and so no red flags.
 ``scripts/score_reference_ipos.py`` writes the scored risks and flags this script reads.
-``fit`` takes the bottom and top third of the **train + dev** scores (``finsight.risklevel
+``fit`` takes the bottom and top third of the **train + dev** scores (``vidura.risklevel
 .reference``), writes ``eval_results/b/risklevel_fit.json`` and rewrites ``configs/risklevel.yaml``
 (``provisional: false``, ``computed_on`` = the git sha). Test and bench scores are never used.
 
@@ -29,15 +29,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.core.schemas import RedFlag, Risk  # noqa: E402
-from finsight.risklevel import compute, load_config  # noqa: E402
-from finsight.risklevel.reference import (  # noqa: E402
+from vidura.core.schemas import RedFlag, Risk  # noqa: E402
+from vidura.risklevel import compute, load_config  # noqa: E402
+from vidura.risklevel.reference import (  # noqa: E402
     apply_fit,
     fit_thresholds,
     read_scores,
     write_scores,
 )
-from finsight.splits import load_splits, reference_config  # noqa: E402
+from vidura.splits import load_splits, reference_config  # noqa: E402
 
 DATA = Path(
     os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data")

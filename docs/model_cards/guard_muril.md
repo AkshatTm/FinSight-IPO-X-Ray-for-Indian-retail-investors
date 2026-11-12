@@ -10,7 +10,7 @@ tags: [safety, advice-guard, experiment]
 # Advice guard (keyword rules shipped; MuRIL not adopted)
 
 !!! info "Status in v1.1"
-    **Shipped: the keyword guard** (`finsight.guard`, no model): it declines questions asking for
+    **Shipped: the keyword guard** (`vidura.guard`, no model): it declines questions asking for
     advice, forecasts or private data before any model runs. **MuRIL was an experiment (E8) and is not
     used** (`guard.backend` defaults to the keyword guard): on 18 held-out questions it falsely blocked
     4 of 9 fact questions, the keyword guard none. The Hindi and Hinglish questions below date from
@@ -63,4 +63,4 @@ A guard that blocks too little lets the chat drift into advice; one that blocks 
 
 ## How to use and reproduce
 
-Set `guard.backend: muril` (or `FINSIGHT_GUARD__BACKEND=muril`) with weights in `models/guard_clf/` (never committed). Reproduce: `uv run python -m finsight.guard.clf_data` (split and package), then `uv run python -m finsight.guard.kaggle_clf push|status|fetch full` (Kaggle; `fetch` writes `eval_results/guard_clf.json`), then `uv run python -m finsight.evaluate.guard_eval` for `guard_compare.json`.
+Set `guard.backend: muril` (or `FINSIGHT_GUARD__BACKEND=muril`) with weights in `models/guard_clf/` (never committed). Reproduce: `uv run python -m vidura.guard.clf_data` (split and package), then `uv run python -m vidura.guard.kaggle_clf push|status|fetch full` (Kaggle; `fetch` writes `eval_results/guard_clf.json`), then `uv run python -m vidura.evaluate.guard_eval` for `guard_compare.json`.

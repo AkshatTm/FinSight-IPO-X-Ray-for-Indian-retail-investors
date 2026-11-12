@@ -18,10 +18,10 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from summary_eval import SECTIONS, load_summary  # noqa: E402
 
-from finsight.core.schemas import ParsedDoc  # noqa: E402
-from finsight.ingest.registry import list_demo_ipos  # noqa: E402
-from finsight.redflags import detect_severe  # noqa: E402
-from finsight.redflags.severe import forcing, with_auditor  # noqa: E402
+from vidura.core.schemas import ParsedDoc  # noqa: E402
+from vidura.ingest.registry import list_demo_ipos  # noqa: E402
+from vidura.redflags import detect_severe  # noqa: E402
+from vidura.redflags.severe import forcing, with_auditor  # noqa: E402
 
 
 def main() -> int:

@@ -31,8 +31,8 @@ Closing a window stops that part. To keep a log, run the API by hand and redirec
 | Build the upload-style reports of the 10 showcase IPOs | `uv run python scripts/build_showcase.py [--only <ipo_id>]` |
 | List analyses that are degraded or have an unknown model fingerprint | `uv run python scripts/purge_degraded.py` (dry run) |
 | Delete them (files, indexes, page images, rows) | `uv run python scripts/purge_degraded.py --apply` (add `--strict` for empty and old-version ones) |
-| Delete one analysis | `uv run python -m finsight.jobs forget <doc_id>` |
-| Delete uploads past retention | `uv run python -m finsight.jobs sweep` |
+| Delete one analysis | `uv run python -m vidura.jobs forget <doc_id>` |
+| Delete uploads past retention | `uv run python -m vidura.jobs sweep` |
 
 `purge_degraded.py` never touches showcase documents or anything still processing.
 
@@ -44,7 +44,7 @@ Closing a window stops that part. To keep a log, run the API by hand and redirec
    `file`, `pages`, `sha256`, the cover's `dated` line); add sector and listing date to
    `configs/ipo_meta.yaml`. A `split: test` IPO is for reported numbers only.
 3. Add it to `data/gold/excluded_ipos.txt` so no training data uses it.
-4. Build it: `uv run python -m finsight.pipeline build --ipo <ipo_id> --stage parse`, then `sections`,
+4. Build it: `uv run python -m vidura.pipeline build --ipo <ipo_id> --stage parse`, then `sections`,
    `tables`, `rules`, `xray`, `index` (and `qa` with the extractor weights); then
    `uv run python scripts/build_showcase.py --only <ipo_id>` for its full report.
 
@@ -68,7 +68,7 @@ cp -r data/store data/backup_$(date +%F)/
 
 Restore by stopping the app and copying them back. `data/backup_*` is gitignored. The final session
 made one such backup before purging blank and outdated analyses: `data/backup_2026-11-03/`
-(`finsight.db`, `store/`, and untracked gold v3.1 files).
+(`vidura.db`, `store/`, and untracked gold v3.1 files).
 
 ## Model weights and the archive
 

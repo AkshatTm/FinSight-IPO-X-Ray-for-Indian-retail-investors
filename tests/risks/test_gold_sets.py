@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.risks.gold_sets import (
+from vidura.risks.gold_sets import (
     CATEGORY_COLUMNS,
     agreement,
     category_gold,
@@ -17,7 +17,7 @@ from finsight.risks.gold_sets import (
     score_rewrites,
     write_csv,
 )
-from finsight.risks.teacher_input import Candidate
+from vidura.risks.teacher_input import Candidate
 
 BODY = " ".join(["word"] * 60)
 

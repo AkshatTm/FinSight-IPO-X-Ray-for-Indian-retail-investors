@@ -4,8 +4,8 @@ from typing import Any
 
 import pytest
 
-from finsight.core.config import LLMConfig
-from finsight.generate.llm_backend import (
+from vidura.core.config import LLMConfig
+from vidura.generate.llm_backend import (
     LLMUnavailable,
     OllamaBackend,
     ReasoningLeak,

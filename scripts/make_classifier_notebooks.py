@@ -3,8 +3,8 @@
     uv run python scripts/make_classifier_notebooks.py
 
 Both read the private dataset ``finsight-risk-classifier`` (``train.jsonl``, ``dev.jsonl``,
-``labels.json``; made by ``python -m finsight.risks.classify split``). The metric code is pasted
-from ``finsight.risks.clf_metrics`` so the best epoch is chosen with the metric the laptop
+``labels.json``; made by ``python -m vidura.risks.classify split``). The metric code is pasted
+from ``vidura.risks.clf_metrics`` so the best epoch is chosen with the metric the laptop
 reports (``tests/risks/test_classifier_notebooks.py`` checks the committed files).
 """
 
@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-METRICS = ROOT / "src" / "finsight" / "risks" / "clf_metrics.py"
+METRICS = ROOT / "src" / "vidura" / "risks" / "clf_metrics.py"
 DATASET = "finsight-risk-classifier"
 
 NOTEBOOKS: dict[str, dict[str, Any]] = {
@@ -39,7 +39,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
     },
 }
 
-MD = """# B2.4 - Risk-category classifier: {title} (FinSight)
+MD = """# B2.4 - Risk-category classifier: {title} (Vidura)
 
 Fine-tunes `{model}` twice per seed: **category** (one of 10) and **seriousness band** (1, 2, 3,
 4 = severe; levels 4 and 5 merged). **Runs on Kaggle (T4, fp16)**; nothing trains on the laptop.

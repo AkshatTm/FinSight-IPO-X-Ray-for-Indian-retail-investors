@@ -27,18 +27,18 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.core.ids import make_doc_id  # noqa: E402
-from finsight.core.schemas import ParsedDoc, Section  # noqa: E402
-from finsight.extract import get_field  # noqa: E402
-from finsight.ingest.corpus import EXCEL_NAME, load_corpus_doc  # noqa: E402
-from finsight.ingest.exclusion import excluded_names, is_excluded  # noqa: E402
-from finsight.ingest.fetch import read_rows  # noqa: E402
-from finsight.splits import Manifest, file_sha256, load_splits, write_manifest  # noqa: E402
-from finsight.weaklabel.__main__ import excel_rows  # noqa: E402
-from finsight.weaklabel.build_squad import _parsed, to_squad  # noqa: E402
-from finsight.weaklabel.negatives import negatives  # noqa: E402
-from finsight.weaklabel.propagate import propagate  # noqa: E402
-from finsight.weaklabel.seeds import LADDER_FIELDS, excel_values, find_seeds  # noqa: E402
+from vidura.core.ids import make_doc_id  # noqa: E402
+from vidura.core.schemas import ParsedDoc, Section  # noqa: E402
+from vidura.extract import get_field  # noqa: E402
+from vidura.ingest.corpus import EXCEL_NAME, load_corpus_doc  # noqa: E402
+from vidura.ingest.exclusion import excluded_names, is_excluded  # noqa: E402
+from vidura.ingest.fetch import read_rows  # noqa: E402
+from vidura.splits import Manifest, file_sha256, load_splits, write_manifest  # noqa: E402
+from vidura.weaklabel.__main__ import excel_rows  # noqa: E402
+from vidura.weaklabel.build_squad import _parsed, to_squad  # noqa: E402
+from vidura.weaklabel.negatives import negatives  # noqa: E402
+from vidura.weaklabel.propagate import propagate  # noqa: E402
+from vidura.weaklabel.seeds import LADDER_FIELDS, excel_values, find_seeds  # noqa: E402
 
 LABEL_VERSION = 3
 SCRIPT = "scripts/extractor_v2.py"
@@ -155,8 +155,8 @@ V2_EVAL = ROOT / "eval_results" / "c" / "extractor_v2"
 
 
 def _patched_kaggle():  # type: ignore[no-untyped-def]
-    """``finsight.weaklabel.kaggle`` pointed at the v3 dataset and v2 kernel names (v1 untouched)."""
-    from finsight.weaklabel import kaggle, package
+    """``vidura.weaklabel.kaggle`` pointed at the v3 dataset and v2 kernel names (v1 untouched)."""
+    from vidura.weaklabel import kaggle, package
 
     package.DATASET_NAME = DATASET
     kaggle.DATASET_NAME = DATASET

@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import pytest
 
-from finsight.core.schemas import ParsedDoc, Section
-from finsight.redflags import detect_severe
-from finsight.redflags.severe import classify, with_auditor
-from finsight.risklevel import compute
+from vidura.core.schemas import ParsedDoc, Section
+from vidura.redflags import detect_severe
+from vidura.redflags.severe import classify, with_auditor
+from vidura.risklevel import compute
 
 
 def _doc(*pages: str) -> ParsedDoc:
-    from finsight.core.schemas import Page
+    from vidura.core.schemas import Page
 
     return ParsedDoc(
         ipo_id="x",
@@ -111,7 +111,7 @@ def test_boilerplate_sections_and_pages_before_the_summary_are_not_scanned() -> 
 
 
 def test_a_qualified_summary_remark_counts_even_without_a_matching_sentence() -> None:
-    from finsight.core.schemas import PageEvidence
+    from vidura.core.schemas import PageEvidence
 
     ev = PageEvidence(doc_id="d", page=30, sentence="Qualification: …")
     out = with_auditor(True, [], ev)
@@ -169,7 +169,7 @@ def test_an_issuer_mention_after_a_promoter_one_forces_high() -> None:
 
 
 def test_group_company_and_director_subjects() -> None:
-    from finsight.redflags.severe import about
+    from vidura.redflags.severe import about
 
     heading = ["Litigation involving our Group Companies"]
     assert about("SEBI imposed a penalty on JSW Ispat.", heading) == "group_company"
@@ -191,7 +191,7 @@ def test_negated_or_hypothetical_orders_are_no_finding(text: str) -> None:
 
 
 def test_matches_report_fired_and_blocked_sentences() -> None:
-    from finsight.redflags.severe import matches
+    from vidura.redflags.severe import matches
 
     doc = _doc(
         "Intro sentence one. Our Subsidiary has defaulted on the repayment of its term loan. "

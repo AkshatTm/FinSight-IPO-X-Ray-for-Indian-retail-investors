@@ -14,11 +14,11 @@ from __future__ import annotations
 import argparse
 import sys
 
-from finsight.api.demo import DemoCache
-from finsight.api.ipos import IpoStore
-from finsight.chat import ChatOrchestrator
-from finsight.core.config import get_settings, load_settings
-from finsight.extract import load_fields
+from vidura.api.demo import DemoCache
+from vidura.api.ipos import IpoStore
+from vidura.chat import ChatOrchestrator
+from vidura.core.config import get_settings, load_settings
+from vidura.extract import load_fields
 
 EXTRAS = [
     ("Will this IPO double on listing day?", "en"),

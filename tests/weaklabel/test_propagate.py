@@ -1,9 +1,9 @@
 from weaklabel_docs import FILLER, acme, make_doc, sections_for
 
-from finsight.core.schemas import ListValue, TextValue
-from finsight.extract import get_field
-from finsight.normalize import parse_amount
-from finsight.weaklabel import find_answer, find_seeds, propagate
+from vidura.core.schemas import ListValue, TextValue
+from vidura.extract import get_field
+from vidura.normalize import parse_amount
+from vidura.weaklabel import find_answer, find_seeds, propagate
 
 
 def positives(field_id: str):  # type: ignore[no-untyped-def]

@@ -28,7 +28,7 @@ Offer documents print the names of promoters and directors and business contact 
 
 ## How to delete
 
-- One document: **Delete** on its report, `DELETE /api/docs/{doc_id}`, or `uv run python -m finsight.jobs forget <doc_id>`. This removes the PDF, the results, the page images, the search index and its rows.
+- One document: **Delete** on its report, `DELETE /api/docs/{doc_id}`, or `uv run python -m vidura.jobs forget <doc_id>`. This removes the PDF, the results, the page images, the search index and its rows.
 - Everything: stop the app (`stop.bat`) and delete `data/finsight.db`, `data/traces.sqlite`, `data/store/` and the `data/processed/doc_*` folders.
 
 ## Changes

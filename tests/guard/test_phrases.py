@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.guard import find_forbidden, is_clean
+from vidura.guard import find_forbidden, is_clean
 
 ROOT = Path(__file__).resolve().parents[2]
 # English-only copy (final): `"key.name": "text"`; the older `en: "text"` form is still read.
@@ -61,7 +61,7 @@ def test_instruction_style_phrases_are_blocked(text: str) -> None:
 @pytest.mark.parametrize(
     "text",
     [
-        "FinSight explains what IPO documents say. It won't tell you whether to apply or buy.",
+        "Vidura explains what IPO documents say. It won't tell you whether to apply or buy.",
         "The selling shareholders will receive the money from the offer for sale.",
         "Our loans are guaranteed by our Promoters, who may withdraw these guarantees.",
         "Investors may lose part of their investment if our revenue falls.",

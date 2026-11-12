@@ -6,7 +6,7 @@ Writes ``bench_<system>.json`` (every scored item) and ``bench_summary.json`` (m
 IPO-cluster 95 % intervals, paired differences, latency, cost, which runs are still missing, and
 whether any scorer file changed since the freeze), plus ``bench_failures.json`` (failures picked
 by a fixed rule for the error analysis). Task A uses the E14 matcher (``summary_eval``), Task B
-the pinned red-flag engine and the E15 comparison, Tasks C, D and G ``finsight.bench.score``.
+the pinned red-flag engine and the E15 comparison, Tasks C, D and G ``vidura.bench.score``.
 Every number is a single run; nothing here is typed by hand.
 """
 
@@ -32,7 +32,7 @@ import summary_eval  # noqa: E402
 from bench_run import BENCH, load_prompts, passages  # noqa: E402
 from redflag_eval import ORDINAL  # noqa: E402
 
-from finsight.bench import (  # noqa: E402
+from vidura.bench import (  # noqa: E402
     FLAT,
     Patterns,
     gold_amount_from_row,
@@ -45,8 +45,8 @@ from finsight.bench import (  # noqa: E402
     score_rewrite,
     sha256,
 )
-from finsight.core.schemas import SUMMARY_HAS_VALUE  # noqa: E402
-from finsight.redflags import evaluate, inputs_from_gold  # noqa: E402
+from vidura.core.schemas import SUMMARY_HAS_VALUE  # noqa: E402
+from vidura.redflags import evaluate, inputs_from_gold  # noqa: E402
 
 OUT = ROOT / "eval_results" / "c4"
 SYSTEMS = ("rules_v1", "student", "base", "teacher", "opus", "opus_api", "chatgpt_go")
@@ -54,7 +54,7 @@ SCORER_FILES = (
     "scripts/summary_eval.py",
     "scripts/redflag_eval.py",
     "scripts/bench_score.py",
-    "src/finsight/bench/score.py",
+    "src/vidura/bench/score.py",
     "configs/forbidden_phrases.yaml",
 )
 MONEY_KEYS = {"revenue", "profit_after_tax", "operating_cash_flow", "total_borrowings", "net_worth",
@@ -66,10 +66,10 @@ MONEY_KEYS = {"revenue", "profit_after_tax", "operating_cash_flow", "total_borro
 POST_FREEZE_CHANGES = [
     "scripts/summary_eval.py: main gained the opt-in gold v3.1 convention (off here; v3 keys); "
     "before any run.",
-    "finsight/bench/score.py: gold_in_context / citation_has_value also accept the gold's printed "
+    "vidura/bench/score.py: gold_in_context / citation_has_value also accept the gold's printed "
     "digits (3+) in table text, since tables print bare numbers with the unit in the header; made "
     "after reading the first rules_v1 Task C scores (diagnostics only: correctness unchanged).",
-    "finsight/bench/answers.py: Task A replies shaped {field id: value} or {field id: {status, "
+    "vidura/bench/answers.py: Task A replies shaped {field id: value} or {field id: {status, "
     "value, unit, page}} are read (value-only ones get no unit or page) instead of scoring as "
     "unparseable; made after reading the student's first reply, before any student score; the "
     "fields are counted as n_flat_format_fields.",
@@ -410,7 +410,7 @@ def main() -> int:
     drift = {f: sha256(ROOT / f) for f in SCORER_FILES if (ROOT / f).exists()}
     frozen_scorer = manifest.scorer_sha256
     result = {
-        "experiment": "FinSight Bench v1 (C4.1)",
+        "experiment": "Vidura Bench v1 (C4.1)",
         "bench": manifest.version,
         "frozen_utc": manifest.frozen_utc,
         "ipos": manifest.ipos,

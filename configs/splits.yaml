@@ -1,4 +1,4 @@
-# Phase 3 time split (C02 §4, C-ADR-02). Written by `python -m finsight.splits build`;
+# Phase 3 time split (C02 §4, C-ADR-02). Written by `python -m vidura.splits build`;
 # never edit by hand. Once frozen, it changes only by a new C-ADR.
 version: 1
 frozen: true

@@ -4,7 +4,7 @@
 
 The 13 checks behind the Red flags tab (B01 §5). Each one is OK, Watch, Concern, Not available or Not applicable, with one plain sentence and the pages it used. The checks describe the document; they never say what to do about it.
 
-Thresholds version: `b01-initial-1` (stored in every `redflags.json`). Missing data: "FinSight couldn't find this in the document."
+Thresholds version: `b01-initial-1` (stored in every `redflags.json`). Missing data: "Vidura couldn't find this in the document."
 
 | Check | Title | How this check works | Thresholds |
 | --- | --- | --- | --- |

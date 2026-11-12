@@ -1,11 +1,11 @@
 @echo off
-rem FinSight one-click launcher. Double-click for the menu, or run with an action:
+rem Vidura one-click launcher. Double-click for the menu, or run with an action:
 rem   start.bat start | stop | restart | status
 rem Start: Ollama (:11434, kept if already running), then the API (:8000) and the web app
-rem (:3000), each in its own minimised window ("FinSight Ollama", "FinSight API",
-rem "FinSight Web"), then opens the app in %BROWSER% (Edge by default).
+rem (:3000), each in its own minimised window ("Vidura Ollama", "Vidura API",
+rem "Vidura Web"), then opens the app in %BROWSER% (Edge by default).
 rem Whatever already listens on :8000 or :3000 is stopped first, so they always start there.
-rem Stop: kills only FinSight's processes (by port, by those window titles, and Ollama itself).
+rem Stop: kills only Vidura's processes (by port, by those window titles, and Ollama itself).
 rem It never kills node.exe or python.exe in general.
 setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
@@ -34,7 +34,7 @@ if /i "%~1"=="status" (call :status & goto :end)
 
 :menu
 echo.
-echo  ===============  FinSight  ===============
+echo  ===============  Vidura  ===============
 call :status
 echo.
 echo   [1] Start everything
@@ -61,7 +61,7 @@ if defined PIDS (
 ) else (
   where ollama >nul 2>nul || (echo Ollama is not installed: https://ollama.com/download & exit /b 1)
   echo Starting Ollama ...
-  start "FinSight Ollama" /MIN cmd /k "title FinSight Ollama && ollama serve"
+  start "Vidura Ollama" /MIN cmd /k "title Vidura Ollama && ollama serve"
   call :wait "%OLLAMA_URL%" 30 Ollama || exit /b 1
 )
 ollama list 2>nul | findstr /C:"%MODEL%" >nul
@@ -72,7 +72,7 @@ if errorlevel 1 (
   start "" /B curl -s -o nul -m 120 http://127.0.0.1:11434/api/generate -d "{\"model\":\"%MODEL%\",\"keep_alive\":\"30m\"}"
 )
 
-rem Free :8000 and :3000 so FinSight always runs on them.
+rem Free :8000 and :3000 so Vidura always runs on them.
 call :killport 8000
 call :killport 3000
 call :freewait 8000
@@ -81,20 +81,20 @@ call :freewait 3000
 echo Checking Python packages ...
 uv sync --inexact --group ml --group onnx -q || (echo Package install failed. & exit /b 1)
 echo Starting the API on :8000 ...
-start "FinSight API" /MIN /D "%ROOT%" cmd /k "title FinSight API && uv run python -m uvicorn finsight.api.app:app --port 8000 --timeout-keep-alive 30"
+start "Vidura API" /MIN /D "%ROOT%" cmd /k "title Vidura API && uv run python -m uvicorn vidura.api.app:app --port 8000 --timeout-keep-alive 30"
 
 if not exist "%ROOT%frontend\node_modules" (
   echo Installing the frontend packages, first run only ...
   pushd "%ROOT%frontend" && pnpm install --frozen-lockfile & popd
 )
 echo Starting the web app on :3000 ...
-start "FinSight Web" /MIN /D "%ROOT%frontend" cmd /k "title FinSight Web && pnpm dev --port 3000"
+start "Vidura Web" /MIN /D "%ROOT%frontend" cmd /k "title Vidura Web && pnpm dev --port 3000"
 
 call :wait "%API_URL%" 120 API || exit /b 1
 call :wait "%WEB_URL%" 180 "Web app" || exit /b 1
 echo.
-echo FinSight is running: http://localhost:3000
-echo The three FinSight windows are minimised in the taskbar; closing them stops the app.
+echo Vidura is running: http://localhost:3000
+echo The three Vidura windows are minimised in the taskbar; closing them stops the app.
 if /i "%BROWSER%"=="default" (start "" http://localhost:3000) else (
   start "" "%BROWSER%" http://localhost:3000 2>nul || start "" http://localhost:3000
 )
@@ -102,9 +102,9 @@ exit /b 0
 
 rem ----------------------------------------------------------------- stop
 :stop
-echo Stopping FinSight ...
+echo Stopping Vidura ...
 for %%P in (8000 3000 11434) do call :killport %%P
-for %%T in ("FinSight API*" "FinSight Web*" "FinSight Ollama*") do (
+for %%T in ("Vidura API*" "Vidura Web*" "Vidura Ollama*") do (
   taskkill /FI "WINDOWTITLE eq %%~T" /T /F >nul 2>nul
 )
 taskkill /IM "ollama app.exe" /T /F >nul 2>nul

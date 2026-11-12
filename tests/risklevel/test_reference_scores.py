@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.risklevel import compute, load_config
-from finsight.risklevel.reference import (
+from vidura.risklevel import compute, load_config
+from vidura.risklevel.reference import (
     apply_fit,
     deciles,
     fit_thresholds,
@@ -14,7 +14,7 @@ from finsight.risklevel.reference import (
     window_scores,
     write_scores,
 )
-from finsight.splits import SplitEntry, SplitsFile
+from vidura.splits import SplitEntry, SplitsFile
 
 
 def entry(ipo: str, slice_: str, day: str) -> SplitEntry:

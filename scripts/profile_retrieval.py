@@ -63,7 +63,7 @@ class Timed:
 def run_config(
     data: Path, questions: list[dict[str, Any]], emb_dev: str, rr_dev: str, pool: int
 ) -> dict[str, Any]:
-    from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
+    from vidura.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
 
     emb = Timed(BgeM3Embedder(device=emb_dev), "embed")
     rr = Timed(CrossEncoderReranker(device=rr_dev), "score")

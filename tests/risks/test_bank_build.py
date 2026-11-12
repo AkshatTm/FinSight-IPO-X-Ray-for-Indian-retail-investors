@@ -7,16 +7,16 @@ import numpy as np
 import pytest
 from real import loader
 
-from finsight.core.schemas import Risk
-from finsight.pipeline import split_risks
-from finsight.risks import load_bank, segment_text, to_risks
-from finsight.risks.bank_build import (
+from vidura.core.schemas import Risk
+from vidura.pipeline import split_risks
+from vidura.risks import load_bank, segment_text, to_risks
+from vidura.risks.bank_build import (
     build_rows,
     count_by_year,
     segmentation_stats,
     write_parquet,
 )
-from finsight.splits import (
+from vidura.splits import (
     Manifest,
     SplitEntry,
     SplitsFile,
@@ -133,7 +133,7 @@ def test_parquet_roundtrip_and_rolling_window(tmp_path: Path) -> None:
 
 
 def test_subset_needs_an_ipo_id_column(tmp_path: Path) -> None:
-    from finsight.risks.bank import RiskBank
+    from vidura.risks.bank import RiskBank
 
     legacy = RiskBank(["A"], np.array([2020]), ["t"], np.ones((1, 2), dtype=np.float32))
     with pytest.raises(ValueError, match="ipo_id"):

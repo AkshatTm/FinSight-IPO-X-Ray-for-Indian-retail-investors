@@ -6,7 +6,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from finsight.summary import parse_period, rank_years
+from vidura.summary import parse_period, rank_years
 
 
 @pytest.mark.parametrize(

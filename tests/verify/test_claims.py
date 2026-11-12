@@ -1,5 +1,5 @@
-from finsight.verify import find_metrics, metric_at, split_claims
-from finsight.verify.claims import sentence_spans
+from vidura.verify import find_metrics, metric_at, split_claims
+from vidura.verify.claims import sentence_spans
 
 
 def raws(answer: str) -> list[list[str]]:
@@ -67,7 +67,7 @@ COVER = (
 
 
 def metric_of(text: str, needle: str, nth: int = 0) -> str | None:
-    from finsight.normalize import parse_amounts
+    from vidura.normalize import parse_amounts
 
     spans = parse_amounts(text)
     where = [(s.start, s.end) for s in spans]
@@ -136,8 +136,8 @@ def test_a_defined_term_after_the_amount_names_it() -> None:
 
 
 def test_a_pure_offer_for_sale_total_carries_both_metrics() -> None:
-    from finsight.normalize import parse_amounts
-    from finsight.verify import MetricIndex
+    from vidura.normalize import parse_amounts
+    from vidura.verify import MetricIndex
 
     text = (
         "INITIAL PUBLIC OFFERING THROUGH AN OFFER FOR SALE OF 123,587,570 EQUITY SHARES "

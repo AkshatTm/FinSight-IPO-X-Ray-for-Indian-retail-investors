@@ -3,10 +3,10 @@ from pathlib import Path
 
 from pydantic import TypeAdapter
 
-from finsight.core.schemas import Money, Page, ParsedDoc, Section
-from finsight.extract import field_ids
-from finsight.pipeline.layout import doc_outputs
-from finsight.pipeline.rules_stage import load_candidates, rules_summary, run_rules
+from vidura.core.schemas import Money, Page, ParsedDoc, Section
+from vidura.extract import field_ids
+from vidura.pipeline.layout import doc_outputs
+from vidura.pipeline.rules_stage import load_candidates, rules_summary, run_rules
 
 IPO = "urban-company-2025"
 COVER = (

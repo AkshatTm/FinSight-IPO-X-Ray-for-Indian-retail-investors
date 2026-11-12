@@ -8,25 +8,25 @@ Everything Vidura stores is on the laptop, under `data/` (ignored by git).
 | --- | --- | --- |
 | `data/store/docs/<doc_id>/source.pdf` | The uploaded PDF | upload (`POST /api/uploads/{doc_id}/file`) |
 | `data/store/docs/<doc_id>/*.json` | One file per stage: `doc.json`, `parsed.json`, `sections.json`, `xray.json`, `summary.json`, `redflags.json`, `compare.json`, `sod.json`, `risks.json`, `risks_scored.json`, `risklevel.json`, `simplified.json`, `index.json` | the [pipeline stages](pipeline.md) |
-| `data/store/docs/<doc_id>/report.json` | The assembled report overview | `finsight.reports` on request |
+| `data/store/docs/<doc_id>/report.json` | The assembled report overview | `vidura.reports` on request |
 | `data/processed/<doc_id>/` | Copies of `parsed.json` / `sections.json`, page images and the BM25 index used by chat | `index` stage |
-| `data/processed/<ipo_id>/` | Showcase IPOs built by the offline pipeline | `python -m finsight.pipeline build` |
+| `data/processed/<ipo_id>/` | Showcase IPOs built by the offline pipeline | `python -m vidura.pipeline build` |
 | `data/processed/bank/` | The risk bank (past risks with `bge-m3` vectors) | `scripts/build_risk_bank.py` |
 | `data/finsight.db` | SQLite database (below) | API and job runner |
 | `data/traces.sqlite` | Chat traces (`GET /api/traces/{trace_id}`) | chat |
-| `data/cache/weight_hashes.json` | Hashes of model files for the cache fingerprint | `finsight.jobs.cache` |
+| `data/cache/weight_hashes.json` | Hashes of model files for the cache fingerprint | `vidura.jobs.cache` |
 | `data/preload_log.csv` | One row per document preloaded, with stage timings | `scripts/preload.py` |
 
-The storage layer (`finsight.storage`) puts every key under one protocol (`put_bytes`, `get_bytes`,
+The storage layer (`vidura.storage`) puts every key under one protocol (`put_bytes`, `get_bytes`,
 `exists`, `delete_prefix`), so the files above are addressed as `docs/<doc_id>/<name>`. Only the local
 backend exists since B-ADR-16 removed Cloud Storage.
 
 ## Database
 
-SQLAlchemy Core tables in `src/finsight/db/tables.py`. On the laptop (`db.backend: sqlite`) missing
+SQLAlchemy Core tables in `src/vidura/db/tables.py`. On the laptop (`db.backend: sqlite`) missing
 tables are created on first use and missing columns are added with `ALTER TABLE`
-(`Database.create_all`). Postgres would use the Alembic migrations in `src/finsight/db/migrations/`
-(`uv run python -m finsight.db.migrate`); CI runs the Postgres tests (`pytest -m postgres`) against a
+(`Database.create_all`). Postgres would use the Alembic migrations in `src/vidura/db/migrations/`
+(`uv run python -m vidura.db.migrate`); CI runs the Postgres tests (`pytest -m postgres`) against a
 service container.
 
 | Table | Rows | Key columns |
@@ -50,9 +50,9 @@ service container.
 ## Deleting
 
 - One document: **Delete** in the report, `DELETE /api/docs/{doc_id}`, or
-  `uv run python -m finsight.jobs forget <doc_id>`. It removes the stored files, the page images, the
+  `uv run python -m vidura.jobs forget <doc_id>`. It removes the stored files, the page images, the
   search index and the rows.
-- Uploads past `uploads.retention_days`: `uv run python -m finsight.jobs sweep`.
+- Uploads past `uploads.retention_days`: `uv run python -m vidura.jobs sweep`.
 - Degraded or unknown-fingerprint analyses: `scripts/purge_degraded.py` ([Operations](../operations/index.md)).
 
 Backups and restores are on [Operations](../operations/index.md#back-up-and-restore).

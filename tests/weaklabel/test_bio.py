@@ -1,4 +1,4 @@
-from finsight.weaklabel.bio import to_bio, to_dev, tokenize
+from vidura.weaklabel.bio import to_bio, to_dev, tokenize
 
 
 def row(i: str, field: str, ctx: str, text: str | None) -> dict:

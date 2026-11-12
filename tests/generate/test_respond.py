@@ -3,9 +3,9 @@
 from collections.abc import Iterator
 from typing import Any
 
-from finsight.core.schemas import Passage
-from finsight.generate import respond
-from finsight.generate.llm_backend import LLMUnavailable, ReasoningLeak
+from vidura.core.schemas import Passage
+from vidura.generate import respond
+from vidura.generate.llm_backend import LLMUnavailable, ReasoningLeak
 
 
 def passage(text: str = "The Registrar to the Offer is KFin Technologies Limited.") -> Passage:

@@ -32,8 +32,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from finsight.bench import CHAT_BUDGET_CHARS, load  # noqa: E402
-from finsight.core.schemas import Passage  # noqa: E402
+from vidura.bench import CHAT_BUDGET_CHARS, load  # noqa: E402
+from vidura.core.schemas import Passage  # noqa: E402
 
 BENCH = ROOT / "bench" / "v1"
 MODELS = {
@@ -105,7 +105,7 @@ def _now() -> str:
 
 # ----------------------------------------------------------------------------- model systems
 def run_model(system: str, prompts: list[dict[str, Any]], out: Path) -> int:
-    from finsight.generate import OllamaBackend
+    from vidura.generate import OllamaBackend
 
     llm = OllamaBackend(model=MODELS[system], num_ctx=NUM_CTX, timeout=900.0)
     if not llm.is_available():
@@ -142,9 +142,9 @@ def _pred_json(pred: Any) -> dict[str, Any]:
 
 def _summary(processed: Path, ipo: str, doc: str) -> tuple[Any, Any, str]:
     """``extract_summary`` with freshly detected sections (as E14 v2), the X-Ray, the doc used."""
-    from finsight.core.schemas import ParsedDoc, XRay
-    from finsight.parse import find_sections
-    from finsight.summary import extract_summary
+    from vidura.core.schemas import ParsedDoc, XRay
+    from vidura.parse import find_sections
+    from vidura.summary import extract_summary
 
     for which in dict.fromkeys((doc, "rhp")):
         suffix = "" if which == "rhp" else "_prospectus"
@@ -161,7 +161,7 @@ def run_rules_a_b(processed: Path, out: Path) -> None:
     """Task A values and Task B statuses from the pipeline's summary and red-flag rules."""
     from summary_eval import Pred, predicted
 
-    from finsight.redflags import evaluate, inputs_from_summary
+    from vidura.redflags import evaluate, inputs_from_summary
 
     cfg = yaml.safe_load((BENCH / "pinned" / "redflags.yaml").read_text(encoding="utf-8"))
     items = [
@@ -199,7 +199,7 @@ def run_rules_a_b(processed: Path, out: Path) -> None:
             _append(out, {
                 "system": "rules_v1", "prompt_id": pid, "task": "A", "ipo_id": ipo,
                 "doc_used": used, "fields": fields, "seconds": round(seconds, 2),
-                "model": "rules (finsight.summary)", "error": None, "utc": _now(),
+                "model": "rules (vidura.summary)", "error": None, "utc": _now(),
             })  # fmt: skip
         pid = f"B:{ipo}:rules"
         if pid in done:
@@ -217,15 +217,15 @@ def run_rules_a_b(processed: Path, out: Path) -> None:
             "system": "rules_v1", "prompt_id": pid, "task": "B", "ipo_id": ipo,
             "statuses": statuses, "redflags_version": str(cfg["version"]),
             "seconds": round(seconds + time.perf_counter() - t0, 2),
-            "model": "rules (finsight.redflags)", "error": None, "utc": _now(),
+            "model": "rules (vidura.redflags)", "error": None, "utc": _now(),
         })  # fmt: skip
         print(f"  rules A/B {ipo}", flush=True)
 
 
 def run_rules_chat(prompts: list[dict[str, Any]], out: Path) -> None:
     """Tasks C and G through the product chat path on the stored passages."""
-    from finsight.generate import NOT_FOUND, OllamaBackend, respond
-    from finsight.guard import check_question, refusal_text
+    from vidura.generate import NOT_FOUND, OllamaBackend, respond
+    from vidura.guard import check_question, refusal_text
 
     llm = OllamaBackend(model=MODELS["rules_v1"], num_ctx=2048, timeout=900.0)
     done = _done(out)

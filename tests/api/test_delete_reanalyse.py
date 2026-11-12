@@ -10,17 +10,17 @@ import pytest
 from fastapi.testclient import TestClient
 from make_fixture_pdf import build_offer_pdf
 
-from finsight.api.app import create_app
-from finsight.api.errors import ApiError
-from finsight.api.routes_docs import _owned
-from finsight.api.uploads_state import UploadState, get_upload_state
-from finsight.auth import User
-from finsight.core.config import load_settings
-from finsight.core.schemas import DocRecord
-from finsight.db import Database
-from finsight.jobs import InlineLauncher, process_document
-from finsight.jobs import preflight as pf
-from finsight.storage import LocalStorage
+from vidura.api.app import create_app
+from vidura.api.errors import ApiError
+from vidura.api.routes_docs import _owned
+from vidura.api.uploads_state import UploadState, get_upload_state
+from vidura.auth import User
+from vidura.core.config import load_settings
+from vidura.core.schemas import DocRecord
+from vidura.db import Database
+from vidura.jobs import InlineLauncher, process_document
+from vidura.jobs import preflight as pf
+from vidura.storage import LocalStorage
 
 
 @pytest.fixture

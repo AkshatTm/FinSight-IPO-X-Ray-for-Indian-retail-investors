@@ -1,6 +1,6 @@
-from finsight.core.ids import parse_passage_id
-from finsight.core.schemas import Page, ParsedDoc, Section, Table, TableCell, Word
-from finsight.retrieve.chunk import HARD_MAX_CHARS, TARGET_CHARS, build_chunks, section_for_page
+from vidura.core.ids import parse_passage_id
+from vidura.core.schemas import Page, ParsedDoc, Section, Table, TableCell, Word
+from vidura.retrieve.chunk import HARD_MAX_CHARS, TARGET_CHARS, build_chunks, section_for_page
 
 
 def word(text: str, x: float, y: float) -> Word:

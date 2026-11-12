@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from finsight.evaluate.nli_eval import build_items, run, summarise
+from vidura.evaluate.nli_eval import build_items, run, summarise
 
 SPLITS = {"a": "dev", "b": "test", "c": "test"}
 

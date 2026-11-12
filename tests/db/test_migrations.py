@@ -1,4 +1,4 @@
-"""B1.2: the Alembic migrations build exactly the tables in ``finsight.db.tables``."""
+"""B1.2: the Alembic migrations build exactly the tables in ``vidura.db.tables``."""
 
 from __future__ import annotations
 
@@ -9,8 +9,8 @@ import sqlalchemy as sa
 from alembic.autogenerate import compare_metadata
 from alembic.migration import MigrationContext
 
-from finsight.core.config import DbConfig, load_settings
-from finsight.db import metadata, normalise_url, upgrade, url_from_settings
+from vidura.core.config import DbConfig, load_settings
+from vidura.db import metadata, normalise_url, upgrade, url_from_settings
 
 
 def test_migrations_match_the_tables(tmp_path: Path) -> None:

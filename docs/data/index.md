@@ -19,7 +19,7 @@ open to the same investors.
 
 ## The time split (C-ADR-02)
 
-`configs/splits.yaml` is written by `uv run python -m finsight.splits build` and **frozen**
+`configs/splits.yaml` is written by `uv run python -m vidura.splits build` and **frozen**
 (`frozen: true`, rule `strict`). It changes only by a new C-ADR (it was changed once, by C-ADR-24, to
 create the bench).
 

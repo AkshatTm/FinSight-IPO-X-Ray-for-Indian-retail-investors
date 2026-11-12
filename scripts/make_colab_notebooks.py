@@ -89,7 +89,7 @@ PRESETS = {
 
 def rate_check() -> dict[str, Any]:
     """C0.2 smoke notebook: GPU info, matmul timing, vLLM pin test with a small AWQ model."""
-    md = """# C0.2 — Colab rate check + vLLM smoke (FinSight)
+    md = """# C0.2 — Colab rate check + vLLM smoke (Vidura)
 
 Pick `PRESET`, then **Run all**. `rate_check` also runs the vLLM pin test (needs sm80+: L4,
 A100, H100; a T4 skips it). The kernel and memory settings come from the detected GPU. Inputs and
@@ -359,12 +359,12 @@ def teacher() -> dict[str, Any]:
     sys.path.insert(0, str(ROOT / "scripts"))
     import make_teacher_notebook as legacy
 
-    md = """# C2.2 / C2.3 - Teacher labels and plain-English rewrites (FinSight, Colab)
+    md = """# C2.2 / C2.3 - Teacher labels and plain-English rewrites (Vidura, Colab)
 
 Runs AWQ teachers with **vLLM** over a risks file (`risk_id`, `title`, `body`). Inference only.
 One JSON answer per risk: `category`, `seriousness_1to5`, `hard_fact`, `simple` (<= 60 words),
 `numbers_copied`. Thinking mode is off, `max_tokens` is capped. The prompt and the loop are copied
-from `finsight.risks` by `scripts/make_colab_notebooks.py`, so they are the tested ones.
+from `vidura.risks` by `scripts/make_colab_notebooks.py`, so they are the tested ones.
 
 **Pick `PRESET`, Run all.** Presets: `bakeoff_smoke` (20 risks per model), `bakeoff` (300 risks,
 all candidates), `teacher_smoke`, `teacher_full` (12k, the chosen model), `gold_eval` (test-slice
@@ -590,12 +590,12 @@ def student() -> dict[str, Any]:
     sys.path.insert(0, str(ROOT / "scripts"))
     import make_student_notebook as legacy
 
-    md = """# C2.5 - Simplifier student: LoRA on Colab + GGUF export (FinSight, M6)
+    md = """# C2.5 - Simplifier student: LoRA on Colab + GGUF export (Vidura, M6)
 
 Fine-tunes a ~4B Qwen instruct model to rewrite risk factors in plain English, from the filtered
 teacher pairs (`train.jsonl`, `dev.jsonl` in `MyDrive/FinSight/student/`, made by
-`python -m finsight.risks.simplify split`; split by company). The training rows already use the
-serving prompt (`finsight.risks.simplify`).
+`python -m vidura.risks.simplify split`; split by company). The training rows already use the
+serving prompt (`vidura.risks.simplify`).
 
 - **PRECISION `bf16`** (L4/A100): LoRA r=16 on a bf16 base, no 4-bit. **`nf4`**: the T4 recipe (4-bit, fp16).
 - Checkpoints go to local disk and are copied to the private HF job repo (or Drive) on every save (`SAVE_STEPS`); a disconnect resumes.

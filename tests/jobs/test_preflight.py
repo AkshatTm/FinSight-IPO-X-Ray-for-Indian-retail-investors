@@ -7,15 +7,15 @@ from pathlib import Path
 
 import pytest
 
-from finsight import jobs as jobs_module
-from finsight.core.config import Settings, load_settings
-from finsight.core.schemas import DocRecord
-from finsight.db import Database
-from finsight.jobs import preflight as pf
-from finsight.jobs import process_document
-from finsight.jobs.cache import Fingerprint
-from finsight.jobs.runner import Stage
-from finsight.storage import LocalStorage, put_json
+from vidura import jobs as jobs_module
+from vidura.core.config import Settings, load_settings
+from vidura.core.schemas import DocRecord
+from vidura.db import Database
+from vidura.jobs import preflight as pf
+from vidura.jobs import process_document
+from vidura.jobs.cache import Fingerprint
+from vidura.jobs.runner import Stage
+from vidura.storage import LocalStorage, put_json
 
 T0 = datetime(2026, 10, 3, 6, 0, tzinfo=UTC)
 

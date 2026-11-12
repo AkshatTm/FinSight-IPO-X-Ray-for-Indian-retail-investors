@@ -3,8 +3,8 @@ import re
 
 import pytest
 
-from finsight.core.config import get_settings
-from finsight.ingest.registry import get_demo_ipo, list_demo_ipos
+from vidura.core.config import get_settings
+from vidura.ingest.registry import get_demo_ipo, list_demo_ipos
 
 DEV = {"hexaware-technologies-2025", "ather-energy-2025", "urban-company-2025"}
 
@@ -60,7 +60,7 @@ def test_local_pdfs_match_the_recorded_checksums() -> None:
 
 
 def test_showcase_doc_ids_follow_the_sha256() -> None:
-    from finsight.core.ids import make_doc_id
+    from vidura.core.ids import make_doc_id
 
     for ipo in list_demo_ipos():
         for doc in (ipo.rhp, ipo.prospectus):

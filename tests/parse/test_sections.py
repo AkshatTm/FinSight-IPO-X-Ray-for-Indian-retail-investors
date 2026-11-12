@@ -1,8 +1,8 @@
 import pytest
 
-from finsight.core import registry
-from finsight.core.schemas import Page, ParsedDoc, Word
-from finsight.parse.sections import (
+from vidura.core import registry
+from vidura.core.schemas import Page, ParsedDoc, Word
+from vidura.parse.sections import (
     KEY_SECTIONS,
     _heading_matches,
     canonical_id,
@@ -167,7 +167,7 @@ def test_missing_toc_falls_back_to_heading_regex() -> None:
 
 
 def test_rhp_adapter_is_registered() -> None:
-    from finsight.parse.rhp_adapter import register
+    from vidura.parse.rhp_adapter import register
 
     register()  # other tests may have cleared the registry
     adapter = registry.get("doc_adapter", "rhp")
@@ -193,8 +193,8 @@ def test_financial_section_ids(title: str, expected: str) -> None:
 
 
 def test_subsection_pages_found_inside_restated_section() -> None:
-    from finsight.core.schemas import Section
-    from finsight.parse.sections import find_subsection_pages
+    from vidura.core.schemas import Section
+    from vidura.parse.sections import find_subsection_pages
 
     pages = [
         _page(1, "RESTATED FINANCIAL INFORMATION\nIndependent Auditor's Examination Report\ntext"),
@@ -312,7 +312,7 @@ def _misleading_footer_doc() -> ParsedDoc:
 
 
 def test_misleading_footers_are_overruled_by_the_offset_the_headings_agree_on() -> None:
-    from finsight.parse.sections import toc_pdf_pages, voted_shift
+    from vidura.parse.sections import toc_pdf_pages, voted_shift
 
     doc = _misleading_footer_doc()
     entries = parse_toc_lines(doc.pages[2].text.splitlines())
@@ -327,7 +327,7 @@ def test_misleading_footers_are_overruled_by_the_offset_the_headings_agree_on() 
 
 
 def test_footer_mapping_is_kept_when_it_finds_the_headings() -> None:
-    from finsight.parse.sections import toc_pdf_pages
+    from vidura.parse.sections import toc_pdf_pages
 
     doc = _doc()  # footers right, offset +3
     entries = parse_toc_lines(TOC.splitlines())

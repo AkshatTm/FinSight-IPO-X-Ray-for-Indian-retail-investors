@@ -15,7 +15,7 @@ tags: [retrieval, reranking, rag]
     (`retrieve: {dense: false, rerank: true, rerank_top_n: 20}`); the dense index is off.
 
 - **Models:** `BAAI/bge-reranker-v2-m3` (cross-encoder, Apache-2.0) and `BAAI/bge-m3` (embeddings,
-  MIT), loaded from the Hugging Face cache by `finsight.retrieve` and `finsight.risks`.
+  MIT), loaded from the Hugging Face cache by `vidura.retrieve` and `vidura.risks`.
 - **Precision:** fp16 on the GPU, fp32 on the CPU (`CrossEncoderReranker`). An ONNX int8 export lives in
   `models/reranker_onnx/`; chat does not use it, but its hash is part of the cache fingerprint.
 - **Owner:** Akshat · **Evaluation:** `eval_results/retrieval.json`, `eval_results/rerank_dev.json`,

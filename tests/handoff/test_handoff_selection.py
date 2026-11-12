@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from finsight.handoff import excluded_ipos, splits_by_ipo
+from vidura.handoff import excluded_ipos, splits_by_ipo
 
 SPLITS = {
     "version": 1,

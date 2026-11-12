@@ -32,7 +32,7 @@ curl -s http://127.0.0.1:8000/api/docs/doc_72480c2e249eb8da/redflags
 
 | Result | How it was made | Needs |
 | --- | --- | --- |
-| Extractor ladder, E2 / E3 / E11 (`ladder_table.json`, `extractor_metrics-*.json`, `bilstm_metrics-*.json`) | Kaggle notebooks `notebooks/01_finetune_extractor.ipynb`, `02_bilstm_crf.ipynb`; then `uv run python -m finsight.evaluate.run_gold` and `uv run python -m finsight.evaluate.ladder` | Kaggle GPU, weights |
+| Extractor ladder, E2 / E3 / E11 (`ladder_table.json`, `extractor_metrics-*.json`, `bilstm_metrics-*.json`) | Kaggle notebooks `notebooks/01_finetune_extractor.ipynb`, `02_bilstm_crf.ipynb`; then `uv run python -m vidura.evaluate.run_gold` and `uv run python -m vidura.evaluate.ladder` | Kaggle GPU, weights |
 | Extractor v1 / v2 on the v3 dev set (`c/extractor_v1_on_v3dev.json`, `c/extractor_v2/`) | `scripts/extractor_v2.py`, `extractor_v2_compare.py`, `extractor_v2_gold.py` | Kaggle GPU |
 | Classifier base, E16 (`b/classifier_base.json`, `b/classifier_tfidf.json`) | `uv run python scripts/classifier_kaggle.py push run`, `status`, `fetch`, `summary` | Kaggle GPU |
 | Classifier large (`c/classifier_large.json`) | Colab job `classifier_large` through `scripts/gpu_jobs.py`, then `scripts/classifier_large_summary.py` | Colab G4 |
@@ -43,12 +43,12 @@ curl -s http://127.0.0.1:8000/api/docs/doc_72480c2e249eb8da/redflags
 | 8B student (`c/student_8b_vs_4b_gold50.json`) | Colab job `student_8b`, then `scripts/student_8b_eval.py` | Colab G4 |
 | Teacher bake-off (`c/teacher_bakeoff.json`) | Colab job `bakeoff` (`docs/phase3/COLAB_STEPS_teacher_bakeoff.md`), `scripts/teacher_bakeoff.py` | Colab G4 |
 | Bench v1 (`c4/bench_*.json`) | `scripts/bench_run.py`, `scripts/bench_score.py` ([Bench](bench.md)) | Ollama, full documents |
-| Retrieval E6, chat E7, latency E10 (`retrieval.json`, `e7.json`, `latency.json`) | `finsight.retrieve.evaluate`, `finsight.evaluate.answers`, `finsight.evaluate.latency` | Ollama, profile `full` |
-| Verifier E5 (`verifier.json`) | `finsight.evaluate.seeded_errors` | — |
-| Guard E8 (`guard.json`, `guard_clf.json`, `guard_compare.json`) | `uv run python -m finsight.evaluate.guard_eval`; MuRIL via `finsight.guard.kaggle_clf` | Kaggle for MuRIL |
+| Retrieval E6, chat E7, latency E10 (`retrieval.json`, `e7.json`, `latency.json`) | `vidura.retrieve.evaluate`, `vidura.evaluate.answers`, `vidura.evaluate.latency` | Ollama, profile `full` |
+| Verifier E5 (`verifier.json`) | `vidura.evaluate.seeded_errors` | — |
+| Guard E8 (`guard.json`, `guard_clf.json`, `guard_compare.json`) | `uv run python -m vidura.evaluate.guard_eval`; MuRIL via `vidura.guard.kaggle_clf` | Kaggle for MuRIL |
 | Decided checks over 289 RHPs (1,561 → 1,714) | `uv run python scripts/p4_decided_counts.py --data-root <checkout> --out <file>` and `--compare` | cached parses of all 289 |
 | Risk-level fit (`b/risklevel_fit.json`, `c/risklevel_scoring.json`) | `scripts/score_reference_ipos.py`, `scripts/validate_risklevel.py` | classifier on the GPU |
-| Corpus stats (`corpus_stats.json`) | the corpus builder in `finsight.ingest` | the Ghosh corpus |
+| Corpus stats (`corpus_stats.json`) | the corpus builder in `vidura.ingest` | the Ghosh corpus |
 
 Commands in this table were taken from each script's own usage text and were not run again for these
 docs.

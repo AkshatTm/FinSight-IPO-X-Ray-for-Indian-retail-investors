@@ -149,7 +149,7 @@ Red-flag checks (B01 §5, B05 §5.4). Thresholds are B01's initial definitions; 
 | Key | Value | Meaning |
 | --- | --- | --- |
 | `version` | `b01-initial-1` | Rule version, stored in every `redflags.json`. |
-| `default_missing` | `FinSight couldn't find this in the document.` | Sentence shown when a check's inputs are not in the document. |
+| `default_missing` | `Vidura couldn't find this in the document.` | Sentence shown when a check's inputs are not in the document. |
 | `checks` | *(section)* | The 13 checks, RF01–RF13. |
 | `checks.RF01` | *(section)* | One check. |
 | `checks.RF01.title` | `Profit or loss` | Name shown on the card. |
@@ -213,7 +213,7 @@ Red-flag checks (B01 §5, B05 §5.4). Thresholds are B01's initial definitions; 
 
 ## `reference.yaml`
 
-Rolling reference window (C02 §5, C-ADR-03): "past IPOs" for a document are those dated before it within the last window_years. Corpus IPOs (close year only) count when their close year is in the window_years calendar years before the as-of year. Read by finsight.splits.reference.
+Rolling reference window (C02 §5, C-ADR-03): "past IPOs" for a document are those dated before it within the last window_years. Corpus IPOs (close year only) count when their close year is in the window_years calendar years before the as-of year. Read by vidura.splits.reference.
 
 | Key | Value | Meaning |
 | --- | --- | --- |
@@ -281,9 +281,9 @@ Risk features (B02 §7). tau set by C2.6 / E22 from 60 rated pairs (eval_results
 
 ## `splits.yaml`
 
-Phase 3 time split (C02 §4, C-ADR-02). Written by `python -m finsight.splits build`; never edit by hand. Once frozen, it changes only by a new C-ADR.
+Phase 3 time split (C02 §4, C-ADR-02). Written by `python -m vidura.splits build`; never edit by hand. Once frozen, it changes only by a new C-ADR.
 
-Keys not listed: the file is written by `python -m finsight.splits build`; never edited by hand.
+Keys not listed: the file is written by `python -m vidura.splits build`; never edited by hand.
 
 | Key | Value | Meaning |
 | --- | --- | --- |
@@ -297,7 +297,7 @@ Keys not listed: the file is written by `python -m finsight.splits build`; never
 | `ipos` | *list, 664 entries* | Every IPO with its slice. |
 | `excluded` | *list, 14 entries* | IPOs left out, with the reason. |
 | `demo` | `nityas-gems-and-jewellery-india-2026, srit-india-2026, shah-investor-s-home-2026` | Newest IPOs kept for the demo only. |
-| `bench` | *list, 7 entries* | The 7 FinSight Bench v1 IPOs. |
+| `bench` | *list, 7 entries* | The 7 Vidura Bench v1 IPOs. |
 | `bench_dev` | `[]` | Bench development IPOs (none). |
 
 ## `suggested_questions.yaml`

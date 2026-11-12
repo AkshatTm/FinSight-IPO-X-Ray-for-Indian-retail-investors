@@ -14,11 +14,11 @@ from __future__ import annotations
 import argparse
 import sys
 
-from finsight.core.config import Settings, get_settings
-from finsight.core.schemas import DocRecord
-from finsight.db import Database, make_database
-from finsight.jobs import delete_document
-from finsight.storage import Storage, doc_key, make_storage
+from vidura.core.config import Settings, get_settings
+from vidura.core.schemas import DocRecord
+from vidura.db import Database, make_database
+from vidura.jobs import delete_document
+from vidura.storage import Storage, doc_key, make_storage
 
 
 def reason(

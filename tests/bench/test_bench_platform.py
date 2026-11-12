@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.bench import normalize_ipo_id, read_ipo_ids
+from vidura.bench import normalize_ipo_id, read_ipo_ids
 
 
 @pytest.mark.parametrize(

@@ -21,8 +21,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.ingest import list_demo_ipos  # noqa: E402
-from finsight.ingest.universe import (  # noqa: E402
+from vidura.ingest import list_demo_ipos  # noqa: E402
+from vidura.ingest.universe import (  # noqa: E402
     SMID_FINAL,
     SMID_RHP,
     UniverseCandidate,
@@ -31,7 +31,7 @@ from finsight.ingest.universe import (  # noqa: E402
     crawl,
     name_key,
 )
-from finsight.splits import UNIVERSE_COLUMNS  # noqa: E402
+from vidura.splits import UNIVERSE_COLUMNS  # noqa: E402
 
 OUT = ROOT / "configs" / "ipo_universe.csv"
 

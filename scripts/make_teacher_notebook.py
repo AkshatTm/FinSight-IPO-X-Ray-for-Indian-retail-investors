@@ -4,7 +4,7 @@
     uv run python scripts/make_teacher_notebook.py kernel smoke --username <kaggle-user>
         # -> data/processed/kaggle/kernels/finsight-teacher-smoke/ for `kaggle kernels push -p`
 
-The prompt, the JSON schema and the checkpoint loop are copied from ``finsight.risks`` when the
+The prompt, the JSON schema and the checkpoint loop are copied from ``vidura.risks`` when the
 notebook is written, so the notebook can never drift from the tested code
 (``tests/risks/test_teacher_notebook.py`` checks this). Runs: smoke = 50 risks, pilot = 500,
 full = everything; each resumes from the ``raw.jsonl`` of an earlier run when it is attached.
@@ -21,14 +21,14 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.risks import teacher  # noqa: E402
+from vidura.risks import teacher  # noqa: E402
 
 OUT = ROOT / "notebooks" / "b2_teacher_kaggle.ipynb"
-RUN_SOURCE = ROOT / "src" / "finsight" / "risks" / "teacher_run.py"
+RUN_SOURCE = ROOT / "src" / "vidura" / "risks" / "teacher_run.py"
 DATASET = "finsight-teacher-risks"  # private Kaggle dataset: risks.jsonl (+ raw.jsonl to resume)
 RUNS: dict[str, int | None] = {"smoke": 50, "pilot": 500, "full": None}
 
-MD = """# B2.3 - Teacher labels and plain-English rewrites (FinSight, M5)
+MD = """# B2.3 - Teacher labels and plain-English rewrites (Vidura, M5)
 
 Runs a Qwen teacher (AWQ 4-bit) with **vLLM** over the corpus risks in the private dataset
 `finsight-teacher-risks` (`risks.jsonl`: `risk_id`, `company`, `title`, `body`). Inference only;
@@ -38,7 +38,7 @@ nothing is trained here. One JSON answer per risk: `category` (one of 10), `seri
 - **Order:** smoke (50) -> pilot (500) -> full. Answers are appended to
   `/kaggle/working/teacher/raw.jsonl` every 100 risks; attach an earlier `raw.jsonl` as a dataset
   and the run skips what is done.
-- **Filters run on the laptop**, not here (`python -m finsight.risks.teacher_data filter`), with
+- **Filters run on the laptop**, not here (`python -m vidura.risks.teacher_data filter`), with
   the same checks the student's rewrites must pass.
 - GPU: T4 (16 GB, fp16 compute; AWQ kernels work on Turing). With T4 x2 the model is split over
   both GPUs (more room for the KV cache). Record the GPU hours in PROGRESS.md.
@@ -124,9 +124,9 @@ def _cell(kind: str, src: str, tags: list[str] | None = None) -> dict[str, Any]:
 
 
 def prompt_cell() -> str:
-    """The prompt and schema as literals, generated from ``finsight.risks.teacher``."""
+    """The prompt and schema as literals, generated from ``vidura.risks.teacher``."""
     return (
-        "# GENERATED from finsight.risks.teacher by scripts/make_teacher_notebook.py; do not edit\n"
+        "# GENERATED from vidura.risks.teacher by scripts/make_teacher_notebook.py; do not edit\n"
         f"PROMPT_VERSION = {teacher.PROMPT_VERSION!r}\n"
         f"SYSTEM = {teacher.SYSTEM!r}\n"
         f"OUTPUT_SCHEMA = json.loads({json.dumps(teacher.OUTPUT_SCHEMA)!r})\n\n\n"
@@ -160,7 +160,7 @@ def build() -> dict[str, Any]:
 
 def kernel_folder(run: str, username: str, folder: Path) -> Path:
     """Rendered notebook + ``kernel-metadata.json`` for ``kaggle kernels push -p folder``."""
-    from finsight.weaklabel.kaggle import CODE_FILE, render_notebook
+    from vidura.weaklabel.kaggle import CODE_FILE, render_notebook
 
     nb = render_notebook(build(), {"LIMIT": RUNS[run]})
     slug = f"finsight-teacher-{run}"

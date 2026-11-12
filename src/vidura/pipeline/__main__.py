@@ -1,0 +1,237 @@
+"""Offline pipeline CLI.
+
+uv run python -m vidura.pipeline build --ipo meesho-2025 [--doc rhp|prospectus|both]
+                                        [--stage parse|sections|tables|rules|qa|xray|index]
+                                        [--no-images]
+uv run python -m vidura.pipeline build-all [--stage parse|sections|tables|rules|qa|xray|index]
+                                            [--no-images]
+uv run python -m vidura.pipeline inspect --ipo meesho-2025 [--doc rhp] --stats
+uv run python -m vidura.pipeline inspect --ipo meesho-2025 --page 1 [--lines 20]
+uv run python -m vidura.pipeline inspect --ipo meesho-2025 --grep "fresh issue"
+                                          [--write-samples NAME]
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from collections import Counter
+from typing import cast
+
+from vidura.core.config import get_settings
+from vidura.core.schemas import DocType, Section, XRay
+from vidura.extract import DEFAULT_SEED, FineTunedExtractor, QAExtractor
+from vidura.ingest.registry import DemoIpo, get_demo_ipo, list_demo_ipos
+from vidura.parse import KEY_SECTIONS
+from vidura.pipeline import inspect as insp
+from vidura.pipeline.index_stage import run_index
+from vidura.pipeline.parse_stage import ParseReport, load_parsed, run_parse
+from vidura.pipeline.rules_stage import (
+    RulesRun,
+    rules_summary,
+    run_rules,
+    write_rules_summary,
+)
+from vidura.pipeline.sections_stage import run_sections, section_matrix, write_matrix
+from vidura.pipeline.tables_stage import TablesReport, run_tables, update_summary
+from vidura.pipeline.xray_stage import run_qa, run_xray, write_xray_summary, xray_summary
+from vidura.retrieve import BgeM3Embedder
+
+STAGES = ["parse", "sections", "tables", "rules", "qa", "xray", "index"]
+
+
+def _docs(choice: str) -> list[DocType]:
+    return ["rhp", "prospectus"] if choice == "both" else [cast(DocType, choice)]
+
+
+def _build(ipo: DemoIpo, docs: list[DocType], images: bool) -> list[ParseReport]:
+    processed = get_settings().paths.processed_dir
+    reports = []
+    for doc in docs:
+        pdf = ipo.rhp.file if doc == "rhp" else ipo.prospectus.file
+        report = run_parse(pdf, processed, ipo.ipo_id, doc, images=images)
+        print(
+            f"{ipo.ipo_id:28} {doc:10} pages={report.pages:4} scanned={report.scanned_pages:3} "
+            f"printed={report.pages_with_printed_number:4} parse={report.parse_s:6.1f}s "
+            f"images={report.images_s:6.1f}s",
+            flush=True,
+        )
+        reports.append(report)
+    return reports
+
+
+def _sections(ipo: DemoIpo, docs: list[DocType]) -> dict[tuple[str, DocType], list[Section]]:
+    processed = get_settings().paths.processed_dir
+    results = {}
+    for doc in docs:
+        sections = run_sections(processed, ipo.ipo_id, doc)
+        missing = set(KEY_SECTIONS) - {s.id for s in sections}
+        print(f"{ipo.ipo_id:28} {doc:10} sections={len(sections):3} missing_key={sorted(missing)}")
+        results[(ipo.ipo_id, doc)] = sections
+    return results
+
+
+def _tables(ipo: DemoIpo, docs: list[DocType]) -> list[TablesReport]:
+    processed = get_settings().paths.processed_dir
+    reports = []
+    for doc in docs:
+        pdf = ipo.rhp.file if doc == "rhp" else ipo.prospectus.file
+        r = run_tables(processed, pdf, ipo.ipo_id, doc)
+        print(
+            f"{ipo.ipo_id:28} {doc:10} tables={r.n_tables:4} {r.backend} {r.seconds:6.1f}s "
+            f"objects={r.objects} rows={len(r.objects_rows)} scale={r.objects_scale}",
+            flush=True,
+        )
+        reports.append(r)
+    update_summary(get_settings().paths.eval_dir / "tables.json", reports)
+    return reports
+
+
+def _rules(ipo: DemoIpo, docs: list[DocType]) -> dict[tuple[str, DocType], RulesRun]:
+    processed = get_settings().paths.processed_dir
+    out = {}
+    for doc in docs:
+        found = run_rules(processed, ipo.ipo_id, doc)
+        got = sum(bool(c) for c in found.values())
+        print(f"{ipo.ipo_id:28} {doc:10} fields with a candidate: {got}/{len(found)}", flush=True)
+        out[(ipo.ipo_id, doc)] = found
+    return out
+
+
+def _qa(ipo: DemoIpo, docs: list[DocType], qa: list[QAExtractor]) -> None:
+    processed = get_settings().paths.processed_dir
+    for doc in docs:
+        found = run_qa(processed, ipo.ipo_id, doc, qa)
+        got = sum(bool(c) for c in found.values())
+        print(
+            f"{ipo.ipo_id:28} {doc:10} fields with a QA candidate: {got}/{len(found)}", flush=True
+        )
+
+
+def _qa_extractors() -> list[QAExtractor]:
+    """Both QA rungs; each runs only on the fields that name it in fields.yaml (ADR-018)."""
+    return [QAExtractor(), FineTunedExtractor(DEFAULT_SEED)]
+
+
+def _xray(ipo: DemoIpo) -> XRay:
+    xray = run_xray(get_settings().paths.processed_dir, ipo)
+    chosen = sum(f.chosen is not None for f in xray.fields)
+    verdicts = Counter(f.verdict for f in xray.fields)
+    print(f"{ipo.ipo_id:28} xray fields with a value: {chosen}/{len(xray.fields)} {dict(verdicts)}")
+    return xray
+
+
+def _write_timing(reports: list[ParseReport]) -> None:
+    out = get_settings().paths.eval_dir / "parse_timing.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    existing = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
+    for r in reports:
+        existing[f"{r.ipo_id}:{r.doc}"] = r.as_dict()
+    out.write_text(
+        json.dumps(dict(sorted(existing.items())), indent=2) + "\n", encoding="utf-8", newline="\n"
+    )
+
+
+def main(argv: list[str] | None = None) -> int:
+    # Windows pipes default to cp1252, which cannot print ₹ or [●].
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    parser = argparse.ArgumentParser(prog="vidura.pipeline")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    build = sub.add_parser("build", help="run pipeline stages for one IPO")
+    build.add_argument("--ipo", required=True)
+    build.add_argument("--doc", choices=["rhp", "prospectus", "both"], default="both")
+    build.add_argument("--stage", choices=STAGES, default="parse")
+    build.add_argument("--no-images", action="store_true")
+    build.add_argument("--dense", action="store_true", help="index stage: also embed (ml group)")
+
+    build_all = sub.add_parser("build-all", help="run pipeline stages for every demo IPO")
+    build_all.add_argument("--stage", choices=STAGES, default="parse")
+    build_all.add_argument("--no-images", action="store_true")
+    build_all.add_argument(
+        "--dense", action="store_true", help="index stage: also embed (ml group)"
+    )
+
+    ins = sub.add_parser("inspect", help="capped view of a parsed document (<= 40 lines)")
+    ins.add_argument("--ipo", required=True)
+    ins.add_argument("--doc", choices=["rhp", "prospectus"], default="rhp")
+    ins.add_argument("--stats", action="store_true")
+    ins.add_argument("--page", type=int)
+    ins.add_argument("--lines", type=int, default=20)
+    ins.add_argument("--grep")
+    ins.add_argument("--write-samples", metavar="NAME", help="with --grep: data/samples/NAME.jsonl")
+
+    args = parser.parse_args(argv)
+
+    if getattr(args, "stage", None) == "index":
+        embedder = BgeM3Embedder() if args.dense else None  # one model load for every IPO
+        ipos = [get_demo_ipo(args.ipo)] if args.command == "build" else list_demo_ipos()
+        for ipo in ipos:
+            r = run_index(get_settings().paths.processed_dir, ipo.ipo_id, embedder=embedder)
+            print(
+                f"{r.ipo_id:28} passages={r.passages:5} table_passages={r.tables:4} dense={r.dense}"
+            )
+    elif args.command == "build" and args.stage == "sections":
+        _sections(get_demo_ipo(args.ipo), _docs(args.doc))
+    elif args.command == "build" and args.stage == "rules":
+        _rules(get_demo_ipo(args.ipo), _docs(args.doc))
+    elif args.command == "build-all" and args.stage == "rules":
+        every: dict[tuple[str, DocType], RulesRun] = {}
+        for ipo in list_demo_ipos():
+            every |= _rules(ipo, ["rhp", "prospectus"])
+        write_rules_summary(
+            get_settings().paths.eval_dir / "rules_candidates.json", rules_summary(every)
+        )
+    elif args.command == "build" and args.stage == "qa":
+        _qa(get_demo_ipo(args.ipo), _docs(args.doc), _qa_extractors())
+    elif args.command == "build-all" and args.stage == "qa":
+        qa = _qa_extractors()  # one model load for all 20 documents
+        for ipo in list_demo_ipos():
+            _qa(ipo, ["rhp", "prospectus"], qa)
+    elif args.command == "build" and args.stage == "xray":
+        _xray(get_demo_ipo(args.ipo))
+    elif args.command == "build-all" and args.stage == "xray":
+        xrays = [_xray(ipo) for ipo in list_demo_ipos()]
+        write_xray_summary(get_settings().paths.eval_dir / "xray_summary.json", xray_summary(xrays))
+    elif args.command == "build" and args.stage == "tables":
+        _tables(get_demo_ipo(args.ipo), _docs(args.doc))
+    elif args.command == "build":
+        _write_timing(_build(get_demo_ipo(args.ipo), _docs(args.doc), not args.no_images))
+    elif args.command == "build-all" and args.stage == "sections":
+        results: dict[tuple[str, DocType], list[Section]] = {}
+        for ipo in list_demo_ipos():
+            results |= _sections(ipo, ["rhp", "prospectus"])
+        matrix = section_matrix(results)
+        write_matrix(get_settings().paths.eval_dir / "sections.json", matrix)
+        print(f"all key sections found: {matrix['all_key_found']}")
+    elif args.command == "build-all" and args.stage == "tables":
+        for ipo in list_demo_ipos():
+            _tables(ipo, ["rhp", "prospectus"])  # the summary is updated after every IPO
+        summary = update_summary(get_settings().paths.eval_dir / "tables.json", [])
+        print(json.dumps(summary["summary"], ensure_ascii=False))
+    elif args.command == "build-all":
+        reports: list[ParseReport] = []
+        for ipo in list_demo_ipos():
+            reports += _build(ipo, ["rhp", "prospectus"], not args.no_images)
+            _write_timing(reports)
+    else:
+        settings = get_settings()
+        doc = load_parsed(settings.paths.processed_dir, args.ipo, cast(DocType, args.doc))
+        lines: list[str] = []
+        if args.stats:
+            lines += insp.stats(doc)
+        if args.page:
+            lines += insp.page_lines(doc, args.page, args.lines)
+        if args.grep:
+            lines += insp.grep(doc, args.grep)
+            if args.write_samples:
+                out = settings.paths.samples_dir / f"{args.write_samples}.jsonl"
+                lines.append(f"wrote {insp.write_samples(doc, args.grep, out)} snippets to {out}")
+        print("\n".join(insp._cap(lines or insp.stats(doc))))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

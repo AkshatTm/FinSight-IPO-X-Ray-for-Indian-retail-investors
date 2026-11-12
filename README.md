@@ -1,6 +1,6 @@
 # Vidura — IPO X-Ray for Indian retail investors
 
-Formerly FinSight.
+Formerly Vidura.
 
 [![backend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml)
 [![frontend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml)
@@ -159,7 +159,7 @@ Built and timed on Windows 11, 16 GB RAM and an NVIDIA RTX 2050 with 4 GB. The r
 ## Project layout
 
 ```text
-src/finsight/      the Python package: one folder per job
+src/vidura/      the Python package: one folder per job
   api/               FastAPI app and routes
   jobs/              background job runner, stages, cache key
   storage/ db/       files under data/store, SQLite / Postgres

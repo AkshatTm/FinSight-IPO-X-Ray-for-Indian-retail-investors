@@ -47,7 +47,7 @@ The two buttons at the top of every report:
 
 The same actions exist in the API (`POST /api/docs/{doc_id}/reanalyse`, `DELETE /api/docs/{doc_id}`,
 see the [API guide](../reference/api-guide.md)) and on the command line
-(`uv run python -m finsight.jobs forget <doc_id>`).
+(`uv run python -m vidura.jobs forget <doc_id>`).
 
 ## Where the results live
 

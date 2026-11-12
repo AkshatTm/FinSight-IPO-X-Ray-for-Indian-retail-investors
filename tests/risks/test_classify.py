@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.risks.classify import (
+from vidura.risks.classify import (
     Example,
     TfidfBaseline,
     evaluate,
@@ -14,8 +14,8 @@ from finsight.risks.classify import (
     split_by_company,
     write_split,
 )
-from finsight.risks.clf_metrics import band_scores, company_bucket, scores
-from finsight.risks.teacher import CATEGORIES
+from vidura.risks.clf_metrics import band_scores, company_bucket, scores
+from vidura.risks.teacher import CATEGORIES
 
 WORDS = {
     "financial": "losses revenue margins profit decline",

@@ -22,7 +22,7 @@ The corpus ends in 2023, but offer documents change and users will upload new on
 
 ## Collection process
 
-`scripts/build_ipo_universe.py` reads SEBI's public filings pages (*Filings → Public Issues*: Red Herring Documents filed with ROC, and Final Offer Documents), one request every 3 seconds, with an honest User-Agent. It drops addenda and corrigenda, keeps the RHP for each company (the Prospectus when no RHP is listed), merges spelling variants of one name and gives the 10 showcase IPOs their existing ids. Code: `src/finsight/ingest/universe.py`.
+`scripts/build_ipo_universe.py` reads SEBI's public filings pages (*Filings → Public Issues*: Red Herring Documents filed with ROC, and Final Offer Documents), one request every 3 seconds, with an honest User-Agent. It drops addenda and corrigenda, keeps the RHP for each company (the Prospectus when no RHP is listed), merges spelling variants of one name and gives the 10 showcase IPOs their existing ids. Code: `src/vidura/ingest/universe.py`.
 
 ## Known limits (stated, not hidden)
 

@@ -7,11 +7,11 @@ from typing import Any
 
 import pytest
 
-from finsight.core.schemas import Money, PageEvidence
-from finsight.guard import find_forbidden
-from finsight.normalize import parse_amount
-from finsight.redflags import CHECKS, DRAFT_SENTENCES, RedFlagInputs, evaluate, load_config
-from finsight.redflags.rules import money, num
+from vidura.core.schemas import Money, PageEvidence
+from vidura.guard import find_forbidden
+from vidura.normalize import parse_amount
+from vidura.redflags import CHECKS, DRAFT_SENTENCES, RedFlagInputs, evaluate, load_config
+from vidura.redflags.rules import money, num
 
 
 def m(text: str, unit: str = "₹ in million") -> Money:
@@ -36,10 +36,10 @@ def test_all_13_checks_always_come_back_and_empty_inputs_are_not_available() -> 
     statuses = {f.id: f.status for f in flags.flags}
     assert set(statuses.values()) == {"not_available"}
     texts = {f.id: f.sentence for f in flags.flags}
-    assert texts["RF01"] == "FinSight couldn't find the profit figures."
+    assert texts["RF01"] == "Vidura couldn't find the profit figures."
     assert texts["RF05"] == "Not available until the price is set."
     assert texts["RF10"] == "The document doesn't give customer shares."
-    assert texts["RF02"] == "FinSight couldn't find this in the document."
+    assert texts["RF02"] == "Vidura couldn't find this in the document."
     assert all(f.points == 0 and f.rule for f in flags.flags)
 
 

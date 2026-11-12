@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from finsight.core.schemas import Passage
-from finsight.generate import build_prompt
-from finsight.handoff import chat_template, rewrite_template
-from finsight.risks.simplify import student_prompt
+from vidura.core.schemas import Passage
+from vidura.generate import build_prompt
+from vidura.handoff import chat_template, rewrite_template
+from vidura.risks.simplify import student_prompt
 
 
 def _passage(text: str, page: int) -> Passage:

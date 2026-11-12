@@ -1,5 +1,5 @@
-from finsight.core.schemas import Passage
-from finsight.verify.nli import check_claims, decide, premise_for
+from vidura.core.schemas import Passage
+from vidura.verify.nli import check_claims, decide, premise_for
 
 
 def passage(text: str, n: int = 1) -> Passage:

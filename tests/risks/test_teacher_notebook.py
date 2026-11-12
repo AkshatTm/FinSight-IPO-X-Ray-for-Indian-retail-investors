@@ -4,7 +4,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any
 
-from finsight.risks import teacher
+from vidura.risks import teacher
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -42,9 +42,7 @@ def test_prompt_cell_reproduces_the_tested_prompt() -> None:
 
 def test_run_cell_is_the_tested_module_and_every_cell_compiles() -> None:
     nb = load_script().build()
-    assert cell(nb, "teacher-run") == (ROOT / "src/finsight/risks/teacher_run.py").read_text(
-        "utf-8"
-    )
+    assert cell(nb, "teacher-run") == (ROOT / "src/vidura/risks/teacher_run.py").read_text("utf-8")
     for c in nb["cells"]:
         if c["cell_type"] == "code":
             compile("".join(c["source"]), "cell", "exec")

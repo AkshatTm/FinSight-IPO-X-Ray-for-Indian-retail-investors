@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pymupdf
 
-from finsight.core.schemas import BBox, Page, Word
-from finsight.parse import parse_pdf
-from finsight.risks.segment import (
+from vidura.core.schemas import BBox, Page, Word
+from vidura.parse import parse_pdf
+from vidura.risks.segment import (
     body_lines,
     first_sentence,
     page_lines,
@@ -305,8 +305,8 @@ def test_to_risks_numbers_in_order() -> None:
 
 
 def test_split_risks_reads_the_risk_factors_section_and_its_table_boxes() -> None:
-    from finsight.core.schemas import ParsedDoc, Section, Table, TableCell
-    from finsight.pipeline import split_risks, table_boxes
+    from vidura.core.schemas import ParsedDoc, Section, Table, TableCell
+    from vidura.pipeline import split_risks, table_boxes
 
     pages, boxes = mixed_doc()
     cover = Page(number=1, width=W, height=H, words=[], text="", is_scanned=False)
@@ -329,8 +329,8 @@ def test_split_risks_reads_the_risk_factors_section_and_its_table_boxes() -> Non
 
 
 def test_split_stage_withholds_residential_addresses() -> None:
-    from finsight.core.schemas import ParsedDoc, Section
-    from finsight.pipeline import split_risks
+    from vidura.core.schemas import ParsedDoc, Section
+    from vidura.pipeline import split_risks
 
     p = (
         PageBuilder(5)
@@ -356,8 +356,8 @@ def test_split_stage_withholds_residential_addresses() -> None:
 def test_short_section_loses_the_running_header_using_the_whole_document(tmp_path: Path) -> None:
     from make_fixture_pdf import RISK_TITLES, build_rhp_with_risks
 
-    from finsight.parse import find_sections
-    from finsight.pipeline import split_risks
+    from vidura.parse import find_sections
+    from vidura.pipeline import split_risks
 
     parsed = parse_pdf(build_rhp_with_risks(tmp_path / "rhp.pdf"), "acme", "rhp")
     sections = find_sections(parsed)

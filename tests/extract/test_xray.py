@@ -1,8 +1,8 @@
 from datetime import UTC, datetime
 
-from finsight.core.schemas import Candidate, DocType, Money, Placeholder, TextValue, Value
-from finsight.extract import DocInputs, build_xray, field_ids
-from finsight.normalize import parse_amount
+from vidura.core.schemas import Candidate, DocType, Money, Placeholder, TextValue, Value
+from vidura.extract import DocInputs, build_xray, field_ids
+from vidura.normalize import parse_amount
 
 NOW = datetime(2026, 10, 1, tzinfo=UTC)
 
@@ -130,7 +130,7 @@ def test_candidates_are_capped_but_keep_one_per_document() -> None:
 
 
 def test_xray_round_trips_through_json() -> None:
-    from finsight.core.schemas import XRay
+    from vidura.core.schemas import XRay
 
     rhp = [cand("fresh_issue_size", money("₹ 4,720 million"))]
     xray = build_xray("x", "X", docs(rhp, []), NOW)

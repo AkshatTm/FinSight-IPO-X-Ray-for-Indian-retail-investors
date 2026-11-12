@@ -3,11 +3,11 @@
     uv run python scripts/compare_reference.py --data <data dir> [--as-of YYYY-MM-DD] [--limit N]
         [--only ipo-id ...] [--write]
 
-"Past IPOs" are the product reference of ``finsight.splits`` (every collected IPO dated within
+"Past IPOs" are the product reference of ``vidura.splits`` (every collected IPO dated within
 ``configs/reference.yaml: window_years`` before ``--as-of``, default today). For each one found in
 the batch store (full words and boxes) or the text corpus (close year only), the X-Ray is built
 with the same ``upload_xray`` the upload pipeline uses and the four Compare numbers are read with
-``finsight.compare.compare_metrics``. A number the document does not print is left out of that
+``vidura.compare.compare_metrics``. A number the document does not print is left out of that
 metric's quantiles; ``metric_n`` records how many IPOs each metric rests on, and a metric with
 fewer than ``--min-n`` values is dropped (the tab then shows no percentile for it, never a typed
 one). Quantiles are linear-interpolated percentiles 0, 10, ..., 100.
@@ -33,15 +33,15 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.compare import METRICS, compare_metrics  # noqa: E402
-from finsight.compare.metrics import plausible  # noqa: E402
-from finsight.core.ids import make_doc_id  # noqa: E402
-from finsight.core.schemas import FinancialSummary, Page, ParsedDoc, Section  # noqa: E402
-from finsight.extract import upload_xray  # noqa: E402
-from finsight.ingest.corpus import load_corpus_doc  # noqa: E402
-from finsight.ingest.fetch import read_rows  # noqa: E402
-from finsight.splits import ipos_before, load_splits, reference_config  # noqa: E402
-from finsight.summary import extract_summary  # noqa: E402
+from vidura.compare import METRICS, compare_metrics  # noqa: E402
+from vidura.compare.metrics import plausible  # noqa: E402
+from vidura.core.ids import make_doc_id  # noqa: E402
+from vidura.core.schemas import FinancialSummary, Page, ParsedDoc, Section  # noqa: E402
+from vidura.extract import upload_xray  # noqa: E402
+from vidura.ingest.corpus import load_corpus_doc  # noqa: E402
+from vidura.ingest.fetch import read_rows  # noqa: E402
+from vidura.splits import ipos_before, load_splits, reference_config  # noqa: E402
+from vidura.summary import extract_summary  # noqa: E402
 
 CONFIG = ROOT / "configs" / "compare.yaml"
 UNIVERSE = ROOT / "configs" / "ipo_universe.csv"

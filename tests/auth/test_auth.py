@@ -9,8 +9,8 @@ import jwt
 import pytest
 from cryptography.hazmat.primitives.asymmetric import ec
 
-from finsight.auth import LOCAL_USER_ID, AuthError, user_from_header, verify_token
-from finsight.core.config import AuthConfig
+from vidura.auth import LOCAL_USER_ID, AuthError, user_from_header, verify_token
+from vidura.core.config import AuthConfig
 
 URL = "https://abc.supabase.co"
 SECRET = "test-secret-not-real-" + "x" * 20

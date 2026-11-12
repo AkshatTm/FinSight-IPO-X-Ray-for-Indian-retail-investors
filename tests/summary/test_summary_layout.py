@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from finsight.core.schemas import Page, Word
-from finsight.summary import clean_label, read_tables
-from finsight.summary.layout import is_nil, is_placeholder, is_value_token, unit_of
+from vidura.core.schemas import Page, Word
+from vidura.summary import clean_label, read_tables
+from vidura.summary.layout import is_nil, is_placeholder, is_value_token, unit_of
 
 COLS = (225.0, 303.0, 373.0)
 

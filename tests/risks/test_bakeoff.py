@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.risks.bakeoff import (
+from vidura.risks.bakeoff import (
     TIE,
     build_sheet,
     critical_drop_rate,
@@ -15,9 +15,9 @@ from finsight.risks.bakeoff import (
     wilson,
     write_sheet,
 )
-from finsight.risks.filters import Kept
-from finsight.risks.teacher import TeacherOutput
-from finsight.risks.teacher_input import Candidate
+from vidura.risks.filters import Kept
+from vidura.risks.teacher import TeacherOutput
+from vidura.risks.teacher_input import Candidate
 
 
 def cand(company: str, i: int, year: int) -> Candidate:

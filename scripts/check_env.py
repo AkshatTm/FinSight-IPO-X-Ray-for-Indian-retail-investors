@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import sys
 
-from finsight.core.config import REQUIRED_ENV, missing_env
+from vidura.core.config import REQUIRED_ENV, missing_env
 
 
 def main(argv: list[str]) -> int:

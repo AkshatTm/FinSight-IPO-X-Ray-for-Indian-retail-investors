@@ -1,4 +1,4 @@
-"""Shared helpers for every FinSight Colab notebook (C03 §2).
+"""Shared helpers for every Vidura Colab notebook (C03 §2).
 
 Checkpoints are written to the runtime's local disk (fast) and synced to Google Drive (IO mode
 ``"drive"``) or a private Hugging Face dataset repo (IO mode ``"hf"``, the default; resumes from
@@ -31,7 +31,7 @@ from pathlib import Path
 from typing import Any
 
 DRIVE_MOUNT = Path("/content/drive")
-DRIVE_ROOT = DRIVE_MOUNT / "MyDrive" / "FinSight"
+DRIVE_ROOT = DRIVE_MOUNT / "MyDrive" / "Vidura"
 
 # Observed Colab Pro rates (C0.2, units per hour). Used only to estimate cost in run_summary.
 OBSERVED_UNITS_PER_HOUR = {"T4": 1.07, "L4": 1.54, "A100": 6.77, "G4": 8.9}  # H100: not offered on Pro
@@ -51,7 +51,7 @@ def mount_drive(job: str, root: Path | None = None) -> Path:
             drive.mount(str(DRIVE_MOUNT))
         except ImportError:  # not on Colab: fall back to a local folder
             pass
-        root = DRIVE_ROOT if DRIVE_MOUNT.exists() else Path.cwd() / "FinSight_local"
+        root = DRIVE_ROOT if DRIVE_MOUNT.exists() else Path.cwd() / "Vidura_local"
     job_dir = Path(root) / job
     job_dir.mkdir(parents=True, exist_ok=True)
     return job_dir

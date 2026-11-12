@@ -673,131 +673,6 @@ wheels = [
 ]
 
 [[package]]
-name = "finsight"
-version = "0.0.0"
-source = { editable = "." }
-dependencies = [
-    { name = "pydantic" },
-    { name = "pydantic-settings" },
-    { name = "python-ulid" },
-    { name = "pyyaml" },
-]
-
-[package.dev-dependencies]
-api = [
-    { name = "alembic" },
-    { name = "bm25s" },
-    { name = "fastapi" },
-    { name = "numpy" },
-    { name = "psycopg", extra = ["binary"] },
-    { name = "pyjwt", extra = ["crypto"] },
-    { name = "python-multipart" },
-    { name = "sqlalchemy" },
-    { name = "sse-starlette" },
-    { name = "uvicorn", extra = ["standard"] },
-]
-data = [
-    { name = "openpyxl" },
-    { name = "pdfplumber" },
-    { name = "pillow" },
-    { name = "psutil" },
-    { name = "pymupdf" },
-]
-dev = [
-    { name = "httpx2" },
-    { name = "hypothesis" },
-    { name = "mypy" },
-    { name = "nbstripout" },
-    { name = "poethepoet" },
-    { name = "pre-commit" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "ruff" },
-    { name = "types-pyyaml" },
-]
-docs = [
-    { name = "interrogate" },
-    { name = "mkdocs-material" },
-    { name = "mkdocstrings", extra = ["python"] },
-]
-ml = [
-    { name = "torch" },
-    { name = "transformers" },
-]
-ml-cpu = [
-    { name = "pyarrow" },
-    { name = "scikit-learn" },
-]
-onnx = [
-    { name = "onnx" },
-    { name = "onnxruntime" },
-    { name = "tokenizers" },
-]
-tables = [
-    { name = "docling" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "pydantic", specifier = ">=2.7" },
-    { name = "pydantic-settings", specifier = ">=2.3" },
-    { name = "python-ulid", specifier = ">=4.0.1" },
-    { name = "pyyaml", specifier = ">=6.0" },
-]
-
-[package.metadata.requires-dev]
-api = [
-    { name = "alembic", specifier = ">=1.13" },
-    { name = "bm25s", specifier = ">=0.3.11" },
-    { name = "fastapi", specifier = ">=0.115" },
-    { name = "numpy", specifier = ">=2.4.6" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
-    { name = "pyjwt", extras = ["crypto"], specifier = ">=2.9" },
-    { name = "python-multipart", specifier = ">=0.0.32" },
-    { name = "sqlalchemy", specifier = ">=2.0" },
-    { name = "sse-starlette", specifier = ">=2.1" },
-    { name = "uvicorn", extras = ["standard"], specifier = ">=0.30" },
-]
-data = [
-    { name = "openpyxl", specifier = ">=3.1" },
-    { name = "pdfplumber", specifier = ">=0.11.10" },
-    { name = "pillow", specifier = ">=12.3.0" },
-    { name = "psutil", specifier = ">=5.9" },
-    { name = "pymupdf", specifier = ">=1.28.2" },
-]
-dev = [
-    { name = "httpx2", specifier = ">=2.13.1" },
-    { name = "hypothesis", specifier = ">=6.100" },
-    { name = "mypy", specifier = ">=1.10" },
-    { name = "nbstripout", specifier = ">=0.7" },
-    { name = "poethepoet", specifier = ">=0.29" },
-    { name = "pre-commit", specifier = ">=3.7" },
-    { name = "pytest", specifier = ">=8.2" },
-    { name = "pytest-cov", specifier = ">=5.0" },
-    { name = "ruff", specifier = ">=0.6" },
-    { name = "types-pyyaml", specifier = ">=6.0" },
-]
-docs = [
-    { name = "interrogate", specifier = ">=1.7" },
-    { name = "mkdocs-material", specifier = ">=9.5" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.26" },
-]
-ml = [
-    { name = "torch", specifier = ">=2.4", index = "https://download.pytorch.org/whl/cu128" },
-    { name = "transformers", specifier = ">=4.44" },
-]
-ml-cpu = [
-    { name = "pyarrow", specifier = ">=17" },
-    { name = "scikit-learn", specifier = ">=1.5" },
-]
-onnx = [
-    { name = "onnx", specifier = ">=1.16" },
-    { name = "onnxruntime", specifier = ">=1.18" },
-    { name = "tokenizers", specifier = ">=0.20" },
-]
-tables = [{ name = "docling", specifier = ">=2.131.0" }]
-
-[[package]]
 name = "flatbuffers"
 version = "25.12.19"
 source = { registry = "https://pypi.org/simple" }
@@ -3151,6 +3026,131 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/7f/74/03c05ae4737e871923d21a76fe28b6aad57f5c03b6e6bfcfa5ad616013e4/uvloop-0.22.1-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:40631b049d5972c6755b06d0bfe8233b1bd9a8a6392d9d1c45c10b6f9e9b2733", size = 3621267, upload-time = "2025-10-16T22:16:26.819Z" },
     { url = "https://files.pythonhosted.org/packages/75/be/f8e590fe61d18b4a92070905497aec4c0e64ae1761498cad09023f3f4b3e/uvloop-0.22.1-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:535cc37b3a04f6cd2c1ef65fa1d370c9a35b6695df735fcff5427323f2cd5473", size = 3723105, upload-time = "2025-10-16T22:16:28.252Z" },
 ]
+
+[[package]]
+name = "vidura"
+version = "0.0.0"
+source = { editable = "." }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "python-ulid" },
+    { name = "pyyaml" },
+]
+
+[package.dev-dependencies]
+api = [
+    { name = "alembic" },
+    { name = "bm25s" },
+    { name = "fastapi" },
+    { name = "numpy" },
+    { name = "psycopg", extra = ["binary"] },
+    { name = "pyjwt", extra = ["crypto"] },
+    { name = "python-multipart" },
+    { name = "sqlalchemy" },
+    { name = "sse-starlette" },
+    { name = "uvicorn", extra = ["standard"] },
+]
+data = [
+    { name = "openpyxl" },
+    { name = "pdfplumber" },
+    { name = "pillow" },
+    { name = "psutil" },
+    { name = "pymupdf" },
+]
+dev = [
+    { name = "httpx2" },
+    { name = "hypothesis" },
+    { name = "mypy" },
+    { name = "nbstripout" },
+    { name = "poethepoet" },
+    { name = "pre-commit" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+    { name = "types-pyyaml" },
+]
+docs = [
+    { name = "interrogate" },
+    { name = "mkdocs-material" },
+    { name = "mkdocstrings", extra = ["python"] },
+]
+ml = [
+    { name = "torch" },
+    { name = "transformers" },
+]
+ml-cpu = [
+    { name = "pyarrow" },
+    { name = "scikit-learn" },
+]
+onnx = [
+    { name = "onnx" },
+    { name = "onnxruntime" },
+    { name = "tokenizers" },
+]
+tables = [
+    { name = "docling" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.7" },
+    { name = "pydantic-settings", specifier = ">=2.3" },
+    { name = "python-ulid", specifier = ">=4.0.1" },
+    { name = "pyyaml", specifier = ">=6.0" },
+]
+
+[package.metadata.requires-dev]
+api = [
+    { name = "alembic", specifier = ">=1.13" },
+    { name = "bm25s", specifier = ">=0.3.11" },
+    { name = "fastapi", specifier = ">=0.115" },
+    { name = "numpy", specifier = ">=2.4.6" },
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
+    { name = "pyjwt", extras = ["crypto"], specifier = ">=2.9" },
+    { name = "python-multipart", specifier = ">=0.0.32" },
+    { name = "sqlalchemy", specifier = ">=2.0" },
+    { name = "sse-starlette", specifier = ">=2.1" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.30" },
+]
+data = [
+    { name = "openpyxl", specifier = ">=3.1" },
+    { name = "pdfplumber", specifier = ">=0.11.10" },
+    { name = "pillow", specifier = ">=12.3.0" },
+    { name = "psutil", specifier = ">=5.9" },
+    { name = "pymupdf", specifier = ">=1.28.2" },
+]
+dev = [
+    { name = "httpx2", specifier = ">=2.13.1" },
+    { name = "hypothesis", specifier = ">=6.100" },
+    { name = "mypy", specifier = ">=1.10" },
+    { name = "nbstripout", specifier = ">=0.7" },
+    { name = "poethepoet", specifier = ">=0.29" },
+    { name = "pre-commit", specifier = ">=3.7" },
+    { name = "pytest", specifier = ">=8.2" },
+    { name = "pytest-cov", specifier = ">=5.0" },
+    { name = "ruff", specifier = ">=0.6" },
+    { name = "types-pyyaml", specifier = ">=6.0" },
+]
+docs = [
+    { name = "interrogate", specifier = ">=1.7" },
+    { name = "mkdocs-material", specifier = ">=9.5" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.26" },
+]
+ml = [
+    { name = "torch", specifier = ">=2.4", index = "https://download.pytorch.org/whl/cu128" },
+    { name = "transformers", specifier = ">=4.44" },
+]
+ml-cpu = [
+    { name = "pyarrow", specifier = ">=17" },
+    { name = "scikit-learn", specifier = ">=1.5" },
+]
+onnx = [
+    { name = "onnx", specifier = ">=1.16" },
+    { name = "onnxruntime", specifier = ">=1.18" },
+    { name = "tokenizers", specifier = ">=0.20" },
+]
+tables = [{ name = "docling", specifier = ">=2.131.0" }]
 
 [[package]]
 name = "virtualenv"

@@ -53,7 +53,7 @@ upload belongs to one local user.
 
 **How do I start over with a document?**
 Click **Delete** on the report and upload it again, or **Re-analyse** to keep the PDF and run the
-pipeline again. From the command line: `uv run python -m finsight.jobs forget <doc_id>`.
+pipeline again. From the command line: `uv run python -m vidura.jobs forget <doc_id>`.
 
 **The report says it was made with an older version.**
 It is re-analysed automatically because its `pipeline_version` differs from 4.2

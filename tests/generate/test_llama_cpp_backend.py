@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.generate import LLMUnavailable, ReasoningLeak
-from finsight.generate.llama_cpp_backend import LlamaCppBackend
+from vidura.generate import LLMUnavailable, ReasoningLeak
+from vidura.generate.llama_cpp_backend import LlamaCppBackend
 
 
 class FakeLlama:

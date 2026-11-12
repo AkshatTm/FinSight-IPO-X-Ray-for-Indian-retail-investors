@@ -2,7 +2,7 @@
 
 import pytest
 
-from finsight.core.schemas import (
+from vidura.core.schemas import (
     Count,
     ListValue,
     Money,
@@ -12,8 +12,8 @@ from finsight.core.schemas import (
     Range,
     TextValue,
 )
-from finsight.extract import QAExtractor, RawAnswer, build_passages
-from finsight.extract import get_field as deployed_field
+from vidura.extract import QAExtractor, RawAnswer, build_passages
+from vidura.extract import get_field as deployed_field
 
 
 def get_field(field_id: str):  # type: ignore[no-untyped-def]
@@ -141,7 +141,7 @@ def test_best_answers_first_and_one_candidate_per_distinct_value() -> None:
 
 @pytest.mark.slow
 def test_real_model_reads_a_cover_sentence() -> None:
-    from finsight.extract.qa_pretrained import default_answerer
+    from vidura.extract.qa_pretrained import default_answerer
 
     qa = QAExtractor(answerer=default_answerer())
     doc = make_doc(

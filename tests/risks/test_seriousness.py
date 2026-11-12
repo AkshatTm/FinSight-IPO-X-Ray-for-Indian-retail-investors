@@ -2,9 +2,9 @@ from decimal import Decimal
 
 import pytest
 
-from finsight.core.schemas import Hedging, Risk
-from finsight.risks.numbers import risk_numbers
-from finsight.risks.seriousness import (
+from vidura.core.schemas import Hedging, Risk
+from vidura.risks.numbers import risk_numbers
+from vidura.risks.seriousness import (
     importance,
     ranked_rids,
     score_risks,

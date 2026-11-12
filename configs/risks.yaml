@@ -2,7 +2,7 @@
 novelty:
   tau: 0.71               # cosine similarity at which a past risk counts as "the same risk" (E22: precision 0.91, n=45)
   years: [2018, 2023]     # LEGACY fixed window for banks without ipo_id; C2.1 banks use the rolling
-                          # window instead (configs/reference.yaml, finsight.splits.reference_bank)
+                          # window instead (configs/reference.yaml, vidura.splits.reference_bank)
   nearest: 3              # similar past risks shown on a card (distinct companies)
   unusual_below: 0.10     # "Unusual: in x% of past IPOs" (B05 §6)
   common_above: 0.60      # "Common: in x% of past IPOs"

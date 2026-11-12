@@ -30,7 +30,7 @@ IPOs, except the sets marked EVAL ONLY.
 | `student_chat_template.txt`, `student_chat_template_hi.txt` | | frozen chat prompt; placeholders `{{QUESTION}}` (twice), `{{PASSAGE_BLOCKS}}`; a block is `[n] (RHP page p)` then the text | n/a |
 | `serious_finding_hits.jsonl.gz` | 2801 | every sentence a severe pattern matched, from 275 documents, with the rules' `rules_decision` (`fired`, `blocked_soft`, `blocked_no_debt`); counts: {'blocked_no_debt': 18, 'blocked_soft': 2469, 'fired': 314}. Fields: `id, ipo_id, slice, excluded, check_id, page, sentence, context_before, context_after, rules_decision` | `rule` |
 | `five_things_selection.jsonl.gz` | 2147 | what the "Five things" card picked per IPO (437 train+dev IPOs): top 5 by importance. M2 baseline | `rule` |
-| `bench_v1/` | | frozen FinSight Bench v1 items, keys, prompts and stored retrieval. EVAL ONLY | gold v3 (human) |
+| `bench_v1/` | | frozen Vidura Bench v1 items, keys, prompts and stored retrieval. EVAL ONLY | gold v3 (human) |
 | `gold/` | | gold-150, gold-50 sheet and ratings, gold v3 / v3.1, red-flag status gold. EVAL ONLY | see `gold/README.md` |
 
 ## Known gaps (do not assume these exist)

@@ -39,18 +39,18 @@ flowchart LR
 | Container | Code | How it starts |
 | --- | --- | --- |
 | Web app | `frontend/` (Next.js App Router) | `pnpm dev --port 3000` from `start.bat` |
-| API + job runner | `finsight.api`, `finsight.jobs` | `uvicorn finsight.api.app:app --port 8000` from `start.bat` |
+| API + job runner | `vidura.api`, `vidura.jobs` | `uvicorn vidura.api.app:app --port 8000` from `start.bat` |
 | Model server | Ollama | `ollama serve` from `start.bat` |
-| Jobs by hand | `python -m finsight.jobs run \| simplify \| forget \| sweep` | command line, same stages without the API |
+| Jobs by hand | `python -m vidura.jobs run \| simplify \| forget \| sweep` | command line, same stages without the API |
 
-Supabase sign-in and Postgres still exist in code (`finsight.auth`, `FINSIGHT_DB__URL`) but are off:
+Supabase sign-in and Postgres still exist in code (`vidura.auth`, `FINSIGHT_DB__URL`) but are off:
 without Supabase settings every request is one local user ([Settings](../reference/config.md)).
 
 ## Components
 
 ```mermaid
 flowchart TB
-  subgraph api [finsight.api]
+  subgraph api [vidura.api]
     R1[routes: IPOs, X-Ray, chat, lab, glossary]
     R2[routes_uploads, routes_docs, routes_risks]
   end
@@ -88,7 +88,7 @@ flowchart TB
   risks --> generate
 ```
 
-Each package lives in `src/finsight/<package>/` and is imported only through its `__init__.py`; its
+Each package lives in `src/vidura/<package>/` and is imported only through its `__init__.py`; its
 docstring states its job ([Python packages](../reference/python.md)). The packages by job:
 
 | Package | Job |

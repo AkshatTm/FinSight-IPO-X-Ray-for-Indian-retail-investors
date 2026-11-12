@@ -5,8 +5,8 @@ from decimal import Decimal
 from hypothesis import given
 from hypothesis import strategies as st
 
-from finsight.core.schemas import Count, Money, Placeholder
-from finsight.normalize import (
+from vidura.core.schemas import Count, Money, Placeholder
+from vidura.normalize import (
     MULTIPLIER,
     equal,
     format_money,

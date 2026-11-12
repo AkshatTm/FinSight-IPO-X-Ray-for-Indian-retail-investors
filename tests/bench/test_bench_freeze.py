@@ -12,8 +12,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.bench import changed_files, load, unlisted_inputs
-from finsight.splits import load_splits
+from vidura.bench import changed_files, load, unlisted_inputs
+from vidura.splits import load_splits
 
 ROOT = Path(__file__).resolve().parents[2]
 BENCH = ROOT / "bench" / "v1"

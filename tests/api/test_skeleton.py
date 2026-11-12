@@ -4,8 +4,8 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from finsight.api.app import create_app
-from finsight.api.events import EVENT_MODELS
+from vidura.api.app import create_app
+from vidura.api.events import EVENT_MODELS
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -25,7 +25,7 @@ ROUTES = [
     ("GET", "/api/lab/verifier"),
     ("GET", "/api/lab/weaklabels"),
     ("GET", "/api/lab/b/{name}"),  # B3.4a (B06 §5)
-    ("GET", "/api/lab/c/bench"),  # C3.6 (FinSight Bench scores)
+    ("GET", "/api/lab/c/bench"),  # C3.6 (Vidura Bench scores)
     ("GET", "/api/lab/frontier"),
     ("GET", "/api/lab/retrieval"),
     ("GET", "/api/glossary"),
@@ -130,12 +130,12 @@ def test_no_two_response_models_share_a_name() -> None:
 
     from pydantic import BaseModel
 
-    import finsight.api.events
-    import finsight.api.models
-    import finsight.core.schemas
+    import vidura.api.events
+    import vidura.api.models
+    import vidura.core.schemas
 
     seen: dict[str, str] = {}
-    for module in (finsight.core.schemas, finsight.api.models, finsight.api.events):
+    for module in (vidura.core.schemas, vidura.api.models, vidura.api.events):
         for name, obj in inspect.getmembers(module, inspect.isclass):
             if issubclass(obj, BaseModel) and obj.__module__ == module.__name__:
                 assert name not in seen, f"{name} in {module.__name__} and {seen[name]}"

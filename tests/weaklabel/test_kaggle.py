@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.weaklabel.kaggle import (
+from vidura.weaklabel.kaggle import (
     NOTEBOOK,
     check_outputs,
     collect,
@@ -226,7 +226,7 @@ def test_collect_needs_the_baseline_and_keeps_nothing_from_a_smoke_run(tmp_path:
 
 # ---- BiLSTM-CRF runs (P5.3) -----------------------------------------------------------------
 def test_bilstm_runs_and_slugs() -> None:
-    from finsight.weaklabel.kaggle import kernel_slug, run_params
+    from vidura.weaklabel.kaggle import kernel_slug, run_params
 
     assert run_params("bilstm-smoke")["SLICE"] == 200
     assert run_params("bilstm-42") == {"SLICE": None, "SEEDS": [42]}
@@ -237,7 +237,7 @@ def test_bilstm_runs_and_slugs() -> None:
 
 
 def test_bilstm_kernel_embeds_the_model_source(tmp_path: Path) -> None:
-    from finsight.weaklabel.kaggle import write_kernel
+    from vidura.weaklabel.kaggle import write_kernel
 
     folder = write_kernel(tmp_path / "k", "akshat-user", "bilstm-13")
     nb = json.loads((folder / "notebook.ipynb").read_text(encoding="utf-8"))

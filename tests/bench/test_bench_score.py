@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import bench_score  # noqa: E402
 import summary_eval  # noqa: E402
 
-from finsight.redflags import evaluate, inputs_from_gold  # noqa: E402
+from vidura.redflags import evaluate, inputs_from_gold  # noqa: E402
 
 
 def _fa(status: str, value: str = "", unit: str = "", page: int | None = None) -> SimpleNamespace:

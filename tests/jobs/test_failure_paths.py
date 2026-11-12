@@ -12,11 +12,11 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import load_settings
-from finsight.core.schemas import DocRecord
-from finsight.db import Database
-from finsight.jobs import JobContext, Stage, StageRejected, run_job, upload_stages
-from finsight.storage import LocalStorage, doc_key, put_json
+from vidura.core.config import load_settings
+from vidura.core.schemas import DocRecord
+from vidura.db import Database
+from vidura.jobs import JobContext, Stage, StageRejected, run_job, upload_stages
+from vidura.storage import LocalStorage, doc_key, put_json
 
 T0 = datetime(2026, 10, 3, 6, 0, tzinfo=UTC)
 

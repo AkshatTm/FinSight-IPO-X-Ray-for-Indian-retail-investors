@@ -2,8 +2,8 @@ from decimal import Decimal
 
 import pytest
 
-from finsight.core.schemas import Money
-from finsight.normalize import equal, format_money, group_digits, parse_amount, to_unit
+from vidura.core.schemas import Money
+from vidura.normalize import equal, format_money, group_digits, parse_amount, to_unit
 
 
 def A(text: str):  # type: ignore[no-untyped-def]

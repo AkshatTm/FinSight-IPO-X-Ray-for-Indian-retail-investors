@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import Passage
-from finsight.retrieve.boost import OBJECTS_EXTRA, inject, objects_candidates, wants_objects
+from vidura.core.schemas import Passage
+from vidura.retrieve.boost import OBJECTS_EXTRA, inject, objects_candidates, wants_objects
 
 
 def passage(page: int, section: str, doc: str = "rhp", k: int = 0) -> Passage:
@@ -76,8 +76,8 @@ def test_inject_does_not_duplicate_a_passage_already_in_the_pool() -> None:
     "question", ["How will the money from the IPO be used?", "paisa kahan lagega"]
 )
 def test_real_indexes_return_an_objects_passage_in_the_top_five(ipo: str, question: str) -> None:
-    from finsight.core.config import get_settings
-    from finsight.retrieve import Retriever
+    from vidura.core.config import get_settings
+    from vidura.retrieve import Retriever
 
     s = get_settings()
     r = Retriever(s.paths.processed_dir, pool=s.retrieve.rerank_top_n, top_k=s.retrieve.final_top_k)

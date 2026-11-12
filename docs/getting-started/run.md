@@ -28,7 +28,7 @@ Or run one action from a terminal: `start.bat start`, `start.bat stop`, `start.b
    once to create it from the GGUF), otherwise loads it for 30 minutes so the first answer is quick.
 4. Stops whatever listens on ports 8000 and 3000, so Vidura always gets them.
 5. Runs `uv sync --inexact --group ml --group onnx` (fast when nothing changed).
-6. Starts the API (`uvicorn finsight.api.app:app --port 8000`) in a minimised window *Vidura API*.
+6. Starts the API (`uvicorn vidura.api.app:app --port 8000`) in a minimised window *Vidura API*.
 7. Runs `pnpm install` once if `frontend/node_modules` is missing, then starts the web app
    (`pnpm dev --port 3000`) in a minimised window *Vidura Web*.
 8. Waits for `http://127.0.0.1:8000/api/health` (up to 120 s) and the web app (up to 180 s), then opens

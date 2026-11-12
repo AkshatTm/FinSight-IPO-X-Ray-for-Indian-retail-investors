@@ -158,7 +158,7 @@ def main() -> int:
                     sys.executable,
                     "-m",
                     "uvicorn",
-                    "finsight.api.app:app",
+                    "vidura.api.app:app",
                     "--port",
                     str(a.port),
                     "--timeout-keep-alive",
@@ -186,7 +186,7 @@ def main() -> int:
             if not wait_for("http://127.0.0.1:3000/", "The frontend", 120):
                 return fail("the frontend did not start (see the messages above).")
         say("\n" + "=" * 60)
-        say("FinSight is running.")
+        say("Vidura is running.")
         if not a.no_frontend:
             say("  Open:   http://localhost:3000/upload   (upload your own RHP / prospectus PDF)")
         say(f"  API:    http://127.0.0.1:{a.port}/docs")

@@ -1,4 +1,4 @@
-# FinSight teacher runner (C2.2 / C2.3): paste as two cells in a Colab notebook (split at "# ---- cell 2").
+# Vidura teacher runner (C2.2 / C2.3): paste as two cells in a Colab notebook (split at "# ---- cell 2").
 # It downloads the pushed notebooks/c2_teacher.ipynb from the HF job repo and runs it as a plain
 # python process, so vLLM's engine child gets a real stdout (in-kernel runs crashed with
 # "io.UnsupportedOperation: fileno"). The kernel, not the job, releases the GPU when UNASSIGN.

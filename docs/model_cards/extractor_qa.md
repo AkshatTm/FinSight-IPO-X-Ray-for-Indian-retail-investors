@@ -13,8 +13,8 @@ metrics: [exact_match, f1, nvm]
 
 !!! info "Status in v1.1"
     **v1 (seed 2026) is the shipped extractor**, used only when the 10 showcase IPOs are built offline
-    (`python -m finsight.pipeline build --stage qa`), as a cross-check on the rules. Uploads do not run
-    it: the upload `facts` stage uses the rules and table extractors only (`finsight.extract.upload_xray`).
+    (`python -m vidura.pipeline build --stage qa`), as a cross-check on the rules. Uploads do not run
+    it: the upload `facts` stage uses the rules and table extractors only (`vidura.extract.upload_xray`).
     **v2** is a reported ablation and is not used (see below). Licence: trained on the CC BY-NC-SA 4.0
     corpus, so non-commercial; the weights are not published.
 
@@ -126,4 +126,4 @@ The model reads public offer documents only; it sees no personal data beyond nam
 
 ## How to use and reproduce
 
-`finsight.extract` loads the weights from `models/extractor/seed-<n>` (the best epoch of each Kaggle run; weights are never committed). To reproduce: build the weak labels (`python -m finsight.weaklabel`), run `notebooks/01_finetune_extractor.ipynb` on Kaggle (Kaggle steps: [Training lanes](../operations/training-lanes.md#kaggle)), score the gold set with `uv run python -m finsight.evaluate.run_gold`, then rebuild the table with `uv run python -m finsight.evaluate.ladder`.
+`vidura.extract` loads the weights from `models/extractor/seed-<n>` (the best epoch of each Kaggle run; weights are never committed). To reproduce: build the weak labels (`python -m vidura.weaklabel`), run `notebooks/01_finetune_extractor.ipynb` on Kaggle (Kaggle steps: [Training lanes](../operations/training-lanes.md#kaggle)), score the gold set with `uv run python -m vidura.evaluate.run_gold`, then rebuild the table with `uv run python -m vidura.evaluate.ladder`.

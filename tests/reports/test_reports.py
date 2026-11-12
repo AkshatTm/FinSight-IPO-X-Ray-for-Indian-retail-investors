@@ -5,9 +5,9 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from pathlib import Path
 
-from finsight.core.schemas import DocRecord
-from finsight.reports import assemble, etag, write_report
-from finsight.storage import LocalStorage, doc_key, get_json, put_json
+from vidura.core.schemas import DocRecord
+from vidura.reports import assemble, etag, write_report
+from vidura.storage import LocalStorage, doc_key, get_json, put_json
 
 DOC = DocRecord(
     doc_id="doc_a",

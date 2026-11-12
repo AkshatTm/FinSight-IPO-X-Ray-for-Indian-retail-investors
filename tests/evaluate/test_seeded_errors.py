@@ -1,7 +1,7 @@
 import random
 
-from finsight.core.schemas import Passage
-from finsight.evaluate.seeded_errors import (
+from vidura.core.schemas import Passage
+from vidura.evaluate.seeded_errors import (
     ERROR_TYPES,
     EXPECTED,
     build_items,
@@ -15,8 +15,8 @@ from finsight.evaluate.seeded_errors import (
     show,
     summarise,
 )
-from finsight.normalize import parse_amount
-from finsight.verify import same_value
+from vidura.normalize import parse_amount
+from vidura.verify import same_value
 
 
 def passage(ipo: str, doc: str, page: int, text: str) -> Passage:

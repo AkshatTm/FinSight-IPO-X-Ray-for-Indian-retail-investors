@@ -38,7 +38,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from bench_run import BENCH, _append, _done, _now, load_prompts  # noqa: E402
 
-from finsight.bench import bundle, load, split_bundle  # noqa: E402
+from vidura.bench import bundle, load, split_bundle  # noqa: E402
 
 SYSTEMS = ("opus", "chatgpt_go")
 BUNDLE_CHARS = 40_000  # one paste stays well inside both apps' message limits

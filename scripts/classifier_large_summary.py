@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.risks.clf_runs import summarise, summarise_band  # noqa: E402
+from vidura.risks.clf_runs import summarise, summarise_band  # noqa: E402
 
 LARGE = ROOT / "models" / "risk_classifier_large"
 BASE = ROOT / "eval_results" / "b" / "classifier_base.json"

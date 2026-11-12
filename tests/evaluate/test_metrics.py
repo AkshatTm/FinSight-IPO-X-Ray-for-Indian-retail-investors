@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import Count, ListValue, Money, Placeholder, Range, TextValue
-from finsight.evaluate.metrics import (
+from vidura.core.schemas import Count, ListValue, Money, Placeholder, Range, TextValue
+from vidura.evaluate.metrics import (
     audit_precision,
     bootstrap_ci,
     exact_match,
@@ -15,7 +15,7 @@ from finsight.evaluate.metrics import (
     token_f1,
     wilson_interval,
 )
-from finsight.normalize import parse_amount
+from vidura.normalize import parse_amount
 
 
 def m(text: str) -> Money:

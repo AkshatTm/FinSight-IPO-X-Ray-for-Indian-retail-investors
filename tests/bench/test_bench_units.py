@@ -1,4 +1,4 @@
-"""Unit tests for ``finsight.bench``: items, prompts, answer parsing, scoring rules, statistics."""
+"""Unit tests for ``vidura.bench``: items, prompts, answer parsing, scoring rules, statistics."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.bench import (
+from vidura.bench import (
     FIELDS,
     GROUPS,
     Manifest,
@@ -31,8 +31,8 @@ from finsight.bench import (
     task_a_prompt,
     task_c,
 )
-from finsight.bench.items import GUARD
-from finsight.core.schemas import Passage
+from vidura.bench.items import GUARD
+from vidura.core.schemas import Passage
 
 ROOT = Path(__file__).resolve().parents[2]
 SCORING = {

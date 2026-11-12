@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from smoke_local import follow_job, get, upload  # noqa: E402
 
-from finsight.ingest.registry import list_demo_ipos  # noqa: E402
+from vidura.ingest.registry import list_demo_ipos  # noqa: E402
 
 
 def main() -> int:

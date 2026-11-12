@@ -27,9 +27,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import gold_sets  # noqa: E402
 
-from finsight.generate import LLMUnavailable  # noqa: E402
-from finsight.risks.readability import fkgl  # noqa: E402
-from finsight.risks.simplify import Simplifier, _backend  # noqa: E402
+from vidura.generate import LLMUnavailable  # noqa: E402
+from vidura.risks.readability import fkgl  # noqa: E402
+from vidura.risks.simplify import Simplifier, _backend  # noqa: E402
 
 OUT_DIR = ROOT / "data" / "processed" / "gold_eval" / "8b"
 RESULT = ROOT / "eval_results" / "c" / "student_8b_vs_4b_gold50.json"

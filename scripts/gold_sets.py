@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from finsight.risks.gold_sets import (  # noqa: E402
+from vidura.risks.gold_sets import (  # noqa: E402
     CATEGORY_COLUMNS,
     GOLD50,
     GOLD150,
@@ -45,15 +45,15 @@ from finsight.risks.gold_sets import (  # noqa: E402
     score_rewrites,
     write_csv,
 )
-from finsight.risks.teacher import CATEGORIES, TeacherOutput, parse_output  # noqa: E402
-from finsight.risks.teacher_cleanup import (  # noqa: E402
+from vidura.risks.teacher import CATEGORIES, TeacherOutput, parse_output  # noqa: E402
+from vidura.risks.teacher_cleanup import (  # noqa: E402
     load_rules,
     remap_category,
     remap_version,
     seriousness_band,
 )
-from finsight.risks.teacher_input import Candidate  # noqa: E402
-from finsight.risks.teacher_run import read_jsonl  # noqa: E402
+from vidura.risks.teacher_input import Candidate  # noqa: E402
+from vidura.risks.teacher_run import read_jsonl  # noqa: E402
 
 DIR = ROOT / "data" / "processed" / "gold_eval"
 GOLD = ROOT / "data" / "gold"
@@ -90,7 +90,7 @@ def cmd_sample(_: argparse.Namespace) -> None:
     """Pick gold-150 and gold-50 from disjoint test IPOs and write the manifest (kind eval)."""
     from build_risk_bank import make_source
 
-    from finsight.splits import Manifest, file_sha256, load_splits, write_manifest
+    from vidura.splits import Manifest, file_sha256, load_splits, write_manifest
 
     splits = load_splits(ROOT / "configs" / "splits.yaml")
     source = make_source(splits)
@@ -193,8 +193,8 @@ def cmd_generate(a: argparse.Namespace) -> None:
     Same prompt and cleaning as the product (``simplify``); the cleaned text is kept even when a
     post-check fails, with the failure in ``check``, so it can still be rated.
     """
-    from finsight.generate import LLMUnavailable
-    from finsight.risks.simplify import Simplifier, _backend
+    from vidura.generate import LLMUnavailable
+    from vidura.risks.simplify import Simplifier, _backend
 
     simp = Simplifier(_backend(a.backend, a.model, ROOT / "models"), a.model)
     out = []
@@ -214,7 +214,7 @@ def cmd_generate(a: argparse.Namespace) -> None:
 
 def _check(c: Candidate, text: str) -> str:
     """The product's post-check on a rewrite: ``""`` when it passes, else the reason."""
-    from finsight.risks.simplify import post_check
+    from vidura.risks.simplify import post_check
 
     original = f"{c.title}\n\n{c.body}" if c.title.strip() else c.body
     problem = post_check(original, text)

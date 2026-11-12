@@ -10,12 +10,12 @@ from __future__ import annotations
 import json
 import sys
 
-from finsight.core.config import get_settings
-from finsight.core.schemas import Count, ListValue, Money, Placeholder, Range, TableValue, TextValue
-from finsight.evaluate.gold import FIELDS, _compact
-from finsight.ingest.registry import list_demo_ipos
-from finsight.normalize import equal, parse_amount
-from finsight.pipeline.rules_stage import load_candidates
+from vidura.core.config import get_settings
+from vidura.core.schemas import Count, ListValue, Money, Placeholder, Range, TableValue, TextValue
+from vidura.evaluate.gold import FIELDS, _compact
+from vidura.ingest.registry import list_demo_ipos
+from vidura.normalize import equal, parse_amount
+from vidura.pipeline.rules_stage import load_candidates
 
 
 def agrees(field_id: str, gold: dict[str, object], value: object) -> bool:

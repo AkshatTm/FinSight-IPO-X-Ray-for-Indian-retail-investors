@@ -1,8 +1,8 @@
 """Layer 2 of the privacy fix (ADR-048): residential addresses never reach the index."""
 
-from finsight.core.schemas import Page, ParsedDoc, Table, TableCell, Word
-from finsight.retrieve import build_chunks, find_personal_addresses, redact_prose, redact_table
-from finsight.retrieve.redact import PLACEHOLDER, address_column_words
+from vidura.core.schemas import Page, ParsedDoc, Table, TableCell, Word
+from vidura.retrieve import build_chunks, find_personal_addresses, redact_prose, redact_table
+from vidura.retrieve.redact import PLACEHOLDER, address_column_words
 
 ADDRESS = "Flat 12, Maple Heights, Sector 22, Springfield 400001"
 

@@ -9,14 +9,14 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from finsight.api import routes_risks
-from finsight.api.app import create_app
-from finsight.api.uploads_state import UploadState, get_upload_state
-from finsight.core.config import load_settings
-from finsight.core.schemas import DocRecord, Risk
-from finsight.db import Database
-from finsight.jobs import InlineLauncher
-from finsight.storage import LocalStorage, doc_key, put_json
+from vidura.api import routes_risks
+from vidura.api.app import create_app
+from vidura.api.uploads_state import UploadState, get_upload_state
+from vidura.core.config import load_settings
+from vidura.core.schemas import DocRecord, Risk
+from vidura.db import Database
+from vidura.jobs import InlineLauncher
+from vidura.storage import LocalStorage, doc_key, put_json
 
 DOC = "doc_" + "a" * 16
 
@@ -157,7 +157,7 @@ def test_rate_limit_window_slides() -> None:
 def test_risk_level_endpoint_follows_the_behind_click_switch(
     client: TestClient, state: UploadState, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    from finsight.risklevel import build, load_config
+    from vidura.risklevel import build, load_config
 
     assert client.get(f"/api/docs/{DOC}/risk-level").json()["error"]["code"] == "not_available"
     build(state.storage, DOC)
@@ -174,8 +174,8 @@ def test_risk_level_endpoint_follows_the_behind_click_switch(
 def test_compare_endpoint(client: TestClient, state: UploadState) -> None:
     from decimal import Decimal
 
-    from finsight.compare import build
-    from finsight.core.schemas import Peer
+    from vidura.compare import build
+    from vidura.core.schemas import Peer
 
     assert client.get(f"/api/docs/{DOC}/compare").json()["error"]["code"] == "not_available"
     peers = [

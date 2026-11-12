@@ -1,8 +1,8 @@
 from decimal import Decimal
 
-from finsight.core.schemas import Count, Money, Placeholder, Value
-from finsight.normalize import parse_amount
-from finsight.verify import check_consistency
+from vidura.core.schemas import Count, Money, Placeholder, Value
+from vidura.normalize import parse_amount
+from vidura.verify import check_consistency
 
 
 def money(text: str) -> Money:

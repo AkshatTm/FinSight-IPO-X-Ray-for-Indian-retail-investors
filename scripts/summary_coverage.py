@@ -27,20 +27,20 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from pydantic import TypeAdapter  # noqa: E402
 
-from finsight.core.ids import make_doc_id  # noqa: E402
-from finsight.core.schemas import (  # noqa: E402
+from vidura.core.ids import make_doc_id  # noqa: E402
+from vidura.core.schemas import (  # noqa: E402
     SUMMARY_HAS_VALUE,
     FinancialSummary,
     ParsedDoc,
     Section,
     SummaryValue,
 )
-from finsight.ingest.fetch import read_rows  # noqa: E402
-from finsight.parse import find_subsection_pages  # noqa: E402
-from finsight.redflags import detect_severe, evaluate, inputs_from_summary  # noqa: E402
-from finsight.redflags.severe import with_auditor  # noqa: E402
-from finsight.splits import load_splits  # noqa: E402
-from finsight.summary import extract_summary, values_by_source  # noqa: E402
+from vidura.ingest.fetch import read_rows  # noqa: E402
+from vidura.parse import find_subsection_pages  # noqa: E402
+from vidura.redflags import detect_severe, evaluate, inputs_from_summary  # noqa: E402
+from vidura.redflags.severe import with_auditor  # noqa: E402
+from vidura.splits import load_splits  # noqa: E402
+from vidura.summary import extract_summary, values_by_source  # noqa: E402
 
 ALLOWED = ("dev", "train")
 SECTIONS = TypeAdapter(list[Section])

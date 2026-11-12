@@ -5,8 +5,8 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from decimal import Decimal
 
-from finsight.compare import compare, compare_metrics
-from finsight.core.schemas import (
+from vidura.compare import compare, compare_metrics
+from vidura.core.schemas import (
     Candidate,
     FieldResult,
     FinancialSummary,

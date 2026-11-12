@@ -9,9 +9,9 @@ import pymupdf
 import pytest
 from make_fixture_pdf import build_blank_pdf, build_offer_pdf
 
-from finsight.core.config import UploadsConfig, load_settings
-from finsight.core.ids import make_doc_id
-from finsight.ingest import detect_type, sha256_file, validate_pdf
+from vidura.core.config import UploadsConfig, load_settings
+from vidura.core.ids import make_doc_id
+from vidura.ingest import detect_type, sha256_file, validate_pdf
 
 CASES = [
     ("rhp", "rhp", None),

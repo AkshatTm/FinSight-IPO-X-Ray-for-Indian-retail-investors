@@ -5,7 +5,7 @@
 
 The status gold (``data/gold/redflag_status_gold.jsonl``, written by
 ``scripts/redflag_status_gold.py`` from verified gold v3 rows) holds 13 statuses per IPO. The
-pipeline's statuses are what ``finsight.redflags`` computes from ``extract_summary`` on the same
+pipeline's statuses are what ``vidura.redflags`` computes from ``extract_summary`` on the same
 document, so E15 measures the extraction plus the rules together (E14 measures extraction alone).
 Reported: exact accuracy, accuracy where the gold has a value, the confusion matrix, per-check
 accuracy and the serious disagreements (OK against Concern). Severe overrides are listed per IPO
@@ -84,9 +84,9 @@ def predict(processed: Path, ipo_id: str) -> tuple[dict[str, str], list[str]]:
     """Statuses (and severe override ids) the pipeline's rules give the IPO's RHP."""
     from summary_eval import load_summary
 
-    from finsight.core.schemas import ParsedDoc, XRay
-    from finsight.redflags import detect_severe, evaluate, inputs_from_summary
-    from finsight.redflags.severe import with_auditor
+    from vidura.core.schemas import ParsedDoc, XRay
+    from vidura.redflags import detect_severe, evaluate, inputs_from_summary
+    from vidura.redflags.severe import with_auditor
 
     summary, _ = load_summary(processed, ipo_id, "rhp")
     if summary is None:

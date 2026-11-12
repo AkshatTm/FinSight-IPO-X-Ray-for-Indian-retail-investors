@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 XLSX = ROOT / "data" / "raw" / "ipo_dataset" / "ipo_mainline_final_data_v18.xlsx"
 OUT = ROOT / "eval_results" / "c" / "bir_links.json"
 LINK_COLUMNS = ("dhrp_rhp_links_pdf", "most_relevant_link")
-UA = "FinSight-course-project link check (non-commercial; contact: repo owner)"
+UA = "Vidura-course-project link check (non-commercial; contact: repo owner)"
 URL = re.compile(r"https?://[^\s'\",\]\[]+")
 
 

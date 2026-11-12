@@ -18,8 +18,8 @@ from pathlib import Path
 import pdfplumber
 import pymupdf
 
-from finsight.core.config import get_settings
-from finsight.ingest.registry import get_demo_ipo
+from vidura.core.config import get_settings
+from vidura.ingest.registry import get_demo_ipo
 
 # (ipo, PDF page, what the page shows)
 PAGES = [

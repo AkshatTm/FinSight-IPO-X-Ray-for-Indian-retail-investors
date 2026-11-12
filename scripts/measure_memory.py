@@ -17,9 +17,9 @@ import time
 
 import psutil
 
-from finsight.core.config import get_settings
-from finsight.ingest.registry import list_demo_ipos
-from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
+from vidura.core.config import get_settings
+from vidura.ingest.registry import list_demo_ipos
+from vidura.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
 
 GB = 1024**3
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from finsight.core.schemas import (
+from vidura.core.schemas import (
     Count,
     FinancialSummary,
     Money,
@@ -16,11 +16,11 @@ from finsight.core.schemas import (
     SummaryValue,
     Word,
 )
-from finsight.summary.derived import ratios
-from finsight.summary.litigation_prose import METHOD, criminal_from_sections
-from finsight.summary.locate import reader_pages, scan_start, source_of
-from finsight.summary.sod import SODResult, build_sod
-from finsight.summary.strengths import extract_strengths
+from vidura.summary.derived import ratios
+from vidura.summary.litigation_prose import METHOD, criminal_from_sections
+from vidura.summary.locate import reader_pages, scan_start, source_of
+from vidura.summary.sod import SODResult, build_sod
+from vidura.summary.strengths import extract_strengths
 
 DOC = "synthetic-2026"
 

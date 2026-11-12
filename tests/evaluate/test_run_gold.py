@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from finsight.core.schemas import (
+from vidura.core.schemas import (
     Count,
     ListValue,
     Money,
@@ -14,7 +14,7 @@ from finsight.core.schemas import (
     Section,
     TextValue,
 )
-from finsight.evaluate.run_gold import (
+from vidura.evaluate.run_gold import (
     cached,
     gold_text,
     gold_value,
@@ -24,8 +24,8 @@ from finsight.evaluate.run_gold import (
     stated_in_body,
     summarise,
 )
-from finsight.extract import FineTunedExtractor, QAExtractor, RawAnswer, get_field, load_fields
-from finsight.extract.qa_finetuned import weights_dir
+from vidura.extract import FineTunedExtractor, QAExtractor, RawAnswer, get_field, load_fields
+from vidura.extract.qa_finetuned import weights_dir
 
 COVER = "FRESH ISSUE OF UP TO 81,816,199 EQUITY SHARES AGGREGATING UP TO ₹26,260 MILLION"
 BODY = (

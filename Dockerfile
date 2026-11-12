@@ -1,4 +1,4 @@
-# FinSight API for a CPU-only Hugging Face Space (P6.1, ADR-022). Not built or tested in CI.
+# Vidura API for a CPU-only Hugging Face Space (P6.1, ADR-022). Not built or tested in CI.
 # Build:  docker build -t finsight-api .
 # Run:    docker run -p 7860:7860 -v "$PWD/dist/space:/app/bundle:ro" finsight-api
 # Stage 1: llama-cpp-python built from source. The prebuilt "CPU" wheels on the project's own

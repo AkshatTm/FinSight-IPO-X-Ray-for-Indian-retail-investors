@@ -3,8 +3,8 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from finsight.core import config
-from finsight.core.config import Settings, load_settings
+from vidura.core import config
+from vidura.core.config import Settings, load_settings
 
 YAML = """
 paths: {data_dir: data, processed_dir: data/processed, models_dir: models, eval_dir: eval_results}
@@ -103,7 +103,7 @@ def test_repo_config_loads_every_profile(profile: str, monkeypatch: pytest.Monke
 
 
 def test_full_profile_carries_the_dev_tuned_abstain_threshold() -> None:
-    from finsight.core.config import load_settings
+    from vidura.core.config import load_settings
 
     thresholds = load_settings("full").retrieve.abstain_thresholds
     assert set(thresholds) == {"hybrid+rerank"}

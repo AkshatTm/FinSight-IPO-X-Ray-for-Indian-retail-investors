@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.risks.teacher_data import (
+from vidura.risks.teacher_data import (
     SHEET_COLUMNS,
     filter_file,
     main,

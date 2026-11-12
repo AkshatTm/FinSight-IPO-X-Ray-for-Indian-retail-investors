@@ -2,7 +2,7 @@
 
 import pytest
 
-from finsight.guard.advice import check_advice
+from vidura.guard.advice import check_advice
 
 
 @pytest.mark.parametrize(

@@ -25,7 +25,7 @@ The full rules used during the project are in [08_GIT_WORKFLOW.md](https://githu
 
 ## Tests
 
-- Every module ships with pytest tests; `finsight.normalize` also has property tests (Hypothesis).
+- Every module ships with pytest tests; `vidura.normalize` also has property tests (Hypothesis).
 - Tests that need full documents, the corpus or model weights are marked `@pytest.mark.local`; `poe test` and CI skip them.
 - Frontend: Vitest for logic and components, Playwright on the mocks for flows.
 

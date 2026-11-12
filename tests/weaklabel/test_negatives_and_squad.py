@@ -4,9 +4,9 @@ from pathlib import Path
 import pytest
 from weaklabel_docs import CAPITAL, COVER, FILLER, OFFER, acme, sections_for
 
-from finsight.extract import get_field
-from finsight.ingest.corpus import CorpusDoc, CorpusPage
-from finsight.weaklabel import (
+from vidura.extract import get_field
+from vidura.ingest.corpus import CorpusDoc, CorpusPage
+from vidura.weaklabel import (
     build_dataset,
     clean_text,
     find_answer,

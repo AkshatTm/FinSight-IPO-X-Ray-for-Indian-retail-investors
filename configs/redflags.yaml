@@ -3,7 +3,7 @@
 # Titles are B05 §5.4 verbatim. `rule` is the "How this check works" text: a builder draft listed
 # in docs/AKSHAT_TODO.md for copy approval.
 version: "b01-initial-1"
-default_missing: "FinSight couldn't find this in the document."
+default_missing: "Vidura couldn't find this in the document."
 
 checks:
   RF01:

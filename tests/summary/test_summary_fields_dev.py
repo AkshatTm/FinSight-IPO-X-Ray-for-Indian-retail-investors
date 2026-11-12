@@ -11,10 +11,10 @@ from decimal import Decimal
 import pytest
 from real import loader
 
-from finsight.compare import peer_median_pe
-from finsight.core.schemas import Count, FinancialSummary, Money
-from finsight.redflags import evaluate, inputs_from_summary
-from finsight.summary import extract_summary
+from vidura.compare import peer_median_pe
+from vidura.core.schemas import Count, FinancialSummary, Money
+from vidura.redflags import evaluate, inputs_from_summary
+from vidura.summary import extract_summary
 
 DEV = ("ather-energy-2025", "hexaware-technologies-2025", "urban-company-2025")
 

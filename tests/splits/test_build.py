@@ -1,15 +1,15 @@
-"""C1.4: `python -m finsight.splits build [--freeze]` on synthetic inputs (no real data)."""
+"""C1.4: `python -m vidura.splits build [--freeze]` on synthetic inputs (no real data)."""
 
 import json
 from pathlib import Path
 
 import pytest
 
-from finsight.splits import UNIVERSE_COLUMNS, load_splits, read_manifests
-from finsight.splits.__main__ import main
-from finsight.splits.assign import SplitRules
-from finsight.splits.build import BuildError, BuildPaths, build, cover_date
-from finsight.splits.retro import retro_manifests
+from vidura.splits import UNIVERSE_COLUMNS, load_splits, read_manifests
+from vidura.splits.__main__ import main
+from vidura.splits.assign import SplitRules
+from vidura.splits.build import BuildError, BuildPaths, build, cover_date
+from vidura.splits.retro import retro_manifests
 
 SHA = "ab" * 32
 DEMO = """ipos:
@@ -129,7 +129,7 @@ def test_retro_without_weak_labels_says_so(tmp_path: Path) -> None:
 def test_cli_dry_run_and_check(paths: BuildPaths, capsys: pytest.CaptureFixture[str]) -> None:
     common = ["--universe", str(paths.universe), "--corpus-dir", str(paths.corpus_dir),
               "--out", str(paths.out), "--manifests", str(paths.manifests)]  # fmt: skip
-    import finsight.splits.__main__ as cli
+    import vidura.splits.__main__ as cli
 
     cli_paths = cli._paths  # demo/processed come from the repo; point them at the fixture
     try:

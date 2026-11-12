@@ -15,7 +15,7 @@ Please do not open a public issue for a security problem. Use GitHub's **Report 
 
 ## In scope
 
-- The FastAPI service (`src/finsight/api`) and the upload pipeline: PDF validation, path handling in storage, the job runner.
+- The FastAPI service (`src/vidura/api`) and the upload pipeline: PDF validation, path handling in storage, the job runner.
 - Anything that lets one document's data leak into another's report, or lets a crafted PDF run code.
 - The web app (`frontend/`): script injection from document text, unsafe rendering.
 - Anything that would make Vidura show investment advice despite the guard and the forbidden-phrase checks.

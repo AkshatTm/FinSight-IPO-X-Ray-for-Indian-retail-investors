@@ -6,7 +6,7 @@ import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from finsight.splits import IpoRecord, SplitError, SplitRules, assign, check_strict
+from vidura.splits import IpoRecord, SplitError, SplitRules, assign, check_strict
 
 
 def new(i: int, d: date, company: str | None = None) -> IpoRecord:

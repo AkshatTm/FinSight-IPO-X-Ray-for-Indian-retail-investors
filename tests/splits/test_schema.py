@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.splits import UNIVERSE_COLUMNS, UniverseError, load_universe
+from vidura.splits import UNIVERSE_COLUMNS, UniverseError, load_universe
 
 HEADER = ",".join(UNIVERSE_COLUMNS)
 

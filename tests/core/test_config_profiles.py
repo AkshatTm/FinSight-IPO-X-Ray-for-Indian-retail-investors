@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import ENV_KEYS, REQUIRED_ENV, load_settings, missing_env
+from vidura.core.config import ENV_KEYS, REQUIRED_ENV, load_settings, missing_env
 
 ROOT = Path(__file__).resolve().parents[2]
 

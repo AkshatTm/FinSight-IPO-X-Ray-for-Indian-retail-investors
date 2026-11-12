@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.risks.teacher_run import done_ids, read_jsonl, run_teacher
+from vidura.risks.teacher_run import done_ids, read_jsonl, run_teacher
 
 
 def items(n: int) -> list[dict[str, object]]:

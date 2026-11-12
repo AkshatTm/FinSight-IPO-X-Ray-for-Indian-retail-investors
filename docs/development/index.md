@@ -3,7 +3,7 @@
 ## Repository layout
 
 ```text
-src/finsight/<package>/   Python packages, one job each (see Architecture)
+src/vidura/<package>/   Python packages, one job each (see Architecture)
 tests/<package>/          pytest tests, mirroring src/
 configs/                  YAML settings, rules, thresholds and the frozen split
 scripts/                  one-off and evaluation scripts, docs generators
@@ -31,7 +31,7 @@ cd frontend && pnpm install --frozen-lockfile
 
 - Python 3.11, typed. `ruff` (line length 100; rules E, F, I, UP, B, SIM, PT, RUF) and `ruff format`;
   `mypy` on the correctness-critical packages (`uv run poe typecheck`).
-- Pydantic v2 schemas live in `finsight.core.schemas`; packages import each other only through their
+- Pydantic v2 schemas live in `vidura.core.schemas`; packages import each other only through their
   `__init__.py`.
 - Google-style docstrings on public functions; each package's `__init__` docstring states its job.
   CI fails below 70 % docstring coverage (`interrogate`) and warns below 80 %.
@@ -109,7 +109,7 @@ Edit the source (a YAML file, a decision log, a result file), not the generated 
 - [Add or replace a model](add-model.md)
 - **Add a fact-sheet field.** Describe it in `configs/fields.yaml` (`id`, `label_en`, `type`, `doc`,
   `sections`, `questions`, `extractor`, `fallback`, `ladder`); write the rule in
-  `src/finsight/extract/rules.py` using `finsight.normalize.parse_amount` so lakh, crore, million and
+  `src/vidura/extract/rules.py` using `vidura.normalize.parse_amount` so lakh, crore, million and
   `[●]` are handled the same way; test it in `tests/extract/test_rules.py` (including a `[●]`
   placeholder and a sentence that must not match); add the field to the gold template and leave the
   gold value to a person; rebuild a showcase IPO (`--stage rules`, then `--stage xray`) and check the

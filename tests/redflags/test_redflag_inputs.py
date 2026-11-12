@@ -13,7 +13,7 @@ from typing import Any
 
 import pytest
 
-from finsight.core.schemas import (
+from vidura.core.schemas import (
     Candidate,
     FieldResult,
     FinancialSummary,
@@ -25,9 +25,9 @@ from finsight.core.schemas import (
     SummaryValue,
     XRay,
 )
-from finsight.normalize import parse_amount
-from finsight.redflags import auditor_kind, build, evaluate, inputs_from_gold, inputs_from_summary
-from finsight.storage import LocalStorage, doc_key, get_json, put_json
+from vidura.normalize import parse_amount
+from vidura.redflags import auditor_kind, build, evaluate, inputs_from_gold, inputs_from_summary
+from vidura.storage import LocalStorage, doc_key, get_json, put_json
 
 ROOT = Path(__file__).resolve().parents[2]
 DOC = "doc_0123456789abcdef"

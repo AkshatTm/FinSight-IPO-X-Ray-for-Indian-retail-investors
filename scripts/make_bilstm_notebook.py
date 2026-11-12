@@ -10,7 +10,7 @@ from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[1] / "notebooks" / "02_bilstm_crf.ipynb"
 
-MD = """# 02 - BiLSTM-CRF extractor (FinSight, Rung 4, E11)
+MD = """# 02 - BiLSTM-CRF extractor (Vidura, Rung 4, E11)
 
 A word + character BiLSTM with a CRF on top, tagging BIO spans (one tag set for all eight ladder
 fields) on the weak labels (ADR-038/041). **Runs on Kaggle** (GPU, Internet off is enough) with the
@@ -20,14 +20,14 @@ private dataset `finsight-weaklabel` attached; nothing trains on the laptop.
   rows they answer; same IPO split as the QA rungs).
 - No pretrained vectors: word embeddings are learned from the training text, a character CNN reads
   digits and rare words.
-- The model code is `src/finsight/extract/bilstm_crf_model.py`, pasted into the cell below when the run is
-  pushed (`python -m finsight.weaklabel.kaggle push bilstm-smoke|bilstm-13|...`). One source of truth.
+- The model code is `src/vidura/extract/bilstm_crf_model.py`, pasted into the cell below when the run is
+  pushed (`python -m vidura.weaklabel.kaggle push bilstm-smoke|bilstm-13|...`). One source of truth.
 - Dev is scored after every epoch with the same EM / token-F1 as the QA rungs; the best epoch by
   dev F1 is kept in `final/`. The trivial baseline (the most common training answer of each field,
   predicted when it occurs in the context) is scored on the same dev rows and written to
   `metrics-baseline.json`: a seed must beat it.
 - `predictions-<seed>.json` holds every epoch's dev answer per row so NVM is computed on the laptop
-  with the FinSight normalizer.
+  with the Vidura normalizer.
 """
 
 PARAMS = """# ---- parameters (the only cell you normally edit) -------------------------------------------
@@ -69,9 +69,11 @@ dev_rows = [dict(r, context=s["context"]) for s in dev_seqs for r in s["rows"]]
 print(len(train_seqs), "train sequences,", len(dev_seqs), "dev sequences,", len(dev_rows), "dev rows | device:", DEVICE)
 """
 
-SHARED = "# SHARED-MODEL (replaced with src/finsight/extract/bilstm_crf_model.py when the run is pushed)\n"
+SHARED = (
+    "# SHARED-MODEL (replaced with src/vidura/extract/bilstm_crf_model.py when the run is pushed)\n"
+)
 
-METRICS = """# ---- metrics (mirror finsight/evaluate/metrics.py: SQuAD EM and token F1) ---------------------
+METRICS = """# ---- metrics (mirror vidura/evaluate/metrics.py: SQuAD EM and token F1) ---------------------
 _ART = re.compile(r"\\b(a|an|the)\\b")
 def normalize_text(t):
     t = "".join(c for c in t.lower() if c not in set(string.punctuation))

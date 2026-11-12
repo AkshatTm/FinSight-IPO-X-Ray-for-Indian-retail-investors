@@ -21,9 +21,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.evaluate.outcomes import validate  # noqa: E402
-from finsight.risklevel import load_config  # noqa: E402
-from finsight.risklevel.reference import read_scores  # noqa: E402
+from vidura.evaluate.outcomes import validate  # noqa: E402
+from vidura.risklevel import load_config  # noqa: E402
+from vidura.risklevel.reference import read_scores  # noqa: E402
 
 TABLE = (
     Path(os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data"))

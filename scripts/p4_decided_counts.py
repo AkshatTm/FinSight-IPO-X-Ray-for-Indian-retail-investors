@@ -28,7 +28,7 @@ OFFER_FIELDS = ("offer_price", "fresh_issue_size", "ofs_amount", "ofs_shares", "
 
 
 def _parsed_dir(data_root: Path, ipo_id: str) -> Path | None:
-    from finsight.core.ids import make_doc_id
+    from vidura.core.ids import make_doc_id
 
     raw = data_root / "data" / "raw"
     pdf = next(
@@ -53,13 +53,13 @@ def _parsed_dir(data_root: Path, ipo_id: str) -> Path | None:
 
 def run_one(args: tuple[str, str, str]) -> dict[str, Any]:
     """Statuses of the 13 checks for one IPO (an ``error`` key when the path fails)."""
-    from finsight.core.schemas import ParsedDoc
-    from finsight.extract.fields import load_fields
-    from finsight.extract.rules import RulesExtractor
-    from finsight.extract.xray import DocInputs, build_xray
-    from finsight.parse import find_sections
-    from finsight.redflags import evaluate, inputs_from_summary
-    from finsight.summary import extract_summary
+    from vidura.core.schemas import ParsedDoc
+    from vidura.extract.fields import load_fields
+    from vidura.extract.rules import RulesExtractor
+    from vidura.extract.xray import DocInputs, build_xray
+    from vidura.parse import find_sections
+    from vidura.redflags import evaluate, inputs_from_summary
+    from vidura.summary import extract_summary
 
     ipo_id, slice_, base_s = args
     try:

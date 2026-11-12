@@ -5,8 +5,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from finsight.core.schemas import Risk
-from finsight.risks import (
+from vidura.core.schemas import Risk
+from vidura.risks import (
     add_features,
     company_key,
     embed_text,

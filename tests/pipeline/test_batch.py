@@ -8,8 +8,8 @@ import pymupdf
 import pytest
 from make_fixture_pdf import build_offer_pdf, build_rhp_with_risks
 
-from finsight.core.config import load_settings
-from finsight.pipeline.batch import (
+from vidura.core.config import load_settings
+from vidura.pipeline.batch import (
     DocResult,
     apply_results,
     cover_date,

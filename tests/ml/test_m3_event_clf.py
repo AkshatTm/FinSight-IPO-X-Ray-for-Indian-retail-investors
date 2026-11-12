@@ -26,9 +26,9 @@ def test_m3_predict_contract_and_no_product_imports() -> None:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
-                assert not alias.name.startswith("finsight"), f"Forbidden import: {alias.name}"
+                assert not alias.name.startswith("vidura"), f"Forbidden import: {alias.name}"
         elif isinstance(node, ast.ImportFrom) and node.module:
-            assert not node.module.startswith("finsight"), f"Forbidden import: {node.module}"
+            assert not node.module.startswith("vidura"), f"Forbidden import: {node.module}"
 
     items = [
         {

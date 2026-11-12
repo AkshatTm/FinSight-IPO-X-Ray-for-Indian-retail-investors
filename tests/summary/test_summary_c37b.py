@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from finsight.core.schemas import Page, ParsedDoc, Peer, Section
-from finsight.summary.objects import general_purposes
-from finsight.summary.peers import extract_peers, issuer_pe_statement, with_issuer_pe
+from vidura.core.schemas import Page, ParsedDoc, Peer, Section
+from vidura.summary.objects import general_purposes
+from vidura.summary.peers import extract_peers, issuer_pe_statement, with_issuer_pe
 
 DOC = "synthetic-2025"
 

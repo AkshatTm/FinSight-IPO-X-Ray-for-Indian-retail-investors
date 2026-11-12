@@ -4,42 +4,42 @@ Generated from the docstrings by mkdocstrings. Each package's `__init__` docstri
 
 ## Phase 2
 
-::: finsight.storage
+::: vidura.storage
     options:
       members: false
 
-::: finsight.db
+::: vidura.db
     options:
       members: false
 
-::: finsight.jobs
+::: vidura.jobs
     options:
       members: false
 
-::: finsight.risks
+::: vidura.risks
     options:
       members: false
 
-::: finsight.redflags
+::: vidura.redflags
     options:
       members: false
 
-::: finsight.risklevel
+::: vidura.risklevel
 
-::: finsight.compare
+::: vidura.compare
 
-::: finsight.reports
+::: vidura.reports
     options:
       members: false
 
 ## Phase 1 core
 
-::: finsight.core.config
+::: vidura.core.config
 
-::: finsight.normalize
+::: vidura.normalize
     options:
       members: false
 
-::: finsight.verify
+::: vidura.verify
     options:
       members: false

@@ -2,9 +2,9 @@
 
 import pytest
 
-from finsight.core.schemas import Claim, Passage
-from finsight.normalize import parse_amount
-from finsight.verify import NumericCheck, is_scale_mismatch, same_value, verify_answer
+from vidura.core.schemas import Claim, Passage
+from vidura.normalize import parse_amount
+from vidura.verify import NumericCheck, is_scale_mismatch, same_value, verify_answer
 
 
 def passage(n: int, text: str, page: int = 3) -> Passage:

@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pytest
 
-import finsight.risks.teacher_cleanup as tc
-from finsight.risks.strict_numbers import strict_check
-from finsight.risks.teacher_cleanup import (
+import vidura.risks.teacher_cleanup as tc
+from vidura.risks.strict_numbers import strict_check
+from vidura.risks.teacher_cleanup import (
     clean,
     is_nonrisk_title,
     load_rules,

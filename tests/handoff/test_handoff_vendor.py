@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.handoff import build_lite
-from finsight.risks.checks import unmatched_numbers
+from vidura.handoff import build_lite
+from vidura.risks.checks import unmatched_numbers
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -31,13 +31,13 @@ from finsight_lite.clf_metrics import band_scores
 pairs = json.loads(sys.argv[2])
 out = [unmatched_numbers(a, b) for a, b in pairs]
 assert band_scores([4, 1], [4, 2])["severe_recall"] == 1.0
-assert not [m for m in sys.modules if m == "finsight" or m.startswith("finsight.")]
+assert not [m for m in sys.modules if m == "vidura" or m.startswith("vidura.")]
 print(json.dumps(out))
 """
 
 
 def test_lite_copy_matches_the_product_and_is_self_contained(tmp_path: Path) -> None:
-    build_lite(ROOT / "src" / "finsight", tmp_path)
+    build_lite(ROOT / "src" / "vidura", tmp_path)
     run = subprocess.run(
         [sys.executable, "-I", "-c", _CHILD, str(tmp_path), json.dumps(PAIRS)],
         capture_output=True,
@@ -51,7 +51,7 @@ def test_lite_copy_matches_the_product_and_is_self_contained(tmp_path: Path) -> 
 
 @pytest.mark.parametrize("name", ["core/schemas.py", "normalize/numerals.py", "numcheck.py"])
 def test_no_product_imports_remain(tmp_path: Path, name: str) -> None:
-    build_lite(ROOT / "src" / "finsight", tmp_path)
+    build_lite(ROOT / "src" / "vidura", tmp_path)
     text = (tmp_path / "finsight_lite" / name).read_text(encoding="utf-8")
-    assert "from finsight." not in text
-    assert "import finsight." not in text
+    assert "from vidura." not in text
+    assert "import vidura." not in text

@@ -24,9 +24,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.risks.classify import MAX_LENGTH, OnnxClassifier, predict  # noqa: E402
-from finsight.risks.clf_metrics import scores  # noqa: E402
-from finsight.risks.teacher_run import read_jsonl  # noqa: E402
+from vidura.risks.classify import MAX_LENGTH, OnnxClassifier, predict  # noqa: E402
+from vidura.risks.clf_metrics import scores  # noqa: E402
+from vidura.risks.teacher_run import read_jsonl  # noqa: E402
 
 
 def export(model_dir: Path, out: Path, opset: int = 17, int8: bool = False) -> Path:

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.handoff import build_baselines, build_manifest, manifest, write_manifest
+from vidura.handoff import build_baselines, build_manifest, manifest, write_manifest
 
 
 def test_files_over_the_limit_go_to_hf_and_are_gitignored(

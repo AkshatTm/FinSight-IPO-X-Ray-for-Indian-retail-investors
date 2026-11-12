@@ -3,9 +3,9 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import Section
-from finsight.parse import parse_pdf
-from finsight.parse.tables import (
+from vidura.core.schemas import Section
+from vidura.parse import parse_pdf
+from vidura.parse.tables import (
     detect_header_scale,
     docling_backend,
     extract_tables,

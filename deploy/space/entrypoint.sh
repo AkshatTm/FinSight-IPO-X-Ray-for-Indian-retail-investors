@@ -19,4 +19,4 @@ PY
 fi
 
 cd /app/bundle
-exec /app/.venv/bin/uvicorn finsight.api.app:app --host 0.0.0.0 --port "${PORT:-7860}"
+exec /app/.venv/bin/uvicorn vidura.api.app:app --host 0.0.0.0 --port "${PORT:-7860}"

@@ -54,4 +54,4 @@ terms:
     body: { en: "A blank in the RHP for a value that isn't decided yet, usually the price.", hi: "आरएचपी में किसी ऐसे मान के लिए खाली जगह जो अभी तय नहीं है, आमतौर पर कीमत।" }
   - id: gmp
     title: { en: "GMP", hi: "जीएमपी" }
-    body: { en: "“Grey market premium”: unofficial trading talk before listing. It's not in the documents and FinSight doesn't track it.", hi: "“ग्रे मार्केट प्रीमियम”: लिस्टिंग से पहले की अनौपचारिक चर्चा। यह दस्तावेज़ों में नहीं होता और FinSight इसे ट्रैक नहीं करता।" }
+    body: { en: "“Grey market premium”: unofficial trading talk before listing. It's not in the documents and Vidura doesn't track it.", hi: "“ग्रे मार्केट प्रीमियम”: लिस्टिंग से पहले की अनौपचारिक चर्चा। यह दस्तावेज़ों में नहीं होता और Vidura इसे ट्रैक नहीं करता।" }

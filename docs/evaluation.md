@@ -116,7 +116,7 @@ Total 264 s (4.4 min) including upload. The slow parts are risk scoring (classif
 ## Phase 1 results (fact sheet and chat)
 
 Test-set figures of the Phase 1 experiments. The chat rows (E7) were measured with the Phase 1 profile
-`full` (`qwen3.5:2b`), not with the v1.1 student; the student's chat behaviour is measured by FinSight
+`full` (`qwen3.5:2b`), not with the v1.1 student; the student's chat behaviour is measured by Vidura
 Bench Task C above.
 
 <!-- generated:results start -->
@@ -153,7 +153,7 @@ it and what happened to it. "No result file" means the experiment was not run.
 | E6 | Retrieval quality | `retrieval.json` |  |
 | E7 | Answer quality | `e7.json` |  |
 | E8 | Guard | `guard.json`, `guard_clf.json`, `guard_compare.json` |  |
-| E9 | Frontier comparison | no result file | frontier answers were not collected; FinSight Bench v1 compares rules and the student |
+| E9 | Frontier comparison | no result file | frontier answers were not collected; Vidura Bench v1 compares rules and the student |
 | E10 | Latency + memory | `latency.json` |  |
 | E11 | BiLSTM-CRF rung (P1) | `bilstm_metrics-13.json`, `bilstm_metrics-2026.json`, `bilstm_metrics-42.json` |  |
 | E12 | ASR | `asr.json` | speech input removed in v1.1 (English-only); the file is history |
@@ -177,7 +177,7 @@ it and what happened to it. "No result file" means the experiment was not run.
 ## Caveats
 
 - **Small test sets.** E14 / E15 are scored on the 10 showcase IPOs (195 valued rows, 130 statuses),
-  FinSight Bench on 7 test IPOs, the extractor ladder on 7 test IPOs (56 facts), the chat on 67 test
+  Vidura Bench on 7 test IPOs, the extractor ladder on 7 test IPOs (56 facts), the chat on 67 test
   questions and the held-out guard test on 18 questions. Intervals are wide.
 - **AI-assisted gold.** Gold values were pre-filled with AI help and checked by Akshat against the page
   (ADR-035). Gold-150 categories started from model labels (Akshat changed 18 of 150). The bake-off

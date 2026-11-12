@@ -2,11 +2,11 @@ from pathlib import Path
 
 from pydantic import TypeAdapter
 
-from finsight.core.schemas import Section
-from finsight.parse import pymupdf_backend
-from finsight.pipeline.layout import doc_outputs
-from finsight.pipeline.parse_stage import run_parse
-from finsight.pipeline.tables_stage import (
+from vidura.core.schemas import Section
+from vidura.parse import pymupdf_backend
+from vidura.pipeline.layout import doc_outputs
+from vidura.pipeline.parse_stage import run_parse
+from vidura.pipeline.tables_stage import (
     load_tables,
     run_tables,
     tables_summary,

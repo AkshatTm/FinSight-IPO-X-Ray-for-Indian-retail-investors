@@ -1,9 +1,9 @@
 from datetime import UTC, datetime
 
-from finsight.chat import ChatOrchestrator, TraceStore
-from finsight.chat.objects import amount_with_unit, objects_passage, table_passage
-from finsight.core.schemas import Candidate, FieldResult, Passage, TableValue, XRay
-from finsight.retrieve import Hit, SearchResult
+from vidura.chat import ChatOrchestrator, TraceStore
+from vidura.chat.objects import amount_with_unit, objects_passage, table_passage
+from vidura.core.schemas import Candidate, FieldResult, Passage, TableValue, XRay
+from vidura.retrieve import Hit, SearchResult
 
 ROWS = [
     ["Capital expenditure for the factory", "9,272 (₹ in million)"],

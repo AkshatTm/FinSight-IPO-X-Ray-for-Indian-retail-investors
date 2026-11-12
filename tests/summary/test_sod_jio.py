@@ -14,12 +14,12 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import project_root
-from finsight.core.schemas import Count, Money, ParsedDoc, Percent
-from finsight.parse import find_sections
-from finsight.redflags import detect_severe, evaluate, inputs_from_summary
-from finsight.summary import extract_summary
-from finsight.summary.sod import build_sod
+from vidura.core.config import project_root
+from vidura.core.schemas import Count, Money, ParsedDoc, Percent
+from vidura.parse import find_sections
+from vidura.redflags import detect_severe, evaluate, inputs_from_summary
+from vidura.summary import extract_summary
+from vidura.summary.sod import build_sod
 
 pytestmark = pytest.mark.local
 JIO = project_root() / "data" / "store" / "docs" / "doc_72480c2e249eb8da"
@@ -36,9 +36,9 @@ def jio() -> tuple[ParsedDoc, list, object]:  # type: ignore[type-arg]
 
 
 def _flags(doc, sections, summary):  # type: ignore[no-untyped-def]
-    from finsight.extract.fields import load_fields
-    from finsight.extract.rules import RulesExtractor
-    from finsight.extract.xray import DocInputs, build_xray
+    from vidura.extract.fields import load_fields
+    from vidura.extract.rules import RulesExtractor
+    from vidura.extract.xray import DocInputs, build_xray
 
     fields, rules = load_fields(), RulesExtractor()
     cands = {f.id: rules.extract(doc, sections, [], f) for f in fields if f.id in OFFER_FIELDS}

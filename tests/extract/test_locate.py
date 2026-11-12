@@ -1,5 +1,5 @@
-from finsight.core.schemas import Word
-from finsight.extract import locate_bbox
+from vidura.core.schemas import Word
+from vidura.extract import locate_bbox
 
 
 def words(*items: tuple[str, float, float]) -> list[Word]:
