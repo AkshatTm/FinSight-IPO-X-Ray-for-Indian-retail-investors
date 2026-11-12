@@ -102,7 +102,7 @@ checked by one reviewer only, and speech input needed its own dependency group (
 ## Records kept from every phase
 
 - [Decisions](adr/index.md): 55 ADRs, 16 B-ADRs, 28 C-ADRs.
-- [CHANGELOG](changelog.md) and git tags `v0.2.0`, `v0.3.0`, `v0.4.0`, `v1.0`, `v1.1-pre`, `v1.1`.
+- [CHANGELOG](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/CHANGELOG.md) and git tags `v0.2.0`, `v0.3.0`, `v0.4.0`, `v1.0`, `v1.1-pre`, `v1.1`.
 - [PROGRESS.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/PROGRESS.md)
   and the per-phase progress logs.
 - [The documentation audit](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/archive/DOCS_AUDIT.md)

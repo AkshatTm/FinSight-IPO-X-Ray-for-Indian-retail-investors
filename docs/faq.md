@@ -41,7 +41,7 @@ caveats is on [Results and experiments](evaluation.md).
 
 **Does anything leave my machine?**
 No. The API, the models and the data stay on the laptop; no paid or hosted LLM is called. Models are
-downloaded once from Hugging Face. See [PRIVACY](privacy.md).
+downloaded once from Hugging Face. See [PRIVACY](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/PRIVACY.md).
 
 **Do I need a GPU?**
 No, but it helps: the chat reranker takes 0.82 s per question on the RTX 2050 and 42.8 s on the CPU

@@ -81,7 +81,7 @@ commits so the second agent's commits kept their SHAs. Never force-push `main`; 
 (except `data/gold/`, `data/manifests/` and the fixture pack), weights, PDFs, `.env` or files over
 5 MB. The full rules are in
 [08_GIT_WORKFLOW.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/08_GIT_WORKFLOW.md)
-and the [contributing guide](../contributing.md).
+and the [contributing guide](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/CONTRIBUTING.md).
 
 ## Docs
 
