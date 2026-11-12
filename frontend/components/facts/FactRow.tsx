@@ -223,8 +223,8 @@ export function FactRow({ ipoId, field: f, compare }: Props) {
       {open && !r.notInDocument && <Popover ipoId={ipoId} f={f} doc={r.doc} page={r.page} bbox={r.bbox} />}
       {compare && f.candidates.length > 0 && (
         <ul className="mb-2 ml-4 space-y-1 border-l-2 border-rule pl-3 text-sm">
-          {f.candidates.map((c) => (
-            <li key={c.extractor} className="flex items-center justify-between gap-2">
+          {f.candidates.map((c, i) => (
+            <li key={`${c.extractor}-${i}`}className="flex items-center justify-between gap-2">
               <span className="text-muted">{pick(EXTRACTOR_NAME[c.extractor] ?? { en: c.extractor, hi: c.extractor })}</span>
               <span className="flex items-center gap-1.5">
                 <span className="font-mono text-xs">{c.raw}</span>

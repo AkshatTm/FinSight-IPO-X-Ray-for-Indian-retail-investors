@@ -75,7 +75,7 @@ function FinTable({ sod, unit }: { sod: Sod; unit: Unit }) {
             {hasStub && (
               <th scope="col" className="px-3 py-2 font-medium text-text">
                 {t("fin.stub")}
-                {stubPeriod && <span className="block max-w-[14rem] text-xs font-normal text-muted">{stubPeriod}</span>}
+                {stubPeriod && <span className="ml-auto block max-w-[14rem] text-right text-xs font-normal text-muted">{stubPeriod}</span>}
               </th>
             )}
           </tr>

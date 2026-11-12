@@ -24,8 +24,12 @@ function doneText(t: ReturnType<typeof useT>["t"], key: string, v: JobView): str
     case "risks":
       return t("proc.risks.done", { n: String(d("risks_split").n_risks ?? "") });
     case "simplify": {
-      const p = v.progress.simplify ?? { done: 0, total: 15 };
-      return t("proc.simplify.done", { done: p.done, total: p.total });
+      // The stage only queues the rewrites; the background worker finishes them later and the backend
+      // sends no progress for it. Report what was queued, never a made-up "0 of 15".
+      const p = v.progress.simplify;
+      if (p && p.total > 0) return t("proc.simplify.done", { done: p.done, total: p.total });
+      const queued = Number(d("simplify").queued);
+      return queued > 0 ? t("proc.simplify.queued", { n: queued }) : t("proc.simplify.none");
     }
     default:
       return t(`proc.${key}.done` as StringKey);

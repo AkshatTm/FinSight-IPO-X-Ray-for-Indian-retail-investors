@@ -57,6 +57,8 @@ export const UPLOAD = {
   "proc.risk_level.done": "Risk level ready",
   "proc.simplify": "Explaining risks in plain English",
   "proc.simplify.done": "{done} of {total} explained",
+  "proc.simplify.queued": "Top {n} risks are being explained; they appear in the Risks tab as they finish",
+  "proc.simplify.none": "Plain-English explanations appear in the Risks tab on request",
   "proc.index": "Preparing questions and answers",
   "proc.index.done": "Ready for questions",
   "proc.seeReady": "See what's ready",

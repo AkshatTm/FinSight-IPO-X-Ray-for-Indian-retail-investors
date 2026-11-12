@@ -69,6 +69,10 @@ export function FinChart({ sod, unit }: { sod: Sod; unit: Unit }) {
   const unitWord = t(`unit.${unit}`);
   const fmt = (v: number) => formatMoney(v * SHIFT[unit], unit).replace(/\.00(?= )/, "");
   const showMargin = rows.some((r) => r.margin !== null);
+  const tick = (v: number) => v.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+  // Size the left axis to its longest label ("₹ full" ticks run to 12+ characters and were clipped).
+  const maxTick = Math.max(0, ...rows.flatMap((r) => [r.revenue ?? 0, r.pat ?? 0]));
+  const axisWidth = Math.max(56, tick(maxTick * 1.25).length * 8 + 16);
   return (
     <section aria-labelledby="fin-chart" className="rounded-[16px] border border-rule bg-surface p-5 shadow-[var(--shadow-card)]">
       <h3 id="fin-chart" className="text-lg font-semibold">{t("fin.chart")}</h3>
@@ -78,7 +82,7 @@ export function FinChart({ sod, unit }: { sod: Sod; unit: Unit }) {
           <ComposedChart data={rows} margin={{ top: 8, right: 8, bottom: 4, left: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--rule)" />
             <XAxis dataKey="name" tick={AXIS} axisLine={{ stroke: "var(--rule)" }} tickLine={false} />
-            <YAxis yAxisId="l" tick={AXIS} axisLine={false} tickLine={false} width={84} tickFormatter={(v: number) => v.toLocaleString("en-IN", { maximumFractionDigits: 0 })} />
+            <YAxis yAxisId="l" tick={AXIS} axisLine={false} tickLine={false} width={axisWidth} tickFormatter={tick} />
             {showMargin && <YAxis yAxisId="r" orientation="right" tick={AXIS} axisLine={false} tickLine={false} width={48} tickFormatter={(v: number) => `${v.toFixed(0)}%`} />}
             <Tooltip contentStyle={TIP} formatter={(v, n) => (n === t("fin.margin") ? `${Number(v).toFixed(1)}%` : fmt(Number(v)))} />
             <Legend wrapperStyle={{ fontSize: 14 }} />
