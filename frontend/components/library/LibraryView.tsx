@@ -9,13 +9,14 @@ import { ErrorBlock } from "@/components/ui/ErrorBlock";
 import { useIpos } from "@/lib/api/hooks";
 import { filterSortIpos, type FilterKey, type SortKey } from "@/lib/library";
 import { useT } from "@/lib/useT";
+import { getItemMigrating } from "@/lib/legacyStorage";
 import { IpoRow } from "./IpoRow";
 
-const HINT_KEY = "fs_hint_library";
+const HINT_KEY = "vd_hint_library";
 const hintListeners = new Set<() => void>();
 const hintSeen = () => {
   try {
-    return localStorage.getItem(HINT_KEY) === "1";
+    return getItemMigrating(localStorage, HINT_KEY) === "1";
   } catch {
     return false;
   }

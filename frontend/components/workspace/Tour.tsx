@@ -2,8 +2,9 @@
 
 import { useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { useT } from "@/lib/useT";
+import { getItemMigrating } from "@/lib/legacyStorage";
 
-export const TOUR_KEY = "fs_tour_workspace";
+export const TOUR_KEY = "vd_tour_workspace";
 
 const STEPS = [
   { pane: "facts", text: "tour.1" },
@@ -13,7 +14,7 @@ const STEPS = [
 
 function seen(): boolean {
   try {
-    return localStorage.getItem(TOUR_KEY) === "1";
+    return getItemMigrating(localStorage, TOUR_KEY) === "1";
   } catch {
     return true;
   }

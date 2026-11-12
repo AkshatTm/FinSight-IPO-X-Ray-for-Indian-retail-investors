@@ -28,7 +28,7 @@ Names only; `.env.example` lists them. No secret ever goes in the frontend.
 
 | Variable | Meaning | When unset |
 | --- | --- | --- |
-| `FINSIGHT_API_ORIGIN` | Where Next.js rewrites `/api/*` (the local FastAPI service) | `http://localhost:8000` |
+| `VIDURA_API_ORIGIN` (the old `FINSIGHT_API_ORIGIN` still works) | Where Next.js rewrites `/api/*` (the local FastAPI service) | `http://localhost:8000` |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase project for Google sign-in | auth is "off": one local user |
 | `NEXT_PUBLIC_USE_MOCKS` | `1` serves every API call from `mocks/` | the real API is called |
 

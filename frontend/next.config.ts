@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
-const API_ORIGIN = process.env.FINSIGHT_API_ORIGIN ?? "http://localhost:8000";
+if (process.env.FINSIGHT_API_ORIGIN && !process.env.VIDURA_API_ORIGIN) {
+  console.warn("FINSIGHT_API_ORIGIN is deprecated: rename it to VIDURA_API_ORIGIN (the old name still works).");
+}
+const API_ORIGIN = process.env.VIDURA_API_ORIGIN ?? process.env.FINSIGHT_API_ORIGIN ?? "http://localhost:8000";
 
 const nextConfig: NextConfig = {
   // The e2e run on mocks uses its own build folder so it can sit beside a real-API `pnpm dev`.

@@ -3,6 +3,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { create } from "zustand";
 import { USE_MOCKS } from "@/lib/api/client";
+import { getItemMigrating } from "@/lib/legacyStorage";
 
 /**
  * Google sign-in through Supabase Auth (B06 §1). Three modes:
@@ -42,11 +43,11 @@ interface AuthState {
 }
 
 const MOCK_USER: AuthUser = { id: "mock-user", email: "you@example.com", name: "You" };
-const MOCK_KEY = "fs_mock_session";
+const MOCK_KEY = "vd_mock_session";
 
 function readMock(): boolean {
   try {
-    return sessionStorage.getItem(MOCK_KEY) === "1";
+    return getItemMigrating(sessionStorage, MOCK_KEY) === "1";
   } catch {
     return false;
   }
