@@ -5,7 +5,7 @@ Jio Platforms RHP (591 pages) analysed on 3 Nov 2026.
 
 | Page | Address | What it is for |
 | --- | --- | --- |
-| Home | `/` | What FinSight does, with a real RHP page under an X-ray lens |
+| Home | `/` | What FinSight does, with a short animation of one fact being read off a made-up prospectus page |
 | IPOs (library) | `/ipos` | The 10 showcase IPOs from 2025 |
 | Analyse a document | `/upload` | Upload your own offer document |
 | Report | `/reports/<doc_id>` | Overview, Financials, Red flags, Risks, Compare |

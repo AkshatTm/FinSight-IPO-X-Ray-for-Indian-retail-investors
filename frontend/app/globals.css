@@ -194,89 +194,62 @@ a.btn:active {
     transform: translateY(6px);
   }
 }
-/* Landing hero: words rise in one after another, the last two glow saffron. */
-.hero-word {
-  animation: hero-rise 700ms var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+/* Landing hero: four blocks settle in, 70 ms apart. */
+.hero-in {
+  animation: hero-in 600ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 80ms);
 }
-@keyframes hero-rise {
+@keyframes hero-in {
   from {
     opacity: 0;
-    transform: translateY(18px);
-    filter: blur(6px);
+    transform: translateY(10px);
   }
-}
-.hero-lit {
-  color: var(--stamp);
-  text-shadow: 0 0 32px rgba(226, 89, 27, 0.45);
 }
 .hero-grain {
   opacity: 0.05;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-/* X-ray lens: a magnified, film-toned copy of the page inside a saffron ring. */
-.lens {
-  border: 2px solid var(--stamp);
+/* Hero reel (components/landing/ProspectusReel.tsx): sizes follow the page, not the viewport. */
+.reel-frame {
+  container-type: inline-size;
+}
+.reel-scan {
+  background: linear-gradient(180deg, transparent, rgba(226, 89, 27, 0.1) 70%, rgba(226, 89, 27, 0.55) 99%, transparent);
+  border-bottom: 1px solid rgba(226, 89, 27, 0.9);
+}
+.reel-beam {
+  background: linear-gradient(90deg, transparent, rgba(255, 170, 120, 0.85), transparent);
+  mix-blend-mode: multiply;
+}
+.reel-bracket {
+  border-radius: 2px;
   box-shadow:
-    0 0 0 6px rgba(226, 89, 27, 0.18),
-    0 0 40px 6px rgba(226, 89, 27, 0.45),
-    inset 0 0 30px rgba(0, 0, 0, 0.6);
-  will-change: transform;
-  z-index: 5;
+    0 0 0 1.5px var(--stamp),
+    0 0 0 4px rgba(226, 89, 27, 0.16);
 }
-.lens::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background:
-    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.22), transparent 38%),
-    repeating-linear-gradient(0deg, rgba(226, 89, 27, 0.07) 0 1px, transparent 1px 4px);
+.reel-mark {
+  background: rgba(255, 176, 102, 0.55);
+  mix-blend-mode: multiply;
 }
-.lens-film {
-  filter: invert(1) sepia(1) saturate(2.6) hue-rotate(-18deg) brightness(0.95) contrast(1.15);
+.reel-chip {
+  background: #fffdf8;
+  color: #17161a;
+  font-size: 3.3cqw;
+  box-shadow:
+    0 0 0 1.5px var(--stamp),
+    0 10px 24px rgba(23, 22, 26, 0.35);
 }
-.lens-box {
-  outline: 2px solid var(--stamp);
-  background: rgba(255, 196, 140, 0.18);
-  box-shadow: 0 0 14px 2px rgba(226, 89, 27, 0.8);
-  animation: lens-box 1.6s ease-in-out infinite;
+.reel-card .reel-t-sm {
+  font-size: clamp(0.7rem, 2.5cqw, 0.875rem);
 }
-@keyframes lens-box {
-  50% {
-    box-shadow: 0 0 22px 5px rgba(226, 89, 27, 0.95);
-  }
+.reel-card .reel-t-lg {
+  font-size: clamp(1rem, 4.4cqw, 1.5rem);
+  line-height: 1.15;
 }
-.lens-ping {
-  box-shadow: 0 0 0 0 rgba(226, 89, 27, 0.7);
-  animation: lens-ping 1.8s ease-out infinite;
-}
-@keyframes lens-ping {
-  70%,
-  100% {
-    box-shadow: 0 0 0 14px rgba(226, 89, 27, 0);
-  }
-}
-.lens-callout {
-  animation: lens-callout 260ms var(--ease-out) both;
-}
-@keyframes lens-callout {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.97);
-  }
-}
-@media (hover: none) {
-  .lens-page {
-    cursor: auto;
-  }
-}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero-word,
-  .lens-box,
-  .lens-ping,
-  .lens-callout {
+  .hero-in {
     animation: none;
   }
 }

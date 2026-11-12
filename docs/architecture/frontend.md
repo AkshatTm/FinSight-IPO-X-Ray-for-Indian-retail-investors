@@ -7,7 +7,7 @@ Tailwind CSS 4. Versions are pinned in `frontend/package.json`.
 
 | Route | File | Screen |
 | --- | --- | --- |
-| `/` | `app/page.tsx` | Home: hero with an X-ray lens over a real RHP page, how it works, stats |
+| `/` | `app/page.tsx` | Home: hero with an animated reel (a made-up prospectus page is read, the total issue size is pulled out and checked), how it works, stats |
 | `/ipos` | `app/ipos/page.tsx` | Library of the 10 showcase IPOs |
 | `/ipos/[id]` | `app/ipos/[id]/page.tsx` | Workspace: facts, document pages, chat (`id` is an `ipo_id` or an upload's `doc_id`) |
 | `/upload` | `app/upload/page.tsx` | Upload, model check, Analysing screen |
