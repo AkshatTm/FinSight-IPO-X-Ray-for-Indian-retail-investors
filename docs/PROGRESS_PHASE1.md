@@ -1,4 +1,4 @@
-> **Historical record (project).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+> **Historical record (project).** Kept as written; it may describe plans that changed or were cut. Current state: the [FinSight docs site](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/index.md) and [FINAL_SCORECARD](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md).
 
 # PROGRESS — Phase 1 archive (moved from PROGRESS.md on 3 Oct 2026, unchanged)
 

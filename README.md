@@ -2,9 +2,9 @@
 
 Formerly Vidura.
 
-[![backend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml)
-[![frontend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml)
-[![docs](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/docs.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/docs.yml)
+[![backend](https://github.com/AkshatTm/Vidura-IPO-X-Ray/actions/workflows/backend.yml/badge.svg)](https://github.com/AkshatTm/Vidura-IPO-X-Ray/actions/workflows/backend.yml)
+[![frontend](https://github.com/AkshatTm/Vidura-IPO-X-Ray/actions/workflows/frontend.yml/badge.svg)](https://github.com/AkshatTm/Vidura-IPO-X-Ray/actions/workflows/frontend.yml)
+[![docs](https://github.com/AkshatTm/Vidura-IPO-X-Ray/actions/workflows/docs.yml/badge.svg)](https://github.com/AkshatTm/Vidura-IPO-X-Ray/actions/workflows/docs.yml)
 [![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 ![version 1.1](https://img.shields.io/badge/version-1.1-orange.svg)
 ![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
@@ -45,14 +45,14 @@ Generated from `eval_results/` by [`scripts/readme_results.py`](scripts/readme_r
 <!-- results:start -->
 | What | Metric | Result | Status | File |
 | --- | --- | --- | --- | --- |
-| Key facts from the offer document (E14) | value match, 10 showcase IPOs, gold v3 | **0.774** (195 rows) | re-measured, v1.1 | [`final/e14_today.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/e14_today.json) |
-| Red-flag statuses (E15) | accuracy, 13 checks × 10 IPOs | **0.769** (130 statuses) | re-measured, v1.1 | [`final/e15_today.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/e15_today.json) |
-| Risk category classifier (DeBERTa-v3-base) | dev macro-F1, 3 seeds (TF-IDF 0.862) | **0.892 ± 0.006**; gold-150 0.899 | carried | [`b/classifier_base.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/b/classifier_base.json) |
-| Plain-English rewrites, faithful (gold-50, blind human rating) | base / student / teacher | 0.84 / **0.92** / 0.98 | carried, one seed | [`c/simplify_gold50.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c/simplify_gold50.json) |
-| Plain-English rewrites, readability 1–5 (gold-50) | base / student / teacher | 3.00 / **4.64** / 4.80 | carried, one seed | [`c/simplify_gold50.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c/simplify_gold50.json) |
-| Rewrites passing the product post-checks (gold-50) | student vs base | **49 / 50** vs 16 / 50 | carried, one seed | [`c/student_vs_base_gold50.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c/student_vs_base_gold50.json) |
-| Vidura Bench v1, task A key facts (rules) | value match [95 % CI], 7 test IPOs | 0.724 [0.636, 0.816] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c4/bench_summary.json) |
-| Vidura Bench v1, task B red flags (rules) | status accuracy [95 % CI] | 0.703 [0.582, 0.824] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c4/bench_summary.json) |
+| Key facts from the offer document (E14) | value match, 10 showcase IPOs, gold v3 | **0.774** (195 rows) | re-measured, v1.1 | [`final/e14_today.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/e14_today.json) |
+| Red-flag statuses (E15) | accuracy, 13 checks × 10 IPOs | **0.769** (130 statuses) | re-measured, v1.1 | [`final/e15_today.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/e15_today.json) |
+| Risk category classifier (DeBERTa-v3-base) | dev macro-F1, 3 seeds (TF-IDF 0.862) | **0.892 ± 0.006**; gold-150 0.899 | carried | [`b/classifier_base.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/b/classifier_base.json) |
+| Plain-English rewrites, faithful (gold-50, blind human rating) | base / student / teacher | 0.84 / **0.92** / 0.98 | carried, one seed | [`c/simplify_gold50.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/c/simplify_gold50.json) |
+| Plain-English rewrites, readability 1–5 (gold-50) | base / student / teacher | 3.00 / **4.64** / 4.80 | carried, one seed | [`c/simplify_gold50.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/c/simplify_gold50.json) |
+| Rewrites passing the product post-checks (gold-50) | student vs base | **49 / 50** vs 16 / 50 | carried, one seed | [`c/student_vs_base_gold50.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/c/student_vs_base_gold50.json) |
+| Vidura Bench v1, task A key facts (rules) | value match [95 % CI], 7 test IPOs | 0.724 [0.636, 0.816] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/c4/bench_summary.json) |
+| Vidura Bench v1, task B red flags (rules) | status accuracy [95 % CI] | 0.703 [0.582, 0.824] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/c4/bench_summary.json) |
 <!-- results:end -->
 
 Caveats the sources state:
@@ -133,8 +133,8 @@ Licences of every base model and dataset: [NOTICE](NOTICE). The weights are not 
 Needs [uv](https://docs.astral.sh/uv/), [pnpm](https://pnpm.io) with Node 24, [Ollama](https://ollama.com) and the model files described in [install](docs/getting-started/install.md).
 
 ```bat
-git clone https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors.git
-cd FinSight-IPO-X-Ray-for-Indian-retail-investors
+git clone https://github.com/AkshatTm/Vidura-IPO-X-Ray.git
+cd Vidura-IPO-X-Ray
 start.bat
 ```
 
@@ -221,6 +221,6 @@ If you use Vidura, cite it with [CITATION.cff](CITATION.cff) (GitHub shows a "Ci
   title   = {Vidura: IPO X-Ray for Indian retail investors},
   version = {1.1},
   year    = {2026},
-  url     = {https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors}
+  url     = {https://github.com/AkshatTm/Vidura-IPO-X-Ray}
 }
 ```

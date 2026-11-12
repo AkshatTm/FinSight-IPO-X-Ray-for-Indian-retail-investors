@@ -4,8 +4,8 @@
 # they stay on GitHub with a "historical record" banner and docs/history.md links to them.
 site_name: Vidura
 site_description: IPO X-Ray for Indian retail investors (v1.1)
-site_url: https://akshattm.github.io/FinSight-IPO-X-Ray-for-Indian-retail-investors/
-repo_url: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors
+site_url: https://akshattm.github.io/Vidura-IPO-X-Ray/
+repo_url: https://github.com/AkshatTm/Vidura-IPO-X-Ray
 edit_uri: edit/main/docs/
 docs_dir: docs
 strict: true

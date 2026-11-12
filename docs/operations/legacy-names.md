@@ -27,8 +27,7 @@ still work as a permanent fallback; the `VIDURA_*` name wins. See
 | `finsight-extractor-*`, `finsight-clf-*`, `finsight-bilstm-*`, `finsight-muril-guard-*` | Kaggle kernel slugs | Kernel slugs used by `python -m vidura.weaklabel.kaggle` to push, poll and fetch |
 | `MyDrive/FinSight`, `/content/drive/MyDrive/finsight_p4` | Google Drive folders used by the Colab notebooks | Folders already hold checkpoints |
 | Supabase project and table names | Supabase | Nothing in the repo names a `finsight` project or table; the project is reached through `VIDURA_AUTH__SUPABASE_URL`. Check the dashboard for a project called FinSight |
-| `https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors` | GitHub repo URL | Updated when the repo is renamed (GitHub redirects the old name) |
-| `https://akshattm.github.io/FinSight-IPO-X-Ray-for-Indian-retail-investors/` | GitHub Pages | Pages does not redirect; updated with the repo rename |
+| `AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors` | Old GitHub repo name | Renamed to `AkshatTm/Vidura-IPO-X-Ray`; GitHub redirects old repo URLs, but GitHub Pages does not redirect, so old docs-site links no longer work. Historical records (`docs/archive/`, `report/`, dated logs) still contain the old URL |
 
 ## Files, folders and records
 

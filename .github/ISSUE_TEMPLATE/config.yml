@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Documentation
-    url: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/index.md
+    url: https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/index.md
     about: Install, run, read a report, troubleshooting and FAQ.
   - name: Security problem
-    url: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/security/advisories/new
+    url: https://github.com/AkshatTm/Vidura-IPO-X-Ray/security/advisories/new
     about: Report privately; do not open a public issue.

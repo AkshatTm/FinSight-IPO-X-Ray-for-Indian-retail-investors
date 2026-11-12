@@ -13,7 +13,7 @@ committed files are configs, manifests, gold labels and a small fixture pack of 
 | Recent RHPs (2024–2026, by SEBI posting date) | **289** in the universe; **275** parsed, **14** excluded with reasons (12 SME, 2 without numbered risk factors) | SEBI and exchange filings, `configs/ipo_universe.csv`, fetched by `scripts/fetch_offer_docs.py` | the time split, dev / test / bench, the risk bank, reference scores |
 
 Sources: `eval_results/corpus_stats.json` and C05 roadmap part C1 (summarised in
-[FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md#corpus-and-splits-carried)).
+[FINAL_SCORECARD](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md#corpus-and-splits-carried)).
 SME IPOs are excluded by decision (C-ADR-09): their documents follow a different format and they are not
 open to the same investors.
 
@@ -48,7 +48,7 @@ Hand-checked labels used for scoring; full details on [Gold sets](../datasheets/
 | --- | --- | --- | --- | --- |
 | gold v3 | Summary facts and red-flag statuses of the 10 showcase IPOs | 280 rows (195 with a value); 130 red-flag statuses | AI pre-fill, verified on the page by Akshat | E14, E15 |
 | gold v3.1 | Gold v3 with 11 rows changed by four convention fixes (C-ADR-22) | 280 rows | as v3, plus documented fixes (`data/gold/gold_v3_1_changelog.md`); test-informed | E14 / E15 history rows |
-| gold-150 | 150 risk factors from test IPOs with category and band | 150 | model pre-fill, Akshat agreed with 132 and changed 18 ([source](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c/gold150_verification.json)) | classifier test |
+| gold-150 | 150 risk factors from test IPOs with category and band | 150 | model pre-fill, Akshat agreed with 132 and changed 18 ([source](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/c/gold150_verification.json)) | classifier test |
 | gold-50 | 50 risks from 10 test IPOs, rewritten by base, student and teacher | 50 × 3 | blind, shuffled ratings by one rater | student evaluation (E18) |
 | Phase 1 gold | Cover facts and chat questions of 7 test IPOs | see datasheet | AI-assisted, checked | extractor ladder, E7 |
 | L2 event labels | Sentences around serious findings labelled actual / hypothetical / negated / not relevant | 1,007 sentences from 275 IPOs (416 train, 194 dev, 397 test) | AI (`label_source: "ai"`), verification sheet of 481 rows prepared | written for the Phase 4 event classifier (M3), which was cut; not used by the product |
@@ -65,5 +65,5 @@ The L2 card is `data/gold/event_labels/LABELS_CARD.md` (written by ARGON in Phas
   share-alike.
 - **Teacher outputs** were written by Gemma-4-31B-it, so the Gemma terms of use apply to them.
 
-See [NOTICE](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/NOTICE)
+See [NOTICE](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/NOTICE)
 for every third-party licence.

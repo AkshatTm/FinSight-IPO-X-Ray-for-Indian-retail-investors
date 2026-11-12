@@ -2,7 +2,7 @@
 
 **IPO X-Ray for Indian retail investors.** Upload an Indian IPO offer document (RHP, DRHP or final
 prospectus) and Vidura reads all of it on your own laptop (264 s for the 591-page Jio Platforms RHP
-on an RTX 2050 laptop, [one run](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md#laptop-timings-rtx-2050-4-gb-16-gb-ram-profile-local)). It gives you:
+on an RTX 2050 laptop, [one run](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md#laptop-timings-rtx-2050-4-gb-16-gb-ram-profile-local)). It gives you:
 
 - **key facts and financials**, every figure with the page it was read from;
 - **13 red-flag checks** on the numbers the document discloses;
@@ -36,7 +36,7 @@ Version **1.1** (pipeline version 4.2), English only. The project is finished: P
 the Platform Bench and cloud hosting were cut ([history](history.md)). Every number on this site comes
 from a file in `eval_results/` and says whether it was re-measured for v1.1 or carried from an earlier
 run; the summary is
-[FINAL_SCORECARD.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+[FINAL_SCORECARD.md](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md).
 
 !!! warning "Not investment advice"
     Vidura summarises public disclosures. The risk level describes how much risk the document

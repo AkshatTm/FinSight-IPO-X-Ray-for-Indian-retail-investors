@@ -19,8 +19,8 @@ NVIDIA RTX 2050 with 4 GB.
 ## 2. Code and Python packages
 
 ```bash
-git clone https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors.git
-cd FinSight-IPO-X-Ray-for-Indian-retail-investors
+git clone https://github.com/AkshatTm/Vidura-IPO-X-Ray.git
+cd Vidura-IPO-X-Ray
 uv sync --inexact --group ml --group onnx
 ```
 

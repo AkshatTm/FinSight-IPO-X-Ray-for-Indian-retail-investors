@@ -10,7 +10,7 @@ import { SAMPLE_REPORT_DOC_ID } from "@/lib/showcase";
 import { useT } from "@/lib/useT";
 import { Section } from "./Sections";
 
-const REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors";
+const REPO = "https://github.com/AkshatTm/Vidura-IPO-X-Ray";
 
 /** Stat blocks; each one is left out when its source value is missing (spec 5.9, B05 §2).
  * "Past IPOs used for comparison" is `corpus_n` from configs/risklevel.yaml as the risk-level

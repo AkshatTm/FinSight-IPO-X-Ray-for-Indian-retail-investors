@@ -13,4 +13,4 @@ the time split and the licences is [Corpus, splits and licences](../data/index.m
 | Weak labels | Automatically made training examples for the field extractor | [Weak labels](weak_labels.md) |
 | Gold sets | Hand-checked values, statuses, ratings and questions used for scoring | [Gold sets](gold_sets.md) |
 | Teacher outputs | Labels and rewrites of train-slice risks by Gemma-4-31B-it | [Teacher outputs](../phase2/datasheets/teacher_outputs.md) |
-| L2 event labels | 1,007 AI-labelled sentences around serious findings (Phase 4, unused) | [LABELS_CARD.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/data/gold/event_labels/LABELS_CARD.md) |
+| L2 event labels | 1,007 AI-labelled sentences around serious findings (Phase 4, unused) | [LABELS_CARD.md](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/data/gold/event_labels/LABELS_CARD.md) |

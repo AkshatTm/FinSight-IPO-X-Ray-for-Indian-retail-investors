@@ -127,6 +127,6 @@ curl -s $API/lab/c/bench                           # Vidura Bench v1 numbers
 ```
 
 The API contract and its rules (errors, events, caching) were specified in
-[B06](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase2/B06_API_CONTRACT.md),
+[B06](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase2/B06_API_CONTRACT.md),
 and the v1.1 additions to the report (`sod`) in
-[final/CONTRACT.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/final/CONTRACT.md).
+[final/CONTRACT.md](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/final/CONTRACT.md).

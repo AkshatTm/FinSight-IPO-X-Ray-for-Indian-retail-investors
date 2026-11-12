@@ -27,11 +27,11 @@ were bilingual (English and Hindi) with voice input.
 NVM 0.74 vs rules 0.86 on the full document and 0.85 vs 0.23 when the cover is hidden; chat numbers
 verified 0.69 of 86 on test (one run).
 
-**Planning records:** [00_README](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/00_README.md),
-[PRD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/01_PRD.md),
-[architecture](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/02_ARCHITECTURE.md),
-[roadmap](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/07_ROADMAP.md),
-[gates](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/tree/main/docs/gates).
+**Planning records:** [00_README](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/00_README.md),
+[PRD](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/01_PRD.md),
+[architecture](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/02_ARCHITECTURE.md),
+[roadmap](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/07_ROADMAP.md),
+[gates](https://github.com/AkshatTm/Vidura-IPO-X-Ray/tree/main/docs/gates).
 
 ## Phase 2: upload any offer document
 
@@ -43,8 +43,8 @@ teacher / classifier / simplifier code and notebooks, and this docs site.
 **Changed course.** The Google Cloud hosting design (B-ADR-04) was removed after one day: the product
 became local-only (B-ADR-16).
 
-**Planning records:** [B00 index](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase2/B00_README.md),
-[execution plan](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase2/B_EXECUTION_PLAN.md).
+**Planning records:** [B00 index](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase2/B00_README.md),
+[execution plan](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase2/B_EXECUTION_PLAN.md).
 
 ## Phase 3: recent IPOs, trained models, FinSight Bench (v1.0)
 
@@ -57,9 +57,9 @@ gold-150 and gold-50; fitted risk-level thresholds (C-ADR-25); FinSight Bench v1
 
 **Cut.** Frontier answers for the bench, the outcome comparison (E21), hosting (C5.1).
 
-**Planning records:** [C00 index](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase3/C00_README.md),
-[roadmap](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase3/C05_ROADMAP.md),
-[execution plan](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase3/C_EXECUTION_PLAN.md).
+**Planning records:** [C00 index](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase3/C00_README.md),
+[roadmap](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase3/C05_ROADMAP.md),
+[execution plan](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase3/C_EXECUTION_PLAN.md).
 
 ## Phase 4 (closed)
 
@@ -80,9 +80,9 @@ were dropped: the hand-collected platform data and the gold were not ready when 
 level v2 (CC-07) were replaced by two targeted fixes in the final session (C-ADR-26, C-ADR-28).
 Supabase sign-in and the cloud deployment, planned for the week after, were not done.
 
-**Planning records:** [P4 plan](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase4/P4_PLAN.md),
-[CC progress](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase4/PROGRESS_CC.md),
-[ARGON progress](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase4/PROGRESS_ARGON.md).
+**Planning records:** [P4 plan](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase4/P4_PLAN.md),
+[CC progress](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase4/PROGRESS_CC.md),
+[ARGON progress](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase4/PROGRESS_ARGON.md).
 
 ## Final session (v1.1)
 
@@ -96,15 +96,15 @@ E15 0.769 re-measured.
 **Why English only.** To keep one well-tested path (FINAL_SCORECARD, item 7): Hindi output had been
 checked by one reviewer only, and speech input needed its own dependency group (`asr`), now removed.
 
-**Rules for the session:** [final/RULES.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/final/RULES.md),
-[final/CONTRACT.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/final/CONTRACT.md).
+**Rules for the session:** [final/RULES.md](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/final/RULES.md),
+[final/CONTRACT.md](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/final/CONTRACT.md).
 
 ## Records kept from every phase
 
 - [Decisions](adr/index.md): 55 ADRs, 16 B-ADRs, 28 C-ADRs.
-- [CHANGELOG](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/CHANGELOG.md) and git tags `v0.2.0`, `v0.3.0`, `v0.4.0`, `v1.0`, `v1.1-pre`, `v1.1`.
-- [PROGRESS.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/PROGRESS.md)
+- [CHANGELOG](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/CHANGELOG.md) and git tags `v0.2.0`, `v0.3.0`, `v0.4.0`, `v1.0`, `v1.1-pre`, `v1.1`.
+- [PROGRESS.md](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/PROGRESS.md)
   and the per-phase progress logs.
-- [The documentation audit](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/archive/DOCS_AUDIT.md)
+- [The documentation audit](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/archive/DOCS_AUDIT.md)
   and the archived pages in `docs/archive/`.
-- The B3.5a [security review](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/security_review.md).
+- The B3.5a [security review](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/security_review.md).

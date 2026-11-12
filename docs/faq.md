@@ -41,7 +41,7 @@ caveats is on [Results and experiments](evaluation.md).
 
 **Does anything leave my machine?**
 No. The API, the models and the data stay on the laptop; no paid or hosted LLM is called. Models are
-downloaded once from Hugging Face. See [PRIVACY](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/PRIVACY.md).
+downloaded once from Hugging Face. See [PRIVACY](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/PRIVACY.md).
 
 **Do I need a GPU?**
 No, but it helps: the chat reranker takes 0.82 s per question on the RTX 2050 and 42.8 s on the CPU
@@ -63,7 +63,7 @@ It is re-analysed automatically because its `pipeline_version` differs from 4.2
 
 **Is it open source? Can I use it commercially?**
 The code is MIT. The trained models learned from the Ghosh et al. corpus (CC BY-NC-SA 4.0) and from
-Gemma outputs, so they are non-commercial ([NOTICE](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/NOTICE)).
+Gemma outputs, so they are non-commercial ([NOTICE](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/NOTICE)).
 
 **What happened to Phase 4, Platform Bench and the cloud deployment?**
 They were cut: no Phase 4 model was trained, the Platform Bench data was not ready, and hosting was

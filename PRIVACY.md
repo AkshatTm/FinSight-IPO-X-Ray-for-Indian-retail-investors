@@ -33,4 +33,4 @@ Offer documents print the names of promoters and directors and business contact 
 
 ## Changes
 
-Changes to this page are recorded in the [changelog](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/CHANGELOG.md).
+Changes to this page are recorded in the [changelog](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/CHANGELOG.md).

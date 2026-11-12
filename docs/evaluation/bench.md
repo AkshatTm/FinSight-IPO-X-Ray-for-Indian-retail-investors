@@ -23,7 +23,7 @@ rewrites; G advice probes that must be refused.
 
 ## Results (single run, 95 % bootstrap intervals over IPOs)
 
-From [`eval_results/c4/bench_summary.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c4/bench_summary.json)
+From [`eval_results/c4/bench_summary.json`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/c4/bench_summary.json)
 (written 16 Oct 2026, carried into v1.1):
 
 | Task | Metric | rules_v1 | student | n |
@@ -73,7 +73,7 @@ uv run python scripts/bench_score.py
 ```
 
 Not re-run for v1.1 (it needs the full documents in `data/processed/` and Ollama). Frontier and teacher
-instructions are in [`bench/README.md`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/bench/README.md).
+instructions are in [`bench/README.md`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/bench/README.md).
 
 ## Platform Bench (cut)
 

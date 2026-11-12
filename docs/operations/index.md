@@ -80,7 +80,7 @@ made one such backup before purging blank and outdated analyses: `data/backup_20
 
 The archive holds `extractor/`, `extractor_v2/`, `reranker_onnx/` and `risk_classifier/` (217 files,
 each checked against the local copy before deletion). What was deleted from the laptop, where each item
-is now and how to restore it: [CLEANUP.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/final/CLEANUP.md).
+is now and how to restore it: [CLEANUP.md](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/final/CLEANUP.md).
 
 !!! warning "The GPU-jobs dataset is public"
     `AkshatTm/finsight-gpu-jobs` holds the student adapters and GGUFs and is a public dataset. The

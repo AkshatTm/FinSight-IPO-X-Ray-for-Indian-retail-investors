@@ -2,7 +2,7 @@
 
 import { useT } from "@/lib/useT";
 
-const REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors";
+const REPO = "https://github.com/AkshatTm/Vidura-IPO-X-Ray";
 
 export function Footer() {
   const { t } = useT();

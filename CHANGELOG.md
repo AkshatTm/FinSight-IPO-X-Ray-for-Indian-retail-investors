@@ -1,10 +1,12 @@
 # Changelog
 
-All notable changes to FinSight. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/). Each release is a git tag. Numbers quoted here come from [`eval_results/final/FINAL_SCORECARD.md`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
+All notable changes to FinSight. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/). Each release is a git tag. Numbers quoted here come from [`eval_results/final/FINAL_SCORECARD.md`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md).
 
 ## [Unreleased]
 
-Nothing yet.
+### Changed
+
+- The project is now called Vidura (formerly FinSight). Python package `vidura`, environment prefix `VIDURA_` (the old `FINSIGHT_*` names still work), repository `Vidura-IPO-X-Ray`. External IDs such as the Hugging Face repos keep their old names; see `docs/operations/legacy-names.md`.
 
 ## [1.1] — 2026-11-07
 
@@ -90,9 +92,9 @@ Phase 2 (upload any offer document) and Phase 3 (recent IPOs, trained models, Fi
 
 - Parsing, normalisation, the extractors (rules, pretrained QA, fine-tuned QA on weak labels, BiLSTM-CRF), weak labels and the extractor ladder (Phase 1 parts 1–2, gate G2).
 
-[Unreleased]: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/compare/v1.1...HEAD
-[1.1]: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/compare/v1.0...v1.1
-[1.0]: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/compare/v0.4.0...v1.0
-[0.4.0]: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/releases/tag/v0.2.0
+[Unreleased]: https://github.com/AkshatTm/Vidura-IPO-X-Ray/compare/v1.1...HEAD
+[1.1]: https://github.com/AkshatTm/Vidura-IPO-X-Ray/compare/v1.0...v1.1
+[1.0]: https://github.com/AkshatTm/Vidura-IPO-X-Ray/compare/v0.4.0...v1.0
+[0.4.0]: https://github.com/AkshatTm/Vidura-IPO-X-Ray/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/AkshatTm/Vidura-IPO-X-Ray/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/AkshatTm/Vidura-IPO-X-Ray/releases/tag/v0.2.0

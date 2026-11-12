@@ -42,7 +42,7 @@ is requested, so a report opens before the last stage finishes.
 
 One upload of the 591-page Jio Platforms RHP on the reference laptop, seconds from upload to the end of
 each stage (single run, from `data/preload_log.csv`, summarised in
-[FINAL_SCORECARD](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md#laptop-timings-rtx-2050-4-gb-16-gb-ram-profile-local)):
+[FINAL_SCORECARD](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md#laptop-timings-rtx-2050-4-gb-16-gb-ram-profile-local)):
 
 | validated | parsed | sections | facts | financials | red flags | compare | sod | risks split | risks scored | risk level | simplify | index |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

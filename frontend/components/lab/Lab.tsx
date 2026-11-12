@@ -10,7 +10,7 @@ import { LabRewrites, LabRiskLevelCheck, LabSpeedCost } from "./LabPhase2More";
 import { LabRetrieval } from "./LabRetrieval";
 import { LabVerifier, LabWeak } from "./LabVerifier";
 
-const REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors";
+const REPO = "https://github.com/AkshatTm/Vidura-IPO-X-Ray";
 
 /** Model Lab (spec section 8). Every section reads its own file and hides when the data is missing. */
 export function Lab() {

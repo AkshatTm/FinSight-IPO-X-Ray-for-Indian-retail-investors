@@ -4,7 +4,7 @@ import { Rich } from "@/components/ui/Rich";
 import type { StringKey } from "@/lib/copy";
 import { useT } from "@/lib/useT";
 
-const REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors";
+const REPO = "https://github.com/AkshatTm/Vidura-IPO-X-Ray";
 
 function Block({ h, children }: { h: string; children: React.ReactNode }) {
   return (

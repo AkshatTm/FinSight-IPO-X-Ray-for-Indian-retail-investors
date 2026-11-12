@@ -37,7 +37,7 @@ leave Colab as adapters, GGUF or ONNX, never merged fp16. `HF_TOKEN` comes from 
     `scripts/gpu_jobs.py` describes `AkshatTm/finsight-gpu-jobs` as a private dataset, but on 7 Nov 2026
     an unauthenticated `hf download --dry-run` of the student GGUF succeeded, so the repo appears to be
     public. Check its visibility on Hugging Face: the student is trained on data derived from the
-    CC BY-NC-SA 4.0 corpus ([NOTICE](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/NOTICE)).
+    CC BY-NC-SA 4.0 corpus ([NOTICE](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/NOTICE)).
 
 ## Compute log
 

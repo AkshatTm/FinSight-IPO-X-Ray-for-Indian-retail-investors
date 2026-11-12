@@ -746,7 +746,7 @@ def _scorecard_block() -> str:
     body = re.sub(r"^## ", "### ", body, flags=re.M)
     return (
         "Copied from [`eval_results/final/FINAL_SCORECARD.md`](https://github.com/AkshatTm/"
-        "FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/"
+        "Vidura-IPO-X-Ray/blob/main/eval_results/final/"
         "FINAL_SCORECARD.md); file paths in the tables are relative to the repository root.\n\n"
         + body
         + "\n"

@@ -25,7 +25,7 @@ LINK = re.compile(r"!?\[[^\]\n]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 FENCE = re.compile(r"^\s*(```|~~~)")
 INLINE_CODE = re.compile(r"`[^`\n]*`")
 REPO_URL = re.compile(
-    r"^https://github\.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/"
+    r"^https://github\.com/AkshatTm/Vidura-IPO-X-Ray/"
     r"(?:blob|tree)/main/(.+)$"
 )
 

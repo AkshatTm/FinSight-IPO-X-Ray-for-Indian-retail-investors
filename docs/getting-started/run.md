@@ -89,7 +89,7 @@ coloured dot at the top right of the web app shows the same.
 | --- | --- |
 | RAM | 16 GB (about 8 GB used by other apps) |
 | GPU | RTX 2050, 4 GB: reranker and embeddings; the student runs in Ollama |
-| One 591-page RHP | 264 s from upload to "done", one run ([timings](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md#laptop-timings-rtx-2050-4-gb-16-gb-ram-profile-local)) |
+| One 591-page RHP | 264 s from upload to "done", one run ([timings](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md#laptop-timings-rtx-2050-4-gb-16-gb-ram-profile-local)) |
 | One plain-English rewrite on CPU only | 12.3 s on average over 60 dev risks ([model card](../model_cards/risk_simplifier.md#evaluation)) |
 
 Close other heavy apps before analysing a large document. Training never runs on the laptop

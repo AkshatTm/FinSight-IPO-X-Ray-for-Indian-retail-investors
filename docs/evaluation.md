@@ -4,17 +4,17 @@ Every number on this page is generated from `eval_results/` by `scripts/docs_gen
 by hand. Each row says whether it was **re-measured** for v1.1 (3 Nov 2026, pipeline version 4.2) or
 **carried** from the last Phase 3 / Phase 4 run. Runs are single runs unless the row gives seeds. The
 plans behind each experiment are in the Phase 1 and Phase 2 data-and-evaluation documents
-([05](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/05_DATA_AND_EVALUATION.md),
-[B04](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase2/B04_DATA_AND_EVALUATION.md))
+([05](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/05_DATA_AND_EVALUATION.md),
+[B04](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase2/B04_DATA_AND_EVALUATION.md))
 and the Phase 3 benchmark plan
-([C04](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/phase3/C04_BENCHMARK.md)).
+([C04](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/docs/phase3/C04_BENCHMARK.md)).
 How to re-run each one: [Reproduce the numbers](evaluation/reproduce.md).
 
 ## v1.1 scorecard
 
 <!-- generated:scorecard start -->
 
-Copied from [`eval_results/final/FINAL_SCORECARD.md`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md); file paths in the tables are relative to the repository root.
+Copied from [`eval_results/final/FINAL_SCORECARD.md`](https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/eval_results/final/FINAL_SCORECARD.md); file paths in the tables are relative to the repository root.
 
 Every number is copied from a result file named in the row. **Re-measured today** = run on
 3 Nov 2026 on this laptop at commit `57bb013` or later (pipeline_version 4.2). **Carried** = the

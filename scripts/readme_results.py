@@ -96,7 +96,7 @@ def render(eval_dir: Path) -> str:
     return "\n".join([*head, *rows])
 
 
-REPO = "https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/"
+REPO = "https://github.com/AkshatTm/Vidura-IPO-X-Ray/blob/main/"
 
 
 def _link(eval_dir: Path, name: str) -> str:
