@@ -7,7 +7,7 @@
 | 1.1 (latest `main`) | yes |
 | older tags | no (kept for the record) |
 
-FinSight runs on the user's own machine; there is no hosted deployment.
+Vidura runs on the user's own machine; there is no hosted deployment.
 
 ## Reporting a problem
 
@@ -18,7 +18,7 @@ Please do not open a public issue for a security problem. Use GitHub's **Report 
 - The FastAPI service (`src/finsight/api`) and the upload pipeline: PDF validation, path handling in storage, the job runner.
 - Anything that lets one document's data leak into another's report, or lets a crafted PDF run code.
 - The web app (`frontend/`): script injection from document text, unsafe rendering.
-- Anything that would make FinSight show investment advice despite the guard and the forbidden-phrase checks.
+- Anything that would make Vidura show investment advice despite the guard and the forbidden-phrase checks.
 
 ## Out of scope
 

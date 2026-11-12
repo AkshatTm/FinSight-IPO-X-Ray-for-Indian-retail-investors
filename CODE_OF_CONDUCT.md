@@ -1,6 +1,6 @@
 # Code of conduct
 
-FinSight follows the [Contributor Covenant, version 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/), in short:
+Vidura follows the [Contributor Covenant, version 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/), in short:
 
 - Be respectful and welcoming; disagree about code, not about people.
 - No harassment, insults, sexualised language or personal attacks, in issues, pull requests or anywhere else connected with the project.

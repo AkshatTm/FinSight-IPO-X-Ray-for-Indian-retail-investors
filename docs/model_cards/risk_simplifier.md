@@ -97,7 +97,7 @@ A rewrite that drops a "may" or an amount changes what the document says. The pr
 certainty, length and advice phrases on every rewrite and shows the original when a check fails; the
 original text is always one click away. As a chat model it can still be wrong about meaning, which is
 why every number in an answer is checked against the cited page and advice questions are declined
-before the model runs. FinSight Bench shows the model alone is weak at abstaining (Task C) and at
+before the model runs. Vidura Bench shows the model alone is weak at abstaining (Task C) and at
 refusing advice without the guard (Task G); see [Bench](../evaluation/bench.md).
 
 ## Licence and use

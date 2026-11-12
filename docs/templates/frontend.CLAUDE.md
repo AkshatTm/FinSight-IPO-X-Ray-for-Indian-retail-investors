@@ -1,4 +1,4 @@
-# FinSight frontend — Claude Code instructions
+# Vidura frontend — Claude Code instructions
 
 (Copied from `docs/templates/frontend.CLAUDE.md` into `frontend/CLAUDE.md` during F1.)
 

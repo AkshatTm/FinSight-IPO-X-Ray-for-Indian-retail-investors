@@ -52,7 +52,7 @@ export const useLabB = (name: LabBName) =>
     staleTime: Infinity,
   });
 
-/** FinSight Bench scores (`/api/lab/c/bench`); a 404 means no system was scored, and the section hides. */
+/** Vidura Bench scores (`/api/lab/c/bench`); a 404 means no system was scored, and the section hides. */
 export const useLabBench = () =>
   useQuery({
     queryKey: ["lab-c", "bench"],

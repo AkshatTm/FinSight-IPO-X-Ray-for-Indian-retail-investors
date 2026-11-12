@@ -2,7 +2,7 @@
 
 ## About the product
 
-**Does FinSight tell me whether to apply for an IPO?**
+**Does Vidura tell me whether to apply for an IPO?**
 No. It summarises what the offer document discloses, with the page behind every number. It never
 recommends applying, buying, selling or avoiding, and does not predict listing gains. Advice questions
 in chat are declined and answered with the key facts instead.

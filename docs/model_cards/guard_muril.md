@@ -24,7 +24,7 @@ tags: [safety, advice-guard, experiment]
 
 Says how likely a chat question is to ask for advice, a forecast or private data, in English, Hindi or Hinglish, so the chat can decline it and show the key facts instead (E8). It is an experiment against the keyword guard; the app uses the keyword guard unless `guard.backend: muril` is set.
 
-**Out of scope:** judging whether an answer is correct, moderating other content, any use outside the FinSight chat.
+**Out of scope:** judging whether an answer is correct, moderating other content, any use outside the Vidura chat.
 
 ## Training data
 

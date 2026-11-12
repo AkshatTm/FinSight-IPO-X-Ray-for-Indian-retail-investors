@@ -32,7 +32,7 @@ export function trickQuestion(qs: { text: string; kind: string }[] | undefined):
   return qs?.find((q) => q.kind === "trick")?.text ?? null;
 }
 
-/** Index of the first number FinSight marked wrong, so step 4 can open its drawer. */
+/** Index of the first number Vidura marked wrong, so step 4 can open its drawer. */
 export function firstContradicted(turn: Turn | undefined): number | null {
   return turn?.verdicts.find((v) => v.status === "contradicted")?.index ?? null;
 }

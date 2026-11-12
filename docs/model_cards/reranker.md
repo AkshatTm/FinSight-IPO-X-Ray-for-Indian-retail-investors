@@ -25,7 +25,7 @@ tags: [retrieval, reranking, rag]
 
 Order the passages of one offer document by how well they answer a chat question, so the student model
 sees the right page and the number checker can compare against it. Out of scope: ranking across
-documents, the web, or any use outside FinSight chat.
+documents, the web, or any use outside Vidura chat.
 
 ## Evaluation
 

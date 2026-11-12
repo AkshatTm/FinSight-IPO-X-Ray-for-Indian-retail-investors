@@ -1,8 +1,8 @@
-# FinSight docs site. Build: `uv sync --group docs` then `uv run poe docs-build` (strict).
+# Vidura docs site. Build: `uv sync --group docs` then `uv run poe docs-build` (strict).
 # Pages marked "Generated" are written by `uv run poe docs-gen` from configs/, eval_results/ and the
 # decision logs; CI fails when they are stale. Planning records (Phases 1–4) are not published here:
 # they stay on GitHub with a "historical record" banner and docs/history.md links to them.
-site_name: FinSight
+site_name: Vidura
 site_description: IPO X-Ray for Indian retail investors (v1.1)
 site_url: https://akshattm.github.io/FinSight-IPO-X-Ray-for-Indian-retail-investors/
 repo_url: https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors
@@ -87,7 +87,7 @@ nav:
   - Home: index.md
   - Getting started:
       - Install: getting-started/install.md
-      - Run FinSight (start.bat): getting-started/run.md
+      - Run Vidura (start.bat): getting-started/run.md
       - Your first upload: getting-started/first-upload.md
       - Troubleshooting: getting-started/troubleshooting.md
   - User guide:
@@ -118,7 +118,7 @@ nav:
       - BiLSTM-CRF (baseline): model_cards/bilstm_crf.md
   - Evaluation:
       - Results and experiments: evaluation.md
-      - FinSight Bench v1: evaluation/bench.md
+      - Vidura Bench v1: evaluation/bench.md
       - Bench error analysis: phase3/bench_error_analysis.md
       - Reproduce the numbers: evaluation/reproduce.md
   - API reference:

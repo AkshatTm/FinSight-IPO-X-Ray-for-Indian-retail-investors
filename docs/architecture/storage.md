@@ -1,6 +1,6 @@
 # Storage and database
 
-Everything FinSight stores is on the laptop, under `data/` (ignored by git).
+Everything Vidura stores is on the laptop, under `data/` (ignored by git).
 
 ## Files
 

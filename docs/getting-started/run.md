@@ -1,11 +1,11 @@
-# Run FinSight (start.bat)
+# Run Vidura (start.bat)
 
 ## The launcher
 
 Double-click **`start.bat`** in the repository folder. It shows a menu:
 
 ```text
- ===============  FinSight  ===============
+ ===============  Vidura  ===============
    Ollama   :11434  UP    PID 1234
    API      :8000   down
    Web app  :3000   down
@@ -23,14 +23,14 @@ Or run one action from a terminal: `start.bat start`, `start.bat stop`, `start.b
 ### What "Start" does
 
 1. Checks that `uv`, `pnpm` and `ollama` are installed.
-2. Starts Ollama on port 11434 in a minimised window titled *FinSight Ollama*, unless it already runs.
+2. Starts Ollama on port 11434 in a minimised window titled *Vidura Ollama*, unless it already runs.
 3. Warns if Ollama has no `finsight-student:q4` (run `uv run python scripts/run_app.py --no-frontend`
    once to create it from the GGUF), otherwise loads it for 30 minutes so the first answer is quick.
-4. Stops whatever listens on ports 8000 and 3000, so FinSight always gets them.
+4. Stops whatever listens on ports 8000 and 3000, so Vidura always gets them.
 5. Runs `uv sync --inexact --group ml --group onnx` (fast when nothing changed).
-6. Starts the API (`uvicorn finsight.api.app:app --port 8000`) in a minimised window *FinSight API*.
+6. Starts the API (`uvicorn finsight.api.app:app --port 8000`) in a minimised window *Vidura API*.
 7. Runs `pnpm install` once if `frontend/node_modules` is missing, then starts the web app
-   (`pnpm dev --port 3000`) in a minimised window *FinSight Web*.
+   (`pnpm dev --port 3000`) in a minimised window *Vidura Web*.
 8. Waits for `http://127.0.0.1:8000/api/health` (up to 120 s) and the web app (up to 180 s), then opens
    <http://localhost:3000> in Microsoft Edge (`set "BROWSER=msedge"` at the top of `start.bat`; set it
    to `default` for the system browser).
@@ -48,7 +48,7 @@ The windows inherit these settings from `start.bat`:
 
 ### What "Stop" does
 
-It stops only FinSight: the processes listening on 8000, 3000 and 11434, the three windows by their
+It stops only Vidura: the processes listening on 8000, 3000 and 11434, the three windows by their
 titles, and Ollama. It never kills every `node.exe` or `python.exe`.
 
 ## Manual start (any OS)

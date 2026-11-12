@@ -78,7 +78,7 @@ export function Chatbot() {
   );
 }
 
-/** B05 §2: four blocks after "How FinSight works". */
+/** B05 §2: four blocks after "How Vidura works". */
 export function WhatYouGet() {
   const { t } = useT();
   const blocks = [1, 2, 3, 4] as const;

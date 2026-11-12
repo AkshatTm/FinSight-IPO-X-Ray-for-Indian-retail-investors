@@ -2,7 +2,7 @@
 
 ## Motivation
 
-To say how unusual a risk factor is, FinSight compares it with the risk factors of past IPOs. The bank holds those past risks as vectors. It also feeds the teacher's input (C2.3) and the classifier's train/dev data.
+To say how unusual a risk factor is, Vidura compares it with the risk factors of past IPOs. The bank holds those past risks as vectors. It also feeds the teacher's input (C2.3) and the classifier's train/dev data.
 
 ## Composition
 

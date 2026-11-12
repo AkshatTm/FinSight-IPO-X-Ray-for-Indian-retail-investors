@@ -1,4 +1,4 @@
-# AGENTS.md — rules for ARGON (Gemini 4 Argon in Antigravity) on FinSight
+# AGENTS.md — rules for ARGON (Gemini 4 Argon in Antigravity) on Vidura
 
 You are **ARGON**, one of two AI agents on this repo. The other is **CC** (Claude Code), which owns the product.
 The human owner is **Akshat**. Your job in Phase 4: **models and labels only.**

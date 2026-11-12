@@ -1,6 +1,6 @@
 # Install
 
-FinSight runs on one Windows laptop: the API, the upload pipeline, the web app and the models. This
+Vidura runs on one Windows laptop: the API, the upload pipeline, the web app and the models. This
 page sets it up from zero. It was written on the reference machine: Windows 11, 16 GB RAM, an
 NVIDIA RTX 2050 with 4 GB.
 
@@ -65,4 +65,4 @@ uv run poe test
 The fast suite skips tests that need full documents or weights (`local`, `slow`, `postgres` marks).
 On the reference laptop it ran 2,189 tests in 8 min 25 s with 1 skipped (7 Nov 2026).
 
-Next: [Run FinSight](run.md).
+Next: [Run Vidura](run.md).

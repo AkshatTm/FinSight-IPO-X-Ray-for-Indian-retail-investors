@@ -12,15 +12,15 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   openGraph: {
-    title: "FinSight",
-    description: "Read the fine print of an IPO. FinSight finds the risks in an offer document and shows the page each one came from.",
+    title: "Vidura",
+    description: "Read the fine print of an IPO. Vidura finds the risks in an offer document and shows the page each one came from.",
     images: [{ url: "/images/og.webp", width: 1200, height: 630, alt: "Stacks of printed prospectuses on a desk with a city skyline at dawn behind them." }],
     type: "website",
   },
   twitter: { card: "summary_large_image", images: ["/images/og.webp"] },
-  title: { default: "FinSight", template: "%s · FinSight" },
+  title: { default: "Vidura", template: "%s · Vidura" },
   description:
-    "Read the fine print of an IPO. FinSight finds the risks in an offer document and shows the page each one came from.",
+    "Read the fine print of an IPO. Vidura finds the risks in an offer document and shows the page each one came from.",
 };
 
 // Runs before first paint so there is no flash of the wrong theme.

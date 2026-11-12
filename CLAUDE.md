@@ -1,6 +1,6 @@
-# FinSight — Claude Code instructions (always loaded)
+# Vidura — Claude Code instructions (always loaded)
 
-FinSight = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sheet + bilingual chat with ✅/⚠️/❌ number verification. Phase 2: upload any IPO offer document → red flags, plain-English risk report, risk level with reasons, comparisons. **Phase 3 (now):** newest-IPO data, trained Phase 2 models, FinSight Bench vs frontier models, then deploy. Gate-driven; course deadline: Sun 1 Nov 2026 (the only date; it lives only here). Open-weight models only.
+Vidura = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sheet + bilingual chat with ✅/⚠️/❌ number verification. Phase 2: upload any IPO offer document → red flags, plain-English risk report, risk level with reasons, comparisons. **Phase 3 (now):** newest-IPO data, trained Phase 2 models, Vidura Bench vs frontier models, then deploy. Gate-driven; course deadline: Sun 1 Nov 2026 (the only date; it lives only here). Open-weight models only.
 
 ## Environment rule
 **Local only in code (B-ADR-16, 4 Oct 2026).** Every part runs in a local session on the Windows laptop (see Environment below). Start with `git pull`. Do not add Cloud Run, GCS, GPU-job, Docker-deploy or paid-hosting code before C5.1; Supabase sign-in/Postgres, Vercel and the HF Space are optional config only. B-ADR-16's "credit used up" premise is outdated: a Google Cloud free trial is active, used only at C5.1 after a budget alert and Akshat's explicit "go" (C-ADR-10).

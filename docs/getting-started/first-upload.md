@@ -1,13 +1,13 @@
 # Your first upload
 
-With FinSight running ([Run FinSight](run.md)), open <http://localhost:3000> and click
+With Vidura running ([Run Vidura](run.md)), open <http://localhost:3000> and click
 **Analyse a document**.
 
 ![The upload page](../screenshots/final/v2-upload.png)
 
 ## 1. Pick a document
 
-FinSight reads Indian IPO offer documents: a **Red Herring Prospectus (RHP)**, a **draft (DRHP)** or a
+Vidura reads Indian IPO offer documents: a **Red Herring Prospectus (RHP)**, a **draft (DRHP)** or a
 **final prospectus**, as a **text PDF** up to 50 MB and 1,500 pages. SEBI's website and the NSE / BSE
 issue pages publish them. A scanned PDF has no text layer and is refused; OCR is not built.
 
@@ -16,7 +16,7 @@ issue pages publish them. A scanned PDF has no text layer and is refused; OCR is
 Drop the PDF or choose it. The browser computes the file's SHA-256 first. If the same file was analysed
 before with the current pipeline version, you go straight to its report. Otherwise:
 
-1. **Model check.** FinSight checks that the models it needs are available: the student in Ollama, the
+1. **Model check.** Vidura checks that the models it needs are available: the student in Ollama, the
    ONNX risk classifier, the `bge-m3` embeddings and the reranker. If one is missing you can still
    continue with **Analyse without it**; the report then says which part is incomplete.
 2. **Analysing.** The page lists each stage as it finishes (validated, parsed, sections, facts,

@@ -1,6 +1,6 @@
 # System overview
 
-FinSight is one Python process (FastAPI API plus an in-process job runner), a Next.js web app and
+Vidura is one Python process (FastAPI API plus an in-process job runner), a Next.js web app and
 Ollama, all on one laptop. Documents and results are local files and a SQLite database. This page shows
 the system at three levels (context, containers, components) and the two main flows. Each stage is
 detailed on [Pipeline stages](pipeline.md); the reasons are in the [decision records](../adr/index.md).
@@ -9,7 +9,7 @@ detailed on [Pipeline stages](pipeline.md); the reasons are in the [decision rec
 
 ```mermaid
 flowchart LR
-  R([Retail investor]) -->|uploads an offer document, reads the report, asks questions| FS[FinSight on a laptop]
+  R([Retail investor]) -->|uploads an offer document, reads the report, asks questions| FS[Vidura on a laptop]
   FS -. offline, never at runtime .-> SEBI[(Public RHPs and prospectuses: SEBI, NSE, BSE)]
   FS -. training only .-> HF[(Ghosh et al. Indian IPO corpus, CC BY-NC-SA 4.0)]
   FS -. training only .-> GPU[Kaggle and Colab GPU notebooks]
@@ -106,7 +106,7 @@ docstring states its job ([Python packages](../reference/python.md)). The packag
 | `reports` | Assemble `report.json` from the stage outputs |
 | `retrieve`, `generate`, `guard`, `verify`, `chat` | Chat: BM25 + reranker, the student, the advice guard, the number checker |
 | `jobs`, `storage`, `db`, `auth` | Job runner and cache, files, database, the local user |
-| `evaluate`, `bench`, `weaklabel`, `splits`, `handoff` | Evaluation, FinSight Bench, weak labels, time split, Phase 4 hand-off pack |
+| `evaluate`, `bench`, `weaklabel`, `splits`, `handoff` | Evaluation, Vidura Bench, weak labels, time split, Phase 4 hand-off pack |
 
 ## Upload sequence
 

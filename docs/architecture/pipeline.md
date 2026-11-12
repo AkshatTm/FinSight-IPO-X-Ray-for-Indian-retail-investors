@@ -69,7 +69,7 @@ sha256(pdf)  +  pipeline_version  +  models_fingerprint
   in `data/cache/weight_hashes.json`.
 
 Opening a report whose version or fingerprint differs re-runs it ("This report was made with an older
-version of FinSight"). A **degraded** analysis (a stage failed, or a model was skipped) is never cached
+version of Vidura"). A **degraded** analysis (a stage failed, or a model was skipped) is never cached
 as complete. If a needed model is down when a stale report is opened, the report says the newer
 analysis "can't run right now" and offers **Analyse without it**.
 

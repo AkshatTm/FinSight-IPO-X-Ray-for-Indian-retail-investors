@@ -7,7 +7,7 @@ const en = (text: string): Entry => text;
 export const REPORT = {
 
   // Cache v2 (CC-04): banners, Re-analyse and Delete. Builder drafts; the risk report is English only.
-  "cache.reanalysing": en("This report was made with an older version of FinSight, so it is being analysed again."),
+  "cache.reanalysing": en("This report was made with an older version of Vidura, so it is being analysed again."),
   "cache.degraded": en("Some parts of this report are incomplete."),
   "cache.failed": en("This document could not be analysed."),
   "cache.blocked": en("A newer analysis is available but can't run right now: {why}"),
@@ -86,7 +86,7 @@ export const REPORT = {
   "rl.how": en("How the risk level works"),
   "rl.provisional": en("Provisional: the thresholds are placeholders until they are computed from 2018–2023 IPOs."), // builder draft
   // §6.3 modal
-  "rlm.intro": en("FinSight adds up points from the red flags and the most serious unusual risks:"),
+  "rlm.intro": en("Vidura adds up points from the red flags and the most serious unusual risks:"),
   "rlm.points1": en("Each Concern adds 2 points and each Watch adds 1."),
   "rlm.points2": en("Each risk that is highly serious and appears in fewer than 10% of past IPOs adds 1 point (up to 4)."),
   "rlm.share": en("Checks that can't be worked out for this document are left out, so the total is compared as a share of the points that were possible."),
@@ -130,7 +130,7 @@ export const REPORT = {
   "rf.numbers": en("Numbers used"),
   "rf.how": en("How this check works"),
   "rf.show": en("Show in document"),
-  "rf.missing": en("FinSight couldn't find this in the document."),
+  "rf.missing": en("Vidura couldn't find this in the document."),
   "rf.page": en("page {p}"), // builder draft
 
   // §5.5 Risks tab
@@ -157,7 +157,7 @@ export const REPORT = {
   "rk.similarRow": en("{company} ({year}): {title}"),
   "rk.show": en("Show in document"),
   "rk.askAbout": en("Ask about this"),
-  "rk.footnote": en("Plain-English versions are written by FinSight's own model and checked: every number must match the original. Always read the original for anything important."),
+  "rk.footnote": en("Plain-English versions are written by Vidura's own model and checked: every number must match the original. Always read the original for anything important."),
   "rk.none": en("No risks match."), // builder draft
   "cat.financial": en("Money and profits"),
   "cat.debt_liquidity": en("Debt and cash"),
@@ -181,7 +181,7 @@ export const REPORT = {
   "ov.kf.networth": en("Net worth"),
   "ov.kf.debt": en("Borrowings"),
   "ov.strengths": en("What the company says its strengths are"),
-  "ov.strengthsNote": en("From the prospectus, in the company's words. FinSight has not checked these claims."),
+  "ov.strengthsNote": en("From the prospectus, in the company's words. Vidura has not checked these claims."),
   "ov.promoter": en("Promoter holding"),
   "ov.promoterPre": en("Before the offer"),
   "ov.promoterPost": en("After the offer"),

@@ -1,6 +1,6 @@
-# FinSight web app
+# Vidura web app
 
-The FinSight website: landing page, IPO library, the workspace (fact sheet, document viewer and verified chat), Model Lab, uploads and the report page. It is built with Next.js (App Router), TypeScript in strict mode, Tailwind, TanStack Query and Zustand. The design spec is `docs/12_FRONTEND_SPEC.md` (Phase 1) and `docs/phase2/B05_UI_SPEC.md` (Phase 2).
+The Vidura website: landing page, IPO library, the workspace (fact sheet, document viewer and verified chat), Model Lab, uploads and the report page. It is built with Next.js (App Router), TypeScript in strict mode, Tailwind, TanStack Query and Zustand. The design spec is `docs/12_FRONTEND_SPEC.md` (Phase 1) and `docs/phase2/B05_UI_SPEC.md` (Phase 2).
 
 ## Run it
 

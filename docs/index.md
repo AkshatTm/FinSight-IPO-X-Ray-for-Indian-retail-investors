@@ -1,7 +1,7 @@
-# FinSight
+# Vidura
 
 **IPO X-Ray for Indian retail investors.** Upload an Indian IPO offer document (RHP, DRHP or final
-prospectus) and FinSight reads all of it on your own laptop (264 s for the 591-page Jio Platforms RHP
+prospectus) and Vidura reads all of it on your own laptop (264 s for the 591-page Jio Platforms RHP
 on an RTX 2050 laptop, [one run](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md#laptop-timings-rtx-2050-4-gb-16-gb-ram-profile-local)). It gives you:
 
 - **key facts and financials**, every figure with the page it was read from;
@@ -12,16 +12,16 @@ on an RTX 2050 laptop, [one run](https://github.com/AkshatTm/FinSight-IPO-X-Ray-
 - a **chat** that answers from the document and marks each number ✅ verified, ⚠️ unverifiable or
   ❌ contradicted.
 
-FinSight explains what a document says. It never tells you to apply, buy, sell or avoid, and it does
+Vidura explains what a document says. It never tells you to apply, buy, sell or avoid, and it does
 not predict prices. All models are open-weight and run locally; no paid LLM API is called.
 
-![A FinSight report: key facts with page numbers and the risk level card](screenshots/final/v2-report-overview.png)
+![A Vidura report: key facts with page numbers and the risk level card](screenshots/final/v2-report-overview.png)
 
 ## Where to start
 
 | You want to… | Read |
 | --- | --- |
-| Install and run it | [Install](getting-started/install.md), then [Run FinSight](getting-started/run.md) |
+| Install and run it | [Install](getting-started/install.md), then [Run Vidura](getting-started/run.md) |
 | Understand a report | [Pages and tabs](user-guide/index.md), [Reading the results](user-guide/reading-results.md) |
 | See how it works inside | [System overview](architecture/index.md), [Pipeline stages](architecture/pipeline.md) |
 | Check the numbers | [Results and experiments](evaluation.md), [Model cards](model_cards/index.md) |
@@ -39,5 +39,5 @@ run; the summary is
 [FINAL_SCORECARD.md](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/final/FINAL_SCORECARD.md).
 
 !!! warning "Not investment advice"
-    FinSight summarises public disclosures. The risk level describes how much risk the document
+    Vidura summarises public disclosures. The risk level describes how much risk the document
     discloses compared with past Indian IPOs; it is not a rating and does not say whether to invest.

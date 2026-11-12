@@ -1,4 +1,6 @@
-# FinSight — IPO X-Ray for Indian retail investors
+# Vidura — IPO X-Ray for Indian retail investors
+
+Formerly FinSight.
 
 [![backend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/backend.yml)
 [![frontend](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml/badge.svg)](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/actions/workflows/frontend.yml)
@@ -9,17 +11,19 @@
 ![Node 24](https://img.shields.io/badge/node-24-green.svg)
 ![open-weight models only](https://img.shields.io/badge/models-open--weight-success.svg)
 
-**FinSight reads an Indian IPO offer document (RHP, DRHP or prospectus) on your own computer and gives back a report you can check: key facts with the page they came from, 13 red-flag checks, every risk factor rewritten in plain English, a risk level with its reasons, comparisons with listed peers, and a chat whose numbers are marked ✅ verified, ⚠️ unverifiable or ❌ contradicted against the document.** Every model is open-weight and runs locally; nothing is sent to a server.
+**Vidura reads an Indian IPO offer document (RHP, DRHP or prospectus) on your own computer and gives back a report you can check: key facts with the page they came from, 13 red-flag checks, every risk factor rewritten in plain English, a risk level with its reasons, comparisons with listed peers, and a chat whose numbers are marked ✅ verified, ⚠️ unverifiable or ❌ contradicted against the document.** Every model is open-weight and runs locally; nothing is sent to a server.
 
-> **Not investment advice.** FinSight summarises what a public filing discloses. It never says whether to apply, buy or sell, and never predicts a price or listing gain. The risk level describes the document, always with its reasons and a disclaimer; it is not a rating.
+Vidura was the Mahabharata minister who saw danger early and said it plainly, even when the court did not want to hear it. Vidura does the same for an IPO offer document: it surfaces the facts and red flags, but never tells you whether to apply.
 
-![FinSight landing page: an X-ray lens over a real offer-document page](docs/screenshots/final/v2-landing.png)
+> **Not investment advice.** Vidura summarises what a public filing discloses. It never says whether to apply, buy or sell, and never predicts a price or listing gain. The risk level describes the document, always with its reasons and a disclaimer; it is not a rating.
+
+![Vidura landing page: an X-ray lens over a real offer-document page](docs/screenshots/final/v2-landing.png)
 
 **Documentation:** [docs site](docs/index.md) · [install](docs/getting-started/install.md) · [run](docs/getting-started/run.md) · [read a report](docs/user-guide/reading-results.md) · [API guide](docs/reference/api-guide.md) · [FAQ](docs/faq.md)
 
 ## The problem
 
-A Red Herring Prospectus runs to hundreds of pages; the Jio Platforms RHP used in the timings below has 591. The facts a retail investor needs, such as the issue price band, the promoter's holding before and after, litigation totals, related-party transactions and the risk factors, are spread across it and written in legal language. FinSight finds them, shows the page each one came from, and is honest about what it could not find.
+A Red Herring Prospectus runs to hundreds of pages; the Jio Platforms RHP used in the timings below has 591. The facts a retail investor needs, such as the issue price band, the promoter's holding before and after, litigation totals, related-party transactions and the risk factors, are spread across it and written in legal language. Vidura finds them, shows the page each one came from, and is honest about what it could not find.
 
 ## Features
 
@@ -47,8 +51,8 @@ Generated from `eval_results/` by [`scripts/readme_results.py`](scripts/readme_r
 | Plain-English rewrites, faithful (gold-50, blind human rating) | base / student / teacher | 0.84 / **0.92** / 0.98 | carried, one seed | [`c/simplify_gold50.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c/simplify_gold50.json) |
 | Plain-English rewrites, readability 1–5 (gold-50) | base / student / teacher | 3.00 / **4.64** / 4.80 | carried, one seed | [`c/simplify_gold50.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c/simplify_gold50.json) |
 | Rewrites passing the product post-checks (gold-50) | student vs base | **49 / 50** vs 16 / 50 | carried, one seed | [`c/student_vs_base_gold50.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c/student_vs_base_gold50.json) |
-| FinSight Bench v1, task A key facts (rules) | value match [95 % CI], 7 test IPOs | 0.724 [0.636, 0.816] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c4/bench_summary.json) |
-| FinSight Bench v1, task B red flags (rules) | status accuracy [95 % CI] | 0.703 [0.582, 0.824] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c4/bench_summary.json) |
+| Vidura Bench v1, task A key facts (rules) | value match [95 % CI], 7 test IPOs | 0.724 [0.636, 0.816] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c4/bench_summary.json) |
+| Vidura Bench v1, task B red flags (rules) | status accuracy [95 % CI] | 0.703 [0.582, 0.824] | carried, single run | [`c4/bench_summary.json`](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/eval_results/c4/bench_summary.json) |
 <!-- results:end -->
 
 Caveats the sources state:
@@ -134,7 +138,7 @@ cd FinSight-IPO-X-Ray-for-Indian-retail-investors
 start.bat
 ```
 
-Choose **[1] Start everything**. The launcher starts Ollama, the API on port 8000 and the web app on port 3000 in minimised windows, waits for `/api/health`, and opens <http://localhost:3000>. `start.bat status` shows what runs; `stop.bat` stops only FinSight. The first run installs the Python and Node packages. What each step does: [Run FinSight](docs/getting-started/run.md).
+Choose **[1] Start everything**. The launcher starts Ollama, the API on port 8000 and the web app on port 3000 in minimised windows, waits for `/api/health`, and opens <http://localhost:3000>. `start.bat status` shows what runs; `stop.bat` stops only Vidura. The first run installs the Python and Node packages. What each step does: [Run Vidura](docs/getting-started/run.md).
 
 ### Manual setup (any OS)
 
@@ -164,11 +168,11 @@ src/finsight/      the Python package: one folder per job
   redflags/ risks/ risklevel/ compare/   the report
   retrieve/ generate/ verify/ guard/ chat/   the chat
   normalize/         Indian number formats (lakh, crore)
-  weaklabel/ evaluate/ bench/ splits/   training data, scoring, FinSight Bench
+  weaklabel/ evaluate/ bench/ splits/   training data, scoring, Vidura Bench
 frontend/          Next.js web app (mocks in frontend/mocks)
 configs/           every setting as YAML (reference: docs/reference/configs.md)
 eval_results/      result files; final/FINAL_SCORECARD.md
-bench/v1/          FinSight Bench v1, frozen
+bench/v1/          Vidura Bench v1, frozen
 data/gold/         hand-checked gold sets; data/manifests/ split manifests
 notebooks/         Kaggle and Colab training notebooks
 scripts/           evaluation, docs generation, preload, link check
@@ -188,7 +192,7 @@ start.bat stop.bat the Windows launcher
 
 ## Roadmap and what was cut
 
-FinSight v1.1 is the final version of a course project. Phase 4 planned new models (M1–M5), a second benchmark (Platform Bench) and gold v4; they were cut so the product could keep the measured Phase 3 models, and the time went into the SOD engine, the Financials tab, cache v2, a fairer risk level and the launcher. Hindi chat and voice input were removed on 3 Nov 2026 to keep one well-tested path. The full account, with reasons: [project history](docs/history.md) and the [changelog](CHANGELOG.md).
+Vidura v1.1 is the final version of a course project. Phase 4 planned new models (M1–M5), a second benchmark (Platform Bench) and gold v4; they were cut so the product could keep the measured Phase 3 models, and the time went into the SOD engine, the Financials tab, cache v2, a fairer risk level and the launcher. Hindi chat and voice input were removed on 3 Nov 2026 to keep one well-tested path. The full account, with reasons: [project history](docs/history.md) and the [changelog](CHANGELOG.md).
 
 Ideas that are not planned work: OCR for scanned filings, red-flag checks for DRHPs that lack a price band, and a person-checked gold set beyond ten IPOs.
 
@@ -209,12 +213,12 @@ Code: MIT ([LICENSE](LICENSE)). The weak-label corpus of Ghosh et al. (`sohomgho
 
 ## Citation
 
-If you use FinSight, cite it with [CITATION.cff](CITATION.cff) (GitHub shows a "Cite this repository" button):
+If you use Vidura, cite it with [CITATION.cff](CITATION.cff) (GitHub shows a "Cite this repository" button):
 
 ```bibtex
 @software{tomar_finsight_2026,
   author  = {Tomar, Akshat},
-  title   = {FinSight: IPO X-Ray for Indian retail investors},
+  title   = {Vidura: IPO X-Ray for Indian retail investors},
   version = {1.1},
   year    = {2026},
   url     = {https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors}

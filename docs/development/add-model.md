@@ -1,6 +1,6 @@
 # Add or replace a model
 
-FinSight uses open-weight models only. A model enters the product only after it beats the current one
+Vidura uses open-weight models only. A model enters the product only after it beats the current one
 on **dev**, is reported once on **test**, and has a model card. This is how the Phase 3 models were
 added, and how the Phase 4 models were meant to be integrated (CC-09, cut).
 

@@ -2,7 +2,7 @@
 
 ## Motivation
 
-The extractors need many examples of how Indian offer documents state their facts, and Phase 2 needs past risk factors to compare a new document with. FinSight does not crawl SEBI or the exchanges; it uses a published research dataset (ADR-016).
+The extractors need many examples of how Indian offer documents state their facts, and Phase 2 needs past risk factors to compare a new document with. Vidura does not crawl SEBI or the exchanges; it uses a published research dataset (ADR-016).
 
 ## Composition
 
@@ -38,7 +38,7 @@ The demo IPOs (`configs/demo_ipos.yaml`) and the gold-set IPOs (`data/gold/exclu
 
 ## Distribution and licence
 
-CC BY-NC-SA 4.0 (non-commercial, share-alike). The corpus is never committed or redistributed by FinSight; anyone rebuilding it downloads it from the source. Models trained on it inherit the non-commercial terms (see `NOTICE`).
+CC BY-NC-SA 4.0 (non-commercial, share-alike). The corpus is never committed or redistributed by Vidura; anyone rebuilding it downloads it from the source. Models trained on it inherit the non-commercial terms (see `NOTICE`).
 
 ## Maintenance
 

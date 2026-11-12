@@ -1,5 +1,5 @@
 name: Bug report
-description: Something in FinSight does not work as documented.
+description: Something in Vidura does not work as documented.
 labels: [bug]
 body:
   - type: markdown
@@ -27,7 +27,7 @@ body:
     id: logs
     attributes:
       label: Logs or error text
-      description: From the FinSight API window or the browser console. Remove any tokens.
+      description: From the Vidura API window or the browser console. Remove any tokens.
       render: text
   - type: input
     id: version

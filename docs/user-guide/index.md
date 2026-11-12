@@ -5,7 +5,7 @@ Jio Platforms RHP (591 pages) analysed on 3 Nov 2026.
 
 | Page | Address | What it is for |
 | --- | --- | --- |
-| Home | `/` | What FinSight does, with a short animation of one fact being read off a made-up prospectus page |
+| Home | `/` | What Vidura does, with a short animation of one fact being read off a made-up prospectus page |
 | IPOs (library) | `/ipos` | The 10 showcase IPOs from 2025 |
 | Analyse a document | `/upload` | Upload your own offer document |
 | Report | `/reports/<doc_id>` | Overview, Financials, Red flags, Risks, Compare |
@@ -119,4 +119,4 @@ Every document analysed on this machine, with its status, so you can reopen, re-
 
 The evaluation numbers behind the product, read from `eval_results/` through `/api/lab/*`: the
 extractor ladder, field accuracy, the number verifier, weak labels, retrieval, the Phase 2 models and
-FinSight Bench. The full list with sources is on [Results and experiments](../evaluation.md).
+Vidura Bench. The full list with sources is on [Results and experiments](../evaluation.md).

@@ -40,7 +40,7 @@ function Wordmark() {
   return (
     <Link href="/" className="flex h-14 items-center gap-2 text-lg font-semibold tracking-[-0.02em] text-text">
       <Logomark />
-      FinSight
+      Vidura
     </Link>
   );
 }

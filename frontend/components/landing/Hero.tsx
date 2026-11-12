@@ -8,7 +8,7 @@ import { ProspectusReel } from "./ProspectusReel";
 
 /**
  * Full-bleed charcoal hero over a slow film loop of a document under a saffron scan (generated
- * footage, public/landing/hero-loop.mp4). Left: the promise; right: a reel of FinSight reading a
+ * footage, public/landing/hero-loop.mp4). Left: the promise; right: a reel of Vidura reading a
  * made-up prospectus page and pulling one fact out of it.
  */
 export function Hero() {

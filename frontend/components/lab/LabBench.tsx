@@ -21,7 +21,7 @@ function score(x: unknown): string {
   return `${p(s.mean)}% (${p(s.low)}–${p(s.high)})`;
 }
 
-/** FinSight Bench v1 (C4.1): one row per scored system; hides when no system was scored. */
+/** Vidura Bench v1 (C4.1): one row per scored system; hides when no system was scored. */
 export function LabBench() {
   const { t } = useT();
   const { data } = useLabBench();

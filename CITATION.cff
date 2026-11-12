@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use FinSight, please cite it as below."
-title: "FinSight: IPO X-Ray for Indian retail investors"
+message: "If you use Vidura, please cite it as below."
+title: "Vidura: IPO X-Ray for Indian retail investors"
 abstract: >-
   A local web app that reads an Indian IPO offer document (RHP, DRHP or prospectus) and
   produces a cited fact sheet, red flags, plain-English risk factors, a risk level with

@@ -16,7 +16,7 @@ export const STRINGS = d({
   ...UPLOAD,
   ...REPORT,
   // 3.1 navigation
-  "nav.home": "FinSight",
+  "nav.home": "Vidura",
   "nav.ipos": "IPOs",
   "nav.how": "How it works",
   "nav.lab": "Model Lab",
@@ -32,11 +32,11 @@ export const STRINGS = d({
   "health.ok": "Everything is running",
   "health.warming": "Models are loading. This takes about 20 seconds the first time.",
   "health.degraded": "Running with reduced features. {detail}",
-  "health.unreachable": "Can't reach the FinSight server. Demo answers still work.",
+  "health.unreachable": "Can't reach the Vidura server. Demo answers still work.",
 
   // 3.3 footer
   "footer.notAdviceBold": "Not investment advice.",
-  "footer.notAdviceRest": "FinSight explains what public IPO documents say. It does not tell you whether to apply.",
+  "footer.notAdviceRest": "Vidura explains what public IPO documents say. It does not tell you whether to apply.",
   "footer.built": "Built by Akshat Tomar for CSE472 (Deep Learning for NLP), Lovely Professional University",
   "footer.data": "Data: public SEBI filings",
   "footer.source": "Source code on GitHub",
@@ -85,7 +85,7 @@ export const STRINGS = d({
   "reason.scale_mismatch": "Wrong unit. The answer says {a} ({a_crore}). The document says {b} ({b_crore}). That's {factor} times different.",
   "reason.wrong_value": "Different number. For {metric}, the document says {b} on {doc} page {page}.",
   "reason.wrong_metric": "This number belongs to {other_metric}, not {metric}.",
-  "reason.not_found": "This number doesn't appear in the pages used for this answer. It may still be correct, but FinSight couldn't confirm it.",
+  "reason.not_found": "This number doesn't appear in the pages used for this answer. It may still be correct, but Vidura couldn't confirm it.",
   "reason.placeholder": "The RHP leaves this blank ([●]). It's filled in later, in the final prospectus.",
 
   // 13.2 faithfulness meter
@@ -103,11 +103,11 @@ export const STRINGS = d({
   "guard.forecast.chipMoney": "What will the money be used for?",
   "guard.forecast.chipPast": "Past revenue and profit",
   "guard.privacy.title": "I don't share personal details.",
-  "guard.privacy.body": "Offer documents list home addresses and contact details of some people. FinSight doesn't show them, even though they're public. I can tell you who the promoters and directors are and their roles.",
+  "guard.privacy.body": "Offer documents list home addresses and contact details of some people. Vidura doesn't show them, even though they're public. I can tell you who the promoters and directors are and their roles.",
 
   // 13.4 abstain
   "abstain.title": "I couldn't find this in the documents.",
-  "abstain.body": "Rather than guess, FinSight only answers from the pages. The closest page it found is below.",
+  "abstain.body": "Rather than guess, Vidura only answers from the pages. The closest page it found is below.",
   "abstain.tryDifferent": "Try asking it differently",
   "common.showInDocument": "Show in document",
 
@@ -119,7 +119,7 @@ export const STRINGS = d({
   "err.rate_limited": "Too many questions at once. Wait a few seconds.",
   "err.validation_error": "Something about that question didn't work. Try rephrasing it.",
   "err.internal_error": "Something went wrong on our side. Try again.",
-  "err.network": "Can't reach the FinSight server. Check that it's running.",
+  "err.network": "Can't reach the Vidura server. Check that it's running.",
 
   // 7.9 tour
   "tour.1": "These are the key facts from the offer document. Click one.",
@@ -264,7 +264,7 @@ export const STRINGS = d({
   "ev.reason": "Reason",
   "ev.source": "Source",
   "ev.sourceLine": "{doc}, page {page}",
-  "ev.foot": "FinSight compares numbers with code, not with another AI model.",
+  "ev.foot": "Vidura compares numbers with code, not with another AI model.",
 
   // 7.8 glossary, 7.7 inspector
   "gl.title": "Glossary",

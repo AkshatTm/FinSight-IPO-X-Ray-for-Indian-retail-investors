@@ -1,21 +1,21 @@
 # Run, back up, restore
 
-FinSight runs on one laptop; nothing is hosted. This page covers day-to-day running, the maintenance
+Vidura runs on one laptop; nothing is hosted. This page covers day-to-day running, the maintenance
 scripts, backups and restoring weights.
 
 ## Launcher
 
 `start.bat` (menu: start, stop, restart, status) and `stop.bat`; details on
-[Run FinSight](../getting-started/run.md). `start.bat status` prints which of Ollama (:11434), the API
+[Run Vidura](../getting-started/run.md). `start.bat status` prints which of Ollama (:11434), the API
 (:8000) and the web app (:3000) are up, with their process ids.
 
 ## Logs
 
 | Where | What |
 | --- | --- |
-| *FinSight API* window | the API and the job runner: one JSON line per record (`ts`, `level`, `logger`, `message`, plus `doc_id`, `job_id`, `stage` on stage events) |
-| *FinSight Web* window | Next.js dev server |
-| *FinSight Ollama* window | Ollama |
+| *Vidura API* window | the API and the job runner: one JSON line per record (`ts`, `level`, `logger`, `message`, plus `doc_id`, `job_id`, `stage` on stage events) |
+| *Vidura Web* window | Next.js dev server |
+| *Vidura Ollama* window | Ollama |
 | `GET /api/docs/{doc_id}/events` | the stored event stream of a document's last job (also in the `job_events` table) |
 | `GET /api/traces/{trace_id}` | one chat answer's trace (`data/traces.sqlite`) |
 | `GET /api/admin/jobs` | failed jobs (the local user is the admin when `auth.mode` is `off`) |

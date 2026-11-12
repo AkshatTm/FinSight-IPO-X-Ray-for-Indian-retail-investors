@@ -18,7 +18,7 @@ metrics: [exact_match, f1, nvm]
     **v2** is a reported ablation and is not used (see below). Licence: trained on the CC BY-NC-SA 4.0
     corpus, so non-commercial; the weights are not published.
 
-- **Base model:** `deepset/deberta-v3-base-squad2` (CC BY 4.0), fine-tuned on FinSight weak labels
+- **Base model:** `deepset/deberta-v3-base-squad2` (CC BY 4.0), fine-tuned on Vidura weak labels
 - **Owner:** Akshat · **Notebook:** `notebooks/01_finetune_extractor.ipynb` (Kaggle, 2 GPUs)
 - **Version:** the run recorded in `eval_results/extractor_metrics-*.json` and `ladder_table.json` (gold v1)
 

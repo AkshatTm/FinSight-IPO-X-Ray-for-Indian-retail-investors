@@ -7,22 +7,22 @@ type Entry = string;
 export const LANDING = {
   // 5.2 hero
   "land.h1": "500 pages of fine print, read in minutes.",
-  "land.sub": "FinSight reads an IPO offer document, flags the risks in plain English, and shows the page behind every number.",
+  "land.sub": "Vidura reads an IPO offer document, flags the risks in plain English, and shows the page behind every number.",
   "land.cta": "X-ray an IPO",
   "land.sample": "See a sample report",
   "land.how": "How it works",
   "land.free": "Free. Sign in with Google to upload. Runs on open-source models.",
   "land.kicker": "IPO X-ray for Indian retail investors",
-  "land.reel.alt": "Animation: FinSight reads the cover page of a made-up Red Herring Prospectus, zooms in on the total issue size, lifts out {value}, and shows it as a fact that matches page 1.",
+  "land.reel.alt": "Animation: Vidura reads the cover page of a made-up Red Herring Prospectus, zooms in on the total issue size, lifts out {value}, and shows it as a fact that matches page 1.",
   "land.reel.label": "Total issue size",
-  "land.reel.steps": "What FinSight does with each page",
+  "land.reel.steps": "What Vidura does with each page",
   "land.reel.step.read": "Read",
   "land.reel.step.find": "Find",
   "land.reel.step.extract": "Extract",
   "land.reel.step.check": "Check",
   "land.reel.pause": "Pause the animation",
   "land.reel.play": "Play the animation",
-  "land.reel.note": "A made-up prospectus, read the way FinSight reads a real one.",
+  "land.reel.note": "A made-up prospectus, read the way Vidura reads a real one.",
 
   // 5.3 new to IPOs
   "land.new.h": "New to IPOs? Start here.",
@@ -42,10 +42,10 @@ export const LANDING = {
   "land.bot.row2v": "\"₹800 crore\"",
   "land.bot.verdictHead": "Doesn't match.",
   "land.bot.verdict": "₹800 lakh is ₹8 crore. The document says ₹800 crore. That's 100 times more.",
-  "land.bot.caption": "Illustrative example. FinSight's own comparison with general chatbots is in the Model Lab.",
+  "land.bot.caption": "Illustrative example. Vidura's own comparison with general chatbots is in the Model Lab.",
 
   // 5.5 how it works
-  "land.steps.h": "How FinSight works",
+  "land.steps.h": "How Vidura works",
   "land.steps.1.h": "It reads the whole document.",
   "land.steps.1.b": "Every page, including the tables, from the RHP and the final prospectus.",
   "land.steps.2.h": "It pulls out the key facts.",
@@ -57,29 +57,29 @@ export const LANDING = {
   "land.marks.contradicted": "the document says something different.",
 
   // 5.6 mini demo
-  // B05 §2: "What you get", after "How FinSight works"
+  // B05 §2: "What you get", after "How Vidura works"
   "land.get.h": "What you get",
   "land.get.1.h": "The key facts.",
   "land.get.1.b": "Issue size, price, who is selling, what the money is for. Each linked to its page.",
   "land.get.2.h": "Red flags.",
   "land.get.2.b": "13 checks, like losses, cash burn, debt, and how cheaply insiders bought their shares. Each marked OK, Watch or Concern.",
   "land.get.3.h": "Every risk, in plain English.",
-  "land.get.3.b": "Companies list dozens of risks in legal language. FinSight rewrites each one in simple words and shows the unusual ones first.",
+  "land.get.3.b": "Companies list dozens of risks in legal language. Vidura rewrites each one in simple words and shows the unusual ones first.",
   "land.get.4.h": "A risk level.",
   "land.get.4.b": "Low, Medium or High, compared with past Indian IPOs, with the reasons listed.",
 
   "land.demo.h": "Try it here",
-  "land.demo.b": "Click a fact. FinSight jumps to the page and highlights where it came from.",
+  "land.demo.b": "Click a fact. Vidura jumps to the page and highlights where it came from.",
   "land.demo.open": "Open the full workspace",
 
   // 5.7 languages
 
   // 5.8 limits
-  "land.no.h": "What FinSight won't do",
+  "land.no.h": "What Vidura won't do",
   "land.no.1": "It won't tell you whether to apply or buy.",
   "land.no.2": "It won't predict listing prices or profits.",
   "land.no.3": "Its risk level describes what the document discloses. It is not a recommendation.",
-  "land.no.p": "In India, investment advice can only come from advisers registered with [[sebi|SEBI]]. FinSight sticks to what the documents say.",
+  "land.no.p": "In India, investment advice can only come from advisers registered with [[sebi|SEBI]]. Vidura sticks to what the documents say.",
 
   // 5.9 stats
   "land.open.h": "Built in the open",
