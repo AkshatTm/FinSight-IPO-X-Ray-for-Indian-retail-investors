@@ -1,7 +1,7 @@
 """The deploy LLM: a small GGUF model on CPU through llama-cpp-python (ADR-022, P6.1).
 
 Same contract as the Ollama backend (``stream``, ``generate``, ``is_available``), so the chat
-orchestrator does not know which one it has. The model file comes from ``FINSIGHT_GGUF`` (a path)
+orchestrator does not know which one it has. The model file comes from ``VIDURA_GGUF`` (a path)
 or from ``llm.model`` in the config when that is a path to an existing file; the file is not in
 the repository (the artifact bundle puts it on the Space). ``llama_cpp`` is imported only when the
 model is first used, so laptops and CI without the wheel can import this module.
@@ -18,7 +18,7 @@ from vidura.core.config import LLMConfig
 from vidura.core.registry import register
 from vidura.generate.llm_backend import REPEAT_PENALTY, STOP, LLMUnavailable, ReasoningLeak
 
-ENV_PATH = "FINSIGHT_GGUF"
+ENV_PATH = "VIDURA_GGUF"
 Loader = Callable[..., Any]
 
 
@@ -50,7 +50,7 @@ class LlamaCppBackend:
 
     @classmethod
     def from_config(cls, config: LLMConfig, **kwargs: Any) -> LlamaCppBackend:
-        """Build from settings; the ``FINSIGHT_GGUF`` path wins over ``llm.model``."""
+        """Build from settings; the ``VIDURA_GGUF`` path wins over ``llm.model``."""
         path = os.environ.get(ENV_PATH) or config.model
         return cls(model_path=path, num_ctx=config.num_ctx, **kwargs)
 

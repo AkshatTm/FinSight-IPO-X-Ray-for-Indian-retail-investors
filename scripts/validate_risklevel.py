@@ -26,7 +26,7 @@ from vidura.risklevel import load_config  # noqa: E402
 from vidura.risklevel.reference import read_scores  # noqa: E402
 
 TABLE = (
-    Path(os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data"))
+    Path(os.environ.get("VIDURA_DATA_DIR", ROOT / "data"))
     / "processed"
     / "risk_bank"
     / "points_only_scores.csv"

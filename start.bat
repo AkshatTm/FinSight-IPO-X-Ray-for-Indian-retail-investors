@@ -19,12 +19,12 @@ rem Use any exe name on PATH or a full path; "default" opens the system default 
 set "BROWSER=msedge"
 
 rem Settings the API and the web app inherit from this window.
-set "FINSIGHT_PROFILE=local"
-set "FINSIGHT_UPLOADS__PER_USER_PER_DAY=1000"
-set "FINSIGHT_UPLOADS__GLOBAL_PER_DAY=1000"
-set "FINSIGHT_UPLOADS__RETENTION_DAYS=3650"
+set "VIDURA_PROFILE=local"
+set "VIDURA_UPLOADS__PER_USER_PER_DAY=1000"
+set "VIDURA_UPLOADS__GLOBAL_PER_DAY=1000"
+set "VIDURA_UPLOADS__RETENTION_DAYS=3650"
 set "PYTHONUTF8=1"
-set "FINSIGHT_API_ORIGIN=http://127.0.0.1:8000"
+set "VIDURA_API_ORIGIN=http://127.0.0.1:8000"
 set "NEXT_PUBLIC_USE_MOCKS=0"
 
 if /i "%~1"=="start" (call :start & goto :end)

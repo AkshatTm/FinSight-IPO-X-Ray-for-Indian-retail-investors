@@ -1,6 +1,6 @@
 """C2.7: run the v2 extractor seeds (``models/extractor_v2``) over the gold ladder as rung ``qa_finetuned_v2``.
 
-    FINSIGHT_PATHS__PROCESSED_DIR=<main>/data/processed \
+    VIDURA_PATHS__PROCESSED_DIR=<main>/data/processed \
         uv run --group ml python scripts/extractor_v2_gold.py [--seed 13]
     # -> eval_results/ladder/qa_finetuned_v2_seed<n>.json
 

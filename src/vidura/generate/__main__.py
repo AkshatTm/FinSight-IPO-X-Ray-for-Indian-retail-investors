@@ -176,7 +176,7 @@ def main(argv: list[str] | None = None) -> int:
     ask_p = sub.add_parser("ask", help="answer one question with citations")
     ask_p.add_argument("--ipo", required=True)
     ask_p.add_argument("--lang", choices=["en", "hi"], default="en")
-    ask_p.add_argument("--profile", help="config profile (default: FINSIGHT_PROFILE or dev_light)")
+    ask_p.add_argument("--profile", help="config profile (default: VIDURA_PROFILE or dev_light)")
     ask_p.add_argument("--model", help="override the profile's Ollama model")
     ask_p.add_argument("--answer", help="skip the model and verify this answer text instead")
     ask_p.add_argument("question")

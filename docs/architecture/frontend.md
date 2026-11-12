@@ -19,7 +19,7 @@ Tailwind CSS 4. Versions are pinned in `frontend/package.json`.
 ## Data
 
 - **API client** (`lib/api/client.ts`): every call goes to `/api/*`, which `next.config.ts` rewrites to
-  `FINSIGHT_API_ORIGIN` (default `http://localhost:8000`).
+  `VIDURA_API_ORIGIN` (default `http://localhost:8000`).
 - **Types** (`lib/api/types.ts`) are generated from the committed `openapi.json` with `pnpm gen:api`
   (openapi-typescript); never edited by hand. CI checks that `openapi.json` matches the API.
 - **Server state** uses TanStack Query hooks (`lib/api/hooks.ts`), one query key per resource.

@@ -55,7 +55,7 @@ uvx pre-commit install
 | `uv run poe test` | fast suite: everything not marked `slow`, `local` or `postgres` (what CI runs) |
 | `uv run poe test-all` | everything, including real models and full documents |
 | `uv run pytest -m local` | tests that need `data/processed`, full PDFs, the corpus or weights |
-| `uv run pytest -m postgres` | needs `FINSIGHT_TEST_PG_URL` (CI uses a service container) |
+| `uv run pytest -m postgres` | needs `VIDURA_TEST_PG_URL` (CI uses a service container) |
 | `uv run poe lint`, `uv run poe typecheck` | ruff and mypy |
 | `cd frontend && pnpm test` | Vitest |
 | `cd frontend && pnpm test:e2e` | Playwright on the mocks; `E2E_REAL=1` against the running app |

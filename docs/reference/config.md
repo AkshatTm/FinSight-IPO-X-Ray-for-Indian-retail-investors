@@ -2,55 +2,55 @@
 
 # Configuration and environment variables
 
-Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, default `dev_light`). Environment variables win over the YAML; nested keys use `__`, so `llm.model` is `FINSIGHT_LLM__MODEL`. `UPLOADS_ENABLED=false` is the upload kill switch.
+Settings load from `configs/config.yaml` for one profile (`VIDURA_PROFILE`, default `dev_light`). Environment variables win over the YAML; nested keys use `__`, so `llm.model` is `VIDURA_LLM__MODEL`. `UPLOADS_ENABLED=false` is the upload kill switch. Vidura was called FinSight: the old `FINSIGHT_*` names still work as a fallback (the `VIDURA_*` name wins, and one deprecation warning is printed).
 
 ## Settings
 
 | Key | Type | Default | Environment variable |
 | --- | --- | --- | --- |
-| `pipeline_version` | str | `0` | `FINSIGHT_PIPELINE_VERSION` |
-| `paths.data_dir` | Path | `data` | `FINSIGHT_PATHS__DATA_DIR` |
-| `paths.processed_dir` | Path | `data/processed` | `FINSIGHT_PATHS__PROCESSED_DIR` |
-| `paths.models_dir` | Path | `models` | `FINSIGHT_PATHS__MODELS_DIR` |
-| `paths.eval_dir` | Path | `eval_results` | `FINSIGHT_PATHS__EVAL_DIR` |
-| `llm.backend` | str | `ollama` | `FINSIGHT_LLM__BACKEND` |
-| `llm.model` | str | `qwen3.5:0.8b` | `FINSIGHT_LLM__MODEL` |
-| `llm.num_ctx` | int | `2048` | `FINSIGHT_LLM__NUM_CTX` |
-| `llm.think` | Literal | false | `FINSIGHT_LLM__THINK` |
-| `retrieve.dense` | bool | false | `FINSIGHT_RETRIEVE__DENSE` |
-| `retrieve.rerank` | bool | false | `FINSIGHT_RETRIEVE__RERANK` |
-| `retrieve.rerank_top_n` | int | `20` | `FINSIGHT_RETRIEVE__RERANK_TOP_N` |
-| `retrieve.final_top_k` | int | `5` | `FINSIGHT_RETRIEVE__FINAL_TOP_K` |
-| `retrieve.abstain_thresholds` | dict | `{}` | `FINSIGHT_RETRIEVE__ABSTAIN_THRESHOLDS` |
-| `verify.nli` | bool | false | `FINSIGHT_VERIFY__NLI` |
-| `guard.backend` | Literal | `keyword` | `FINSIGHT_GUARD__BACKEND` |
-| `guard.threshold` | float | `0.5` | `FINSIGHT_GUARD__THRESHOLD` |
-| `uploads.enabled` | bool | true | `FINSIGHT_UPLOADS__ENABLED` |
-| `uploads.max_mb` | int | `50` | `FINSIGHT_UPLOADS__MAX_MB` |
-| `uploads.max_pages` | int | `1500` | `FINSIGHT_UPLOADS__MAX_PAGES` |
-| `uploads.scanned_min_median_chars` | int | `100` | `FINSIGHT_UPLOADS__SCANNED_MIN_MEDIAN_CHARS` |
-| `uploads.per_user_per_day` | int | `3` | `FINSIGHT_UPLOADS__PER_USER_PER_DAY` |
-| `uploads.global_per_day` | int | `10` | `FINSIGHT_UPLOADS__GLOBAL_PER_DAY` |
-| `uploads.retention_days` | int | `30` | `FINSIGHT_UPLOADS__RETENTION_DAYS` |
-| `uploads.trusted_proxy_hops` | int | `0` | `FINSIGHT_UPLOADS__TRUSTED_PROXY_HOPS` |
-| `storage.backend` | Literal | `local` | `FINSIGHT_STORAGE__BACKEND` |
-| `storage.local_dir` | Path | `data/store` | `FINSIGHT_STORAGE__LOCAL_DIR` |
-| `storage.signed_url_ttl_s` | int | `900` | `FINSIGHT_STORAGE__SIGNED_URL_TTL_S` |
-| `db.backend` | Literal | `sqlite` | `FINSIGHT_DB__BACKEND` |
-| `db.sqlite_path` | Path | `data/finsight.db` | `FINSIGHT_DB__SQLITE_PATH` |
-| `db.url` | str \| None | — | `FINSIGHT_DB__URL` |
-| `auth.mode` | Literal | `off` | `FINSIGHT_AUTH__MODE` |
-| `auth.supabase_url` | str \| None | — | `FINSIGHT_AUTH__SUPABASE_URL` |
-| `auth.jwt_secret` | str \| None | — | `FINSIGHT_AUTH__JWT_SECRET` |
-| `auth.audience` | str | `authenticated` | `FINSIGHT_AUTH__AUDIENCE` |
-| `auth.admin_emails` | list | `[]` | `FINSIGHT_AUTH__ADMIN_EMAILS` |
-| `simplify.backend` | Literal | `ollama` | `FINSIGHT_SIMPLIFY__BACKEND` |
-| `simplify.model` | str | `finsight-student:q4` | `FINSIGHT_SIMPLIFY__MODEL` |
-| `simplify.fallback_model` | str \| None | — | `FINSIGHT_SIMPLIFY__FALLBACK_MODEL` |
-| `simplify.auto_top_n` | int | `15` | `FINSIGHT_SIMPLIFY__AUTO_TOP_N` |
-| `jobs.poll_interval_s` | float | `1.0` | `FINSIGHT_JOBS__POLL_INTERVAL_S` |
-| `jobs.model_stages` | bool | true | `FINSIGHT_JOBS__MODEL_STAGES` |
-| `jobs.stage_timeouts_s` | dict | `{'parsed': 600.0}` | `FINSIGHT_JOBS__STAGE_TIMEOUTS_S` |
+| `pipeline_version` | str | `0` | `VIDURA_PIPELINE_VERSION` |
+| `paths.data_dir` | Path | `data` | `VIDURA_PATHS__DATA_DIR` |
+| `paths.processed_dir` | Path | `data/processed` | `VIDURA_PATHS__PROCESSED_DIR` |
+| `paths.models_dir` | Path | `models` | `VIDURA_PATHS__MODELS_DIR` |
+| `paths.eval_dir` | Path | `eval_results` | `VIDURA_PATHS__EVAL_DIR` |
+| `llm.backend` | str | `ollama` | `VIDURA_LLM__BACKEND` |
+| `llm.model` | str | `qwen3.5:0.8b` | `VIDURA_LLM__MODEL` |
+| `llm.num_ctx` | int | `2048` | `VIDURA_LLM__NUM_CTX` |
+| `llm.think` | Literal | false | `VIDURA_LLM__THINK` |
+| `retrieve.dense` | bool | false | `VIDURA_RETRIEVE__DENSE` |
+| `retrieve.rerank` | bool | false | `VIDURA_RETRIEVE__RERANK` |
+| `retrieve.rerank_top_n` | int | `20` | `VIDURA_RETRIEVE__RERANK_TOP_N` |
+| `retrieve.final_top_k` | int | `5` | `VIDURA_RETRIEVE__FINAL_TOP_K` |
+| `retrieve.abstain_thresholds` | dict | `{}` | `VIDURA_RETRIEVE__ABSTAIN_THRESHOLDS` |
+| `verify.nli` | bool | false | `VIDURA_VERIFY__NLI` |
+| `guard.backend` | Literal | `keyword` | `VIDURA_GUARD__BACKEND` |
+| `guard.threshold` | float | `0.5` | `VIDURA_GUARD__THRESHOLD` |
+| `uploads.enabled` | bool | true | `VIDURA_UPLOADS__ENABLED` |
+| `uploads.max_mb` | int | `50` | `VIDURA_UPLOADS__MAX_MB` |
+| `uploads.max_pages` | int | `1500` | `VIDURA_UPLOADS__MAX_PAGES` |
+| `uploads.scanned_min_median_chars` | int | `100` | `VIDURA_UPLOADS__SCANNED_MIN_MEDIAN_CHARS` |
+| `uploads.per_user_per_day` | int | `3` | `VIDURA_UPLOADS__PER_USER_PER_DAY` |
+| `uploads.global_per_day` | int | `10` | `VIDURA_UPLOADS__GLOBAL_PER_DAY` |
+| `uploads.retention_days` | int | `30` | `VIDURA_UPLOADS__RETENTION_DAYS` |
+| `uploads.trusted_proxy_hops` | int | `0` | `VIDURA_UPLOADS__TRUSTED_PROXY_HOPS` |
+| `storage.backend` | Literal | `local` | `VIDURA_STORAGE__BACKEND` |
+| `storage.local_dir` | Path | `data/store` | `VIDURA_STORAGE__LOCAL_DIR` |
+| `storage.signed_url_ttl_s` | int | `900` | `VIDURA_STORAGE__SIGNED_URL_TTL_S` |
+| `db.backend` | Literal | `sqlite` | `VIDURA_DB__BACKEND` |
+| `db.sqlite_path` | Path | `data/finsight.db` | `VIDURA_DB__SQLITE_PATH` |
+| `db.url` | str \| None | — | `VIDURA_DB__URL` |
+| `auth.mode` | Literal | `off` | `VIDURA_AUTH__MODE` |
+| `auth.supabase_url` | str \| None | — | `VIDURA_AUTH__SUPABASE_URL` |
+| `auth.jwt_secret` | str \| None | — | `VIDURA_AUTH__JWT_SECRET` |
+| `auth.audience` | str | `authenticated` | `VIDURA_AUTH__AUDIENCE` |
+| `auth.admin_emails` | list | `[]` | `VIDURA_AUTH__ADMIN_EMAILS` |
+| `simplify.backend` | Literal | `ollama` | `VIDURA_SIMPLIFY__BACKEND` |
+| `simplify.model` | str | `finsight-student:q4` | `VIDURA_SIMPLIFY__MODEL` |
+| `simplify.fallback_model` | str \| None | — | `VIDURA_SIMPLIFY__FALLBACK_MODEL` |
+| `simplify.auto_top_n` | int | `15` | `VIDURA_SIMPLIFY__AUTO_TOP_N` |
+| `jobs.poll_interval_s` | float | `1.0` | `VIDURA_JOBS__POLL_INTERVAL_S` |
+| `jobs.model_stages` | bool | true | `VIDURA_JOBS__MODEL_STAGES` |
+| `jobs.stage_timeouts_s` | dict | `{'parsed': 600.0}` | `VIDURA_JOBS__STAGE_TIMEOUTS_S` |
 | `demo_mode` | bool | false | `DEMO_MODE` |
 
 ## Profiles
@@ -126,13 +126,13 @@ Names only: values never live in the repository (`.env.example` lists the same n
 
 | Name | Required by |
 | --- | --- |
-| `FINSIGHT_PROFILE` | — |
+| `VIDURA_PROFILE` | — |
 | `UPLOADS_ENABLED` | — |
-| `FINSIGHT_DB__URL` | — |
-| `FINSIGHT_AUTH__SUPABASE_URL` | — |
-| `FINSIGHT_AUTH__JWT_SECRET` | — |
-| `FINSIGHT_AUTH__ADMIN_EMAILS` | — |
-| `FINSIGHT_API_ORIGIN` | — |
+| `VIDURA_DB__URL` | — |
+| `VIDURA_AUTH__SUPABASE_URL` | — |
+| `VIDURA_AUTH__JWT_SECRET` | — |
+| `VIDURA_AUTH__ADMIN_EMAILS` | — |
+| `VIDURA_API_ORIGIN` | — |
 | `NEXT_PUBLIC_SUPABASE_URL` | — |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | — |
 | `HF_TOKEN` | — |

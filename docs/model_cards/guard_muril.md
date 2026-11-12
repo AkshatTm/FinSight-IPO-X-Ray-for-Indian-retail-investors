@@ -63,4 +63,4 @@ A guard that blocks too little lets the chat drift into advice; one that blocks 
 
 ## How to use and reproduce
 
-Set `guard.backend: muril` (or `FINSIGHT_GUARD__BACKEND=muril`) with weights in `models/guard_clf/` (never committed). Reproduce: `uv run python -m vidura.guard.clf_data` (split and package), then `uv run python -m vidura.guard.kaggle_clf push|status|fetch full` (Kaggle; `fetch` writes `eval_results/guard_clf.json`), then `uv run python -m vidura.evaluate.guard_eval` for `guard_compare.json`.
+Set `guard.backend: muril` (or `VIDURA_GUARD__BACKEND=muril`) with weights in `models/guard_clf/` (never committed). Reproduce: `uv run python -m vidura.guard.clf_data` (split and package), then `uv run python -m vidura.guard.kaggle_clf push|status|fetch full` (Kaggle; `fetch` writes `eval_results/guard_clf.json`), then `uv run python -m vidura.evaluate.guard_eval` for `guard_compare.json`.

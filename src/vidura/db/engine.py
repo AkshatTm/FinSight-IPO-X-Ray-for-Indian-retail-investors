@@ -49,7 +49,7 @@ def url_from_settings(settings: Settings) -> str:
     cfg = settings.db
     if cfg.backend == "postgres":
         if not cfg.url:
-            raise ValueError("db.backend is postgres but FINSIGHT_DB__URL is not set")
+            raise ValueError("db.backend is postgres but VIDURA_DB__URL is not set")
         return cfg.url
     path = cfg.sqlite_path if cfg.sqlite_path.is_absolute() else settings.root / cfg.sqlite_path
     path.parent.mkdir(parents=True, exist_ok=True)

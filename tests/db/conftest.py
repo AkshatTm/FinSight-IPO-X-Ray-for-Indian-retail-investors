@@ -1,4 +1,4 @@
-"""A fresh database per test: SQLite always; Postgres too when ``FINSIGHT_TEST_PG_URL`` is set
+"""A fresh database per test: SQLite always; Postgres too when ``VIDURA_TEST_PG_URL`` is set
 (the CI service job runs ``pytest -m postgres``)."""
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 from vidura.db import Database, metadata
 
-PG_URL = os.environ.get("FINSIGHT_TEST_PG_URL")
+PG_URL = os.environ.get("VIDURA_TEST_PG_URL")
 
 
 @pytest.fixture(
@@ -28,7 +28,7 @@ def db(request: pytest.FixtureRequest, tmp_path: Path) -> Iterator[Database]:
         yield database
         return
     if not PG_URL:
-        pytest.skip("FINSIGHT_TEST_PG_URL not set")
+        pytest.skip("VIDURA_TEST_PG_URL not set")
     database = Database(PG_URL)
     metadata.drop_all(database.engine)
     with database.engine.begin() as conn:

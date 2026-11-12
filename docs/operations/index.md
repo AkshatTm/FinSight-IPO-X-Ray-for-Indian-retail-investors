@@ -21,7 +21,7 @@ scripts, backups and restoring weights.
 | `GET /api/admin/jobs` | failed jobs (the local user is the admin when `auth.mode` is `off`) |
 
 Closing a window stops that part. To keep a log, run the API by hand and redirect it, for example
-`FINSIGHT_PROFILE=local uv run poe api > api-run.log 2>&1` (`api-run.log` is gitignored).
+`VIDURA_PROFILE=local uv run poe api > api-run.log 2>&1` (`api-run.log` is gitignored).
 
 ## Maintenance scripts
 

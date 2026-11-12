@@ -75,7 +75,7 @@ def _settings_rows(model: type[BaseModel], prefix: str = "") -> list[tuple[str, 
             rows.extend(_settings_rows(annotation, f"{key}."))
             continue
         default = field.get_default(call_default_factory=True)
-        env = "FINSIGHT_" + key.upper().replace(".", "__")
+        env = "VIDURA_" + key.upper().replace(".", "__")
         if key == "demo_mode":
             env = "DEMO_MODE"
         rows.append((key, _type(annotation), _cell(default), f"`{env}`"))
@@ -97,10 +97,11 @@ def config_page() -> str:
     lines = [
         HEADER.format(source="vidura.core.config and configs/config.yaml"),
         "# Configuration and environment variables\n\n",
-        "Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, default "
+        "Settings load from `configs/config.yaml` for one profile (`VIDURA_PROFILE`, default "
         "`dev_light`). Environment variables win over the YAML; nested keys use `__`, so "
-        "`llm.model` is `FINSIGHT_LLM__MODEL`. `UPLOADS_ENABLED=false` is the upload kill "
-        "switch.\n\n",
+        "`llm.model` is `VIDURA_LLM__MODEL`. `UPLOADS_ENABLED=false` is the upload kill "
+        "switch. Vidura was called FinSight: the old `FINSIGHT_*` names still work as a "
+        "fallback (the `VIDURA_*` name wins, and one deprecation warning is printed).\n\n",
         "## Settings\n\n",
         "| Key | Type | Default | Environment variable |\n| --- | --- | --- | --- |\n",
     ]
@@ -346,7 +347,7 @@ CONFIG_NOTES: list[tuple[str, str, str]] = [
         r"uploads\.scanned_min_median_chars",
         "A PDF whose median page has fewer characters is refused as a scan.",
     ),
-    ("config.yaml", r"profiles", "Named settings bundles; pick one with `FINSIGHT_PROFILE`."),
+    ("config.yaml", r"profiles", "Named settings bundles; pick one with `VIDURA_PROFILE`."),
     (
         "config.yaml",
         r"profiles\.dev_light",

@@ -146,7 +146,7 @@ Choose **[1] Start everything**. The launcher starts Ollama, the API on port 800
 uv sync --inexact --group ml --group onnx    # Python packages incl. the model groups
 cd frontend && pnpm install && cd ..
 ollama serve                                  # in its own terminal
-FINSIGHT_PROFILE=local uv run poe api         # API on :8000
+VIDURA_PROFILE=local uv run poe api         # API on :8000
 cd frontend && pnpm dev                       # web app on :3000
 ```
 

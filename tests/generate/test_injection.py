@@ -50,7 +50,7 @@ def test_a_passage_cannot_close_the_fence() -> None:
 @pytest.mark.parametrize("language", ["en", "hi"])
 def test_live_model_ignores_the_injected_instruction(language: str) -> None:
     """Runs the real local model; skipped when Ollama or the model is not available."""
-    backend = OllamaBackend(model=os.environ.get("FINSIGHT_TEST_MODEL", "qwen3.5:2b"), num_ctx=2048)
+    backend = OllamaBackend(model=os.environ.get("VIDURA_TEST_MODEL", "qwen3.5:2b"), num_ctx=2048)
     if not backend.is_available():
         pytest.skip("Ollama or the model is not available")
     question = {

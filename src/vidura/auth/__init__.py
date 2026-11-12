@@ -55,7 +55,7 @@ def verify_token(
     try:
         if alg == "HS256":
             if not cfg.jwt_secret:
-                raise AuthError("HS256 token but no FINSIGHT_AUTH__JWT_SECRET")
+                raise AuthError("HS256 token but no VIDURA_AUTH__JWT_SECRET")
             key: Any = cfg.jwt_secret
         elif alg in ("RS256", "ES256"):
             client = jwks or _jwks_client(f"{_issuer(cfg)}/.well-known/jwks.json")

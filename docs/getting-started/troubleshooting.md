@@ -75,7 +75,7 @@ the *Vidura API* window (it logs `doc_id`, `job_id` and `stage`) and in the job'
 
 **Fix:** close browsers and other apps; do not run benchmark or training jobs at the same time. Stop
 other Ollama models with `ollama stop <name>`. For coding without the models, use
-`FINSIGHT_PROFILE=dev_light`.
+`VIDURA_PROFILE=dev_light`.
 
 ### The page stays on "Analysing" or is blank
 

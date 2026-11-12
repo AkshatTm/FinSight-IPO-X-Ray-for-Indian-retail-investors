@@ -43,7 +43,7 @@ flowchart LR
 | Model server | Ollama | `ollama serve` from `start.bat` |
 | Jobs by hand | `python -m vidura.jobs run \| simplify \| forget \| sweep` | command line, same stages without the API |
 
-Supabase sign-in and Postgres still exist in code (`vidura.auth`, `FINSIGHT_DB__URL`) but are off:
+Supabase sign-in and Postgres still exist in code (`vidura.auth`, `VIDURA_DB__URL`) but are off:
 without Supabase settings every request is one local user ([Settings](../reference/config.md)).
 
 ## Components

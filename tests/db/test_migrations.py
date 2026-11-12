@@ -29,7 +29,7 @@ def test_postgres_urls_use_psycopg3() -> None:
 
 
 def test_postgres_backend_needs_the_env_url(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.delenv("FINSIGHT_DB__URL", raising=False)
+    monkeypatch.delenv("VIDURA_DB__URL", raising=False)
     with pytest.raises(ValueError, match="DB__URL"):
         url_from_settings(
             load_settings("full").model_copy(update={"db": DbConfig(backend="postgres")})
@@ -40,9 +40,9 @@ def test_postgres_backend_needs_the_env_url(monkeypatch: pytest.MonkeyPatch) -> 
 def test_migrations_match_the_tables_on_postgres() -> None:
     import os
 
-    url = os.environ.get("FINSIGHT_TEST_PG_URL")
+    url = os.environ.get("VIDURA_TEST_PG_URL")
     if not url:
-        pytest.skip("FINSIGHT_TEST_PG_URL not set")
+        pytest.skip("VIDURA_TEST_PG_URL not set")
     engine = sa.create_engine(normalise_url(url))
     metadata.drop_all(engine)
     with engine.begin() as conn:

@@ -39,9 +39,7 @@ from vidura.risklevel.reference import (  # noqa: E402
 )
 from vidura.splits import load_splits, reference_config  # noqa: E402
 
-DATA = Path(
-    os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data")
-)  # gitignored data may live elsewhere
+DATA = Path(os.environ.get("VIDURA_DATA_DIR", ROOT / "data"))  # gitignored data may live elsewhere
 BANK_DIR = DATA / "processed" / "risk_bank"
 SCORED = BANK_DIR / "scored"
 TABLE = BANK_DIR / "reference_scores.csv"  # full score (red flags + risk points): the fit input

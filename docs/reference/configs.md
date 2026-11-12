@@ -33,7 +33,7 @@ Compare tab reference (B05 §5.6, C3.4). Written by scripts/compare_reference.py
 
 ## `config.yaml`
 
-Profiles from 02_ARCHITECTURE.md section 8. Pick one with FINSIGHT_PROFILE (default dev_light). Any value can be overridden by env vars: FINSIGHT_LLM__MODEL=qwen3.5:2b, DEMO_MODE=1, ... Cache key part (CC-04): bump when extraction, red-flag or risk-level logic changes.
+Profiles from 02_ARCHITECTURE.md section 8. Pick one with VIDURA_PROFILE (default dev_light). Any value can be overridden by env vars: VIDURA_LLM__MODEL=qwen3.5:2b, DEMO_MODE=1, ... Cache key part (CC-04): bump when extraction, red-flag or risk-level logic changes.
 
 | Key | Value | Meaning |
 | --- | --- | --- |
@@ -51,7 +51,7 @@ Profiles from 02_ARCHITECTURE.md section 8. Pick one with FINSIGHT_PROFILE (defa
 | `uploads.global_per_day` | `10` | Uploads per day for everyone together; `start.bat` raises it to 1000. |
 | `uploads.retention_days` | `30` | Days an upload is kept before `jobs sweep` deletes it; `start.bat` sets 3650. |
 | `uploads.scanned_min_median_chars` | `100` | A PDF whose median page has fewer characters is refused as a scan. |
-| `profiles` | *(section)* | Named settings bundles; pick one with `FINSIGHT_PROFILE`. |
+| `profiles` | *(section)* | Named settings bundles; pick one with `VIDURA_PROFILE`. |
 | `profiles.dev_light` | *(section)* | Coding profile: smallest chat model, no dense index or reranker. |
 | `profiles.dev_light.llm` | `{ backend: ollama, model: "qwen3.5:0.8b", num_ctx: 2048 }` | Chat and rewrite model: backend, model tag and context length. |
 | `profiles.dev_light.retrieve` | `{ dense: false, rerank: false }` | Retrieval: dense index, reranker and how many passages it reranks. |

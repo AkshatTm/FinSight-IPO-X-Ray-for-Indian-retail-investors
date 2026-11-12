@@ -39,10 +39,10 @@ The windows inherit these settings from `start.bat`:
 
 | Variable | Value | Effect |
 | --- | --- | --- |
-| `FINSIGHT_PROFILE` | `local` | the student model through Ollama, BM25 + reranker |
-| `FINSIGHT_UPLOADS__PER_USER_PER_DAY`, `FINSIGHT_UPLOADS__GLOBAL_PER_DAY` | `1000` | no practical daily limit on your own machine |
-| `FINSIGHT_UPLOADS__RETENTION_DAYS` | `3650` | uploads are kept for ten years |
-| `FINSIGHT_API_ORIGIN` | `http://127.0.0.1:8000` | where the web app sends `/api/*` |
+| `VIDURA_PROFILE` | `local` | the student model through Ollama, BM25 + reranker |
+| `VIDURA_UPLOADS__PER_USER_PER_DAY`, `VIDURA_UPLOADS__GLOBAL_PER_DAY` | `1000` | no practical daily limit on your own machine |
+| `VIDURA_UPLOADS__RETENTION_DAYS` | `3650` | uploads are kept for ten years |
+| `VIDURA_API_ORIGIN` | `http://127.0.0.1:8000` | where the web app sends `/api/*` |
 | `NEXT_PUBLIC_USE_MOCKS` | `0` | the real API, not the mocks |
 | `PYTHONUTF8` | `1` | UTF-8 console output on Windows |
 
@@ -57,7 +57,7 @@ Two terminals from the repository root:
 
 ```bash
 # 1: the API on :8000 with the laptop profile
-FINSIGHT_PROFILE=local uv run poe api
+VIDURA_PROFILE=local uv run poe api
 # 2: the web app on :3000
 cd frontend && pnpm dev
 ```

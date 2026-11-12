@@ -3,7 +3,7 @@
 ``configs/config.yaml`` holds shared ``paths`` and one block per profile
 (``dev_light`` default, ``full``, ``deploy_cpu``; B-ADR-16 removed the Google Cloud profiles).
 Environment variables win over
-the YAML: ``FINSIGHT_PROFILE`` picks the profile, ``FINSIGHT_LLM__MODEL=...`` overrides
+the YAML: ``VIDURA_PROFILE`` picks the profile, ``VIDURA_LLM__MODEL=...`` overrides
 a nested value, ``DEMO_MODE=1`` turns demo mode on. Code reads paths from here and
 uses ``pathlib`` only.
 """
@@ -112,19 +112,19 @@ class StorageConfig(BaseModel):
 
 
 class DbConfig(BaseModel):
-    """SQLite by default; Supabase Postgres via the pooler when ``FINSIGHT_DB__URL`` is set."""
+    """SQLite by default; Supabase Postgres via the pooler when ``VIDURA_DB__URL`` is set."""
 
     backend: Literal["sqlite", "postgres"] = "sqlite"
     sqlite_path: Path = Path("data/finsight.db")
-    url: str | None = None  # env FINSIGHT_DB__URL only; never in YAML or git
+    url: str | None = None  # env VIDURA_DB__URL only; never in YAML or git
 
 
 class AuthConfig(BaseModel):
     """``off`` = one local user (laptop); ``supabase`` = verify Supabase JWTs (B06 §1)."""
 
     mode: Literal["off", "supabase"] = "off"
-    supabase_url: str | None = None  # env FINSIGHT_AUTH__SUPABASE_URL
-    jwt_secret: str | None = None  # env FINSIGHT_AUTH__JWT_SECRET (HS256 fallback only)
+    supabase_url: str | None = None  # env VIDURA_AUTH__SUPABASE_URL
+    jwt_secret: str | None = None  # env VIDURA_AUTH__JWT_SECRET (HS256 fallback only)
     audience: str = "authenticated"
     admin_emails: list[str] = Field(default_factory=list)
 
@@ -153,13 +153,13 @@ class JobsConfig(BaseModel):
 # Environment variables a deployment may need. Names only: values never live in the repo.
 # ``.env.example`` must list exactly these (tests/core/test_config_profiles.py).
 ENV_KEYS: tuple[str, ...] = (
-    "FINSIGHT_PROFILE",
+    "VIDURA_PROFILE",
     "UPLOADS_ENABLED",
-    "FINSIGHT_DB__URL",
-    "FINSIGHT_AUTH__SUPABASE_URL",
-    "FINSIGHT_AUTH__JWT_SECRET",
-    "FINSIGHT_AUTH__ADMIN_EMAILS",
-    "FINSIGHT_API_ORIGIN",  # frontend build: where Next.js rewrites /api/* (next.config.ts)
+    "VIDURA_DB__URL",
+    "VIDURA_AUTH__SUPABASE_URL",
+    "VIDURA_AUTH__JWT_SECRET",
+    "VIDURA_AUTH__ADMIN_EMAILS",
+    "VIDURA_API_ORIGIN",  # frontend build: where Next.js rewrites /api/* (next.config.ts)
     "NEXT_PUBLIC_SUPABASE_URL",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY",
     "HF_TOKEN",  # Phase 3: scripts/hf_upload.py (private model repos); never printed
@@ -181,7 +181,7 @@ class Settings(BaseSettings):
     """All settings for one profile; environment variables win over the YAML."""
 
     model_config = SettingsConfigDict(
-        env_prefix="FINSIGHT_", env_nested_delimiter="__", extra="ignore"
+        env_prefix="VIDURA_", env_nested_delimiter="__", extra="ignore"
     )
 
     profile: str = DEFAULT_PROFILE
@@ -217,8 +217,8 @@ class Settings(BaseSettings):
 
 
 def project_root() -> Path:
-    """Repo root: ``FINSIGHT_ROOT`` if set, else the checkout this file lives in, else cwd."""
-    env = os.environ.get("FINSIGHT_ROOT")
+    """Repo root: ``VIDURA_ROOT`` if set, else the checkout this file lives in, else cwd."""
+    env = os.environ.get("VIDURA_ROOT")
     if env:
         return Path(env).resolve()
     checkout = Path(__file__).resolve().parents[3]
@@ -233,12 +233,10 @@ SHARED_BLOCKS = ("uploads",)
 def load_settings(profile: str | None = None, config_path: Path | None = None) -> Settings:
     """Load ``config.yaml`` and build the settings for one profile (env overrides apply)."""
     root = project_root()
-    path = config_path or Path(
-        os.environ.get("FINSIGHT_CONFIG") or root / "configs" / "config.yaml"
-    )
+    path = config_path or Path(os.environ.get("VIDURA_CONFIG") or root / "configs" / "config.yaml")
     raw: dict[str, Any] = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
 
-    chosen = profile or os.environ.get("FINSIGHT_PROFILE") or DEFAULT_PROFILE
+    chosen = profile or os.environ.get("VIDURA_PROFILE") or DEFAULT_PROFILE
     profiles: dict[str, Any] = raw.get("profiles", {})
     if chosen not in profiles:
         raise ValueError(f"Unknown profile {chosen!r}. Available: {sorted(profiles)}")
@@ -251,7 +249,7 @@ def load_settings(profile: str | None = None, config_path: Path | None = None) -
     if "pipeline_version" in raw:
         chosen_values.setdefault("pipeline_version", str(raw["pipeline_version"]))
     settings = Settings(root=root, paths=paths, **chosen_values)
-    settings.profile = chosen  # the argument wins over FINSIGHT_PROFILE picked up from the env
+    settings.profile = chosen  # the argument wins over VIDURA_PROFILE picked up from the env
     kill = os.environ.get("UPLOADS_ENABLED")
     if kill is not None:  # the kill switch has a short name so it is easy to flip in a console
         settings.uploads.enabled = kill.strip().lower() not in {"0", "false", "no", "off"}
@@ -260,7 +258,7 @@ def load_settings(profile: str | None = None, config_path: Path | None = None) -
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
-    """The settings for ``FINSIGHT_PROFILE``, loaded once and cached."""
+    """The settings for ``VIDURA_PROFILE``, loaded once and cached."""
     return load_settings()
 
 

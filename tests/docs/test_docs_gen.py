@@ -30,7 +30,7 @@ def test_config_page_lists_every_env_key_and_profile() -> None:
     profiles = yaml.safe_load((ROOT / "configs" / "config.yaml").read_text(encoding="utf-8"))
     for name in profiles["profiles"]:
         assert f"### `{name}`" in page
-    assert "| `llm.model` | str | `qwen3.5:0.8b` | `FINSIGHT_LLM__MODEL` |" in page
+    assert "| `llm.model` | str | `qwen3.5:0.8b` | `VIDURA_LLM__MODEL` |" in page
     assert "`DEMO_MODE`" in page
 
 

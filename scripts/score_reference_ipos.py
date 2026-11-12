@@ -55,9 +55,7 @@ from vidura.risks.teacher_data import original_text  # noqa: E402
 from vidura.splits import load_splits, reference_bank, reference_config  # noqa: E402
 from vidura.summary import extract_summary  # noqa: E402
 
-DATA = Path(
-    os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data")
-)  # gitignored data may live elsewhere
+DATA = Path(os.environ.get("VIDURA_DATA_DIR", ROOT / "data"))  # gitignored data may live elsewhere
 PROCESSED = DATA / "processed"
 build_risk_bank.PROCESSED = PROCESSED
 BANK = PROCESSED / "bank" / "risk_bank.parquet"

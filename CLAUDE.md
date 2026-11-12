@@ -48,7 +48,7 @@ uv run poe api               # FastAPI on :8000
 uv run python -m vidura.pipeline build --ipo <id>
 cd frontend && pnpm dev      # :3000   (NEXT_PUBLIC_USE_MOCKS=1 for fixtures)
 ```
-Laptop: 16 GB RAM (~8 GB used by other apps), RTX 2050 4 GB. Use `FINSIGHT_PROFILE=dev_light` while coding. Stop Ollama before GPU-heavy offline jobs.
+Laptop: 16 GB RAM (~8 GB used by other apps), RTX 2050 4 GB. Use `VIDURA_PROFILE=dev_light` while coding. Stop Ollama before GPU-heavy offline jobs.
 
 **Profiles:** `dev_light`, `full` (laptop) · `deploy_cpu` (ADR-022 paid HF fallback, dormant). The `cloud` / `cloud_gpu` profiles were removed (B-ADR-16); no hosting.
 

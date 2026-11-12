@@ -21,10 +21,10 @@ FROM python:3.11-slim AS runtime
 
 ENV PYTHONUNBUFFERED=1 \
     UV_LINK_MODE=copy \
-    FINSIGHT_PROFILE=deploy_cpu \
-    FINSIGHT_ROOT=/app/bundle \
-    FINSIGHT_GGUF=/app/models/model.gguf \
-    FINSIGHT_RETRIEVE__RERANK=false \
+    VIDURA_PROFILE=deploy_cpu \
+    VIDURA_ROOT=/app/bundle \
+    VIDURA_GGUF=/app/models/model.gguf \
+    VIDURA_RETRIEVE__RERANK=false \
     PORT=7860
 
 RUN apt-get update \
