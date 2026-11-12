@@ -22,6 +22,8 @@ test("overview → reason opens the red flag → risks: filter, explain, search"
 
   await page.getByRole("tab", { name: "Risks" }).click();
   await expect(page.getByText("The company lists 18 risks.", { exact: false })).toBeVisible();
+  // The redesigned tab shows the top risks first; the rest are one click away.
+  await page.getByRole("button", { name: "Show all 18 risks" }).click();
   const card = page.locator("#risk-r17");
   await card.getByRole("button", { name: "Explain in plain English" }).click();
   await expect(card).toContainText("Explaining…");
