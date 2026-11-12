@@ -198,7 +198,7 @@ def prompt_cell() -> str:
 
 
 def build() -> dict[str, Any]:
-    return {
+    nb: dict[str, Any] = {
         "cells": [
             _cell("markdown", MD),
             _cell("code", PARAMS, ["parameters"]),
@@ -214,6 +214,9 @@ def build() -> dict[str, Any]:
         "nbformat": 4,
         "nbformat_minor": 5,
     }
+    for i, cell in enumerate(nb["cells"]):  # nbstripout adds ids; emit them so the file is stable
+        cell["id"] = str(i)
+    return nb
 
 
 def main() -> None:

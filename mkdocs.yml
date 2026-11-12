@@ -141,6 +141,7 @@ nav:
   - Operations:
       - Run, back up, restore: operations/index.md
       - Training lanes and compute: operations/training-lanes.md
+      - Legacy names (FinSight): operations/legacy-names.md
   - Decisions:
       - ADR index: adr/index.md
       - Phase 1 (ADR): 09_DECISIONS.md
