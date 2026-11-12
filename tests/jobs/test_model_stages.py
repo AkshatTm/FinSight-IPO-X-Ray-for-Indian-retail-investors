@@ -11,12 +11,12 @@ from typing import Any
 import pytest
 from PIL import Image
 
-from finsight.api.ipos import IpoStore
-from finsight.core.schemas import DocRecord, Page, ParsedDoc
-from finsight.db import Database
-from finsight.jobs import SimplifyDrain, upload_stages
-from finsight.jobs.model_stages import guess_company
-from finsight.storage import LocalStorage, doc_key, put_json
+from vidura.api.ipos import IpoStore
+from vidura.core.schemas import DocRecord, Page, ParsedDoc
+from vidura.db import Database
+from vidura.jobs import SimplifyDrain, upload_stages
+from vidura.jobs.model_stages import guess_company
+from vidura.storage import LocalStorage, doc_key, put_json
 
 
 def _doc(text_by_page: list[str]) -> ParsedDoc:

@@ -123,7 +123,7 @@ curl -s $API/ipos                                  # the library
 curl -s $API/ipos/ather-energy-2025/xray           # the fact sheet with pages and boxes
 curl -s $API/ipos/ather-energy-2025/suggested-questions
 curl -s $API/glossary
-curl -s $API/lab/c/bench                           # FinSight Bench v1 numbers
+curl -s $API/lab/c/bench                           # Vidura Bench v1 numbers
 ```
 
 The API contract and its rules (errors, events, caching) were specified in

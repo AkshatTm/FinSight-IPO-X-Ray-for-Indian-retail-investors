@@ -1,7 +1,7 @@
 import pytest
 
-from finsight.core.schemas import Passage
-from finsight.retrieve.boost import (
+from vidura.core.schemas import Passage
+from vidura.retrieve.boost import (
     COVER_EXTRA,
     cover_candidates,
     inject,
@@ -9,7 +9,7 @@ from finsight.retrieve.boost import (
     prospectus_first,
     wants_cover,
 )
-from finsight.retrieve.retriever import IpoIndex, Retriever
+from vidura.retrieve.retriever import IpoIndex, Retriever
 
 
 def passage(doc: str, page: int, text: str = "x", k: int = 0) -> Passage:

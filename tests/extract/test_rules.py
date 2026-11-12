@@ -5,7 +5,7 @@ from typing import Any
 
 import pytest
 
-from finsight.core.schemas import (
+from vidura.core.schemas import (
     Count,
     ListValue,
     Money,
@@ -16,7 +16,7 @@ from finsight.core.schemas import (
     Section,
     TextValue,
 )
-from finsight.extract import RulesExtractor, get_field
+from vidura.extract import RulesExtractor, get_field
 
 URBAN_COVER = (
     "AN INITIAL PUBLIC OFFER OF UP TO [●] EQUITY SHARES OF FACE VALUE OF ₹1 EACH (THE "

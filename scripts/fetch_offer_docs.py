@@ -18,8 +18,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.ingest import list_demo_ipos  # noqa: E402
-from finsight.ingest.fetch import Fetcher, run  # noqa: E402
+from vidura.ingest import list_demo_ipos  # noqa: E402
+from vidura.ingest.fetch import Fetcher, run  # noqa: E402
 
 CSV = ROOT / "configs" / "ipo_universe.csv"
 OUT = ROOT / "data" / "raw" / "offer_docs"

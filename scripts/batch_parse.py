@@ -22,9 +22,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.core.config import load_settings  # noqa: E402
-from finsight.ingest.fetch import read_rows, write_rows  # noqa: E402
-from finsight.pipeline.batch import apply_results, load_state, run_batch  # noqa: E402
+from vidura.core.config import load_settings  # noqa: E402
+from vidura.ingest.fetch import read_rows, write_rows  # noqa: E402
+from vidura.pipeline.batch import apply_results, load_state, run_batch  # noqa: E402
 
 CSV = ROOT / "configs" / "ipo_universe.csv"
 PDFS = ROOT / "data" / "raw" / "offer_docs"

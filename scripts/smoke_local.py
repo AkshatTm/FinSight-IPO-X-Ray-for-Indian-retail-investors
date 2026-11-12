@@ -147,7 +147,7 @@ def main() -> int:
     doc_id = "doc_" + sha[:16]
     if a.fresh:
         subprocess.run(
-            ["uv", "run", "python", "-m", "finsight.jobs", "forget", doc_id], cwd=ROOT, check=False
+            ["uv", "run", "python", "-m", "vidura.jobs", "forget", doc_id], cwd=ROOT, check=False
         )
     doc_id, t_upload = upload(client, a.pdf)
     print(f"  uploaded in {t_upload:.1f}s -> {doc_id}")

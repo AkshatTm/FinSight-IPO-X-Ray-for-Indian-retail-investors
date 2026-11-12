@@ -32,11 +32,11 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from finsight.core.config import LLMConfig, load_settings
-from finsight.evaluate.answer_scoring import compact, score_answer
-from finsight.extract import load_fields
-from finsight.generate import cited_indices, get_llm, is_not_found, respond
-from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
+from vidura.core.config import LLMConfig, load_settings
+from vidura.evaluate.answer_scoring import compact, score_answer
+from vidura.extract import load_fields
+from vidura.generate import cited_indices, get_llm, is_not_found, respond
+from vidura.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
 
 DEV_IPOS = ["ather-energy-2025", "hexaware-technologies-2025", "urban-company-2025"]
 QUESTIONS = {

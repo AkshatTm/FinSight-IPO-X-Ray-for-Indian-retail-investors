@@ -3,9 +3,9 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from finsight.core.schemas import ParsedDoc
-from finsight.parse import parse_pdf, render_pages
-from finsight.parse.clean import (
+from vidura.core.schemas import ParsedDoc
+from vidura.parse import parse_pdf, render_pages
+from vidura.parse.clean import (
     boilerplate_keys,
     is_scanned_page,
     line_key,

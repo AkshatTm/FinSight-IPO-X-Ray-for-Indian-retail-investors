@@ -7,8 +7,8 @@ from datetime import UTC, datetime, timedelta, timezone
 import pytest
 from sqlalchemy.exc import IntegrityError
 
-from finsight.core.schemas import DocRecord
-from finsight.db import Database
+from vidura.core.schemas import DocRecord
+from vidura.db import Database
 
 T0 = datetime(2026, 10, 3, 12, 0, tzinfo=UTC)
 

@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.guard.clf_data import load_questions, split_questions, write_dataset
-from finsight.guard.kaggle_clf import kernel_slug, run_params, write_kernel
+from vidura.guard.clf_data import load_questions, split_questions, write_dataset
+from vidura.guard.kaggle_clf import kernel_slug, run_params, write_kernel
 
 HEADER = "question,language,is_advice (must block?),tricky_note,reviewed_by_akshat (Y/edit)\n"
 

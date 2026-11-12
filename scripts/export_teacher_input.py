@@ -20,9 +20,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from build_risk_bank import make_source  # noqa: E402
 
-from finsight.risks import risks_config  # noqa: E402
-from finsight.risks.teacher_input import Candidate, select  # noqa: E402
-from finsight.splits import Manifest, file_sha256, load_splits, write_manifest  # noqa: E402
+from vidura.risks import risks_config  # noqa: E402
+from vidura.risks.teacher_input import Candidate, select  # noqa: E402
+from vidura.splits import Manifest, file_sha256, load_splits, write_manifest  # noqa: E402
 
 OUT = ROOT / "data" / "processed" / "teacher" / "risks.jsonl"
 

@@ -13,7 +13,7 @@ export const UPLOAD = {
 
   // §3 upload page
   "up.title": "Analyse an IPO document",
-  "up.sub": "Upload a Red Herring Prospectus, a draft (DRHP), or a final prospectus. FinSight reads it and builds a report in a few minutes.",
+  "up.sub": "Upload a Red Herring Prospectus, a draft (DRHP), or a final prospectus. Vidura reads it and builds a report in a few minutes.",
   "up.drop": "Drag a PDF here, or",
   "up.choose": "choose a file",
   "up.helper": "Up to {max_mb} MB. Text PDFs only (not scans).",
@@ -32,10 +32,10 @@ export const UPLOAD = {
   "rej.password": "This PDF is password-protected. Please upload an unlocked copy.",
   "rej.too_large": "This file is larger than {max_mb} MB.",
   "rej.hash_mismatch": "The upload didn't finish correctly. Please try again.",
-  "rej.too_many_pages": "This document has more than 1,500 pages, which is more than FinSight can handle.",
-  "rej.not_offer_document": "This doesn't look like an IPO offer document. FinSight works with RHPs, DRHPs and prospectuses.",
+  "rej.too_many_pages": "This document has more than 1,500 pages, which is more than Vidura can handle.",
+  "rej.not_offer_document": "This doesn't look like an IPO offer document. Vidura works with RHPs, DRHPs and prospectuses.",
   "rej.quota": "You've reached today's limit of 3 documents. Try again tomorrow.",
-  "rej.global_quota": "FinSight has reached today's limit for everyone. Please try again tomorrow.",
+  "rej.global_quota": "Vidura has reached today's limit for everyone. Please try again tomorrow.",
 
   // §4 processing screen
   "proc.title": "Analysing {company}",

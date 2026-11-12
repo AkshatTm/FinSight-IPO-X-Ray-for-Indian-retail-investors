@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.ingest.exclusion import (
+from vidura.ingest.exclusion import (
     excluded_names,
     is_excluded,
     load_gold_names,

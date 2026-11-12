@@ -143,10 +143,10 @@ def main() -> int:
 
     env = {
         **os.environ,
-        "FINSIGHT_PROFILE": "local",
-        "FINSIGHT_UPLOADS__PER_USER_PER_DAY": "1000",
-        "FINSIGHT_UPLOADS__GLOBAL_PER_DAY": "1000",
-        "FINSIGHT_UPLOADS__RETENTION_DAYS": "3650",
+        "VIDURA_PROFILE": "local",
+        "VIDURA_UPLOADS__PER_USER_PER_DAY": "1000",
+        "VIDURA_UPLOADS__GLOBAL_PER_DAY": "1000",
+        "VIDURA_UPLOADS__RETENTION_DAYS": "3650",
         "PYTHONUTF8": "1",
     }
     procs: list[subprocess.Popen[bytes]] = []
@@ -158,7 +158,7 @@ def main() -> int:
                     sys.executable,
                     "-m",
                     "uvicorn",
-                    "finsight.api.app:app",
+                    "vidura.api.app:app",
                     "--port",
                     str(a.port),
                     "--timeout-keep-alive",
@@ -180,13 +180,13 @@ def main() -> int:
                 if subprocess.run([pnpm, "install", "--frozen-lockfile"], cwd=front).returncode:
                     return fail("`pnpm install` failed.")
             say("Starting the frontend on :3000 ...")
-            fenv = {**env, "FINSIGHT_API_ORIGIN": f"http://127.0.0.1:{a.port}"}
+            fenv = {**env, "VIDURA_API_ORIGIN": f"http://127.0.0.1:{a.port}"}
             fenv.pop("NEXT_PUBLIC_USE_MOCKS", None)
             procs.append(subprocess.Popen([pnpm, "dev", "--port", "3000"], cwd=front, env=fenv))
             if not wait_for("http://127.0.0.1:3000/", "The frontend", 120):
                 return fail("the frontend did not start (see the messages above).")
         say("\n" + "=" * 60)
-        say("FinSight is running.")
+        say("Vidura is running.")
         if not a.no_frontend:
             say("  Open:   http://localhost:3000/upload   (upload your own RHP / prospectus PDF)")
         say(f"  API:    http://127.0.0.1:{a.port}/docs")

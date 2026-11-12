@@ -30,7 +30,7 @@ def test_committed_notebooks_match_the_generator(name: str) -> None:
     gen = load("make_classifier_notebooks")
     committed = json.loads((ROOT / "notebooks" / name).read_text("utf-8"))
     assert committed == gen.build(name), "run: uv run python scripts/make_classifier_notebooks.py"
-    metrics = (ROOT / "src/finsight/risks/clf_metrics.py").read_text("utf-8")
+    metrics = (ROOT / "src/vidura/risks/clf_metrics.py").read_text("utf-8")
     assert cell(committed, "clf-metrics") == metrics
     for c in committed["cells"]:
         if c["cell_type"] == "code":

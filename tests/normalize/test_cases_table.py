@@ -13,8 +13,8 @@ from decimal import Decimal
 
 import pytest
 
-from finsight.core.schemas import Count, Money, Percent, Placeholder, Range
-from finsight.normalize import parse_amount, parse_amounts
+from vidura.core.schemas import Count, Money, Percent, Placeholder, Range
+from vidura.normalize import parse_amount, parse_amounts
 
 Expected = tuple[object, ...] | None
 

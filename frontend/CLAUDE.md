@@ -1,4 +1,4 @@
-# FinSight frontend — Claude Code instructions
+# Vidura frontend — Claude Code instructions
 
 **Current state (v1.1):** English only (`lib/i18n.ts` and the Hindi copy are gone; copy lives in `lib/content/`), the Charcoal & Saffron design, real API by default. Current docs: `../docs/architecture/frontend.md`.
 

@@ -50,7 +50,7 @@ from pydantic import TypeAdapter
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.core.schemas import (  # noqa: E402
+from vidura.core.schemas import (  # noqa: E402
     SUMMARY_HAS_VALUE,
     Count,
     FinancialSummary,
@@ -60,7 +60,7 @@ from finsight.core.schemas import (  # noqa: E402
     Section,
     SummaryValue,
 )
-from finsight.redflags.inputs import (  # noqa: E402
+from vidura.redflags.inputs import (  # noqa: E402
     _gold_amount,
     _yes_no,
     auditor_kind,
@@ -383,7 +383,7 @@ def _paths(processed: Path, ipo_id: str, doc: str) -> tuple[Path, Path]:
 
 def load_summary(processed: Path, ipo_id: str, doc: str) -> tuple[FinancialSummary | None, str]:
     """``extract_summary`` on the IPO's parsed document; the RHP when the Prospectus is missing."""
-    from finsight.summary import extract_summary
+    from vidura.summary import extract_summary
 
     for which in dict.fromkeys((doc, "rhp")):
         parsed, sections = _paths(processed, ipo_id, which)

@@ -1,8 +1,8 @@
 import pytest
 
-from finsight.core.schemas import Passage
-from finsight.generate.postprocess import LoopDetector, clean_answer, is_dump, trim_loops
-from finsight.generate.prompts import NOT_FOUND, build_prompt
+from vidura.core.schemas import Passage
+from vidura.generate.postprocess import LoopDetector, clean_answer, is_dump, trim_loops
+from vidura.generate.prompts import NOT_FOUND, build_prompt
 
 PASSAGE_TEXT = (
     "The Registrar to the Offer is KFin Technologies Limited, having its office at Selenium "
@@ -103,7 +103,7 @@ FRESH = "The fresh issue is up to ₹ 26,260 million [1]."
 
 
 def test_devanagari_digits_become_ascii_digits():
-    from finsight.generate.postprocess import ascii_digits
+    from vidura.generate.postprocess import ascii_digits
 
     assert ascii_digits("₹ ४,७२० million") == ("₹ 4,720 million", True)
     assert ascii_digits("₹ 4,720 million") == ("₹ 4,720 million", False)
@@ -125,7 +125,7 @@ def test_clean_answer_converts_digits_and_flags_it():
     ],
 )
 def test_converted_unit_is_rejected(answer):
-    from finsight.generate.postprocess import converted_units
+    from vidura.generate.postprocess import converted_units
 
     passages = [passage("The fresh issue is up to ₹ 26,260 million.")]
     if "2,626" in answer:
@@ -155,7 +155,7 @@ def test_investor_opinions_and_cautions_are_rejected(answer):
 
 
 def test_plain_facts_are_not_opinions():
-    from finsight.generate.postprocess import has_opinion
+    from vidura.generate.postprocess import has_opinion
 
     assert not has_opinion("The registrar is KFin Technologies Limited [1].")
     assert not has_opinion("इस ऑफ़र का रजिस्ट्रार KFin Technologies Limited है [1]।")

@@ -4,12 +4,12 @@ from pathlib import Path
 import pytest
 from pydantic import TypeAdapter
 
-from finsight.core.schemas import DocType, Page, ParsedDoc, Section
-from finsight.extract import FineTunedExtractor, RawAnswer
-from finsight.ingest.registry import DemoIpo, DocFile
-from finsight.pipeline.layout import doc_outputs, xray_path
-from finsight.pipeline.rules_stage import run_rules
-from finsight.pipeline.xray_stage import (
+from vidura.core.schemas import DocType, Page, ParsedDoc, Section
+from vidura.extract import FineTunedExtractor, RawAnswer
+from vidura.ingest.registry import DemoIpo, DocFile
+from vidura.pipeline.layout import doc_outputs, xray_path
+from vidura.pipeline.rules_stage import run_rules
+from vidura.pipeline.xray_stage import (
     load_xray,
     run_qa,
     run_xray,

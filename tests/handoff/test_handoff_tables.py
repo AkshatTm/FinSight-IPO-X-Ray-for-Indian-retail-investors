@@ -6,7 +6,7 @@ import gzip
 import json
 from pathlib import Path
 
-from finsight.handoff import five_things, risk_bank_rows, with_ipo, write_jsonl_gz, write_parquet
+from vidura.handoff import five_things, risk_bank_rows, with_ipo, write_jsonl_gz, write_parquet
 
 
 def _bank(risk_id: str, ipo_id: str, split: str) -> dict[str, object]:

@@ -12,12 +12,12 @@ import pytest
 from fastapi.testclient import TestClient
 from make_fixture_pdf import build_offer_pdf
 
-from finsight.api.app import create_app
-from finsight.api.uploads_state import UploadState, get_upload_state
-from finsight.core.config import AuthConfig, load_settings
-from finsight.db import Database
-from finsight.jobs import InlineLauncher, process_document
-from finsight.storage import LocalStorage
+from vidura.api.app import create_app
+from vidura.api.uploads_state import UploadState, get_upload_state
+from vidura.core.config import AuthConfig, load_settings
+from vidura.db import Database
+from vidura.jobs import InlineLauncher, process_document
+from vidura.storage import LocalStorage
 
 SECRET = "s" * 40
 SUPABASE = "https://x.supabase.co"

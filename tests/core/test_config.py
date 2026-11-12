@@ -3,8 +3,8 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from finsight.core import config
-from finsight.core.config import Settings, load_settings
+from vidura.core import config
+from vidura.core.config import Settings, load_settings
 
 YAML = """
 paths: {data_dir: data, processed_dir: data/processed, models_dir: models, eval_dir: eval_results}
@@ -28,9 +28,9 @@ profiles:
 def cfg(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     path = tmp_path / "config.yaml"
     path.write_text(YAML, encoding="utf-8")
-    for var in ("FINSIGHT_PROFILE", "DEMO_MODE", "FINSIGHT_LLM__MODEL", "FINSIGHT_ROOT"):
+    for var in ("VIDURA_PROFILE", "DEMO_MODE", "VIDURA_LLM__MODEL", "VIDURA_ROOT"):
         monkeypatch.delenv(var, raising=False)
-    monkeypatch.setenv("FINSIGHT_ROOT", str(tmp_path))
+    monkeypatch.setenv("VIDURA_ROOT", str(tmp_path))
     return path
 
 
@@ -49,7 +49,7 @@ def test_explicit_profile_argument(cfg: Path) -> None:
 
 
 def test_env_profile_selects_profile(cfg: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("FINSIGHT_PROFILE", "full")
+    monkeypatch.setenv("VIDURA_PROFILE", "full")
     assert load_settings(config_path=cfg).profile == "full"
 
 
@@ -59,7 +59,7 @@ def test_unknown_profile_lists_choices(cfg: Path) -> None:
 
 
 def test_env_overrides_yaml_including_nested(cfg: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("FINSIGHT_LLM__MODEL", "from-env")
+    monkeypatch.setenv("VIDURA_LLM__MODEL", "from-env")
     s = load_settings(config_path=cfg)
     assert s.llm.model == "from-env"
     assert s.llm.backend == "ollama"  # untouched siblings survive the merge
@@ -86,7 +86,7 @@ def test_thinking_mode_cannot_be_enabled() -> None:
 
 
 def test_get_settings_is_cached(cfg: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("FINSIGHT_CONFIG", str(cfg))
+    monkeypatch.setenv("VIDURA_CONFIG", str(cfg))
     config.reset_settings()
     assert config.get_settings() is config.get_settings()
     config.reset_settings()
@@ -94,8 +94,8 @@ def test_get_settings_is_cached(cfg: Path, monkeypatch: pytest.MonkeyPatch) -> N
 
 @pytest.mark.parametrize("profile", ["dev_light", "full", "deploy_cpu"])
 def test_repo_config_loads_every_profile(profile: str, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.delenv("FINSIGHT_ROOT", raising=False)
-    monkeypatch.delenv("FINSIGHT_LLM__MODEL", raising=False)
+    monkeypatch.delenv("VIDURA_ROOT", raising=False)
+    monkeypatch.delenv("VIDURA_LLM__MODEL", raising=False)
     monkeypatch.delenv("DEMO_MODE", raising=False)
     s = load_settings(profile)
     assert s.profile == profile
@@ -103,7 +103,7 @@ def test_repo_config_loads_every_profile(profile: str, monkeypatch: pytest.Monke
 
 
 def test_full_profile_carries_the_dev_tuned_abstain_threshold() -> None:
-    from finsight.core.config import load_settings
+    from vidura.core.config import load_settings
 
     thresholds = load_settings("full").retrieve.abstain_thresholds
     assert set(thresholds) == {"hybrid+rerank"}

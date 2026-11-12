@@ -20,11 +20,11 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.core.ids import make_doc_id  # noqa: E402
-from finsight.core.schemas import Risk  # noqa: E402
-from finsight.ingest.corpus import load_corpus_doc  # noqa: E402
-from finsight.ingest.fetch import read_rows  # noqa: E402
-from finsight.risks.bank_build import (  # noqa: E402
+from vidura.core.ids import make_doc_id  # noqa: E402
+from vidura.core.schemas import Risk  # noqa: E402
+from vidura.ingest.corpus import load_corpus_doc  # noqa: E402
+from vidura.ingest.fetch import read_rows  # noqa: E402
+from vidura.risks.bank_build import (  # noqa: E402
     build_rows,
     corpus_risks,
     count_by_year,
@@ -32,7 +32,7 @@ from finsight.risks.bank_build import (  # noqa: E402
     write_json,
     write_parquet,
 )
-from finsight.splits import Manifest, file_sha256, load_splits, write_manifest  # noqa: E402
+from vidura.splits import Manifest, file_sha256, load_splits, write_manifest  # noqa: E402
 
 PROCESSED = ROOT / "data" / "processed"
 BANK_DIR = PROCESSED / "bank"
@@ -82,7 +82,7 @@ def main(argv: list[str] | None = None) -> int:
         def embed(texts):  # type: ignore[no-untyped-def]
             return np.zeros((len(texts), 8), dtype=np.float32)
     else:
-        from finsight.retrieve import BgeM3Embedder
+        from vidura.retrieve import BgeM3Embedder
 
         embed = BgeM3Embedder().embed
     source = make_source(splits)

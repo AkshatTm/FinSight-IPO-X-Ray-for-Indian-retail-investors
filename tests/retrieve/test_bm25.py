@@ -1,4 +1,4 @@
-from finsight.retrieve.bm25 import BM25Index, tokenize
+from vidura.retrieve.bm25 import BM25Index, tokenize
 
 TEXTS = [
     "The fresh issue is up to 4,720 million equity shares of face value 10",

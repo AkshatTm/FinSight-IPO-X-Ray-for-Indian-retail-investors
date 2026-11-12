@@ -15,8 +15,8 @@ import argparse
 import json
 import re
 
-from finsight.core.config import get_settings
-from finsight.retrieve import find_personal_addresses
+from vidura.core.config import get_settings
+from vidura.retrieve import find_personal_addresses
 
 TOKEN = re.compile(
     r"\b(?:house|flat|plot|door|villa)\s*(?:no\.?|number|#)\s*\w+|\bapartments?\b|\bsector[\s-]*\d+\b|"

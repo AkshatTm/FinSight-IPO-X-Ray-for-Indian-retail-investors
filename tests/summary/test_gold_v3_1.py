@@ -6,8 +6,8 @@ import importlib.util
 import sys
 from typing import Any
 
-from finsight.core.config import project_root
-from finsight.core.schemas import FinancialSummary, PageEvidence, SummaryValue
+from vidura.core.config import project_root
+from vidura.core.schemas import FinancialSummary, PageEvidence, SummaryValue
 
 
 def _load(name: str) -> Any:

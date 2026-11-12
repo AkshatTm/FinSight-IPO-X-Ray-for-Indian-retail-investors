@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from finsight.core.schemas import Page, ParsedDoc, Section
+from vidura.core.schemas import Page, ParsedDoc, Section
 
 COVER = (
     "INITIAL PUBLIC OFFER OF UP TO 10,000,000 EQUITY SHARES OF FACE VALUE OF ₹ 10 EACH OF ACME "

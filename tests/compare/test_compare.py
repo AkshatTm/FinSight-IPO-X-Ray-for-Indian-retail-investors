@@ -9,7 +9,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from finsight.compare import (
+from vidura.compare import (
     build,
     cell_number,
     compare,
@@ -19,8 +19,8 @@ from finsight.compare import (
     peers_from_table,
     percentiles,
 )
-from finsight.core.schemas import Peer, Table, TableCell
-from finsight.storage import LocalStorage, doc_key, get_json
+from vidura.core.schemas import Peer, Table, TableCell
+from vidura.storage import LocalStorage, doc_key, get_json
 
 HEADER = [
     "Name of the company",
@@ -178,8 +178,8 @@ def test_empty_compare() -> None:
 
 
 def test_issuer_row_called_the_company_gets_the_company_name() -> None:
-    from finsight.compare import compare, with_issuer_name
-    from finsight.core.schemas import Peer
+    from vidura.compare import compare, with_issuer_name
+    from vidura.core.schemas import Peer
 
     peers = [
         Peer(name="The Company", eps=Decimal("33.63"), is_issuer=True),

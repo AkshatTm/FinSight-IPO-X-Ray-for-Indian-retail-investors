@@ -28,7 +28,7 @@ Puts each risk factor of an offer document into one of 10 categories (financial,
 
 ## Training data
 
-Teacher labels (AI-made, `label_source`) on `train`-slice risks only, split 90/10 **by company** so no company is on both sides (`python -m finsight.risks.classify split`). The time split holds: the manifests `classifier_train` and `classifier_dev` list the IPOs and `tests/test_split_leakage.py` checks them. See the [teacher datasheet](../phase2/datasheets/teacher_outputs.md).
+Teacher labels (AI-made, `label_source`) on `train`-slice risks only, split 90/10 **by company** so no company is on both sides (`python -m vidura.risks.classify split`). The time split holds: the manifests `classifier_train` and `classifier_dev` list the IPOs and `tests/test_split_leakage.py` checks them. See the [teacher datasheet](../phase2/datasheets/teacher_outputs.md).
 
 ## Training procedure and evaluation
 
@@ -80,7 +80,7 @@ offer-document text. Labels are AI-made (`label_source`), and that is disclosed 
 
 ## How to use and reproduce
 
-`finsight.risks.OnnxClassifier(models/risk_classifier/onnx)` loads `model.onnx`, `tokenizer.json` and
-`labels.json`. To reproduce: split (`uv run python -m finsight.risks.classify split`), run the Kaggle
+`vidura.risks.OnnxClassifier(models/risk_classifier/onnx)` loads `model.onnx`, `tokenizer.json` and
+`labels.json`. To reproduce: split (`uv run python -m vidura.risks.classify split`), run the Kaggle
 notebook through `scripts/classifier_kaggle.py`, then export with `scripts/export_onnx_classifier.py`.
 The steps are on [Training lanes](../operations/training-lanes.md#kaggle).

@@ -2,10 +2,10 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import Settings
-from finsight.evaluate.guard_eval import compare
-from finsight.guard import check_question
-from finsight.guard.clf import load_scorer
+from vidura.core.config import Settings
+from vidura.evaluate.guard_eval import compare
+from vidura.guard import check_question
+from vidura.guard.clf import load_scorer
 
 
 def test_a_scorer_decides_advice_but_privacy_stays_rule_based() -> None:

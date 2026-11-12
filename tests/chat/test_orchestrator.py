@@ -3,10 +3,10 @@
 from collections.abc import Iterator
 from typing import Any
 
-from finsight.chat import ChatOrchestrator, TraceStore
-from finsight.core.schemas import Passage
-from finsight.generate.llm_backend import LLMUnavailable
-from finsight.retrieve import Hit, SearchResult
+from vidura.chat import ChatOrchestrator, TraceStore
+from vidura.core.schemas import Passage
+from vidura.generate.llm_backend import LLMUnavailable
+from vidura.retrieve import Hit, SearchResult
 
 TEXT = "Fresh Issue of up to Rs. 26,260 million. Offer for Sale of up to 11,051,746 Equity Shares."
 
@@ -145,7 +145,7 @@ def test_a_rejected_answer_is_sent_as_not_found_without_verdicts() -> None:
 
 
 def test_rerank_pool_is_capped_only_on_cpu() -> None:
-    from finsight.chat.orchestrator import rerank_pool
+    from vidura.chat.orchestrator import rerank_pool
 
     assert rerank_pool(20, "cpu") == 10
     assert rerank_pool(20, "cuda") == 20
@@ -154,7 +154,7 @@ def test_rerank_pool_is_capped_only_on_cpu() -> None:
 
 
 def test_red_flag_question_is_answered_with_the_no_advice_note_after_the_text() -> None:
-    from finsight.guard import SEBI_NOTE
+    from vidura.guard import SEBI_NOTE
 
     c = chat(FakeLLM("The document lists a pending SEBI proceeding [1]."))
     events = list(c.events("a", "What are the red flags in this IPO?"))

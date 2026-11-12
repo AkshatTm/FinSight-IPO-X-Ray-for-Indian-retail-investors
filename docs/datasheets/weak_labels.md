@@ -29,9 +29,9 @@ Audit (E1, measured on labels v1; current v2): 45/50 correct, precision 0.90 [0.
 
 ## Labelling process
 
-1. **Seeds:** rules read each value from the cover page of a corpus document (`finsight.weaklabel.seeds`), and where the Excel sheet holds the same value the two are compared.
-2. **Propagation:** a body passage becomes a positive when it holds the same value (compared with `normalize.equal`, so ₹ 3,000 million equals Rs. 300 crore) near a word naming the field (`finsight.weaklabel.propagate`).
-3. **Negatives:** one or two passages from the same sections without the value, chosen with a fixed seed (`finsight.weaklabel.negatives`).
+1. **Seeds:** rules read each value from the cover page of a corpus document (`vidura.weaklabel.seeds`), and where the Excel sheet holds the same value the two are compared.
+2. **Propagation:** a body passage becomes a positive when it holds the same value (compared with `normalize.equal`, so ₹ 3,000 million equals Rs. 300 crore) near a word naming the field (`vidura.weaklabel.propagate`).
+3. **Negatives:** one or two passages from the same sections without the value, chosen with a fixed seed (`vidura.weaklabel.negatives`).
 
 No person or AI model wrote these labels; they are fully automatic. The 50-row **audit** was labelled with AI help and reviewed by Akshat (`label_source` in `data/gold/weaklabel_audit.jsonl`).
 
@@ -46,4 +46,4 @@ Training and validating the extractors only. Never as a scoring set: scores use 
 
 ## Distribution and licence
 
-Derived from the CC BY-NC-SA 4.0 corpus; not committed. Rebuild with `python -m finsight.weaklabel`.
+Derived from the CC BY-NC-SA 4.0 corpus; not committed. Rebuild with `python -m vidura.weaklabel`.

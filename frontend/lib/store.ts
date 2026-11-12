@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { Unit } from "@/lib/format";
 import type { DocKind } from "@/lib/doc";
+import { getItemMigrating } from "@/lib/legacyStorage";
 
 export type Theme = "light" | "dark";
 
@@ -78,8 +79,12 @@ export const useUi = create<UiState>()(
       dismissColdBanner: () => set({ coldBannerDismissed: true }),
     }),
     {
-      name: "fs_ui",
-      storage: createJSONStorage(() => localStorage),
+      name: "vd_ui",
+      storage: createJSONStorage(() => ({
+        getItem: (k: string) => getItemMigrating(localStorage, k),
+        setItem: (k: string, v: string) => localStorage.setItem(k, v),
+        removeItem: (k: string) => localStorage.removeItem(k),
+      })),
       partialize: (s) => ({ theme: s.theme, unit: s.unit }),
       // Rehydrated from Providers after mount, so server and first client render match.
       skipHydration: true,

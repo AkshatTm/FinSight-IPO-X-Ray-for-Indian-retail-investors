@@ -10,8 +10,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.ingest import list_demo_ipos
-from finsight.splits import check_manifests, load_splits, read_manifests, showcase_mismatches
+from vidura.ingest import list_demo_ipos
+from vidura.splits import check_manifests, load_splits, read_manifests, showcase_mismatches
 
 ROOT = Path(__file__).resolve().parents[1]
 SPLITS = ROOT / "configs" / "splits.yaml"
@@ -19,7 +19,7 @@ MANIFESTS = ROOT / "data" / "manifests"
 
 needs_split = pytest.mark.skipif(
     not SPLITS.is_file(),
-    reason="split not frozen yet: run `python -m finsight.splits build "
+    reason="split not frozen yet: run `python -m vidura.splits build "
     "--freeze` after C1.3 (C05 C1.4)",
 )
 

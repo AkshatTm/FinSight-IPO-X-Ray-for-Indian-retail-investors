@@ -5,8 +5,8 @@ from typing import Any
 import openpyxl
 import pytest
 
-from finsight.evaluate.gold import FIELDS, validate_file
-from finsight.evaluate.gold_xlsx import HEADERS, export_xlsx, import_xlsx
+from vidura.evaluate.gold import FIELDS, validate_file
+from vidura.evaluate.gold_xlsx import HEADERS, export_xlsx, import_xlsx
 
 URBAN = "urban-company-2025"
 
@@ -202,8 +202,8 @@ def test_complete_import_of_a_fully_filled_sheet(xlsx: Path, tmp_path: Path) -> 
 
 
 def test_how_to_examples_pass_the_validator() -> None:
-    from finsight.evaluate.gold import DEFAULT_DOC
-    from finsight.evaluate.gold_xlsx import EXAMPLES, _value
+    from vidura.evaluate.gold import DEFAULT_DOC
+    from vidura.evaluate.gold_xlsx import EXAMPLES, _value
 
     for ex in EXAMPLES:
         status = ex["status"]
@@ -215,6 +215,6 @@ def test_how_to_examples_pass_the_validator() -> None:
             "value_raw": value, "page": ex["page"] or None, "quote": ex["quote"],
             "status": status, "labelled_at": "2026-10-08", "notes": "",
         }  # fmt: skip
-        from finsight.evaluate.gold import validate_row
+        from vidura.evaluate.gold import validate_row
 
         assert validate_row(row) == [], ex["type"]

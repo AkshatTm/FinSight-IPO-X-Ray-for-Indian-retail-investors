@@ -1,4 +1,4 @@
-from finsight.core.schemas import (
+from vidura.core.schemas import (
     Candidate,
     Count,
     DocType,
@@ -8,8 +8,8 @@ from finsight.core.schemas import (
     TextValue,
     Value,
 )
-from finsight.extract import get_field, select_field
-from finsight.normalize import parse_amount
+from vidura.extract import get_field, select_field
+from vidura.normalize import parse_amount
 
 
 def money(text: str) -> Money:

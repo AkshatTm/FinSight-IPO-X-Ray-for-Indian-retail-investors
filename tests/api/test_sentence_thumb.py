@@ -3,9 +3,9 @@ from pathlib import Path
 
 from PIL import Image
 
-from finsight.api.ipos import _thumbnail
-from finsight.core.schemas import Candidate, ParsedDoc, Word
-from finsight.extract import fill_boxes, sentence_around
+from vidura.api.ipos import _thumbnail
+from vidura.core.schemas import Candidate, ParsedDoc, Word
+from vidura.extract import fill_boxes, sentence_around
 
 
 def word(t: str, x: float, y: float = 100.0, w: float = 20.0) -> Word:

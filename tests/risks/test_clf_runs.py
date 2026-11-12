@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.risks.classify import Example
-from finsight.risks.clf_runs import (
+from vidura.risks.classify import Example
+from vidura.risks.clf_runs import (
     ipo_id_of,
     ipo_ids_of,
     kernel_folder,

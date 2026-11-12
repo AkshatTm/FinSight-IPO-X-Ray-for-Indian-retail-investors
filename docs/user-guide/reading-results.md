@@ -43,7 +43,7 @@ works" text are on [Red-flag checks](../reference/redflags.md).
 
 ## Page citations
 
-Every number FinSight reads carries the page it came from (the "page 76" chips). Clicking one opens
+Every number Vidura reads carries the page it came from (the "page 76" chips). Clicking one opens
 the page in **Facts, pages and Ask** and highlights the words. The number checker compares numbers
 with code, not with a model: lakh, crore and million are converted before comparing.
 
@@ -75,7 +75,7 @@ A report is **degraded** when a stage did not finish or ran without one of its m
 "This part isn't ready yet", and the report is not cached as complete: start the missing model and
 click **Re-analyse**.
 
-## What FinSight does not do
+## What Vidura does not do
 
 - Recommend applying, buying, selling or avoiding, or predict listing gains.
 - Read scanned PDFs.

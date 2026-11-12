@@ -10,8 +10,8 @@ from types import ModuleType
 
 import pytest
 
-from finsight.risklevel.reference import read_scores
-from finsight.splits import load_splits
+from vidura.risklevel.reference import read_scores
+from vidura.splits import load_splits
 
 ROOT = Path(__file__).resolve().parents[2]
 

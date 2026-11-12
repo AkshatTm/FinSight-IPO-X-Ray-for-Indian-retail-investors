@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import load_settings
-from finsight.storage import (
+from vidura.core.config import load_settings
+from vidura.storage import (
     LocalStorage,
     Storage,
     doc_key,

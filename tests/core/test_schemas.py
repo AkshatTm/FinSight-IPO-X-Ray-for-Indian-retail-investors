@@ -4,7 +4,7 @@ from decimal import Decimal
 import pytest
 from pydantic import TypeAdapter, ValidationError
 
-from finsight.core.schemas import (
+from vidura.core.schemas import (
     Amount,
     Candidate,
     CheckResult,
@@ -160,7 +160,7 @@ def test_check_result_and_claim_round_trip() -> None:
 def test_doc_record_and_evidence_round_trip() -> None:
     from datetime import UTC, datetime
 
-    from finsight.core.schemas import DocRecord, PageEvidence
+    from vidura.core.schemas import DocRecord, PageEvidence
 
     rec = DocRecord(
         doc_id="doc_0123456789abcdef",
@@ -182,7 +182,7 @@ def test_doc_record_never_stores_unknown_type() -> None:
     import pytest
     from pydantic import ValidationError
 
-    from finsight.core.schemas import DocRecord
+    from vidura.core.schemas import DocRecord
 
     with pytest.raises(ValidationError):
         DocRecord(

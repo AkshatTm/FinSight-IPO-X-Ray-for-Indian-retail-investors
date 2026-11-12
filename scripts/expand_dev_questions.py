@@ -15,7 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 
-from finsight.core.config import get_settings
+from vidura.core.config import get_settings
 
 DEV_IPOS = ["ather-energy-2025", "hexaware-technologies-2025", "urban-company-2025"]
 LANGS = ("en", "hi", "hinglish")

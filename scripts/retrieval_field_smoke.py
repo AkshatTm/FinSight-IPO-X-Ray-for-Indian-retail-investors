@@ -15,10 +15,10 @@ import argparse
 import json
 from collections import defaultdict
 
-from finsight.core.config import get_settings
-from finsight.extract import load_fields
-from finsight.retrieve import Retriever
-from finsight.retrieve.evaluate import compact
+from vidura.core.config import get_settings
+from vidura.extract import load_fields
+from vidura.retrieve import Retriever
+from vidura.retrieve.evaluate import compact
 
 _NOISE = ("₹", "MILLION", "EQUITY SHARES", "CRORE")
 
@@ -40,7 +40,7 @@ def main() -> None:
     settings = get_settings()
     embedder = None
     if args.dense:
-        from finsight.retrieve import BgeM3Embedder
+        from vidura.retrieve import BgeM3Embedder
 
         embedder = BgeM3Embedder()
     retriever = Retriever(settings.paths.processed_dir, embedder=embedder)

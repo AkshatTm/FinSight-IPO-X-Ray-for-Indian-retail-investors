@@ -1,5 +1,5 @@
-from finsight.chat import TraceStore, new_trace_id
-from finsight.core.schemas import Trace
+from vidura.chat import TraceStore, new_trace_id
+from vidura.core.schemas import Trace
 
 
 def test_trace_ids_are_26_char_ulids_sorted_by_time() -> None:

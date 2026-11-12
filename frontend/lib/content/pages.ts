@@ -4,7 +4,7 @@ type Entry = string;
 
 export const PAGES = {
   // 9 how it works
-  "how.title": "How FinSight works",
+  "how.title": "How Vidura works",
   "how.intro": "Two parts. The first runs once per IPO and prepares everything. The second runs every time you ask a question.",
   "how.row1": "Preparing an IPO (once)",
   "how.row2": "Answering a question (every time)",
@@ -48,10 +48,10 @@ export const PAGES = {
   "how.faq2.q": "Can it still be wrong?",
   "how.faq2.a": "Yes. The marks tell you which numbers were checked. Always look at the page for anything important.",
   "how.faq3.q": "Why doesn't it give advice?",
-  "how.faq3.a": "Investment advice in India needs SEBI registration. FinSight only explains the documents.",
+  "how.faq3.a": "Investment advice in India needs SEBI registration. Vidura only explains the documents.",
 
   // 10 about
-  "about.title": "About FinSight",
+  "about.title": "About Vidura",
   "about.who.h": "Who made it",
   "about.who.b": "Akshat Tomar, B.Tech CSE, Lovely Professional University, as the course project for CSE472 Deep Learning for NLP (2026).",
   "about.who.link": "Source code on GitHub",

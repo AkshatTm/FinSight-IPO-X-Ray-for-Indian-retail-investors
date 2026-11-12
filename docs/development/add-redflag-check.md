@@ -3,7 +3,7 @@
 A red-flag check turns one or two numbers the document discloses into OK, Watch, Concern, Not
 available or Not applicable, with one plain sentence and the pages behind it. There are 13 (RF01–RF13).
 Serious findings (going concern, regulator orders, qualified audit, default, fraud) are a separate
-sentence-level scan in `src/finsight/redflags/severe.py`.
+sentence-level scan in `src/vidura/redflags/severe.py`.
 
 ## Steps
 
@@ -11,11 +11,11 @@ sentence-level scan in `src/finsight/redflags/severe.py`.
    `rule` (the "How this check works" text, plain English) and its thresholds as strings. Bump
    `version`: it is stored in every `redflags.json`, so old results stay explainable.
 2. **Make sure the inputs exist.** Add the number to `RedFlagInputs` in
-   `src/finsight/redflags/inputs.py` and fill it in both `inputs_from_summary` (the pipeline) and
+   `src/vidura/redflags/inputs.py` and fill it in both `inputs_from_summary` (the pipeline) and
    `inputs_from_gold` (gold v3 rows), so the status gold is computed by the same rule. `None` means
    "not found", never zero. If the number is not read yet, add it to the financial summary in
-   `finsight.summary` first.
-3. **Write the rule** in `src/finsight/redflags/rules.py` with the same signature as the others,
+   `vidura.summary` first.
+3. **Write the rule** in `src/vidura/redflags/rules.py` with the same signature as the others,
    `def rf14(x: RedFlagInputs, c: Mapping[str, Any], na: str) -> Result`, and add it to `CHECKS`.
    Return the evidence keys you used so the page chips work. A sentence with no approved wording goes
    into `DRAFT_SENTENCES`.

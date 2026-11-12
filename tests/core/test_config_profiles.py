@@ -6,14 +6,14 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import ENV_KEYS, REQUIRED_ENV, load_settings, missing_env
+from vidura.core.config import ENV_KEYS, REQUIRED_ENV, load_settings, missing_env
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 @pytest.fixture(autouse=True)
 def _clean_env(monkeypatch: pytest.MonkeyPatch) -> None:
-    for var in ("FINSIGHT_PROFILE", "UPLOADS_ENABLED", "FINSIGHT_DB__URL", "DEMO_MODE"):
+    for var in ("VIDURA_PROFILE", "UPLOADS_ENABLED", "VIDURA_DB__URL", "DEMO_MODE"):
         monkeypatch.delenv(var, raising=False)
 
 
@@ -45,7 +45,7 @@ def test_uploads_kill_switch(monkeypatch: pytest.MonkeyPatch, value: str, enable
 
 
 def test_db_url_comes_from_env(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("FINSIGHT_DB__URL", "postgresql://example")
+    monkeypatch.setenv("VIDURA_DB__URL", "postgresql://example")
     assert load_settings("full").db.url == "postgresql://example"
 
 

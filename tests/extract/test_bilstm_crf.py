@@ -6,11 +6,11 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import Money, Page, ParsedDoc
-from finsight.extract import BiLSTMCRFExtractor, tokenize
-from finsight.extract import get_field as deployed_field
-from finsight.extract.bilstm_crf import TaggedSpan, Tagger
-from finsight.extract.tokens import TOKEN_PATTERN
+from vidura.core.schemas import Money, Page, ParsedDoc
+from vidura.extract import BiLSTMCRFExtractor, tokenize
+from vidura.extract import get_field as deployed_field
+from vidura.extract.bilstm_crf import TaggedSpan, Tagger
+from vidura.extract.tokens import TOKEN_PATTERN
 
 TEXT = "The Fresh Issue is up to ₹ 26,260 million by the Company and nothing else."
 

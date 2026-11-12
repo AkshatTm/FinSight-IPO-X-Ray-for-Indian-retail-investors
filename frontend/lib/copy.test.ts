@@ -31,7 +31,7 @@ describe("copy dictionary", () => {
   });
   it("maps API error codes, unknown codes fall back", () => {
     expect(errorMessage("ipo_not_found")).toBe("We couldn't find that IPO.");
-    expect(errorMessage("network")).toContain("FinSight");
+    expect(errorMessage("network")).toContain("Vidura");
     expect(errorMessage("something_new")).toBe("Something went wrong on our side. Try again.");
   });
 });

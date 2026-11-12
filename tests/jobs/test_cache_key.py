@@ -7,18 +7,18 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import Settings, load_settings
-from finsight.core.schemas import DocRecord
-from finsight.db import Database
-from finsight.jobs import cache_key, delete_document
-from finsight.jobs.cache import (
+from vidura.core.config import Settings, load_settings
+from vidura.core.schemas import DocRecord
+from vidura.db import Database
+from vidura.jobs import cache_key, delete_document
+from vidura.jobs.cache import (
     Fingerprint,
     analysis_status,
     cache_state,
     models_fingerprint,
     reset_for_reanalysis,
 )
-from finsight.storage import LocalStorage
+from vidura.storage import LocalStorage
 
 T0 = datetime(2026, 10, 3, 6, 0, tzinfo=UTC)
 
@@ -90,7 +90,7 @@ def test_fingerprint_is_empty_but_stable_when_model_stages_are_off(settings: Set
 def test_skipping_a_model_changes_the_fingerprint(
     settings: Settings, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    from finsight.jobs import preflight as pf
+    from vidura.jobs import preflight as pf
 
     settings.jobs.model_stages = True
     monkeypatch.setattr(pf, "required_models", lambda s: ("ollama",))

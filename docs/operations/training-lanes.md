@@ -11,9 +11,9 @@ free or prepaid GPU notebooks, in two lanes (C-ADR-04).
 ## Kaggle
 
 ```bash
-uv run python -m finsight.weaklabel.kaggle push|status|fetch <run>      # extractor, BiLSTM-CRF
+uv run python -m vidura.weaklabel.kaggle push|status|fetch <run>      # extractor, BiLSTM-CRF
 uv run python scripts/classifier_kaggle.py manifests|dataset|push|status|fetch|summary [run]
-uv run python -m finsight.guard.kaggle_clf push|status|fetch smoke|full  # MuRIL guard
+uv run python -m vidura.guard.kaggle_clf push|status|fetch smoke|full  # MuRIL guard
 ```
 
 The Kaggle token lives in `~/.kaggle/kaggle.json` and is never committed or printed. Notebooks are

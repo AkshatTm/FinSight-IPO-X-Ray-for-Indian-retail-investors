@@ -24,7 +24,7 @@ A small, explainable baseline for the extractor ladder (E11): it tags each word 
 
 ## Training data
 
-The [weak labels](../datasheets/weak_labels.md) converted to BIO tags (`finsight.weaklabel.bio`). Showcase and gold IPOs are excluded.
+The [weak labels](../datasheets/weak_labels.md) converted to BIO tags (`vidura.weaklabel.bio`). Showcase and gold IPOs are excluded.
 
 ## Training procedure
 
@@ -85,4 +85,4 @@ Same as the [QA extractor](extractor_qa.md#ethical-considerations): public docum
 
 ## How to use and reproduce
 
-`finsight.extract` loads the weights from `models/bilstm_crf/seed-<n>` (fetched with `python -m finsight.weaklabel.kaggle fetch bilstm-<seed>`; never committed). Reproduce with `notebooks/02_bilstm_crf.ipynb` on Kaggle, then `uv run python -m finsight.evaluate.run_gold` and `uv run python -m finsight.evaluate.ladder`.
+`vidura.extract` loads the weights from `models/bilstm_crf/seed-<n>` (fetched with `python -m vidura.weaklabel.kaggle fetch bilstm-<seed>`; never committed). Reproduce with `notebooks/02_bilstm_crf.ipynb` on Kaggle, then `uv run python -m vidura.evaluate.run_gold` and `uv run python -m vidura.evaluate.ladder`.

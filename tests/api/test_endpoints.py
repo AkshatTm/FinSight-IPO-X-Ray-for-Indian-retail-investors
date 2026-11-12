@@ -10,14 +10,14 @@ import pytest
 from fastapi.testclient import TestClient
 from PIL import Image
 
-from finsight.api import state as state_module
-from finsight.api.app import create_app
-from finsight.api.demo import DemoCache
-from finsight.api.ipos import IpoStore
-from finsight.api.state import AppState, get_state
-from finsight.chat import ChatOrchestrator, TraceStore
-from finsight.core.config import load_settings
-from finsight.core.schemas import (
+from vidura.api import state as state_module
+from vidura.api.app import create_app
+from vidura.api.demo import DemoCache
+from vidura.api.ipos import IpoStore
+from vidura.api.state import AppState, get_state
+from vidura.chat import ChatOrchestrator, TraceStore
+from vidura.core.config import load_settings
+from vidura.core.schemas import (
     Candidate,
     CheckResult,
     FieldResult,
@@ -30,7 +30,7 @@ from finsight.core.schemas import (
     Word,
     XRay,
 )
-from finsight.retrieve import Hit, SearchResult
+from vidura.retrieve import Hit, SearchResult
 
 IPO = "ather-energy-2025"
 TEXT = "Fresh Issue of up to Rs. 26,260 million."
@@ -118,7 +118,7 @@ class FakeBackend:
 def app_state(data: Path, monkeypatch: pytest.MonkeyPatch) -> AppState:
     for cache in (state_module.get_settings,):
         cache.cache_clear()  # type: ignore[attr-defined]
-    from finsight.api import ipos as ipos_module
+    from vidura.api import ipos as ipos_module
 
     for fn in (ipos_module._load_xray, ipos_module._load_parsed, ipos_module._load_sections):
         fn.cache_clear()
@@ -328,7 +328,7 @@ def test_demo_mode_replays_recorded_streams_and_never_invents(
     assert not app_state.demo.has(IPO, "How big is the fresh issue?", "en")
     missing = sse_events(chat(client, demo=True).text)
     assert missing[0][0] == "error"
-    from finsight.api.events import EVENT_MODELS
+    from vidura.api.events import EVENT_MODELS
 
     app_state.demo.record(IPO, "How big is the fresh issue?", "en",
                           [(n, EVENT_MODELS[n].model_validate(d)) for n, d in live])  # fmt: skip
@@ -340,7 +340,7 @@ def test_demo_mode_replays_recorded_streams_and_never_invents(
 
 
 def test_recorder_refuses_a_stream_without_final(app_state: AppState) -> None:
-    from finsight.api.events import StageEvent
+    from vidura.api.events import StageEvent
 
     with pytest.raises(ValueError, match="final"):
         app_state.demo.record(IPO, "q", "en", [("stage", StageEvent(name="guard", status="start"))])
@@ -356,8 +356,8 @@ def test_voice_route_is_gone_and_a_stray_language_is_ignored(client: TestClient)
 def test_phase2_lab_follows_the_b06_mapping(client: TestClient, app_state: AppState) -> None:
     from typing import get_args
 
-    from finsight.api import content
-    from finsight.api.routes import LabBName
+    from vidura.api import content
+    from vidura.api.routes import LabBName
 
     assert set(get_args(LabBName)) == set(content.LAB_B_FILES)
     for name in content.LAB_B_FILES:  # nothing run yet: every section 404s and the Lab hides it

@@ -10,7 +10,7 @@ import json
 import sys
 from pathlib import Path
 
-from finsight.api.app import create_app
+from vidura.api.app import create_app
 
 OUT = Path(__file__).resolve().parents[1] / "openapi.json"
 

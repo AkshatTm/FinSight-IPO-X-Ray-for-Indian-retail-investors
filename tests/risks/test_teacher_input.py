@@ -2,7 +2,7 @@
 
 from collections import Counter
 
-from finsight.risks.teacher_input import Candidate, select
+from vidura.risks.teacher_input import Candidate, select
 
 
 def cand(company: str, i: int, year: int = 2020, words: int = 60, title: str | None = None):

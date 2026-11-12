@@ -14,13 +14,13 @@ CALLS_THE_MODEL = re.compile(
     r"(?<!request)\.(?:stream|generate)\(|OllamaBackend\(|:11434"
 )  # 11434 = the Ollama port; ``request.stream()`` is Starlette reading an HTTP body
 ALLOWED = {
-    "src/finsight/generate/llama_cpp_backend.py",
-    "src/finsight/generate/llm_backend.py",
-    "src/finsight/generate/respond.py",
+    "src/vidura/generate/llama_cpp_backend.py",
+    "src/vidura/generate/llm_backend.py",
+    "src/vidura/generate/respond.py",
     # B2.5a: the risk simplifier is the one other caller. Its input is document text, never a
     # user question, and every output passes its own post-checks (numbers, forbidden phrases,
     # length, certainty) before it can be shown.
-    "src/finsight/risks/simplify.py",
+    "src/vidura/risks/simplify.py",
     # C2.5: times the student on CPU (num_gpu=0, which the backend does not expose) and scores
     # E19/E20. Same simplifier prompt, document text only, output goes to post_check, never shown.
     "scripts/student_eval.py",
@@ -30,7 +30,7 @@ ALLOWED = {
     # C3.7: keeps the answer model resident in Ollama while timing retrieval; one fixed prompt
     # ("hi", one token), never user input and never shown.
     "scripts/profile_retrieval.py",
-    # C4.1: FinSight Bench runs raw models (student, base) on the frozen bench prompts to compare
+    # C4.1: Vidura Bench runs raw models (student, base) on the frozen bench prompts to compare
     # them with the product path; rules_v1 itself goes through ``respond``. Evaluation only: the
     # input is the bench's stored prompt text, the output is scored and never shown.
     "scripts/bench_run.py",

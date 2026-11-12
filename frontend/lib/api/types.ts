@@ -293,7 +293,7 @@ export interface paths {
         };
         /**
          * Lab Frontier
-         * @description Model Lab: FinSight against frontier chatbots on the same questions (E9).
+         * @description Model Lab: Vidura against frontier chatbots on the same questions (E9).
          */
         get: operations["lab_frontier_api_lab_frontier_get"];
         put?: never;
@@ -373,7 +373,7 @@ export interface paths {
         };
         /**
          * Lab C Bench
-         * @description Model Lab, Phase 3: FinSight Bench v1 scores per system and task (C4.1).
+         * @description Model Lab, Phase 3: Vidura Bench v1 scores per system and task (C4.1).
          */
         get: operations["lab_c_bench_api_lab_c_bench_get"];
         put?: never;
@@ -2116,7 +2116,7 @@ export interface components {
         };
         /**
          * AbstainEvent
-         * @description FinSight declines to answer because retrieval found nothing close enough.
+         * @description Vidura declines to answer because retrieval found nothing close enough.
          */
         AbstainEvent: {
             /**

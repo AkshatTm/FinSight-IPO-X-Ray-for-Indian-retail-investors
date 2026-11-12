@@ -17,8 +17,8 @@ from typing import Any
 import pytest
 from real import loader
 
-from finsight.core.config import project_root
-from finsight.core.schemas import Count, Money, Percent, SummaryValue
+from vidura.core.config import project_root
+from vidura.core.schemas import Count, Money, Percent, SummaryValue
 
 GOLD = project_root() / "data" / "gold" / "sod_fixtures"
 MIN_PASSING = 8
@@ -61,8 +61,8 @@ def _matches(got: SummaryValue | None, want: dict[str, Any]) -> bool:
 
 
 def _score(ipo_id: str, expected: dict[str, Any]) -> list[str]:
-    from finsight.summary import extract_summary
-    from finsight.summary.sod import build_sod
+    from vidura.summary import extract_summary
+    from vidura.summary.sod import build_sod
 
     doc = loader.load_doc(ipo_id, root=loader.SOD)
     sections = loader.load_sections(ipo_id, root=loader.SOD)

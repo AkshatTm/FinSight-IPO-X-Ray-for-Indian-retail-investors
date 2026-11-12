@@ -41,23 +41,21 @@ import build_risk_bank  # noqa: E402
 import summary_coverage  # noqa: E402
 from pydantic import TypeAdapter  # noqa: E402
 
-from finsight.core.schemas import ParsedDoc, Risk, Section  # noqa: E402
-from finsight.extract import upload_xray  # noqa: E402
-from finsight.ingest.fetch import read_rows  # noqa: E402
-from finsight.parse import find_sections  # noqa: E402
-from finsight.redflags import detect_severe, evaluate, inputs_from_summary  # noqa: E402
-from finsight.redflags.severe import with_auditor  # noqa: E402
-from finsight.risks import risks_config  # noqa: E402
-from finsight.risks.bank import load_bank  # noqa: E402
-from finsight.risks.features import add_features  # noqa: E402
-from finsight.risks.seriousness import score_risks  # noqa: E402
-from finsight.risks.teacher_data import original_text  # noqa: E402
-from finsight.splits import load_splits, reference_bank, reference_config  # noqa: E402
-from finsight.summary import extract_summary  # noqa: E402
+from vidura.core.schemas import ParsedDoc, Risk, Section  # noqa: E402
+from vidura.extract import upload_xray  # noqa: E402
+from vidura.ingest.fetch import read_rows  # noqa: E402
+from vidura.parse import find_sections  # noqa: E402
+from vidura.redflags import detect_severe, evaluate, inputs_from_summary  # noqa: E402
+from vidura.redflags.severe import with_auditor  # noqa: E402
+from vidura.risks import risks_config  # noqa: E402
+from vidura.risks.bank import load_bank  # noqa: E402
+from vidura.risks.features import add_features  # noqa: E402
+from vidura.risks.seriousness import score_risks  # noqa: E402
+from vidura.risks.teacher_data import original_text  # noqa: E402
+from vidura.splits import load_splits, reference_bank, reference_config  # noqa: E402
+from vidura.summary import extract_summary  # noqa: E402
 
-DATA = Path(
-    os.environ.get("FINSIGHT_DATA_DIR", ROOT / "data")
-)  # gitignored data may live elsewhere
+DATA = Path(os.environ.get("VIDURA_DATA_DIR", ROOT / "data"))  # gitignored data may live elsewhere
 PROCESSED = DATA / "processed"
 build_risk_bank.PROCESSED = PROCESSED
 BANK = PROCESSED / "bank" / "risk_bank.parquet"

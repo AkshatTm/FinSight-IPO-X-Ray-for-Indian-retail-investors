@@ -5,10 +5,10 @@ from typing import Any
 
 import pytest
 
-from finsight.core.schemas import Candidate
-from finsight.evaluate.xray_accuracy import config_fields, score_xrays, summarise
-from finsight.extract import DocInputs, build_xray, load_fields
-from finsight.normalize import parse_amount
+from vidura.core.schemas import Candidate
+from vidura.evaluate.xray_accuracy import config_fields, score_xrays, summarise
+from vidura.extract import DocInputs, build_xray, load_fields
+from vidura.normalize import parse_amount
 
 NOW = datetime(2026, 10, 1, tzinfo=UTC)
 

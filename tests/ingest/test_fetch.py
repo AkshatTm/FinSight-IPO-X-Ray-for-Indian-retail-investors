@@ -9,9 +9,9 @@ from pathlib import Path
 import fitz
 import pytest
 
-from finsight.ingest import fetch
-from finsight.ingest.fetch import Fetcher, extract_pdf_urls, read_rows, run, write_rows
-from finsight.splits import UNIVERSE_COLUMNS, load_universe
+from vidura.ingest import fetch
+from vidura.ingest.fetch import Fetcher, extract_pdf_urls, read_rows, run, write_rows
+from vidura.splits import UNIVERSE_COLUMNS, load_universe
 
 
 def make_pdf(pages: int) -> bytes:

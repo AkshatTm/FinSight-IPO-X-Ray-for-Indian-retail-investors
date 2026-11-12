@@ -10,10 +10,10 @@ from pathlib import Path
 
 import sqlalchemy as sa
 
-from finsight.core.config import load_settings
-from finsight.core.schemas import DocRecord
-from finsight.db import Database
-from finsight.storage import LocalStorage
+from vidura.core.config import load_settings
+from vidura.core.schemas import DocRecord
+from vidura.db import Database
+from vidura.storage import LocalStorage
 
 OLD_DOCS = """CREATE TABLE docs (
     doc_id VARCHAR(40) PRIMARY KEY, sha256 VARCHAR(64) NOT NULL UNIQUE, doc_type VARCHAR(16),

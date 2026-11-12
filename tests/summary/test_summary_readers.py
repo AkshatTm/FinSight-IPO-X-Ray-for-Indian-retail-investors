@@ -6,15 +6,15 @@ from decimal import Decimal
 
 import pytest
 
-import finsight.summary as summary_pkg
-from finsight.core.schemas import Count, Money, Page, ParsedDoc, Percent, Section, Word
-from finsight.summary.anchored import split_line
-from finsight.summary.customers import extract_customers
-from finsight.summary.holdings import identifiable, pledged
-from finsight.summary.layout import Line
-from finsight.summary.litigation import extract_litigation
-from finsight.summary.objects import general_purposes
-from finsight.summary.peers import extract_peers
+import vidura.summary as summary_pkg
+from vidura.core.schemas import Count, Money, Page, ParsedDoc, Percent, Section, Word
+from vidura.summary.anchored import split_line
+from vidura.summary.customers import extract_customers
+from vidura.summary.holdings import identifiable, pledged
+from vidura.summary.layout import Line
+from vidura.summary.litigation import extract_litigation
+from vidura.summary.objects import general_purposes
+from vidura.summary.peers import extract_peers
 
 DOC = "synthetic-2025"
 

@@ -2,7 +2,7 @@ import importlib
 
 import pytest
 
-import finsight
+import vidura
 
 PACKAGES = [
     "core", "ingest", "parse", "normalize", "extract", "weaklabel", "retrieve", "generate",
@@ -11,10 +11,10 @@ PACKAGES = [
 
 
 def test_version_is_set() -> None:
-    assert finsight.__version__
+    assert vidura.__version__
 
 
 @pytest.mark.parametrize("package", PACKAGES)
 def test_package_imports_and_has_docstring(package: str) -> None:
-    module = importlib.import_module(f"finsight.{package}")
-    assert module.__doc__, f"finsight.{package} needs a responsibility docstring"
+    module = importlib.import_module(f"vidura.{package}")
+    assert module.__doc__, f"vidura.{package} needs a responsibility docstring"

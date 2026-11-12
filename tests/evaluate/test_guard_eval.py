@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.evaluate.guard_eval import (
+from vidura.evaluate.guard_eval import (
     ADVICE,
     LANGUAGE,
     NOTE,

@@ -5,9 +5,9 @@ from typing import Any
 
 import pytest
 
-from finsight.core.schemas import RedFlag, Risk
-from finsight.risklevel import build, compute, level_for, load_config, percentile
-from finsight.storage import LocalStorage, doc_key, get_json, put_json
+from vidura.core.schemas import RedFlag, Risk
+from vidura.risklevel import build, compute, level_for, load_config, percentile
+from vidura.storage import LocalStorage, doc_key, get_json, put_json
 
 CFG: dict[str, Any] = {
     "provisional": True,

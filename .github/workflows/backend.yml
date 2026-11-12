@@ -41,7 +41,7 @@ jobs:
         options: >-
           --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
     env:
-      FINSIGHT_TEST_PG_URL: postgresql://postgres:finsight-ci@localhost:5432/postgres
+      VIDURA_TEST_PG_URL: postgresql://postgres:finsight-ci@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v10.2.0

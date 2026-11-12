@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from finsight.evaluate.ladder import (
+from vidura.evaluate.ladder import (
     build,
     choose_extractors,
     load_results,
@@ -179,7 +179,7 @@ def test_the_strict_metric_run_is_kept_beside_the_fixed_one(tmp_path: Path) -> N
 
 
 def test_heatmap_examples_are_at_most_five_per_cell_and_misses_come_first(tmp_path: Path) -> None:
-    from finsight.evaluate.ladder import cell_examples
+    from vidura.evaluate.ladder import cell_examples
 
     results = load_results(write_results(tmp_path))["rules"]
     out = cell_examples(results, "test", "full", k=2)

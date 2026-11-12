@@ -9,9 +9,9 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from finsight.risks import load_bank
-from finsight.risks.bank_build import write_parquet
-from finsight.risks.novelty_tau import (
+from vidura.risks import load_bank
+from vidura.risks.bank_build import write_parquet
+from vidura.risks.novelty_tau import (
     MIN_PAIRS,
     Pair,
     choose_tau,
@@ -22,7 +22,7 @@ from finsight.risks.novelty_tau import (
     sample_pairs,
     write_sheet,
 )
-from finsight.splits import SplitEntry, SplitsFile
+from vidura.splits import SplitEntry, SplitsFile
 
 ROOT = Path(__file__).resolve().parents[2]
 

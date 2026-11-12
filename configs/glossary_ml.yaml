@@ -53,7 +53,7 @@ terms:
 # Words on the report pages that the app's glossary drawer (configs/glossary.yaml) does not list.
 report_terms:
   - term: SOD (Summary of the Offer Document)
-    body: The short chapter near the front of an RHP that sums up the offer, the financials, litigation and related-party dealings. FinSight reads it first; when a document has none, it reads the chapters the summary would have covered.
+    body: The short chapter near the front of an RHP that sums up the offer, the financials, litigation and related-party dealings. Vidura reads it first; when a document has none, it reads the chapters the summary would have covered.
   - term: Risk factor
     body: One numbered risk the company lists in its "Risk Factors" chapter. A large RHP lists 50 to 100.
   - term: WACA (weighted average cost of acquisition)

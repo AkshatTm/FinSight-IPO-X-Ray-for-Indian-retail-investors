@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth/supabase";
 import { useUi } from "@/lib/store";
+import { getItemMigrating } from "@/lib/legacyStorage";
 import { USE_MOCKS } from "@/lib/api/client";
 
 function makeClient() {
@@ -28,7 +29,7 @@ export function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
     let saved = false;
     try {
-      saved = !!localStorage.getItem("fs_ui");
+      saved = !!getItemMigrating(localStorage, "vd_ui");
     } catch {
       /* storage blocked: defaults apply */
     }

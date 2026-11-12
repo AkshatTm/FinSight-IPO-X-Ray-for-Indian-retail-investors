@@ -1,6 +1,6 @@
-# Contributing to FinSight
+# Contributing to Vidura
 
-FinSight is a finished course project (v1.1) with one maintainer (Akshat Tomar). Issues and pull requests are welcome: bug fixes, documentation, new red-flag checks, evaluation. Read this first so a change can be merged without a second round.
+Vidura is a finished course project (v1.1) with one maintainer (Akshat Tomar). Issues and pull requests are welcome: bug fixes, documentation, new red-flag checks, evaluation. Read this first so a change can be merged without a second round.
 
 ## Set up
 
@@ -11,7 +11,7 @@ uv run poe lint && uv run poe typecheck
 cd frontend && pnpm install --frozen-lockfile && pnpm test
 ```
 
-Name every group you need in one `uv sync`; without `--inexact` a sync drops the groups it does not name. Running the whole app: [Install](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/getting-started/install.md) and [Run FinSight](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/getting-started/run.md). Coding standards, tests and CI: [Developer guide](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/development/index.md).
+Name every group you need in one `uv sync`; without `--inexact` a sync drops the groups it does not name. Running the whole app: [Install](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/getting-started/install.md) and [Run Vidura](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/getting-started/run.md). Coding standards, tests and CI: [Developer guide](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/docs/development/index.md).
 
 ## The loop
 
@@ -25,7 +25,7 @@ The full rules used during the project are in [08_GIT_WORKFLOW.md](https://githu
 
 ## Tests
 
-- Every module ships with pytest tests; `finsight.normalize` also has property tests (Hypothesis).
+- Every module ships with pytest tests; `vidura.normalize` also has property tests (Hypothesis).
 - Tests that need full documents, the corpus or model weights are marked `@pytest.mark.local`; `poe test` and CI skip them.
 - Frontend: Vitest for logic and components, Playwright on the mocks for flows.
 
@@ -45,6 +45,6 @@ Docs change in the same pull request as the behaviour they describe.
 - Test-slice or bench documents in any training data, threshold or prompt (C-ADR-02; `tests/test_split_leakage.py`).
 - Data outside `data/gold`, `data/manifests` and the fixture pack; PDFs; model weights; `.env` files; notebook outputs; files over 5 MB.
 - Credentials of any kind ([SECURITY](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/SECURITY.md)).
-- Closed-weight or paid model APIs at runtime: FinSight uses open-weight models only.
+- Closed-weight or paid model APIs at runtime: Vidura uses open-weight models only.
 
 By contributing you agree that your code is released under the MIT licence ([LICENSE](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/LICENSE)) and that you follow the [Code of Conduct](https://github.com/AkshatTm/FinSight-IPO-X-Ray-for-Indian-retail-investors/blob/main/CODE_OF_CONDUCT.md).

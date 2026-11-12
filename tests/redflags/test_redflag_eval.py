@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.config import project_root
+from vidura.core.config import project_root
 
 SPEC = importlib.util.spec_from_file_location(
     "redflag_eval", project_root() / "scripts" / "redflag_eval.py"
@@ -70,8 +70,8 @@ def test_predict_passes_the_xray_offer_facts_to_the_rules(
     evaluator must hand ``xray.json`` to ``inputs_from_summary`` like the pipeline stage does."""
     import summary_eval
 
-    import finsight.redflags as rf
-    from finsight.core.schemas import FinancialSummary, XRay
+    import vidura.redflags as rf
+    from vidura.core.schemas import FinancialSummary, XRay
 
     seen: list[XRay | None] = []
 

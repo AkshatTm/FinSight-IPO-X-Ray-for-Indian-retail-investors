@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from finsight.core.ids import (
+from vidura.core.ids import (
     make_doc_id,
     make_ipo_id,
     new_trace_id,

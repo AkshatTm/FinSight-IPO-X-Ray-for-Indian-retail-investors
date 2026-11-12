@@ -2,9 +2,9 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import FieldSpec
-from finsight.evaluate.gold import DEFAULT_DOC, FIELDS
-from finsight.extract import field_ids, get_field, load_fields
+from vidura.core.schemas import FieldSpec
+from vidura.evaluate.gold import DEFAULT_DOC, FIELDS
+from vidura.extract import field_ids, get_field, load_fields
 
 
 def test_registry_has_the_eleven_gold_fields_with_matching_types_and_docs() -> None:

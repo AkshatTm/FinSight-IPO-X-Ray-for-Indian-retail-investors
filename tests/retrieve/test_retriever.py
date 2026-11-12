@@ -3,10 +3,10 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from finsight.core.schemas import Passage
-from finsight.retrieve.dense import DenseIndex, Vectors, normalise
-from finsight.retrieve.fuse import rrf
-from finsight.retrieve.retriever import IpoIndex, Retriever, index_dir
+from vidura.core.schemas import Passage
+from vidura.retrieve.dense import DenseIndex, Vectors, normalise
+from vidura.retrieve.fuse import rrf
+from vidura.retrieve.retriever import IpoIndex, Retriever, index_dir
 
 VOCAB = [
     "registrar",

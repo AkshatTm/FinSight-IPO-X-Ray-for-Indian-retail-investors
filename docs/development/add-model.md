@@ -1,6 +1,6 @@
 # Add or replace a model
 
-FinSight uses open-weight models only. A model enters the product only after it beats the current one
+Vidura uses open-weight models only. A model enters the product only after it beats the current one
 on **dev**, is reported once on **test**, and has a model card. This is how the Phase 3 models were
 added, and how the Phase 4 models were meant to be integrated (CC-09, cut).
 
@@ -8,11 +8,11 @@ added, and how the Phase 4 models were meant to be integrated (CC-09, cut).
 
 | Slot | Current model | Interface | Loaded by |
 | --- | --- | --- | --- |
-| Plain-English rewrites and chat | `finsight-student:q4` (Ollama) | `llm.model` / `simplify.model` in the profile | `finsight.generate`, `jobs/simplify_worker.py` |
-| Risk category and band | ONNX classifier in `models/risk_classifier/onnx/` | `finsight.risks.OnnxClassifier` (`model.onnx`, `tokenizer.json`, `labels.json`) | `jobs/model_stages.py` (`risks_scored`) |
-| Novelty embeddings | `BAAI/bge-m3` | `finsight.retrieve.BgeM3Embedder` | `risks_scored` |
-| Chat reranker | `BAAI/bge-reranker-v2-m3` | `finsight.retrieve.CrossEncoderReranker` | `finsight.chat` |
-| Fact cross-check (showcase only) | extractor v1 in `models/extractor/seed-2026` | `finsight.extract` QA extractor | `python -m finsight.pipeline build --stage qa` |
+| Plain-English rewrites and chat | `finsight-student:q4` (Ollama) | `llm.model` / `simplify.model` in the profile | `vidura.generate`, `jobs/simplify_worker.py` |
+| Risk category and band | ONNX classifier in `models/risk_classifier/onnx/` | `vidura.risks.OnnxClassifier` (`model.onnx`, `tokenizer.json`, `labels.json`) | `jobs/model_stages.py` (`risks_scored`) |
+| Novelty embeddings | `BAAI/bge-m3` | `vidura.retrieve.BgeM3Embedder` | `risks_scored` |
+| Chat reranker | `BAAI/bge-reranker-v2-m3` | `vidura.retrieve.CrossEncoderReranker` | `vidura.chat` |
+| Fact cross-check (showcase only) | extractor v1 in `models/extractor/seed-2026` | `vidura.extract` QA extractor | `python -m vidura.pipeline build --stage qa` |
 
 ## 2. Train it off the laptop
 
@@ -36,8 +36,8 @@ rule that kept DeBERTa-v3-base over large, and the 4B student over the 8B).
 ## 4. Integrate behind the existing interface
 
 - Put the weights where the loader expects them (table above); never commit them.
-- The model preflight (`src/finsight/jobs/preflight.py`) must be able to find it, and its file or
-  Ollama digest becomes part of the cache fingerprint (`src/finsight/jobs/cache.py`), so reports made
+- The model preflight (`src/vidura/jobs/preflight.py`) must be able to find it, and its file or
+  Ollama digest becomes part of the cache fingerprint (`src/vidura/jobs/cache.py`), so reports made
   with the old model are re-run.
 - Bump `pipeline_version` if the output format or logic around the model changed.
 - Keep a fallback: a missing model must give an "analyse without it" choice and a degraded report,

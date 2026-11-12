@@ -6,7 +6,7 @@ part of Akshat's advice set, so they measure how the rules do on wording they we
 
 import pytest
 
-from finsight.guard import check_advice, normalize_question
+from vidura.guard import check_advice, normalize_question
 
 ADVICE = [
     # English
@@ -183,7 +183,7 @@ RED_FLAG_STILL_ADVICE = [
 
 @pytest.mark.parametrize("question", RED_FLAG_FACTS)
 def test_red_flag_questions_are_not_blocked(question: str) -> None:
-    from finsight.guard import is_red_flag_question
+    from vidura.guard import is_red_flag_question
 
     assert not check_advice(question).blocked
     assert is_red_flag_question(question)
@@ -195,6 +195,6 @@ def test_red_flag_questions_that_ask_what_to_do_stay_blocked(question: str) -> N
 
 
 def test_a_plain_question_is_not_a_red_flag_question() -> None:
-    from finsight.guard import is_red_flag_question
+    from vidura.guard import is_red_flag_question
 
     assert not is_red_flag_question("What is the price band?")

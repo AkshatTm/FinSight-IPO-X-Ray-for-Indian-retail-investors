@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.evaluate.outcomes import (
+from vidura.evaluate.outcomes import (
     LIMITATION,
     MIN_N,
     level_table,
@@ -14,7 +14,7 @@ from finsight.evaluate.outcomes import (
     validate,
 )
 
-SRC = Path(__file__).resolve().parents[2] / "src" / "finsight"
+SRC = Path(__file__).resolve().parents[2] / "src" / "vidura"
 
 
 def test_spearman_known_values() -> None:
@@ -67,7 +67,7 @@ def test_nothing_outside_evaluate_imports_outcomes() -> None:
         if rel.parts[0] == "evaluate":
             continue
         text = path.read_text(encoding="utf-8")
-        if "evaluate.outcomes" in text or "from finsight.evaluate import outcomes" in text:
+        if "evaluate.outcomes" in text or "from vidura.evaluate import outcomes" in text:
             offenders.append(str(rel))
     assert offenders == []
 

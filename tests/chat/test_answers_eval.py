@@ -1,6 +1,6 @@
 from types import SimpleNamespace as NS
 
-from finsight.evaluate.answers import summarise, turn_record
+from vidura.evaluate.answers import summarise, turn_record
 
 Q = {"ipo_id": "a", "question": "q", "language": "en", "answerable": True, "answer_gold": "x"}
 
@@ -53,7 +53,7 @@ def test_an_error_turn_keeps_its_code_and_message() -> None:
 
 
 def test_the_sample_is_spread_evenly_not_picked() -> None:
-    from finsight.evaluate.answers import pick_sample
+    from vidura.evaluate.answers import pick_sample
 
     rows = [{"i": i} for i in range(100)]
     got = pick_sample(rows, 20)
@@ -63,7 +63,7 @@ def test_the_sample_is_spread_evenly_not_picked() -> None:
 
 
 def test_a_hinglish_question_is_asked_with_an_answer_language_the_product_has() -> None:
-    from finsight.evaluate.answers import answer_language
+    from vidura.evaluate.answers import answer_language
 
     assert answer_language({"language": "hinglish"}) == "en"  # KeyError in the prompt before
     assert answer_language({"language": "hi"}) == "hi"

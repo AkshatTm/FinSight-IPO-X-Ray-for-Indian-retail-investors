@@ -15,7 +15,7 @@ tags: [retrieval, reranking, rag]
     (`retrieve: {dense: false, rerank: true, rerank_top_n: 20}`); the dense index is off.
 
 - **Models:** `BAAI/bge-reranker-v2-m3` (cross-encoder, Apache-2.0) and `BAAI/bge-m3` (embeddings,
-  MIT), loaded from the Hugging Face cache by `finsight.retrieve` and `finsight.risks`.
+  MIT), loaded from the Hugging Face cache by `vidura.retrieve` and `vidura.risks`.
 - **Precision:** fp16 on the GPU, fp32 on the CPU (`CrossEncoderReranker`). An ONNX int8 export lives in
   `models/reranker_onnx/`; chat does not use it, but its hash is part of the cache fingerprint.
 - **Owner:** Akshat · **Evaluation:** `eval_results/retrieval.json`, `eval_results/rerank_dev.json`,
@@ -25,7 +25,7 @@ tags: [retrieval, reranking, rag]
 
 Order the passages of one offer document by how well they answer a chat question, so the student model
 sees the right page and the number checker can compare against it. Out of scope: ranking across
-documents, the web, or any use outside FinSight chat.
+documents, the web, or any use outside Vidura chat.
 
 ## Evaluation
 

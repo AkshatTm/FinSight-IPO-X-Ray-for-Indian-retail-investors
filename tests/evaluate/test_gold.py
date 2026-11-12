@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from finsight.evaluate.gold import (
+from vidura.evaluate.gold import (
     DEFAULT_DOC,
     FIELDS,
     expected_keys,
@@ -235,7 +235,7 @@ def test_label_source_is_optional_and_checked() -> None:
 
 
 def test_convert_prefill_fixes_the_format_only() -> None:
-    from finsight.evaluate.gold import convert_prefill
+    from vidura.evaluate.gold import convert_prefill
 
     src = row(
         doc="pro", notes="[AI-prefilled, needs human verification] Footnote ^ after the number."

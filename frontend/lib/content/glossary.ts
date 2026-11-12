@@ -26,7 +26,7 @@ export const GLOSSARY: Entry[] = [
   { id: "objects", title: "Objects of the offer", short: "What the company plans to do with the money from the fresh issue." },
   { id: "units", title: "Lakh, crore, million", short: "1 lakh = 1,00,000. 1 crore = 100 lakh. 1 million = 10 lakh. So ₹100 crore = ₹1,000 million." },
   { id: "blank", title: "[●] (blank)", short: "A blank in the RHP for a value that isn't decided yet, usually the price." },
-  { id: "gmp", title: "GMP", short: "“Grey market premium”: unofficial trading talk before listing. It's not in the documents and FinSight doesn't track it." },
+  { id: "gmp", title: "GMP", short: "“Grey market premium”: unofficial trading talk before listing. It's not in the documents and Vidura doesn't track it." },
 ];
 
 export const glossaryEntry = (id: string) => GLOSSARY.find((g) => g.id === id);

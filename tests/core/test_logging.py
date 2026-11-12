@@ -2,13 +2,13 @@ import io
 import json
 import logging
 
-from finsight.core.logging import JsonFormatter, configure_logging, get_logger, log_stage
+from vidura.core.logging import JsonFormatter, configure_logging, get_logger, log_stage
 
 
 def _capture() -> tuple[logging.Logger, io.StringIO]:
     stream = io.StringIO()
     configure_logging("INFO", stream=stream)
-    return get_logger("finsight.test"), stream
+    return get_logger("vidura.test"), stream
 
 
 def test_each_line_is_one_json_object() -> None:
@@ -17,7 +17,7 @@ def test_each_line_is_one_json_object() -> None:
     record = json.loads(stream.getvalue().strip())
     assert record["msg"] == "hello"
     assert record["level"] == "INFO"
-    assert record["logger"] == "finsight.test"
+    assert record["logger"] == "vidura.test"
     assert "ts" in record
 
 
@@ -43,7 +43,7 @@ def test_exceptions_are_serialised_not_raised() -> None:
 
 def test_configure_logging_is_idempotent() -> None:
     _, stream = _capture()
-    logger = get_logger("finsight.test")
+    logger = get_logger("vidura.test")
     configure_logging("INFO", stream=stream)
     logger.info("once")
     assert len(stream.getvalue().strip().splitlines()) == 1

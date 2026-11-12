@@ -1,6 +1,6 @@
 # Corpus, splits and licences
 
-FinSight's data comes from public Indian IPO offer documents. No PDF is in the repository; the
+Vidura's data comes from public Indian IPO offer documents. No PDF is in the repository; the
 committed files are configs, manifests, gold labels and a small fixture pack of text excerpts
 (`tests/fixtures/real/`, B-ADR-15). Each dataset has a datasheet in the
 [Datasheets for Datasets](https://arxiv.org/abs/1803.09010) format ([Datasheets](../datasheets/index.md)).
@@ -19,7 +19,7 @@ open to the same investors.
 
 ## The time split (C-ADR-02)
 
-`configs/splits.yaml` is written by `uv run python -m finsight.splits build` and **frozen**
+`configs/splits.yaml` is written by `uv run python -m vidura.splits build` and **frozen**
 (`frozen: true`, rule `strict`). It changes only by a new C-ADR (it was changed once, by C-ADR-24, to
 create the bench).
 
@@ -28,7 +28,7 @@ create the bench).
 | train | 389 corpus IPOs + 110 recent RHPs from before the train cut (`train_cut: 2025-06-19`) | training data, the risk bank, weak labels |
 | dev | 52 recent RHPs + 3 showcase IPOs | choosing models, thresholds, rules and prompts |
 | test | 103 recent RHPs + 7 showcase IPOs | reported numbers only |
-| bench | 7 of the test IPOs, frozen inputs | FinSight Bench v1 only ([Bench](../evaluation/bench.md)) |
+| bench | 7 of the test IPOs, frozen inputs | Vidura Bench v1 only ([Bench](../evaluation/bench.md)) |
 | demo | the 3 newest RHPs | the live demo only |
 | excluded | 14 | nothing |
 
@@ -58,7 +58,7 @@ The L2 card is `data/gold/event_labels/LABELS_CARD.md` (written by ARGON in Phas
 ## Licences of the source documents
 
 - **Offer documents** (DRHPs, RHPs, prospectuses) are public filings with SEBI and the exchanges.
-  FinSight downloads them from the official sources only, politely, and never re-hosts them (C-ADR-08).
+  Vidura downloads them from the official sources only, politely, and never re-hosts them (C-ADR-08).
   The repository holds no PDFs; the fixture pack holds short text excerpts for tests.
 - **The Ghosh et al. corpus** is CC BY-NC-SA 4.0. Anything trained on it (the field extractor, and
   through the teacher's training pairs the classifier and the student) is non-commercial and

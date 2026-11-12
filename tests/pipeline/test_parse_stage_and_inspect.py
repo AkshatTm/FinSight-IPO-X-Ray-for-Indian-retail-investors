@@ -3,10 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import ParsedDoc
-from finsight.pipeline import inspect as insp
-from finsight.pipeline.layout import doc_outputs
-from finsight.pipeline.parse_stage import load_parsed, run_parse
+from vidura.core.schemas import ParsedDoc
+from vidura.pipeline import inspect as insp
+from vidura.pipeline.layout import doc_outputs
+from vidura.pipeline.parse_stage import load_parsed, run_parse
 
 
 @pytest.fixture(scope="module")

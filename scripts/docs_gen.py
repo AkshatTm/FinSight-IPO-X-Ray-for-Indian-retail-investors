@@ -29,7 +29,7 @@ from typing import Any
 import yaml
 from pydantic import BaseModel
 
-from finsight.core.config import ENV_KEYS, REQUIRED_ENV, Settings
+from vidura.core.config import ENV_KEYS, REQUIRED_ENV, Settings
 
 ROOT = Path(__file__).resolve().parents[1]
 EVAL = ROOT / "eval_results"
@@ -75,7 +75,7 @@ def _settings_rows(model: type[BaseModel], prefix: str = "") -> list[tuple[str, 
             rows.extend(_settings_rows(annotation, f"{key}."))
             continue
         default = field.get_default(call_default_factory=True)
-        env = "FINSIGHT_" + key.upper().replace(".", "__")
+        env = "VIDURA_" + key.upper().replace(".", "__")
         if key == "demo_mode":
             env = "DEMO_MODE"
         rows.append((key, _type(annotation), _cell(default), f"`{env}`"))
@@ -95,12 +95,13 @@ def _flatten(values: dict[str, Any], prefix: str = "") -> dict[str, Any]:
 def config_page() -> str:
     """Every setting with its type, default and env var, then what each profile changes."""
     lines = [
-        HEADER.format(source="finsight.core.config and configs/config.yaml"),
+        HEADER.format(source="vidura.core.config and configs/config.yaml"),
         "# Configuration and environment variables\n\n",
-        "Settings load from `configs/config.yaml` for one profile (`FINSIGHT_PROFILE`, default "
+        "Settings load from `configs/config.yaml` for one profile (`VIDURA_PROFILE`, default "
         "`dev_light`). Environment variables win over the YAML; nested keys use `__`, so "
-        "`llm.model` is `FINSIGHT_LLM__MODEL`. `UPLOADS_ENABLED=false` is the upload kill "
-        "switch.\n\n",
+        "`llm.model` is `VIDURA_LLM__MODEL`. `UPLOADS_ENABLED=false` is the upload kill "
+        "switch. Vidura was called FinSight: the old `FINSIGHT_*` names still work as a "
+        "fallback (the `VIDURA_*` name wins, and one deprecation warning is printed).\n\n",
         "## Settings\n\n",
         "| Key | Type | Default | Environment variable |\n| --- | --- | --- | --- |\n",
     ]
@@ -256,11 +257,11 @@ def cli_page() -> str:
     lines.append(
         "\n## Module commands\n\n"
         "| Command | What it does |\n| --- | --- |\n"
-        "| `uv run python -m finsight.pipeline build --ipo <id>` | Build one showcase IPO |\n"
-        "| `uv run python -m finsight.pipeline inspect --ipo <id>` | Print a short view of a parsed document (≤ 40 lines) |\n"
-        "| `uv run python -m finsight.jobs run <doc_id> <job_id>` | Run the upload pipeline |\n"
-        "| `uv run python -m finsight.jobs simplify <doc_id>` | Rewrite the queued risks |\n"
-        "| `uv run python -m finsight.jobs sweep` | Delete uploads past retention |\n"
+        "| `uv run python -m vidura.pipeline build --ipo <id>` | Build one showcase IPO |\n"
+        "| `uv run python -m vidura.pipeline inspect --ipo <id>` | Print a short view of a parsed document (≤ 40 lines) |\n"
+        "| `uv run python -m vidura.jobs run <doc_id> <job_id>` | Run the upload pipeline |\n"
+        "| `uv run python -m vidura.jobs simplify <doc_id>` | Rewrite the queued risks |\n"
+        "| `uv run python -m vidura.jobs sweep` | Delete uploads past retention |\n"
     )
     return "".join(lines)
 
@@ -272,7 +273,7 @@ def glossary_page() -> str:
     lines = [
         HEADER.format(source="configs/glossary.yaml and configs/glossary_ml.yaml"),
         "# Glossary\n\n",
-        "Plain-English meanings of the words FinSight uses. The first table is the list the app's "
+        "Plain-English meanings of the words Vidura uses. The first table is the list the app's "
         "glossary drawer shows (`GET /api/glossary`); the second covers words on the report pages; "
         "the third explains words used on the evaluation and model pages.\n\n",
         "## IPO terms (the app's glossary)\n\n| Term | Meaning |\n| --- | --- |\n",
@@ -286,7 +287,7 @@ def glossary_page() -> str:
 
 
 CONFIG_KEY = re.compile(r"^(\s*)([A-Za-z0-9_./-]+):(?:\s+(.*))?$")
-CONFIG_SKIP = {"splits.yaml": "written by `python -m finsight.splits build`; never edited by hand"}
+CONFIG_SKIP = {"splits.yaml": "written by `python -m vidura.splits build`; never edited by hand"}
 # Meaning of keys whose YAML file has no comment for them: (file, key regex) -> text. Values are
 # never typed here; they come from the file.
 CONFIG_NOTES: list[tuple[str, str, str]] = [
@@ -346,7 +347,7 @@ CONFIG_NOTES: list[tuple[str, str, str]] = [
         r"uploads\.scanned_min_median_chars",
         "A PDF whose median page has fewer characters is refused as a scan.",
     ),
-    ("config.yaml", r"profiles", "Named settings bundles; pick one with `FINSIGHT_PROFILE`."),
+    ("config.yaml", r"profiles", "Named settings bundles; pick one with `VIDURA_PROFILE`."),
     (
         "config.yaml",
         r"profiles\.dev_light",
@@ -465,7 +466,7 @@ CONFIG_NOTES: list[tuple[str, str, str]] = [
     ("splits.yaml", r"ipos", "Every IPO with its slice."),
     ("splits.yaml", r"excluded", "IPOs left out, with the reason."),
     ("splits.yaml", r"demo", "Newest IPOs kept for the demo only."),
-    ("splits.yaml", r"bench", "The 7 FinSight Bench v1 IPOs."),
+    ("splits.yaml", r"bench", "The 7 Vidura Bench v1 IPOs."),
     ("splits.yaml", r"bench_dev", "Bench development IPOs (none)."),
     (
         "suggested_questions.yaml",
@@ -624,11 +625,11 @@ def _gold_rows() -> list[tuple[str, int, list[str]]]:
 
 def data_formats_page() -> str:
     """Fields of the stored stage outputs (from the pydantic schemas) and the gold files."""
-    from finsight.core import schemas
-    from finsight.reports import ReportOverview
+    from vidura.core import schemas
+    from vidura.reports import ReportOverview
 
     lines = [
-        HEADER.format(source="finsight.core.schemas, finsight.reports and data/gold"),
+        HEADER.format(source="vidura.core.schemas, vidura.reports and data/gold"),
         "# Data formats\n\n",
         "What the pipeline stores for each document (`docs/<doc_id>/` in storage) and what the "
         "API returns. Types are Python annotations; `Decimal` values travel as strings.\n\n",
@@ -690,7 +691,7 @@ EXTRA_RESULTS: dict[str, list[str]] = {
 }
 # What happened to an experiment beyond its files.
 EXPERIMENT_NOTES: dict[str, str] = {
-    "E9": "frontier answers were not collected; FinSight Bench v1 compares rules and the student",
+    "E9": "frontier answers were not collected; Vidura Bench v1 compares rules and the student",
     "E12": "speech input removed in v1.1 (English-only); the file is history",
     "E21": "thresholds fitted (C-ADR-25); the outcome comparison waits for `data/gold/outcomes.csv`",
     "E23": "cut: no hosting (B-ADR-16); laptop timings are in FINAL_SCORECARD",

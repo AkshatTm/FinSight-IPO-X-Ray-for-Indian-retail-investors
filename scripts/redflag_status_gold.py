@@ -4,7 +4,7 @@
     uv run python scripts/redflag_status_gold.py --allow-unverified   # a draft, labelled as such
 
 Reads ``data/gold/gold_v3_summary.jsonl`` (the filled, verified copy of
-``gold_v3_template.jsonl``), runs the same ``finsight.redflags`` rules as the pipeline on each
+``gold_v3_template.jsonl``), runs the same ``vidura.redflags`` rules as the pipeline on each
 IPO's rows and writes ``data/gold/redflag_status_gold.jsonl``. Statuses are computed, never typed;
 Akshat spot-checks them (B04). E15 then compares the pipeline's statuses with these.
 """
@@ -21,7 +21,7 @@ from typing import Any
 
 import yaml
 
-from finsight.redflags import evaluate, inputs_from_gold, load_config
+from vidura.redflags import evaluate, inputs_from_gold, load_config
 
 ROOT = Path(__file__).resolve().parents[1]
 GOLD = ROOT / "data" / "gold" / "gold_v3_summary.jsonl"

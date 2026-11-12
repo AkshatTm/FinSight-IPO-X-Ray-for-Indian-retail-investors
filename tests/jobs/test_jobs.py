@@ -9,11 +9,11 @@ from pathlib import Path
 import pytest
 from make_fixture_pdf import RISK_TITLES, build_offer_pdf, build_rhp_with_risks
 
-from finsight.core.config import UploadsConfig, load_settings
-from finsight.core.ids import make_doc_id
-from finsight.core.schemas import DocRecord
-from finsight.db import Database
-from finsight.jobs import (
+from vidura.core.config import UploadsConfig, load_settings
+from vidura.core.ids import make_doc_id
+from vidura.core.schemas import DocRecord
+from vidura.db import Database
+from vidura.jobs import (
     IST,
     JobContext,
     Stage,
@@ -24,7 +24,7 @@ from finsight.jobs import (
     run_job,
     sweep,
 )
-from finsight.storage import LocalStorage, doc_key, get_json, put_json
+from vidura.storage import LocalStorage, doc_key, get_json, put_json
 
 T0 = datetime(2026, 10, 3, 6, 0, tzinfo=UTC)  # 11:30 IST
 
@@ -118,7 +118,7 @@ def test_stage_failure_is_logged_as_json_with_the_ids(db: Database, storage: Loc
     import json
     import logging
 
-    from finsight.core.logging import configure_logging
+    from vidura.core.logging import configure_logging
 
     out = io.StringIO()
     configure_logging(stream=out)
@@ -126,7 +126,7 @@ def test_stage_failure_is_logged_as_json_with_the_ids(db: Database, storage: Loc
         ctx = _ctx(db, storage)
         run_job(ctx, [Stage("redflags", _boom)])
     finally:
-        logging.getLogger("finsight").handlers.clear()
+        logging.getLogger("vidura").handlers.clear()
     line = json.loads(out.getvalue().splitlines()[0])
     assert (line["doc_id"], line["job_id"], line["stage"]) == ("doc_a", ctx.job_id, "redflags")
     assert line["level"] == "ERROR"

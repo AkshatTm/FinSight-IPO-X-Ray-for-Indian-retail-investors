@@ -28,8 +28,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import gold_sets  # noqa: E402
 
-from finsight.risks.readability import fkgl, flesch_reading_ease  # noqa: E402
-from finsight.risks.simplify import MAX_NEW_TOKENS, clean, post_check  # noqa: E402
+from vidura.risks.readability import fkgl, flesch_reading_ease  # noqa: E402
+from vidura.risks.simplify import MAX_NEW_TOKENS, clean, post_check  # noqa: E402
 
 MARK = "Risk factor:\n"
 DEV = ROOT / "data" / "processed" / "kaggle" / "simplify" / "dev.jsonl"

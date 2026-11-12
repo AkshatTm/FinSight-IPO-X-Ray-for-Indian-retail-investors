@@ -1,6 +1,6 @@
 import pytest
 
-from finsight.core import registry
+from vidura.core import registry
 
 
 @pytest.fixture(autouse=True)

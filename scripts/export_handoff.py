@@ -28,9 +28,9 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.bench import read_ipo_ids  # noqa: E402
-from finsight.core.ids import make_doc_id  # noqa: E402
-from finsight.handoff import (  # noqa: E402
+from vidura.bench import read_ipo_ids  # noqa: E402
+from vidura.core.ids import make_doc_id  # noqa: E402
+from vidura.handoff import (  # noqa: E402
     build_baselines,
     build_lite,
     build_manifest,
@@ -46,7 +46,7 @@ from finsight.handoff import (  # noqa: E402
     write_manifest,
     write_parquet,
 )
-from finsight.handoff.templates import versions  # noqa: E402
+from vidura.handoff.templates import versions  # noqa: E402
 
 STEPS = (
     "selection",
@@ -187,9 +187,9 @@ class Pack:
         self.stats["templates"] = versions()
 
     def step_hits(self) -> None:
-        from finsight.core.schemas import ParsedDoc, Section
-        from finsight.parse import find_sections
-        from finsight.redflags.severe import matches
+        from vidura.core.schemas import ParsedDoc, Section
+        from vidura.parse import find_sections
+        from vidura.redflags.severe import matches
 
         proc = self.dr / "data" / "processed"
         cache = proc / "handoff_cache"
@@ -312,7 +312,7 @@ class Pack:
 
     def step_eval(self) -> None:
         ev = self.out / "eval"
-        build_lite(ROOT / "src" / "finsight", ev / "vendor")
+        build_lite(ROOT / "src" / "vidura", ev / "vendor")
         er = ROOT / "eval_results"
         mr = self.dr / "models" / "risk_classifier"
         sources: dict[str, dict[str, str]] = {}

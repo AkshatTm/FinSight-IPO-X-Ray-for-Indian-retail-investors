@@ -1,6 +1,6 @@
 from types import SimpleNamespace as NS
 
-from finsight.evaluate.latency import peak, summarise, summarise_times, time_turn
+from vidura.evaluate.latency import peak, summarise, summarise_times, time_turn
 
 
 class Clock:

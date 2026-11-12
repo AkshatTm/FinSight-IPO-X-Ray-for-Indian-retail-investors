@@ -23,9 +23,9 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.core.schemas import Page, ParsedDoc, Section  # noqa: E402
-from finsight.parse.sections import find_sections, find_subsection_pages  # noqa: E402
-from finsight.parse.tables import pymupdf_backend  # noqa: E402
+from vidura.core.schemas import Page, ParsedDoc, Section  # noqa: E402
+from vidura.parse.sections import find_sections, find_subsection_pages  # noqa: E402
+from vidura.parse.tables import pymupdf_backend  # noqa: E402
 
 OUT = ROOT / "tests" / "fixtures" / "real"
 PROCESSED = ROOT / "data" / "processed"
@@ -155,7 +155,7 @@ def _sod_doc_dir(ipo_id: str, data_root: Path, overrides: dict[str, Path]) -> tu
     (keyed by the PDF's sha256) or ``data/processed/<ipo_id>``."""
     import hashlib
 
-    from finsight.core.ids import make_doc_id
+    from vidura.core.ids import make_doc_id
 
     if ipo_id in overrides:
         base = overrides[ipo_id]

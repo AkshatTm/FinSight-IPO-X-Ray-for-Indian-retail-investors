@@ -4,9 +4,9 @@ from datetime import UTC, datetime
 
 import pytest
 
-from finsight.core.schemas import Candidate, FieldResult, FieldSpec, XRay
-from finsight.guard import check_privacy, check_question, facts_payload, refusal_text
-from finsight.normalize import parse_amount
+from vidura.core.schemas import Candidate, FieldResult, FieldSpec, XRay
+from vidura.guard import check_privacy, check_question, facts_payload, refusal_text
+from vidura.normalize import parse_amount
 
 PRIVATE = [
     "कंपनी के सीईओ का घर का पता क्या है?",  # the question from the Hindi bake-off sheet

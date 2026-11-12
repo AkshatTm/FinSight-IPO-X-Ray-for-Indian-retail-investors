@@ -163,11 +163,11 @@ def final_rows(eval_dir: Path) -> list[str]:
         r = bench["systems"]["rules_v1"]
         n = len(bench["ipos"])
         rows.append(
-            f"| FinSight Bench v1, task A key facts (rules) | value match [95 % CI], {n} test IPOs | "
+            f"| Vidura Bench v1, task A key facts (rules) | value match [95 % CI], {n} test IPOs | "
             f"{_iv(r['A']['nvm'])} | carried, single run | {_link(eval_dir, 'c4/bench_summary.json')} |"
         )
         rows.append(
-            f"| FinSight Bench v1, task B red flags (rules) | status accuracy [95 % CI] | "
+            f"| Vidura Bench v1, task B red flags (rules) | status accuracy [95 % CI] | "
             f"{_iv(r['B']['status_accuracy'])} | carried, single run | "
             f"{_link(eval_dir, 'c4/bench_summary.json')} |"
         )

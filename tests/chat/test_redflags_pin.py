@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from finsight.chat.redflags import redflags_passage, wants_redflags
-from finsight.core.schemas import PageEvidence, RedFlag, RedFlags, SevereOverride
+from vidura.chat.redflags import redflags_passage, wants_redflags
+from vidura.core.schemas import PageEvidence, RedFlag, RedFlags, SevereOverride
 
 
 def _flag(i: str, status: str, sentence: str, page: int | None = None) -> RedFlag:

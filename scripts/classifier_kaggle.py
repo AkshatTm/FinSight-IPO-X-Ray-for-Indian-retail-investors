@@ -1,6 +1,6 @@
 """Risk classifier on Kaggle: manifests, dataset, push/status/fetch and the seed summary (C2.4).
 
-    uv run python -m finsight.risks.classify split                 # train/dev by company
+    uv run python -m vidura.risks.classify split                 # train/dev by company
     uv run python scripts/classifier_kaggle.py manifests           # time-split manifests for both sides
     uv run python scripts/classifier_kaggle.py dataset --username <you>   # private dataset (create/version)
     uv run python scripts/classifier_kaggle.py push smoke --username <you>
@@ -25,8 +25,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.risks.classify import Example  # noqa: E402
-from finsight.risks.clf_runs import (  # noqa: E402
+from vidura.risks.classify import Example  # noqa: E402
+from vidura.risks.clf_runs import (  # noqa: E402
     DATASET,
     ipo_ids_of,
     kernel_folder,
@@ -35,7 +35,7 @@ from finsight.risks.clf_runs import (  # noqa: E402
     summarise_band,
     write_json,
 )
-from finsight.risks.teacher_run import read_jsonl  # noqa: E402
+from vidura.risks.teacher_run import read_jsonl  # noqa: E402
 
 SPLIT_DIR = ROOT / "data" / "processed" / "kaggle" / "risk-classifier"
 WORK = ROOT / "data" / "processed" / "kaggle"
@@ -55,7 +55,7 @@ def kaggle(*args: str) -> int:
 
 def cmd_manifests() -> None:
     """Write ``classifier_train`` / ``classifier_dev`` manifests (kind train: no test or bench)."""
-    from finsight.splits import Manifest, file_sha256, write_manifest
+    from vidura.splits import Manifest, file_sha256, write_manifest
 
     for name in ("train", "dev"):
         path = SPLIT_DIR / f"{name}.jsonl"

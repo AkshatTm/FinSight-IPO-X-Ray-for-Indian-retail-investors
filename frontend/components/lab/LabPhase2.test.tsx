@@ -56,7 +56,7 @@ describe("Phase 2 Lab sections", () => {
     );
     for (const h of ["Splitting risks", "Reading the financial checks", "Sorting risks into categories", "Plain-English rewrites", "Unusualness", "Speed and cost"])
       expect(screen.getByRole("heading", { name: h })).toBeInTheDocument();
-    expect(screen.getByText("How often FinSight separates the risks correctly.")).toBeInTheDocument();
+    expect(screen.getByText("How often Vidura separates the risks correctly.")).toBeInTheDocument();
     expect(screen.getByText("The rewrites are checked for numbers and certainty, not for every shade of meaning.")).toBeInTheDocument();
     expect(screen.getByText("a number changed or added", { exact: false })).toBeInTheDocument();
     expect(screen.getByText("odd_reason", { exact: false })).toBeInTheDocument();

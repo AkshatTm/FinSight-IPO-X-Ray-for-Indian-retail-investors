@@ -1,5 +1,5 @@
-from finsight.core.schemas import Passage
-from finsight.generate.prompts import (
+from vidura.core.schemas import Passage
+from vidura.generate.prompts import (
     CLOSE,
     MAX_WORDS,
     NOT_FOUND,

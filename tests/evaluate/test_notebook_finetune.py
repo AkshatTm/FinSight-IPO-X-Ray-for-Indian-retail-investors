@@ -51,8 +51,8 @@ def test_parameters_cell_exposes_the_knobs(nb: dict) -> None:
 
 
 def test_notebook_metrics_mirror_the_evaluate_module(nb: dict) -> None:
-    """The notebook's own SQuAD scorer must agree with finsight.evaluate.metrics."""
-    from finsight.evaluate.metrics import exact_match, token_f1
+    """The notebook's own SQuAD scorer must agree with vidura.evaluate.metrics."""
+    from vidura.evaluate.metrics import exact_match, token_f1
 
     ns: dict = {}
     src = next(s for s in code_cells(nb) if "def normalize_text" in s)

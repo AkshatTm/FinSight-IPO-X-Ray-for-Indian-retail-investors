@@ -5,7 +5,7 @@ type Entry = string;
 
 export const LAB = {
   "lab.title": "Model Lab",
-  "lab.intro": "FinSight was tested on IPOs it never saw during training. These are the results, including where it falls short.",
+  "lab.intro": "Vidura was tested on IPOs it never saw during training. These are the results, including where it falls short.",
   "lab.shows": "What this shows",
   "lab.missing": "No results for this section on this machine yet.",
 
@@ -22,7 +22,7 @@ export const LAB = {
   "lab.rung.qa_pretrained": "Pretrained model",
   "lab.rung.qa_pretrained.d": "a question-answering model (DeBERTa) used as it comes.",
   "lab.rung.qa_finetuned": "Our fine-tuned model",
-  "lab.rung.qa_finetuned.d": "the same model trained on about 4,000 examples FinSight labelled automatically.",
+  "lab.rung.qa_finetuned.d": "the same model trained on about 4,000 examples Vidura labelled automatically.",
   "lab.rung.bilstm_crf": "Small tagging network",
   "lab.rung.bilstm_crf.d": "a BiLSTM-CRF that tags the words of a page, trained on the same automatic labels, no pretrained knowledge.",
   "lab.ladder.take": "When the cover page is there, simple rules do best because the cover follows a fixed format. When the cover is hidden, the rules drop to {rules_body}% while our model stays at {ft_body}%. Training on automatic labels made the model {delta} points better than the pretrained version.",
@@ -46,7 +46,7 @@ export const LAB = {
 
   // 8.3 automatic labels
   "lab.weak.h": "Automatic labels",
-  "lab.weak.shows": "FinSight's model learned from examples labelled by a program, not by people. We checked a random 50 by hand.",
+  "lab.weak.shows": "Vidura's model learned from examples labelled by a program, not by people. We checked a random 50 by hand.",
   "lab.weak.examples": "examples created",
   "lab.weak.ipos": "IPOs used",
   "lab.weak.precision": "audit precision",
@@ -55,7 +55,7 @@ export const LAB = {
 
   // 8.4 verifier
   "lab.ver.h": "Catching wrong numbers (the verifier)",
-  "lab.ver.shows": "We planted wrong numbers in correct answers and checked how many FinSight caught.",
+  "lab.ver.shows": "We planted wrong numbers in correct answers and checked how many Vidura caught.",
   "lab.ver.caught": "caught",
   "lab.ver.false": "false alarms",
   "lab.ver.unit": "unit mix-ups caught on unseen IPOs",
@@ -73,7 +73,7 @@ export const LAB = {
 
   // 8.5 retrieval
   "lab.ret.h": "Finding the right pages (retrieval) and answers",
-  "lab.ret.shows": "How often the right page is among the five FinSight reads, and how its answers score.",
+  "lab.ret.shows": "How often the right page is among the five Vidura reads, and how its answers score.",
   "lab.ret.col.method": "Way of finding pages",
   "lab.ret.col.recall": "Right page in the five",
   "lab.ret.col.abstain": "Unanswerable questions declined",
@@ -92,7 +92,7 @@ export const LAB = {
   // and the rewrite honesty line are verbatim; every other line (and all Hindi) is a builder draft
   // listed in docs/AKSHAT_TODO.md.
   "labb.seg.h": "Splitting risks",
-  "labb.seg.shows": "How often FinSight separates the risks correctly.",
+  "labb.seg.shows": "How often Vidura separates the risks correctly.",
   "labb.seg.f1": "risk boundaries found correctly (F1)",
   "labb.seg.pr": "precision {p}%, recall {r}%",
   "labb.seg.docs": "documents checked by hand",
@@ -103,7 +103,7 @@ export const LAB = {
   "labb.chk.nvm": "numbers read correctly ({n} values)",
   "labb.chk.acc": "statuses that match the hand-worked one ({n} checks)",
   "labb.chk.col.gold": "Worked out by hand",
-  "labb.chk.col.pred": "FinSight",
+  "labb.chk.col.pred": "Vidura",
 
   "labb.clf.h": "Sorting risks into categories",
   "labb.clf.shows": "Four ways of putting each risk in one of ten categories, from a word-count baseline to the large model that made the training labels, scored on risks labelled by hand.",
@@ -113,7 +113,7 @@ export const LAB = {
   "labb.clf.seeds": "± {std} over {k} runs",
   "labb.clf.note": "The training labels were made by a larger open model, not by people. Only the test set was labelled by hand.",
 
-  "labb.bench.h": "FinSight Bench",
+  "labb.bench.h": "Vidura Bench",
   "labb.bench.shows": "The same questions, field lookups and red-flag checks given to each system on IPOs from after training. One run per system; scores come from files, not from this page.",
   "labb.bench.col.system": "System",
   "labb.bench.col.a": "Facts found (A)",
@@ -137,7 +137,7 @@ export const LAB = {
   "labb.rw.honest": "The rewrites are checked for numbers and certainty, not for every shade of meaning.",
 
   "labb.nov.h": "Unusualness",
-  "labb.nov.shows": "When FinSight says a past IPO had a similar risk, how often a person agrees, at each similarity cut-off.",
+  "labb.nov.shows": "When Vidura says a past IPO had a similar risk, how often a person agrees, at each similarity cut-off.",
   "labb.nov.col.tau": "Similarity cut-off",
   "labb.nov.col.p": "Really similar",
   "labb.nov.col.n": "Pairs checked",
@@ -155,7 +155,7 @@ export const LAB = {
   "labb.rl.col.n": "IPOs",
   "labb.rl.col.median": "Median return",
   "labb.rl.col.range": "Middle half",
-  "labb.rl.note": "Past returns are used only to check the level. FinSight does not predict prices.",
+  "labb.rl.note": "Past returns are used only to check the level. Vidura does not predict prices.",
 
   "labb.sc.h": "Speed and cost",
   "labb.sc.shows": "How long each step takes on the machine running the API, and what one upload costs.",

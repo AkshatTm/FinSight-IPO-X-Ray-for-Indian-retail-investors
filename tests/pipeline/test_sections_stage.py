@@ -1,10 +1,10 @@
 import json
 from pathlib import Path
 
-from finsight.core.schemas import Section
-from finsight.pipeline.layout import doc_outputs
-from finsight.pipeline.parse_stage import run_parse
-from finsight.pipeline.sections_stage import (
+from vidura.core.schemas import Section
+from vidura.pipeline.layout import doc_outputs
+from vidura.pipeline.parse_stage import run_parse
+from vidura.pipeline.sections_stage import (
     load_sections,
     run_sections,
     section_matrix,

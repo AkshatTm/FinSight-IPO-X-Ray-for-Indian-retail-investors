@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from finsight.normalize import find_periods, parse_period
+from vidura.normalize import find_periods, parse_period
 
 # (text, kind, fiscal year it ends, quarter, end date)
 CASES = [

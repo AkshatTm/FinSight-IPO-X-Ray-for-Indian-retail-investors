@@ -1,7 +1,7 @@
 # Pipeline stages
 
 An upload runs 14 stages in order, after the `received` event. They are defined in
-`src/finsight/jobs/pipeline.py` (`upload_stages`) and `src/finsight/jobs/model_stages.py`
+`src/vidura/jobs/pipeline.py` (`upload_stages`) and `src/vidura/jobs/model_stages.py`
 (`model_stages`), and run by the [job runner](jobs.md). Every output is written to
 `data/store/docs/<doc_id>/`.
 
@@ -35,7 +35,7 @@ flowchart LR
 | `simplify` | risks_scored | Queues the `simplify.auto_top_n` (15) most important risks; a worker rewrites them one at a time and announces each with a `risk_simplified` event | `simplified.json` | `finsight-student:q4` (Ollama) |
 | `index` | sections | Copies parsed pages and sections to `data/processed/<doc_id>/` and builds the chat's BM25 index | `index.json` marker, `data/processed/<doc_id>/` | — |
 
-`report.json` is not a stage: `finsight.reports` assembles it from whatever outputs exist when the report
+`report.json` is not a stage: `vidura.reports` assembles it from whatever outputs exist when the report
 is requested, so a report opens before the last stage finishes.
 
 ## Timings
@@ -58,7 +58,7 @@ A stored analysis is valid for
 sha256(pdf)  +  pipeline_version  +  models_fingerprint
 ```
 
-(`src/finsight/jobs/cache.py`, CC-04 "cache v2").
+(`src/vidura/jobs/cache.py`, CC-04 "cache v2").
 
 - **`sha256(pdf)`** is the document id: `doc_id = "doc_" + the first 16 hex characters`.
 - **`pipeline_version`** is set in `configs/config.yaml` and is **4.2** at v1.1 (C-ADR-26 issuer-only
@@ -69,7 +69,7 @@ sha256(pdf)  +  pipeline_version  +  models_fingerprint
   in `data/cache/weight_hashes.json`.
 
 Opening a report whose version or fingerprint differs re-runs it ("This report was made with an older
-version of FinSight"). A **degraded** analysis (a stage failed, or a model was skipped) is never cached
+version of Vidura"). A **degraded** analysis (a stage failed, or a model was skipped) is never cached
 as complete. If a needed model is down when a stale report is opened, the report says the newer
 analysis "can't run right now" and offers **Analyse without it**.
 
@@ -79,8 +79,8 @@ The 10 showcase IPOs in the library are built with the older offline command, wh
 names:
 
 ```bash
-uv run python -m finsight.pipeline build --ipo <ipo_id> --stage parse   # then sections, tables, rules, qa, xray, index
-uv run python -m finsight.pipeline inspect --ipo <ipo_id> --stats
+uv run python -m vidura.pipeline build --ipo <ipo_id> --stage parse   # then sections, tables, rules, qa, xray, index
+uv run python -m vidura.pipeline inspect --ipo <ipo_id> --stats
 ```
 
 `scripts/build_showcase.py` builds their upload-style reports, and `scripts/preload.py` re-analyses a

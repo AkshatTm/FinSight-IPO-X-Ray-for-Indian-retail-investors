@@ -1,6 +1,6 @@
 # Models
 
-FinSight uses open-weight models only and calls no paid LLM API (ADR-002, B-ADR-06). Each trained model
+Vidura uses open-weight models only and calls no paid LLM API (ADR-002, B-ADR-06). Each trained model
 has a card in the Hugging Face model-card format: metadata, intended use, training data, procedure and
 hyper-parameters, metrics with intervals or seeds, variants not adopted, limitations and ethical
 considerations. Numbers in the generated blocks come from `eval_results/` (`uv run poe docs-gen`).

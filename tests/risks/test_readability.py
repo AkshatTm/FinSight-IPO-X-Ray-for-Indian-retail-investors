@@ -1,6 +1,6 @@
 """E19 readability helpers."""
 
-from finsight.risks.readability import fkgl, flesch_reading_ease, syllables
+from vidura.risks.readability import fkgl, flesch_reading_ease, syllables
 
 
 def test_syllables() -> None:

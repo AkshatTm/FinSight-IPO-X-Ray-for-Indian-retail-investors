@@ -12,7 +12,7 @@ tokenizers = pytest.importorskip("tokenizers")
 import numpy as np  # noqa: E402
 from onnx import TensorProto, helper, numpy_helper  # noqa: E402
 
-from finsight.risks.classify import OnnxClassifier, predict  # noqa: E402
+from vidura.risks.classify import OnnxClassifier, predict  # noqa: E402
 
 LABELS = ["financial", "regulatory"]
 VOCAB = {"[PAD]": 0, "[UNK]": 1, "losses": 2, "licence": 3, "the": 4}

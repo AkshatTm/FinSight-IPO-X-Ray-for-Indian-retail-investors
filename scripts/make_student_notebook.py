@@ -4,7 +4,7 @@
 
 QLoRA on a Kaggle T4 (fp16), checkpoints every 200 steps with resume, then merge and GGUF Q4_K_M
 export with llama.cpp for the CPU worker. The training rows come from
-``python -m finsight.risks.simplify split`` (chat format, the serving prompt as the user turn), so
+``python -m vidura.risks.simplify split`` (chat format, the serving prompt as the user turn), so
 the student is trained on exactly the prompt it is served with
 (``tests/risks/test_student_notebook.py`` checks the committed file).
 """
@@ -19,12 +19,12 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from finsight.risks import simplify  # noqa: E402
+from vidura.risks import simplify  # noqa: E402
 
 OUT = ROOT / "notebooks" / "b2_student_qlora_kaggle.ipynb"
 DATASET = "finsight-simplify"
 
-MD = """# B2.5 - Simplifier student: QLoRA on Kaggle + GGUF export (FinSight, M6)
+MD = """# B2.5 - Simplifier student: QLoRA on Kaggle + GGUF export (Vidura, M6)
 
 Fine-tunes a small Qwen instruct model to rewrite risk factors in plain English, from the filtered
 teacher pairs in the private dataset `finsight-simplify` (`train.jsonl`, `dev.jsonl`; split 95/5 by
@@ -190,7 +190,7 @@ def _cell(kind: str, src: str, tags: list[str] | None = None) -> dict[str, Any]:
 def prompt_cell() -> str:
     """The serving prompt as literals (documentation in the notebook; the rows already use it)."""
     return (
-        "# GENERATED from finsight.risks.simplify by scripts/make_student_notebook.py; do not edit\n"
+        "# GENERATED from vidura.risks.simplify by scripts/make_student_notebook.py; do not edit\n"
         f"PROMPT_VERSION = {simplify.PROMPT_VERSION!r}\n"
         f"INSTRUCTIONS = {simplify.INSTRUCTIONS!r}\n"
         f"MAX_NEW_TOKENS = {simplify.MAX_NEW_TOKENS!r}\n"
@@ -198,7 +198,7 @@ def prompt_cell() -> str:
 
 
 def build() -> dict[str, Any]:
-    return {
+    nb: dict[str, Any] = {
         "cells": [
             _cell("markdown", MD),
             _cell("code", PARAMS, ["parameters"]),
@@ -214,6 +214,9 @@ def build() -> dict[str, Any]:
         "nbformat": 4,
         "nbformat_minor": 5,
     }
+    for i, cell in enumerate(nb["cells"]):  # nbstripout adds ids; emit them so the file is stable
+        cell["id"] = str(i)
+    return nb
 
 
 def main() -> None:

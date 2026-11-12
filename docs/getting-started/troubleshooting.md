@@ -8,7 +8,7 @@ Each entry starts with what you see.
 
 **You see:** the health dot is not green, `GET /api/health` says `degraded`, the upload page offers
 **Analyse without** *the plain-English writer*, or chat answers with `llm_unavailable`.
-**Fix:** start FinSight with `start.bat` (it starts Ollama), or run `ollama serve`. Check that the model
+**Fix:** start Vidura with `start.bat` (it starts Ollama), or run `ollama serve`. Check that the model
 exists with `ollama list`; if `finsight-student:q4` is missing, put the GGUF in `models/student/` and run
 `uv run python scripts/run_app.py --no-frontend` once to create it ([Install](install.md#3-model-files)).
 
@@ -59,7 +59,7 @@ the risk classifier", "the risks_scored step did not finish").
 **Fix:** start the missing model (usually Ollama) and click **Re-analyse**. A degraded report is never
 cached as complete, so it is also re-run when opened after the model is back.
 
-### "This report was made with an older version of FinSight"
+### "This report was made with an older version of Vidura"
 
 **Fix:** nothing to do: the report is analysed again because its `pipeline_version` differs from 4.2
 ([cache key](../architecture/pipeline.md#cache-key-and-pipeline-version)).
@@ -68,19 +68,19 @@ cached as complete, so it is also re-run when opened after the model is back.
 
 **You see:** a red mark on one stage on the Analysing page.
 **Fix:** the other stages still finish and the report opens with the parts that exist. The reason is in
-the *FinSight API* window (it logs `doc_id`, `job_id` and `stage`) and in the job's events
+the *Vidura API* window (it logs `doc_id`, `job_id` and `stage`) and in the job's events
 (`GET /api/docs/{doc_id}/events`). Fix the cause and click **Re-analyse**, or delete and upload again.
 
 ### The machine runs out of memory
 
 **Fix:** close browsers and other apps; do not run benchmark or training jobs at the same time. Stop
 other Ollama models with `ollama stop <name>`. For coding without the models, use
-`FINSIGHT_PROFILE=dev_light`.
+`VIDURA_PROFILE=dev_light`.
 
 ### The page stays on "Analysing" or is blank
 
 **Fix:** reload. Check that <http://127.0.0.1:8000/api/health> answers; if not, look at the
-*FinSight API* window for the error and restart from the launcher.
+*Vidura API* window for the error and restart from the launcher.
 
 ## Training lanes
 

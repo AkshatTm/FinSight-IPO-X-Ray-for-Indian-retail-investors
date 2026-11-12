@@ -25,8 +25,8 @@ Run with `uv run poe <task>`.
 
 | Command | What it does |
 | --- | --- |
-| `uv run python -m finsight.pipeline build --ipo <id>` | Build one showcase IPO |
-| `uv run python -m finsight.pipeline inspect --ipo <id>` | Print a short view of a parsed document (≤ 40 lines) |
-| `uv run python -m finsight.jobs run <doc_id> <job_id>` | Run the upload pipeline |
-| `uv run python -m finsight.jobs simplify <doc_id>` | Rewrite the queued risks |
-| `uv run python -m finsight.jobs sweep` | Delete uploads past retention |
+| `uv run python -m vidura.pipeline build --ipo <id>` | Build one showcase IPO |
+| `uv run python -m vidura.pipeline inspect --ipo <id>` | Print a short view of a parsed document (≤ 40 lines) |
+| `uv run python -m vidura.jobs run <doc_id> <job_id>` | Run the upload pipeline |
+| `uv run python -m vidura.jobs simplify <doc_id>` | Rewrite the queued risks |
+| `uv run python -m vidura.jobs sweep` | Delete uploads past retention |

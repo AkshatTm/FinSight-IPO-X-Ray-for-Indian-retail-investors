@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.splits import (
+from vidura.splits import (
     FrozenSplitError,
     Manifest,
     SplitEntry,

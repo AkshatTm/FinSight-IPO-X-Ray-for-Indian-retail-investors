@@ -5,8 +5,8 @@ from pathlib import Path
 import openpyxl
 import pytest
 
-from finsight.ingest import recon
-from finsight.ingest.recon import (
+from vidura.ingest import recon
+from vidura.ingest.recon import (
     ALLOWED_COLUMNS,
     classify_cover,
     flatten_text,

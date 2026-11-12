@@ -175,7 +175,7 @@
     "ndcg7": null
   },
   "m3_event_rules": {
-    "baseline": "rules_v1 (finsight.redflags.severe)",
+    "baseline": "rules_v1 (vidura.redflags.severe)",
     "primary": null
   },
   "m4_severity": {

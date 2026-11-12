@@ -11,8 +11,8 @@ from typing import Any
 
 import pytest
 
-from finsight.core.config import project_root
-from finsight.core.schemas import (
+from vidura.core.config import project_root
+from vidura.core.schemas import (
     Count,
     FinancialSummary,
     Money,

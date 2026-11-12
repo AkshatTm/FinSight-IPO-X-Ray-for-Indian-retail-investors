@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.ingest import list_demo_ipos
-from finsight.ingest.universe import (
+from vidura.ingest import list_demo_ipos
+from vidura.ingest.universe import (
     SMID_FINAL,
     SMID_RHP,
     Entry,
@@ -19,7 +19,7 @@ from finsight.ingest.universe import (
     parse_listing,
     parse_total,
 )
-from finsight.splits import load_universe
+from vidura.splits import load_universe
 
 ROOT = Path(__file__).resolve().parents[2]
 FIX = ROOT / "tests" / "fixtures" / "web"

@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from finsight.weaklabel.package import package_dataset
+from vidura.weaklabel.package import package_dataset
 
 
 def write_rows(path: Path, n: int, prefix: str) -> None:

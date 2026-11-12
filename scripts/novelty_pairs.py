@@ -5,9 +5,9 @@
     uv run python scripts/novelty_pairs.py score      # -> eval_results/b/novelty.json
 
 Needs the bank built by ``scripts/build_risk_bank.py``. Only ``dev`` IPOs are queried; the
-reference window of each is cut with ``finsight.splits.reference_bank`` (``kind="eval"``: no test
+reference window of each is cut with ``vidura.splits.reference_bank`` (``kind="eval"``: no test
 or bench IPO is ever a neighbour). The similarity is kept in a separate key file so the rating is
-blind. The rule that picks tau is in ``finsight.risks.novelty_tau.RULE``.
+blind. The rule that picks tau is in ``vidura.risks.novelty_tau.RULE``.
 """
 
 from __future__ import annotations
@@ -23,9 +23,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from finsight.risks.bank import company_key, load_bank, risks_config  # noqa: E402
-from finsight.risks.bank_build import write_json  # noqa: E402
-from finsight.risks.novelty_tau import (  # noqa: E402
+from vidura.risks.bank import company_key, load_bank, risks_config  # noqa: E402
+from vidura.risks.bank_build import write_json  # noqa: E402
+from vidura.risks.novelty_tau import (  # noqa: E402
     Pair,
     nearest_other,
     read_ratings,
@@ -33,7 +33,7 @@ from finsight.risks.novelty_tau import (  # noqa: E402
     sample_pairs,
     write_sheet,
 )
-from finsight.splits import load_splits, reference_bank  # noqa: E402
+from vidura.splits import load_splits, reference_bank  # noqa: E402
 
 BANK = ROOT / "data" / "processed" / "bank" / "risk_bank.parquet"
 SHEET = ROOT / "data" / "gold" / "novelty_pairs.csv"

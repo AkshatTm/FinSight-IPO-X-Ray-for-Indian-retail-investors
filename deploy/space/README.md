@@ -1,5 +1,5 @@
 ---
-title: FinSight API
+title: Vidura API
 emoji: 📄
 colorFrom: gray
 colorTo: red
@@ -10,7 +10,7 @@ license: mit
 short_description: IPO X-Ray API (CPU demo, recorded answers plus a small local LLM)
 ---
 
-Backend for the FinSight demo: cited fact sheets from Indian IPO prospectuses and a chat whose
+Backend for the Vidura demo: cited fact sheets from Indian IPO prospectuses and a chat whose
 numbers are checked against the document. CPU only, so live answers are slow; the public site
 replays recorded answers for its scripted questions.
 

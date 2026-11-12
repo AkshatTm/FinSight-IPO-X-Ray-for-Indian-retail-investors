@@ -1,4 +1,4 @@
-"""Build and freeze FinSight Bench v1 (C4.1, C04, C-ADR-06, C-ADR-24).
+"""Build and freeze Vidura Bench v1 (C4.1, C04, C-ADR-06, C-ADR-24).
 
     uv run python scripts/bench_build.py build --processed <data/processed> --gold-dir <data/gold>
     uv run python scripts/bench_build.py freeze      # hashes every input, sets frozen: true
@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from finsight.bench import (  # noqa: E402
+from vidura.bench import (  # noqa: E402
     CHAT_BUDGET_CHARS,
     FIELDS,
     GROUPS,
@@ -55,8 +55,8 @@ from finsight.bench import (  # noqa: E402
     task_a_prompt,
     task_c,
 )
-from finsight.core.schemas import Passage  # noqa: E402
-from finsight.generate import build_prompt  # noqa: E402
+from vidura.core.schemas import Passage  # noqa: E402
+from vidura.generate import build_prompt  # noqa: E402
 
 VERSION = "v1"
 BENCH = ROOT / "bench" / VERSION
@@ -135,7 +135,7 @@ SCORING: dict[str, Any] = {
 
 SYSTEMS: dict[str, dict[str, Any]] = {
     "rules_v1": {
-        "what": "FinSight pipeline at this commit: rules (summary + red-flag engine) for A/B; "
+        "what": "Vidura pipeline at this commit: rules (summary + red-flag engine) for A/B; "
         "product chat (guard, qwen3.5:2b, post-processing, verifier) for C/G; Task D not run "
         "(the product's rewriter is the student)",
         "runner": "scripts/bench_run.py --system rules_v1",
@@ -180,11 +180,11 @@ DISCLOSURES = [
     "the PDF (C04 §1 ladder not used), so the bench compares readers of the same context.",
     "Task B is computed by the same rule engine from each system's Task A answers, so it measures "
     "extraction for every system; rules/v1's statuses come from the engine the gold was built "
-    "with (structurally easier for FinSight).",
+    "with (structurally easier for Vidura).",
     "Task C keys are gold v3 values (verified); questions and the 3 unanswerable ones per IPO "
     "were written by Claude Code from templates, not by Akshat.",
     "Single run per system (temperature 0 for local and teacher; app defaults for frontier apps).",
-    "Akshat built FinSight and is the single rater in C4.4.",
+    "Akshat built Vidura and is the single rater in C4.4.",
 ]
 
 
@@ -235,9 +235,9 @@ class Search:
     """The ``full`` profile's retriever (hybrid + rerank), as the chat uses it."""
 
     def __init__(self, processed: Path) -> None:
-        from finsight.chat.orchestrator import rerank_pool
-        from finsight.core.config import load_settings
-        from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
+        from vidura.chat.orchestrator import rerank_pool
+        from vidura.core.config import load_settings
+        from vidura.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
 
         s = load_settings("full")
         reranker = CrossEncoderReranker()
@@ -280,8 +280,8 @@ class Search:
 
 # ----------------------------------------------------------------------------- build
 def build(a: argparse.Namespace) -> int:
-    from finsight.splits import Manifest as SplitManifest
-    from finsight.splits import load_splits, write_manifest
+    from vidura.splits import Manifest as SplitManifest
+    from vidura.splits import load_splits, write_manifest
 
     if (BENCH / "manifest.yaml").exists() and load(BENCH).frozen:
         print(f"{BENCH} is frozen (C-ADR-06): start bench/v2 instead", file=sys.stderr)
@@ -466,7 +466,7 @@ def build(a: argparse.Namespace) -> int:
     _set_bench_slice(ipos)
     write_manifest(
         SplitManifest(artefact="bench_v1", kind="eval", ipo_ids=ipos, written_by="scripts/bench_build.py",
-                      note="FinSight Bench v1 items and prompts (test slice, eval only)"),
+                      note="Vidura Bench v1 items and prompts (test slice, eval only)"),
         ROOT / "data" / "manifests",
     )  # fmt: skip
     print(f"wrote {BENCH} ({len(prompts)} prompts) in {time.perf_counter() - t0:.0f} s")
@@ -483,23 +483,23 @@ def _set_bench_slice(ipos: list[str]) -> None:
     elif "\n" + block not in text:
         raise SystemExit("configs/splits.yaml already has another bench list: new C-ADR needed")
     path.write_text(text, encoding="utf-8", newline="\n")
-    from finsight.splits import load_splits
+    from vidura.splits import load_splits
 
     assert load_splits(path).bench == ipos  # validates bench ⊂ test
 
 
 def _write_prompt_docs() -> None:
     """``prompts/*.md``: the templates in readable form (the rendered texts are the inputs)."""
-    from finsight.bench.prompts import TASK_A_RULES
-    from finsight.generate import CLOSE, OPEN
-    from finsight.risks import student_prompt
+    from vidura.bench.prompts import TASK_A_RULES
+    from vidura.generate import CLOSE, OPEN
+    from vidura.risks import student_prompt
 
     out = BENCH / "prompts"
     out.mkdir(parents=True, exist_ok=True)
     demo = build_prompt("<question>", [], "en").text
     docs = {
         "task_a.md": "# Task A prompt (key facts)\n\nRendered per (IPO, group, document) with the "
-        "group's retrieved passages; field lines come from `finsight.bench.fields`.\n\n```text\n"
+        "group's retrieved passages; field lines come from `vidura.bench.fields`.\n\n```text\n"
         + TASK_A_RULES.format(open=OPEN, close=CLOSE)
         + "\n\nFields:\n- <field id>: <description>\n\nPassages:\n"
         + f"{OPEN}\n[1] (RHP page N)\n...\n{CLOSE}\n\nJSON:\n```\n",

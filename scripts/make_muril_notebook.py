@@ -10,7 +10,7 @@ from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[1] / "notebooks" / "03_muril_guard.ipynb"
 
-MD = """# 03 - MuRIL advice classifier (FinSight, P5.4, E8 classifier row)
+MD = """# 03 - MuRIL advice classifier (Vidura, P5.4, E8 classifier row)
 
 Fine-tunes `google/muril-base-cased` (Indian-language BERT, covers Hindi and Hinglish) to say whether a
 question asks for investment advice, a forecast or a rating (`advice`) or for a fact (`fact`). **Runs on

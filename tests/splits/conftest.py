@@ -5,13 +5,13 @@ from datetime import date
 
 import pytest
 
-from finsight.splits import SplitEntry, SplitsFile
-from finsight.splits.store import ExcludedEntry
+from vidura.splits import SplitEntry, SplitsFile
+from vidura.splits.store import ExcludedEntry
 
 
 def entry(ipo_id: str, company: str, slice_: str, *, d: date | None = None,
           year: int | None = None, source: str = "new") -> SplitEntry:  # fmt: skip
-    from finsight.risks import company_key
+    from vidura.risks import company_key
 
     return SplitEntry(ipo_id=ipo_id, company=company, company_key=company_key(company),
                       source=source, slice=slice_, doc_date=d, close_year=year)  # type: ignore[arg-type]  # fmt: skip

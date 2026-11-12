@@ -2,7 +2,7 @@
 
 import pytest
 
-from finsight.evaluate.answer_scoring import score_answer
+from vidura.evaluate.answer_scoring import score_answer
 
 FRESH = ("Fresh issue size", "₹26,260 MILLION")
 TOTAL = ("Total issue size", "₹ 29,808 MILLION")

@@ -11,11 +11,11 @@ from decimal import Decimal
 import pytest
 from real import loader
 
-from finsight.core.config import project_root
-from finsight.core.schemas import FinancialSummary, Money, ParsedDoc, Section
-from finsight.redflags import evaluate, inputs_from_summary
-from finsight.splits import load_splits
-from finsight.summary import extract_summary
+from vidura.core.config import project_root
+from vidura.core.schemas import FinancialSummary, Money, ParsedDoc, Section
+from vidura.redflags import evaluate, inputs_from_summary
+from vidura.splits import load_splits
+from vidura.summary import extract_summary
 
 DEV = ("ather-energy-2025", "hexaware-technologies-2025", "urban-company-2025")
 

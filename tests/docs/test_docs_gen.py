@@ -23,14 +23,14 @@ def test_committed_pages_are_current() -> None:
 
 def test_config_page_lists_every_env_key_and_profile() -> None:
     page = docs_gen.config_page()
-    from finsight.core.config import ENV_KEYS
+    from vidura.core.config import ENV_KEYS
 
     for key in ENV_KEYS:
         assert f"`{key}`" in page
     profiles = yaml.safe_load((ROOT / "configs" / "config.yaml").read_text(encoding="utf-8"))
     for name in profiles["profiles"]:
         assert f"### `{name}`" in page
-    assert "| `llm.model` | str | `qwen3.5:0.8b` | `FINSIGHT_LLM__MODEL` |" in page
+    assert "| `llm.model` | str | `qwen3.5:0.8b` | `VIDURA_LLM__MODEL` |" in page
     assert "`DEMO_MODE`" in page
 
 
@@ -116,7 +116,7 @@ def test_glossary_has_every_term() -> None:
 
 
 def test_data_formats_list_schema_fields_and_every_gold_file() -> None:
-    from finsight.core.schemas import DocRecord, Risk
+    from vidura.core.schemas import DocRecord, Risk
 
     page = docs_gen.data_formats_page()
     for model in (DocRecord, Risk):

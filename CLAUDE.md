@@ -1,6 +1,6 @@
-# FinSight — Claude Code instructions (always loaded)
+# Vidura — Claude Code instructions (always loaded)
 
-FinSight = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sheet + bilingual chat with ✅/⚠️/❌ number verification. Phase 2: upload any IPO offer document → red flags, plain-English risk report, risk level with reasons, comparisons. **Phase 3 (now):** newest-IPO data, trained Phase 2 models, FinSight Bench vs frontier models, then deploy. Gate-driven; course deadline: Sun 1 Nov 2026 (the only date; it lives only here). Open-weight models only.
+Vidura = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sheet + bilingual chat with ✅/⚠️/❌ number verification. Phase 2: upload any IPO offer document → red flags, plain-English risk report, risk level with reasons, comparisons. **Phase 3 (now):** newest-IPO data, trained Phase 2 models, Vidura Bench vs frontier models, then deploy. Gate-driven; course deadline: Sun 1 Nov 2026 (the only date; it lives only here). Open-weight models only.
 
 ## Environment rule
 **Local only in code (B-ADR-16, 4 Oct 2026).** Every part runs in a local session on the Windows laptop (see Environment below). Start with `git pull`. Do not add Cloud Run, GCS, GPU-job, Docker-deploy or paid-hosting code before C5.1; Supabase sign-in/Postgres, Vercel and the HF Space are optional config only. B-ADR-16's "credit used up" premise is outdated: a Google Cloud free trial is active, used only at C5.1 after a budget alert and Akshat's explicit "go" (C-ADR-10).
@@ -16,9 +16,9 @@ FinSight = IPO X-Ray for Indian retail investors. Phase 1: RHP → cited fact sh
 ## Hard rules
 - **Plan first:** for any task > ~50 lines, a plan (≤ 15 lines) in the PR description (or wait for Akshat's approval when he asks).
 - **One primary package per part;** touch other packages only for wiring, and import them only via their `__init__.py`.
-- **Never read:** `data/raw/`, `data/processed/`, PDFs, audio, `models/`, weights, `node_modules/`, `.next/`, `.venv/`, notebook outputs. You may read `data/samples/`, `data/gold/` and `tests/fixtures/real/`. For schema questions, run a summary script or ask Akshat for 5 rows. To see a document, use `uv run python -m finsight.pipeline inspect` (prints ≤ 40 lines; may write ≤ 30 truncated snippets to `data/samples/`).
+- **Never read:** `data/raw/`, `data/processed/`, PDFs, audio, `models/`, weights, `node_modules/`, `.next/`, `.venv/`, notebook outputs. You may read `data/samples/`, `data/gold/` and `tests/fixtures/real/`. For schema questions, run a summary script or ask Akshat for 5 rows. To see a document, use `uv run python -m vidura.pipeline inspect` (prints ≤ 40 lines; may write ≤ 30 truncated snippets to `data/samples/`).
 - **Fixture pack exception (B-ADR-15):** `tests/fixtures/real/` may hold real section text, word boxes and tables from public offer documents and short corpus excerpts, gzip JSON ≤ 5 MB per file, ≤ 20 MB total, written only by `scripts/export_fixtures.py`. Never PDFs or weights.
-- **Never train models on the laptop.** Write notebooks. On **Kaggle only** (local sessions), you may upload private datasets, push and run notebooks on GPU, poll status and download outputs (`python -m finsight.weaklabel.kaggle`, ADR-042). Official `kaggle` CLI only. Colab runs are started by Akshat.
+- **Never train models on the laptop.** Write notebooks. On **Kaggle only** (local sessions), you may upload private datasets, push and run notebooks on GPU, poll status and download outputs (`python -m vidura.weaklabel.kaggle`, ADR-042). Official `kaggle` CLI only. Colab runs are started by Akshat.
 - **Never commit or print credentials** (Kaggle, Supabase service key, DB URL, HF/Vercel tokens, `.env`). `.env.example` lists names only.
 - **Never deploy, create paid resources or spend credits** without Akshat's explicit "go" in chat. No hosting exists (B-ADR-16).
 - **Never hand-edit model outputs or eval results.** Fix the pipeline or show ⚠️.
@@ -45,10 +45,10 @@ uv sync                      # install
 uv run poe test              # fast tests (not slow, not local) | uv run poe test-all   # everything
 uv run poe lint | fmt | typecheck
 uv run poe api               # FastAPI on :8000
-uv run python -m finsight.pipeline build --ipo <id>
+uv run python -m vidura.pipeline build --ipo <id>
 cd frontend && pnpm dev      # :3000   (NEXT_PUBLIC_USE_MOCKS=1 for fixtures)
 ```
-Laptop: 16 GB RAM (~8 GB used by other apps), RTX 2050 4 GB. Use `FINSIGHT_PROFILE=dev_light` while coding. Stop Ollama before GPU-heavy offline jobs.
+Laptop: 16 GB RAM (~8 GB used by other apps), RTX 2050 4 GB. Use `VIDURA_PROFILE=dev_light` while coding. Stop Ollama before GPU-heavy offline jobs.
 
 **Profiles:** `dev_light`, `full` (laptop) · `deploy_cpu` (ADR-022 paid HF fallback, dormant). The `cloud` / `cloud_gpu` profiles were removed (B-ADR-16); no hosting.
 
@@ -57,7 +57,7 @@ Python 3.11 · uv · ruff · mypy · pytest/hypothesis · pydantic v2 · FastAPI
 Frontend: Next.js App Router · TS strict · Tailwind · shadcn/ui · Motion · TanStack Query · Zustand · Recharts · MSW · openapi-typescript · Vitest · Playwright · supabase-js
 
 ## Module map (details: `docs/02_ARCHITECTURE.md` §5, Phase 2: `docs/phase2/B02_ARCHITECTURE.md` §4)
-Code lives in `src/finsight/<package>/`, tests in `tests/<package>/`, config in `configs/`, helper scripts in `scripts/`, notebooks in `notebooks/`, the app in `frontend/`.
+Code lives in `src/vidura/<package>/`, tests in `tests/<package>/`, config in `configs/`, helper scripts in `scripts/`, notebooks in `notebooks/`, the app in `frontend/`.
 Phase 1: core · ingest · parse · normalize · extract · weaklabel · retrieve · generate · verify · guard · voice · chat · evaluate · api · pipeline
 Phase 2 (new): storage · db · jobs · auth · summary · redflags · risks · risklevel · compare · reports
 

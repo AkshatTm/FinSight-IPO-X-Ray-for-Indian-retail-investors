@@ -1,6 +1,6 @@
 """The teacher (Gemma-4-31B-it) on the frozen bench prompts, with vLLM on a Colab G4 (C4.1).
 
-Self-contained: it runs on the Colab VM, not on the laptop (no ``finsight`` import). Steps are in
+Self-contained: it runs on the Colab VM, not on the laptop (no ``vidura`` import). Steps are in
 ``docs/phase3/COLAB_STEPS_bench_teacher.md``:
 
     laptop:  uv run python scripts/gpu_jobs.py push bench_teacher

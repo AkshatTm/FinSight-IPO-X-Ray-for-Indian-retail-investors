@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from finsight.risks.bakeoff import (  # noqa: E402
+from vidura.risks.bakeoff import (  # noqa: E402
     build_sheet,
     read_sheet,
     sample_risks,
@@ -29,8 +29,8 @@ from finsight.risks.bakeoff import (  # noqa: E402
     write_result,
     write_sheet,
 )
-from finsight.risks.teacher_data import filter_file  # noqa: E402
-from finsight.risks.teacher_input import Candidate  # noqa: E402
+from vidura.risks.teacher_data import filter_file  # noqa: E402
+from vidura.risks.teacher_input import Candidate  # noqa: E402
 
 DIR = ROOT / "data" / "processed" / "teacher" / "bakeoff"
 RISKS = DIR / "bakeoff_risks.jsonl"
@@ -49,7 +49,7 @@ def cmd_sample() -> None:
     """Write the 300-risk input and its manifest."""
     from build_risk_bank import make_source
 
-    from finsight.splits import Manifest, file_sha256, load_splits, write_manifest
+    from vidura.splits import Manifest, file_sha256, load_splits, write_manifest
 
     splits = load_splits(ROOT / "configs" / "splits.yaml")
     source = make_source(splits)

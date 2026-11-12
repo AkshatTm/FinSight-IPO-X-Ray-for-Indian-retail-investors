@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from finsight.core.schemas import Passage
-from finsight.retrieve.evaluate import (
+from vidura.core.schemas import Passage
+from vidura.retrieve.evaluate import (
     Question,
     evaluate,
     is_hit,
@@ -13,7 +13,7 @@ from finsight.retrieve.evaluate import (
     score_method,
     tune_threshold,
 )
-from finsight.retrieve.retriever import Hit, IpoIndex, Retriever
+from vidura.retrieve.retriever import Hit, IpoIndex, Retriever
 
 
 def passage(page: int, text: str = "t", end: int | None = None, ipo: str = "a-2025") -> Passage:
@@ -162,7 +162,7 @@ def test_dev_only_mode_never_searches_the_test_questions() -> None:
 
 
 def test_constrained_threshold_refuses_few_answerable_questions() -> None:
-    from finsight.retrieve.evaluate import tune_threshold_constrained
+    from vidura.retrieve.evaluate import tune_threshold_constrained
 
     answerable = [(True, s) for s in (0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05)]
     unanswerable = [(False, s) for s in (0.45, 0.25, 0.02)]

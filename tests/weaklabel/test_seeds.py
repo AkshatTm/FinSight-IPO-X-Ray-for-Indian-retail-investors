@@ -1,7 +1,7 @@
 from weaklabel_docs import COVER, FILLER, acme, make_doc, sections_for
 
-from finsight.core.schemas import Count, ListValue, Money, TextValue
-from finsight.weaklabel import LADDER_FIELDS, excel_values, find_seeds
+from vidura.core.schemas import Count, ListValue, Money, TextValue
+from vidura.weaklabel import LADDER_FIELDS, excel_values, find_seeds
 
 
 def money(report, field_id):  # type: ignore[no-untyped-def]

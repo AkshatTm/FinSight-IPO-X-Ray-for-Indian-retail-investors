@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from datetime import date
 
-from finsight.splits import (
+from vidura.splits import (
     SplitEntry,
     SplitsFile,
     in_window,
@@ -11,7 +11,7 @@ from finsight.splits import (
     reference_config,
     window_n,
 )
-from finsight.splits.reference import window_summary, years_before
+from vidura.splits.reference import window_summary, years_before
 
 
 def ids(splits: SplitsFile, as_of: date, **kw: object) -> list[str]:

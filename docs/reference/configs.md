@@ -33,7 +33,7 @@ Compare tab reference (B05 §5.6, C3.4). Written by scripts/compare_reference.py
 
 ## `config.yaml`
 
-Profiles from 02_ARCHITECTURE.md section 8. Pick one with FINSIGHT_PROFILE (default dev_light). Any value can be overridden by env vars: FINSIGHT_LLM__MODEL=qwen3.5:2b, DEMO_MODE=1, ... Cache key part (CC-04): bump when extraction, red-flag or risk-level logic changes.
+Profiles from 02_ARCHITECTURE.md section 8. Pick one with VIDURA_PROFILE (default dev_light). Any value can be overridden by env vars: VIDURA_LLM__MODEL=qwen3.5:2b, DEMO_MODE=1, ... Cache key part (CC-04): bump when extraction, red-flag or risk-level logic changes.
 
 | Key | Value | Meaning |
 | --- | --- | --- |
@@ -51,7 +51,7 @@ Profiles from 02_ARCHITECTURE.md section 8. Pick one with FINSIGHT_PROFILE (defa
 | `uploads.global_per_day` | `10` | Uploads per day for everyone together; `start.bat` raises it to 1000. |
 | `uploads.retention_days` | `30` | Days an upload is kept before `jobs sweep` deletes it; `start.bat` sets 3650. |
 | `uploads.scanned_min_median_chars` | `100` | A PDF whose median page has fewer characters is refused as a scan. |
-| `profiles` | *(section)* | Named settings bundles; pick one with `FINSIGHT_PROFILE`. |
+| `profiles` | *(section)* | Named settings bundles; pick one with `VIDURA_PROFILE`. |
 | `profiles.dev_light` | *(section)* | Coding profile: smallest chat model, no dense index or reranker. |
 | `profiles.dev_light.llm` | `{ backend: ollama, model: "qwen3.5:0.8b", num_ctx: 2048 }` | Chat and rewrite model: backend, model tag and context length. |
 | `profiles.dev_light.retrieve` | `{ dense: false, rerank: false }` | Retrieval: dense index, reranker and how many passages it reranks. |
@@ -149,7 +149,7 @@ Red-flag checks (B01 §5, B05 §5.4). Thresholds are B01's initial definitions; 
 | Key | Value | Meaning |
 | --- | --- | --- |
 | `version` | `b01-initial-1` | Rule version, stored in every `redflags.json`. |
-| `default_missing` | `FinSight couldn't find this in the document.` | Sentence shown when a check's inputs are not in the document. |
+| `default_missing` | `Vidura couldn't find this in the document.` | Sentence shown when a check's inputs are not in the document. |
 | `checks` | *(section)* | The 13 checks, RF01–RF13. |
 | `checks.RF01` | *(section)* | One check. |
 | `checks.RF01.title` | `Profit or loss` | Name shown on the card. |
@@ -213,7 +213,7 @@ Red-flag checks (B01 §5, B05 §5.4). Thresholds are B01's initial definitions; 
 
 ## `reference.yaml`
 
-Rolling reference window (C02 §5, C-ADR-03): "past IPOs" for a document are those dated before it within the last window_years. Corpus IPOs (close year only) count when their close year is in the window_years calendar years before the as-of year. Read by finsight.splits.reference.
+Rolling reference window (C02 §5, C-ADR-03): "past IPOs" for a document are those dated before it within the last window_years. Corpus IPOs (close year only) count when their close year is in the window_years calendar years before the as-of year. Read by vidura.splits.reference.
 
 | Key | Value | Meaning |
 | --- | --- | --- |
@@ -281,9 +281,9 @@ Risk features (B02 §7). tau set by C2.6 / E22 from 60 rated pairs (eval_results
 
 ## `splits.yaml`
 
-Phase 3 time split (C02 §4, C-ADR-02). Written by `python -m finsight.splits build`; never edit by hand. Once frozen, it changes only by a new C-ADR.
+Phase 3 time split (C02 §4, C-ADR-02). Written by `python -m vidura.splits build`; never edit by hand. Once frozen, it changes only by a new C-ADR.
 
-Keys not listed: the file is written by `python -m finsight.splits build`; never edited by hand.
+Keys not listed: the file is written by `python -m vidura.splits build`; never edited by hand.
 
 | Key | Value | Meaning |
 | --- | --- | --- |
@@ -297,7 +297,7 @@ Keys not listed: the file is written by `python -m finsight.splits build`; never
 | `ipos` | *list, 664 entries* | Every IPO with its slice. |
 | `excluded` | *list, 14 entries* | IPOs left out, with the reason. |
 | `demo` | `nityas-gems-and-jewellery-india-2026, srit-india-2026, shah-investor-s-home-2026` | Newest IPOs kept for the demo only. |
-| `bench` | *list, 7 entries* | The 7 FinSight Bench v1 IPOs. |
+| `bench` | *list, 7 entries* | The 7 Vidura Bench v1 IPOs. |
 | `bench_dev` | `[]` | Bench development IPOs (none). |
 
 ## `suggested_questions.yaml`

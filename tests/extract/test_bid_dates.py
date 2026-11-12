@@ -2,8 +2,8 @@ from datetime import date
 
 import pytest
 
-from finsight.core.schemas import Page, ParsedDoc
-from finsight.extract import find_bid_closed, parse_closed
+from vidura.core.schemas import Page, ParsedDoc
+from vidura.extract import find_bid_closed, parse_closed
 
 
 def doc(pages: list[str]) -> ParsedDoc:

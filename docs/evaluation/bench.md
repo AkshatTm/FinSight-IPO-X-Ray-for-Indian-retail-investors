@@ -1,4 +1,4 @@
-# FinSight Bench v1
+# Vidura Bench v1
 
 A small, pre-registered benchmark that asks every system the same questions about the same 7 test-slice
 IPOs, with the same retrieved passages and the same prompt text (C-ADR-06, C-ADR-24). It is frozen:
@@ -40,7 +40,7 @@ From [`eval_results/c4/bench_summary.json`](https://github.com/AkshatTm/FinSight
 (−0.231 [−0.385, −0.055]), C correct on par (−0.043 [−0.129, 0.071], p = 0.66), G worse
 (−0.571 [−0.762, −0.429]).
 
-**Systems.** `rules_v1` is the FinSight pipeline: rule extraction for A and B, and for C the Phase 1
+**Systems.** `rules_v1` is the Vidura pipeline: rule extraction for A and B, and for C the Phase 1
 chat with `qwen3.5:2b` and the guard. `student` is `finsight-student:q4` answering from the same
 passages without the pipeline's rules or guard. In the product, the guard declines advice questions
 before any model runs, so Task G for the student is a model-only probe.
@@ -78,6 +78,6 @@ instructions are in [`bench/README.md`](https://github.com/AkshatTm/FinSight-IPO
 ## Platform Bench (cut)
 
 Phase 4 planned a second benchmark ("Platform Bench", CC-03 / CC-10): 30 recent IPOs, comparing
-FinSight with what Groww, Zerodha and AngelOne show for each, from pages Akshat would collect by hand.
+Vidura with what Groww, Zerodha and AngelOne show for each, from pages Akshat would collect by hand.
 The spreadsheet exists on the laptop (gitignored), but nothing was ingested or scored, and the work was cut when Phase 4
 closed. Only the README of `data/platform_bench/` is in git; there is no `eval_results/p4/`.

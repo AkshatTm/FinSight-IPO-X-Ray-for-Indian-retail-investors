@@ -28,16 +28,16 @@ from typing import Any
 
 import numpy as np
 
-from finsight.core.config import get_settings
-from finsight.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
-from finsight.retrieve.evaluate import (
+from vidura.core.config import get_settings
+from vidura.retrieve import BgeM3Embedder, CrossEncoderReranker, Retriever
+from vidura.retrieve.evaluate import (
     Question,
     is_hit,
     load_questions,
     score_method,
     tune_threshold,
 )
-from finsight.retrieve.rerank import BGE_RERANKER, OnnxReranker, Reranker
+from vidura.retrieve.rerank import BGE_RERANKER, OnnxReranker, Reranker
 
 
 class CachedEmbedder:

@@ -8,10 +8,10 @@ from typing import Any
 
 import pytest
 
-from finsight.db import Database
-from finsight.db.tables import simplify_queue
-from finsight.jobs.simplify_worker import SIMPLIFIED, auto_enqueue, load_simplified, run_queue
-from finsight.storage import LocalStorage
+from vidura.db import Database
+from vidura.db.tables import simplify_queue
+from vidura.jobs.simplify_worker import SIMPLIFIED, auto_enqueue, load_simplified, run_queue
+from vidura.storage import LocalStorage
 
 
 @dataclass
